@@ -1,19 +1,17 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
-using Azure.Communication.Identity.Models;
 using Azure.Core;
+
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Identity
 {
-    [CodeGenModel("CommunicationIdentityAccessTokenResult")]
     [CodeGenSuppress("CommunicationUserIdentifierAndToken", typeof(CommunicationIdentity))]
     public partial class CommunicationUserIdentifierAndToken
     {
-        private readonly AccessToken? _accessToken;
-
         internal CommunicationUserIdentifierAndToken(CommunicationIdentity identity, CommunicationIdentityAccessToken accessToken)
         {
             if (identity == null)
@@ -21,8 +19,6 @@ namespace Azure.Communication.Identity
 
             Identity = identity;
             InternalAccessToken = accessToken;
-            User = new CommunicationUserIdentifier(identity.Id);
-            _accessToken = accessToken is null ? null : new AccessToken(accessToken.Token, accessToken.ExpiresOn);
         }
 
         /// <summary>Deconstructs the <see cref="CommunicationUserIdentifierAndToken"/> into a user and token.</summary>
@@ -40,10 +36,17 @@ namespace Azure.Communication.Identity
         [CodeGenMember("AccessToken")]
         internal CommunicationIdentityAccessToken InternalAccessToken { get; }
 
+        // User and AccessToken are computed rather than assigned in the constructor. The generated
+        // deserializer builds this type through the generator's own constructor, which only knows
+        // about Identity and InternalAccessToken, so anything assigned in a hand-written constructor
+        // would stay null on every deserialized instance.
+        private AccessToken? AccessTokenCore
+            => InternalAccessToken is null ? null : new AccessToken(InternalAccessToken.Token, InternalAccessToken.ExpiresOn);
+
         /// <summary>A communication user.</summary>
-        public CommunicationUserIdentifier User { get; }
+        public CommunicationUserIdentifier User => new CommunicationUserIdentifier(Identity.Id);
 
         /// <summary>The token created for <see cref="User"/>.</summary>
-        public AccessToken AccessToken => _accessToken.Value;
+        public AccessToken AccessToken => AccessTokenCore.Value;
     }
 }

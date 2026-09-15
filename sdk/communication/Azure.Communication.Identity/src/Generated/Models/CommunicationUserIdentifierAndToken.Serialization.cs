@@ -5,47 +5,161 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication.Identity.Models;
+using Azure;
 
 namespace Azure.Communication.Identity
 {
-    public partial class CommunicationUserIdentifierAndToken
+    /// <summary> A communication identity with access token. </summary>
+    public partial class CommunicationUserIdentifierAndToken : IJsonModel<CommunicationUserIdentifierAndToken>
     {
-        internal static CommunicationUserIdentifierAndToken DeserializeCommunicationUserIdentifierAndToken(JsonElement element)
+        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierAndToken"/> for deserialization. </summary>
+        internal CommunicationUserIdentifierAndToken()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CommunicationUserIdentifierAndToken PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CommunicationUserIdentifierAndToken>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCommunicationUserIdentifierAndToken(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CommunicationUserIdentifierAndToken)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CommunicationUserIdentifierAndToken>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationIdentityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CommunicationUserIdentifierAndToken)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CommunicationUserIdentifierAndToken>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CommunicationUserIdentifierAndToken IPersistableModel<CommunicationUserIdentifierAndToken>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CommunicationUserIdentifierAndToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CommunicationUserIdentifierAndToken"/> from. </param>
+        public static explicit operator CommunicationUserIdentifierAndToken(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeCommunicationUserIdentifierAndToken(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<CommunicationUserIdentifierAndToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CommunicationUserIdentifierAndToken>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommunicationUserIdentifierAndToken)} does not support writing '{format}' format.");
+            }
+            writer.WritePropertyName("identity"u8);
+            writer.WriteObjectValue(Identity, options);
+            if (Optional.IsDefined(InternalAccessToken))
+            {
+                writer.WritePropertyName("accessToken"u8);
+                writer.WriteObjectValue(InternalAccessToken, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CommunicationUserIdentifierAndToken IJsonModel<CommunicationUserIdentifierAndToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CommunicationUserIdentifierAndToken JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CommunicationUserIdentifierAndToken>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommunicationUserIdentifierAndToken)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommunicationUserIdentifierAndToken(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CommunicationUserIdentifierAndToken DeserializeCommunicationUserIdentifierAndToken(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             CommunicationIdentity identity = default;
-            CommunicationIdentityAccessToken accessToken = default;
-            foreach (var property in element.EnumerateObject())
+            CommunicationIdentityAccessToken internalAccessToken = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    identity = CommunicationIdentity.DeserializeCommunicationIdentity(property.Value);
+                    identity = CommunicationIdentity.DeserializeCommunicationIdentity(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("accessToken"u8))
+                if (prop.NameEquals("accessToken"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accessToken = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(property.Value);
+                    internalAccessToken = CommunicationIdentityAccessToken.DeserializeCommunicationIdentityAccessToken(prop.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
             }
-            return new CommunicationUserIdentifierAndToken(identity, accessToken);
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static CommunicationUserIdentifierAndToken FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCommunicationUserIdentifierAndToken(document.RootElement);
+            return new CommunicationUserIdentifierAndToken(identity, internalAccessToken, additionalBinaryDataProperties);
         }
     }
 }
