@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary></summary>
-    public partial class ExternalEndpointTrafficManagerEndpointResource : IJsonModel<TrafficManagerEndpointData>
+    public partial class ExternalEndpointTrafficManagerEndpoint1Resource : IJsonModel<TrafficManagerEndpointData>
     {
         private static IJsonModel<TrafficManagerEndpointData> s_dataDeserializationInstance;
 

@@ -13,44 +13,45 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// A class representing a NestedEndpointTrafficManagerEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NestedEndpointTrafficManagerEndpointResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TrafficManagerProfileResource"/> using the GetNestedEndpointTrafficManagerEndpoints method.
+    /// A class representing a AzureEndpointTrafficManagerEndpoint1 along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TrafficManagerProfileResource"/> using the GetAzureEndpointTrafficManagerEndpoint1s method.
     /// </summary>
-    public partial class NestedEndpointTrafficManagerEndpointResource : ArmResource
+    public partial class AzureEndpointTrafficManagerEndpoint1Resource : ArmResource
     {
         private readonly ClientDiagnostics _endpointsClientDiagnostics;
         private readonly Endpoints _endpointsRestClient;
         private readonly TrafficManagerEndpointData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles/NestedEndpoints";
+        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles/AzureEndpoints";
 
-        /// <summary> Initializes a new instance of NestedEndpointTrafficManagerEndpointResource for mocking. </summary>
-        protected NestedEndpointTrafficManagerEndpointResource()
+        /// <summary> Initializes a new instance of AzureEndpointTrafficManagerEndpoint1Resource for mocking. </summary>
+        protected AzureEndpointTrafficManagerEndpoint1Resource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NestedEndpointTrafficManagerEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NestedEndpointTrafficManagerEndpointResource(ArmClient client, TrafficManagerEndpointData data) : this(client, data.Id)
+        internal AzureEndpointTrafficManagerEndpoint1Resource(ArmClient client, TrafficManagerEndpointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NestedEndpointTrafficManagerEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NestedEndpointTrafficManagerEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AzureEndpointTrafficManagerEndpoint1Resource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string nestedEndpointTrafficManagerEndpointApiVersion);
+            TryGetApiVersion(ResourceType, out string azureEndpointTrafficManagerEndpoint1ApiVersion);
             _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nestedEndpointTrafficManagerEndpointApiVersion ?? "2024-04-01-preview");
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, azureEndpointTrafficManagerEndpoint1ApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="endpointName"> The endpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/NestedEndpoints/{endpointName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/AzureEndpoints/{endpointName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -108,14 +109,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NestedEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NestedEndpointTrafficManagerEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerEndpoint1Data>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointResource.Get");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("AzureEndpointTrafficManagerEndpoint1Resource.Get");
             scope.Start();
             try
             {
@@ -123,14 +124,14 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "NestedEndpoints", Id.Name, context);
+                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
+                Response<TrafficManagerEndpoint1Data> response = Response.FromValue(TrafficManagerEndpoint1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NestedEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -156,14 +157,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NestedEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NestedEndpointTrafficManagerEndpointResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerEndpoint1Data> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointResource.Get");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("AzureEndpointTrafficManagerEndpoint1Resource.Get");
             scope.Start();
             try
             {
@@ -171,14 +172,14 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "NestedEndpoints", Id.Name, context);
+                HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
+                Response<TrafficManagerEndpoint1Data> response = Response.FromValue(TrafficManagerEndpoint1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NestedEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -204,18 +205,18 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NestedEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<NestedEndpointTrafficManagerEndpointResource>> UpdateAsync(TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerEndpoint1Data>> UpdateAsync(TrafficManagerEndpoint1Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointResource.Update");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("AzureEndpointTrafficManagerEndpoint1Resource.Update");
             scope.Start();
             try
             {
@@ -223,14 +224,14 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "NestedEndpoints", Id.Name, TrafficManagerEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, TrafficManagerEndpoint1Data.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
+                Response<TrafficManagerEndpoint1Data> response = Response.FromValue(TrafficManagerEndpoint1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NestedEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -256,18 +257,18 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NestedEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<NestedEndpointTrafficManagerEndpointResource> Update(TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerEndpoint1Data> Update(TrafficManagerEndpoint1Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointResource.Update");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("AzureEndpointTrafficManagerEndpoint1Resource.Update");
             scope.Start();
             try
             {
@@ -275,14 +276,14 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "NestedEndpoints", Id.Name, TrafficManagerEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, TrafficManagerEndpoint1Data.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
+                Response<TrafficManagerEndpoint1Data> response = Response.FromValue(TrafficManagerEndpoint1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new NestedEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -308,7 +309,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NestedEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +317,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointResource.Delete");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("AzureEndpointTrafficManagerEndpoint1Resource.Delete");
             scope.Start();
             try
             {
@@ -324,7 +325,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "NestedEndpoints", Id.Name, context);
+                HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="NestedEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,7 +368,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("NestedEndpointTrafficManagerEndpointResource.Delete");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("AzureEndpointTrafficManagerEndpoint1Resource.Delete");
             scope.Start();
             try
             {
@@ -375,7 +376,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "NestedEndpoints", Id.Name, context);
+                HttpMessage message = _endpointsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "AzureEndpoints", Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

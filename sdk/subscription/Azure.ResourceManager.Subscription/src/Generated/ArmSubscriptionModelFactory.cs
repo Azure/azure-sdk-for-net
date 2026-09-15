@@ -18,24 +18,6 @@ namespace Azure.ResourceManager.Subscription.Models
     public static partial class ArmSubscriptionModelFactory
     {
 
-        /// <summary> Subscription Information with the alias. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Subscription Alias response properties. </param>
-        /// <returns> A new <see cref="Subscription.SubscriptionAliasData"/> instance for mocking. </returns>
-        public static SubscriptionAliasData SubscriptionAliasData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SubscriptionAliasProperties properties = default)
-        {
-            return new SubscriptionAliasData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Put subscription creation result properties. </summary>
         /// <param name="subscriptionId"> Newly created subscription Id. </param>
         /// <param name="displayName"> The display name of the subscription. </param>
@@ -72,6 +54,24 @@ namespace Azure.ResourceManager.Subscription.Models
                 managementGroupId,
                 createdOn,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <summary> Subscription Information with the alias. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Subscription Alias response properties. </param>
+        /// <returns> A new <see cref="Subscription.SubscriptionAliasData"/> instance for mocking. </returns>
+        public static SubscriptionAliasData SubscriptionAliasData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SubscriptionAliasProperties properties = default)
+        {
+            return new SubscriptionAliasData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
@@ -112,6 +112,19 @@ namespace Azure.ResourceManager.Subscription.Models
             return new SubscriptionAliasAdditionalProperties(managementGroupId, subscriptionTenantId, subscriptionOwnerId, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Tenant policy. </summary>
+        /// <param name="policyId"> Policy Id. </param>
+        /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user's tenant. </param>
+        /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user's tenant. </param>
+        /// <param name="exemptedPrincipals"> List of user objectIds that are exempted from the set subscription tenant policies for the user's tenant. </param>
+        /// <returns> A new <see cref="Models.TenantPolicyProperties"/> instance for mocking. </returns>
+        public static TenantPolicyProperties TenantPolicyProperties(string policyId = default, bool? blockSubscriptionsLeavingTenant = default, bool? blockSubscriptionsIntoTenant = default, IEnumerable<Guid> exemptedPrincipals = default)
+        {
+            exemptedPrincipals ??= new ChangeTrackingList<Guid>();
+
+            return new TenantPolicyProperties(policyId, blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, (exemptedPrincipals ?? new ChangeTrackingList<Guid>()).ToList(), default);
+        }
+
         /// <summary> Tenant policy Information. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -130,19 +143,6 @@ namespace Azure.ResourceManager.Subscription.Models
                 default);
         }
 
-        /// <summary> Tenant policy. </summary>
-        /// <param name="policyId"> Policy Id. </param>
-        /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user's tenant. </param>
-        /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user's tenant. </param>
-        /// <param name="exemptedPrincipals"> List of user objectIds that are exempted from the set subscription tenant policies for the user's tenant. </param>
-        /// <returns> A new <see cref="Models.TenantPolicyProperties"/> instance for mocking. </returns>
-        public static TenantPolicyProperties TenantPolicyProperties(string policyId = default, bool? blockSubscriptionsLeavingTenant = default, bool? blockSubscriptionsIntoTenant = default, IEnumerable<Guid> exemptedPrincipals = default)
-        {
-            exemptedPrincipals ??= new ChangeTrackingList<Guid>();
-
-            return new TenantPolicyProperties(policyId, blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, (exemptedPrincipals ?? new ChangeTrackingList<Guid>()).ToList(), default);
-        }
-
         /// <summary> Put tenant policy request properties. </summary>
         /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user's tenant. </param>
         /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user's tenant. </param>
@@ -153,24 +153,6 @@ namespace Azure.ResourceManager.Subscription.Models
             exemptedPrincipals ??= new ChangeTrackingList<Guid>();
 
             return new TenantPolicyCreateOrUpdateContent(blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, (exemptedPrincipals ?? new ChangeTrackingList<Guid>()).ToList(), default);
-        }
-
-        /// <summary> Billing account policies information. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Billing account policies response properties. </param>
-        /// <returns> A new <see cref="Subscription.BillingAccountPolicyData"/> instance for mocking. </returns>
-        public static BillingAccountPolicyData BillingAccountPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingAccountPolicyProperties properties = default)
-        {
-            return new BillingAccountPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> Put billing account policies response properties. </summary>
@@ -193,16 +175,16 @@ namespace Azure.ResourceManager.Subscription.Models
             return new ServiceTenant(tenantId, tenantName, default);
         }
 
-        /// <summary> Subscription Response for Changed Target Directory. </summary>
+        /// <summary> Billing account policies information. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Subscription Changed Target Directory response properties. </param>
-        /// <returns> A new <see cref="Subscription.TargetDirectoryResultData"/> instance for mocking. </returns>
-        public static TargetDirectoryResultData TargetDirectoryResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TargetDirectoryResultProperties properties = default)
+        /// <param name="properties"> Billing account policies response properties. </param>
+        /// <returns> A new <see cref="Subscription.BillingAccountPolicyData"/> instance for mocking. </returns>
+        public static BillingAccountPolicyData BillingAccountPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingAccountPolicyProperties properties = default)
         {
-            return new TargetDirectoryResultData(
+            return new BillingAccountPolicyData(
                 id,
                 name,
                 resourceType,
@@ -236,6 +218,24 @@ namespace Azure.ResourceManager.Subscription.Models
                 sourceTenantId,
                 status,
                 expiresOn,
+                default);
+        }
+
+        /// <summary> Subscription Response for Changed Target Directory. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Subscription Changed Target Directory response properties. </param>
+        /// <returns> A new <see cref="Subscription.TargetDirectoryResultData"/> instance for mocking. </returns>
+        public static TargetDirectoryResultData TargetDirectoryResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TargetDirectoryResultProperties properties = default)
+        {
+            return new TargetDirectoryResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 

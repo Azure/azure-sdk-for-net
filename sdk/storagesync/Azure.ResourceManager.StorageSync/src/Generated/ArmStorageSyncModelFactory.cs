@@ -18,6 +18,37 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmStorageSyncModelFactory
     {
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
+        /// <returns> A new <see cref="StorageSync.StorageSyncPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static StorageSyncPrivateEndpointConnectionData StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, StorageSyncPrivateLinkServiceConnectionState connectionState = default, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        {
+            return new StorageSyncPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                default);
+        }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.StorageSyncPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static StorageSyncPrivateLinkServiceConnectionState StorageSyncPrivateLinkServiceConnectionState(StorageSyncPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new StorageSyncPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -57,36 +88,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                     default),
                 identity,
                 default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
-        /// <returns> A new <see cref="StorageSync.StorageSyncPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static StorageSyncPrivateEndpointConnectionData StorageSyncPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, StorageSyncPrivateLinkServiceConnectionState connectionState = default, StorageSyncPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new StorageSyncPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
-        }
-
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.StorageSyncPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static StorageSyncPrivateLinkServiceConnectionState StorageSyncPrivateLinkServiceConnectionState(StorageSyncPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
-        {
-            return new StorageSyncPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -182,45 +183,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="storageAccountResourceId"> Storage Account Resource Id. </param>
-        /// <param name="azureFileShareName"> Azure file share name. </param>
-        /// <param name="storageAccountTenantId"> Storage Account Tenant Id. </param>
-        /// <param name="partnershipId"> Partnership Id. </param>
-        /// <param name="friendlyName"> Friendly Name. </param>
-        /// <param name="isBackupEnabled"> Backup Enabled. </param>
-        /// <param name="provisioningState"> CloudEndpoint Provisioning State. </param>
-        /// <param name="lastWorkflowId"> CloudEndpoint lastWorkflowId. </param>
-        /// <param name="lastOperationName"> Resource Last Operation Name. </param>
-        /// <param name="changeEnumerationStatus"> Cloud endpoint change enumeration status. </param>
-        /// <param name="changeEnumerationIntervalDays"> The interval for enumerating changes on the cloud endpoint. </param>
-        /// <returns> A new <see cref="StorageSync.CloudEndpointData"/> instance for mocking. </returns>
-        public static CloudEndpointData CloudEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier storageAccountResourceId = default, string azureFileShareName = default, Guid? storageAccountTenantId = default, string partnershipId = default, string friendlyName = default, string isBackupEnabled = default, string provisioningState = default, string lastWorkflowId = default, string lastOperationName = default, CloudEndpointChangeEnumerationStatus changeEnumerationStatus = default, int? changeEnumerationIntervalDays = default)
-        {
-            return new CloudEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                storageAccountResourceId is null && azureFileShareName is null && storageAccountTenantId is null && partnershipId is null && friendlyName is null && isBackupEnabled is null && provisioningState is null && lastWorkflowId is null && lastOperationName is null && changeEnumerationStatus is null && changeEnumerationIntervalDays is null ? default : new CloudEndpointProperties(
-                    storageAccountResourceId,
-                    azureFileShareName,
-                    storageAccountTenantId,
-                    partnershipId,
-                    friendlyName,
-                    isBackupEnabled,
-                    provisioningState,
-                    lastWorkflowId,
-                    lastOperationName,
-                    changeEnumerationStatus,
-                    changeEnumerationIntervalDays,
-                    default),
-                default);
-        }
-
         /// <summary> Cloud endpoint change enumeration status object. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="lastEnumerationStatus"> Status of last completed change enumeration. </param>
@@ -282,6 +244,45 @@ namespace Azure.ResourceManager.StorageSync.Models
                 minutesRemaining,
                 totalCountsState,
                 deletesProgressPercent,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="storageAccountResourceId"> Storage Account Resource Id. </param>
+        /// <param name="azureFileShareName"> Azure file share name. </param>
+        /// <param name="storageAccountTenantId"> Storage Account Tenant Id. </param>
+        /// <param name="partnershipId"> Partnership Id. </param>
+        /// <param name="friendlyName"> Friendly Name. </param>
+        /// <param name="isBackupEnabled"> Backup Enabled. </param>
+        /// <param name="provisioningState"> CloudEndpoint Provisioning State. </param>
+        /// <param name="lastWorkflowId"> CloudEndpoint lastWorkflowId. </param>
+        /// <param name="lastOperationName"> Resource Last Operation Name. </param>
+        /// <param name="changeEnumerationStatus"> Cloud endpoint change enumeration status. </param>
+        /// <param name="changeEnumerationIntervalDays"> The interval for enumerating changes on the cloud endpoint. </param>
+        /// <returns> A new <see cref="StorageSync.CloudEndpointData"/> instance for mocking. </returns>
+        public static CloudEndpointData CloudEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier storageAccountResourceId = default, string azureFileShareName = default, Guid? storageAccountTenantId = default, string partnershipId = default, string friendlyName = default, string isBackupEnabled = default, string provisioningState = default, string lastWorkflowId = default, string lastOperationName = default, CloudEndpointChangeEnumerationStatus changeEnumerationStatus = default, int? changeEnumerationIntervalDays = default)
+        {
+            return new CloudEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageAccountResourceId is null && azureFileShareName is null && storageAccountTenantId is null && partnershipId is null && friendlyName is null && isBackupEnabled is null && provisioningState is null && lastWorkflowId is null && lastOperationName is null && changeEnumerationStatus is null && changeEnumerationIntervalDays is null ? default : new CloudEndpointProperties(
+                    storageAccountResourceId,
+                    azureFileShareName,
+                    storageAccountTenantId,
+                    partnershipId,
+                    friendlyName,
+                    isBackupEnabled,
+                    provisioningState,
+                    lastWorkflowId,
+                    lastOperationName,
+                    changeEnumerationStatus,
+                    changeEnumerationIntervalDays,
+                    default),
                 default);
         }
 
@@ -416,65 +417,6 @@ namespace Azure.ResourceManager.StorageSync.Models
         public static CloudEndpointAfsShareMetadataCertificatePublicKeys CloudEndpointAfsShareMetadataCertificatePublicKeys(string firstKey = default, string secondKey = default)
         {
             return new CloudEndpointAfsShareMetadataCertificatePublicKeys(firstKey, secondKey, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="serverLocalPath"> Server Local path. </param>
-        /// <param name="cloudTiering"> Cloud Tiering. </param>
-        /// <param name="volumeFreeSpacePercent"> Level of free space to be maintained by Cloud Tiering if it is enabled. </param>
-        /// <param name="tierFilesOlderThanDays"> Tier files older than days. </param>
-        /// <param name="friendlyName"> Friendly Name. </param>
-        /// <param name="serverResourceId"> Server Resource Id. </param>
-        /// <param name="provisioningState"> ServerEndpoint Provisioning State. </param>
-        /// <param name="lastWorkflowId"> ServerEndpoint lastWorkflowId. </param>
-        /// <param name="lastOperationName"> Resource Last Operation Name. </param>
-        /// <param name="syncStatus"> Server Endpoint sync status. </param>
-        /// <param name="offlineDataTransfer"> Offline data transfer. </param>
-        /// <param name="offlineDataTransferStorageAccountResourceId"> Offline data transfer storage account resource ID. </param>
-        /// <param name="offlineDataTransferStorageAccountTenantId"> Offline data transfer storage account tenant ID. </param>
-        /// <param name="offlineDataTransferShareName"> Offline data transfer share name. </param>
-        /// <param name="cloudTieringStatus"> Cloud tiering status. Only populated if cloud tiering is enabled. </param>
-        /// <param name="recallStatus"> Recall status. Only populated if cloud tiering is enabled. </param>
-        /// <param name="initialDownloadPolicy"> Policy for how namespace and files are recalled during FastDr. </param>
-        /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
-        /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
-        /// <param name="serverName"> Server name. </param>
-        /// <param name="serverEndpointProvisioningStatus"> Server Endpoint provisioning status. </param>
-        /// <returns> A new <see cref="StorageSync.StorageSyncServerEndpointData"/> instance for mocking. </returns>
-        public static StorageSyncServerEndpointData StorageSyncServerEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string serverLocalPath = default, StorageSyncFeatureStatus? cloudTiering = default, int? volumeFreeSpacePercent = default, int? tierFilesOlderThanDays = default, string friendlyName = default, ResourceIdentifier serverResourceId = default, string provisioningState = default, string lastWorkflowId = default, string lastOperationName = default, ServerEndpointSyncStatus syncStatus = default, StorageSyncFeatureStatus? offlineDataTransfer = default, ResourceIdentifier offlineDataTransferStorageAccountResourceId = default, Guid? offlineDataTransferStorageAccountTenantId = default, string offlineDataTransferShareName = default, ServerEndpointCloudTieringStatus cloudTieringStatus = default, ServerEndpointRecallStatus recallStatus = default, InitialDownloadPolicy? initialDownloadPolicy = default, LocalCacheMode? localCacheMode = default, InitialUploadPolicy? initialUploadPolicy = default, string serverName = default, StorageSyncServerEndpointProvisioningStatus serverEndpointProvisioningStatus = default)
-        {
-            return new StorageSyncServerEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                serverLocalPath is null && cloudTiering is null && volumeFreeSpacePercent is null && tierFilesOlderThanDays is null && friendlyName is null && serverResourceId is null && provisioningState is null && lastWorkflowId is null && lastOperationName is null && syncStatus is null && offlineDataTransfer is null && offlineDataTransferStorageAccountResourceId is null && offlineDataTransferStorageAccountTenantId is null && offlineDataTransferShareName is null && cloudTieringStatus is null && recallStatus is null && initialDownloadPolicy is null && localCacheMode is null && initialUploadPolicy is null && serverName is null && serverEndpointProvisioningStatus is null ? default : new ServerEndpointProperties(
-                    serverLocalPath,
-                    cloudTiering,
-                    volumeFreeSpacePercent,
-                    tierFilesOlderThanDays,
-                    friendlyName,
-                    serverResourceId,
-                    provisioningState,
-                    lastWorkflowId,
-                    lastOperationName,
-                    syncStatus,
-                    offlineDataTransfer,
-                    offlineDataTransferStorageAccountResourceId,
-                    offlineDataTransferStorageAccountTenantId,
-                    offlineDataTransferShareName,
-                    cloudTieringStatus,
-                    recallStatus,
-                    initialDownloadPolicy,
-                    localCacheMode,
-                    initialUploadPolicy,
-                    serverName,
-                    serverEndpointProvisioningStatus,
-                    default),
-                default);
         }
 
         /// <summary> Server Endpoint sync status. </summary>
@@ -768,6 +710,65 @@ namespace Azure.ResourceManager.StorageSync.Models
                 endOn,
                 errorCode,
                 additionalInformation ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="serverLocalPath"> Server Local path. </param>
+        /// <param name="cloudTiering"> Cloud Tiering. </param>
+        /// <param name="volumeFreeSpacePercent"> Level of free space to be maintained by Cloud Tiering if it is enabled. </param>
+        /// <param name="tierFilesOlderThanDays"> Tier files older than days. </param>
+        /// <param name="friendlyName"> Friendly Name. </param>
+        /// <param name="serverResourceId"> Server Resource Id. </param>
+        /// <param name="provisioningState"> ServerEndpoint Provisioning State. </param>
+        /// <param name="lastWorkflowId"> ServerEndpoint lastWorkflowId. </param>
+        /// <param name="lastOperationName"> Resource Last Operation Name. </param>
+        /// <param name="syncStatus"> Server Endpoint sync status. </param>
+        /// <param name="offlineDataTransfer"> Offline data transfer. </param>
+        /// <param name="offlineDataTransferStorageAccountResourceId"> Offline data transfer storage account resource ID. </param>
+        /// <param name="offlineDataTransferStorageAccountTenantId"> Offline data transfer storage account tenant ID. </param>
+        /// <param name="offlineDataTransferShareName"> Offline data transfer share name. </param>
+        /// <param name="cloudTieringStatus"> Cloud tiering status. Only populated if cloud tiering is enabled. </param>
+        /// <param name="recallStatus"> Recall status. Only populated if cloud tiering is enabled. </param>
+        /// <param name="initialDownloadPolicy"> Policy for how namespace and files are recalled during FastDr. </param>
+        /// <param name="localCacheMode"> Policy for enabling follow-the-sun business models: link local cache to cloud behavior to pre-populate before local access. </param>
+        /// <param name="initialUploadPolicy"> Policy for how the initial upload sync session is performed. </param>
+        /// <param name="serverName"> Server name. </param>
+        /// <param name="serverEndpointProvisioningStatus"> Server Endpoint provisioning status. </param>
+        /// <returns> A new <see cref="StorageSync.StorageSyncServerEndpointData"/> instance for mocking. </returns>
+        public static StorageSyncServerEndpointData StorageSyncServerEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string serverLocalPath = default, StorageSyncFeatureStatus? cloudTiering = default, int? volumeFreeSpacePercent = default, int? tierFilesOlderThanDays = default, string friendlyName = default, ResourceIdentifier serverResourceId = default, string provisioningState = default, string lastWorkflowId = default, string lastOperationName = default, ServerEndpointSyncStatus syncStatus = default, StorageSyncFeatureStatus? offlineDataTransfer = default, ResourceIdentifier offlineDataTransferStorageAccountResourceId = default, Guid? offlineDataTransferStorageAccountTenantId = default, string offlineDataTransferShareName = default, ServerEndpointCloudTieringStatus cloudTieringStatus = default, ServerEndpointRecallStatus recallStatus = default, InitialDownloadPolicy? initialDownloadPolicy = default, LocalCacheMode? localCacheMode = default, InitialUploadPolicy? initialUploadPolicy = default, string serverName = default, StorageSyncServerEndpointProvisioningStatus serverEndpointProvisioningStatus = default)
+        {
+            return new StorageSyncServerEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serverLocalPath is null && cloudTiering is null && volumeFreeSpacePercent is null && tierFilesOlderThanDays is null && friendlyName is null && serverResourceId is null && provisioningState is null && lastWorkflowId is null && lastOperationName is null && syncStatus is null && offlineDataTransfer is null && offlineDataTransferStorageAccountResourceId is null && offlineDataTransferStorageAccountTenantId is null && offlineDataTransferShareName is null && cloudTieringStatus is null && recallStatus is null && initialDownloadPolicy is null && localCacheMode is null && initialUploadPolicy is null && serverName is null && serverEndpointProvisioningStatus is null ? default : new ServerEndpointProperties(
+                    serverLocalPath,
+                    cloudTiering,
+                    volumeFreeSpacePercent,
+                    tierFilesOlderThanDays,
+                    friendlyName,
+                    serverResourceId,
+                    provisioningState,
+                    lastWorkflowId,
+                    lastOperationName,
+                    syncStatus,
+                    offlineDataTransfer,
+                    offlineDataTransferStorageAccountResourceId,
+                    offlineDataTransferStorageAccountTenantId,
+                    offlineDataTransferShareName,
+                    cloudTieringStatus,
+                    recallStatus,
+                    initialDownloadPolicy,
+                    localCacheMode,
+                    initialUploadPolicy,
+                    serverName,
+                    serverEndpointProvisioningStatus,
+                    default),
                 default);
         }
 

@@ -11,22 +11,22 @@ using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The JobDefinitionPropertiesSourceTargetMap. </summary>
-    internal partial class JobDefinitionPropertiesSourceTargetMap
+    /// <summary> The JobDefinitionSourceTargetMap. </summary>
+    internal partial class JobDefinitionSourceTargetMap
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="JobDefinitionPropertiesSourceTargetMap"/>. </summary>
-        public JobDefinitionPropertiesSourceTargetMap()
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionSourceTargetMap"/>. </summary>
+        public JobDefinitionSourceTargetMap()
         {
             Value = new ChangeTrackingList<SourceTargetMap>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobDefinitionPropertiesSourceTargetMap"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobDefinitionSourceTargetMap"/>. </summary>
         /// <param name="value"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobDefinitionPropertiesSourceTargetMap(IReadOnlyList<SourceTargetMap> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobDefinitionSourceTargetMap(IReadOnlyList<SourceTargetMap> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

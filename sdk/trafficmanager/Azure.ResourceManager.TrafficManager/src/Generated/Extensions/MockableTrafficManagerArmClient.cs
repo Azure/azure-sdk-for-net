@@ -62,31 +62,31 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
             return new TrafficManagerUserMetricsResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AzureEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AzureEndpointTrafficManagerEndpointResource"/> object. </returns>
-        public virtual AzureEndpointTrafficManagerEndpointResource GetAzureEndpointTrafficManagerEndpointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/> object. </returns>
+        public virtual AzureEndpointTrafficManagerEndpoint1Resource GetAzureEndpointTrafficManagerEndpoint1Resource(ResourceIdentifier id)
         {
-            AzureEndpointTrafficManagerEndpointResource.ValidateResourceId(id);
-            return new AzureEndpointTrafficManagerEndpointResource(Client, id);
+            AzureEndpointTrafficManagerEndpoint1Resource.ValidateResourceId(id);
+            return new AzureEndpointTrafficManagerEndpoint1Resource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> object. </returns>
-        public virtual ExternalEndpointTrafficManagerEndpointResource GetExternalEndpointTrafficManagerEndpointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/> object. </returns>
+        public virtual ExternalEndpointTrafficManagerEndpoint1Resource GetExternalEndpointTrafficManagerEndpoint1Resource(ResourceIdentifier id)
         {
-            ExternalEndpointTrafficManagerEndpointResource.ValidateResourceId(id);
-            return new ExternalEndpointTrafficManagerEndpointResource(Client, id);
+            ExternalEndpointTrafficManagerEndpoint1Resource.ValidateResourceId(id);
+            return new ExternalEndpointTrafficManagerEndpoint1Resource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="NestedEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="NestedEndpointTrafficManagerEndpoint1Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NestedEndpointTrafficManagerEndpointResource"/> object. </returns>
-        public virtual NestedEndpointTrafficManagerEndpointResource GetNestedEndpointTrafficManagerEndpointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NestedEndpointTrafficManagerEndpoint1Resource"/> object. </returns>
+        public virtual NestedEndpointTrafficManagerEndpoint1Resource GetNestedEndpointTrafficManagerEndpoint1Resource(ResourceIdentifier id)
         {
-            NestedEndpointTrafficManagerEndpointResource.ValidateResourceId(id);
-            return new NestedEndpointTrafficManagerEndpointResource(Client, id);
+            NestedEndpointTrafficManagerEndpoint1Resource.ValidateResourceId(id);
+            return new NestedEndpointTrafficManagerEndpoint1Resource(Client, id);
         }
     }
 }

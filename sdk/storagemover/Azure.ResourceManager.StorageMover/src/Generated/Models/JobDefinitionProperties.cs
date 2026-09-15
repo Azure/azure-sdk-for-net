@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="dataIntegrityValidation"> The checksum validation mode for the job definition. </param>
         /// <param name="isPermissionsPreserved"> Boolean to preserve permissions or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobDefinitionProperties(string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, JobDefinitionPropertiesSourceTargetMap sourceTargetMap, StorageMoverProvisioningState? provisioningState, IList<ResourceIdentifier> connections, StorageMoverScheduleInfo schedule, StorageMoverDataIntegrityValidation? dataIntegrityValidation, bool? isPermissionsPreserved, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobDefinitionProperties(string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, JobDefinitionSourceTargetMap sourceTargetMap, StorageMoverProvisioningState? provisioningState, IList<ResourceIdentifier> connections, StorageMoverScheduleInfo schedule, StorageMoverDataIntegrityValidation? dataIntegrityValidation, bool? isPermissionsPreserved, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             JobType = jobType;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public ResourceIdentifier AgentResourceId { get; }
 
         /// <summary> The list of cloud endpoints to migrate. </summary>
-        internal JobDefinitionPropertiesSourceTargetMap SourceTargetMap { get; set; }
+        internal JobDefinitionSourceTargetMap SourceTargetMap { get; set; }
 
         /// <summary> The provisioning state of this resource. </summary>
         public StorageMoverProvisioningState? ProvisioningState { get; }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 if (SourceTargetMap is null)
                 {
-                    SourceTargetMap = new JobDefinitionPropertiesSourceTargetMap();
+                    SourceTargetMap = new JobDefinitionSourceTargetMap();
                 }
                 return SourceTargetMap.Value;
             }

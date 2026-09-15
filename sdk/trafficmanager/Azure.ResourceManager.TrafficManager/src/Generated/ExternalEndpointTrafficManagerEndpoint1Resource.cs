@@ -13,15 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
-    /// A class representing a ExternalEndpointTrafficManagerEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TrafficManagerProfileResource"/> using the GetExternalEndpointTrafficManagerEndpoints method.
+    /// A class representing a ExternalEndpointTrafficManagerEndpoint1 along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TrafficManagerProfileResource"/> using the GetExternalEndpointTrafficManagerEndpoint1s method.
     /// </summary>
-    public partial class ExternalEndpointTrafficManagerEndpointResource : ArmResource
+    public partial class ExternalEndpointTrafficManagerEndpoint1Resource : ArmResource
     {
         private readonly ClientDiagnostics _endpointsClientDiagnostics;
         private readonly Endpoints _endpointsRestClient;
@@ -29,28 +30,28 @@ namespace Azure.ResourceManager.TrafficManager
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/trafficmanagerprofiles/ExternalEndpoints";
 
-        /// <summary> Initializes a new instance of ExternalEndpointTrafficManagerEndpointResource for mocking. </summary>
-        protected ExternalEndpointTrafficManagerEndpointResource()
+        /// <summary> Initializes a new instance of ExternalEndpointTrafficManagerEndpoint1Resource for mocking. </summary>
+        protected ExternalEndpointTrafficManagerEndpoint1Resource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalEndpointTrafficManagerEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExternalEndpointTrafficManagerEndpointResource(ArmClient client, TrafficManagerEndpointData data) : this(client, data.Id)
+        internal ExternalEndpointTrafficManagerEndpoint1Resource(ArmClient client, TrafficManagerEndpointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalEndpointTrafficManagerEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExternalEndpointTrafficManagerEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ExternalEndpointTrafficManagerEndpoint1Resource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string externalEndpointTrafficManagerEndpointApiVersion);
+            TryGetApiVersion(ResourceType, out string externalEndpointTrafficManagerEndpoint1ApiVersion);
             _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, externalEndpointTrafficManagerEndpointApiVersion ?? "2024-04-01-preview");
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, externalEndpointTrafficManagerEndpoint1ApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -108,14 +109,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExternalEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExternalEndpointTrafficManagerEndpointResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerEndpoint1Data>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpointResource.Get");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpoint1Resource.Get");
             scope.Start();
             try
             {
@@ -125,12 +126,12 @@ namespace Azure.ResourceManager.TrafficManager
                 };
                 HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "ExternalEndpoints", Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
+                Response<TrafficManagerEndpoint1Data> response = Response.FromValue(TrafficManagerEndpoint1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExternalEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -156,14 +157,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExternalEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExternalEndpointTrafficManagerEndpointResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerEndpoint1Data> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpointResource.Get");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpoint1Resource.Get");
             scope.Start();
             try
             {
@@ -173,12 +174,12 @@ namespace Azure.ResourceManager.TrafficManager
                 };
                 HttpMessage message = _endpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "ExternalEndpoints", Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
+                Response<TrafficManagerEndpoint1Data> response = Response.FromValue(TrafficManagerEndpoint1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExternalEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -204,18 +205,18 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExternalEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ExternalEndpointTrafficManagerEndpointResource>> UpdateAsync(TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TrafficManagerEndpoint1Data>> UpdateAsync(TrafficManagerEndpoint1Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpointResource.Update");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpoint1Resource.Update");
             scope.Start();
             try
             {
@@ -223,14 +224,14 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "ExternalEndpoints", Id.Name, TrafficManagerEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "ExternalEndpoints", Id.Name, TrafficManagerEndpoint1Data.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
+                Response<TrafficManagerEndpoint1Data> response = Response.FromValue(TrafficManagerEndpoint1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExternalEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -256,18 +257,18 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExternalEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The Traffic Manager endpoint parameters supplied to the Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ExternalEndpointTrafficManagerEndpointResource> Update(TrafficManagerEndpointData data, CancellationToken cancellationToken = default)
+        public virtual Response<TrafficManagerEndpoint1Data> Update(TrafficManagerEndpoint1Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpointResource.Update");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpoint1Resource.Update");
             scope.Start();
             try
             {
@@ -275,14 +276,14 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "ExternalEndpoints", Id.Name, TrafficManagerEndpointData.ToRequestContent(data), context);
+                HttpMessage message = _endpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, "ExternalEndpoints", Id.Name, TrafficManagerEndpoint1Data.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TrafficManagerEndpointData> response = Response.FromValue(TrafficManagerEndpointData.FromResponse(result), result);
+                Response<TrafficManagerEndpoint1Data> response = Response.FromValue(TrafficManagerEndpoint1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExternalEndpointTrafficManagerEndpointResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -308,7 +309,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExternalEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +317,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpointResource.Delete");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpoint1Resource.Delete");
             scope.Start();
             try
             {
@@ -359,7 +360,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExternalEndpointTrafficManagerEndpointResource"/>. </description>
+        /// <description> <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,7 +368,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpointResource.Delete");
+            using DiagnosticScope scope = _endpointsClientDiagnostics.CreateScope("ExternalEndpointTrafficManagerEndpoint1Resource.Delete");
             scope.Start();
             try
             {
