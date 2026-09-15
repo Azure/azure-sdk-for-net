@@ -16,18 +16,18 @@
 
 ## Summary
 
-- Total libraries: 461
-- Management Plane (MPG): 270
+- Total libraries: 460
+- Management Plane (MPG): 268
   - Autorest/Swagger: 39
-  - New Emitter (TypeSpec): 231
+  - New Emitter (TypeSpec): 229
   - Old TypeSpec: 0
-- Data Plane (DPG): 125
+- Data Plane (DPG): 126
   - Autorest/Swagger: 30
-  - New Emitter (TypeSpec): 54
+  - New Emitter (TypeSpec): 55
   - Old TypeSpec: 0
 - Provisioning: 66
-  - Reflection-based generator: 9
-  - TypeSpec-based generator: 56
+  - Reflection-based generator: 6
+  - TypeSpec-based generator: 59
   - No generator: 1
 - No generator: 41
 
@@ -36,10 +36,11 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 54 / 54 (100%)
+**Migration Status**: 55 / 55 (100%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
+| agentserver | Azure.AI.AgentServer.Core | ✅ |  |
 | agentserver | Azure.AI.AgentServer.Responses | ✅ | ✅ |
 | ai | Azure.AI.Agents.Persistent | ✅ |  |
 | ai | Azure.AI.Extensions.OpenAI | ✅ | ✅ |
@@ -138,12 +139,13 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 231 / 231 (100%)
+**Migration Status**: 229 / 229 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
 | advisor | Azure.ResourceManager.Advisor | ✅ |
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
+| aimanager | Azure.ResourceManager.ContainerServiceAIManager | ✅ |
 | alertsmanagement | Azure.ResourceManager.AlertProcessingRules | ✅ |
 | alertsmanagement | Azure.ResourceManager.AlertRuleRecommendations | ✅ |
 | alertsmanagement | Azure.ResourceManager.AlertsManagement | ✅ |
@@ -269,7 +271,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations | ✅ |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes | ✅ |
 | kusto | Azure.ResourceManager.Kusto | ✅ |
-| lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
 | loadtestservice | Azure.ResourceManager.LoadTesting | ✅ |
 | machinelearningservices | Azure.ResourceManager.MachineLearning | ✅ |
 | maintenance | Azure.ResourceManager.Maintenance | ✅ |
@@ -303,7 +304,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | oracle | Azure.ResourceManager.OracleDatabase | ✅ |
 | paloaltonetworks.ngfw | Azure.ResourceManager.PaloAltoNetworks.Ngfw | ✅ |
 | peering | Azure.ResourceManager.Peering | ✅ |
-| pineconevectordb | Azure.ResourceManager.PineconeVectorDB | ✅ |
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | ✅ |
 | playwright | Azure.ResourceManager.Playwright | ✅ |
 | policyinsights | Azure.ResourceManager.PolicyInsights | ✅ |
@@ -369,7 +369,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | verifiedid | Azure.ResourceManager.VerifiedId | ✅ |
 | webpubsub | Azure.ResourceManager.WebPubSub | ✅ |
 | websites | Azure.ResourceManager.AppService | ✅ |
-| weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
 | workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
 | workloadssapmonitor | Azure.ResourceManager.WorkloadsSapMonitor | ✅ |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | ✅ |
@@ -426,12 +425,12 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 39
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 56 / 66 migrated to TypeSpec-based generator
+**Migration Status**: 59 / 66 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
 | apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement ✅ | Reflection |
-| appconfiguration | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | Reflection |
+| appconfiguration | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | TypeSpec ✅ |
 | applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights ✅ | TypeSpec ✅ |
 | attestation | Azure.Provisioning.Attestation | Azure.ResourceManager.Attestation ✅ | TypeSpec ✅ |
 | batch | Azure.Provisioning.Batch | Azure.ResourceManager.Batch ✅ | TypeSpec ✅ |
@@ -479,11 +478,11 @@ Libraries that provide infrastructure-as-code capabilities for Azure services. T
 | recoveryservices | Azure.Provisioning.RecoveryServices | Azure.ResourceManager.RecoveryServices ✅ | TypeSpec ✅ |
 | recoveryservices-backup | Azure.Provisioning.RecoveryServicesBackup | Azure.ResourceManager.RecoveryServicesBackup ✅ | TypeSpec ✅ |
 | redis | Azure.Provisioning.Redis | Azure.ResourceManager.Redis ✅ | TypeSpec ✅ |
-| redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | Reflection |
+| redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | TypeSpec ✅ |
 | resourcegraph | Azure.Provisioning.ResourceGraph | Azure.ResourceManager.ResourceGraph ✅ | TypeSpec ✅ |
 | resourcehealth | Azure.Provisioning.ResourceHealth | Azure.ResourceManager.ResourceHealth ✅ | TypeSpec ✅ |
 | search | Azure.Provisioning.Search | Azure.ResourceManager.Search ✅ | TypeSpec ✅ |
-| securitycenter | Azure.Provisioning.SecurityCenter | Azure.ResourceManager.SecurityCenter ✅ | Reflection |
+| securitycenter | Azure.Provisioning.SecurityCenter | Azure.ResourceManager.SecurityCenter ✅ | TypeSpec ✅ |
 | servicebus | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus ✅ | TypeSpec ✅ |
 | servicefabric | Azure.Provisioning.ServiceFabric | Azure.ResourceManager.ServiceFabric ✅ | TypeSpec ✅ |
 | servicefabricmanagedclusters | Azure.Provisioning.ServiceFabricManagedClusters | Azure.ResourceManager.ServiceFabricManagedClusters ✅ | TypeSpec ✅ |
@@ -504,7 +503,7 @@ Libraries with no generator have neither autorest.md nor tsp-location.yaml files
 
 | Service | Library |
 | ------- | ------- |
-| agentserver | Azure.AI.AgentServer.Core |
+| agentserver | Azure.AI.AgentServer.Activity |
 | agentserver | Azure.AI.AgentServer.Invocations |
 | ai | Azure.AI.Inference |
 | communication | Azure.Communication.Common |

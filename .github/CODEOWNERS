@@ -758,9 +758,6 @@
 # PRLabel: %HybridConnectivity
 /sdk/hybridconnectivity/Azure.ResourceManager.*/                   @ArcturusZhang @ArthurMa1978
 
-# PRLabel: %LambdaTest HyperExecute
-/sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @ArcturusZhang @ArthurMa1978
-
 # PRLabel: %Impact Reporting
 /sdk/impactreporting/Azure.ResourceManager.*/                      @adityareddy305
 
@@ -836,9 +833,6 @@
 # ServiceLabel: %Oracle %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
-# PRLabel: %Pinecone
-/sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
-
 # PRLabel: %Planetary Computer
 /sdk/planetarycomputer/Azure.ResourceManager.*/                    @chahibi @karthick-rn @mandarinamdar
 
@@ -901,9 +895,6 @@
 
 # ServiceLabel: %SQL - VM %Mgmt
 # ServiceOwners:                                                   @ericshape
-
-# PRLabel: %Weights & Biases %Mgmt
-/sdk/weightsandbiases/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Workload Orchestration %Mgmt
 /sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
