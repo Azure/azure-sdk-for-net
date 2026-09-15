@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Scaling rule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppJobScaleRule : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the JobScaleRuleType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> JobScaleRuleType
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Metadata. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Metadata
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Auth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppScaleRuleAuth> Auth
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Identity
         {
             get

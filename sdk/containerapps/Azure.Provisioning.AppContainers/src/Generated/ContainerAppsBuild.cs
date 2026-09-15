@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Information pertaining to an individual build. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppsBuild : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -91,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BuildProvisioningState> ProvisioningState
         {
             get
@@ -100,6 +102,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the BuildStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BuildStatus> BuildStatus
         {
             get
@@ -109,6 +112,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DestinationContainerRegistry. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryWithCustomImage DestinationContainerRegistry
         {
             get
@@ -118,6 +122,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Configuration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppsBuildConfiguration Configuration
         {
             get
@@ -127,6 +132,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the LogStreamEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LogStreamEndpoint
         {
             get

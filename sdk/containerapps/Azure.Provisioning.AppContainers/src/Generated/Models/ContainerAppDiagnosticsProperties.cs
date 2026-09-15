@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Diagnostics resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppDiagnosticsProperties : ProvisionableConstruct
     {
         private ContainerAppDiagnosticsMetadata _metadata;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Metadata. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppDiagnosticsMetadata Metadata
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Dataset. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppDiagnosticsDataApiResult> Dataset
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppDiagnosticsStatus Status
         {
             get
@@ -54,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DataProviderMetadata. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppDiagnosticDataProviderMetadata DataProviderMetadata
         {
             get

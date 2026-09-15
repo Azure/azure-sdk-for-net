@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Spring Cloud Gateway properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SpringCloudGatewayComponent : JavaComponentProperties
     {
         private JavaComponentIngress _ingress;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Ingress. </summary>
+        [Experimental("AZPROVISION001")]
         internal JavaComponentIngress Ingress
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the SpringCloudGatewayRoutes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ScgRoute> SpringCloudGatewayRoutes
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Fqdn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IngressFqdn
         {
             get

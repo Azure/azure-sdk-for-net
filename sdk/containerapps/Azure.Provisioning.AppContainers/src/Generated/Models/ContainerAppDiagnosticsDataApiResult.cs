@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Diagnostics data returned from a detector. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppDiagnosticsDataApiResult : ProvisionableConstruct
     {
         private ContainerAppDiagnosticDataTableResult _table;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Table. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppDiagnosticDataTableResult Table
         {
             get
@@ -31,6 +34,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RenderingProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppDiagnosticRendering RenderingProperties
         {
             get

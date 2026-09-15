@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The replica resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppConfigurationReplica : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -82,6 +83,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -112,6 +114,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Endpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Endpoint
         {
             get
@@ -125,6 +128,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationReplicaProvisioningState> ProvisioningState
         {
             get

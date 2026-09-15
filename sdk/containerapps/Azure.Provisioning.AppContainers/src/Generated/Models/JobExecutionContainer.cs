@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container Apps Jobs execution container definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class JobExecutionContainer : ProvisionableConstruct
     {
         private BicepValue<string> _image;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Image. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Image
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -46,6 +50,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Command. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Command
         {
             get
@@ -56,6 +61,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Args. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Args
         {
             get
@@ -66,6 +72,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Env. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppEnvironmentVariable> Env
         {
             get
@@ -76,6 +83,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Resources. </summary>
+        [Experimental("AZPROVISION001")]
         public AppContainerResources Resources
         {
             get

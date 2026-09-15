@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container Apps Job execution container status. Contains status code and reason. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerExecutionStatus : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Code. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Code
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the AdditionalInformation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AdditionalInformation
         {
             get
@@ -54,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Status
         {
             get

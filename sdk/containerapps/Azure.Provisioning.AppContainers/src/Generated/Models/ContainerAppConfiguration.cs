@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Non versioned Container App configuration properties that define the mutable settings of a Container app. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppConfiguration : ProvisionableConstruct
     {
         private BicepList<ContainerAppWritableSecret> _secrets;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Secrets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppWritableSecret> Secrets
         {
             get
@@ -46,6 +49,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ActiveRevisionsMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppActiveRevisionsMode> ActiveRevisionsMode
         {
             get
@@ -61,6 +65,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TargetLabel. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TargetLabel
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Ingress. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppIngressConfiguration Ingress
         {
             get
@@ -91,6 +97,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Registries. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppRegistryCredentials> Registries
         {
             get
@@ -106,6 +113,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Dapr. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppDaprConfiguration Dapr
         {
             get
@@ -121,6 +129,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Runtime. </summary>
+        [Experimental("AZPROVISION001")]
         internal Runtime Runtime
         {
             get
@@ -136,6 +145,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxInactiveRevisions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxInactiveRevisions
         {
             get
@@ -151,6 +161,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RevisionTransitionThreshold. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RevisionTransitionThreshold
         {
             get
@@ -166,6 +177,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Service. </summary>
+        [Experimental("AZPROVISION001")]
         internal Service Service
         {
             get
@@ -181,6 +193,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IdentitySettings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppIdentitySettings> IdentitySettings
         {
             get
@@ -196,6 +209,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the EnableMetrics. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableMetrics
         {
             get
@@ -213,6 +227,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the JavaAgent. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppRuntimeJavaAgent JavaAgent
         {
             get
@@ -230,6 +245,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AutoConfigureDataProtection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DotnetAutoConfigureDataProtection
         {
             get
@@ -247,6 +263,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceType
         {
             get

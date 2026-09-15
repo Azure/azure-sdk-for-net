@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Diagnostics data column. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppDiagnosticDataColumn : ProvisionableConstruct
     {
         private BicepValue<string> _columnName;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ColumnName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ColumnName
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DataType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DataType
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ColumnType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ColumnType
         {
             get

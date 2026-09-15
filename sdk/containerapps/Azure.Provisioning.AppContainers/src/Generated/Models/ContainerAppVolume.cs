@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Volume definitions for the Container App. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppVolume : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the StorageType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppStorageType> StorageType
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the StorageName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> StorageName
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Secrets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SecretVolumeItem> Secrets
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MountOptions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MountOptions
         {
             get

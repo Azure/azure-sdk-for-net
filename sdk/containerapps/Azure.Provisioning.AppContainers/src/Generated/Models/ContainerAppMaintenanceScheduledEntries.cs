@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> List of maintenance schedules for a managed environment. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ContainerAppMaintenanceScheduledEntries : ProvisionableConstruct
     {
         private BicepList<ManagedEnvironmentScheduledEntry> _scheduledEntries;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ScheduledEntries. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ManagedEnvironmentScheduledEntry> ScheduledEntries
         {
             get

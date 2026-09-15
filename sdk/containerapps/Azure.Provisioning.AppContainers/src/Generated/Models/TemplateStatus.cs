@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The status of the session pool template. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TemplateStatus : ProvisionableConstruct
     {
         private BicepValue<string> _details;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Details. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Details
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -46,6 +50,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public TemplatePoolStatus Status
         {
             get
@@ -56,6 +61,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Containers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SessionContainer> Containers
         {
             get
@@ -66,6 +72,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Ingress. </summary>
+        [Experimental("AZPROVISION001")]
         internal SessionIngress Ingress
         {
             get
@@ -76,6 +83,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TargetPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> IngressTargetPort
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the Azure Active Directory app registration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppAzureActiveDirectoryRegistrationConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _openIdIssuer;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the OpenIdIssuer. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OpenIdIssuer
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientSecretSettingName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientSecretSettingName
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientSecretCertificateThumbprint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientSecretCertificateThumbprint
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientSecretCertificateSubjectAlternativeName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientSecretCertificateSubjectAlternativeName
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientSecretCertificateIssuer. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientSecretCertificateIssuer
         {
             get

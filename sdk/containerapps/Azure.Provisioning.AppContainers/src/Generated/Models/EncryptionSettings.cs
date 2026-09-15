@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the secrets references of encryption key and signing key for ContainerApp Service Authentication/Authorization. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EncryptionSettings : ProvisionableConstruct
     {
         private BicepValue<string> _containerAppAuthEncryptionSecretName;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ContainerAppAuthEncryptionSecretName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContainerAppAuthEncryptionSecretName
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ContainerAppAuthSigningSecretName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContainerAppAuthSigningSecretName
         {
             get

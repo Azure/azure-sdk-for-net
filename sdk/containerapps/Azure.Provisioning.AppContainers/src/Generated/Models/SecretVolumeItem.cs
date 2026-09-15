@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Secret to be added to volume. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SecretVolumeItem : ProvisionableConstruct
     {
         private BicepValue<string> _secretRef;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the SecretRef. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SecretRef
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Path. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Path
         {
             get

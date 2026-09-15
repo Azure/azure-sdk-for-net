@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The Key Vault that contains your key to use for disk encryption. The Key Vault must be in the same region as the Managed Environment. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DiskEncryptionConfigurationKeyVaultConfiguration : ProvisionableConstruct
     {
         private BicepValue<Uri> _keyUri;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the KeyUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyUri
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Auth. </summary>
+        [Experimental("AZPROVISION001")]
         internal DiskEncryptionConfigurationKeyVaultConfigurationAuth Auth
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> AuthIdentity
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the Azure Active Directory default authorization policy. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppDefaultAuthorizationPolicy : ProvisionableConstruct
     {
         private ContainerAppAllowedPrincipals _allowedPrincipals;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowedPrincipals. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppAllowedPrincipals AllowedPrincipals
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowedApplications. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedApplications
         {
             get

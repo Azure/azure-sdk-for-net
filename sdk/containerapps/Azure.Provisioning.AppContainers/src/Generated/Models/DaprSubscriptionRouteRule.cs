@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr Pubsub Event Subscription Route Rule is used to specify the condition for sending a message to a specific path. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DaprSubscriptionRouteRule : ProvisionableConstruct
     {
         private BicepValue<string> _match;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Match. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Match
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Path. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Path
         {
             get

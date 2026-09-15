@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Rendering details of a diagnostics table. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppDiagnosticRendering : ProvisionableConstruct
     {
         private BicepValue<int> _diagnosticRenderingType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DiagnosticRenderingType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> DiagnosticRenderingType
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Title. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Title
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -54,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the IsVisible. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsVisible
         {
             get

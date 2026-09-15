@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The routes that specify the endpoints used for login and logout requests. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class LoginRoutes : ProvisionableConstruct
     {
         private BicepValue<string> _logoutEndpoint;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the LogoutEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LogoutEndpoint
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container registry that the final image will be uploaded to. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryWithCustomImage : ProvisionableConstruct
     {
         private BicepValue<string> _server;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Server. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Server
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Image. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Image
         {
             get

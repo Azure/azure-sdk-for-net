@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container object under Container App Revision Replica. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppReplicaContainer : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ContainerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContainerId
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the IsReady. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsReady
         {
             get
@@ -60,6 +65,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the IsStarted. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsStarted
         {
             get
@@ -70,6 +76,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RestartCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RestartCount
         {
             get
@@ -80,6 +87,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RunningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppContainerRunningState> RunningState
         {
             get
@@ -90,6 +98,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RunningStateDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RunningStateDetails
         {
             get
@@ -100,6 +109,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the LogStreamEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LogStreamEndpoint
         {
             get
@@ -110,6 +120,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ExecEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExecEndpoint
         {
             get
@@ -120,6 +131,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DebugEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DebugEndpoint
         {
             get

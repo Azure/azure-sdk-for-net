@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the Azure Active directory provider. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppAzureActiveDirectoryConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Registration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppAzureActiveDirectoryRegistrationConfiguration Registration
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Login. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppAzureActiveDirectoryLoginConfiguration Login
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Validation. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppAzureActiveDirectoryValidationConfiguration Validation
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsAutoProvisioned. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsAutoProvisioned
         {
             get

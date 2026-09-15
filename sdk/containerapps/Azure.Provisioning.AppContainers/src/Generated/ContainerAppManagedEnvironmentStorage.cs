@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Storage resource for managedEnvironment. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppManagedEnvironmentStorage : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

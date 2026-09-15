@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App scaling configurations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppScale : ProvisionableConstruct
     {
         private BicepValue<int> _minReplicas;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MinReplicas. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MinReplicas
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxReplicas. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxReplicas
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CooldownPeriod. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> CooldownPeriod
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PollingInterval. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PollingInterval
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Rules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppScaleRule> Rules
         {
             get

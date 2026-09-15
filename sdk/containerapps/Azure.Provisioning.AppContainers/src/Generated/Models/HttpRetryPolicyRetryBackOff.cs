@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Settings for retry backoff characteristics. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class HttpRetryPolicyRetryBackOff : ProvisionableConstruct
     {
         private BicepValue<long> _initialDelayInMilliseconds;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InitialDelayInMilliseconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> InitialDelayInMilliseconds
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxIntervalInMilliseconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaxIntervalInMilliseconds
         {
             get

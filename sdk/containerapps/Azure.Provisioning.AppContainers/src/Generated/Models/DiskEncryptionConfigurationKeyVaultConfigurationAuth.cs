@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration properties for the authentication to the Key Vault. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DiskEncryptionConfigurationKeyVaultConfigurationAuth : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _identity;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> Identity
         {
             get

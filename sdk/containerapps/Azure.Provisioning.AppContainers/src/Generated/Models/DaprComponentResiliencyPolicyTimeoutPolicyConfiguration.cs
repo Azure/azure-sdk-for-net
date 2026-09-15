@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr Component Resiliency Policy Timeout Policy Configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DaprComponentResiliencyPolicyTimeoutPolicyConfiguration : ProvisionableConstruct
     {
         private BicepValue<int> _responseTimeoutInSeconds;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ResponseTimeoutInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ResponseTimeoutInSeconds
         {
             get

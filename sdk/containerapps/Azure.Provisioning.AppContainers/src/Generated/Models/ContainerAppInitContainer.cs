@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App init container definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppInitContainer : ContainerAppBaseContainer
     {
         /// <summary> Creates a new ContainerAppInitContainer. </summary>

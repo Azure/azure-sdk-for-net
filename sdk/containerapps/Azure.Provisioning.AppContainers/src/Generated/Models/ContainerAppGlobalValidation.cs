@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings that determines the validation flow of users using ContainerApp Service Authentication/Authorization. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppGlobalValidation : ProvisionableConstruct
     {
         private BicepValue<ContainerAppUnauthenticatedClientActionV2> _unauthenticatedClientAction;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the UnauthenticatedClientAction. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppUnauthenticatedClientActionV2> UnauthenticatedClientAction
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RedirectToProvider. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RedirectToProvider
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ExcludedPaths. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ExcludedPaths
         {
             get

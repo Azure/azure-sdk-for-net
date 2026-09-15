@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr Component Resiliency Policy. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DaprComponentResiliencyPolicy : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InboundPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public DaprComponentResiliencyPolicyConfiguration InboundPolicy
         {
             get
@@ -112,6 +114,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the OutboundPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public DaprComponentResiliencyPolicyConfiguration OutboundPolicy
         {
             get

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App SourceControl. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppSourceControl : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the OperationState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppSourceControlOperationState> OperationState
         {
             get
@@ -109,6 +111,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RepoUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> RepoUri
         {
             get
@@ -126,6 +129,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Branch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Branch
         {
             get
@@ -143,6 +147,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the GitHubActionConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppGitHubActionConfiguration GitHubActionConfiguration
         {
             get

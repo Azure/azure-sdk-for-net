@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App container resource requirements. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppContainerResources : ProvisionableConstruct
     {
         private BicepValue<double> _cpu;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Cpu. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<double> Cpu
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Memory. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Memory
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the EphemeralStorage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EphemeralStorage
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Gpu. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<double> Gpu
         {
             get

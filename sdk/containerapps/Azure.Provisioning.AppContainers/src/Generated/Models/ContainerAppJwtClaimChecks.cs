@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppJwtClaimChecks : ProvisionableConstruct
     {
         private BicepList<string> _allowedGroups;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowedGroups. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedGroups
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowedClientApplications. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedClientApplications
         {
             get

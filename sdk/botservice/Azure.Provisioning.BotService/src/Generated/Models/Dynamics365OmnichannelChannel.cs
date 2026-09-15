@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Omnichannel channel definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class Dynamics365OmnichannelChannel : BotChannelProperties
     {
         /// <summary> Creates a new Dynamics365OmnichannelChannel. </summary>

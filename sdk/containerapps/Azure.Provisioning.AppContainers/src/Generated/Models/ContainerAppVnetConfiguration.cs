@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration properties for apps environment to join a Virtual Network. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppVnetConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _isInternal;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsInternal. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsInternal
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InfrastructureSubnetId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> InfrastructureSubnetId
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DockerBridgeCidr. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DockerBridgeCidr
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PlatformReservedCidr. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PlatformReservedCidr
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PlatformReservedDnsIP. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PlatformReservedDnsIP
         {
             get

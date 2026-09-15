@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Job's execution template, containing container configuration for a job's execution. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppJobExecutionTemplate : ProvisionableConstruct
     {
         private BicepList<JobExecutionContainer> _containers;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Containers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<JobExecutionContainer> Containers
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the InitContainers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<JobExecutionContainer> InitContainers
         {
             get

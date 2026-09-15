@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Session probe configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionProbe : ProvisionableConstruct
     {
         private BicepValue<SessionProbeType> _type;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionProbeType> Type
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpGet. </summary>
+        [Experimental("AZPROVISION001")]
         public SessionProbeHttpGet HttpGet
         {
             get
@@ -59,6 +63,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TcpSocket. </summary>
+        [Experimental("AZPROVISION001")]
         public SessionProbeTcpSocket TcpSocket
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the FailureThreshold. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> FailureThreshold
         {
             get
@@ -89,6 +95,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InitialDelaySeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> InitialDelaySeconds
         {
             get
@@ -104,6 +111,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PeriodSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PeriodSeconds
         {
             get
@@ -119,6 +127,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the SuccessThreshold. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> SuccessThreshold
         {
             get
@@ -134,6 +143,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TerminationGracePeriodSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> TerminationGracePeriodSeconds
         {
             get
@@ -149,6 +159,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TimeoutSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TimeoutSeconds
         {
             get

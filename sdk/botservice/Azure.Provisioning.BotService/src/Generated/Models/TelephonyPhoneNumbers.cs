@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> A telephone number for the Telephony channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TelephonyPhoneNumbers : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -46,6 +49,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the PhoneNumber. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PhoneNumber
         {
             get
@@ -61,6 +65,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AcsEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AcsEndpoint
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AcsSecret. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AcsSecret
         {
             get
@@ -91,6 +97,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AcsResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> AcsResourceId
         {
             get
@@ -106,6 +113,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CognitiveServiceSubscriptionKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CognitiveServiceSubscriptionKey
         {
             get
@@ -121,6 +129,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CognitiveServiceRegion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CognitiveServiceRegion
         {
             get
@@ -136,6 +145,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CognitiveServiceResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> CognitiveServiceResourceId
         {
             get
@@ -151,6 +161,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the DefaultLocale. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultLocale
         {
             get
@@ -166,6 +177,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the OfferType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OfferType
         {
             get

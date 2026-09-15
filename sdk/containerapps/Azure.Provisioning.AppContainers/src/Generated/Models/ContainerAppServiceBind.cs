@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration to bind a ContainerApp to a dev ContainerApp Service. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppServiceBind : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _serviceId;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ServiceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ServiceId
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientType
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CustomizedKeys. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> CustomizedKeys
         {
             get

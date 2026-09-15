@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Function resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ContainerAppsFunctionProperties : ProvisionableConstruct
     {
         private BicepValue<Uri> _invokeUrlTemplate;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the InvokeUrlTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> InvokeUrlTemplate
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the TriggerType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TriggerType
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Language. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Language
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the IsDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDisabled
         {
             get

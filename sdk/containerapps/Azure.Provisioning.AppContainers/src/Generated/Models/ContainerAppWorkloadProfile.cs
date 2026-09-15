@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Workload profile to scope container app execution. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppWorkloadProfile : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the EnableFips. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableFips
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the WorkloadProfileType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WorkloadProfileType
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MinimumNodeCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MinimumNodeCount
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaximumNodeCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaximumNodeCount
         {
             get

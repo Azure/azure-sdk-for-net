@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Certificate resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppCertificateProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerAppCertificateProvisioningState> _provisioningState;
@@ -35,6 +37,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppCertificateProvisioningState> ProvisioningState
         {
             get
@@ -45,6 +48,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DeploymentErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeploymentErrors
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CertificateKeyVaultProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppCertificateKeyVaultProperties CertificateKeyVaultProperties
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Password. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Password
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the SubjectName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubjectName
         {
             get
@@ -95,6 +102,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the SubjectAlternativeNames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> SubjectAlternativeNames
         {
             get
@@ -105,6 +113,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Value
         {
             get
@@ -120,6 +129,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Issuer. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Issuer
         {
             get
@@ -130,6 +140,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the IssueOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> IssueOn
         {
             get
@@ -140,6 +151,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
@@ -150,6 +162,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Thumbprint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Thumbprint
         {
             get
@@ -160,6 +173,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the IsValid. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsValid
         {
             get
@@ -170,6 +184,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PublicKeyHash. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PublicKeyHash
         {
             get
@@ -180,6 +195,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CertificateType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<CertificateType> CertificateType
         {
             get

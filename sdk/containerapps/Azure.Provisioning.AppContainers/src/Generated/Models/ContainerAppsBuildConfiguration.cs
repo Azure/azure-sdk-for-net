@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration of the build. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppsBuildConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _baseOS;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the BaseOS. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> BaseOS
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Platform. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Platform
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PlatformVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PlatformVersion
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the EnvironmentVariables. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EnvironmentVariable> EnvironmentVariables
         {
             get
@@ -65,6 +71,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PreBuildSteps. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<PreBuildStep> PreBuildSteps
         {
             get

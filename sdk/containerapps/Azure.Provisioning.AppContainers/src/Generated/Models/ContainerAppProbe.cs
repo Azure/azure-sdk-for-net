@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Probe describes a health check to be performed against a container to determine whether it is alive or ready to receive traffic. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppProbe : ProvisionableConstruct
     {
         private BicepValue<int> _failureThreshold;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the FailureThreshold. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> FailureThreshold
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpGet. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppHttpRequestInfo HttpGet
         {
             get
@@ -59,6 +63,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InitialDelaySeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> InitialDelaySeconds
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PeriodSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PeriodSeconds
         {
             get
@@ -89,6 +95,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the SuccessThreshold. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> SuccessThreshold
         {
             get
@@ -104,6 +111,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TcpSocket. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppTcpSocketRequestInfo TcpSocket
         {
             get
@@ -119,6 +127,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TerminationGracePeriodSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> TerminationGracePeriodSeconds
         {
             get
@@ -134,6 +143,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TimeoutSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TimeoutSeconds
         {
             get
@@ -149,6 +159,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ProbeType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppProbeType> ProbeType
         {
             get

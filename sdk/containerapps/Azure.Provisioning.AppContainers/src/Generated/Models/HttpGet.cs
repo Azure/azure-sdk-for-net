@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Model representing a http get request. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HttpGet : ProvisionableConstruct
     {
         private BicepValue<string> _uri;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Uri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Uri
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the FileName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FileName
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Headers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Headers
         {
             get

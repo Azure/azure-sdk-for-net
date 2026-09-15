@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Session pool template update status. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TemplateUpdateStatus : ProvisionableConstruct
     {
         private TemplateStatus _activeTemplate;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ActiveTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public TemplateStatus ActiveTemplate
         {
             get
@@ -31,6 +34,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DesiredTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public TemplateStatus DesiredTemplate
         {
             get

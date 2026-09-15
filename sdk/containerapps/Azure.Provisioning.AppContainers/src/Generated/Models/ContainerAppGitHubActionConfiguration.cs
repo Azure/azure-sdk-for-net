@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration properties that define the mutable settings of a Container App SourceControl. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppGitHubActionConfiguration : ProvisionableConstruct
     {
         private ContainerAppRegistryInfo _registryInfo;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RegistryInfo. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppRegistryInfo RegistryInfo
         {
             get
@@ -46,6 +49,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AzureCredentials. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppCredentials AzureCredentials
         {
             get
@@ -61,6 +65,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ContextPath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContextPath
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DockerfilePath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DockerfilePath
         {
             get
@@ -91,6 +97,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the GitHubPersonalAccessToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> GitHubPersonalAccessToken
         {
             get
@@ -106,6 +113,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Image. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Image
         {
             get
@@ -121,6 +129,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PublishType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PublishType
         {
             get
@@ -136,6 +145,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the OS. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OS
         {
             get
@@ -151,6 +161,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RuntimeStack. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RuntimeStack
         {
             get
@@ -166,6 +177,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RuntimeVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RuntimeVersion
         {
             get
@@ -181,6 +193,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the BuildEnvironmentVariables. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<EnvironmentVariable> BuildEnvironmentVariables
         {
             get

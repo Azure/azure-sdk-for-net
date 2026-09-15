@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the token store. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppTokenStore : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TokenRefreshExtensionHours. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<double> TokenRefreshExtensionHours
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AzureBlobStorage. </summary>
+        [Experimental("AZPROVISION001")]
         internal BlobStorageTokenStore AzureBlobStorage
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AzureBlobStorageSasUrlSettingName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AzureBlobStorageSasUrlSettingName
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the BlobContainerUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> BlobContainerUri
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get
@@ -119,6 +127,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ManagedIdentityResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagedIdentityResourceId
         {
             get

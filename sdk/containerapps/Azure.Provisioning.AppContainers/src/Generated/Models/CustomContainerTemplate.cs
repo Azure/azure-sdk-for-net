@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Custom container configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CustomContainerTemplate : ProvisionableConstruct
     {
         private SessionRegistryCredentials _registryCredentials;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RegistryCredentials. </summary>
+        [Experimental("AZPROVISION001")]
         public SessionRegistryCredentials RegistryCredentials
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Containers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SessionContainer> Containers
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Ingress. </summary>
+        [Experimental("AZPROVISION001")]
         internal SessionIngress Ingress
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TargetPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> IngressTargetPort
         {
             get

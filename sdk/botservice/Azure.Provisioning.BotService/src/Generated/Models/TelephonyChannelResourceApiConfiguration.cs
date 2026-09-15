@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> A resource Api configuration for the Telephony channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TelephonyChannelResourceApiConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ProviderName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProviderName
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CognitiveServiceSubscriptionKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CognitiveServiceSubscriptionKey
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CognitiveServiceRegion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CognitiveServiceRegion
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the CognitiveServiceResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> CognitiveServiceResourceId
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the DefaultLocale. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultLocale
         {
             get

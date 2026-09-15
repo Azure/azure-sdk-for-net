@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Session pool ingress configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SessionIngress : ProvisionableConstruct
     {
         private BicepValue<int> _targetPort;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TargetPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TargetPort
         {
             get

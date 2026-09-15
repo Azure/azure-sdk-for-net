@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Additional workflow properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LogicAppWorkflowEnvelopeProperties : ProvisionableConstruct
     {
         private BicepValue<BinaryData> _files;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Files. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> Files
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the FlowState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<LogicAppWorkflowState> FlowState
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Health. </summary>
+        [Experimental("AZPROVISION001")]
         public LogicAppWorkflowHealth Health
         {
             get

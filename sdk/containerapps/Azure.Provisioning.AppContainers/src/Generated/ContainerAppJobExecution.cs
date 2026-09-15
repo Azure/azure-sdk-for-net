@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container Apps Job execution. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppJobExecution : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -92,6 +93,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<JobExecutionRunningState> Status
         {
             get
@@ -101,6 +103,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the StartsOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> StartsOn
         {
             get
@@ -110,6 +113,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the EndsOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> EndsOn
         {
             get
@@ -119,6 +123,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Template. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppJobExecutionTemplate Template
         {
             get
@@ -128,6 +133,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Reason. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Reason
         {
             get
@@ -137,6 +143,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Message. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Message
         {
             get
@@ -146,6 +153,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Replicas. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ReplicaExecutionStatus> DetailedStatusReplicas
         {
             get

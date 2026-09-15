@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Action to perform once matching of routes is done. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class HttpRouteAction : ProvisionableConstruct
     {
         private BicepValue<string> _prefixRewrite;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PrefixRewrite. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PrefixRewrite
         {
             get

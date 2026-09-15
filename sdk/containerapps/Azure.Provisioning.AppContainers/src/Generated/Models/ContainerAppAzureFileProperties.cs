@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Azure File Properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppAzureFileProperties : ProvisionableConstruct
     {
         private BicepValue<string> _accountName;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AccountName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccountName
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AccountKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccountKey
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AccountKeyVaultProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppSecretKeyVaultProperties AccountKeyVaultProperties
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AccessMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppAccessMode> AccessMode
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ShareName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ShareName
         {
             get

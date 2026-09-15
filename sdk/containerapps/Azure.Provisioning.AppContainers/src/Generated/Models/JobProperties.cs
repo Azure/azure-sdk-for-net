@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container Apps Job resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class JobProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerAppJobProvisioningState> _provisioningState;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppJobProvisioningState> ProvisioningState
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RunningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<JobRunningState> RunningState
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the EnvironmentId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EnvironmentId
         {
             get
@@ -63,6 +68,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the WorkloadProfileName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WorkloadProfileName
         {
             get
@@ -78,6 +84,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Configuration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppJobConfiguration Configuration
         {
             get
@@ -93,6 +100,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Template. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppJobTemplate Template
         {
             get
@@ -108,6 +116,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the OutboundIPAddresses. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> OutboundIPAddresses
         {
             get
@@ -118,6 +127,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the EventStreamEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventStreamEndpoint
         {
             get

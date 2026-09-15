@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration of Application Insights. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AppInsightsConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _connectionString;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ConnectionString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConnectionString
         {
             get

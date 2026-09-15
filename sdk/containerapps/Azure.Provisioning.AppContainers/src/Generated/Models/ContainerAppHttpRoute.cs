@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Http Routes, including paths to match on and whether or not rewrites are to be done. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppHttpRoute : ProvisionableConstruct
     {
         private ContainerAppHttpRouteMatch _match;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Match. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppHttpRouteMatch Match
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Action. </summary>
+        [Experimental("AZPROVISION001")]
         internal HttpRouteAction Action
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PrefixRewrite. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ActionPrefixRewrite
         {
             get

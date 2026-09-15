@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Log Analytics configuration, must only be provided when destination is configured as 'log-analytics'. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppLogAnalyticsConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _customerId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CustomerId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomerId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the SharedKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SharedKey
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the UseDynamicJsonColumns. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> UseDynamicJsonColumns
         {
             get

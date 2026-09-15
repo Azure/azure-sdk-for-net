@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Model representing a pre-build step. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PreBuildStep : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Scripts. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Scripts
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpGet. </summary>
+        [Experimental("AZPROVISION001")]
         public HttpGet HttpGet
         {
             get

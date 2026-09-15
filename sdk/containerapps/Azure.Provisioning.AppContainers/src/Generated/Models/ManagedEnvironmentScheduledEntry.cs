@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Maintenance schedule entry for a managed environment. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ManagedEnvironmentScheduledEntry : ProvisionableConstruct
     {
         private BicepValue<ManagedEnvironmentWeekDay> _weekDay;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the WeekDay. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ManagedEnvironmentWeekDay> WeekDay
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the StartHourUtc. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> StartHourUtc
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DurationHours. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> DurationHours
         {
             get

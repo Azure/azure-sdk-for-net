@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The Private Endpoint Connection resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotServicePrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -65,6 +66,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal PrivateEndpointConnectionProperties Properties
         {
             get
@@ -95,6 +97,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public BotServicePrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -112,6 +115,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BotServicePrivateEndpointConnectionProvisioningState> ProvisioningState
         {
             get
@@ -125,6 +129,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the GroupIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> GroupIds
         {
             get
@@ -142,6 +147,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

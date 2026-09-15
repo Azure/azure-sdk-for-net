@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> The properties of a configuration store. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ConfigurationStoreProperties : ProvisionableConstruct
     {
         private BicepValue<AppConfigurationProvisioningState> _provisioningState;
@@ -37,6 +39,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationProvisioningState> ProvisioningState
         {
             get
@@ -47,6 +50,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Endpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Endpoint
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
+        [Experimental("AZPROVISION001")]
         internal AppConfigurationStoreEncryptionProperties Encryption
         {
             get
@@ -82,6 +88,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections
         {
             get
@@ -92,6 +99,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -107,6 +115,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the DisableLocalAuth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableLocalAuth
         {
             get
@@ -122,6 +131,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the SoftDeleteRetentionInDays. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> SoftDeleteRetentionInDays
         {
             get
@@ -137,6 +147,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the DefaultKeyValueRevisionRetentionPeriodInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> DefaultKeyValueRevisionRetentionPeriodInSeconds
         {
             get
@@ -152,6 +163,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the EnablePurgeProtection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnablePurgeProtection
         {
             get
@@ -167,6 +179,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the DataPlaneProxy. </summary>
+        [Experimental("AZPROVISION001")]
         public AppConfigurationDataPlaneProxyProperties DataPlaneProxy
         {
             get
@@ -182,6 +195,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the CreateMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationCreateMode> CreateMode
         {
             get
@@ -197,6 +211,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Telemetry. </summary>
+        [Experimental("AZPROVISION001")]
         internal TelemetryProperties Telemetry
         {
             get
@@ -212,6 +227,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ManagedOnBehalfOfConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal AppConfigurationManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration
         {
             get
@@ -222,6 +238,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the AzureFrontDoor. </summary>
+        [Experimental("AZPROVISION001")]
         internal AzureFrontDoorProperties AzureFrontDoor
         {
             get
@@ -237,6 +254,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the KeyVaultProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
             get
@@ -254,6 +272,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> TelemetryResourceId
         {
             get
@@ -280,6 +299,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> AzureFrontDoorResourceId
         {
             get

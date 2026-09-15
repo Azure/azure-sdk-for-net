@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> SMB storage properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SmbStorage : ProvisionableConstruct
     {
         private BicepValue<string> _host;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Host. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Host
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ShareName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ShareName
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Username. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Username
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Domain. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Domain
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Password. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Password
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AccessMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppAccessMode> AccessMode
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration of Open Telemetry destinations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DestinationsConfiguration : ProvisionableConstruct
     {
         private DataDogConfiguration _dataDogConfiguration;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DataDogConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public DataDogConfiguration DataDogConfiguration
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the OtlpConfigurations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<OtlpConfiguration> OtlpConfigurations
         {
             get

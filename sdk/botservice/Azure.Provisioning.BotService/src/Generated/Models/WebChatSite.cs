@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> A site for the Webchat channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebChatSite : BotChannelSite
     {
         /// <summary> Creates a new WebChatSite. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> Properties of a private link resource. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AppConfigurationPrivateLinkResourceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _groupId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the GroupId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> GroupId
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the RequiredMembers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> RequiredMembers
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the RequiredZoneNames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> RequiredZoneNames
         {
             get

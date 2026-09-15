@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Model representing a mapping from a container registry to the identity used to connect to it. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistry : ProvisionableConstruct
     {
         private BicepValue<string> _containerRegistryServer;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ContainerRegistryServer. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContainerRegistryServer
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IdentityResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> IdentityResourceId
         {
             get

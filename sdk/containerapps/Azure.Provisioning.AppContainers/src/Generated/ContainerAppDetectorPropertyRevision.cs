@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App Revision. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppDetectorPropertyRevision : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -65,6 +66,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal RevisionProperties Properties
         {
             get
@@ -75,6 +77,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -84,6 +87,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the LastActiveOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastActiveOn
         {
             get
@@ -93,6 +97,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Fqdn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Fqdn
         {
             get
@@ -102,6 +107,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Template. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppTemplate Template
         {
             get
@@ -111,6 +117,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the IsActive. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsActive
         {
             get
@@ -120,6 +127,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Replicas. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Replicas
         {
             get
@@ -129,6 +137,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the TrafficWeight. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TrafficWeight
         {
             get
@@ -138,6 +147,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Labels. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Labels
         {
             get
@@ -147,6 +157,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningError. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningError
         {
             get
@@ -156,6 +167,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the HealthState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppRevisionHealthState> HealthState
         {
             get
@@ -165,6 +177,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppRevisionProvisioningState> ProvisioningState
         {
             get
@@ -174,6 +187,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RunningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RevisionRunningState> RunningState
         {
             get

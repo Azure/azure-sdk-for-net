@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App container definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppContainer : ContainerAppBaseContainer
     {
         private BicepList<ContainerAppProbe> _probes;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Probes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppProbe> Probes
         {
             get

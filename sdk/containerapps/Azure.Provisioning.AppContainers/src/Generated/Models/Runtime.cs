@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App Runtime configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class Runtime : ProvisionableConstruct
     {
         private RuntimeJava _java;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Java. </summary>
+        [Experimental("AZPROVISION001")]
         internal RuntimeJava Java
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Dotnet. </summary>
+        [Experimental("AZPROVISION001")]
         internal RuntimeDotnet Dotnet
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the EnableMetrics. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableMetrics
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the JavaAgent. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppRuntimeJavaAgent JavaAgent
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AutoConfigureDataProtection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DotnetAutoConfigureDataProtection
         {
             get

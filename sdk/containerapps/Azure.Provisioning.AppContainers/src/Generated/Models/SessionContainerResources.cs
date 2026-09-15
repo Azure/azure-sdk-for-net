@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container resource requirements for sessions of the session pool. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionContainerResources : ProvisionableConstruct
     {
         private BicepValue<double> _cpu;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Cpu. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<double> Cpu
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Memory. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Memory
         {
             get

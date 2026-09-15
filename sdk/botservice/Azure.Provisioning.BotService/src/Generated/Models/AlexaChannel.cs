@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Alexa channel definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AlexaChannel : BotChannelProperties
     {
         private AlexaChannelProperties _properties;
@@ -19,6 +22,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public AlexaChannelProperties Properties
         {
             get

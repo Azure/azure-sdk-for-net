@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Spring Cloud Gateway route definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ScgRoute : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Uri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Uri
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Predicates. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Predicates
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Filters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Filters
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Order. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> Order
         {
             get

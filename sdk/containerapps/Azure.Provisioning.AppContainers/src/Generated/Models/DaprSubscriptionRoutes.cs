@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr PubSub Event Subscription Routes configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DaprSubscriptionRoutes : ProvisionableConstruct
     {
         private BicepList<DaprSubscriptionRouteRule> _rules;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Rules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DaprSubscriptionRouteRule> Rules
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Default. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Default
         {
             get

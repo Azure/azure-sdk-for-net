@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> NFS Azure File Properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppNfsAzureFileProperties : ProvisionableConstruct
     {
         private BicepValue<string> _server;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Server. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Server
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AccessMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppAccessMode> AccessMode
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ShareName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ShareName
         {
             get

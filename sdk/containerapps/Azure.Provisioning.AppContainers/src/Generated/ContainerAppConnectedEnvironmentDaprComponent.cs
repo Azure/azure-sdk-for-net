@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr Component. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppConnectedEnvironmentDaprComponent : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ComponentType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ComponentType
         {
             get
@@ -112,6 +114,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Version
         {
             get
@@ -129,6 +132,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IgnoreErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IgnoreErrors
         {
             get
@@ -146,6 +150,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InitTimeout. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> InitTimeout
         {
             get
@@ -163,6 +168,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Secrets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppWritableSecret> Secrets
         {
             get
@@ -180,6 +186,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the SecretStoreComponent. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SecretStoreComponent
         {
             get
@@ -197,6 +204,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Metadata. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppDaprMetadata> Metadata
         {
             get
@@ -214,6 +222,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Scopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Scopes
         {
             get
@@ -231,6 +240,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ServiceComponentBind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DaprComponentServiceBinding> ServiceComponentBind
         {
             get
@@ -248,6 +258,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DaprComponentProvisioningState> ProvisioningState
         {
             get
@@ -261,6 +272,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DeploymentErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeploymentErrors
         {
             get

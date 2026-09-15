@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Sms channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SmsChannelProperties : ProvisionableConstruct
     {
         private BicepValue<string> _phone;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Phone. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Phone
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AccountSID. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccountSID
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AuthToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AuthToken
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsValidated. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsValidated
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get

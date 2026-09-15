@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container Apps Job execution specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class JobExecutionProperties : ProvisionableConstruct
     {
         private BicepValue<JobExecutionRunningState> _status;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<JobExecutionRunningState> Status
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the StartsOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> StartsOn
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the EndsOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> EndsOn
         {
             get
@@ -58,6 +63,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Template. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppJobExecutionTemplate Template
         {
             get
@@ -68,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DetailedStatus. </summary>
+        [Experimental("AZPROVISION001")]
         internal ExecutionStatus DetailedStatus
         {
             get
@@ -78,6 +85,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Reason. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Reason
         {
             get
@@ -88,6 +96,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Message. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Message
         {
             get
@@ -98,6 +107,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Replicas. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ReplicaExecutionStatus> DetailedStatusReplicas
         {
             get

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration properties for disk encryption. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DiskEncryptionConfiguration : ProvisionableConstruct
     {
         private DiskEncryptionConfigurationKeyVaultConfiguration _keyVaultConfiguration;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the KeyVaultConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public DiskEncryptionConfigurationKeyVaultConfiguration KeyVaultConfiguration
         {
             get

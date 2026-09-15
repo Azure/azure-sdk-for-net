@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container Apps Job versioned application definition. Defines the desired state of an immutable revision. Any changes to this section Will result in a new revision being created. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppJobTemplate : ProvisionableConstruct
     {
         private BicepList<ContainerAppInitContainer> _initContainers;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InitContainers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppInitContainer> InitContainers
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Containers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppContainer> Containers
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Volumes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppVolume> Volumes
         {
             get

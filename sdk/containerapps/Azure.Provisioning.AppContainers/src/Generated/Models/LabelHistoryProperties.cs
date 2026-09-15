@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App Label History resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class LabelHistoryProperties : ProvisionableConstruct
     {
         private BicepList<LabelHistoryRecordItem> _records;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Records. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<LabelHistoryRecordItem> Records
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App Dapr configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppDaprConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -45,6 +48,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AppId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AppId
         {
             get
@@ -60,6 +64,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AppProtocol. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppProtocol> AppProtocol
         {
             get
@@ -75,6 +80,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AppPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> AppPort
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpReadBufferSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> HttpReadBufferSize
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpMaxRequestSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> HttpMaxRequestSize
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the LogLevel. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppDaprLogLevel> LogLevel
         {
             get
@@ -135,6 +144,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsApiLoggingEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsApiLoggingEnabled
         {
             get
@@ -150,6 +160,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AppHealth. </summary>
+        [Experimental("AZPROVISION001")]
         public DaprAppHealth AppHealth
         {
             get
@@ -165,6 +176,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxConcurrency. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxConcurrency
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Policy to set request timeouts. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TimeoutPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _responseTimeoutInSeconds;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ResponseTimeoutInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ResponseTimeoutInSeconds
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ConnectionTimeoutInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ConnectionTimeoutInSeconds
         {
             get

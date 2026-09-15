@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App auto patch configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ContainerAppPropertiesPatchingConfiguration : ProvisionableConstruct
     {
         private BicepValue<PatchingMode> _patchingMode;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PatchingMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PatchingMode> PatchingMode
         {
             get

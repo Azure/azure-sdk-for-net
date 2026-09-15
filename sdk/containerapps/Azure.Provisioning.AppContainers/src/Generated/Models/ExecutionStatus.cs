@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container Apps Job execution status. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ExecutionStatus : ProvisionableConstruct
     {
         private BicepList<ReplicaExecutionStatus> _replicas;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Replicas. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ReplicaExecutionStatus> Replicas
         {
             get

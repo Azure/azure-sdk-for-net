@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Optional settings for a Managed Identity that is assigned to the Container App. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppIdentitySettings : ProvisionableConstruct
     {
         private BicepValue<string> _identity;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Identity
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Lifecycle. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppIdentitySettingsLifeCycle> Lifecycle
         {
             get

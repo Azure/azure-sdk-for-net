@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration properties for apps environment custom domain. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppCustomDomainConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _customDomainVerificationId;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the CustomDomainVerificationId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomDomainVerificationId
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DnsSuffix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DnsSuffix
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CertificateKeyVaultProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppCertificateKeyVaultProperties CertificateKeyVaultProperties
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CertificateValue. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BinaryData> CertificateValue
         {
             get
@@ -84,6 +90,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CertificatePassword. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CertificatePassword
         {
             get
@@ -99,6 +106,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
@@ -109,6 +117,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Thumbprint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Thumbprint
         {
             get
@@ -119,6 +128,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the SubjectName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubjectName
         {
             get

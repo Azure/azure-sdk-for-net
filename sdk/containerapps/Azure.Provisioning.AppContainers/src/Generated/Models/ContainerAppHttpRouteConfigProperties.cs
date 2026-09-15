@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Http Route Config properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppHttpRouteConfigProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerAppHttpRouteProvisioningState> _provisioningState;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppHttpRouteProvisioningState> ProvisioningState
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppHttpRouteProvisioningErrors> ProvisioningErrors
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Fqdn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Fqdn
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CustomDomains. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppCustomDomain> CustomDomains
         {
             get
@@ -70,6 +76,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Rules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppHttpRouteRule> Rules
         {
             get

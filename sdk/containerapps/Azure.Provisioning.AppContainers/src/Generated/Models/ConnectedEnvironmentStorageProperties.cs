@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Storage properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ConnectedEnvironmentStorageProperties : ProvisionableConstruct
     {
         private BicepValue<ConnectedEnvironmentStorageProvisioningState> _provisioningState;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ConnectedEnvironmentStorageProvisioningState> ProvisioningState
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DeploymentErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeploymentErrors
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AzureFile. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppAzureFileProperties AzureFile
         {
             get
@@ -59,6 +64,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Smb. </summary>
+        [Experimental("AZPROVISION001")]
         public SmbStorage Smb
         {
             get

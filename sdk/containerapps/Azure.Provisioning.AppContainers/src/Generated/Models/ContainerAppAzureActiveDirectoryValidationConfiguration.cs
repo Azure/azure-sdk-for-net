@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppAzureActiveDirectoryValidationConfiguration : ProvisionableConstruct
     {
         private ContainerAppJwtClaimChecks _jwtClaimChecks;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the JwtClaimChecks. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppJwtClaimChecks JwtClaimChecks
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowedAudiences. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedAudiences
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DefaultAuthorizationPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppDefaultAuthorizationPolicy DefaultAuthorizationPolicy
         {
             get

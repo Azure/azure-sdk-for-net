@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Certificate used for Custom Domain bindings of Container Apps in a Managed Environment. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppConnectedEnvironmentCertificate : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

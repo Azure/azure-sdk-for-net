@@ -17,6 +17,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerApp : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -103,6 +104,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal ContainerAppProperties Properties
         {
             get
@@ -118,6 +120,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppExtendedLocation ExtendedLocation
         {
             get
@@ -133,6 +136,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -148,6 +152,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ManagedBy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagedBy
         {
             get
@@ -163,6 +168,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppKind> Kind
         {
             get
@@ -178,6 +184,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppProvisioningState> ProvisioningState
         {
             get
@@ -191,6 +198,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RunningStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppRunningStatus> RunningStatus
         {
             get
@@ -204,6 +212,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DeploymentErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeploymentErrors
         {
             get
@@ -217,6 +226,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ManagedEnvironmentId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ManagedEnvironmentId
         {
             get
@@ -234,6 +244,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the EnvironmentId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> EnvironmentId
         {
             get
@@ -251,6 +262,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the WorkloadProfileName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WorkloadProfileName
         {
             get
@@ -268,6 +280,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the LatestRevisionName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LatestRevisionName
         {
             get
@@ -281,6 +294,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the LatestReadyRevisionName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LatestReadyRevisionName
         {
             get
@@ -294,6 +308,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the LatestRevisionFqdn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LatestRevisionFqdn
         {
             get
@@ -307,6 +322,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the CustomDomainVerificationId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomDomainVerificationId
         {
             get
@@ -320,6 +336,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Configuration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppConfiguration Configuration
         {
             get
@@ -337,6 +354,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Template. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppTemplate Template
         {
             get
@@ -354,6 +372,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the OutboundIPAddressList. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IPAddress> OutboundIPAddressList
         {
             get
@@ -367,6 +386,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the EventStreamEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> EventStreamEndpoint
         {
             get
@@ -380,6 +400,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PatchingMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PatchingMode> PatchingMode
         {
             get

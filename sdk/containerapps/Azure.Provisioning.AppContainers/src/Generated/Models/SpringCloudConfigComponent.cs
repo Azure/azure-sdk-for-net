@@ -5,9 +5,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Spring Cloud Config properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SpringCloudConfigComponent : JavaComponentProperties
     {
         /// <summary> Creates a new SpringCloudConfigComponent. </summary>

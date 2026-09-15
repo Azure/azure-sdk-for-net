@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Settings for the ingress component, including workload profile, scaling, and connection handling. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ManagedEnvironmentIngressConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _workloadProfileName;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the WorkloadProfileName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WorkloadProfileName
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TerminationGracePeriodSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TerminationGracePeriodSeconds
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HeaderCountLimit. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> HeaderCountLimit
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RequestIdleTimeout. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RequestIdleTimeout
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Scaling configurations for event driven jobs. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppJobScale : ProvisionableConstruct
     {
         private BicepValue<int> _pollingIntervalInSeconds;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PollingIntervalInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PollingIntervalInSeconds
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MinExecutions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MinExecutions
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxExecutions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxExecutions
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Rules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppJobScaleRule> Rules
         {
             get

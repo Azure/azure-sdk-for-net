@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App base container definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppBaseContainer : ProvisionableConstruct
     {
         private BicepValue<string> _image;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Image. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Image
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ImageType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ImageType> ImageType
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Command. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Command
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Args. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Args
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Env. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppEnvironmentVariable> Env
         {
             get
@@ -118,6 +126,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Resources. </summary>
+        [Experimental("AZPROVISION001")]
         public AppContainerResources Resources
         {
             get
@@ -133,6 +142,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the VolumeMounts. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppVolumeMount> VolumeMounts
         {
             get

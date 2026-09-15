@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Subscription for inbound rule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotServiceNspAccessRuleSubscription : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get

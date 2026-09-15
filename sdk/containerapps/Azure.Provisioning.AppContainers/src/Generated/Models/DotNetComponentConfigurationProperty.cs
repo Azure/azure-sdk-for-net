@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration properties for a .NET Component. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DotNetComponentConfigurationProperty : ProvisionableConstruct
     {
         private BicepValue<string> _propertyName;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PropertyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PropertyName
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get

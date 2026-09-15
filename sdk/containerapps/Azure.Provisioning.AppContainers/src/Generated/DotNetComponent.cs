@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> .NET Component. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DotNetComponent : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ComponentType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DotNetComponentType> ComponentType
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DotNetComponentProvisioningState> ProvisioningState
         {
             get
@@ -126,6 +129,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Configurations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DotNetComponentConfigurationProperty> Configurations
         {
             get
@@ -143,6 +147,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ServiceBinds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DotNetComponentServiceBind> ServiceBinds
         {
             get

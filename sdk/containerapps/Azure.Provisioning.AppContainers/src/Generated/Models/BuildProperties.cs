@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The build properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BuildProperties : ProvisionableConstruct
     {
         private BicepValue<BuildProvisioningState> _provisioningState;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BuildProvisioningState> ProvisioningState
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the BuildStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BuildStatus> BuildStatus
         {
             get
@@ -47,6 +51,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DestinationContainerRegistry. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryWithCustomImage DestinationContainerRegistry
         {
             get
@@ -62,6 +67,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Configuration. </summary>
+        [Experimental("AZPROVISION001")]
         public BuildConfiguration Configuration
         {
             get
@@ -77,6 +83,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the UploadEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UploadEndpoint
         {
             get
@@ -87,6 +94,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the LogStreamEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LogStreamEndpoint
         {
             get
@@ -97,6 +105,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the TokenEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TokenEndpoint
         {
             get

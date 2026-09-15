@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App Patch. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppsPatch : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

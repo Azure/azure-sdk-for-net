@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Storage properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ManagedEnvironmentStorageProperties : ProvisionableConstruct
     {
         private ContainerAppAzureFileProperties _azureFile;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AzureFile. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppAzureFileProperties AzureFile
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the NfsAzureFile. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppNfsAzureFileProperties NfsAzureFile
         {
             get

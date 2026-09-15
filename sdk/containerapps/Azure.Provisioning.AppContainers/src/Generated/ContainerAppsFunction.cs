@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App Function. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppsFunction : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -92,6 +93,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the InvokeUrlTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> InvokeUrlTemplate
         {
             get
@@ -101,6 +103,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the TriggerType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TriggerType
         {
             get
@@ -110,6 +113,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Language. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Language
         {
             get
@@ -119,6 +123,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the IsDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDisabled
         {
             get

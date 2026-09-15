@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
@@ -16,6 +17,7 @@ namespace Azure.Provisioning.BotService
     /// Channel definition
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AlexaChannel"/>, <see cref="FacebookChannel"/>, <see cref="EmailChannel"/>, <see cref="OutlookChannel"/>, <see cref="MsTeamsChannel"/>, <see cref="SkypeChannel"/>, <see cref="KikChannel"/>, <see cref="WebChatChannel"/>, <see cref="DirectLineChannel"/>, <see cref="TelegramChannel"/>, <see cref="SmsChannel"/>, <see cref="SlackChannel"/>, <see cref="LineChannel"/>, <see cref="DirectLineSpeechChannel"/>, <see cref="Dynamics365OmnichannelChannel"/>, <see cref="TelephonyChannel"/>, <see cref="AcsChatChannel"/>, <see cref="SearchAssistant"/>, and <see cref="M365Extensions"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotChannelProperties : ProvisionableConstruct
     {
         private BicepValue<string> _channelName;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> The channel name. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<string> ChannelName
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get

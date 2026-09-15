@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the session cookie's expiration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppCookieExpiration : ProvisionableConstruct
     {
         private BicepValue<ContainerAppCookieExpirationConvention> _convention;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Convention. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppCookieExpirationConvention> Convention
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TimeToExpiration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TimeToExpiration
         {
             get

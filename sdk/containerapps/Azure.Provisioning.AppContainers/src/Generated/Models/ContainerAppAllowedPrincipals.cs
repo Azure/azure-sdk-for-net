@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the Azure Active Directory allowed principals. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppAllowedPrincipals : ProvisionableConstruct
     {
         private BicepList<string> _groups;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Groups. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Groups
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Identities. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Identities
         {
             get

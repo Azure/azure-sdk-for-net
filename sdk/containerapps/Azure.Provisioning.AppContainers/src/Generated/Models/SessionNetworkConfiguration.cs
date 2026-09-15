@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Session network configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SessionNetworkConfiguration : ProvisionableConstruct
     {
         private BicepValue<SessionNetworkStatus> _status;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionNetworkStatus> Status
         {
             get

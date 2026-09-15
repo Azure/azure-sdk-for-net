@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Conditions required to match a header. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HeaderMatch : ProvisionableConstruct
     {
         private BicepValue<string> _header;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Header. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Header
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Match. </summary>
+        [Experimental("AZPROVISION001")]
         internal HeaderMatchMatch Match
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ExactMatch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExactMatch
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PrefixMatch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PrefixMatch
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the SuffixMatch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SuffixMatch
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RegexMatch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RegexMatch
         {
             get

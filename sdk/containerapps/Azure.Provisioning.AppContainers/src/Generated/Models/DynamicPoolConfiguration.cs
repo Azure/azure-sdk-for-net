@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dynamic pool configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DynamicPoolConfiguration : ProvisionableConstruct
     {
         private SessionPoolLifecycleConfiguration _lifecycleConfiguration;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the LifecycleConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public SessionPoolLifecycleConfiguration LifecycleConfiguration
         {
             get

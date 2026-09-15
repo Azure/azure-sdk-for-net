@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container definitions for the sessions of the session pool. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionContainer : ProvisionableConstruct
     {
         private BicepValue<string> _image;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Image. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Image
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Command. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Command
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Args. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Args
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Env. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppEnvironmentVariable> Env
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Resources. </summary>
+        [Experimental("AZPROVISION001")]
         public SessionContainerResources Resources
         {
             get
@@ -117,6 +125,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Probes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SessionProbe> Probes
         {
             get
