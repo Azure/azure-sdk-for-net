@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Billing
       safeName: AzureResourceManagerBilling
+    - name: Azure.Provisioning.Billing
+      safeName: AzureProvisioningBilling
