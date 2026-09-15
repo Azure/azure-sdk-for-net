@@ -18,25 +18,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     public static partial class ArmNewRelicObservabilityModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
-        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
-        /// <returns> A new <see cref="NewRelicObservability.NewRelicObservabilityTagRuleData"/> instance for mocking. </returns>
-        public static NewRelicObservabilityTagRuleData NewRelicObservabilityTagRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NewRelicProvisioningState? provisioningState = default, NewRelicObservabilityLogRules logRules = default, NewRelicObservabilityMetricRules metricRules = default)
-        {
-            return new NewRelicObservabilityTagRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && logRules is null && metricRules is null ? default : new NewRelicMonitoringTagRules(provisioningState, logRules, metricRules, default),
-                default);
-        }
-
         /// <summary> The resource-specific properties for this resource. </summary>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
@@ -83,108 +64,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             filteringTags ??= new ChangeTrackingList<NewRelicObservabilityFilteringTag>();
 
             return new NewRelicObservabilityMetricRules(sendMetrics, (filteringTags ?? new ChangeTrackingList<NewRelicObservabilityFilteringTag>()).ToList(), userEmail, default);
-        }
-
-        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
-        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
-        /// <returns> A new <see cref="Models.NewRelicObservabilityTagRulePatch"/> instance for mocking. </returns>
-        public static NewRelicObservabilityTagRulePatch NewRelicObservabilityTagRulePatch(NewRelicObservabilityLogRules logRules = default, NewRelicObservabilityMetricRules metricRules = default)
-        {
-            return new NewRelicObservabilityTagRulePatch(logRules is null && metricRules is null ? default : new TagRuleUpdateProperties(logRules, metricRules, default), default);
-        }
-
-        /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </param>
-        /// <returns> A new <see cref="NewRelicObservability.NewRelicMonitoredSubscriptionData"/> instance for mocking. </returns>
-        public static NewRelicMonitoredSubscriptionData NewRelicMonitoredSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NewRelicMonitoredSubscriptionProperties properties = default)
-        {
-            return new NewRelicMonitoredSubscriptionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
-        /// <param name="patchOperation"> The operation for the patch on the resource. </param>
-        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <returns> A new <see cref="Models.NewRelicMonitoredSubscriptionProperties"/> instance for mocking. </returns>
-        public static NewRelicMonitoredSubscriptionProperties NewRelicMonitoredSubscriptionProperties(MonitoredSubscriptionPatchOperation? patchOperation = default, IEnumerable<NewRelicMonitoredSubscriptionInfo> monitoredSubscriptionList = default, NewRelicProvisioningState? provisioningState = default)
-        {
-            monitoredSubscriptionList ??= new ChangeTrackingList<NewRelicMonitoredSubscriptionInfo>();
-
-            return new NewRelicMonitoredSubscriptionProperties(patchOperation, (monitoredSubscriptionList ?? new ChangeTrackingList<NewRelicMonitoredSubscriptionInfo>()).ToList(), provisioningState, default);
-        }
-
-        /// <summary> The list of subscriptions and it's monitoring status by current NewRelic monitor. </summary>
-        /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
-        /// <param name="status"> The state of monitoring. </param>
-        /// <param name="error"> The reason of not monitoring the subscription. </param>
-        /// <param name="tagRules"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.NewRelicMonitoredSubscriptionInfo"/> instance for mocking. </returns>
-        public static NewRelicMonitoredSubscriptionInfo NewRelicMonitoredSubscriptionInfo(string subscriptionId = default, NewRelicMonitoringStatus? status = default, string error = default, NewRelicMonitoringTagRules tagRules = default)
-        {
-            return new NewRelicMonitoredSubscriptionInfo(subscriptionId, status, error, tagRules, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning State of the resource. </param>
-        /// <param name="monitoringStatus"> MonitoringStatus of the resource. </param>
-        /// <param name="marketplaceSubscriptionStatus"> NewRelic Organization properties of the resource. </param>
-        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
-        /// <param name="newRelicAccountProperties"> MarketplaceSubscriptionStatus of the resource. </param>
-        /// <param name="userInfo"> User Info. </param>
-        /// <param name="planData"> Plan details. </param>
-        /// <param name="liftrResourceCategory"> Liftr resource category. </param>
-        /// <param name="liftrResourcePreference"> Liftr resource preference. The priority of the resource. </param>
-        /// <param name="orgCreationSource"> Source of org creation. </param>
-        /// <param name="accountCreationSource"> Source of account creation. </param>
-        /// <param name="subscriptionState"> State of the Azure Subscription containing the monitor resource. </param>
-        /// <param name="saaSAzureSubscriptionStatus"> Status of Azure Subscription where Marketplace SaaS is located. </param>
-        /// <param name="saaSResourceId"> SaaS resource id. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="NewRelicObservability.NewRelicMonitorResourceData"/> instance for mocking. </returns>
-        public static NewRelicMonitorResourceData NewRelicMonitorResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NewRelicProvisioningState? provisioningState = default, NewRelicObservabilityMonitoringStatus? monitoringStatus = default, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, string marketplaceSubscriptionId = default, NewRelicAccountProperties newRelicAccountProperties = default, NewRelicObservabilityUserInfo userInfo = default, NewRelicPlanDetails planData = default, NewRelicLiftrResourceCategory? liftrResourceCategory = default, int? liftrResourcePreference = default, NewRelicObservabilityOrgCreationSource? orgCreationSource = default, NewRelicObservabilityAccountCreationSource? accountCreationSource = default, string subscriptionState = default, string saaSAzureSubscriptionStatus = default, string saaSResourceId = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NewRelicMonitorResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && monitoringStatus is null && marketplaceSubscriptionStatus is null && marketplaceSubscriptionId is null && newRelicAccountProperties is null && userInfo is null && planData is null && saaSResourceId is null && liftrResourceCategory is null && liftrResourcePreference is null && orgCreationSource is null && accountCreationSource is null && subscriptionState is null && saaSAzureSubscriptionStatus is null ? default : new MonitorProperties(
-                    provisioningState,
-                    monitoringStatus,
-                    marketplaceSubscriptionStatus,
-                    marketplaceSubscriptionId,
-                    newRelicAccountProperties,
-                    userInfo,
-                    planData,
-                    saaSResourceId is null ? default : new NewRelicObservabilitySaaSInfo(saaSResourceId, default),
-                    liftrResourceCategory,
-                    liftrResourcePreference,
-                    orgCreationSource,
-                    accountCreationSource,
-                    subscriptionState,
-                    saaSAzureSubscriptionStatus,
-                    default),
-                identity,
-                default);
         }
 
         /// <param name="userId"> User id. </param>
@@ -253,6 +132,127 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         public static NewRelicObservabilitySaaSInfo NewRelicObservabilitySaaSInfo(string saaSResourceId = default)
         {
             return new NewRelicObservabilitySaaSInfo(saaSResourceId, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <param name="monitoringStatus"> MonitoringStatus of the resource. </param>
+        /// <param name="marketplaceSubscriptionStatus"> NewRelic Organization properties of the resource. </param>
+        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
+        /// <param name="newRelicAccountProperties"> MarketplaceSubscriptionStatus of the resource. </param>
+        /// <param name="userInfo"> User Info. </param>
+        /// <param name="planData"> Plan details. </param>
+        /// <param name="liftrResourceCategory"> Liftr resource category. </param>
+        /// <param name="liftrResourcePreference"> Liftr resource preference. The priority of the resource. </param>
+        /// <param name="orgCreationSource"> Source of org creation. </param>
+        /// <param name="accountCreationSource"> Source of account creation. </param>
+        /// <param name="subscriptionState"> State of the Azure Subscription containing the monitor resource. </param>
+        /// <param name="saaSAzureSubscriptionStatus"> Status of Azure Subscription where Marketplace SaaS is located. </param>
+        /// <param name="saaSResourceId"> SaaS resource id. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="NewRelicObservability.NewRelicMonitorResourceData"/> instance for mocking. </returns>
+        public static NewRelicMonitorResourceData NewRelicMonitorResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NewRelicProvisioningState? provisioningState = default, NewRelicObservabilityMonitoringStatus? monitoringStatus = default, NewRelicObservabilityMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, string marketplaceSubscriptionId = default, NewRelicAccountProperties newRelicAccountProperties = default, NewRelicObservabilityUserInfo userInfo = default, NewRelicPlanDetails planData = default, NewRelicLiftrResourceCategory? liftrResourceCategory = default, int? liftrResourcePreference = default, NewRelicObservabilityOrgCreationSource? orgCreationSource = default, NewRelicObservabilityAccountCreationSource? accountCreationSource = default, string subscriptionState = default, string saaSAzureSubscriptionStatus = default, string saaSResourceId = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NewRelicMonitorResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && monitoringStatus is null && marketplaceSubscriptionStatus is null && marketplaceSubscriptionId is null && newRelicAccountProperties is null && userInfo is null && planData is null && saaSResourceId is null && liftrResourceCategory is null && liftrResourcePreference is null && orgCreationSource is null && accountCreationSource is null && subscriptionState is null && saaSAzureSubscriptionStatus is null ? default : new MonitorProperties(
+                    provisioningState,
+                    monitoringStatus,
+                    marketplaceSubscriptionStatus,
+                    marketplaceSubscriptionId,
+                    newRelicAccountProperties,
+                    userInfo,
+                    planData,
+                    saaSResourceId is null ? default : new NewRelicObservabilitySaaSInfo(saaSResourceId, default),
+                    liftrResourceCategory,
+                    liftrResourcePreference,
+                    orgCreationSource,
+                    accountCreationSource,
+                    subscriptionState,
+                    saaSAzureSubscriptionStatus,
+                    default),
+                identity,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <returns> A new <see cref="NewRelicObservability.NewRelicObservabilityTagRuleData"/> instance for mocking. </returns>
+        public static NewRelicObservabilityTagRuleData NewRelicObservabilityTagRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NewRelicProvisioningState? provisioningState = default, NewRelicObservabilityLogRules logRules = default, NewRelicObservabilityMetricRules metricRules = default)
+        {
+            return new NewRelicObservabilityTagRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && logRules is null && metricRules is null ? default : new NewRelicMonitoringTagRules(provisioningState, logRules, metricRules, default),
+                default);
+        }
+
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <returns> A new <see cref="Models.NewRelicObservabilityTagRulePatch"/> instance for mocking. </returns>
+        public static NewRelicObservabilityTagRulePatch NewRelicObservabilityTagRulePatch(NewRelicObservabilityLogRules logRules = default, NewRelicObservabilityMetricRules metricRules = default)
+        {
+            return new NewRelicObservabilityTagRulePatch(logRules is null && metricRules is null ? default : new TagRuleUpdateProperties(logRules, metricRules, default), default);
+        }
+
+        /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
+        /// <param name="patchOperation"> The operation for the patch on the resource. </param>
+        /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
+        /// <param name="provisioningState"> Provisioning State of the resource. </param>
+        /// <returns> A new <see cref="Models.NewRelicMonitoredSubscriptionProperties"/> instance for mocking. </returns>
+        public static NewRelicMonitoredSubscriptionProperties NewRelicMonitoredSubscriptionProperties(MonitoredSubscriptionPatchOperation? patchOperation = default, IEnumerable<NewRelicMonitoredSubscriptionInfo> monitoredSubscriptionList = default, NewRelicProvisioningState? provisioningState = default)
+        {
+            monitoredSubscriptionList ??= new ChangeTrackingList<NewRelicMonitoredSubscriptionInfo>();
+
+            return new NewRelicMonitoredSubscriptionProperties(patchOperation, (monitoredSubscriptionList ?? new ChangeTrackingList<NewRelicMonitoredSubscriptionInfo>()).ToList(), provisioningState, default);
+        }
+
+        /// <summary> The list of subscriptions and it's monitoring status by current NewRelic monitor. </summary>
+        /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
+        /// <param name="status"> The state of monitoring. </param>
+        /// <param name="error"> The reason of not monitoring the subscription. </param>
+        /// <param name="tagRules"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.NewRelicMonitoredSubscriptionInfo"/> instance for mocking. </returns>
+        public static NewRelicMonitoredSubscriptionInfo NewRelicMonitoredSubscriptionInfo(string subscriptionId = default, NewRelicMonitoringStatus? status = default, string error = default, NewRelicMonitoringTagRules tagRules = default)
+        {
+            return new NewRelicMonitoredSubscriptionInfo(subscriptionId, status, error, tagRules, default);
+        }
+
+        /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </param>
+        /// <returns> A new <see cref="NewRelicObservability.NewRelicMonitoredSubscriptionData"/> instance for mocking. </returns>
+        public static NewRelicMonitoredSubscriptionData NewRelicMonitoredSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NewRelicMonitoredSubscriptionProperties properties = default)
+        {
+            return new NewRelicMonitoredSubscriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <param name="identity"> The managed service identities assigned to this resource. </param>

@@ -19,57 +19,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     public static partial class ArmNotificationHubsModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="notificationHubName"> Gets or sets the NotificationHub name. </param>
-        /// <param name="registrationTtl"> Gets or sets the RegistrationTtl of the created NotificationHub. </param>
-        /// <param name="authorizationRules"> Gets or sets the AuthorizationRules of the created NotificationHub. </param>
-        /// <param name="apnsCredential"> Description of a NotificationHub ApnsCredential. </param>
-        /// <param name="wnsCredential"> Description of a NotificationHub WnsCredential. </param>
-        /// <param name="gcmCredential"> Description of a NotificationHub GcmCredential. </param>
-        /// <param name="mpnsCredential"> Description of a NotificationHub MpnsCredential. </param>
-        /// <param name="admCredential"> Description of a NotificationHub AdmCredential. </param>
-        /// <param name="baiduCredential"> Description of a NotificationHub BaiduCredential. </param>
-        /// <param name="browserCredential"> Description of a NotificationHub BrowserCredential. </param>
-        /// <param name="xiaomiCredential"> Description of a NotificationHub XiaomiCredential. </param>
-        /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
-        /// <param name="dailyMaxActiveDevices"> Gets the DailyMaxActiveDevices. </param>
-        /// <param name="sku"> The Sku description for a namespace. </param>
-        /// <returns> A new <see cref="NotificationHubs.NotificationHubData"/> instance for mocking. </returns>
-        public static NotificationHubData NotificationHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IEnumerable<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential = default, long? dailyMaxActiveDevices = default, NotificationHubSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NotificationHubData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                notificationHubName is null && registrationTtl is null && authorizationRules is null && apnsCredential is null && wnsCredential is null && gcmCredential is null && mpnsCredential is null && admCredential is null && baiduCredential is null && browserCredential is null && xiaomiCredential is null && fcmV1Credential is null && dailyMaxActiveDevices is null ? default : new NotificationHubProperties(
-                    notificationHubName,
-                    registrationTtl,
-                    (authorizationRules ?? new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>()).ToList(),
-                    apnsCredential,
-                    wnsCredential,
-                    gcmCredential,
-                    mpnsCredential,
-                    admCredential,
-                    baiduCredential,
-                    browserCredential,
-                    xiaomiCredential,
-                    fcmV1Credential,
-                    dailyMaxActiveDevices,
-                    default),
-                sku,
-                default);
-        }
-
         /// <summary> SharedAccessAuthorizationRule properties. </summary>
         /// <param name="accessRights"> Gets or sets the rights associated with the rule. </param>
         /// <param name="primaryKey">
@@ -221,6 +170,226 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new FcmV1Credential(clientEmail is null && privateKey is null && projectId is null ? default : new FcmV1CredentialProperties(clientEmail, privateKey, projectId, default), default);
         }
 
+        /// <summary> Represents namespace properties. </summary>
+        /// <param name="namespaceName">
+        /// Name of the Notification Hubs namespace. This is immutable property, set automatically
+        /// by the service when the namespace is created.
+        /// </param>
+        /// <param name="operationProvisioningState"> Defines values for OperationProvisioningState. </param>
+        /// <param name="namespaceStatus"> Namespace status. </param>
+        /// <param name="isEnabled"> Gets or sets whether or not the namespace is currently enabled. </param>
+        /// <param name="isCritical"> Gets or sets whether or not the namespace is set as Critical. </param>
+        /// <param name="subscriptionId"> Namespace subscription id. </param>
+        /// <param name="region">
+        /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
+        /// this property.
+        /// </param>
+        /// <param name="metricId"> Azure Insights Metrics id. </param>
+        /// <param name="createdOn"> Time when the namespace was created. </param>
+        /// <param name="updatedOn"> Time when the namespace was updated. </param>
+        /// <param name="hubNamespaceType"> Defines values for NamespaceType. </param>
+        /// <param name="replicationRegion"> Allowed replication region. </param>
+        /// <param name="zoneRedundancy"> Namespace SKU name. </param>
+        /// <param name="networkAcls"> A collection of network authorization rules. </param>
+        /// <param name="pnsCredentials"> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </param>
+        /// <param name="serviceBusEndpoint">
+        /// Gets or sets endpoint you can use to perform NotificationHub
+        /// operations.
+        /// </param>
+        /// <param name="privateEndpointConnections"> Private Endpoint Connections for namespace. </param>
+        /// <param name="scaleUnit"> Gets or sets scaleUnit where the namespace gets created. </param>
+        /// <param name="dataCenter"> Deprecated. </param>
+        /// <param name="publicNetworkAccess"> Type of public network access. </param>
+        /// <returns> A new <see cref="Models.NotificationHubNamespaceProperties"/> instance for mocking. </returns>
+        public static NotificationHubNamespaceProperties NotificationHubNamespaceProperties(string namespaceName = default, OperationProvisioningState? operationProvisioningState = default, NotificationHubNamespaceStatus? namespaceStatus = default, bool? isEnabled = default, bool? isCritical = default, string subscriptionId = default, string region = default, string metricId = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, NotificationHubNamespaceTypeExt? hubNamespaceType = default, AllowedReplicationRegion? replicationRegion = default, ZoneRedundancyPreference? zoneRedundancy = default, NotificationHubNetworkAcls networkAcls = default, PnsCredentials pnsCredentials = default, Uri serviceBusEndpoint = default, IEnumerable<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = default, string scaleUnit = default, string dataCenter = default, NotificationHubPublicNetworkAccess? publicNetworkAccess = default)
+        {
+            privateEndpointConnections ??= new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>();
+
+            return new NotificationHubNamespaceProperties(
+                namespaceName,
+                operationProvisioningState,
+                namespaceStatus,
+                isEnabled,
+                isCritical,
+                subscriptionId,
+                region,
+                metricId,
+                createdOn,
+                updatedOn,
+                hubNamespaceType,
+                replicationRegion,
+                zoneRedundancy,
+                networkAcls,
+                pnsCredentials,
+                serviceBusEndpoint,
+                (privateEndpointConnections ?? new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>()).ToList(),
+                scaleUnit,
+                dataCenter,
+                publicNetworkAccess,
+                default);
+        }
+
+        /// <param name="ipRules"> List of IP rules. </param>
+        /// <param name="publicNetworkRuleAccessRights"> List of access rights. </param>
+        /// <returns> A new <see cref="Models.NotificationHubNetworkAcls"/> instance for mocking. </returns>
+        public static NotificationHubNetworkAcls NotificationHubNetworkAcls(IEnumerable<NotificationHubIPRule> ipRules = default, IEnumerable<AuthorizationRuleAccessRightExt> publicNetworkRuleAccessRights = default)
+        {
+            ipRules ??= new ChangeTrackingList<NotificationHubIPRule>();
+
+            return new NotificationHubNetworkAcls((ipRules ?? new ChangeTrackingList<NotificationHubIPRule>()).ToList(), publicNetworkRuleAccessRights is null ? default : new PublicInternetAuthorizationRule((publicNetworkRuleAccessRights ?? new ChangeTrackingList<AuthorizationRuleAccessRightExt>()).ToList(), default), default);
+        }
+
+        /// <summary> A network authorization rule that filters traffic based on IP address. </summary>
+        /// <param name="ipMask"> IP mask. </param>
+        /// <param name="accessRights"> List of access rights. </param>
+        /// <returns> A new <see cref="Models.NotificationHubIPRule"/> instance for mocking. </returns>
+        public static NotificationHubIPRule NotificationHubIPRule(string ipMask = default, IEnumerable<AuthorizationRuleAccessRightExt> accessRights = default)
+        {
+            accessRights ??= new ChangeTrackingList<AuthorizationRuleAccessRightExt>();
+
+            return new NotificationHubIPRule(ipMask, (accessRights ?? new ChangeTrackingList<AuthorizationRuleAccessRightExt>()).ToList(), default);
+        }
+
+        /// <summary> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </summary>
+        /// <param name="admCredential"> Description of a NotificationHub AdmCredential. </param>
+        /// <param name="apnsCredential"> Description of a NotificationHub ApnsCredential. </param>
+        /// <param name="baiduCredential"> Description of a NotificationHub BaiduCredential. </param>
+        /// <param name="browserCredential"> Description of a NotificationHub BrowserCredential. </param>
+        /// <param name="gcmCredential"> Description of a NotificationHub GcmCredential. </param>
+        /// <param name="mpnsCredential"> Description of a NotificationHub MpnsCredential. </param>
+        /// <param name="wnsCredential"> Description of a NotificationHub WnsCredential. </param>
+        /// <param name="xiaomiCredential"> Description of a NotificationHub XiaomiCredential. </param>
+        /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
+        /// <returns> A new <see cref="Models.PnsCredentials"/> instance for mocking. </returns>
+        public static PnsCredentials PnsCredentials(NotificationHubAdmCredential admCredential = default, NotificationHubApnsCredential apnsCredential = default, NotificationHubBaiduCredential baiduCredential = default, BrowserCredential browserCredential = default, NotificationHubGcmCredential gcmCredential = default, NotificationHubMpnsCredential mpnsCredential = default, NotificationHubWnsCredential wnsCredential = default, XiaomiCredential xiaomiCredential = default, FcmV1Credential fcmV1Credential = default)
+        {
+            return new PnsCredentials(
+                admCredential,
+                apnsCredential,
+                baiduCredential,
+                browserCredential,
+                gcmCredential,
+                mpnsCredential,
+                wnsCredential,
+                xiaomiCredential,
+                fcmV1Credential,
+                default);
+        }
+
+        /// <summary> Represents a Private Endpoint Connection ARM resource - a sub-resource of Notification Hubs namespace. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Private Endpoint Connection properties. </param>
+        /// <returns> A new <see cref="NotificationHubs.NotificationHubPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static NotificationHubPrivateEndpointConnectionData NotificationHubPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NotificationHubPrivateEndpointConnectionProperties properties = default)
+        {
+            return new NotificationHubPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="provisioningState"> State of Private Endpoint Connection. </param>
+        /// <param name="privateEndpointId"> ARM resource ID of the Private Endpoint. This may belong to different subscription and resource group than a Notification Hubs namespace. </param>
+        /// <param name="groupIds"> List of group ids. For Notification Hubs, it always contains a single "namespace" element. </param>
+        /// <param name="privateLinkServiceConnectionState"> State of the Private Link Service connection. </param>
+        /// <returns> A new <see cref="Models.NotificationHubPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static NotificationHubPrivateEndpointConnectionProperties NotificationHubPrivateEndpointConnectionProperties(NotificationHubsPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, IEnumerable<string> groupIds = default, RemotePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default)
+        {
+            groupIds ??= new ChangeTrackingList<string>();
+
+            return new NotificationHubPrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new RemotePrivateEndpointConnection(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, default);
+        }
+
+        /// <summary> State of the Private Link Service connection. </summary>
+        /// <param name="status"> State of Private Link Connection. </param>
+        /// <param name="description"> Human-friendly description. </param>
+        /// <param name="actionsRequired"> Human-friendly description of required actions. </param>
+        /// <returns> A new <see cref="Models.RemotePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static RemotePrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState(NotificationHubPrivateLinkConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new RemotePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="namespaceName">
+        /// Name of the Notification Hubs namespace. This is immutable property, set automatically
+        /// by the service when the namespace is created.
+        /// </param>
+        /// <param name="operationProvisioningState"> Defines values for OperationProvisioningState. </param>
+        /// <param name="namespaceStatus"> Namespace status. </param>
+        /// <param name="isEnabled"> Gets or sets whether or not the namespace is currently enabled. </param>
+        /// <param name="isCritical"> Gets or sets whether or not the namespace is set as Critical. </param>
+        /// <param name="subscriptionId"> Namespace subscription id. </param>
+        /// <param name="region">
+        /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
+        /// this property.
+        /// </param>
+        /// <param name="metricId"> Azure Insights Metrics id. </param>
+        /// <param name="createdOn"> Time when the namespace was created. </param>
+        /// <param name="updatedOn"> Time when the namespace was updated. </param>
+        /// <param name="hubNamespaceType"> Defines values for NamespaceType. </param>
+        /// <param name="replicationRegion"> Allowed replication region. </param>
+        /// <param name="zoneRedundancy"> Namespace SKU name. </param>
+        /// <param name="networkAcls"> A collection of network authorization rules. </param>
+        /// <param name="pnsCredentials"> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </param>
+        /// <param name="serviceBusEndpoint">
+        /// Gets or sets endpoint you can use to perform NotificationHub
+        /// operations.
+        /// </param>
+        /// <param name="privateEndpointConnections"> Private Endpoint Connections for namespace. </param>
+        /// <param name="scaleUnit"> Gets or sets scaleUnit where the namespace gets created. </param>
+        /// <param name="dataCenter"> Deprecated. </param>
+        /// <param name="publicNetworkAccess"> Type of public network access. </param>
+        /// <param name="sku"> The Sku description for a namespace. </param>
+        /// <returns> A new <see cref="NotificationHubs.NotificationHubNamespaceData"/> instance for mocking. </returns>
+        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namespaceName, OperationProvisioningState? operationProvisioningState, NotificationHubNamespaceStatus? namespaceStatus, bool? isEnabled, bool? isCritical, string subscriptionId, string region, string metricId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, NotificationHubNamespaceTypeExt? hubNamespaceType, AllowedReplicationRegion? replicationRegion, ZoneRedundancyPreference? zoneRedundancy, NotificationHubNetworkAcls networkAcls, PnsCredentials pnsCredentials, Uri serviceBusEndpoint, IEnumerable<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = default, string scaleUnit = default, string dataCenter = default, NotificationHubPublicNetworkAccess? publicNetworkAccess = default, NotificationHubSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NotificationHubNamespaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                namespaceName is null && operationProvisioningState is null && namespaceStatus is null && isEnabled is null && isCritical is null && subscriptionId is null && region is null && metricId is null && createdOn is null && updatedOn is null && hubNamespaceType is null && replicationRegion is null && zoneRedundancy is null && networkAcls is null && pnsCredentials is null && serviceBusEndpoint is null && privateEndpointConnections is null && scaleUnit is null && dataCenter is null && publicNetworkAccess is null ? default : new NotificationHubNamespaceProperties(
+                    namespaceName,
+                    operationProvisioningState,
+                    namespaceStatus,
+                    isEnabled,
+                    isCritical,
+                    subscriptionId,
+                    region,
+                    metricId,
+                    createdOn,
+                    updatedOn,
+                    hubNamespaceType,
+                    replicationRegion,
+                    zoneRedundancy,
+                    networkAcls,
+                    pnsCredentials,
+                    serviceBusEndpoint,
+                    (privateEndpointConnections ?? new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>()).ToList(),
+                    scaleUnit,
+                    dataCenter,
+                    publicNetworkAccess,
+                    default),
+                sku,
+                default);
+        }
+
         /// <summary> The Sku description for a namespace. </summary>
         /// <param name="name"> Namespace SKU name. </param>
         /// <param name="tier"> Gets or sets the tier of particular sku. </param>
@@ -236,6 +405,57 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 size,
                 family,
                 capacity,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="notificationHubName"> Gets or sets the NotificationHub name. </param>
+        /// <param name="registrationTtl"> Gets or sets the RegistrationTtl of the created NotificationHub. </param>
+        /// <param name="authorizationRules"> Gets or sets the AuthorizationRules of the created NotificationHub. </param>
+        /// <param name="apnsCredential"> Description of a NotificationHub ApnsCredential. </param>
+        /// <param name="wnsCredential"> Description of a NotificationHub WnsCredential. </param>
+        /// <param name="gcmCredential"> Description of a NotificationHub GcmCredential. </param>
+        /// <param name="mpnsCredential"> Description of a NotificationHub MpnsCredential. </param>
+        /// <param name="admCredential"> Description of a NotificationHub AdmCredential. </param>
+        /// <param name="baiduCredential"> Description of a NotificationHub BaiduCredential. </param>
+        /// <param name="browserCredential"> Description of a NotificationHub BrowserCredential. </param>
+        /// <param name="xiaomiCredential"> Description of a NotificationHub XiaomiCredential. </param>
+        /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
+        /// <param name="dailyMaxActiveDevices"> Gets the DailyMaxActiveDevices. </param>
+        /// <param name="sku"> The Sku description for a namespace. </param>
+        /// <returns> A new <see cref="NotificationHubs.NotificationHubData"/> instance for mocking. </returns>
+        public static NotificationHubData NotificationHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string notificationHubName, TimeSpan? registrationTtl, IEnumerable<SharedAccessAuthorizationRuleProperties> authorizationRules, NotificationHubApnsCredential apnsCredential, NotificationHubWnsCredential wnsCredential, NotificationHubGcmCredential gcmCredential, NotificationHubMpnsCredential mpnsCredential, NotificationHubAdmCredential admCredential, NotificationHubBaiduCredential baiduCredential, BrowserCredential browserCredential, XiaomiCredential xiaomiCredential, FcmV1Credential fcmV1Credential = default, long? dailyMaxActiveDevices = default, NotificationHubSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NotificationHubData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                notificationHubName is null && registrationTtl is null && authorizationRules is null && apnsCredential is null && wnsCredential is null && gcmCredential is null && mpnsCredential is null && admCredential is null && baiduCredential is null && browserCredential is null && xiaomiCredential is null && fcmV1Credential is null && dailyMaxActiveDevices is null ? default : new NotificationHubProperties(
+                    notificationHubName,
+                    registrationTtl,
+                    (authorizationRules ?? new ChangeTrackingList<SharedAccessAuthorizationRuleProperties>()).ToList(),
+                    apnsCredential,
+                    wnsCredential,
+                    gcmCredential,
+                    mpnsCredential,
+                    admCredential,
+                    baiduCredential,
+                    browserCredential,
+                    xiaomiCredential,
+                    fcmV1Credential,
+                    dailyMaxActiveDevices,
+                    default),
+                sku,
                 default);
         }
 
@@ -367,32 +587,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 default);
         }
 
-        /// <summary> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </summary>
-        /// <param name="admCredential"> Description of a NotificationHub AdmCredential. </param>
-        /// <param name="apnsCredential"> Description of a NotificationHub ApnsCredential. </param>
-        /// <param name="baiduCredential"> Description of a NotificationHub BaiduCredential. </param>
-        /// <param name="browserCredential"> Description of a NotificationHub BrowserCredential. </param>
-        /// <param name="gcmCredential"> Description of a NotificationHub GcmCredential. </param>
-        /// <param name="mpnsCredential"> Description of a NotificationHub MpnsCredential. </param>
-        /// <param name="wnsCredential"> Description of a NotificationHub WnsCredential. </param>
-        /// <param name="xiaomiCredential"> Description of a NotificationHub XiaomiCredential. </param>
-        /// <param name="fcmV1Credential"> Description of a NotificationHub FcmV1Credential. </param>
-        /// <returns> A new <see cref="Models.PnsCredentials"/> instance for mocking. </returns>
-        public static PnsCredentials PnsCredentials(NotificationHubAdmCredential admCredential = default, NotificationHubApnsCredential apnsCredential = default, NotificationHubBaiduCredential baiduCredential = default, BrowserCredential browserCredential = default, NotificationHubGcmCredential gcmCredential = default, NotificationHubMpnsCredential mpnsCredential = default, NotificationHubWnsCredential wnsCredential = default, XiaomiCredential xiaomiCredential = default, FcmV1Credential fcmV1Credential = default)
-        {
-            return new PnsCredentials(
-                admCredential,
-                apnsCredential,
-                baiduCredential,
-                browserCredential,
-                gcmCredential,
-                mpnsCredential,
-                wnsCredential,
-                xiaomiCredential,
-                fcmV1Credential,
-                default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -469,200 +663,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             return new NotificationHubPolicyKey(policyKey, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="namespaceName">
-        /// Name of the Notification Hubs namespace. This is immutable property, set automatically
-        /// by the service when the namespace is created.
-        /// </param>
-        /// <param name="operationProvisioningState"> Defines values for OperationProvisioningState. </param>
-        /// <param name="namespaceStatus"> Namespace status. </param>
-        /// <param name="isEnabled"> Gets or sets whether or not the namespace is currently enabled. </param>
-        /// <param name="isCritical"> Gets or sets whether or not the namespace is set as Critical. </param>
-        /// <param name="subscriptionId"> Namespace subscription id. </param>
-        /// <param name="region">
-        /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
-        /// this property.
-        /// </param>
-        /// <param name="metricId"> Azure Insights Metrics id. </param>
-        /// <param name="createdOn"> Time when the namespace was created. </param>
-        /// <param name="updatedOn"> Time when the namespace was updated. </param>
-        /// <param name="hubNamespaceType"> Defines values for NamespaceType. </param>
-        /// <param name="replicationRegion"> Allowed replication region. </param>
-        /// <param name="zoneRedundancy"> Namespace SKU name. </param>
-        /// <param name="networkAcls"> A collection of network authorization rules. </param>
-        /// <param name="pnsCredentials"> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </param>
-        /// <param name="serviceBusEndpoint">
-        /// Gets or sets endpoint you can use to perform NotificationHub
-        /// operations.
-        /// </param>
-        /// <param name="privateEndpointConnections"> Private Endpoint Connections for namespace. </param>
-        /// <param name="scaleUnit"> Gets or sets scaleUnit where the namespace gets created. </param>
-        /// <param name="dataCenter"> Deprecated. </param>
-        /// <param name="publicNetworkAccess"> Type of public network access. </param>
-        /// <param name="sku"> The Sku description for a namespace. </param>
-        /// <returns> A new <see cref="NotificationHubs.NotificationHubNamespaceData"/> instance for mocking. </returns>
-        public static NotificationHubNamespaceData NotificationHubNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string namespaceName, OperationProvisioningState? operationProvisioningState, NotificationHubNamespaceStatus? namespaceStatus, bool? isEnabled, bool? isCritical, string subscriptionId, string region, string metricId, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, NotificationHubNamespaceTypeExt? hubNamespaceType, AllowedReplicationRegion? replicationRegion, ZoneRedundancyPreference? zoneRedundancy, NotificationHubNetworkAcls networkAcls, PnsCredentials pnsCredentials, Uri serviceBusEndpoint, IEnumerable<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = default, string scaleUnit = default, string dataCenter = default, NotificationHubPublicNetworkAccess? publicNetworkAccess = default, NotificationHubSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NotificationHubNamespaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                namespaceName is null && operationProvisioningState is null && namespaceStatus is null && isEnabled is null && isCritical is null && subscriptionId is null && region is null && metricId is null && createdOn is null && updatedOn is null && hubNamespaceType is null && replicationRegion is null && zoneRedundancy is null && networkAcls is null && pnsCredentials is null && serviceBusEndpoint is null && privateEndpointConnections is null && scaleUnit is null && dataCenter is null && publicNetworkAccess is null ? default : new NotificationHubNamespaceProperties(
-                    namespaceName,
-                    operationProvisioningState,
-                    namespaceStatus,
-                    isEnabled,
-                    isCritical,
-                    subscriptionId,
-                    region,
-                    metricId,
-                    createdOn,
-                    updatedOn,
-                    hubNamespaceType,
-                    replicationRegion,
-                    zoneRedundancy,
-                    networkAcls,
-                    pnsCredentials,
-                    serviceBusEndpoint,
-                    (privateEndpointConnections ?? new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>()).ToList(),
-                    scaleUnit,
-                    dataCenter,
-                    publicNetworkAccess,
-                    default),
-                sku,
-                default);
-        }
-
-        /// <summary> Represents namespace properties. </summary>
-        /// <param name="namespaceName">
-        /// Name of the Notification Hubs namespace. This is immutable property, set automatically
-        /// by the service when the namespace is created.
-        /// </param>
-        /// <param name="operationProvisioningState"> Defines values for OperationProvisioningState. </param>
-        /// <param name="namespaceStatus"> Namespace status. </param>
-        /// <param name="isEnabled"> Gets or sets whether or not the namespace is currently enabled. </param>
-        /// <param name="isCritical"> Gets or sets whether or not the namespace is set as Critical. </param>
-        /// <param name="subscriptionId"> Namespace subscription id. </param>
-        /// <param name="region">
-        /// Region. The value is always set to the same value as Namespace.Location, so we are deprecating
-        /// this property.
-        /// </param>
-        /// <param name="metricId"> Azure Insights Metrics id. </param>
-        /// <param name="createdOn"> Time when the namespace was created. </param>
-        /// <param name="updatedOn"> Time when the namespace was updated. </param>
-        /// <param name="hubNamespaceType"> Defines values for NamespaceType. </param>
-        /// <param name="replicationRegion"> Allowed replication region. </param>
-        /// <param name="zoneRedundancy"> Namespace SKU name. </param>
-        /// <param name="networkAcls"> A collection of network authorization rules. </param>
-        /// <param name="pnsCredentials"> Collection of Notification Hub or Notification Hub Namespace PNS credentials. </param>
-        /// <param name="serviceBusEndpoint">
-        /// Gets or sets endpoint you can use to perform NotificationHub
-        /// operations.
-        /// </param>
-        /// <param name="privateEndpointConnections"> Private Endpoint Connections for namespace. </param>
-        /// <param name="scaleUnit"> Gets or sets scaleUnit where the namespace gets created. </param>
-        /// <param name="dataCenter"> Deprecated. </param>
-        /// <param name="publicNetworkAccess"> Type of public network access. </param>
-        /// <returns> A new <see cref="Models.NotificationHubNamespaceProperties"/> instance for mocking. </returns>
-        public static NotificationHubNamespaceProperties NotificationHubNamespaceProperties(string namespaceName = default, OperationProvisioningState? operationProvisioningState = default, NotificationHubNamespaceStatus? namespaceStatus = default, bool? isEnabled = default, bool? isCritical = default, string subscriptionId = default, string region = default, string metricId = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, NotificationHubNamespaceTypeExt? hubNamespaceType = default, AllowedReplicationRegion? replicationRegion = default, ZoneRedundancyPreference? zoneRedundancy = default, NotificationHubNetworkAcls networkAcls = default, PnsCredentials pnsCredentials = default, Uri serviceBusEndpoint = default, IEnumerable<NotificationHubPrivateEndpointConnectionData> privateEndpointConnections = default, string scaleUnit = default, string dataCenter = default, NotificationHubPublicNetworkAccess? publicNetworkAccess = default)
-        {
-            privateEndpointConnections ??= new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>();
-
-            return new NotificationHubNamespaceProperties(
-                namespaceName,
-                operationProvisioningState,
-                namespaceStatus,
-                isEnabled,
-                isCritical,
-                subscriptionId,
-                region,
-                metricId,
-                createdOn,
-                updatedOn,
-                hubNamespaceType,
-                replicationRegion,
-                zoneRedundancy,
-                networkAcls,
-                pnsCredentials,
-                serviceBusEndpoint,
-                (privateEndpointConnections ?? new ChangeTrackingList<NotificationHubPrivateEndpointConnectionData>()).ToList(),
-                scaleUnit,
-                dataCenter,
-                publicNetworkAccess,
-                default);
-        }
-
-        /// <param name="ipRules"> List of IP rules. </param>
-        /// <param name="publicNetworkRuleAccessRights"> List of access rights. </param>
-        /// <returns> A new <see cref="Models.NotificationHubNetworkAcls"/> instance for mocking. </returns>
-        public static NotificationHubNetworkAcls NotificationHubNetworkAcls(IEnumerable<NotificationHubIPRule> ipRules = default, IEnumerable<AuthorizationRuleAccessRightExt> publicNetworkRuleAccessRights = default)
-        {
-            ipRules ??= new ChangeTrackingList<NotificationHubIPRule>();
-
-            return new NotificationHubNetworkAcls((ipRules ?? new ChangeTrackingList<NotificationHubIPRule>()).ToList(), publicNetworkRuleAccessRights is null ? default : new PublicInternetAuthorizationRule((publicNetworkRuleAccessRights ?? new ChangeTrackingList<AuthorizationRuleAccessRightExt>()).ToList(), default), default);
-        }
-
-        /// <summary> A network authorization rule that filters traffic based on IP address. </summary>
-        /// <param name="ipMask"> IP mask. </param>
-        /// <param name="accessRights"> List of access rights. </param>
-        /// <returns> A new <see cref="Models.NotificationHubIPRule"/> instance for mocking. </returns>
-        public static NotificationHubIPRule NotificationHubIPRule(string ipMask = default, IEnumerable<AuthorizationRuleAccessRightExt> accessRights = default)
-        {
-            accessRights ??= new ChangeTrackingList<AuthorizationRuleAccessRightExt>();
-
-            return new NotificationHubIPRule(ipMask, (accessRights ?? new ChangeTrackingList<AuthorizationRuleAccessRightExt>()).ToList(), default);
-        }
-
-        /// <summary> Represents a Private Endpoint Connection ARM resource - a sub-resource of Notification Hubs namespace. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Private Endpoint Connection properties. </param>
-        /// <returns> A new <see cref="NotificationHubs.NotificationHubPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static NotificationHubPrivateEndpointConnectionData NotificationHubPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NotificationHubPrivateEndpointConnectionProperties properties = default)
-        {
-            return new NotificationHubPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <param name="provisioningState"> State of Private Endpoint Connection. </param>
-        /// <param name="privateEndpointId"> ARM resource ID of the Private Endpoint. This may belong to different subscription and resource group than a Notification Hubs namespace. </param>
-        /// <param name="groupIds"> List of group ids. For Notification Hubs, it always contains a single "namespace" element. </param>
-        /// <param name="privateLinkServiceConnectionState"> State of the Private Link Service connection. </param>
-        /// <returns> A new <see cref="Models.NotificationHubPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static NotificationHubPrivateEndpointConnectionProperties NotificationHubPrivateEndpointConnectionProperties(NotificationHubsPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, IEnumerable<string> groupIds = default, RemotePrivateLinkServiceConnectionState privateLinkServiceConnectionState = default)
-        {
-            groupIds ??= new ChangeTrackingList<string>();
-
-            return new NotificationHubPrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new RemotePrivateEndpointConnection(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, default);
-        }
-
-        /// <summary> State of the Private Link Service connection. </summary>
-        /// <param name="status"> State of Private Link Connection. </param>
-        /// <param name="description"> Human-friendly description. </param>
-        /// <param name="actionsRequired"> Human-friendly description of required actions. </param>
-        /// <returns> A new <see cref="Models.RemotePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static RemotePrivateLinkServiceConnectionState RemotePrivateLinkServiceConnectionState(NotificationHubPrivateLinkConnectionStatus? status = default, string description = default, string actionsRequired = default)
-        {
-            return new RemotePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
-        }
-
         /// <summary> Patch parameter for NamespaceResource. </summary>
         /// <param name="sku"> The Sku description for a namespace. </param>
         /// <param name="properties"> Represents namespace properties. </param>
@@ -733,6 +733,19 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 default);
         }
 
+        /// <summary> Represents properties of Private Link Resource. </summary>
+        /// <param name="groupId"> A Group Id for Private Link. For Notification Hubs, it is always set to "namespace". </param>
+        /// <param name="requiredMembers"> Required members. For Notification Hubs, it's always a collection with a single "namespace" item. </param>
+        /// <param name="requiredZoneNames"> Required DNS zone names. For Notification Hubs, it contains two CNames for Service Bus and Notification Hubs zones. </param>
+        /// <returns> A new <see cref="Models.NotificationHubsPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static NotificationHubsPrivateLinkResourceProperties NotificationHubsPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new NotificationHubsPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <summary> A Private Link Arm Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -749,19 +762,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> Represents properties of Private Link Resource. </summary>
-        /// <param name="groupId"> A Group Id for Private Link. For Notification Hubs, it is always set to "namespace". </param>
-        /// <param name="requiredMembers"> Required members. For Notification Hubs, it's always a collection with a single "namespace" item. </param>
-        /// <param name="requiredZoneNames"> Required DNS zone names. For Notification Hubs, it contains two CNames for Service Bus and Notification Hubs zones. </param>
-        /// <returns> A new <see cref="Models.NotificationHubsPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static NotificationHubsPrivateLinkResourceProperties NotificationHubsPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new NotificationHubsPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Notification Hubs Namespace Resource. </summary>

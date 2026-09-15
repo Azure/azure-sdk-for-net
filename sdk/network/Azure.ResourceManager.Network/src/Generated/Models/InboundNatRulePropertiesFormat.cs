@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="backendAddressPool"> A reference to backendAddressPool resource. </param>
         /// <param name="provisioningState"> The provisioning state of the inbound NAT rule resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InboundNatRulePropertiesFormat(NetworkSubResource frontendIPConfiguration, NetworkInterfaceIPConfigurationData backendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, int? frontendPortRangeStart, int? frontendPortRangeEnd, NetworkSubResource backendAddressPool, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InboundNatRulePropertiesFormat(NetworkSubResource frontendIPConfiguration, Network.NetworkInterfaceIPConfiguration1Data backendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, int? frontendPortRangeStart, int? frontendPortRangeEnd, NetworkSubResource backendAddressPool, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             BackendIPConfiguration = backendIPConfiguration;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </summary>
         [WirePath("backendIPConfiguration")]
-        public NetworkInterfaceIPConfigurationData BackendIPConfiguration { get; }
+        public Network.NetworkInterfaceIPConfiguration1Data BackendIPConfiguration { get; }
 
         /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>
         [WirePath("protocol")]

@@ -19,34 +19,6 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
     public static partial class ArmOnlineExperimentationModelFactory
     {
 
-        /// <summary> An online experimentation workspace resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <returns> A new <see cref="OnlineExperimentation.OnlineExperimentationWorkspaceData"/> instance for mocking. </returns>
-        public static OnlineExperimentationWorkspaceData OnlineExperimentationWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OnlineExperimentationWorkspaceProperties properties = default, ManagedServiceIdentity identity = default, OnlineExperimentationWorkspaceSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new OnlineExperimentationWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                sku,
-                default);
-        }
-
         /// <param name="workspaceId"> The Id of the workspace. </param>
         /// <param name="provisioningState"> The provisioning state for the resource. </param>
         /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </param>
@@ -137,6 +109,34 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             return new OnlineExperimentationPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> An online experimentation workspace resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <returns> A new <see cref="OnlineExperimentation.OnlineExperimentationWorkspaceData"/> instance for mocking. </returns>
+        public static OnlineExperimentationWorkspaceData OnlineExperimentationWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OnlineExperimentationWorkspaceProperties properties = default, ManagedServiceIdentity identity = default, OnlineExperimentationWorkspaceSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OnlineExperimentationWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                sku,
+                default);
+        }
+
         /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
         /// <param name="name"> The name of the SKU. Ex - F0, P0. It is typically a letter+number code. </param>
         /// <param name="tier"> The name of the SKU tier. </param>
@@ -172,6 +172,19 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             return new OnlineExperimentationWorkspacePatchProperties(logAnalyticsWorkspaceResourceId, logsExporterStorageAccountResourceId, customerManagedKeyEncryption is null ? default : new ResourceEncryptionConfiguration(customerManagedKeyEncryption, default), publicNetworkAccess, default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.OnlineExperimentationPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static OnlineExperimentationPrivateLinkResourceProperties OnlineExperimentationPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new OnlineExperimentationPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <summary> A private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -188,19 +201,6 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> Properties of a private link resource. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.OnlineExperimentationPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static OnlineExperimentationPrivateLinkResourceProperties OnlineExperimentationPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new OnlineExperimentationPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
     }
 }

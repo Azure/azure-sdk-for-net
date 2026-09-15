@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The reference to the private IP Address of the collector nic that will receive the tap. </summary>
         [WirePath("properties.destinationNetworkInterfaceIPConfiguration")]
-        public NetworkInterfaceIPConfigurationData DestinationNetworkInterfaceIPConfiguration
+        public Network.NetworkInterfaceIPConfiguration1Data DestinationNetworkInterfaceIPConfiguration
         {
             get
             {

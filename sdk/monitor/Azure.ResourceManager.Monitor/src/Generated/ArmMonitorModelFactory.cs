@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMonitorModelFactory
     {
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -39,6 +40,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.MonitorPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static MonitorPrivateLinkServiceConnectionState MonitorPrivateLinkServiceConnectionState(MonitorPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new MonitorPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -56,67 +67,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 resourceType,
                 systemData,
                 groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
-        }
-
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.MonitorPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkServiceConnectionState MonitorPrivateLinkServiceConnectionState(MonitorPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
-        {
-            return new MonitorPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="description"> Description of the data collection endpoint. </param>
-        /// <param name="immutableId"> The immutable ID of this data collection endpoint resource. This property is READ-ONLY. </param>
-        /// <param name="provisioningState"> The resource provisioning state. This property is READ-ONLY. </param>
-        /// <param name="privateLinkScopedResources"> List of Azure Monitor Private Link Scope Resources to which this data collection endpoint resource is associated. This property is READ-ONLY. </param>
-        /// <param name="failoverConfiguration"> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </param>
-        /// <param name="metadata"> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </param>
-        /// <param name="configurationAccessEndpoint"> The endpoint. This property is READ-ONLY. </param>
-        /// <param name="logsIngestionEndpoint"> The endpoint. This property is READ-ONLY. </param>
-        /// <param name="metricsIngestionEndpoint"> The endpoint. This property is READ-ONLY. </param>
-        /// <param name="publicNetworkAccess"> The configuration to set whether network access from public internet to the endpoints are allowed. </param>
-        /// <param name="kind"> The kind of the resource. </param>
-        /// <param name="sku"> The SKU of the resource. </param>
-        /// <param name="identity"> Managed service identity of the resource. </param>
-        /// <param name="eTag"> Resource entity tag (ETag). </param>
-        /// <returns> A new <see cref="Monitor.DataCollectionEndpointData"/> instance for mocking. </returns>
-        public static DataCollectionEndpointData DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string immutableId, DataCollectionEndpointProvisioningState? provisioningState, IEnumerable<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources, DataCollectionEndpointFailoverConfiguration failoverConfiguration, DataCollectionEndpointMetadata metadata, string configurationAccessEndpoint, string logsIngestionEndpoint, string metricsIngestionEndpoint, MonitorPublicNetworkAccess? publicNetworkAccess, DataCollectionEndpointResourceKind? kind, DataCollectionEndpointResourceSku sku, ManagedServiceIdentity identity, ETag? eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DataCollectionEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                description is null && immutableId is null && configurationAccessEndpoint is null && logsIngestionEndpoint is null && metricsIngestionEndpoint is null && publicNetworkAccess is null && provisioningState is null && privateLinkScopedResources is null && failoverConfiguration is null && metadata is null ? default : new DataCollectionEndpointResourceProperties(
-                    description,
-                    immutableId,
-                    configurationAccessEndpoint is null ? default : new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint, default),
-                    logsIngestionEndpoint is null ? default : new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint, default),
-                    metricsIngestionEndpoint is null ? default : new DataCollectionEndpointMetricsIngestion(metricsIngestionEndpoint, default),
-                    publicNetworkAccess is null ? default : new DataCollectionEndpointNetworkAcls(publicNetworkAccess, default),
-                    provisioningState,
-                    (privateLinkScopedResources ?? new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>()).ToList(),
-                    failoverConfiguration,
-                    metadata,
-                    default),
-                kind,
-                sku,
-                identity,
-                eTag,
                 default);
         }
 
@@ -178,6 +128,57 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataCollectionRuleRelatedResourceMetadata DataCollectionRuleRelatedResourceMetadata(string provisionedBy, string provisionedByResourceId, string provisionedByImmutableId)
         {
             return new DataCollectionRuleRelatedResourceMetadata(provisionedBy, provisionedByResourceId, provisionedByImmutableId, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="description"> Description of the data collection endpoint. </param>
+        /// <param name="immutableId"> The immutable ID of this data collection endpoint resource. This property is READ-ONLY. </param>
+        /// <param name="provisioningState"> The resource provisioning state. This property is READ-ONLY. </param>
+        /// <param name="privateLinkScopedResources"> List of Azure Monitor Private Link Scope Resources to which this data collection endpoint resource is associated. This property is READ-ONLY. </param>
+        /// <param name="failoverConfiguration"> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </param>
+        /// <param name="metadata"> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </param>
+        /// <param name="configurationAccessEndpoint"> The endpoint. This property is READ-ONLY. </param>
+        /// <param name="logsIngestionEndpoint"> The endpoint. This property is READ-ONLY. </param>
+        /// <param name="metricsIngestionEndpoint"> The endpoint. This property is READ-ONLY. </param>
+        /// <param name="publicNetworkAccess"> The configuration to set whether network access from public internet to the endpoints are allowed. </param>
+        /// <param name="kind"> The kind of the resource. </param>
+        /// <param name="sku"> The SKU of the resource. </param>
+        /// <param name="identity"> Managed service identity of the resource. </param>
+        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        /// <returns> A new <see cref="Monitor.DataCollectionEndpointData"/> instance for mocking. </returns>
+        public static DataCollectionEndpointData DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string immutableId, DataCollectionEndpointProvisioningState? provisioningState, IEnumerable<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources, DataCollectionEndpointFailoverConfiguration failoverConfiguration, DataCollectionEndpointMetadata metadata, string configurationAccessEndpoint, string logsIngestionEndpoint, string metricsIngestionEndpoint, MonitorPublicNetworkAccess? publicNetworkAccess, DataCollectionEndpointResourceKind? kind, DataCollectionEndpointResourceSku sku, ManagedServiceIdentity identity, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataCollectionEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description is null && immutableId is null && configurationAccessEndpoint is null && logsIngestionEndpoint is null && metricsIngestionEndpoint is null && publicNetworkAccess is null && provisioningState is null && privateLinkScopedResources is null && failoverConfiguration is null && metadata is null ? default : new DataCollectionEndpointResourceProperties(
+                    description,
+                    immutableId,
+                    configurationAccessEndpoint is null ? default : new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint, default),
+                    logsIngestionEndpoint is null ? default : new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint, default),
+                    metricsIngestionEndpoint is null ? default : new DataCollectionEndpointMetricsIngestion(metricsIngestionEndpoint, default),
+                    publicNetworkAccess is null ? default : new DataCollectionEndpointNetworkAcls(publicNetworkAccess, default),
+                    provisioningState,
+                    (privateLinkScopedResources ?? new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>()).ToList(),
+                    failoverConfiguration,
+                    metadata,
+                    default),
+                kind,
+                sku,
+                identity,
+                eTag,
+                default);
         }
 
         /// <summary> The SKU of the resource. </summary>
@@ -418,71 +419,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataCollectionRuleAssociationMetadata DataCollectionRuleAssociationMetadata(string provisionedBy, string provisionedByResourceId, string provisionedByImmutableId)
         {
             return new DataCollectionRuleAssociationMetadata(provisionedBy, provisionedByResourceId, provisionedByImmutableId, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="description"> Description of the data collection rule. </param>
-        /// <param name="immutableId"> The immutable ID of this data collection rule. This property is READ-ONLY. </param>
-        /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that this rule can be used with. </param>
-        /// <param name="metadata"> Metadata about the resource. </param>
-        /// <param name="endpoints"> Defines the ingestion endpoints to send data to via this rule. </param>
-        /// <param name="references"> Defines all the references that may be used in other sections of the DCR. </param>
-        /// <param name="streamDeclarations"> Declaration of custom streams used in this rule. </param>
-        /// <param name="dataSources">
-        /// The specification of data sources.
-        /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
-        /// </param>
-        /// <param name="directDataSources">
-        /// The specification of direct data sources.
-        /// This property is optional and can be omitted.
-        /// </param>
-        /// <param name="destinations"> The specification of destinations. </param>
-        /// <param name="dataFlows"> The specification of data flows. </param>
-        /// <param name="provisioningState"> The resource provisioning state. </param>
-        /// <param name="agentLogs"> All the settings that are applicable to the logs agent (AMA). </param>
-        /// <param name="ingestionQuotasLogs"> Gets the Logs. </param>
-        /// <param name="kind"> The kind of the resource. </param>
-        /// <param name="sku"> The SKU of the resource. </param>
-        /// <param name="identity"> Managed service identity of the resource. </param>
-        /// <param name="eTag"> Resource entity tag (ETag). </param>
-        /// <returns> A new <see cref="Monitor.DataCollectionRuleData"/> instance for mocking. </returns>
-        public static DataCollectionRuleData DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, DataCollectionRuleEndpoints endpoints, DataCollectionRuleReferences references, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDirectDataSources directDataSources, DataCollectionRuleDestinations destinations, IEnumerable<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState, IEnumerable<MonitorAgentSetting> agentLogs, IngestionQuotasLogs ingestionQuotasLogs = default, DataCollectionRuleResourceKind? kind = default, DataCollectionRuleResourceSku sku = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DataCollectionRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                description is null && immutableId is null && dataCollectionEndpointId is null && metadata is null && endpoints is null && references is null && agentLogs is null && streamDeclarations is null && dataSources is null && directDataSources is null && destinations is null && dataFlows is null && ingestionQuotasLogs is null && provisioningState is null ? default : new DataCollectionRuleResourceProperties(
-                    description,
-                    immutableId,
-                    dataCollectionEndpointId,
-                    metadata,
-                    endpoints,
-                    references,
-                    agentLogs is null ? default : new DataCollectionRuleAgentSettings((agentLogs ?? new ChangeTrackingList<MonitorAgentSetting>()).ToList(), default),
-                    streamDeclarations ?? new ChangeTrackingDictionary<string, DataStreamDeclaration>(),
-                    dataSources,
-                    directDataSources,
-                    destinations,
-                    (dataFlows ?? new ChangeTrackingList<DataFlow>()).ToList(),
-                    ingestionQuotasLogs is null ? default : new DataCollectionRuleIngestionQuotas(ingestionQuotasLogs, default),
-                    provisioningState,
-                    default),
-                kind,
-                sku,
-                identity,
-                eTag,
-                default);
         }
 
         /// <summary> Metadata about the resource. </summary>
@@ -1426,6 +1362,71 @@ namespace Azure.ResourceManager.Monitor.Models
             return new LogsQuotaInfo(maxSizePerMinuteInGB, maxRequestsPerMinute, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="description"> Description of the data collection rule. </param>
+        /// <param name="immutableId"> The immutable ID of this data collection rule. This property is READ-ONLY. </param>
+        /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that this rule can be used with. </param>
+        /// <param name="metadata"> Metadata about the resource. </param>
+        /// <param name="endpoints"> Defines the ingestion endpoints to send data to via this rule. </param>
+        /// <param name="references"> Defines all the references that may be used in other sections of the DCR. </param>
+        /// <param name="streamDeclarations"> Declaration of custom streams used in this rule. </param>
+        /// <param name="dataSources">
+        /// The specification of data sources.
+        /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
+        /// </param>
+        /// <param name="directDataSources">
+        /// The specification of direct data sources.
+        /// This property is optional and can be omitted.
+        /// </param>
+        /// <param name="destinations"> The specification of destinations. </param>
+        /// <param name="dataFlows"> The specification of data flows. </param>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        /// <param name="agentLogs"> All the settings that are applicable to the logs agent (AMA). </param>
+        /// <param name="ingestionQuotasLogs"> Gets the Logs. </param>
+        /// <param name="kind"> The kind of the resource. </param>
+        /// <param name="sku"> The SKU of the resource. </param>
+        /// <param name="identity"> Managed service identity of the resource. </param>
+        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        /// <returns> A new <see cref="Monitor.DataCollectionRuleData"/> instance for mocking. </returns>
+        public static DataCollectionRuleData DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, DataCollectionRuleEndpoints endpoints, DataCollectionRuleReferences references, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDirectDataSources directDataSources, DataCollectionRuleDestinations destinations, IEnumerable<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState, IEnumerable<MonitorAgentSetting> agentLogs, IngestionQuotasLogs ingestionQuotasLogs = default, DataCollectionRuleResourceKind? kind = default, DataCollectionRuleResourceSku sku = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataCollectionRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description is null && immutableId is null && dataCollectionEndpointId is null && metadata is null && endpoints is null && references is null && agentLogs is null && streamDeclarations is null && dataSources is null && directDataSources is null && destinations is null && dataFlows is null && ingestionQuotasLogs is null && provisioningState is null ? default : new DataCollectionRuleResourceProperties(
+                    description,
+                    immutableId,
+                    dataCollectionEndpointId,
+                    metadata,
+                    endpoints,
+                    references,
+                    agentLogs is null ? default : new DataCollectionRuleAgentSettings((agentLogs ?? new ChangeTrackingList<MonitorAgentSetting>()).ToList(), default),
+                    streamDeclarations ?? new ChangeTrackingDictionary<string, DataStreamDeclaration>(),
+                    dataSources,
+                    directDataSources,
+                    destinations,
+                    (dataFlows ?? new ChangeTrackingList<DataFlow>()).ToList(),
+                    ingestionQuotasLogs is null ? default : new DataCollectionRuleIngestionQuotas(ingestionQuotasLogs, default),
+                    provisioningState,
+                    default),
+                kind,
+                sku,
+                identity,
+                eTag,
+                default);
+        }
+
         /// <summary> The SKU of the resource. </summary>
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
@@ -1442,6 +1443,28 @@ namespace Azure.ResourceManager.Monitor.Models
                 family,
                 capacity,
                 default);
+        }
+
+        /// <summary> Properties that define the scope private link mode settings. </summary>
+        /// <param name="queryAccessMode"> Specifies the default access mode of queries through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
+        /// <param name="ingestionAccessMode"> Specifies the default access mode of ingestion through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
+        /// <param name="exclusions"> List of exclusions that override the default access mode settings for specific private endpoint connections. </param>
+        /// <returns> A new <see cref="Models.MonitorPrivateLinkAccessModeSettings"/> instance for mocking. </returns>
+        public static MonitorPrivateLinkAccessModeSettings MonitorPrivateLinkAccessModeSettings(MonitorPrivateLinkAccessMode queryAccessMode = default, MonitorPrivateLinkAccessMode ingestionAccessMode = default, IEnumerable<MonitorPrivateLinkAccessModeSettingsExclusion> exclusions = default)
+        {
+            exclusions ??= new ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion>();
+
+            return new MonitorPrivateLinkAccessModeSettings(queryAccessMode, ingestionAccessMode, (exclusions ?? new ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion>()).ToList(), default);
+        }
+
+        /// <summary> Properties that define the scope private link mode settings exclusion item. This setting applies to a specific private endpoint connection and overrides the default settings for that private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The private endpoint connection name associated to the private endpoint on which we want to apply the specific access mode settings. </param>
+        /// <param name="queryAccessMode"> Specifies the access mode of queries through the specified private endpoint connection in the exclusion. </param>
+        /// <param name="ingestionAccessMode"> Specifies the access mode of ingestion through the specified private endpoint connection in the exclusion. </param>
+        /// <returns> A new <see cref="Models.MonitorPrivateLinkAccessModeSettingsExclusion"/> instance for mocking. </returns>
+        public static MonitorPrivateLinkAccessModeSettingsExclusion MonitorPrivateLinkAccessModeSettingsExclusion(string privateEndpointConnectionName = default, MonitorPrivateLinkAccessMode? queryAccessMode = default, MonitorPrivateLinkAccessMode? ingestionAccessMode = default)
+        {
+            return new MonitorPrivateLinkAccessModeSettingsExclusion(privateEndpointConnectionName, queryAccessMode, ingestionAccessMode, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1467,28 +1490,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 location,
                 privateLinkScopeProvisioningState is null && privateEndpointConnections is null && accessModeSettings is null ? default : new AzureMonitorPrivateLinkScopeProperties(privateLinkScopeProvisioningState, (privateEndpointConnections ?? new ChangeTrackingList<MonitorPrivateEndpointConnectionData>()).ToList(), accessModeSettings, default),
                 default);
-        }
-
-        /// <summary> Properties that define the scope private link mode settings. </summary>
-        /// <param name="queryAccessMode"> Specifies the default access mode of queries through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
-        /// <param name="ingestionAccessMode"> Specifies the default access mode of ingestion through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
-        /// <param name="exclusions"> List of exclusions that override the default access mode settings for specific private endpoint connections. </param>
-        /// <returns> A new <see cref="Models.MonitorPrivateLinkAccessModeSettings"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkAccessModeSettings MonitorPrivateLinkAccessModeSettings(MonitorPrivateLinkAccessMode queryAccessMode = default, MonitorPrivateLinkAccessMode ingestionAccessMode = default, IEnumerable<MonitorPrivateLinkAccessModeSettingsExclusion> exclusions = default)
-        {
-            exclusions ??= new ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion>();
-
-            return new MonitorPrivateLinkAccessModeSettings(queryAccessMode, ingestionAccessMode, (exclusions ?? new ChangeTrackingList<MonitorPrivateLinkAccessModeSettingsExclusion>()).ToList(), default);
-        }
-
-        /// <summary> Properties that define the scope private link mode settings exclusion item. This setting applies to a specific private endpoint connection and overrides the default settings for that private endpoint connection. </summary>
-        /// <param name="privateEndpointConnectionName"> The private endpoint connection name associated to the private endpoint on which we want to apply the specific access mode settings. </param>
-        /// <param name="queryAccessMode"> Specifies the access mode of queries through the specified private endpoint connection in the exclusion. </param>
-        /// <param name="ingestionAccessMode"> Specifies the access mode of ingestion through the specified private endpoint connection in the exclusion. </param>
-        /// <returns> A new <see cref="Models.MonitorPrivateLinkAccessModeSettingsExclusion"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkAccessModeSettingsExclusion MonitorPrivateLinkAccessModeSettingsExclusion(string privateEndpointConnectionName = default, MonitorPrivateLinkAccessMode? queryAccessMode = default, MonitorPrivateLinkAccessMode? ingestionAccessMode = default)
-        {
-            return new MonitorPrivateLinkAccessModeSettingsExclusion(privateEndpointConnectionName, queryAccessMode, ingestionAccessMode, default);
         }
 
         /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
@@ -1518,43 +1519,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 resourceType,
                 systemData,
                 kind is null && linkedResourceId is null && subscriptionLocation is null && scopedResourceProvisioningState is null ? default : new ScopedResourceProperties(kind, linkedResourceId, subscriptionLocation, scopedResourceProvisioningState, default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
-        /// <param name="notifications"> the collection of notifications. </param>
-        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is 'false'. </param>
-        /// <param name="predictiveAutoscalePolicy"> the predictive autoscale policy mode. </param>
-        /// <param name="autoscaleSettingName"> the name of the autoscale setting. </param>
-        /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
-        /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
-        /// <returns> A new <see cref="Monitor.AutoscaleSettingData"/> instance for mocking. </returns>
-        public static AutoscaleSettingData AutoscaleSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<AutoscaleProfile> profiles = default, IEnumerable<AutoscaleNotification> notifications = default, bool? isEnabled = default, PredictiveAutoscalePolicy predictiveAutoscalePolicy = default, string autoscaleSettingName = default, ResourceIdentifier targetResourceId = default, AzureLocation? targetResourceLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AutoscaleSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                profiles is null && notifications is null && isEnabled is null && predictiveAutoscalePolicy is null && autoscaleSettingName is null && targetResourceId is null && targetResourceLocation is null ? default : new AutoscaleSettingProperties(
-                    (profiles ?? new ChangeTrackingList<AutoscaleProfile>()).ToList(),
-                    (notifications ?? new ChangeTrackingList<AutoscaleNotification>()).ToList(),
-                    isEnabled,
-                    predictiveAutoscalePolicy,
-                    autoscaleSettingName,
-                    targetResourceId,
-                    targetResourceLocation,
-                    default),
                 default);
         }
 
@@ -1730,6 +1694,43 @@ namespace Azure.ResourceManager.Monitor.Models
         public static PredictiveAutoscalePolicy PredictiveAutoscalePolicy(PredictiveAutoscalePolicyScaleMode scaleMode = default, TimeSpan? scaleLookAheadTime = default)
         {
             return new PredictiveAutoscalePolicy(scaleMode, scaleLookAheadTime, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
+        /// <param name="notifications"> the collection of notifications. </param>
+        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is 'false'. </param>
+        /// <param name="predictiveAutoscalePolicy"> the predictive autoscale policy mode. </param>
+        /// <param name="autoscaleSettingName"> the name of the autoscale setting. </param>
+        /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
+        /// <param name="targetResourceLocation"> the location of the resource that the autoscale setting should be added to. </param>
+        /// <returns> A new <see cref="Monitor.AutoscaleSettingData"/> instance for mocking. </returns>
+        public static AutoscaleSettingData AutoscaleSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<AutoscaleProfile> profiles = default, IEnumerable<AutoscaleNotification> notifications = default, bool? isEnabled = default, PredictiveAutoscalePolicy predictiveAutoscalePolicy = default, string autoscaleSettingName = default, ResourceIdentifier targetResourceId = default, AzureLocation? targetResourceLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AutoscaleSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                profiles is null && notifications is null && isEnabled is null && predictiveAutoscalePolicy is null && autoscaleSettingName is null && targetResourceId is null && targetResourceLocation is null ? default : new AutoscaleSettingProperties(
+                    (profiles ?? new ChangeTrackingList<AutoscaleProfile>()).ToList(),
+                    (notifications ?? new ChangeTrackingList<AutoscaleNotification>()).ToList(),
+                    isEnabled,
+                    predictiveAutoscalePolicy,
+                    autoscaleSettingName,
+                    targetResourceId,
+                    targetResourceLocation,
+                    default),
+                default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -2113,6 +2114,37 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
+        /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular metric. </summary>
+        /// <param name="timeGrain"> the timegrain of the metric in ISO8601 format. </param>
+        /// <param name="category"> Name of a Diagnostic Metric category for a resource type this setting is applied to. To obtain the list of Diagnostic metric categories for a resource, first perform a GET diagnostic settings operation. </param>
+        /// <param name="isEnabled"> a value indicating whether this category is enabled. </param>
+        /// <param name="retentionPolicy"> the retention policy for this category. </param>
+        /// <returns> A new <see cref="Models.MetricSettings"/> instance for mocking. </returns>
+        public static MetricSettings MetricSettings(TimeSpan? timeGrain = default, string category = default, bool isEnabled = default, RetentionPolicy retentionPolicy = default)
+        {
+            return new MetricSettings(timeGrain, category, isEnabled, retentionPolicy, default);
+        }
+
+        /// <summary> Specifies the retention policy for the log. </summary>
+        /// <param name="isEnabled"> a value indicating whether the retention policy is enabled. </param>
+        /// <param name="days"> the number of days for the retention in days. A value of 0 will retain the events indefinitely. </param>
+        /// <returns> A new <see cref="Models.RetentionPolicy"/> instance for mocking. </returns>
+        public static RetentionPolicy RetentionPolicy(bool isEnabled = default, int days = default)
+        {
+            return new RetentionPolicy(isEnabled, days, default);
+        }
+
+        /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular log. </summary>
+        /// <param name="category"> Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
+        /// <param name="categoryGroup"> Name of a Diagnostic Log category group for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
+        /// <param name="isEnabled"> a value indicating whether this log is enabled. </param>
+        /// <param name="retentionPolicy"> the retention policy for this log. </param>
+        /// <returns> A new <see cref="Models.LogSettings"/> instance for mocking. </returns>
+        public static LogSettings LogSettings(string category = default, string categoryGroup = default, bool isEnabled = default, RetentionPolicy retentionPolicy = default)
+        {
+            return new LogSettings(category, categoryGroup, isEnabled, retentionPolicy, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2146,37 +2178,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
-        }
-
-        /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular metric. </summary>
-        /// <param name="timeGrain"> the timegrain of the metric in ISO8601 format. </param>
-        /// <param name="category"> Name of a Diagnostic Metric category for a resource type this setting is applied to. To obtain the list of Diagnostic metric categories for a resource, first perform a GET diagnostic settings operation. </param>
-        /// <param name="isEnabled"> a value indicating whether this category is enabled. </param>
-        /// <param name="retentionPolicy"> the retention policy for this category. </param>
-        /// <returns> A new <see cref="Models.MetricSettings"/> instance for mocking. </returns>
-        public static MetricSettings MetricSettings(TimeSpan? timeGrain = default, string category = default, bool isEnabled = default, RetentionPolicy retentionPolicy = default)
-        {
-            return new MetricSettings(timeGrain, category, isEnabled, retentionPolicy, default);
-        }
-
-        /// <summary> Specifies the retention policy for the log. </summary>
-        /// <param name="isEnabled"> a value indicating whether the retention policy is enabled. </param>
-        /// <param name="days"> the number of days for the retention in days. A value of 0 will retain the events indefinitely. </param>
-        /// <returns> A new <see cref="Models.RetentionPolicy"/> instance for mocking. </returns>
-        public static RetentionPolicy RetentionPolicy(bool isEnabled = default, int days = default)
-        {
-            return new RetentionPolicy(isEnabled, days, default);
-        }
-
-        /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular log. </summary>
-        /// <param name="category"> Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
-        /// <param name="categoryGroup"> Name of a Diagnostic Log category group for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
-        /// <param name="isEnabled"> a value indicating whether this log is enabled. </param>
-        /// <param name="retentionPolicy"> the retention policy for this log. </param>
-        /// <returns> A new <see cref="Models.LogSettings"/> instance for mocking. </returns>
-        public static LogSettings LogSettings(string category = default, string categoryGroup = default, bool isEnabled = default, RetentionPolicy retentionPolicy = default)
-        {
-            return new LogSettings(category, categoryGroup, isEnabled, retentionPolicy, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -2254,41 +2255,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="tenantScope"> The tenant GUID. Must be provided for tenant-level and management group events rules. </param>
-        /// <param name="scopes"> A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item. </param>
-        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
-        /// <param name="description"> A description of this Activity Log Alert rule. </param>
-        /// <param name="conditionAllOf"> The list of Activity Log Alert rule conditions. </param>
-        /// <param name="actionsActionGroups"> The list of the Action Groups. </param>
-        /// <returns> A new <see cref="Monitor.ActivityLogAlertData"/> instance for mocking. </returns>
-        public static ActivityLogAlertData ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string tenantScope, IEnumerable<string> scopes, bool? isEnabled, string description, IEnumerable<ActivityLogAlertAnyOfOrLeafCondition> conditionAllOf, IEnumerable<ActivityLogAlertActionGroup> actionsActionGroups)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ActivityLogAlertData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                tenantScope is null && scopes is null && conditionAllOf is null && actionsActionGroups is null && isEnabled is null && description is null ? default : new AlertRuleProperties(
-                    tenantScope,
-                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                    new AlertRuleAllOfCondition((conditionAllOf ?? new ChangeTrackingList<ActivityLogAlertAnyOfOrLeafCondition>()).ToList(), default),
-                    new ActionList((actionsActionGroups ?? new ChangeTrackingList<ActivityLogAlertActionGroup>()).ToList(), default),
-                    isEnabled,
-                    description,
-                    default),
-                default);
-        }
-
         /// <summary>
         /// An Activity Log Alert rule condition that is met when all its member conditions are met.
         /// Each condition can be of one of the following types:
@@ -2345,6 +2311,41 @@ namespace Azure.ResourceManager.Monitor.Models
             return new ActivityLogAlertActionGroup(actionGroupId, webhookProperties ?? new ChangeTrackingDictionary<string, string>(), actionProperties ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="tenantScope"> The tenant GUID. Must be provided for tenant-level and management group events rules. </param>
+        /// <param name="scopes"> A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item. </param>
+        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
+        /// <param name="description"> A description of this Activity Log Alert rule. </param>
+        /// <param name="conditionAllOf"> The list of Activity Log Alert rule conditions. </param>
+        /// <param name="actionsActionGroups"> The list of the Action Groups. </param>
+        /// <returns> A new <see cref="Monitor.ActivityLogAlertData"/> instance for mocking. </returns>
+        public static ActivityLogAlertData ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string tenantScope, IEnumerable<string> scopes, bool? isEnabled, string description, IEnumerable<ActivityLogAlertAnyOfOrLeafCondition> conditionAllOf, IEnumerable<ActivityLogAlertActionGroup> actionsActionGroups)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ActivityLogAlertData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                tenantScope is null && scopes is null && conditionAllOf is null && actionsActionGroups is null && isEnabled is null && description is null ? default : new AlertRuleProperties(
+                    tenantScope,
+                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
+                    new AlertRuleAllOfCondition((conditionAllOf ?? new ChangeTrackingList<ActivityLogAlertAnyOfOrLeafCondition>()).ToList(), default),
+                    new ActionList((actionsActionGroups ?? new ChangeTrackingList<ActivityLogAlertActionGroup>()).ToList(), default),
+                    isEnabled,
+                    description,
+                    default),
+                default);
+        }
+
         /// <param name="tags"> The resource tags. </param>
         /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
         /// <returns> A new <see cref="Models.ActivityLogAlertPatch"/> instance for mocking. </returns>
@@ -2353,63 +2354,6 @@ namespace Azure.ResourceManager.Monitor.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ActivityLogAlertPatch(tags ?? new ChangeTrackingDictionary<string, string>(), isEnabled is null ? default : new AlertRulePatchProperties(isEnabled, default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="description"> The description of the metric alert that will be included in the alert email. </param>
-        /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
-        /// <param name="isEnabled"> The flag that indicates whether the metric alert is enabled. </param>
-        /// <param name="scopes"> The list of resource id's that this metric alert is scoped to. You cannot change the scope of a metric rule based on logs. </param>
-        /// <param name="evaluationFrequency"> How often the metric alert is evaluated represented in ISO 8601 duration format. </param>
-        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
-        /// <param name="targetResourceType"> The resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
-        /// <param name="targetResourceRegion"> The region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
-        /// <param name="criteria"> Defines the specific alert criteria information. </param>
-        /// <param name="isAutoMitigateEnabled"> The flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
-        /// <param name="resolveConfiguration"> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </param>
-        /// <param name="actions"> The array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
-        /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
-        /// <param name="isMigrated"> The value indicating whether this alert rule is migrated. </param>
-        /// <param name="customProperties"> The properties of an alert payload. </param>
-        /// <param name="actionProperties"> The properties of an action properties. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <returns> A new <see cref="Monitor.MetricAlertData"/> instance for mocking. </returns>
-        public static MetricAlertData MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, MetricAlertResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MetricAlertData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                new MetricAlertProperties(
-                    description,
-                    severity,
-                    isEnabled,
-                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                    evaluationFrequency,
-                    windowSize,
-                    targetResourceType,
-                    targetResourceRegion,
-                    criteria,
-                    isAutoMitigateEnabled,
-                    resolveConfiguration,
-                    (actions ?? new ChangeTrackingList<MetricAlertAction>()).ToList(),
-                    lastUpdatedOn,
-                    isMigrated,
-                    customProperties ?? new ChangeTrackingDictionary<string, string>(),
-                    actionProperties ?? new ChangeTrackingDictionary<string, string>(),
-                    default),
-                identity,
-                default);
         }
 
         /// <summary>
@@ -2648,6 +2592,63 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MetricAlertAction(actionGroupId, webHookProperties ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="description"> The description of the metric alert that will be included in the alert email. </param>
+        /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
+        /// <param name="isEnabled"> The flag that indicates whether the metric alert is enabled. </param>
+        /// <param name="scopes"> The list of resource id's that this metric alert is scoped to. You cannot change the scope of a metric rule based on logs. </param>
+        /// <param name="evaluationFrequency"> How often the metric alert is evaluated represented in ISO 8601 duration format. </param>
+        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
+        /// <param name="targetResourceType"> The resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
+        /// <param name="targetResourceRegion"> The region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
+        /// <param name="criteria"> Defines the specific alert criteria information. </param>
+        /// <param name="isAutoMitigateEnabled"> The flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
+        /// <param name="resolveConfiguration"> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </param>
+        /// <param name="actions"> The array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
+        /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
+        /// <param name="isMigrated"> The value indicating whether this alert rule is migrated. </param>
+        /// <param name="customProperties"> The properties of an alert payload. </param>
+        /// <param name="actionProperties"> The properties of an action properties. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <returns> A new <see cref="Monitor.MetricAlertData"/> instance for mocking. </returns>
+        public static MetricAlertData MetricAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, MetricAlertResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MetricAlertData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new MetricAlertProperties(
+                    description,
+                    severity,
+                    isEnabled,
+                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
+                    evaluationFrequency,
+                    windowSize,
+                    targetResourceType,
+                    targetResourceRegion,
+                    criteria,
+                    isAutoMitigateEnabled,
+                    resolveConfiguration,
+                    (actions ?? new ChangeTrackingList<MetricAlertAction>()).ToList(),
+                    lastUpdatedOn,
+                    isMigrated,
+                    customProperties ?? new ChangeTrackingDictionary<string, string>(),
+                    actionProperties ?? new ChangeTrackingDictionary<string, string>(),
+                    default),
+                identity,
+                default);
+        }
+
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="description"> The description of the metric alert that will be included in the alert email. </param>
@@ -2719,73 +2720,6 @@ namespace Azure.ResourceManager.Monitor.Models
             dimensions ??= new ChangeTrackingDictionary<string, string>();
 
             return new MetricAlertStatusProperties(dimensions ?? new ChangeTrackingDictionary<string, string>(), status, timestamp, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="createdWithApiVersion"> The api-version used when creating this alert rule. </param>
-        /// <param name="isLegacyLogAnalyticsRule"> True if alert rule is legacy Log Analytic rule. </param>
-        /// <param name="description"> The description of the scheduled query rule. </param>
-        /// <param name="displayName"> The display name of the alert rule. </param>
-        /// <param name="severity"> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </param>
-        /// <param name="isEnabled"> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </param>
-        /// <param name="scopes"> The list of resource id's that this scheduled query rule is scoped to. </param>
-        /// <param name="evaluationFrequency"> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </param>
-        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert. </param>
-        /// <param name="overrideQueryTimeRange"> If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="targetResourceTypes"> List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="muteActionsDuration"> Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired. Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="actions"> Actions to invoke when the alert fires. </param>
-        /// <param name="isWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer's storage. The default is false. </param>
-        /// <param name="checkWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule should be stored in the customer's storage. The default is false. Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="skipQueryValidation"> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </param>
-        /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of kinds LogAlert and SimpleLogAlert. </param>
-        /// <param name="resolveConfiguration"> Defines the configuration for resolving fired alerts. Relevant only for rules of kinds LogAlert and SimpleLogAlert. </param>
-        /// <param name="criteriaAllOf"> A list of conditions to evaluate against the specified scopes. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="kind"> Indicates the type of scheduled query rule. The default is LogAlert. </param>
-        /// <param name="eTag"> Resource entity tag (ETag). </param>
-        /// <returns> A new <see cref="Monitor.ScheduledQueryRuleData"/> instance for mocking. </returns>
-        public static ScheduledQueryRuleData ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, IEnumerable<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IEnumerable<string> targetResourceTypes, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate, RuleResolveConfiguration resolveConfiguration, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf, ManagedServiceIdentity identity, ScheduledQueryRuleKind? kind, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ScheduledQueryRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                createdWithApiVersion is null && isLegacyLogAnalyticsRule is null && description is null && displayName is null && severity is null && isEnabled is null && scopes is null && evaluationFrequency is null && windowSize is null && overrideQueryTimeRange is null && targetResourceTypes is null && criteriaAllOf is null && muteActionsDuration is null && actions is null && isWorkspaceAlertsStorageConfigured is null && checkWorkspaceAlertsStorageConfigured is null && skipQueryValidation is null && autoMitigate is null && resolveConfiguration is null ? default : new ScheduledQueryRuleProperties(
-                    createdWithApiVersion,
-                    isLegacyLogAnalyticsRule,
-                    description,
-                    displayName,
-                    severity,
-                    isEnabled,
-                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
-                    evaluationFrequency,
-                    windowSize,
-                    overrideQueryTimeRange,
-                    (targetResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
-                    criteriaAllOf is null ? default : new ScheduledQueryRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>()).ToList(), default),
-                    muteActionsDuration,
-                    actions,
-                    isWorkspaceAlertsStorageConfigured,
-                    checkWorkspaceAlertsStorageConfigured,
-                    skipQueryValidation,
-                    autoMitigate,
-                    resolveConfiguration,
-                    default),
-                identity,
-                kind,
-                eTag,
-                default);
         }
 
         /// <summary> A condition of the scheduled query rule. </summary>
@@ -2866,6 +2800,73 @@ namespace Azure.ResourceManager.Monitor.Models
         public static RuleResolveConfiguration RuleResolveConfiguration(bool? isAutoResolved = default, TimeSpan? timeToResolve = default)
         {
             return new RuleResolveConfiguration(isAutoResolved, timeToResolve, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="createdWithApiVersion"> The api-version used when creating this alert rule. </param>
+        /// <param name="isLegacyLogAnalyticsRule"> True if alert rule is legacy Log Analytic rule. </param>
+        /// <param name="description"> The description of the scheduled query rule. </param>
+        /// <param name="displayName"> The display name of the alert rule. </param>
+        /// <param name="severity"> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </param>
+        /// <param name="isEnabled"> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </param>
+        /// <param name="scopes"> The list of resource id's that this scheduled query rule is scoped to. </param>
+        /// <param name="evaluationFrequency"> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </param>
+        /// <param name="windowSize"> The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert. </param>
+        /// <param name="overrideQueryTimeRange"> If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="targetResourceTypes"> List of resource type of the target resource(s) on which the alert is created/updated. For example if the scope is a resource group and targetResourceTypes is Microsoft.Compute/virtualMachines, then a different alert will be fired for each virtual machine in the resource group which meet the alert criteria. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="muteActionsDuration"> Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="actions"> Actions to invoke when the alert fires. </param>
+        /// <param name="isWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer's storage. The default is false. </param>
+        /// <param name="checkWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule should be stored in the customer's storage. The default is false. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="skipQueryValidation"> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of kinds LogAlert and SimpleLogAlert. </param>
+        /// <param name="resolveConfiguration"> Defines the configuration for resolving fired alerts. Relevant only for rules of kinds LogAlert and SimpleLogAlert. </param>
+        /// <param name="criteriaAllOf"> A list of conditions to evaluate against the specified scopes. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="kind"> Indicates the type of scheduled query rule. The default is LogAlert. </param>
+        /// <param name="eTag"> Resource entity tag (ETag). </param>
+        /// <returns> A new <see cref="Monitor.ScheduledQueryRuleData"/> instance for mocking. </returns>
+        public static ScheduledQueryRuleData ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, IEnumerable<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IEnumerable<string> targetResourceTypes, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate, RuleResolveConfiguration resolveConfiguration, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf, ManagedServiceIdentity identity, ScheduledQueryRuleKind? kind, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ScheduledQueryRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                createdWithApiVersion is null && isLegacyLogAnalyticsRule is null && description is null && displayName is null && severity is null && isEnabled is null && scopes is null && evaluationFrequency is null && windowSize is null && overrideQueryTimeRange is null && targetResourceTypes is null && criteriaAllOf is null && muteActionsDuration is null && actions is null && isWorkspaceAlertsStorageConfigured is null && checkWorkspaceAlertsStorageConfigured is null && skipQueryValidation is null && autoMitigate is null && resolveConfiguration is null ? default : new ScheduledQueryRuleProperties(
+                    createdWithApiVersion,
+                    isLegacyLogAnalyticsRule,
+                    description,
+                    displayName,
+                    severity,
+                    isEnabled,
+                    (scopes ?? new ChangeTrackingList<string>()).ToList(),
+                    evaluationFrequency,
+                    windowSize,
+                    overrideQueryTimeRange,
+                    (targetResourceTypes ?? new ChangeTrackingList<string>()).ToList(),
+                    criteriaAllOf is null ? default : new ScheduledQueryRuleCriteria((criteriaAllOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>()).ToList(), default),
+                    muteActionsDuration,
+                    actions,
+                    isWorkspaceAlertsStorageConfigured,
+                    checkWorkspaceAlertsStorageConfigured,
+                    skipQueryValidation,
+                    autoMitigate,
+                    resolveConfiguration,
+                    default),
+                identity,
+                kind,
+                eTag,
+                default);
         }
 
         /// <param name="identity"> The identity of the resource. </param>
@@ -2989,59 +2990,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorBaselineMetadata MonitorBaselineMetadata(string name = default, string value = default)
         {
             return new MonitorBaselineMetadata(name, value, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="groupShortName"> The short name of the action group. This will be used in SMS messages. </param>
-        /// <param name="isEnabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </param>
-        /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
-        /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
-        /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
-        /// <param name="itsmReceivers"> The list of ITSM receivers that are part of this action group. </param>
-        /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this action group. </param>
-        /// <param name="automationRunbookReceivers"> The list of AutomationRunbook receivers that are part of this action group. </param>
-        /// <param name="voiceReceivers"> The list of voice receivers that are part of this action group. </param>
-        /// <param name="logicAppReceivers"> The list of logic app receivers that are part of this action group. </param>
-        /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
-        /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
-        /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
-        /// <param name="incidentReceivers"> The list of incident receivers that are part of this action group. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Monitor.ActionGroupData"/> instance for mocking. </returns>
-        public static ActionGroupData ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IEnumerable<MonitorEmailReceiver> emailReceivers, IEnumerable<MonitorSmsReceiver> smsReceivers, IEnumerable<MonitorWebhookReceiver> webhookReceivers, IEnumerable<MonitorItsmReceiver> itsmReceivers, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IEnumerable<MonitorVoiceReceiver> voiceReceivers, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers, IEnumerable<MonitorEventHubReceiver> eventHubReceivers, IEnumerable<MonitorIncidentReceiver> incidentReceivers, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ActionGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                groupShortName is null && isEnabled is null && emailReceivers is null && smsReceivers is null && webhookReceivers is null && itsmReceivers is null && azureAppPushReceivers is null && automationRunbookReceivers is null && voiceReceivers is null && logicAppReceivers is null && azureFunctionReceivers is null && armRoleReceivers is null && eventHubReceivers is null && incidentReceivers is null ? default : new ActionGroupProperties(
-                    groupShortName,
-                    isEnabled.GetValueOrDefault(),
-                    (emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>()).ToList(),
-                    (smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>()).ToList(),
-                    (webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>()).ToList(),
-                    (itsmReceivers ?? new ChangeTrackingList<MonitorItsmReceiver>()).ToList(),
-                    (azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>()).ToList(),
-                    (automationRunbookReceivers ?? new ChangeTrackingList<MonitorAutomationRunbookReceiver>()).ToList(),
-                    (voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>()).ToList(),
-                    (logicAppReceivers ?? new ChangeTrackingList<MonitorLogicAppReceiver>()).ToList(),
-                    (azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>()).ToList(),
-                    (armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>()).ToList(),
-                    (eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>()).ToList(),
-                    (incidentReceivers ?? new ChangeTrackingList<MonitorIncidentReceiver>()).ToList(),
-                    default),
-                identity,
-                default);
         }
 
         /// <summary> An email receiver. </summary>
@@ -3241,6 +3189,59 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorIncidentServiceConnection MonitorIncidentServiceConnection(string name = default, string id = default)
         {
             return new MonitorIncidentServiceConnection(name, id, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="groupShortName"> The short name of the action group. This will be used in SMS messages. </param>
+        /// <param name="isEnabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </param>
+        /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
+        /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
+        /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
+        /// <param name="itsmReceivers"> The list of ITSM receivers that are part of this action group. </param>
+        /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this action group. </param>
+        /// <param name="automationRunbookReceivers"> The list of AutomationRunbook receivers that are part of this action group. </param>
+        /// <param name="voiceReceivers"> The list of voice receivers that are part of this action group. </param>
+        /// <param name="logicAppReceivers"> The list of logic app receivers that are part of this action group. </param>
+        /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
+        /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
+        /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        /// <param name="incidentReceivers"> The list of incident receivers that are part of this action group. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Monitor.ActionGroupData"/> instance for mocking. </returns>
+        public static ActionGroupData ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IEnumerable<MonitorEmailReceiver> emailReceivers, IEnumerable<MonitorSmsReceiver> smsReceivers, IEnumerable<MonitorWebhookReceiver> webhookReceivers, IEnumerable<MonitorItsmReceiver> itsmReceivers, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IEnumerable<MonitorVoiceReceiver> voiceReceivers, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers, IEnumerable<MonitorEventHubReceiver> eventHubReceivers, IEnumerable<MonitorIncidentReceiver> incidentReceivers, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ActionGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                groupShortName is null && isEnabled is null && emailReceivers is null && smsReceivers is null && webhookReceivers is null && itsmReceivers is null && azureAppPushReceivers is null && automationRunbookReceivers is null && voiceReceivers is null && logicAppReceivers is null && azureFunctionReceivers is null && armRoleReceivers is null && eventHubReceivers is null && incidentReceivers is null ? default : new ActionGroupProperties(
+                    groupShortName,
+                    isEnabled.GetValueOrDefault(),
+                    (emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>()).ToList(),
+                    (smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>()).ToList(),
+                    (webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>()).ToList(),
+                    (itsmReceivers ?? new ChangeTrackingList<MonitorItsmReceiver>()).ToList(),
+                    (azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>()).ToList(),
+                    (automationRunbookReceivers ?? new ChangeTrackingList<MonitorAutomationRunbookReceiver>()).ToList(),
+                    (voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>()).ToList(),
+                    (logicAppReceivers ?? new ChangeTrackingList<MonitorLogicAppReceiver>()).ToList(),
+                    (azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>()).ToList(),
+                    (armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>()).ToList(),
+                    (eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>()).ToList(),
+                    (incidentReceivers ?? new ChangeTrackingList<MonitorIncidentReceiver>()).ToList(),
+                    default),
+                identity,
+                default);
         }
 
         /// <param name="tags"> Resource tags. </param>

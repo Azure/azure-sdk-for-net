@@ -17,26 +17,6 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMonitorSlisModelFactory
     {
-        /// <summary> Represents an SLI resource within the ProviderHub. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Slis.MonitorSliData"/> instance for mocking. </returns>
-        public static MonitorSliData MonitorSliData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorSliProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            return new MonitorSliData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                identity,
-                default);
-        }
-
         /// <param name="provisioningState"> Indicates the provisioning status of the last operation. </param>
         /// <param name="description"> A user-provided description of the SLI, with a maximum length of 1000 characters. </param>
         /// <param name="category"> Specifies the category of the SLI, used to classify signals such as Availability and Latency. </param>
@@ -201,6 +181,26 @@ namespace Azure.ResourceManager.Monitor.Slis.Models
         public static WindowUptimeCriteria WindowUptimeCriteria(float target = default, WindowUptimeCriteriaComparator comparator = default)
         {
             return new WindowUptimeCriteria(target, comparator, default);
+        }
+
+        /// <summary> Represents an SLI resource within the ProviderHub. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Slis.MonitorSliData"/> instance for mocking. </returns>
+        public static MonitorSliData MonitorSliData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorSliProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            return new MonitorSliData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                identity,
+                default);
         }
     }
 }

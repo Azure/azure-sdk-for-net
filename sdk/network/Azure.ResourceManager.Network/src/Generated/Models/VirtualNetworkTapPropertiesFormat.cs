@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationLoadBalancerFrontEndIPConfiguration"> The reference to the private IP address on the internal Load Balancer that will receive the tap. </param>
         /// <param name="destinationPort"> The VXLAN destination port that will receive the tapped traffic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkTapPropertiesFormat(IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkTapPropertiesFormat(IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState, Network.NetworkInterfaceIPConfiguration1Data destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkInterfaceTapConfigurations = networkInterfaceTapConfigurations;
             ResourceGuid = resourceGuid;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The reference to the private IP Address of the collector nic that will receive the tap. </summary>
         [WirePath("destinationNetworkInterfaceIPConfiguration")]
-        public NetworkInterfaceIPConfigurationData DestinationNetworkInterfaceIPConfiguration { get; set; }
+        public Network.NetworkInterfaceIPConfiguration1Data DestinationNetworkInterfaceIPConfiguration { get; set; }
 
         /// <summary> The reference to the private IP address on the internal Load Balancer that will receive the tap. </summary>
         [WirePath("destinationLoadBalancerFrontEndIPConfiguration")]

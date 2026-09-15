@@ -19,34 +19,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
     public static partial class ArmMonitorWorkspacesModelFactory
     {
 
-        /// <summary> An Azure Monitor Workspace definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Resource properties. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <returns> A new <see cref="Workspaces.MonitorWorkspaceData"/> instance for mocking. </returns>
-        public static MonitorWorkspaceData MonitorWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MonitorWorkspaceProperties properties = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MonitorWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                eTag,
-                default);
-        }
-
         /// <summary> Properties of an Azure Monitor Workspace. </summary>
         /// <param name="accountId"> The immutable Id of the Azure Monitor Workspace. This property is read-only. </param>
         /// <param name="metrics"> Properties related to the metrics container in the Azure Monitor Workspace. </param>
@@ -129,6 +101,34 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new MonitorWorkspacePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> An Azure Monitor Workspace definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <returns> A new <see cref="Workspaces.MonitorWorkspaceData"/> instance for mocking. </returns>
+        public static MonitorWorkspaceData MonitorWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MonitorWorkspaceProperties properties = default, ManagedServiceIdentity identity = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MonitorWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                eTag,
+                default);
+        }
+
         /// <summary> The type used for updating an Azure Monitor Workspace. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -139,24 +139,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new MonitorWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, default);
-        }
-
-        /// <summary> The Issue resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Workspaces.MonitorIssueData"/> instance for mocking. </returns>
-        public static MonitorIssueData MonitorIssueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorIssueProperties properties = default)
-        {
-            return new MonitorIssueData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> The issue properties. </summary>
@@ -261,6 +243,24 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
         public static TimeBasedUpdatesNotificationType TimeBasedUpdatesNotificationType(string updateInterval = default)
         {
             return new TimeBasedUpdatesNotificationType(default, default, updateInterval);
+        }
+
+        /// <summary> The Issue resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Workspaces.MonitorIssueData"/> instance for mocking. </returns>
+        public static MonitorIssueData MonitorIssueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorIssueProperties properties = default)
+        {
+            return new MonitorIssueData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> The Issue resource update. </summary>
@@ -399,6 +399,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new MonitorIssueBackgroundVisualization(visualization, origin, default);
         }
 
+        /// <summary> Properties of a metrics container. </summary>
+        /// <param name="provisioningState"> The provisioning state of the metrics container. </param>
+        /// <param name="version"> The version of Metrics Query Service that this AMW will use for all metric queries. </param>
+        /// <returns> A new <see cref="Models.MonitorMetricsContainerProperties"/> instance for mocking. </returns>
+        public static MonitorMetricsContainerProperties MonitorMetricsContainerProperties(MonitorWorkspaceProvisioningState? provisioningState = default, string version = default)
+        {
+            return new MonitorMetricsContainerProperties(provisioningState, version, default);
+        }
+
         /// <summary> Metrics container resource for an Azure Monitor Workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -415,15 +424,6 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> Properties of a metrics container. </summary>
-        /// <param name="provisioningState"> The provisioning state of the metrics container. </param>
-        /// <param name="version"> The version of Metrics Query Service that this AMW will use for all metric queries. </param>
-        /// <returns> A new <see cref="Models.MonitorMetricsContainerProperties"/> instance for mocking. </returns>
-        public static MonitorMetricsContainerProperties MonitorMetricsContainerProperties(MonitorWorkspaceProvisioningState? provisioningState = default, string version = default)
-        {
-            return new MonitorMetricsContainerProperties(provisioningState, version, default);
         }
     }
 }

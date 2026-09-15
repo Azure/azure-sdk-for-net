@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </summary>
         [WirePath("properties.backendIPConfiguration")]
-        public NetworkInterfaceIPConfigurationData BackendIPConfiguration
+        public Network.NetworkInterfaceIPConfiguration1Data BackendIPConfiguration
         {
             get
             {
