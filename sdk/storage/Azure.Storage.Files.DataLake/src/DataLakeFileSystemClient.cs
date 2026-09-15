@@ -447,7 +447,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 HttpPipelinePolicy blobAuthentication = DataLakeServiceClient.BlobServiceClientInternals.CreateSessionPolicy(
                     _blobUri,
-                    DataLakeServiceClient.BlobServiceClientInternals.CreateBlobClientOptions(options, clientDiagnostics),
+                    CreateBlobClientOptions(options, clientDiagnostics),
                     authentication,
                     dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
                     tokenCredential,
@@ -530,6 +530,18 @@ namespace Azure.Storage.Files.DataLake
             return (dfsFileSystemRestClient, blobFileSystemRestClient);
         }
 
+        private static BlobClientOptions CreateBlobClientOptions(
+            DataLakeClientOptions clientOptions,
+            ClientDiagnostics clientDiagnostics)
+        {
+            BlobClientOptions options = new BlobClientOptions(clientOptions.Version.AsBlobsVersion())
+            {
+                Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled },
+            };
+            clientOptions.TransferValidation.CopyTo(options.TransferValidation);
+            return options;
+        }
+
         /// <summary>
         /// Helper to access protected static members of BlobContainerClient
         /// that should not be exposed directly to customers.
@@ -540,11 +552,9 @@ namespace Azure.Storage.Files.DataLake
                 Uri uri,
                 DataLakeClientConfiguration clientConfiguration)
             {
-                var options = new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
-                {
-                    Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
-                };
-                clientConfiguration.TransferValidation.CopyTo(options.TransferValidation);
+                BlobClientOptions options = CreateBlobClientOptions(
+                    clientConfiguration.ClientOptions,
+                    clientConfiguration.ClientDiagnostics);
                 return BlobContainerClient.CreateClient(
                     uri,
                     options,

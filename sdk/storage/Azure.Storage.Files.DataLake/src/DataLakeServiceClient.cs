@@ -405,7 +405,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 blobAuthentication = BlobServiceClientInternals.CreateSessionPolicy(
                     _blobUri,
-                    BlobServiceClientInternals.CreateBlobClientOptions(options, clientDiagnostics),
+                    CreateBlobClientOptions(options, clientDiagnostics),
                     authentication,
                     dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
                     tokenCredential,
@@ -433,6 +433,16 @@ namespace Azure.Storage.Files.DataLake
             DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
         }
 
+        private static BlobClientOptions CreateBlobClientOptions(
+            DataLakeClientOptions clientOptions,
+            ClientDiagnostics clientDiagnostics)
+        {
+            return new BlobClientOptions(clientOptions.Version.AsBlobsVersion())
+            {
+                Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled }
+            };
+        }
+
         /// <summary>
         /// Helper to access protected static members of BlobServiceClient
         /// that should not be exposed directly to customers.
@@ -452,21 +462,6 @@ namespace Azure.Storage.Files.DataLake
                     clientConfiguration.SharedKeyCredential,
                     clientConfiguration.SasCredential,
                     clientConfiguration.TokenCredential);
-            }
-
-            /// <summary>
-            /// Translates <see cref="DataLakeClientOptions"/> into the equivalent
-            /// <see cref="BlobClientOptions"/> used by the inner blob clients (including the
-            /// session-minting client).
-            /// </summary>
-            public static BlobClientOptions CreateBlobClientOptions(
-                DataLakeClientOptions options,
-                ClientDiagnostics clientDiagnostics)
-            {
-                return new BlobClientOptions(options.Version.AsBlobsVersion())
-                {
-                    Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled }
-                };
             }
 
             public static HttpPipelinePolicy CreateSessionPolicy(

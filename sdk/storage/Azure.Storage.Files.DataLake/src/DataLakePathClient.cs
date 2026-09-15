@@ -585,7 +585,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 HttpPipelinePolicy blobAuthentication = DataLakeServiceClient.BlobServiceClientInternals.CreateSessionPolicy(
                     _blobUri,
-                    DataLakeServiceClient.BlobServiceClientInternals.CreateBlobClientOptions(options, clientDiagnostics),
+                    CreateBlobClientOptions(options, clientDiagnostics, options.CustomerProvidedKey),
                     authentication,
                     dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
                     tokenCredential,
@@ -707,6 +707,20 @@ namespace Azure.Storage.Files.DataLake
             return (dfsPathRestClient, blobPathRestClient);
         }
 
+        private static BlobClientOptions CreateBlobClientOptions(
+            DataLakeClientOptions clientOptions,
+            ClientDiagnostics clientDiagnostics,
+            Models.DataLakeCustomerProvidedKey? customerProvidedKey)
+        {
+            BlobClientOptions options = new BlobClientOptions(clientOptions.Version.AsBlobsVersion())
+            {
+                Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled },
+                CustomerProvidedKey = customerProvidedKey.ToBlobCustomerProvidedKey(),
+            };
+            clientOptions.TransferValidation.CopyTo(options.TransferValidation);
+            return options;
+        }
+
         /// <summary>
         /// Helper to access protected static members of BlockBlobClient
         /// that should not be exposed directly to customers.
@@ -717,12 +731,10 @@ namespace Azure.Storage.Files.DataLake
                 Uri uri,
                 DataLakeClientConfiguration clientConfiguration)
             {
-                var options = new BlobClientOptions(clientConfiguration.ClientOptions.Version.AsBlobsVersion())
-                {
-                    Diagnostics = { IsDistributedTracingEnabled = clientConfiguration.ClientDiagnostics.IsActivityEnabled },
-                    CustomerProvidedKey = clientConfiguration.CustomerProvidedKey.ToBlobCustomerProvidedKey(),
-                };
-                clientConfiguration.TransferValidation.CopyTo(options.TransferValidation);
+                BlobClientOptions options = CreateBlobClientOptions(
+                    clientConfiguration.ClientOptions,
+                    clientConfiguration.ClientDiagnostics,
+                    clientConfiguration.CustomerProvidedKey);
                 return BlockBlobClient.CreateClient(
                     uri,
                     options,
