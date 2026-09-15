@@ -10,6 +10,7 @@ namespace Azure.Provisioning.AppService;
 /// </summary>
 // Preserve the API shipped by the reflection-based generator for resource providers absent from the Microsoft.Web TypeSpec.
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+// TODO: Redirect to Azure.Provisioning.CertificateRegistration when that package is available.
 [System.Obsolete("All certificate registration APIs are moved to the new Azure.ResourceManager.CertificateRegistration namespace.")]
 public enum AppServiceCertificateNotRenewableReason
 {
