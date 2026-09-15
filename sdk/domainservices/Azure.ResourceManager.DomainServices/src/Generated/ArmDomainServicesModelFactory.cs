@@ -18,66 +18,6 @@ namespace Azure.ResourceManager.DomainServices.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDomainServicesModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="version"> Data Model Version. </param>
-        /// <param name="tenantId"> Azure Active Directory Tenant Id. </param>
-        /// <param name="domainName"> The name of the Azure domain that the user would like to deploy Domain Services to. </param>
-        /// <param name="deploymentId"> Deployment Id. </param>
-        /// <param name="syncOwner"> SyncOwner ReplicaSet Id. </param>
-        /// <param name="syncApplicationId"> The unique sync application id of the Azure AD Domain Services deployment. </param>
-        /// <param name="replicaSets"> List of ReplicaSets. </param>
-        /// <param name="ldapsSettings"> Secure LDAP Settings. </param>
-        /// <param name="resourceForestSettings"> Resource Forest Settings. </param>
-        /// <param name="domainSecuritySettings"> DomainSecurity Settings. </param>
-        /// <param name="domainConfigurationType"> Domain Configuration Type. </param>
-        /// <param name="sku"> Sku Type. </param>
-        /// <param name="filteredSync"> Enabled or Disabled flag to turn on Group-based filtered sync. </param>
-        /// <param name="syncScope"> All or CloudOnly, All users in AAD are synced to AAD DS domain or only users actively syncing in the cloud. </param>
-        /// <param name="notificationSettings"> Notification Settings. </param>
-        /// <param name="migrationProperties"> Migration Properties. </param>
-        /// <param name="provisioningState"> the current deployment or provisioning state, which only appears in the response. </param>
-        /// <param name="configDiagnostics"> Configuration diagnostics data containing latest execution from client. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="eTag"> Resource etag. </param>
-        /// <returns> A new <see cref="DomainServices.DomainServiceData"/> instance for mocking. </returns>
-        public static DomainServiceData DomainServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? version = default, string tenantId = default, string domainName = default, string deploymentId = default, string syncOwner = default, string syncApplicationId = default, IEnumerable<DomainServiceReplicaSet> replicaSets = default, LdapsSettings ldapsSettings = default, ResourceForestSettings resourceForestSettings = default, DomainSecuritySettings domainSecuritySettings = default, string domainConfigurationType = default, string sku = default, FilteredSync? filteredSync = default, DomainServiceSyncScope? syncScope = default, DomainServiceNotificationSettings notificationSettings = default, DomainServiceMigrationProperties migrationProperties = default, string provisioningState = default, DomainServiceConfigDiagnostics configDiagnostics = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DomainServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                version is null && tenantId is null && domainName is null && deploymentId is null && syncOwner is null && syncApplicationId is null && replicaSets is null && ldapsSettings is null && resourceForestSettings is null && domainSecuritySettings is null && domainConfigurationType is null && sku is null && filteredSync is null && syncScope is null && notificationSettings is null && migrationProperties is null && provisioningState is null && configDiagnostics is null ? default : new DomainServiceProperties(
-                    version,
-                    tenantId,
-                    domainName,
-                    deploymentId,
-                    syncOwner,
-                    syncApplicationId,
-                    (replicaSets ?? new ChangeTrackingList<DomainServiceReplicaSet>()).ToList(),
-                    ldapsSettings,
-                    resourceForestSettings,
-                    domainSecuritySettings,
-                    domainConfigurationType,
-                    sku,
-                    filteredSync,
-                    syncScope,
-                    notificationSettings,
-                    migrationProperties,
-                    provisioningState,
-                    configDiagnostics,
-                    default),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                eTag,
-                default);
-        }
 
         /// <summary> Replica Set Definition. </summary>
         /// <param name="replicaSetId"> ReplicaSet Id. </param>
@@ -290,12 +230,83 @@ namespace Azure.ResourceManager.DomainServices.Models
             return new DomainServiceConfigDiagnosticsValidatorResultIssue(id, (descriptionParams ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="version"> Data Model Version. </param>
+        /// <param name="tenantId"> Azure Active Directory Tenant Id. </param>
+        /// <param name="domainName"> The name of the Azure domain that the user would like to deploy Domain Services to. </param>
+        /// <param name="deploymentId"> Deployment Id. </param>
+        /// <param name="syncOwner"> SyncOwner ReplicaSet Id. </param>
+        /// <param name="syncApplicationId"> The unique sync application id of the Azure AD Domain Services deployment. </param>
+        /// <param name="replicaSets"> List of ReplicaSets. </param>
+        /// <param name="ldapsSettings"> Secure LDAP Settings. </param>
+        /// <param name="resourceForestSettings"> Resource Forest Settings. </param>
+        /// <param name="domainSecuritySettings"> DomainSecurity Settings. </param>
+        /// <param name="domainConfigurationType"> Domain Configuration Type. </param>
+        /// <param name="sku"> Sku Type. </param>
+        /// <param name="filteredSync"> Enabled or Disabled flag to turn on Group-based filtered sync. </param>
+        /// <param name="syncScope"> All or CloudOnly, All users in AAD are synced to AAD DS domain or only users actively syncing in the cloud. </param>
+        /// <param name="notificationSettings"> Notification Settings. </param>
+        /// <param name="migrationProperties"> Migration Properties. </param>
+        /// <param name="provisioningState"> the current deployment or provisioning state, which only appears in the response. </param>
+        /// <param name="configDiagnostics"> Configuration diagnostics data containing latest execution from client. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="eTag"> Resource etag. </param>
+        /// <returns> A new <see cref="DomainServices.DomainServiceData"/> instance for mocking. </returns>
+        public static DomainServiceData DomainServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? version = default, string tenantId = default, string domainName = default, string deploymentId = default, string syncOwner = default, string syncApplicationId = default, IEnumerable<DomainServiceReplicaSet> replicaSets = default, LdapsSettings ldapsSettings = default, ResourceForestSettings resourceForestSettings = default, DomainSecuritySettings domainSecuritySettings = default, string domainConfigurationType = default, string sku = default, FilteredSync? filteredSync = default, DomainServiceSyncScope? syncScope = default, DomainServiceNotificationSettings notificationSettings = default, DomainServiceMigrationProperties migrationProperties = default, string provisioningState = default, DomainServiceConfigDiagnostics configDiagnostics = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DomainServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                version is null && tenantId is null && domainName is null && deploymentId is null && syncOwner is null && syncApplicationId is null && replicaSets is null && ldapsSettings is null && resourceForestSettings is null && domainSecuritySettings is null && domainConfigurationType is null && sku is null && filteredSync is null && syncScope is null && notificationSettings is null && migrationProperties is null && provisioningState is null && configDiagnostics is null ? default : new DomainServiceProperties(
+                    version,
+                    tenantId,
+                    domainName,
+                    deploymentId,
+                    syncOwner,
+                    syncApplicationId,
+                    (replicaSets ?? new ChangeTrackingList<DomainServiceReplicaSet>()).ToList(),
+                    ldapsSettings,
+                    resourceForestSettings,
+                    domainSecuritySettings,
+                    domainConfigurationType,
+                    sku,
+                    filteredSync,
+                    syncScope,
+                    notificationSettings,
+                    migrationProperties,
+                    provisioningState,
+                    configDiagnostics,
+                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                eTag,
+                default);
+        }
+
         /// <summary> Response for successful unsuspend of a domain service. </summary>
         /// <param name="message"></param>
         /// <returns> A new <see cref="Models.DomainServiceUnsuspendResult"/> instance for mocking. </returns>
         public static DomainServiceUnsuspendResult DomainServiceUnsuspendResult(string message = default)
         {
             return new DomainServiceUnsuspendResult(message, default);
+        }
+
+        /// <summary> Container Account Description. </summary>
+        /// <param name="accountName"> The account name. </param>
+        /// <param name="spn"> The account spn. </param>
+        /// <param name="password"> The account password. </param>
+        /// <returns> A new <see cref="Models.OuContainerCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static OuContainerCreateOrUpdateContent OuContainerCreateOrUpdateContent(string accountName = default, string spn = default, string password = default)
+        {
+            return new OuContainerCreateOrUpdateContent(accountName, spn, password, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -337,16 +348,6 @@ namespace Azure.ResourceManager.DomainServices.Models
                 location,
                 eTag,
                 default);
-        }
-
-        /// <summary> Container Account Description. </summary>
-        /// <param name="accountName"> The account name. </param>
-        /// <param name="spn"> The account spn. </param>
-        /// <param name="password"> The account password. </param>
-        /// <returns> A new <see cref="Models.OuContainerCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static OuContainerCreateOrUpdateContent OuContainerCreateOrUpdateContent(string accountName = default, string spn = default, string password = default)
-        {
-            return new OuContainerCreateOrUpdateContent(accountName, spn, password, default);
         }
     }
 }

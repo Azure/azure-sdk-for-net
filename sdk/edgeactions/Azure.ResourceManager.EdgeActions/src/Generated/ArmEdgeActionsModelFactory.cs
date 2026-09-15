@@ -17,6 +17,26 @@ namespace Azure.ResourceManager.EdgeActions.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmEdgeActionsModelFactory
     {
+        /// <summary> Represents an edge action properties. </summary>
+        /// <param name="provisioningState"> The provisioning state of the edge action. </param>
+        /// <param name="attachments"> A list of attachments for the edge action. </param>
+        /// <returns> A new <see cref="Models.EdgeActionProperties"/> instance for mocking. </returns>
+        public static EdgeActionProperties EdgeActionProperties(EdgeActionProvisioningState? provisioningState = default, IEnumerable<EdgeActionAttachment> attachments = default)
+        {
+            attachments ??= new ChangeTrackingList<EdgeActionAttachment>();
+
+            return new EdgeActionProperties(provisioningState, (attachments ?? new ChangeTrackingList<EdgeActionAttachment>()).ToList(), default);
+        }
+
+        /// <summary> Edge action attachment information. </summary>
+        /// <param name="id"> The edge action attachment id. </param>
+        /// <param name="attachedResourceId"> The attached resource Id. </param>
+        /// <returns> A new <see cref="Models.EdgeActionAttachment"/> instance for mocking. </returns>
+        public static EdgeActionAttachment EdgeActionAttachment(string id = default, ResourceIdentifier attachedResourceId = default)
+        {
+            return new EdgeActionAttachment(id, attachedResourceId, default);
+        }
+
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -41,26 +61,6 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 properties,
                 sku,
                 default);
-        }
-
-        /// <summary> Represents an edge action properties. </summary>
-        /// <param name="provisioningState"> The provisioning state of the edge action. </param>
-        /// <param name="attachments"> A list of attachments for the edge action. </param>
-        /// <returns> A new <see cref="Models.EdgeActionProperties"/> instance for mocking. </returns>
-        public static EdgeActionProperties EdgeActionProperties(EdgeActionProvisioningState? provisioningState = default, IEnumerable<EdgeActionAttachment> attachments = default)
-        {
-            attachments ??= new ChangeTrackingList<EdgeActionAttachment>();
-
-            return new EdgeActionProperties(provisioningState, (attachments ?? new ChangeTrackingList<EdgeActionAttachment>()).ToList(), default);
-        }
-
-        /// <summary> Edge action attachment information. </summary>
-        /// <param name="id"> The edge action attachment id. </param>
-        /// <param name="attachedResourceId"> The attached resource Id. </param>
-        /// <returns> A new <see cref="Models.EdgeActionAttachment"/> instance for mocking. </returns>
-        public static EdgeActionAttachment EdgeActionAttachment(string id = default, ResourceIdentifier attachedResourceId = default)
-        {
-            return new EdgeActionAttachment(id, attachedResourceId, default);
         }
 
         /// <summary> The SKU type for the edge action. </summary>
@@ -100,6 +100,24 @@ namespace Azure.ResourceManager.EdgeActions.Models
             return new EdgeActionSkuTypeUpdate(name, tier, default);
         }
 
+        /// <summary> Represents an edge action version. </summary>
+        /// <param name="deploymentType"> The deployment type. </param>
+        /// <param name="validationStatus"> The validation status. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="isDefaultVersion"> The active state. </param>
+        /// <param name="lastPackageUpdatedOn"> The last update time in UTC for package update. </param>
+        /// <returns> A new <see cref="Models.EdgeActionVersionProperties"/> instance for mocking. </returns>
+        public static EdgeActionVersionProperties EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType = default, EdgeActionVersionValidationStatus? validationStatus = default, EdgeActionProvisioningState? provisioningState = default, EdgeActionIsDefaultVersion isDefaultVersion = default, DateTimeOffset? lastPackageUpdatedOn = default)
+        {
+            return new EdgeActionVersionProperties(
+                deploymentType,
+                validationStatus,
+                provisioningState,
+                isDefaultVersion,
+                lastPackageUpdatedOn,
+                default);
+        }
+
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -121,24 +139,6 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                default);
-        }
-
-        /// <summary> Represents an edge action version. </summary>
-        /// <param name="deploymentType"> The deployment type. </param>
-        /// <param name="validationStatus"> The validation status. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="isDefaultVersion"> The active state. </param>
-        /// <param name="lastPackageUpdatedOn"> The last update time in UTC for package update. </param>
-        /// <returns> A new <see cref="Models.EdgeActionVersionProperties"/> instance for mocking. </returns>
-        public static EdgeActionVersionProperties EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType = default, EdgeActionVersionValidationStatus? validationStatus = default, EdgeActionProvisioningState? provisioningState = default, EdgeActionIsDefaultVersion isDefaultVersion = default, DateTimeOffset? lastPackageUpdatedOn = default)
-        {
-            return new EdgeActionVersionProperties(
-                deploymentType,
-                validationStatus,
-                provisioningState,
-                isDefaultVersion,
-                lastPackageUpdatedOn,
                 default);
         }
 
@@ -171,6 +171,24 @@ namespace Azure.ResourceManager.EdgeActions.Models
             return new EdgeActionVersionCode(content, name, default);
         }
 
+        /// <summary> Properties for edge action execution filter. </summary>
+        /// <param name="versionId"> The referenced versionId of the edgeaction version. </param>
+        /// <param name="lastUpdatedOn"> The last update time in UTC for the execution filter. </param>
+        /// <param name="executionFilterIdentifierHeaderName"> Custom Header Key associated with the execution filter. </param>
+        /// <param name="executionFilterIdentifierHeaderValue"> Custom Header Value associated with the execution filter. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <returns> A new <see cref="Models.EdgeActionExecutionFilterProperties"/> instance for mocking. </returns>
+        public static EdgeActionExecutionFilterProperties EdgeActionExecutionFilterProperties(ResourceIdentifier versionId = default, DateTimeOffset? lastUpdatedOn = default, string executionFilterIdentifierHeaderName = default, string executionFilterIdentifierHeaderValue = default, EdgeActionProvisioningState? provisioningState = default)
+        {
+            return new EdgeActionExecutionFilterProperties(
+                versionId,
+                lastUpdatedOn,
+                executionFilterIdentifierHeaderName,
+                executionFilterIdentifierHeaderValue,
+                provisioningState,
+                default);
+        }
+
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -192,24 +210,6 @@ namespace Azure.ResourceManager.EdgeActions.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                default);
-        }
-
-        /// <summary> Properties for edge action execution filter. </summary>
-        /// <param name="versionId"> The referenced versionId of the edgeaction version. </param>
-        /// <param name="lastUpdatedOn"> The last update time in UTC for the execution filter. </param>
-        /// <param name="executionFilterIdentifierHeaderName"> Custom Header Key associated with the execution filter. </param>
-        /// <param name="executionFilterIdentifierHeaderValue"> Custom Header Value associated with the execution filter. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="Models.EdgeActionExecutionFilterProperties"/> instance for mocking. </returns>
-        public static EdgeActionExecutionFilterProperties EdgeActionExecutionFilterProperties(ResourceIdentifier versionId = default, DateTimeOffset? lastUpdatedOn = default, string executionFilterIdentifierHeaderName = default, string executionFilterIdentifierHeaderValue = default, EdgeActionProvisioningState? provisioningState = default)
-        {
-            return new EdgeActionExecutionFilterProperties(
-                versionId,
-                lastUpdatedOn,
-                executionFilterIdentifierHeaderName,
-                executionFilterIdentifierHeaderValue,
-                provisioningState,
                 default);
         }
 

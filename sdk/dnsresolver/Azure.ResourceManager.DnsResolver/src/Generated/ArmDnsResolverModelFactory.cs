@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDnsResolverModelFactory
     {
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -59,6 +60,16 @@ namespace Azure.ResourceManager.DnsResolver.Models
             return new DnsResolverPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <param name="subnetId"> Resource ID. </param>
+        /// <param name="privateIPAddress"> Private IP address of the IP configuration. </param>
+        /// <param name="privateIPAllocationMethod"> Private IP address allocation method. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
+        /// <returns> A new <see cref="Models.InboundEndpointIPConfiguration"/> instance for mocking. </returns>
+        public static InboundEndpointIPConfiguration InboundEndpointIPConfiguration(ResourceIdentifier subnetId = default, IPAddress privateIPAddress = default, InboundEndpointIPAllocationMethod? privateIPAllocationMethod = default)
+        {
+            return new InboundEndpointIPConfiguration(subnetId is null ? default : new SubResource(subnetId, default), privateIPAddress, privateIPAllocationMethod, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -84,16 +95,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 ipConfigurations is null && provisioningState is null && resourceGuid is null ? default : new InboundEndpointProperties((ipConfigurations ?? new ChangeTrackingList<InboundEndpointIPConfiguration>()).ToList(), provisioningState, resourceGuid, default),
                 eTag,
                 default);
-        }
-
-        /// <param name="subnetId"> Resource ID. </param>
-        /// <param name="privateIPAddress"> Private IP address of the IP configuration. </param>
-        /// <param name="privateIPAllocationMethod"> Private IP address allocation method. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
-        /// <returns> A new <see cref="Models.InboundEndpointIPConfiguration"/> instance for mocking. </returns>
-        public static InboundEndpointIPConfiguration InboundEndpointIPConfiguration(ResourceIdentifier subnetId = default, IPAddress privateIPAddress = default, InboundEndpointIPAllocationMethod? privateIPAllocationMethod = default)
-        {
-            return new InboundEndpointIPConfiguration(subnetId is null ? default : new SubResource(subnetId, default), privateIPAddress, privateIPAllocationMethod, default);
         }
 
         /// <summary> Describes an inbound endpoint for a DNS resolver for PATCH operation. </summary>
@@ -192,6 +193,15 @@ namespace Azure.ResourceManager.DnsResolver.Models
             return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLinkId is null ? default : new VirtualNetworkLinkSubResourceProperties(new SubResource(virtualNetworkLinkId, default), default), default);
         }
 
+        /// <summary> Describes a server to forward the DNS queries to. </summary>
+        /// <param name="ipAddress"> DNS server IP address. </param>
+        /// <param name="port"> DNS server port. </param>
+        /// <returns> A new <see cref="Models.TargetDnsServer"/> instance for mocking. </returns>
+        public static TargetDnsServer TargetDnsServer(IPAddress ipAddress = default, int? port = default)
+        {
+            return new TargetDnsServer(ipAddress, port, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -219,15 +229,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     default),
                 eTag,
                 default);
-        }
-
-        /// <summary> Describes a server to forward the DNS queries to. </summary>
-        /// <param name="ipAddress"> DNS server IP address. </param>
-        /// <param name="port"> DNS server port. </param>
-        /// <returns> A new <see cref="Models.TargetDnsServer"/> instance for mocking. </returns>
-        public static TargetDnsServer TargetDnsServer(IPAddress ipAddress = default, int? port = default)
-        {
-            return new TargetDnsServer(ipAddress, port, default);
         }
 
         /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
@@ -303,6 +304,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
             return new DnsResolverPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The action to take on DNS requests that match the DNS security rule. </summary>
+        /// <param name="actionType"> The type of action to take. </param>
+        /// <returns> A new <see cref="Models.DnsSecurityRuleAction"/> instance for mocking. </returns>
+        public static DnsSecurityRuleAction DnsSecurityRuleAction(DnsSecurityRuleActionType? actionType = default)
+        {
+            return new DnsSecurityRuleAction(actionType, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -338,14 +347,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                     default),
                 eTag,
                 default);
-        }
-
-        /// <summary> The action to take on DNS requests that match the DNS security rule. </summary>
-        /// <param name="actionType"> The type of action to take. </param>
-        /// <returns> A new <see cref="Models.DnsSecurityRuleAction"/> instance for mocking. </returns>
-        public static DnsSecurityRuleAction DnsSecurityRuleAction(DnsSecurityRuleActionType? actionType = default)
-        {
-            return new DnsSecurityRuleAction(actionType, default);
         }
 
         /// <param name="dnsResolverDomainLists"> DNS resolver policy domains lists that the DNS security rule applies to. </param>

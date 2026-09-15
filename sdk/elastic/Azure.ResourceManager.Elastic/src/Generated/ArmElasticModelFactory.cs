@@ -18,35 +18,6 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmElasticModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of the monitor resource. </param>
-        /// <param name="kind"> The kind of the Elastic resource - observability, security, search etc. </param>
-        /// <param name="skuName"> The name of the SKU. </param>
-        /// <param name="identity"> Identity properties of the monitor resource. </param>
-        /// <returns> A new <see cref="Elastic.ElasticMonitorData"/> instance for mocking. </returns>
-        public static ElasticMonitorData ElasticMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticMonitorProperties properties = default, string kind = default, string skuName = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ElasticMonitorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                kind,
-                skuName is null ? default : new ElasticSku(skuName, default),
-                identity,
-                default);
-        }
-
         /// <summary> Properties specific to the monitor resource. </summary>
         /// <param name="provisioningState"> Provisioning state of the monitor resource. </param>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
@@ -187,6 +158,35 @@ namespace Azure.ResourceManager.Elastic.Models
         public static MonitorResourceProjectDetails MonitorResourceProjectDetails(MonitorResourceProjectType? projectType = default, ElasticsearchProjectConfigurationType? configurationType = default)
         {
             return new MonitorResourceProjectDetails(projectType, configurationType, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the monitor resource. </param>
+        /// <param name="kind"> The kind of the Elastic resource - observability, security, search etc. </param>
+        /// <param name="skuName"> The name of the SKU. </param>
+        /// <param name="identity"> Identity properties of the monitor resource. </param>
+        /// <returns> A new <see cref="Elastic.ElasticMonitorData"/> instance for mocking. </returns>
+        public static ElasticMonitorData ElasticMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticMonitorProperties properties = default, string kind = default, string skuName = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ElasticMonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                kind,
+                skuName is null ? default : new ElasticSku(skuName, default),
+                identity,
+                default);
         }
 
         /// <summary> Monitor resource update parameters. </summary>
@@ -454,24 +454,6 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </param>
-        /// <returns> A new <see cref="Elastic.ElasticMonitoredSubscriptionData"/> instance for mocking. </returns>
-        public static ElasticMonitoredSubscriptionData ElasticMonitoredSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ElasticMonitoredSubscriptionProperties properties = default)
-        {
-            return new ElasticMonitoredSubscriptionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </summary>
         /// <param name="operation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
@@ -526,16 +508,16 @@ namespace Azure.ResourceManager.Elastic.Models
             return new ElasticFilteringTag(name, value, action, default);
         }
 
-        /// <summary> Capture properties of Open AI resource Integration. </summary>
+        /// <summary> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Open AI Integration details. </param>
-        /// <returns> A new <see cref="Elastic.ElasticOpenAIIntegrationData"/> instance for mocking. </returns>
-        public static ElasticOpenAIIntegrationData ElasticOpenAIIntegrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ElasticOpenAIIntegrationProperties properties = default)
+        /// <param name="properties"> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </param>
+        /// <returns> A new <see cref="Elastic.ElasticMonitoredSubscriptionData"/> instance for mocking. </returns>
+        public static ElasticMonitoredSubscriptionData ElasticMonitoredSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ElasticMonitoredSubscriptionProperties properties = default)
         {
-            return new ElasticOpenAIIntegrationData(
+            return new ElasticMonitoredSubscriptionData(
                 id,
                 name,
                 resourceType,
@@ -559,6 +541,24 @@ namespace Azure.ResourceManager.Elastic.Models
                 openAIConnectorId,
                 key,
                 lastRefreshOn,
+                default);
+        }
+
+        /// <summary> Capture properties of Open AI resource Integration. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Open AI Integration details. </param>
+        /// <returns> A new <see cref="Elastic.ElasticOpenAIIntegrationData"/> instance for mocking. </returns>
+        public static ElasticOpenAIIntegrationData ElasticOpenAIIntegrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ElasticOpenAIIntegrationProperties properties = default)
+        {
+            return new ElasticOpenAIIntegrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
