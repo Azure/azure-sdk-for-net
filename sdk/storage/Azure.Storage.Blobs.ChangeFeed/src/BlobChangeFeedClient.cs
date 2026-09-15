@@ -220,20 +220,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
             => new BlobChangeFeedPageable(this, _maxTransferSize, _includeNonFinalizedEvents);
 
         /// <summary>
-        /// Resumes reading change feed events from a continuation token previously captured from a
-        /// page returned by this client. Resume is supported in both finalized and non-finalized
-        /// modes; when <see cref="BlobChangeFeedClientOptions.IncludeNonFinalizedEvents"/> is
-        /// enabled, resuming continues from the exact saved position, including within a segment
-        /// that is still growing past the finalized watermark.
+        /// GetChanges.
         /// </summary>
-        /// <param name="continuationToken">
-        /// A continuation token previously captured from a page returned by this client.
-        /// </param>
+        /// <param name="continuationToken"></param>
         /// <returns><see cref="BlobChangeFeedPageable"/>.</returns>
 #pragma warning disable AZC0002
         public virtual Pageable<BlobChangeFeedEvent> GetChanges(string continuationToken)
 #pragma warning restore AZC0002
         {
+            ThrowIfContinuationDisallowed(continuationToken);
             return new BlobChangeFeedPageable(this, _maxTransferSize, _includeNonFinalizedEvents, continuation: continuationToken);
         }
 
@@ -261,20 +256,15 @@ namespace Azure.Storage.Blobs.ChangeFeed
             => new BlobChangeFeedAsyncPageable(this, _maxTransferSize, _includeNonFinalizedEvents);
 
         /// <summary>
-        /// Resumes reading change feed events from a continuation token previously captured from a
-        /// page returned by this client. Resume is supported in both finalized and non-finalized
-        /// modes; when <see cref="BlobChangeFeedClientOptions.IncludeNonFinalizedEvents"/> is
-        /// enabled, resuming continues from the exact saved position, including within a segment
-        /// that is still growing past the finalized watermark.
+        /// GetChangesAsync.
         /// </summary>
-        /// <param name="continuationToken">
-        /// A continuation token previously captured from a page returned by this client.
-        /// </param>
+        /// <param name="continuationToken"></param>
         /// <returns><see cref="BlobChangeFeedAsyncPageable"/>.</returns>
 #pragma warning disable AZC0002
         public virtual AsyncPageable<BlobChangeFeedEvent> GetChangesAsync(string continuationToken)
 #pragma warning restore AZC0002
         {
+            ThrowIfContinuationDisallowed(continuationToken);
             return new BlobChangeFeedAsyncPageable(this, _maxTransferSize, _includeNonFinalizedEvents, continuation: continuationToken);
         }
 
@@ -301,6 +291,22 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 throw new ArgumentException(
                     $"{nameof(start)} ({start.Value:O}) must be earlier than or equal to {nameof(end)} ({end.Value:O}).",
                     nameof(start));
+            }
+        }
+
+        private void ThrowIfContinuationDisallowed(string continuationToken)
+        {
+            if (continuationToken != null && _includeNonFinalizedEvents)
+            {
+                throw new ArgumentException(
+                    "Resuming from a continuation token is not supported when " +
+                    nameof(BlobChangeFeedClientOptions.IncludeNonFinalizedEvents) +
+                    " is enabled on " + nameof(BlobChangeFeedClientOptions) + ". " +
+                    "Non-finalized reads do not produce continuation tokens because segments past " +
+                    "the finalized watermark may change between calls. Disable " +
+                    nameof(BlobChangeFeedClientOptions.IncludeNonFinalizedEvents) +
+                    " to resume from a saved position.",
+                    nameof(continuationToken));
             }
         }
         #endregion GetChanges

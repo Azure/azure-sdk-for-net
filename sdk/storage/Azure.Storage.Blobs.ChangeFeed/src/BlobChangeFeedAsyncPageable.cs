@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using Azure.Storage.Blobs;
 using Azure.Storage.ChangeFeed.Common;
 
@@ -28,9 +26,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             bool includeNonFinalizedEvents,
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default,
-            string continuation = default,
-            CancellationToken cancellationToken = default)
-            : base(cancellationToken)
+            string continuation = default)
         {
             _client = client;
             _maxTransferSize = maxTransferSize;
@@ -53,15 +49,9 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// <returns>
         /// <see cref="IAsyncEnumerable{Page}"/>.
         /// </returns>
-        public override IAsyncEnumerable<Page<BlobChangeFeedEvent>> AsPages(
+        public override async IAsyncEnumerable<Page<BlobChangeFeedEvent>> AsPages(
             string continuationToken = null,
             int? pageSizeHint = null)
-            => AsPagesInternal(continuationToken, pageSizeHint, CancellationToken);
-
-        private async IAsyncEnumerable<Page<BlobChangeFeedEvent>> AsPagesInternal(
-            string continuationToken,
-            int? pageSizeHint,
-            [EnumeratorCancellation] CancellationToken cancellationToken)
         {
             if (continuationToken != null)
                 throw new ArgumentException($"{nameof(continuationToken)} not supported. Use BlobChangeFeedClient.GetChangesAsync(string) instead.");
@@ -79,16 +69,14 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 _endTime,
                 _continuation,
                 async: true,
-                cancellationToken: cancellationToken)
+                cancellationToken: default)
                 .ConfigureAwait(false);
 
             while (changeFeed.HasNext())
             {
-                cancellationToken.ThrowIfCancellationRequested();
                 yield return await changeFeed.GetPage(
                     async: true,
-                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize,
-                    cancellationToken: cancellationToken)
+                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize)
                     .ConfigureAwait(false);
             }
         }

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.ChangeFeed.Common;
@@ -28,9 +27,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
             bool includeNonFinalizedEvents,
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default,
-            string continuation = default,
-            CancellationToken cancellationToken = default)
-            : base(cancellationToken)
+            string continuation = default)
         {
             _client = client;
             _maxTransferSize = maxTransferSize;
@@ -73,16 +70,14 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 _endTime,
                 _continuation,
                 async: false,
-                cancellationToken: CancellationToken)
+                cancellationToken: default)
                 .EnsureCompleted();
 
             while (changeFeed.HasNext())
             {
-                CancellationToken.ThrowIfCancellationRequested();
                 yield return changeFeed.GetPage(
                     async: false,
-                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize,
-                    cancellationToken: CancellationToken)
+                    pageSize: pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize)
                     .EnsureCompleted();
             }
         }
