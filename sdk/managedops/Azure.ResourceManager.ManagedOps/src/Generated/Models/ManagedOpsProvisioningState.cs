@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.ManagedOps.Models
         private const string ProvisioningValue = "Provisioning";
         /// <summary> The resource is being deleted. </summary>
         private const string DeletingValue = "Deleting";
+        /// <summary> The resource has been accepted for provisioning. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="ManagedOpsProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -50,6 +52,9 @@ namespace Azure.ResourceManager.ManagedOps.Models
 
         /// <summary> The resource is being deleted. </summary>
         public static ManagedOpsProvisioningState Deleting { get; } = new ManagedOpsProvisioningState(DeletingValue);
+
+        /// <summary> The resource has been accepted for provisioning. </summary>
+        public static ManagedOpsProvisioningState Accepted { get; } = new ManagedOpsProvisioningState(AcceptedValue);
 
         /// <summary> Determines if two <see cref="ManagedOpsProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

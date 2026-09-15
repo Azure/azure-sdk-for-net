@@ -47,51 +47,15 @@ namespace Azure.ResourceManager.ManagedOps.Models
         public ManagedOpsAzureMonitorInformation AzureMonitorInsights { get; }
 
         /// <summary> Azure Update Manager service information. </summary>
-        internal UpdateManagerInformation AzureUpdateManager { get; }
+        public UpdateManagerInformation AzureUpdateManager { get; }
 
         /// <summary> Azure Policy and Machine Configuration service information. </summary>
-        internal GuestConfigurationInformation AzurePolicyAndMachineConfiguration { get; }
+        public GuestConfigurationInformation AzurePolicyAndMachineConfiguration { get; }
 
         /// <summary> Defender for Servers service information. </summary>
-        internal DefenderForServersInformation DefenderForServers { get; }
+        public DefenderForServersInformation DefenderForServers { get; }
 
         /// <summary> Defender for Cloud's Cloud security posture management (CSPM) service information. </summary>
-        internal DefenderCspmInformation DefenderCspm { get; }
-
-        /// <summary> Indicates whether the service is enabled. </summary>
-        public ManagedOpsEnablementStatus? AzureUpdateManagerEnablementStatus
-        {
-            get
-            {
-                return AzureUpdateManager is null ? default : AzureUpdateManager.EnablementStatus;
-            }
-        }
-
-        /// <summary> Indicates whether the service is enabled. </summary>
-        public ManagedOpsEnablementStatus? AzurePolicyAndMachineEnablementStatus
-        {
-            get
-            {
-                return AzurePolicyAndMachineConfiguration is null ? default : AzurePolicyAndMachineConfiguration.EnablementStatus;
-            }
-        }
-
-        /// <summary> Indicates whether the service is enabled. </summary>
-        public ManagedOpsEnablementStatus? DefenderForServersEnablementStatus
-        {
-            get
-            {
-                return DefenderForServers is null ? default : DefenderForServers.EnablementStatus;
-            }
-        }
-
-        /// <summary> Indicates whether the service is enabled. </summary>
-        public ManagedOpsEnablementStatus? DefenderCspmEnablementStatus
-        {
-            get
-            {
-                return DefenderCspm is null ? default : DefenderCspm.EnablementStatus;
-            }
-        }
+        public DefenderCspmInformation DefenderCspm { get; }
     }
 }

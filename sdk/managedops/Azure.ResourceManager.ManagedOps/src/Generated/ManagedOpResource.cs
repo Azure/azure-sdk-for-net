@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedOps
         {
             TryGetApiVersion(ResourceType, out string managedOpApiVersion);
             _managedOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedOps", ResourceType.Namespace, Diagnostics);
-            _managedOperationsRestClient = new ManagedOperations(_managedOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedOpApiVersion ?? "2025-07-28-preview");
+            _managedOperationsRestClient = new ManagedOperations(_managedOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedOpApiVersion ?? "2026-01-06-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedOps
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-28-preview. </description>
+        /// <description> 2026-01-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedOps
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-28-preview. </description>
+        /// <description> 2026-01-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ManagedOps
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-28-preview. </description>
+        /// <description> 2026-01-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ManagedOps
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-28-preview. </description>
+        /// <description> 2026-01-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ManagedOps
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-28-preview. </description>
+        /// <description> 2026-01-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ManagedOps
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-28-preview. </description>
+        /// <description> 2026-01-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

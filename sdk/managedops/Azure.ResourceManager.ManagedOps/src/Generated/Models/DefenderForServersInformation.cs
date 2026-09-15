@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ManagedOps.Models
 {
     /// <summary> Defender for Servers service information. </summary>
-    internal partial class DefenderForServersInformation
+    public partial class DefenderForServersInformation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -25,14 +25,19 @@ namespace Azure.ResourceManager.ManagedOps.Models
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersInformation"/>. </summary>
         /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
+        /// <param name="errorDetails"> Optional error message if the service is in Failed state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderForServersInformation(ManagedOpsEnablementStatus enablementStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefenderForServersInformation(ManagedOpsEnablementStatus enablementStatus, ErrorDetails errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnablementStatus = enablementStatus;
+            ErrorDetails = errorDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether the service is enabled. </summary>
         public ManagedOpsEnablementStatus EnablementStatus { get; }
+
+        /// <summary> Optional error message if the service is in Failed state. </summary>
+        public ErrorDetails ErrorDetails { get; }
     }
 }
