@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
@@ -241,14 +241,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string AttributeMicrosoftRequestResultCode = "microsoft.request.resultCode";
 
         /// <summary>
-        /// Routing attribute carrying the destination instrumentation key for multi-tenant export.
+        /// Routing attribute carrying the destination instrumentation key for multi-endpoint routing.
         /// </summary>
         public const string AttributeMicrosoftInstrumentationKey = "microsoft.instrumentation_key";
 
         /// <summary>
-        /// Routing attribute carrying the destination ingestion endpoint for multi-tenant export.
+        /// Routing attribute carrying the destination ingestion endpoint for multi-endpoint routing.
         /// </summary>
         public const string AttributeMicrosoftIngestionEndpoint = "microsoft.ingestion_endpoint";
+
+        /// <summary>
+        /// Attribute carrying the cloud role to report for routed telemetry.
+        /// </summary>
+        public const string AttributeMicrosoftMultiEndpointCloudRole = "microsoft.multi_endpoint_cloud_role";
 
         // Context tag attributes set by the Application Insights shim (TelemetryClient.Context)
         public const string AttributeMicrosoftClientIp = "microsoft.client.ip";
