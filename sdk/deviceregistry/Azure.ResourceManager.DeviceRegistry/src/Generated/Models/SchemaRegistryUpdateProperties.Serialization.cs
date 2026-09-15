@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(OutboundIdentity))
+            {
+                writer.WritePropertyName("outboundIdentity"u8);
+                writer.WriteObjectValue(OutboundIdentity, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
             string displayName = default;
             string description = default;
+            OutboundIdentity outboundIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,12 +147,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("outboundIdentity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outboundIdentity = OutboundIdentity.DeserializeOutboundIdentity(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SchemaRegistryUpdateProperties(displayName, description, additionalBinaryDataProperties);
+            return new SchemaRegistryUpdateProperties(displayName, description, outboundIdentity, additionalBinaryDataProperties);
         }
     }
 }

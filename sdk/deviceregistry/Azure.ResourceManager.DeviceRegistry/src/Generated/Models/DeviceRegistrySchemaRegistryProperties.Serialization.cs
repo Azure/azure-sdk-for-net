@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
             writer.WritePropertyName("storageAccountContainerUrl"u8);
             writer.WriteStringValue(StorageAccountContainerUri.AbsoluteUri);
+            if (Optional.IsDefined(OutboundIdentity))
+            {
+                writer.WritePropertyName("outboundIdentity"u8);
+                writer.WriteObjectValue(OutboundIdentity, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -150,6 +155,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string displayName = default;
             string description = default;
             Uri storageAccountContainerUri = default;
+            OutboundIdentity outboundIdentity = default;
             DeviceRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -179,6 +185,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     storageAccountContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
+                if (prop.NameEquals("outboundIdentity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outboundIdentity = OutboundIdentity.DeserializeOutboundIdentity(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -199,6 +214,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 displayName,
                 description,
                 storageAccountContainerUri,
+                outboundIdentity,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

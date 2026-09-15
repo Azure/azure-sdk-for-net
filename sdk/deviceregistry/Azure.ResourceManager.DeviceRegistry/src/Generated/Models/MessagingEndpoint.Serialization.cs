@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     /// <summary> Namespace messaging endpoint model used by a device to connect to a service. </summary>
     public partial class MessagingEndpoint : IJsonModel<MessagingEndpoint>
     {
-        /// <summary> Initializes a new instance of <see cref="MessagingEndpoint"/> for deserialization. </summary>
-        internal MessagingEndpoint()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MessagingEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -84,12 +79,40 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WritePropertyName("endpointType"u8);
                 writer.WriteStringValue(EndpointType);
             }
-            writer.WritePropertyName("address"u8);
-            writer.WriteStringValue(Address);
+            if (Optional.IsDefined(Address))
+            {
+                writer.WritePropertyName("address"u8);
+                writer.WriteStringValue(Address);
+            }
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeviceAddress))
+            {
+                writer.WritePropertyName("deviceAddress"u8);
+                writer.WriteStringValue(DeviceAddress);
+            }
+            if (Optional.IsDefined(InboundCallerIdentity))
+            {
+                writer.WritePropertyName("inboundCallerIdentity"u8);
+                writer.WriteObjectValue(InboundCallerIdentity, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LinkingState))
+            {
+                writer.WritePropertyName("linkingState"u8);
+                writer.WriteStringValue(LinkingState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LinkingError))
+            {
+                writer.WritePropertyName("linkingError"u8);
+                writer.WriteObjectValue(LinkingError, options);
+            }
+            if (Optional.IsDefined(Provisioning))
+            {
+                writer.WritePropertyName("provisioning"u8);
+                writer.WriteObjectValue(Provisioning, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -136,6 +159,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string endpointType = default;
             string address = default;
             string resourceId = default;
+            string deviceAddress = default;
+            InboundCallerIdentity inboundCallerIdentity = default;
+            NamespaceLinkingStateValue? linkingState = default;
+            NamespaceLinkingError linkingError = default;
+            MessagingEndpointProvisioning provisioning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,12 +182,62 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     resourceId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("deviceAddress"u8))
+                {
+                    deviceAddress = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("inboundCallerIdentity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inboundCallerIdentity = InboundCallerIdentity.DeserializeInboundCallerIdentity(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("linkingState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkingState = new NamespaceLinkingStateValue(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("linkingError"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkingError = NamespaceLinkingError.DeserializeNamespaceLinkingError(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("provisioning"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioning = MessagingEndpointProvisioning.DeserializeMessagingEndpointProvisioning(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MessagingEndpoint(endpointType, address, resourceId, additionalBinaryDataProperties);
+            return new MessagingEndpoint(
+                endpointType,
+                address,
+                resourceId,
+                deviceAddress,
+                inboundCallerIdentity,
+                linkingState,
+                linkingError,
+                provisioning,
+                additionalBinaryDataProperties);
         }
     }
 }

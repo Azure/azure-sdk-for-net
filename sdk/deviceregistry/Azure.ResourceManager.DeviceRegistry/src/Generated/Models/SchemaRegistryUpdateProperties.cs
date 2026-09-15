@@ -24,11 +24,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Initializes a new instance of <see cref="SchemaRegistryUpdateProperties"/>. </summary>
         /// <param name="displayName"> Human-readable display name. </param>
         /// <param name="description"> Human-readable description of the schema registry. </param>
+        /// <param name="outboundIdentity"> The identity used for outbound calls from the ADR schema registry. If not specified and the schema registry has a system-assigned identity enabled, the system-assigned identity is used by default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SchemaRegistryUpdateProperties(string displayName, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SchemaRegistryUpdateProperties(string displayName, string description, OutboundIdentity outboundIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
+            OutboundIdentity = outboundIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +39,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Human-readable description of the schema registry. </summary>
         public string Description { get; set; }
+
+        /// <summary> The identity used for outbound calls from the ADR schema registry. If not specified and the schema registry has a system-assigned identity enabled, the system-assigned identity is used by default. </summary>
+        public OutboundIdentity OutboundIdentity { get; set; }
     }
 }

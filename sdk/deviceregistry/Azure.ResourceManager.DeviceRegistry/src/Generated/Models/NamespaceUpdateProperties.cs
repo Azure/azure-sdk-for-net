@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The updatable properties of the Namespace. </summary>
-    internal partial class NamespaceUpdateProperties
+    public partial class NamespaceUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,15 +23,30 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="NamespaceUpdateProperties"/>. </summary>
         /// <param name="messaging"> Assigned and unassigned messaging endpoints. </param>
+        /// <param name="management"> Assigned and unassigned management endpoints. </param>
+        /// <param name="provisioning"> The provisioning endpoints associated with this namespace. </param>
+        /// <param name="outboundIdentity"> The identity used for outbound calls from the ADR namespace. If not specified and the namespace has a system-assigned identity enabled, the system-assigned identity is used by default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceUpdateProperties(Messaging messaging, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NamespaceUpdateProperties(Messaging messaging, Management management, NamespaceProvisioning provisioning, OutboundIdentity outboundIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Messaging = messaging;
+            Management = management;
+            Provisioning = provisioning;
+            OutboundIdentity = outboundIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Assigned and unassigned messaging endpoints. </summary>
         internal Messaging Messaging { get; set; }
+
+        /// <summary> Assigned and unassigned management endpoints. </summary>
+        internal Management Management { get; set; }
+
+        /// <summary> The provisioning endpoints associated with this namespace. </summary>
+        internal NamespaceProvisioning Provisioning { get; set; }
+
+        /// <summary> The identity used for outbound calls from the ADR namespace. If not specified and the namespace has a system-assigned identity enabled, the system-assigned identity is used by default. </summary>
+        public OutboundIdentity OutboundIdentity { get; set; }
 
         /// <summary> Dictionary of messaging endpoints. </summary>
         public IDictionary<string, MessagingEndpoint> MessagingEndpoints
@@ -43,6 +58,32 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     Messaging = new Messaging();
                 }
                 return Messaging.Endpoints;
+            }
+        }
+
+        /// <summary> Dictionary of management endpoints. </summary>
+        public IDictionary<string, ManagementEndpoint> ManagementEndpoints
+        {
+            get
+            {
+                if (Management is null)
+                {
+                    Management = new Management();
+                }
+                return Management.Endpoints;
+            }
+        }
+
+        /// <summary> Dictionary of provisioning endpoints. </summary>
+        public IDictionary<string, ProvisioningEndpoint> ProvisioningEndpoints
+        {
+            get
+            {
+                if (Provisioning is null)
+                {
+                    Provisioning = new NamespaceProvisioning();
+                }
+                return Provisioning.Endpoints;
             }
         }
     }

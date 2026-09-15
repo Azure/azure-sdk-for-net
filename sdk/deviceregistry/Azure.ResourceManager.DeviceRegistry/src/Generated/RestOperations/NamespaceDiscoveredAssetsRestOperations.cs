@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return message;
         }
 
-        internal HttpMessage CreateGetByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string namespaceName, RequestContext context)
+        internal HttpMessage CreateGetByNamespaceRequest(Guid subscriptionId, string resourceGroupName, string namespaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return message;
         }
 
-        internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string namespaceName, RequestContext context)
+        internal HttpMessage CreateNextGetByNamespaceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string namespaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(ResourceType, out string deviceRegistryNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryNamespaceApiVersion ?? "2026-03-01-preview");
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryNamespaceApiVersion ?? "2026-11-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -785,13 +785,6 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="CredentialResource"/> along with the instance operations that can be performed on it in the <see cref="DeviceRegistryNamespaceResource"/>. </summary>
-        /// <returns> Returns a <see cref="CredentialResource"/> object. </returns>
-        public virtual CredentialResource GetCredential()
-        {
-            return new CredentialResource(Client, Id.AppendChildResource("credentials", "default"));
-        }
-
         /// <summary> Gets a collection of DeviceRegistryNamespaceAssets in the <see cref="DeviceRegistryNamespaceResource"/>. </summary>
         /// <returns> An object representing collection of DeviceRegistryNamespaceAssets and their operations over a DeviceRegistryNamespaceAssetResource. </returns>
         public virtual DeviceRegistryNamespaceAssetCollection GetDeviceRegistryNamespaceAssets()
@@ -922,6 +915,72 @@ namespace Azure.ResourceManager.DeviceRegistry
             Argument.AssertNotNullOrEmpty(discoveredDeviceName, nameof(discoveredDeviceName));
 
             return GetDeviceRegistryNamespaceDiscoveredDevices().Get(discoveredDeviceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CertificateAuthorities in the <see cref="DeviceRegistryNamespaceResource"/>. </summary>
+        /// <returns> An object representing collection of CertificateAuthorities and their operations over a CertificateAuthorityResource. </returns>
+        public virtual CertificateAuthorityCollection GetCertificateAuthorities()
+        {
+            return GetCachedClient(client => new CertificateAuthorityCollection(client, Id));
+        }
+
+        /// <summary> Get a CertificateAuthority. </summary>
+        /// <param name="certificateAuthorityName"> The name of the Certificate Authority resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateAuthorityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateAuthorityName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CertificateAuthorityResource>> GetCertificateAuthorityAsync(string certificateAuthorityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateAuthorityName, nameof(certificateAuthorityName));
+
+            return await GetCertificateAuthorities().GetAsync(certificateAuthorityName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a CertificateAuthority. </summary>
+        /// <param name="certificateAuthorityName"> The name of the Certificate Authority resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateAuthorityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateAuthorityName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CertificateAuthorityResource> GetCertificateAuthority(string certificateAuthorityName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateAuthorityName, nameof(certificateAuthorityName));
+
+            return GetCertificateAuthorities().Get(certificateAuthorityName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RegistryDevices in the <see cref="DeviceRegistryNamespaceResource"/>. </summary>
+        /// <returns> An object representing collection of RegistryDevices and their operations over a RegistryDeviceResource. </returns>
+        public virtual RegistryDeviceCollection GetRegistryDevices()
+        {
+            return GetCachedClient(client => new RegistryDeviceCollection(client, Id));
+        }
+
+        /// <summary> Get a RegistryDevice. </summary>
+        /// <param name="registryDeviceName"> The name of the new device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RegistryDeviceResource>> GetRegistryDeviceAsync(string registryDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(registryDeviceName, nameof(registryDeviceName));
+
+            return await GetRegistryDevices().GetAsync(registryDeviceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a RegistryDevice. </summary>
+        /// <param name="registryDeviceName"> The name of the new device. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="registryDeviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryDeviceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RegistryDeviceResource> GetRegistryDevice(string registryDeviceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(registryDeviceName, nameof(registryDeviceName));
+
+            return GetRegistryDevices().Get(registryDeviceName, cancellationToken);
         }
     }
 }

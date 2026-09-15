@@ -84,6 +84,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WritePropertyName("messaging"u8);
                 writer.WriteObjectValue(Messaging, options);
             }
+            if (Optional.IsDefined(Management))
+            {
+                writer.WritePropertyName("management"u8);
+                writer.WriteObjectValue(Management, options);
+            }
+            if (Optional.IsDefined(Provisioning))
+            {
+                writer.WritePropertyName("provisioning"u8);
+                writer.WriteObjectValue(Provisioning, options);
+            }
+            if (Optional.IsDefined(OutboundIdentity))
+            {
+                writer.WritePropertyName("outboundIdentity"u8);
+                writer.WriteObjectValue(OutboundIdentity, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -133,6 +148,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
             string uuid = default;
             Messaging messaging = default;
+            Management management = default;
+            NamespaceProvisioning provisioning = default;
+            OutboundIdentity outboundIdentity = default;
             DeviceRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,6 +169,33 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     messaging = Messaging.DeserializeMessaging(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("management"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    management = Management.DeserializeManagement(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("provisioning"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioning = NamespaceProvisioning.DeserializeNamespaceProvisioning(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("outboundIdentity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outboundIdentity = OutboundIdentity.DeserializeOutboundIdentity(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -165,7 +210,14 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeviceRegistryNamespaceProperties(uuid, messaging, provisioningState, additionalBinaryDataProperties);
+            return new DeviceRegistryNamespaceProperties(
+                uuid,
+                messaging,
+                management,
+                provisioning,
+                outboundIdentity,
+                provisioningState,
+                additionalBinaryDataProperties);
         }
     }
 }

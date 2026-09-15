@@ -62,24 +62,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
             return new DeviceRegistryNamespaceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="CredentialResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CredentialResource"/> object. </returns>
-        public virtual CredentialResource GetCredentialResource(ResourceIdentifier id)
-        {
-            CredentialResource.ValidateResourceId(id);
-            return new CredentialResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="PolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyResource"/> object. </returns>
-        public virtual PolicyResource GetPolicyResource(ResourceIdentifier id)
-        {
-            PolicyResource.ValidateResourceId(id);
-            return new PolicyResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="DeviceRegistryNamespaceAssetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DeviceRegistryNamespaceAssetResource"/> object. </returns>
@@ -141,6 +123,33 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         {
             DeviceRegistrySchemaVersionResource.ValidateResourceId(id);
             return new DeviceRegistrySchemaVersionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CertificateAuthorityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CertificateAuthorityResource"/> object. </returns>
+        public virtual CertificateAuthorityResource GetCertificateAuthorityResource(ResourceIdentifier id)
+        {
+            CertificateAuthorityResource.ValidateResourceId(id);
+            return new CertificateAuthorityResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="CertificatePolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CertificatePolicyResource"/> object. </returns>
+        public virtual CertificatePolicyResource GetCertificatePolicyResource(ResourceIdentifier id)
+        {
+            CertificatePolicyResource.ValidateResourceId(id);
+            return new CertificatePolicyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RegistryDeviceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegistryDeviceResource"/> object. </returns>
+        public virtual RegistryDeviceResource GetRegistryDeviceResource(ResourceIdentifier id)
+        {
+            RegistryDeviceResource.ValidateResourceId(id);
+            return new RegistryDeviceResource(Client, id);
         }
     }
 }
