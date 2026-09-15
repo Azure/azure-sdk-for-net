@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 extensionsTimeBudget,
                 scheduledEventsProfile,
                 userData,
-                capacityReservationGroupId is null ? default : new CapacityReservationProfile(new SubResource(capacityReservationGroupId, default), default),
+                capacityReservationGroupId is null ? default : new CapacityReservationProfile(capacityReservationGroupId is null ? default : new SubResource(capacityReservationGroupId, default), default),
                 galleryApplications is null ? default : new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VmGalleryApplication>()).ToList(), default),
                 default);
         }

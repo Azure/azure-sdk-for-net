@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     containerGroupOSType,
                     (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
                     instanceView,
-                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
+                    diagnosticsLogAnalytics is null ? default : new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
                     (subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>()).ToList(),
                     dnsConfig,
                     sku,
                     encryptionProperties,
                     (initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>()).ToList(),
                     (extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>()).ToList(),
-                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
+                    confidentialComputeCcePolicy is null ? default : new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
                     priority,
                     identityAcls,
                     containerGroupProfile,
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 livenessProbe,
                 readinessProbe,
                 securityContext,
-                new ConfigMap(configMapKeyValuePairs ?? new ChangeTrackingDictionary<string, string>(), default),
+                configMapKeyValuePairs is null ? default : new ConfigMap(configMapKeyValuePairs ?? new ChangeTrackingDictionary<string, string>(), default),
                 default), default);
         }
 
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 location,
                 elasticProfile is null && placementFaultDomainCount is null && containerGroupProfiles is null && provisioningState is null && updateProfile is null ? default : new NGroupProperties(
                     elasticProfile,
-                    new PlacementProfile(placementFaultDomainCount, default),
+                    placementFaultDomainCount is null ? default : new PlacementProfile(placementFaultDomainCount, default),
                     (containerGroupProfiles ?? new ChangeTrackingList<ContainerGroupProfileStub>()).ToList(),
                     provisioningState,
                     updateProfile,
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <returns> A new <see cref="Models.ContainerGroupElasticProfile"/> instance for mocking. </returns>
         public static ContainerGroupElasticProfile ContainerGroupElasticProfile(int? desiredCount = default, bool? maintainDesiredCount = default, string guidNamingPrefix = default)
         {
-            return new ContainerGroupElasticProfile(desiredCount, maintainDesiredCount, guidNamingPrefix is null ? default : new ElasticProfileContainerGroupNamingPolicy(new ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy(guidNamingPrefix, default), default), default);
+            return new ContainerGroupElasticProfile(desiredCount, maintainDesiredCount, guidNamingPrefix is null ? default : new ElasticProfileContainerGroupNamingPolicy(guidNamingPrefix is null ? default : new ElasticProfileContainerGroupNamingPolicyGuidNamingPolicy(guidNamingPrefix, default), default), default);
         }
 
         /// <param name="resourceId"> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </param>
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 systemData,
                 elasticProfile is null && placementFaultDomainCount is null && containerGroupProfiles is null && provisioningState is null && updateProfile is null ? default : new NGroupProperties(
                     elasticProfile,
-                    new PlacementProfile(placementFaultDomainCount, default),
+                    placementFaultDomainCount is null ? default : new PlacementProfile(placementFaultDomainCount, default),
                     (containerGroupProfiles ?? new ChangeTrackingList<ContainerGroupProfileStub>()).ToList(),
                     provisioningState,
                     updateProfile,
@@ -858,9 +858,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     timeToLive,
                     osType.GetValueOrDefault(),
                     (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
-                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
+                    diagnosticsLogAnalytics is null ? default : new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
                     priority,
-                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
+                    confidentialComputeCcePolicy is null ? default : new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
                     securityContext,
                     revision,
                     (registeredRevisions ?? new ChangeTrackingList<int>()).ToList(),
@@ -1126,14 +1126,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     default,
                     (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
                     instanceView,
-                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
+                    diagnosticsLogAnalytics is null ? default : new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
                     (subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>()).ToList(),
                     dnsConfig,
                     sku,
                     encryptionProperties,
                     (initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>()).ToList(),
                     (extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>()).ToList(),
-                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
+                    confidentialComputeCcePolicy is null ? default : new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
                     priority,
                     default,
                     default,
@@ -1200,14 +1200,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     containerGroupOSType,
                     (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
                     instanceView,
-                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
+                    diagnosticsLogAnalytics is null ? default : new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
                     (subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>()).ToList(),
                     dnsConfig,
                     sku,
                     encryptionProperties,
                     (initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>()).ToList(),
                     (extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>()).ToList(),
-                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
+                    confidentialComputeCcePolicy is null ? default : new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
                     priority,
                     identityAcls,
                     containerGroupProfile,
@@ -1244,7 +1244,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 location,
                 elasticProfile is null && placementFaultDomainCount is null && containerGroupProfiles is null && provisioningState is null && updateProfile is null ? default : new NGroupProperties(
                     elasticProfile,
-                    new PlacementProfile(placementFaultDomainCount, default),
+                    placementFaultDomainCount is null ? default : new PlacementProfile(placementFaultDomainCount, default),
                     (containerGroupProfiles ?? new ChangeTrackingList<ContainerGroupProfileStub>()).ToList(),
                     provisioningState,
                     updateProfile,
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 systemData,
                 elasticProfile is null && placementFaultDomainCount is null && containerGroupProfiles is null && provisioningState is null && updateProfile is null ? default : new NGroupProperties(
                     elasticProfile,
-                    new PlacementProfile(placementFaultDomainCount, default),
+                    placementFaultDomainCount is null ? default : new PlacementProfile(placementFaultDomainCount, default),
                     (containerGroupProfiles ?? new ChangeTrackingList<ContainerGroupProfileStub>()).ToList(),
                     provisioningState,
                     updateProfile,
@@ -1337,9 +1337,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     timeToLive,
                     osType.GetValueOrDefault(),
                     (volumes ?? new ChangeTrackingList<ContainerVolume>()).ToList(),
-                    new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
+                    diagnosticsLogAnalytics is null ? default : new ContainerGroupDiagnostics(diagnosticsLogAnalytics, default),
                     priority,
-                    new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
+                    confidentialComputeCcePolicy is null ? default : new ConfidentialComputeProperties(confidentialComputeCcePolicy, default),
                     securityContext,
                     revision,
                     (registeredRevisions ?? new ChangeTrackingList<int>()).ToList(),

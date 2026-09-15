@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             get
             {
-                return KeyPolicy is null ? default : KeyPolicy.KeyExpirationPeriodInDays;
+                return KeyPolicy is null ? (int?)default : KeyPolicy.KeyExpirationPeriodInDays;
             }
             set
             {
