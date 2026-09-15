@@ -70,7 +70,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The ProjectsAgentDefinition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HostedAgentDefinition"/>, <see cref="Agents.DeclarativeAgentDefinition"/>, <see cref="Agents.WorkflowAgentDefinition"/>, <see cref="Agents.ExternalAgentDefinition"/>, and <see cref="Agents.VoiceAgentDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.DeclarativeAgentDefinition"/>, <see cref="Agents.ExternalAgentDefinition"/>, <see cref="Agents.HostedAgentDefinition"/>, <see cref="Agents.VoiceAgentDefinition"/>, and <see cref="Agents.WorkflowAgentDefinition"/>.
         /// </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
@@ -506,7 +506,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Session-start greeting configuration for a voice agent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentTemplateGreetingConfig"/> and <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfig"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentLlmGeneratedGreetingConfig"/> and <see cref="Agents.VoiceAgentTemplateGreetingConfig"/>.
         /// </summary>
         /// <param name="type"> The greeting mode. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentGreetingConfig"/> instance for mocking. </returns>
@@ -575,7 +575,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Turn-detection configuration for a voice agent.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentServerVadTurnDetection"/>, <see cref="Agents.VoiceAgentAzureSemanticVadTurnDetection"/>, <see cref="Agents.VoiceAgentAzureSemanticVadEnTurnDetection"/>, <see cref="Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection"/>, and <see cref="Agents.VoiceAgentSemanticVadTurnDetection"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentAzureSemanticVadEnTurnDetection"/>, <see cref="Agents.VoiceAgentAzureSemanticVadMultilingualTurnDetection"/>, <see cref="Agents.VoiceAgentAzureSemanticVadTurnDetection"/>, <see cref="Agents.VoiceAgentSemanticVadTurnDetection"/>, and <see cref="Agents.VoiceAgentServerVadTurnDetection"/>.
         /// </summary>
         /// <param name="type"> The turn-detection strategy. </param>
         /// <param name="autoTruncate"> Whether the input audio buffer is truncated automatically when speech stops. </param>
@@ -842,7 +842,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Fields shared by interim-response configurations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentStaticInterimResponseConfig"/> and <see cref="Agents.VoiceAgentLlmInterimResponseConfig"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.VoiceAgentLlmInterimResponseConfig"/> and <see cref="Agents.VoiceAgentStaticInterimResponseConfig"/>.
         /// </summary>
         /// <param name="type"> The interim-response implementation. </param>
         /// <param name="triggers"> Conditions that may trigger one interim response. </param>
@@ -1285,7 +1285,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The AgentEndpointAuthorizationScheme.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.EntraAuthorizationScheme"/>, <see cref="Agents.BotServiceAuthorizationScheme"/>, <see cref="Agents.BotServiceRbacAuthorizationScheme"/>, and <see cref="Agents.BotServiceTenantAuthorizationScheme"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BotServiceAuthorizationScheme"/>, <see cref="Agents.BotServiceRbacAuthorizationScheme"/>, <see cref="Agents.BotServiceTenantAuthorizationScheme"/>, and <see cref="Agents.EntraAuthorizationScheme"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.AgentEndpointAuthorizationScheme"/> instance for mocking. </returns>
@@ -1367,7 +1367,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The ContainerSkill.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.SkillReferenceParam"/> and <see cref="OpenAI.InlineSkillParam"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.InlineSkillParam"/> and <see cref="OpenAI.SkillReferenceParam"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="OpenAI.ContainerSkill"/> instance for mocking. </returns>
@@ -2176,7 +2176,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A destination for a telephony transfer target.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.PSTNTelephonyTransferDestination"/>, <see cref="Agents.TeamsTelephonyTransferDestination"/>, and <see cref="Agents.SipTelephonyTransferDestination"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.PSTNTelephonyTransferDestination"/>, <see cref="Agents.SipTelephonyTransferDestination"/>, and <see cref="Agents.TeamsTelephonyTransferDestination"/>.
         /// </summary>
         /// <param name="kind"> The telephony transfer destination type. </param>
         /// <returns> A new <see cref="Agents.TelephonyTransferDestination"/> instance for mocking. </returns>
@@ -2586,7 +2586,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// An abstract representation of a tool stored in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="Agents.FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.FileSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.ToolSearchToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, and <see cref="Agents.WorkIQPreviewToolboxTool"/>.
         /// </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute
             return message;
         }
 
-        internal HttpMessage CreateGetVersionsRequest(string subscriptionId, AzureLocation location, string publisherName, string @type, string filter, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateGetVersionsRequest(string subscriptionId, AzureLocation location, string publisherName, string @type, string filter, int? top, string @orderby, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -123,6 +123,10 @@ namespace Azure.ResourceManager.Compute
             if (@orderby != null)
             {
                 uri.AppendQuery("$orderby", @orderby, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

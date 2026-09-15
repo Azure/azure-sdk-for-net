@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="sku"> IotHub SKU info. </param>
         /// <param name="identity"> The managed identities for the IotHub. </param>
         /// <returns> A new <see cref="IotHub.IotHubDescriptionData"/> instance for mocking. </returns>
-        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotHubProperties properties = default, ETag? eTag = default, IotHubSkuInfo sku = default, ManagedServiceIdentity identity = default)
+        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotHubProperties properties, ETag? eTag, IotHubSkuInfo sku, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="deviceRegistry"> Represents properties related to the Azure Device Registry (ADR). </param>
         /// <param name="iotHubDetailsGatewayVersion"> The IoT hub Gateway version. </param>
         /// <returns> A new <see cref="Models.IotHubProperties"/> instance for mocking. </returns>
-        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default, bool? disableLocalAuth = default, bool? disableDeviceSas = default, bool? disableModuleSas = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdns = default, IotHubPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<IotHubIPFilterRule> ipFilterRules = default, IotHubNetworkRuleSetProperties networkRuleSets = default, string minTlsVersion = default, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections = default, string provisioningState = default, string state = default, string hostName = default, string deviceHostName = default, string serviceHostName = default, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints = default, IotHubRoutingProperties routing = default, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints = default, IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default, bool? enableFileUploadNotifications = default, CloudToDeviceProperties cloudToDevice = default, string comments = default, IEnumerable<string> deviceStreamsStreamingEndpoints = default, IotHubCapability? features = default, IotHubEncryptionProperties encryption = default, IEnumerable<IotHubLocationDescription> locations = default, bool? enableDataResidency = default, IotHubRootCertificateProperties rootCertificate = default, IotHubIPVersion? ipVersion = default, IotHubDeviceRegistry deviceRegistry = default, IotHubGatewayVersion? iotHubDetailsGatewayVersion = default)
+        public static IotHubProperties IotHubProperties(IEnumerable<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IEnumerable<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IEnumerable<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IEnumerable<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, string deviceHostName, string serviceHostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IEnumerable<string> deviceStreamsStreamingEndpoints, IotHubCapability? features, IotHubEncryptionProperties encryption, IEnumerable<IotHubLocationDescription> locations, bool? enableDataResidency, IotHubRootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion, IotHubDeviceRegistry deviceRegistry = default, IotHubGatewayVersion? iotHubDetailsGatewayVersion = default)
         {
             authorizationPolicies ??= new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>();
             allowedFqdns ??= new ChangeTrackingList<string>();
@@ -918,7 +918,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="certificate"> The certificate content. </param>
         /// <param name="policyResourceId"> The reference to policy stored in Azure Device Registry (ADR). </param>
         /// <returns> A new <see cref="Models.IotHubCertificateProperties"/> instance for mocking. </returns>
-        public static IotHubCertificateProperties IotHubCertificateProperties(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, BinaryData certificate = default, ResourceIdentifier policyResourceId = default)
+        public static IotHubCertificateProperties IotHubCertificateProperties(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, BinaryData certificate, ResourceIdentifier policyResourceId)
         {
             return new IotHubCertificateProperties(
                 subject,
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="certificate"> The certificate content. </param>
         /// <param name="policyResourceId"> The reference to policy stored in Azure Device Registry (ADR). </param>
         /// <returns> A new <see cref="Models.IotHubCertificatePropertiesWithNonce"/> instance for mocking. </returns>
-        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isVerified = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string verificationCode = default, BinaryData certificate = default, ResourceIdentifier policyResourceId = default)
+        public static IotHubCertificatePropertiesWithNonce IotHubCertificatePropertiesWithNonce(string subject, DateTimeOffset? expireOn, string thumbprintString, bool? isVerified, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string verificationCode, BinaryData certificate, ResourceIdentifier policyResourceId)
         {
             return new IotHubCertificatePropertiesWithNonce(
                 subject,

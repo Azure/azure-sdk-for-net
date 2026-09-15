@@ -208,7 +208,7 @@ namespace Azure.AI.Projects.Agents
                         filters = null;
                         continue;
                     }
-                    filters = BinaryData.FromString(prop.Value.GetRawText());
+                    filters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("vector_store_ids"u8))
@@ -234,7 +234,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FileSearchToolboxTool(

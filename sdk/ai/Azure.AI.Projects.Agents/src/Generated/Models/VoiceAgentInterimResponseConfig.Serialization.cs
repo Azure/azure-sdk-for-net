@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Fields shared by interim-response configurations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentStaticInterimResponseConfig"/> and <see cref="VoiceAgentLlmInterimResponseConfig"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentLlmInterimResponseConfig"/> and <see cref="VoiceAgentStaticInterimResponseConfig"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVoiceAgentInterimResponseConfig))]
     public abstract partial class VoiceAgentInterimResponseConfig : IJsonModel<VoiceAgentInterimResponseConfig>
@@ -141,10 +141,10 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
-                    case "static_interim_response":
-                        return VoiceAgentStaticInterimResponseConfig.DeserializeVoiceAgentStaticInterimResponseConfig(element, options);
                     case "llm_interim_response":
                         return VoiceAgentLlmInterimResponseConfig.DeserializeVoiceAgentLlmInterimResponseConfig(element, options);
+                    case "static_interim_response":
+                        return VoiceAgentStaticInterimResponseConfig.DeserializeVoiceAgentStaticInterimResponseConfig(element, options);
                 }
             }
             return UnknownVoiceAgentInterimResponseConfig.DeserializeUnknownVoiceAgentInterimResponseConfig(element, options);

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Turn-detection configuration for a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentServerVadTurnDetection"/>, <see cref="VoiceAgentAzureSemanticVadTurnDetection"/>, <see cref="VoiceAgentAzureSemanticVadEnTurnDetection"/>, <see cref="VoiceAgentAzureSemanticVadMultilingualTurnDetection"/>, and <see cref="VoiceAgentSemanticVadTurnDetection"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentAzureSemanticVadEnTurnDetection"/>, <see cref="VoiceAgentAzureSemanticVadMultilingualTurnDetection"/>, <see cref="VoiceAgentAzureSemanticVadTurnDetection"/>, <see cref="VoiceAgentSemanticVadTurnDetection"/>, and <see cref="VoiceAgentServerVadTurnDetection"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVoiceAgentTurnDetectionConfig))]
     public abstract partial class VoiceAgentTurnDetectionConfig : IJsonModel<VoiceAgentTurnDetectionConfig>
@@ -131,16 +131,16 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
-                    case "server_vad":
-                        return VoiceAgentServerVadTurnDetection.DeserializeVoiceAgentServerVadTurnDetection(element, options);
-                    case "azure_semantic_vad":
-                        return VoiceAgentAzureSemanticVadTurnDetection.DeserializeVoiceAgentAzureSemanticVadTurnDetection(element, options);
                     case "azure_semantic_vad_en":
                         return VoiceAgentAzureSemanticVadEnTurnDetection.DeserializeVoiceAgentAzureSemanticVadEnTurnDetection(element, options);
                     case "azure_semantic_vad_multilingual":
                         return VoiceAgentAzureSemanticVadMultilingualTurnDetection.DeserializeVoiceAgentAzureSemanticVadMultilingualTurnDetection(element, options);
+                    case "azure_semantic_vad":
+                        return VoiceAgentAzureSemanticVadTurnDetection.DeserializeVoiceAgentAzureSemanticVadTurnDetection(element, options);
                     case "semantic_vad":
                         return VoiceAgentSemanticVadTurnDetection.DeserializeVoiceAgentSemanticVadTurnDetection(element, options);
+                    case "server_vad":
+                        return VoiceAgentServerVadTurnDetection.DeserializeVoiceAgentServerVadTurnDetection(element, options);
                 }
             }
             return UnknownVoiceAgentTurnDetectionConfig.DeserializeUnknownVoiceAgentTurnDetectionConfig(element, options);

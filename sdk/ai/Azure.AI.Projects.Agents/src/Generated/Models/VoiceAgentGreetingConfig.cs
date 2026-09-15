@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Session-start greeting configuration for a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentTemplateGreetingConfig"/> and <see cref="VoiceAgentLlmGeneratedGreetingConfig"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentLlmGeneratedGreetingConfig"/> and <see cref="VoiceAgentTemplateGreetingConfig"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class VoiceAgentGreetingConfig

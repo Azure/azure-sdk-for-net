@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             get
             {
-                return ConfidentialCompute is null ? default : ConfidentialCompute.Mode;
+                return ConfidentialCompute is null ? (EventGridConfidentialComputeMode?)default : ConfidentialCompute.Mode;
             }
             set
             {

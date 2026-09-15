@@ -311,7 +311,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// A base class for connection credentials
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AIProjectConnectionApiKeyCredential"/>, <see cref="Projects.AIProjectConnectionEntraIdCredential"/>, <see cref="Projects.AIProjectConnectionCustomCredential"/>, <see cref="Projects.AIProjectConnectionSasCredential"/>, <see cref="Projects.NoAuthenticationCredentials"/>, and <see cref="Projects.AgenticIdentityPreviewCredentials"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AIProjectConnectionApiKeyCredential"/>, <see cref="Projects.AIProjectConnectionCustomCredential"/>, <see cref="Projects.AIProjectConnectionEntraIdCredential"/>, <see cref="Projects.AIProjectConnectionSasCredential"/>, <see cref="Projects.AgenticIdentityPreviewCredentials"/>, and <see cref="Projects.NoAuthenticationCredentials"/>.
         /// </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <returns> A new <see cref="Projects.AIProjectConnectionBaseCredential"/> instance for mocking. </returns>
@@ -499,7 +499,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Index resource Definition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAISearchIndex"/>, <see cref="Projects.ManagedAzureAISearchIndex"/>, and <see cref="Projects.AIProjectCosmosDBIndex"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AIProjectCosmosDBIndex"/>, <see cref="Projects.AzureAISearchIndex"/>, and <see cref="Projects.ManagedAzureAISearchIndex"/>.
         /// </summary>
         /// <param name="type"> Type of index. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
@@ -1000,7 +1000,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base class for targets with discriminator support.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AzureAIModelTarget"/> and <see cref="Evaluation.AzureAIAgentTarget"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AzureAIAgentTarget"/> and <see cref="Evaluation.AzureAIModelTarget"/>.
         /// </summary>
         /// <param name="type"> The type of target. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationTarget"/> instance for mocking. </returns>
@@ -1155,7 +1155,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base evaluator configuration with discriminator
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>, <see cref="Projects.RubricBasedEvaluatorDefinition"/>, and <see cref="Evaluation.EndpointBasedEvaluatorDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CodeBasedEvaluatorDefinition"/>, <see cref="Evaluation.EndpointBasedEvaluatorDefinition"/>, <see cref="Evaluation.PromptBasedEvaluatorDefinition"/>, and <see cref="Projects.RubricBasedEvaluatorDefinition"/>.
         /// </summary>
         /// <param name="type"> The type of evaluator definition. </param>
         /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
@@ -1346,7 +1346,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The base source model for evaluator generation jobs. Polymorphic over `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.PromptEvaluatorGenerationJobSource"/>, <see cref="Projects.AgentEvaluatorGenerationJobSource"/>, <see cref="Projects.TracesEvaluatorGenerationJobSource"/>, and <see cref="Projects.DatasetEvaluatorGenerationJobSource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentEvaluatorGenerationJobSource"/>, <see cref="Projects.DatasetEvaluatorGenerationJobSource"/>, <see cref="Projects.PromptEvaluatorGenerationJobSource"/>, and <see cref="Projects.TracesEvaluatorGenerationJobSource"/>.
         /// </summary>
         /// <param name="type"> The type of source. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorGenerationJobSource"/> instance for mocking. </returns>
@@ -1473,7 +1473,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The request of the insights report.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationRunClusterInsightRequest"/>, <see cref="Evaluation.AgentClusterInsightRequest"/>, and <see cref="Evaluation.EvaluationComparisonInsightRequest"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AgentClusterInsightRequest"/>, <see cref="Evaluation.EvaluationComparisonInsightRequest"/>, and <see cref="Evaluation.EvaluationRunClusterInsightRequest"/>.
         /// </summary>
         /// <param name="type"> The type of request. </param>
         /// <returns> A new <see cref="Evaluation.InsightRequest"/> instance for mocking. </returns>
@@ -1530,7 +1530,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The result of the insights.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationComparisonInsightResult"/>, <see cref="Evaluation.EvaluationRunClusterInsightResult"/>, and <see cref="Evaluation.AgentClusterInsightResult"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AgentClusterInsightResult"/>, <see cref="Evaluation.EvaluationComparisonInsightResult"/>, and <see cref="Evaluation.EvaluationRunClusterInsightResult"/>.
         /// </summary>
         /// <param name="type"> The type of insights result. </param>
         /// <returns> A new <see cref="Evaluation.InsightResult"/> instance for mocking. </returns>
@@ -1806,7 +1806,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base model for Trigger of the schedule.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CronTrigger"/>, <see cref="Evaluation.RecurrenceTrigger"/>, and <see cref="Evaluation.OneTimeTrigger"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CronTrigger"/>, <see cref="Evaluation.OneTimeTrigger"/>, and <see cref="Evaluation.RecurrenceTrigger"/>.
         /// </summary>
         /// <param name="type"> Type of the trigger. </param>
         /// <returns> A new <see cref="Evaluation.ScheduleTrigger"/> instance for mocking. </returns>
@@ -1856,7 +1856,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Recurrence schedule model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.HourlyRecurrenceSchedule"/>, <see cref="Evaluation.DailyRecurrenceSchedule"/>, <see cref="Evaluation.WeeklyRecurrenceSchedule"/>, and <see cref="Evaluation.MonthlyRecurrenceSchedule"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.DailyRecurrenceSchedule"/>, <see cref="Evaluation.HourlyRecurrenceSchedule"/>, <see cref="Evaluation.MonthlyRecurrenceSchedule"/>, and <see cref="Evaluation.WeeklyRecurrenceSchedule"/>.
         /// </summary>
         /// <param name="type"> Recurrence type for the recurrence schedule. </param>
         /// <returns> A new <see cref="Evaluation.RecurrenceSchedule"/> instance for mocking. </returns>
@@ -2096,7 +2096,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// A single memory item stored in the memory store, containing content and metadata.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Memory.UserProfileMemoryItem"/>, <see cref="Memory.ChatSummaryMemoryItem"/>, and <see cref="Projects.ProceduralMemoryItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Memory.ChatSummaryMemoryItem"/>, <see cref="Projects.ProceduralMemoryItem"/>, and <see cref="Memory.UserProfileMemoryItem"/>.
         /// </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
         /// <param name="updatedAt"> The last update time of the memory item. </param>
@@ -2255,7 +2255,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base model for a routine trigger.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ScheduleRoutineTrigger"/>, <see cref="Projects.TimerRoutineTrigger"/>, <see cref="Projects.GitHubIssueRoutineTrigger"/>, and <see cref="Projects.CustomRoutineTrigger"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.CustomRoutineTrigger"/>, <see cref="Projects.GitHubIssueRoutineTrigger"/>, <see cref="Projects.ScheduleRoutineTrigger"/>, and <see cref="Projects.TimerRoutineTrigger"/>.
         /// </summary>
         /// <param name="type"> The trigger type. </param>
         /// <returns> A new <see cref="Projects.RoutineTrigger"/> instance for mocking. </returns>
@@ -2317,7 +2317,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base model for a routine action.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentResponsesApiRoutineAction"/> and <see cref="Projects.AgentInvocationsApiRoutineAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentInvocationsApiRoutineAction"/> and <see cref="Projects.AgentResponsesApiRoutineAction"/>.
         /// </summary>
         /// <param name="type"> The action type. </param>
         /// <returns> A new <see cref="Projects.RoutineAction"/> instance for mocking. </returns>
@@ -2447,7 +2447,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base model for a manual dispatch payload.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentResponsesApiDispatchPayload"/> and <see cref="Projects.AgentInvocationsApiDispatchPayload"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentInvocationsApiDispatchPayload"/> and <see cref="Projects.AgentResponsesApiDispatchPayload"/>.
         /// </summary>
         /// <param name="type"> The manual dispatch payload type. </param>
         /// <returns> A new <see cref="Projects.RoutineDispatchPayload"/> instance for mocking. </returns>
@@ -2509,7 +2509,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// The base source model for data generation jobs.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.PromptDataGenerationJobSource"/>, <see cref="Projects.AgentDataGenerationJobSource"/>, <see cref="Projects.TracesDataGenerationJobSource"/>, and <see cref="Projects.FileDataGenerationJobSource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentDataGenerationJobSource"/>, <see cref="Projects.FileDataGenerationJobSource"/>, <see cref="Projects.PromptDataGenerationJobSource"/>, and <see cref="Projects.TracesDataGenerationJobSource"/>.
         /// </summary>
         /// <param name="type"> The type of source. </param>
         /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
@@ -2579,7 +2579,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Options for managing data generation jobs.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobOptions"/>, <see cref="Projects.TracesDataGenerationJobOptions"/>, <see cref="Projects.SimulationSeedDataGenerationJobOptions"/>, and <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobOptions"/>, <see cref="Projects.SimulationSeedDataGenerationJobOptions"/>, <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/>, and <see cref="Projects.TracesDataGenerationJobOptions"/>.
         /// </summary>
         /// <param name="type"> The data generation job type. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
@@ -2688,7 +2688,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Output information for a data generation job.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.FileDataGenerationJobOutput"/> and <see cref="Projects.DatasetDataGenerationJobOutput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.DatasetDataGenerationJobOutput"/> and <see cref="Projects.FileDataGenerationJobOutput"/>.
         /// </summary>
         /// <param name="type"> The type of the output. </param>
         /// <returns> A new <see cref="Projects.DataGenerationJobOutput"/> instance for mocking. </returns>

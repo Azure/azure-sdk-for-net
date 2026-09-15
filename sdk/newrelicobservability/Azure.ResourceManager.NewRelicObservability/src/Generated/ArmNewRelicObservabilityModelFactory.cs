@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     newRelicAccountProperties,
                     userInfo,
                     planData,
-                    new NewRelicObservabilitySaaSInfo(saaSResourceId, default),
+                    saaSResourceId is null ? default : new NewRelicObservabilitySaaSInfo(saaSResourceId, default),
                     liftrResourceCategory,
                     liftrResourcePreference,
                     orgCreationSource,
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 newRelicAccountProperties,
                 userInfo,
                 planData,
-                new NewRelicObservabilitySaaSInfo(saaSResourceId, default),
+                saaSResourceId is null ? default : new NewRelicObservabilitySaaSInfo(saaSResourceId, default),
                 orgCreationSource,
                 accountCreationSource,
                 default), default);

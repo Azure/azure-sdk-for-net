@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Fields shared by interim-response configurations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentStaticInterimResponseConfig"/> and <see cref="VoiceAgentLlmInterimResponseConfig"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentLlmInterimResponseConfig"/> and <see cref="VoiceAgentStaticInterimResponseConfig"/>.
     /// </summary>
     public abstract partial class VoiceAgentInterimResponseConfig
     {

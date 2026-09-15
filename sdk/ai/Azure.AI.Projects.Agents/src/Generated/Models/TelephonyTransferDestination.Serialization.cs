@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A destination for a telephony transfer target.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PSTNTelephonyTransferDestination"/>, <see cref="TeamsTelephonyTransferDestination"/>, and <see cref="SipTelephonyTransferDestination"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PSTNTelephonyTransferDestination"/>, <see cref="SipTelephonyTransferDestination"/>, and <see cref="TeamsTelephonyTransferDestination"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTelephonyTransferDestination))]
     public abstract partial class TelephonyTransferDestination : IJsonModel<TelephonyTransferDestination>
@@ -128,10 +128,10 @@ namespace Azure.AI.Projects.Agents
                 {
                     case "pstn":
                         return PSTNTelephonyTransferDestination.DeserializePSTNTelephonyTransferDestination(element, options);
-                    case "teams":
-                        return TeamsTelephonyTransferDestination.DeserializeTeamsTelephonyTransferDestination(element, options);
                     case "sip":
                         return SipTelephonyTransferDestination.DeserializeSipTelephonyTransferDestination(element, options);
+                    case "teams":
+                        return TeamsTelephonyTransferDestination.DeserializeTeamsTelephonyTransferDestination(element, options);
                 }
             }
             return UnknownTelephonyTransferDestination.DeserializeUnknownTelephonyTransferDestination(element, options);

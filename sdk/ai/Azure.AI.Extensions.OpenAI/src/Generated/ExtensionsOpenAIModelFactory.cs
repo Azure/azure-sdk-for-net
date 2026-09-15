@@ -224,7 +224,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// authentication details for OpenApiFunctionDefinition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.OpenApiAnonymousAuthenticationDetails"/>, <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.OpenApiAnonymousAuthenticationDetails"/>, <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/>, and <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/>.
         /// </summary>
         /// <param name="kind"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <returns> A new <see cref="OpenAI.OpenApiAuthenticationDetails"/> instance for mocking. </returns>
@@ -1097,7 +1097,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// A single memory item stored in the memory store, containing content and metadata.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.UserProfileMemoryItem"/>, <see cref="OpenAI.ChatSummaryMemoryItem"/>, and <see cref="OpenAI.ProceduralMemoryItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ChatSummaryMemoryItem"/>, <see cref="OpenAI.ProceduralMemoryItem"/>, and <see cref="OpenAI.UserProfileMemoryItem"/>.
         /// </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
         /// <param name="updatedOn"> The last update time of the memory item. </param>

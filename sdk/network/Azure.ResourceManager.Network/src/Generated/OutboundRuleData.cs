@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (LoadBalancerOutboundRuleProtocol?)default : Properties.Protocol;
             }
             set
             {

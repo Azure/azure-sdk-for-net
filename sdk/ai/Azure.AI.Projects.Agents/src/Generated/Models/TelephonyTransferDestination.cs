@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A destination for a telephony transfer target.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PSTNTelephonyTransferDestination"/>, <see cref="TeamsTelephonyTransferDestination"/>, and <see cref="SipTelephonyTransferDestination"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PSTNTelephonyTransferDestination"/>, <see cref="SipTelephonyTransferDestination"/>, and <see cref="TeamsTelephonyTransferDestination"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class TelephonyTransferDestination

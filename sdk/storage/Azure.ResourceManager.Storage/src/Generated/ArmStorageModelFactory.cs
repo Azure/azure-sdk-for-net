@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage.Models
                 resourceType,
                 systemData,
                 corsRules is null && defaultServiceVersion is null && deleteRetentionPolicy is null && staticWebsite is null && isVersioningEnabled is null && isAutomaticSnapshotPolicyEnabled is null && changeFeed is null && restorePolicy is null && containerDeleteRetentionPolicy is null && lastAccessTimeTrackingPolicy is null ? default : new BlobServicePropertiesProperties(
-                    new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default),
+                    corsRules is null ? default : new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default),
                     defaultServiceVersion,
                     deleteRetentionPolicy,
                     staticWebsite,
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="name"> The storage account name. </param>
         /// <param name="resourceType"> The type of resource, Microsoft.Storage/storageAccounts. </param>
         /// <returns> A new <see cref="Models.StorageAccountNameAvailabilityContent"/> instance for mocking. </returns>
-        public static StorageAccountNameAvailabilityContent StorageAccountNameAvailabilityContent(string name = default, ResourceType resourceType = default)
+        public static StorageAccountNameAvailabilityContent StorageAccountNameAvailabilityContent(string name, ResourceType resourceType)
         {
             return new StorageAccountNameAvailabilityContent(name, resourceType, default);
         }
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Storage.Models
                     createdOn,
                     customDomain,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     keyCreationTime,
                     secondaryEndpoints,
                     encryption,
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Storage.Models
                     largeFileSharesState,
                     (privateEndpointConnections ?? new ChangeTrackingList<StoragePrivateEndpointConnectionData>()).ToList(),
                     routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
+                    isIPv6EndpointToBePublished is null ? default : new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
                     blobRestoreStatus,
                     allowBlobPublicAccess,
                     minimumTlsVersion,
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Storage.Models
                     dnsEndpointType,
                     isSkuConversionBlocked,
                     isAccountMigrationInProgress,
-                    new GeoPriorityReplicationStatus(isBlobEnabled, default),
+                    isBlobEnabled is null ? default : new GeoPriorityReplicationStatus(isBlobEnabled, default),
                     allowSharedKeyAccessForServices,
                     dataCollaborationPolicyProperties,
                     default),
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="key1"></param>
         /// <param name="key2"></param>
         /// <returns> A new <see cref="Models.StorageAccountKeyCreationTime"/> instance for mocking. </returns>
-        public static StorageAccountKeyCreationTime StorageAccountKeyCreationTime(DateTimeOffset? key1 = default, DateTimeOffset? key2 = default)
+        public static StorageAccountKeyCreationTime StorageAccountKeyCreationTime(DateTimeOffset? key1, DateTimeOffset? key2)
         {
             return new StorageAccountKeyCreationTime(key1, key2, default);
         }
@@ -682,14 +682,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
         /// <returns> A new <see cref="Storage.StoragePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StoragePrivateLinkServiceConnectionState connectionState = default, StoragePrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StoragePrivateLinkServiceConnectionState connectionState, StoragePrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId)
         {
             return new StoragePrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new StoragePrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new StoragePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.Storage.Models
                     allowedCopyScope,
                     publicNetworkAccess,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     customDomain,
                     encryption,
                     networkRuleSet,
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.Storage.Models
                     isHnsEnabled,
                     largeFileSharesState,
                     routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
+                    isIPv6EndpointToBePublished is null ? default : new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
                     allowBlobPublicAccess,
                     minimumTlsVersion,
                     allowSharedKeyAccess,
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.Storage.Models
                     isDefaultToOAuthAuthentication,
                     immutableStorageWithVersioning,
                     dnsEndpointType,
-                    new GeoPriorityReplicationStatus(isBlobEnabled, default),
+                    isBlobEnabled is null ? default : new GeoPriorityReplicationStatus(isBlobEnabled, default),
                     allowSharedKeyAccessForServices,
                     dataCollaborationPolicyProperties,
                     default),
@@ -924,7 +924,7 @@ namespace Azure.ResourceManager.Storage.Models
                     customDomain,
                     encryption,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     accessTier,
                     azureFilesIdentityBasedAuthentication,
                     enableHttpsTrafficOnly,
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.Storage.Models
                     networkRuleSet,
                     largeFileSharesState,
                     routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
+                    isIPv6EndpointToBePublished is null ? default : new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
                     allowBlobPublicAccess,
                     minimumTlsVersion,
                     allowSharedKeyAccess,
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.Storage.Models
                     immutableStorageWithVersioning,
                     allowedCopyScope,
                     dnsEndpointType,
-                    new GeoPriorityReplicationStatus(isBlobEnabled, default),
+                    isBlobEnabled is null ? default : new GeoPriorityReplicationStatus(isBlobEnabled, default),
                     allowSharedKeyAccessForServices,
                     dataCollaborationPolicyProperties,
                     default),
@@ -1141,14 +1141,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="corsRules"> The List of CORS rules. You can include up to five CorsRule elements in the request. </param>
         /// <param name="sku"> Sku name and tier. </param>
         /// <returns> A new <see cref="Storage.FileServiceData"/> instance for mocking. </returns>
-        public static FileServiceData FileServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeleteRetentionPolicy shareDeleteRetentionPolicy = default, FileServiceProtocolSettings protocolSettings = default, IEnumerable<StorageCorsRule> corsRules = default, StorageSku sku = default)
+        public static FileServiceData FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeleteRetentionPolicy shareDeleteRetentionPolicy, FileServiceProtocolSettings protocolSettings, IEnumerable<StorageCorsRule> corsRules, StorageSku sku)
         {
             return new FileServiceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                corsRules is null && shareDeleteRetentionPolicy is null && protocolSettings is null ? default : new FileServicePropertiesProperties(new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default), shareDeleteRetentionPolicy, protocolSettings, default),
+                corsRules is null && shareDeleteRetentionPolicy is null && protocolSettings is null ? default : new FileServicePropertiesProperties(corsRules is null ? default : new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default), shareDeleteRetentionPolicy, protocolSettings, default),
                 sku,
                 default);
         }
@@ -1158,7 +1158,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.FileServiceProtocolSettings"/> instance for mocking. </returns>
         public static FileServiceProtocolSettings FileServiceProtocolSettings(SmbSetting smbSetting = default, bool? isRequired = default)
         {
-            return new FileServiceProtocolSettings(smbSetting, isRequired is null ? default : new NfsSetting(new EncryptionInTransit(isRequired, default), default), default);
+            return new FileServiceProtocolSettings(smbSetting, isRequired is null ? default : new NfsSetting(isRequired is null ? default : new EncryptionInTransit(isRequired, default), default), default);
         }
 
         /// <param name="isMultiChannelEnabled"> Indicates whether multichannel is enabled. </param>
@@ -1283,7 +1283,7 @@ namespace Azure.ResourceManager.Storage.Models
                 name,
                 resourceType,
                 systemData,
-                corsRules is null ? default : new QueueServicePropertiesProperties(new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default), default),
+                corsRules is null ? default : new QueueServicePropertiesProperties(corsRules is null ? default : new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default), default),
                 default);
         }
 
@@ -1601,7 +1601,7 @@ namespace Azure.ResourceManager.Storage.Models
                 name,
                 resourceType,
                 systemData,
-                corsRules is null ? default : new TableServicePropertiesProperties(new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default), default),
+                corsRules is null ? default : new TableServicePropertiesProperties(corsRules is null ? default : new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default), default),
                 default);
         }
 
@@ -2225,9 +2225,9 @@ namespace Azure.ResourceManager.Storage.Models
                     sourceAccount,
                     destinationAccount,
                     (rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>()).ToList(),
-                    new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
-                    new ObjectReplicationPolicyPropertiesPriorityReplication(isPriorityReplicationEnabled, default),
-                    new ObjectReplicationPolicyPropertiesTagsReplication(isTagsReplicationEnabled, default),
+                    isMetricsEnabled is null ? default : new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
+                    isPriorityReplicationEnabled is null ? default : new ObjectReplicationPolicyPropertiesPriorityReplication(isPriorityReplicationEnabled, default),
+                    isTagsReplicationEnabled is null ? default : new ObjectReplicationPolicyPropertiesTagsReplication(isTagsReplicationEnabled, default),
                     default),
                 default);
         }
@@ -2459,7 +2459,7 @@ namespace Azure.ResourceManager.Storage.Models
                 name,
                 resourceType,
                 systemData,
-                corsRules is null && shareDeleteRetentionPolicy is null && protocolSmbSetting is null ? default : new FileServicePropertiesProperties(new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default), shareDeleteRetentionPolicy, new FileServiceProtocolSettings(protocolSmbSetting, default, default), default),
+                corsRules is null && shareDeleteRetentionPolicy is null && protocolSmbSetting is null ? default : new FileServicePropertiesProperties(corsRules is null ? default : new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default), shareDeleteRetentionPolicy, protocolSmbSetting is null ? default : new FileServiceProtocolSettings(protocolSmbSetting, default, default), default),
                 sku,
                 default);
         }
@@ -2531,7 +2531,7 @@ namespace Azure.ResourceManager.Storage.Models
                     allowedCopyScope,
                     publicNetworkAccess,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     customDomain,
                     encryption,
                     networkRuleSet,
@@ -2608,7 +2608,7 @@ namespace Azure.ResourceManager.Storage.Models
                     allowedCopyScope,
                     publicNetworkAccess,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     customDomain,
                     encryption,
                     networkRuleSet,
@@ -2688,7 +2688,7 @@ namespace Azure.ResourceManager.Storage.Models
                     allowedCopyScope,
                     publicNetworkAccess,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     customDomain,
                     encryption,
                     networkRuleSet,
@@ -2701,7 +2701,7 @@ namespace Azure.ResourceManager.Storage.Models
                     isHnsEnabled,
                     largeFileSharesState,
                     routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
+                    isIPv6EndpointToBePublished is null ? default : new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
                     allowBlobPublicAccess,
                     minimumTlsVersion,
                     allowSharedKeyAccess,
@@ -2714,6 +2714,27 @@ namespace Azure.ResourceManager.Storage.Models
                     default,
                     default,
                     default),
+                default);
+        }
+
+        /// <summary> The Private Endpoint Connection resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="privateEndpointId"></param>
+        /// <returns> A new <see cref="Storage.StoragePrivateEndpointConnectionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StoragePrivateLinkServiceConnectionState connectionState = default, StoragePrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        {
+            return new StoragePrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                connectionState is null && provisioningState is null ? default : new StoragePrivateEndpointConnectionProperties(default, connectionState, provisioningState, default),
                 default);
         }
 
@@ -2795,7 +2816,7 @@ namespace Azure.ResourceManager.Storage.Models
                     createdOn,
                     customDomain,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     keyCreationTime,
                     secondaryEndpoints,
                     encryption,
@@ -2812,7 +2833,7 @@ namespace Azure.ResourceManager.Storage.Models
                     largeFileSharesState,
                     (privateEndpointConnections ?? new ChangeTrackingList<StoragePrivateEndpointConnectionData>()).ToList(),
                     routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
+                    isIPv6EndpointToBePublished is null ? default : new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
                     blobRestoreStatus,
                     allowBlobPublicAccess,
                     minimumTlsVersion,
@@ -2827,8 +2848,8 @@ namespace Azure.ResourceManager.Storage.Models
                     dnsEndpointType,
                     isSkuConversionBlocked,
                     isAccountMigrationInProgress,
-                    new GeoPriorityReplicationStatus(isBlobEnabled, default),
-                    new StorageAccountSharedKeyAccessProperties(new ServiceSharedKeyAccessProperties(isBlobEnabled, default), default, default, default, default),
+                    isBlobEnabled is null ? default : new GeoPriorityReplicationStatus(isBlobEnabled, default),
+                    isBlobEnabled is null ? default : new StorageAccountSharedKeyAccessProperties(isBlobEnabled is null ? default : new ServiceSharedKeyAccessProperties(isBlobEnabled, default), default, default, default, default),
                     default,
                     default),
                 sku,
@@ -2883,7 +2904,7 @@ namespace Azure.ResourceManager.Storage.Models
                     customDomain,
                     encryption,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     accessTier,
                     azureFilesIdentityBasedAuthentication,
                     enableHttpsTrafficOnly,
@@ -2893,7 +2914,7 @@ namespace Azure.ResourceManager.Storage.Models
                     networkRuleSet,
                     largeFileSharesState,
                     routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
+                    isIPv6EndpointToBePublished is null ? default : new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
                     allowBlobPublicAccess,
                     minimumTlsVersion,
                     allowSharedKeyAccess,
@@ -2903,8 +2924,8 @@ namespace Azure.ResourceManager.Storage.Models
                     immutableStorageWithVersioning,
                     allowedCopyScope,
                     dnsEndpointType,
-                    new GeoPriorityReplicationStatus(isBlobEnabled, default),
-                    new StorageAccountSharedKeyAccessProperties(new ServiceSharedKeyAccessProperties(isBlobEnabled, default), default, default, default, default),
+                    isBlobEnabled is null ? default : new GeoPriorityReplicationStatus(isBlobEnabled, default),
+                    isBlobEnabled is null ? default : new StorageAccountSharedKeyAccessProperties(isBlobEnabled is null ? default : new ServiceSharedKeyAccessProperties(isBlobEnabled, default), default, default, default, default),
                     default,
                     default),
                 kind,
@@ -2940,8 +2961,8 @@ namespace Azure.ResourceManager.Storage.Models
                     sourceAccount,
                     destinationAccount,
                     (rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>()).ToList(),
-                    new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
-                    new ObjectReplicationPolicyPropertiesPriorityReplication(isPriorityReplicationEnabled, default),
+                    isMetricsEnabled is null ? default : new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
+                    isPriorityReplicationEnabled is null ? default : new ObjectReplicationPolicyPropertiesPriorityReplication(isPriorityReplicationEnabled, default),
                     default,
                     default),
                 default);
@@ -2972,7 +2993,7 @@ namespace Azure.ResourceManager.Storage.Models
                 resourceType,
                 systemData,
                 corsRules is null && defaultServiceVersion is null && deleteRetentionPolicy is null && isVersioningEnabled is null && isAutomaticSnapshotPolicyEnabled is null && changeFeed is null && restorePolicy is null && containerDeleteRetentionPolicy is null && lastAccessTimeTrackingPolicy is null ? default : new BlobServicePropertiesProperties(
-                    new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default),
+                    corsRules is null ? default : new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default),
                     defaultServiceVersion,
                     deleteRetentionPolicy,
                     default,
@@ -3019,7 +3040,7 @@ namespace Azure.ResourceManager.Storage.Models
                 name,
                 resourceType,
                 systemData,
-                corsRules is null && shareDeleteRetentionPolicy is null && protocolSettings is null ? default : new FileServicePropertiesProperties(new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default), shareDeleteRetentionPolicy, protocolSettings, default),
+                corsRules is null && shareDeleteRetentionPolicy is null && protocolSettings is null ? default : new FileServicePropertiesProperties(corsRules is null ? default : new StorageCorsRules((corsRules ?? new ChangeTrackingList<StorageCorsRule>()).ToList(), default), shareDeleteRetentionPolicy, protocolSettings, default),
                 sku,
                 default);
         }
@@ -3076,7 +3097,7 @@ namespace Azure.ResourceManager.Storage.Models
                     allowedCopyScope,
                     publicNetworkAccess,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     customDomain,
                     encryption,
                     networkRuleSet,
@@ -3089,7 +3110,7 @@ namespace Azure.ResourceManager.Storage.Models
                     isHnsEnabled,
                     largeFileSharesState,
                     routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
+                    isIPv6EndpointToBePublished is null ? default : new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
                     allowBlobPublicAccess,
                     minimumTlsVersion,
                     allowSharedKeyAccess,
@@ -3098,8 +3119,8 @@ namespace Azure.ResourceManager.Storage.Models
                     isDefaultToOAuthAuthentication,
                     immutableStorageWithVersioning,
                     dnsEndpointType,
-                    new GeoPriorityReplicationStatus(isBlobEnabled, default),
-                    new StorageAccountSharedKeyAccessProperties(new ServiceSharedKeyAccessProperties(isBlobEnabled, default), default, default, default, default),
+                    isBlobEnabled is null ? default : new GeoPriorityReplicationStatus(isBlobEnabled, default),
+                    isBlobEnabled is null ? default : new StorageAccountSharedKeyAccessProperties(isBlobEnabled is null ? default : new ServiceSharedKeyAccessProperties(isBlobEnabled, default), default, default, default, default),
                     default,
                     default),
                 default);
@@ -3183,7 +3204,7 @@ namespace Azure.ResourceManager.Storage.Models
                     createdOn,
                     customDomain,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     keyCreationTime,
                     secondaryEndpoints,
                     encryption,
@@ -3200,7 +3221,7 @@ namespace Azure.ResourceManager.Storage.Models
                     largeFileSharesState,
                     (privateEndpointConnections ?? new ChangeTrackingList<StoragePrivateEndpointConnectionData>()).ToList(),
                     routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
+                    isIPv6EndpointToBePublished is null ? default : new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
                     blobRestoreStatus,
                     allowBlobPublicAccess,
                     minimumTlsVersion,
@@ -3215,8 +3236,8 @@ namespace Azure.ResourceManager.Storage.Models
                     dnsEndpointType,
                     isSkuConversionBlocked,
                     isAccountMigrationInProgress,
-                    new GeoPriorityReplicationStatus(isBlobEnabled, default),
-                    new StorageAccountSharedKeyAccessProperties(new ServiceSharedKeyAccessProperties(isBlobEnabled, default), default, default, default, default),
+                    isBlobEnabled is null ? default : new GeoPriorityReplicationStatus(isBlobEnabled, default),
+                    isBlobEnabled is null ? default : new StorageAccountSharedKeyAccessProperties(isBlobEnabled is null ? default : new ServiceSharedKeyAccessProperties(isBlobEnabled, default), default, default, default, default),
                     default,
                     default),
                 sku,
@@ -3245,7 +3266,7 @@ namespace Azure.ResourceManager.Storage.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new StoragePrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new StoragePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -3415,7 +3436,7 @@ namespace Azure.ResourceManager.Storage.Models
                     createdOn,
                     customDomain,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     keyCreationTime,
                     secondaryEndpoints,
                     encryption,
@@ -3432,7 +3453,7 @@ namespace Azure.ResourceManager.Storage.Models
                     largeFileSharesState,
                     (privateEndpointConnections ?? new ChangeTrackingList<StoragePrivateEndpointConnectionData>()).ToList(),
                     routingPreference,
-                    new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
+                    isIPv6EndpointToBePublished is null ? default : new DualStackEndpointPreference(isIPv6EndpointToBePublished, default),
                     blobRestoreStatus,
                     allowBlobPublicAccess,
                     minimumTlsVersion,
@@ -3486,7 +3507,7 @@ namespace Azure.ResourceManager.Storage.Models
                     sourceAccount,
                     destinationAccount,
                     (rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>()).ToList(),
-                    new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
+                    isMetricsEnabled is null ? default : new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, default),
                     default,
                     default,
                     default),
@@ -3591,7 +3612,7 @@ namespace Azure.ResourceManager.Storage.Models
                     createdOn,
                     customDomain,
                     sasPolicy,
-                    new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
+                    keyExpirationPeriodInDays is null ? default : new KeyPolicy(keyExpirationPeriodInDays.GetValueOrDefault(), default),
                     keyCreationTime,
                     secondaryEndpoints,
                     encryption,

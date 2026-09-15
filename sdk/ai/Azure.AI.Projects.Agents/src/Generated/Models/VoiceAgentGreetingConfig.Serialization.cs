@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Session-start greeting configuration for a voice agent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentTemplateGreetingConfig"/> and <see cref="VoiceAgentLlmGeneratedGreetingConfig"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceAgentLlmGeneratedGreetingConfig"/> and <see cref="VoiceAgentTemplateGreetingConfig"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVoiceAgentGreetingConfig))]
     public abstract partial class VoiceAgentGreetingConfig : IJsonModel<VoiceAgentGreetingConfig>
@@ -126,10 +126,10 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
-                    case "template":
-                        return VoiceAgentTemplateGreetingConfig.DeserializeVoiceAgentTemplateGreetingConfig(element, options);
                     case "llm_generated":
                         return VoiceAgentLlmGeneratedGreetingConfig.DeserializeVoiceAgentLlmGeneratedGreetingConfig(element, options);
+                    case "template":
+                        return VoiceAgentTemplateGreetingConfig.DeserializeVoiceAgentTemplateGreetingConfig(element, options);
                 }
             }
             return UnknownVoiceAgentGreetingConfig.DeserializeUnknownVoiceAgentGreetingConfig(element, options);
