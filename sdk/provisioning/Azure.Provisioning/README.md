@@ -140,6 +140,34 @@ ProvisioningParameter parameter = new(nameof(parameter), typeof(object));
 BicepDictionary<string> dynamicTags = parameter;
 ```
 
+#### Free-form JSON and Bicep values
+
+Properties typed as `BicepValue<BinaryData>` treat an absent media type or
+`application/json` as JSON. The JSON is validated and emitted through Bicep's
+`json(...)` function.
+
+```C#
+resource.Settings = BinaryData.FromObjectAsJson(new
+{
+    enabled = true,
+    retryCount = 3
+});
+```
+
+To deliberately supply a raw Bicep value expression, set the media type to
+`text/vnd.microsoft.bicep`. This Azure.Provisioning-specific media type accepts
+UTF-8 content and an optional `charset=utf-8` parameter.
+
+```C#
+resource.Settings = BinaryData.FromString(
+    "{ enabled: featureFlag, endpoint: storageAccount.properties.primaryEndpoints.blob }",
+    "text/vnd.microsoft.bicep");
+```
+
+Other explicitly set media types are rejected. Invalid JSON never falls back
+to raw Bicep. Raw Bicep is caller-controlled source, so prefer structured
+provisioning values when available and do not interpolate untrusted input.
+
 #### Working with Azure Resources
 
 **`ProvisionableResource`** - Base class for Azure resources that provides resource-specific functionality. Users typically work with specific resource types like `StorageAccount`, `VirtualNetwork`, `WebSite`, etc. An instance of type `ProvisionableResource` corresponds to a resource statement in `bicep` language.
@@ -476,4 +504,3 @@ more information, see the [Code of Conduct FAQ][coc_faq] or contact
 [cg]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/CONTRIBUTING.md
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-

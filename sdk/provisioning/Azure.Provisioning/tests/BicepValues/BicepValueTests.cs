@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Provisioning.Primitives;
@@ -168,6 +169,160 @@ public class BicepValueTests
         // float value with whole numbers
         TestHelpers.AssertExpression("314", new BicepValue<float>(314f));
         TestHelpers.AssertExpression("0", new BicepValue<float>(0f));
+    }
+
+    [Test]
+    public void ValidateBinaryDataJsonPrimitiveBicepValues()
+    {
+        TestHelpers.AssertExpression("json('\"plain string\"')", new BicepValue<BinaryData>(BinaryData.FromString("\"plain string\"")));
+        TestHelpers.AssertExpression("json('true')", new BicepValue<BinaryData>(BinaryData.FromString("true")));
+        TestHelpers.AssertExpression("json('false')", new BicepValue<BinaryData>(BinaryData.FromString("false")));
+        TestHelpers.AssertExpression("json('null')", new BicepValue<BinaryData>(BinaryData.FromString("null")));
+        TestHelpers.AssertExpression("json('42')", new BicepValue<BinaryData>(BinaryData.FromString("42")));
+        TestHelpers.AssertExpression("json('-2147483649')", new BicepValue<BinaryData>(BinaryData.FromString("-2147483649")));
+        TestHelpers.AssertExpression("json('3.14')", new BicepValue<BinaryData>(BinaryData.FromString("3.14")));
+    }
+
+    [Test]
+    public void ValidateBinaryDataJsonMediaTypes()
+    {
+        const string json = """{"name":"value"}""";
+        TestHelpers.AssertExpression("""json('{"name":"value"}')""", new BicepValue<BinaryData>(BinaryData.FromString(json)));
+        TestHelpers.AssertExpression("""json('{"name":"value"}')""", new BicepValue<BinaryData>(BinaryData.FromString(json, "application/json")));
+        TestHelpers.AssertExpression("""json('{"name":"value"}')""", new BicepValue<BinaryData>(BinaryData.FromString(json, """ Application/JSON ; charset="UTF-8" """)));
+    }
+
+    [Test]
+    public void ValidateBinaryDataJsonPreservesSerializedDocument()
+    {
+        BinaryData data = BinaryData.FromObjectAsJson(new
+        {
+            accountName = "mystorageaccount",
+            enabled = true,
+            values = new[] { "a", "b" },
+            nothing = (string?)null
+        });
+
+        TestHelpers.AssertExpression(
+            """json('{"accountName":"mystorageaccount","enabled":true,"values":["a","b"],"nothing":null}')""",
+            new BicepValue<BinaryData>(data));
+    }
+
+    [Test]
+    public void ValidateBinaryDataJsonEscapesBicepStringCharacters()
+    {
+        TestHelpers.AssertExpression(
+            """json('{"text":"it\'s \${literal}\\\\path"}')""",
+            new BicepValue<BinaryData>(BinaryData.FromString(
+                """{"text":"it's ${literal}\\path"}""")));
+    }
+
+    [Test]
+    public void ValidateBicepMediaTypeEmitsRawExpression()
+    {
+        TestHelpers.AssertExpression("true", new BicepValue<BinaryData>(BinaryData.FromString("true", "text/vnd.microsoft.bicep")));
+        TestHelpers.AssertExpression("{ enabled: featureFlag }", new BicepValue<BinaryData>(BinaryData.FromString("{ enabled: featureFlag }", """ Text/Vnd.Microsoft.Bicep ; charset="utf-8" """)));
+        TestHelpers.AssertExpression("union(defaults, overrides)", new BicepValue<BinaryData>(BinaryData.FromString("union(defaults, overrides)", "text/vnd.microsoft.bicep")));
+    }
+
+    [Test]
+    public void ValidateBinaryDataMediaTypeDispatchThroughGeneratedProperty()
+    {
+        BinaryDataResource resource = new("resource");
+        resource.Value = BinaryData.FromString("""{"enabled":true}""", "application/json");
+        TestHelpers.AssertExpression("""json('{"enabled":true}')""", resource.Value);
+
+        resource.Value = BinaryData.FromString("{ enabled: featureFlag }", "text/vnd.microsoft.bicep");
+        TestHelpers.AssertExpression("{ enabled: featureFlag }", resource.Value);
+    }
+
+    [Test]
+    public async Task ValidateRawBicepBinaryDataInTemplate()
+    {
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                ProvisioningParameter featureFlag = new(nameof(featureFlag), typeof(bool));
+                infra.Add(featureFlag);
+                infra.Add(new BinaryDataResource("resource")
+                {
+                    Name = "binary-data",
+                    Value = BinaryData.FromString("{ enabled: featureFlag }", "text/vnd.microsoft.bicep")
+                });
+                return infra;
+            })
+            .Compare(
+                """
+                param featureFlag bool
+
+                resource resource 'Test.Provider/binaryDataResources@2024-01-01' = {
+                  name: 'binary-data'
+                  properties: {
+                    value: { enabled: featureFlag }
+                  }
+                }
+                """);
+    }
+
+    [Test]
+    public void ValidateInvalidJsonBinaryDataThrowsJsonException()
+    {
+        foreach (BinaryData data in new[]
+        {
+            BinaryData.FromString("plain string"),
+            BinaryData.FromString("{", "application/json"),
+            BinaryData.FromString("{} trailing", "application/json"),
+            BinaryData.FromBytes([0xFF], "application/json")
+        })
+        {
+            Assert.Catch<JsonException>(() => new BicepValue<BinaryData>(data).Compile());
+        }
+    }
+
+    [TestCase("")]
+    [TestCase("text/plain")]
+    [TestCase("application/xml")]
+    [TestCase("application/octet-stream")]
+    [TestCase("application/jsonp")]
+    [TestCase("application/problem+json")]
+    [TestCase("application/json; charset=utf-16")]
+    [TestCase("text/bicep")]
+    [TestCase("text/vnd.microsoft.bicep; version=1")]
+    public void ValidateUnsupportedBinaryDataMediaTypeThrows(string mediaType)
+    {
+        InvalidOperationException? exception = Assert.Catch<InvalidOperationException>(
+            () => new BicepValue<BinaryData>(BinaryData.FromString("{}", mediaType)).Compile());
+
+        Assert.That(exception!.Message, Does.Contain(mediaType));
+        Assert.That(exception.Message, Does.Not.Contain("{}"));
+    }
+
+    [Test]
+    public void ValidateBicepBinaryDataRequiresUtf8()
+    {
+        InvalidOperationException? exception = Assert.Catch<InvalidOperationException>(
+            () => new BicepValue<BinaryData>(BinaryData.FromBytes([0xFF], "text/vnd.microsoft.bicep")).Compile());
+
+        Assert.That(exception!.Message, Does.Contain("not valid UTF-8"));
+    }
+
+    [Test]
+    public void ValidateBinaryDataWithBase64FormatCompilesToBase64String()
+    {
+        BinaryDataResource resource = new("resource");
+        resource.Blob = BinaryData.FromString("\"not-json-anymore\"");
+        TestHelpers.AssertExpression("'Im5vdC1qc29uLWFueW1vcmUi'", resource.Blob);
+
+        resource.Blob = BinaryData.FromString("""{"name":"value"}""");
+        TestHelpers.AssertExpression("'eyJuYW1lIjoidmFsdWUifQ=='", resource.Blob);
+
+        resource.Blob = BinaryData.FromString("AQIDBA==");
+        TestHelpers.AssertExpression("'QVFJREJBPT0='", resource.Blob);
+
+        resource.Blob = BinaryData.FromBytes([1, 2, 3, 4], "application/octet-stream");
+        TestHelpers.AssertExpression("'AQIDBA=='", resource.Blob);
     }
 
     [Test]
@@ -518,6 +673,44 @@ public class BicepValueTests
                   }
                 }
                 """);
+    }
+
+    private class BinaryDataResource : ProvisionableResource
+    {
+        private BicepValue<string>? _name;
+        private BicepValue<BinaryData>? _value;
+        private BicepValue<BinaryData>? _blob;
+
+        public BicepValue<string> Name
+        {
+            get { Initialize(); return _name!; }
+            set { Initialize(); _name!.Assign(value); }
+        }
+
+        public BicepValue<BinaryData> Value
+        {
+            get { Initialize(); return _value!; }
+            set { Initialize(); _value!.Assign(value); }
+        }
+
+        public BicepValue<BinaryData> Blob
+        {
+            get { Initialize(); return _blob!; }
+            set { Initialize(); _blob!.Assign(value); }
+        }
+
+        public BinaryDataResource(string bicepIdentifier)
+            : base(bicepIdentifier, "Test.Provider/binaryDataResources", "2024-01-01")
+        {
+        }
+
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+            _value = DefineProperty<BinaryData>("Value", ["properties", "value"]);
+            _blob = DefineProperty<BinaryData>("Blob", ["properties", "blob"], format: "base64");
+        }
     }
 
     private class DateTimeCollectionResource : ProvisionableResource
