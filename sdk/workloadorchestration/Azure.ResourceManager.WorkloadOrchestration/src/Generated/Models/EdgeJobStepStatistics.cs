@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary>
     /// Base Job Step Statistics
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeployJobStepStatistics"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeployJobStepStatistics"/>, <see cref="PublishJobStepStatistics"/>, and <see cref="UninstallJobStepStatistics"/>.
     /// </summary>
     public abstract partial class EdgeJobStepStatistics
     {

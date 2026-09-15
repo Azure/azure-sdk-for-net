@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 throw new FormatException($"The model {nameof(EdgeDiagnosticPatchProperties)} does not support writing '{format}' format.");
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -116,15 +121,25 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
+            WorkloadOrchestrationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new WorkloadOrchestrationProvisioningState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EdgeDiagnosticPatchProperties(additionalBinaryDataProperties);
+            return new EdgeDiagnosticPatchProperties(provisioningState, additionalBinaryDataProperties);
         }
     }
 }

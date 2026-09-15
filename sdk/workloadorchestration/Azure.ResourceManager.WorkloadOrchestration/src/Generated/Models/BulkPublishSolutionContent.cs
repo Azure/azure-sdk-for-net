@@ -33,12 +33,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="targets"> Targets to which solution needs to be published. </param>
         /// <param name="solutionInstanceName"> Name of the solution instance. </param>
         /// <param name="solutionDependencies"> Solution dependencies. </param>
+        /// <param name="solutionConfiguration"> Configuration of solution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkPublishSolutionContent(IList<BulkPublishTargetDetails> targets, string solutionInstanceName, IList<EdgeSolutionDependencyContent> solutionDependencies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkPublishSolutionContent(IList<BulkPublishTargetDetails> targets, string solutionInstanceName, IList<EdgeSolutionDependencyContent> solutionDependencies, string solutionConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Targets = targets;
             SolutionInstanceName = solutionInstanceName;
             SolutionDependencies = solutionDependencies;
+            SolutionConfiguration = solutionConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,5 +52,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Solution dependencies. </summary>
         public IList<EdgeSolutionDependencyContent> SolutionDependencies { get; }
+
+        /// <summary> Configuration of solution. </summary>
+        public string SolutionConfiguration { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-directory: specification/edge/Microsoft.Edge.ConfigurationManager.Management
-commit: 1959975cadf9c431731ba5f0b95360141fbae06c
+directory: specification/edge/resource-manager/Microsoft.Edge/configurationmanager
+commit: 87095c76a9f446a727997d12597e59c57a1bb62a
 repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
