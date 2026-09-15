@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- The mTLS proof-of-possession APIs on `BearerTokenAuthenticationPolicy` and `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` are no longer experimental and no longer require `AZID0004` suppression.
+
 ### Breaking Changes
 
 ### Bugs Fixed
