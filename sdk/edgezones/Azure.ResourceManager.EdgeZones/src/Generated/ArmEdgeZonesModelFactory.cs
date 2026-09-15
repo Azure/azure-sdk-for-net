@@ -17,24 +17,6 @@ namespace Azure.ResourceManager.EdgeZones.Models
     public static partial class ArmEdgeZonesModelFactory
     {
 
-        /// <summary> Resource that represents an Azure Extended Zone available to a subscription for registering and unregistering. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="EdgeZones.ExtendedZoneData"/> instance for mocking. </returns>
-        public static ExtendedZoneData ExtendedZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExtendedZoneProperties properties = default)
-        {
-            return new ExtendedZoneData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> The properties of an Extended Zone resource. </summary>
         /// <param name="provisioningState"> Status of the last operation performed by the subscription on the Edge Zone resource. </param>
         /// <param name="registrationState"> Indicates the Azure Extended Zone registration’s approval status. </param>
@@ -62,6 +44,24 @@ namespace Azure.ResourceManager.EdgeZones.Models
                 longitude,
                 latitude,
                 homeLocation,
+                default);
+        }
+
+        /// <summary> Resource that represents an Azure Extended Zone available to a subscription for registering and unregistering. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="EdgeZones.ExtendedZoneData"/> instance for mocking. </returns>
+        public static ExtendedZoneData ExtendedZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExtendedZoneProperties properties = default)
+        {
+            return new ExtendedZoneData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
     }

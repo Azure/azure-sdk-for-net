@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.Education.Models
             return new EducationRedeemContent(redeemCode, firstName, lastName, default);
         }
 
+        /// <summary> The amount. </summary>
+        /// <param name="currency"> The type of currency being used for the value. </param>
+        /// <param name="value"> Amount value. </param>
+        /// <returns> A new <see cref="Models.EducationAmount"/> instance for mocking. </returns>
+        public static EducationAmount EducationAmount(string currency = default, float? value = default)
+        {
+            return new EducationAmount(currency, value, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -53,15 +62,6 @@ namespace Azure.ResourceManager.Education.Models
                     allocatedBudget,
                     default),
                 default);
-        }
-
-        /// <summary> The amount. </summary>
-        /// <param name="currency"> The type of currency being used for the value. </param>
-        /// <param name="value"> Amount value. </param>
-        /// <returns> A new <see cref="Models.EducationAmount"/> instance for mocking. </returns>
-        public static EducationAmount EducationAmount(string currency = default, float? value = default)
-        {
-            return new EducationAmount(currency, value, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

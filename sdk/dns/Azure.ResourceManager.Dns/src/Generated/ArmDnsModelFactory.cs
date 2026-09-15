@@ -18,25 +18,6 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDnsModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Provisioning State of the DNSSEC configuration. </param>
-        /// <param name="signingKeys"> The list of signing keys. </param>
-        /// <param name="eTag"> The etag of the DNSSEC configuration. </param>
-        /// <returns> A new <see cref="Dns.DnssecConfigData"/> instance for mocking. </returns>
-        public static DnssecConfigData DnssecConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, IEnumerable<DnsSigningKey> signingKeys = default, ETag? eTag = default)
-        {
-            return new DnssecConfigData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && signingKeys is null ? default : new DnssecProperties(provisioningState, (signingKeys ?? new ChangeTrackingList<DnsSigningKey>()).ToList(), default),
-                eTag,
-                default);
-        }
 
         /// <summary> Represents the signing key. </summary>
         /// <param name="delegationSignerInfo"> The delegation signer information. </param>
@@ -68,6 +49,75 @@ namespace Azure.ResourceManager.Dns.Models
         public static DelegationSignerInfo DelegationSignerInfo(int? digestAlgorithmType = default, string digestValue = default, string @record = default)
         {
             return new DelegationSignerInfo(digestAlgorithmType, digestValue, @record, default);
+        }
+
+        /// <summary> A reference to a another resource. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <returns> A new <see cref="Models.DnsSubResourceInfo"/> instance for mocking. </returns>
+        public static DnsSubResourceInfo DnsSubResourceInfo(ResourceIdentifier id = default)
+        {
+            return new DnsSubResourceInfo(id, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="maxNumberOfRecords"> The maximum number of record sets that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="maxNumberOfRecordsPerRecord"> The maximum number of records per record set that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="numberOfRecords"> The current number of record sets in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="nameServers"> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
+        /// <param name="registrationVirtualNetworkReferences"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="resolutionVirtualNetworkReferences"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="signingKeys"> The list of signing keys. </param>
+        /// <param name="eTag"> The etag of the zone. </param>
+        /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
+        public static DnsZoneData DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IEnumerable<string> nameServers, DnsZoneType? zoneType, IEnumerable<DnsSubResourceInfo> registrationVirtualNetworkReferences, IEnumerable<DnsSubResourceInfo> resolutionVirtualNetworkReferences, IEnumerable<DnsSigningKey> signingKeys, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DnsZoneData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                maxNumberOfRecords is null && maxNumberOfRecordsPerRecord is null && numberOfRecords is null && nameServers is null && zoneType is null && registrationVirtualNetworkReferences is null && resolutionVirtualNetworkReferences is null && signingKeys is null ? default : new ZoneProperties(
+                    maxNumberOfRecords,
+                    maxNumberOfRecordsPerRecord,
+                    numberOfRecords,
+                    (nameServers ?? new ChangeTrackingList<string>()).ToList(),
+                    zoneType,
+                    (registrationVirtualNetworkReferences ?? new ChangeTrackingList<DnsSubResourceInfo>()).ToList(),
+                    (resolutionVirtualNetworkReferences ?? new ChangeTrackingList<DnsSubResourceInfo>()).ToList(),
+                    (signingKeys ?? new ChangeTrackingList<DnsSigningKey>()).ToList(),
+                    default),
+                eTag,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning State of the DNSSEC configuration. </param>
+        /// <param name="signingKeys"> The list of signing keys. </param>
+        /// <param name="eTag"> The etag of the DNSSEC configuration. </param>
+        /// <returns> A new <see cref="Dns.DnssecConfigData"/> instance for mocking. </returns>
+        public static DnssecConfigData DnssecConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, IEnumerable<DnsSigningKey> signingKeys = default, ETag? eTag = default)
+        {
+            return new DnssecConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && signingKeys is null ? default : new DnssecProperties(provisioningState, (signingKeys ?? new ChangeTrackingList<DnsSigningKey>()).ToList(), default),
+                eTag,
+                default);
         }
 
         /// <param name="metadata"> The metadata attached to the record set. </param>
@@ -126,14 +176,6 @@ namespace Azure.ResourceManager.Dns.Models
                 (dnsTlsaRecords ?? new ChangeTrackingList<DnsTlsaRecordInfo>()).ToList(),
                 (dnsNaptrRecords ?? new ChangeTrackingList<DnsNaptrRecordInfo>()).ToList(),
                 default);
-        }
-
-        /// <summary> A reference to a another resource. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <returns> A new <see cref="Models.DnsSubResourceInfo"/> instance for mocking. </returns>
-        public static DnsSubResourceInfo DnsSubResourceInfo(ResourceIdentifier id = default)
-        {
-            return new DnsSubResourceInfo(id, default);
         }
 
         /// <summary> An MX record. </summary>
@@ -261,47 +303,6 @@ namespace Azure.ResourceManager.Dns.Models
                 services,
                 regexp,
                 replacement,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="maxNumberOfRecords"> The maximum number of record sets that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="maxNumberOfRecordsPerRecord"> The maximum number of records per record set that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="numberOfRecords"> The current number of record sets in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="nameServers"> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
-        /// <param name="registrationVirtualNetworkReferences"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
-        /// <param name="resolutionVirtualNetworkReferences"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
-        /// <param name="signingKeys"> The list of signing keys. </param>
-        /// <param name="eTag"> The etag of the zone. </param>
-        /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
-        public static DnsZoneData DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IEnumerable<string> nameServers, DnsZoneType? zoneType, IEnumerable<DnsSubResourceInfo> registrationVirtualNetworkReferences, IEnumerable<DnsSubResourceInfo> resolutionVirtualNetworkReferences, IEnumerable<DnsSigningKey> signingKeys, ETag? eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DnsZoneData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                maxNumberOfRecords is null && maxNumberOfRecordsPerRecord is null && numberOfRecords is null && nameServers is null && zoneType is null && registrationVirtualNetworkReferences is null && resolutionVirtualNetworkReferences is null && signingKeys is null ? default : new ZoneProperties(
-                    maxNumberOfRecords,
-                    maxNumberOfRecordsPerRecord,
-                    numberOfRecords,
-                    (nameServers ?? new ChangeTrackingList<string>()).ToList(),
-                    zoneType,
-                    (registrationVirtualNetworkReferences ?? new ChangeTrackingList<DnsSubResourceInfo>()).ToList(),
-                    (resolutionVirtualNetworkReferences ?? new ChangeTrackingList<DnsSubResourceInfo>()).ToList(),
-                    (signingKeys ?? new ChangeTrackingList<DnsSigningKey>()).ToList(),
-                    default),
-                eTag,
                 default);
         }
 

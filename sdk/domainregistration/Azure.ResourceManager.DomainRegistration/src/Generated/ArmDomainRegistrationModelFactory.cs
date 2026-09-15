@@ -18,71 +18,6 @@ namespace Azure.ResourceManager.DomainRegistration.Models
     public static partial class ArmDomainRegistrationModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="contactAdmin"> Administrative contact. </param>
-        /// <param name="contactBilling"> Billing contact. </param>
-        /// <param name="contactRegistrant"> Registrant contact. </param>
-        /// <param name="contactTech"> Technical contact. </param>
-        /// <param name="registrationStatus"> Domain registration status. </param>
-        /// <param name="provisioningState"> Domain provisioning state. </param>
-        /// <param name="nameServers"> Name servers. </param>
-        /// <param name="isDomainPrivacyEnabled"> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="createdOn"> Domain creation timestamp. </param>
-        /// <param name="expiresOn"> Domain expiration timestamp. </param>
-        /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
-        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isDnsRecordManagementReady"> &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and \n it is hosted on name servers Azure has programmatic access to. </param>
-        /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
-        /// <param name="consent"> Legal agreement consent. </param>
-        /// <param name="domainNotRenewableReasons"> Reasons why domain is not renewable. </param>
-        /// <param name="dnsType"> Current DNS type. </param>
-        /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
-        /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
-        /// <param name="authCode"> Authorization code for the domain. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="DomainRegistration.AppServiceDomainData"/> instance for mocking. </returns>
-        public static AppServiceDomainData AppServiceDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isDnsRecordManagementReady = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, ResourceIdentifier dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default, string kind = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AppServiceDomainData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                contactAdmin is null && contactBilling is null && contactRegistrant is null && contactTech is null && registrationStatus is null && provisioningState is null && nameServers is null && isDomainPrivacyEnabled is null && createdOn is null && expiresOn is null && lastRenewedOn is null && isAutoRenew is null && isDnsRecordManagementReady is null && managedHostNames is null && consent is null && domainNotRenewableReasons is null && dnsType is null && dnsZoneId is null && targetDnsType is null && authCode is null ? default : new DomainProperties(
-                    contactAdmin,
-                    contactBilling,
-                    contactRegistrant,
-                    contactTech,
-                    registrationStatus,
-                    provisioningState,
-                    (nameServers ?? new ChangeTrackingList<string>()).ToList(),
-                    isDomainPrivacyEnabled,
-                    createdOn,
-                    expiresOn,
-                    lastRenewedOn,
-                    isAutoRenew,
-                    isDnsRecordManagementReady,
-                    (managedHostNames ?? new ChangeTrackingList<AppServiceHostName>()).ToList(),
-                    consent,
-                    (domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>()).ToList(),
-                    dnsType,
-                    dnsZoneId,
-                    targetDnsType,
-                    authCode,
-                    default),
-                kind,
-                default);
-        }
-
         /// <summary>
         /// Contact information for domain registration. If 'Domain Privacy' option is not selected then the contact information is made publicly available through the Whois
         /// directories as per ICANN requirements.
@@ -164,6 +99,71 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             agreementKeys ??= new ChangeTrackingList<string>();
 
             return new DomainPurchaseConsent((agreementKeys ?? new ChangeTrackingList<string>()).ToList(), agreedBy, agreedOn, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="contactAdmin"> Administrative contact. </param>
+        /// <param name="contactBilling"> Billing contact. </param>
+        /// <param name="contactRegistrant"> Registrant contact. </param>
+        /// <param name="contactTech"> Technical contact. </param>
+        /// <param name="registrationStatus"> Domain registration status. </param>
+        /// <param name="provisioningState"> Domain provisioning state. </param>
+        /// <param name="nameServers"> Name servers. </param>
+        /// <param name="isDomainPrivacyEnabled"> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="createdOn"> Domain creation timestamp. </param>
+        /// <param name="expiresOn"> Domain expiration timestamp. </param>
+        /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
+        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isDnsRecordManagementReady"> &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and \n it is hosted on name servers Azure has programmatic access to. </param>
+        /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
+        /// <param name="consent"> Legal agreement consent. </param>
+        /// <param name="domainNotRenewableReasons"> Reasons why domain is not renewable. </param>
+        /// <param name="dnsType"> Current DNS type. </param>
+        /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
+        /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
+        /// <param name="authCode"> Authorization code for the domain. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="DomainRegistration.AppServiceDomainData"/> instance for mocking. </returns>
+        public static AppServiceDomainData AppServiceDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isDnsRecordManagementReady = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, ResourceIdentifier dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default, string kind = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AppServiceDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                contactAdmin is null && contactBilling is null && contactRegistrant is null && contactTech is null && registrationStatus is null && provisioningState is null && nameServers is null && isDomainPrivacyEnabled is null && createdOn is null && expiresOn is null && lastRenewedOn is null && isAutoRenew is null && isDnsRecordManagementReady is null && managedHostNames is null && consent is null && domainNotRenewableReasons is null && dnsType is null && dnsZoneId is null && targetDnsType is null && authCode is null ? default : new DomainProperties(
+                    contactAdmin,
+                    contactBilling,
+                    contactRegistrant,
+                    contactTech,
+                    registrationStatus,
+                    provisioningState,
+                    (nameServers ?? new ChangeTrackingList<string>()).ToList(),
+                    isDomainPrivacyEnabled,
+                    createdOn,
+                    expiresOn,
+                    lastRenewedOn,
+                    isAutoRenew,
+                    isDnsRecordManagementReady,
+                    (managedHostNames ?? new ChangeTrackingList<AppServiceHostName>()).ToList(),
+                    consent,
+                    (domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>()).ToList(),
+                    dnsType,
+                    dnsZoneId,
+                    targetDnsType,
+                    authCode,
+                    default),
+                kind,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

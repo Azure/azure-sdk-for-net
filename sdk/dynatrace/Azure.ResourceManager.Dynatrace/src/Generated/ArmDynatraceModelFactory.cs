@@ -19,24 +19,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
 
         /// <summary> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </param>
-        /// <returns> A new <see cref="Dynatrace.DynatraceMonitoredSubscriptionData"/> instance for mocking. </returns>
-        public static DynatraceMonitoredSubscriptionData DynatraceMonitoredSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DynatraceMonitoredSubscriptionProperties properties = default)
-        {
-            return new DynatraceMonitoredSubscriptionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </summary>
         /// <param name="operation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
@@ -104,68 +86,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
             filteringTags ??= new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>();
 
             return new DynatraceMonitorResourceMetricRules(sendingMetrics, (filteringTags ?? new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>()).ToList(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
-        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Dynatrace.DynatraceTagRuleData"/> instance for mocking. </returns>
-        public static DynatraceTagRuleData DynatraceTagRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DynatraceMonitorResourceLogRules logRules = default, DynatraceMonitorResourceMetricRules metricRules = default, DynatraceProvisioningState? provisioningState = default)
-        {
-            return new DynatraceTagRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                logRules is null && metricRules is null && provisioningState is null ? default : new DynatraceTagRuleProperties(logRules, metricRules, provisioningState, default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="monitoringStatus"> Status of the monitor. </param>
-        /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
-        /// <param name="marketplaceSaasAutoRenew"> Marketplace resource autorenew flag. </param>
-        /// <param name="dynatraceEnvironmentProperties"> Properties of the Dynatrace environment. </param>
-        /// <param name="userInfo"> User info. </param>
-        /// <param name="planData"> Billing plan information. </param>
-        /// <param name="liftrResourceCategory"> Liftr Resource category. </param>
-        /// <param name="liftrResourcePreference"> The priority of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Dynatrace.DynatraceMonitorData"/> instance for mocking. </returns>
-        public static DynatraceMonitorData DynatraceMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DynatraceMonitoringStatus? monitoringStatus = default, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, MarketplaceSaasAutoRenew? marketplaceSaasAutoRenew = default, DynatraceEnvironmentProperties dynatraceEnvironmentProperties = default, DynatraceMonitorUserInfo userInfo = default, DynatraceBillingPlanInfo planData = default, LiftrResourceCategory? liftrResourceCategory = default, int? liftrResourcePreference = default, DynatraceProvisioningState? provisioningState = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DynatraceMonitorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                monitoringStatus is null && marketplaceSubscriptionStatus is null && marketplaceSaasAutoRenew is null && dynatraceEnvironmentProperties is null && userInfo is null && planData is null && liftrResourceCategory is null && liftrResourcePreference is null && provisioningState is null ? default : new DynatraceMonitorProperties(
-                    monitoringStatus,
-                    marketplaceSubscriptionStatus,
-                    marketplaceSaasAutoRenew,
-                    dynatraceEnvironmentProperties,
-                    userInfo,
-                    planData,
-                    liftrResourceCategory,
-                    liftrResourcePreference,
-                    provisioningState,
-                    default),
-                identity,
-                default);
         }
 
         /// <summary> Properties of the Dynatrace environment. </summary>
@@ -247,6 +167,86 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static DynatraceBillingPlanInfo DynatraceBillingPlanInfo(string usageType = default, string billingCycle = default, string planDetails = default, DateTimeOffset? effectiveOn = default)
         {
             return new DynatraceBillingPlanInfo(usageType, billingCycle, planDetails, effectiveOn, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="monitoringStatus"> Status of the monitor. </param>
+        /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
+        /// <param name="marketplaceSaasAutoRenew"> Marketplace resource autorenew flag. </param>
+        /// <param name="dynatraceEnvironmentProperties"> Properties of the Dynatrace environment. </param>
+        /// <param name="userInfo"> User info. </param>
+        /// <param name="planData"> Billing plan information. </param>
+        /// <param name="liftrResourceCategory"> Liftr Resource category. </param>
+        /// <param name="liftrResourcePreference"> The priority of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Dynatrace.DynatraceMonitorData"/> instance for mocking. </returns>
+        public static DynatraceMonitorData DynatraceMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DynatraceMonitoringStatus? monitoringStatus = default, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, MarketplaceSaasAutoRenew? marketplaceSaasAutoRenew = default, DynatraceEnvironmentProperties dynatraceEnvironmentProperties = default, DynatraceMonitorUserInfo userInfo = default, DynatraceBillingPlanInfo planData = default, LiftrResourceCategory? liftrResourceCategory = default, int? liftrResourcePreference = default, DynatraceProvisioningState? provisioningState = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DynatraceMonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                monitoringStatus is null && marketplaceSubscriptionStatus is null && marketplaceSaasAutoRenew is null && dynatraceEnvironmentProperties is null && userInfo is null && planData is null && liftrResourceCategory is null && liftrResourcePreference is null && provisioningState is null ? default : new DynatraceMonitorProperties(
+                    monitoringStatus,
+                    marketplaceSubscriptionStatus,
+                    marketplaceSaasAutoRenew,
+                    dynatraceEnvironmentProperties,
+                    userInfo,
+                    planData,
+                    liftrResourceCategory,
+                    liftrResourcePreference,
+                    provisioningState,
+                    default),
+                identity,
+                default);
+        }
+
+        /// <summary> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </param>
+        /// <returns> A new <see cref="Dynatrace.DynatraceMonitoredSubscriptionData"/> instance for mocking. </returns>
+        public static DynatraceMonitoredSubscriptionData DynatraceMonitoredSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DynatraceMonitoredSubscriptionProperties properties = default)
+        {
+            return new DynatraceMonitoredSubscriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
+        /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Dynatrace.DynatraceTagRuleData"/> instance for mocking. </returns>
+        public static DynatraceTagRuleData DynatraceTagRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DynatraceMonitorResourceLogRules logRules = default, DynatraceMonitorResourceMetricRules metricRules = default, DynatraceProvisioningState? provisioningState = default)
+        {
+            return new DynatraceTagRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                logRules is null && metricRules is null && provisioningState is null ? default : new DynatraceTagRuleProperties(logRules, metricRules, provisioningState, default),
+                default);
         }
 
         /// <param name="tags"> Resource tags. </param>

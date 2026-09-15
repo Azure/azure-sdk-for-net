@@ -18,30 +18,6 @@ namespace Azure.ResourceManager.Discovery.Models
     public static partial class ArmDiscoveryModelFactory
     {
 
-        /// <summary> Bookshelf tracked resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.DiscoveryBookshelfData"/> instance for mocking. </returns>
-        public static DiscoveryBookshelfData DiscoveryBookshelfData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BookshelfProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DiscoveryBookshelfData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="workloadIdentities"> User assigned identity IDs to be used by knowledgebase workloads. The key value must be the resource ID of the identity resource. </param>
         /// <param name="customerManagedKeys"> Whether or not to use a customer managed key when encrypting data at rest. </param>
@@ -135,6 +111,30 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryMoboBrokerResource(id, default);
         }
 
+        /// <summary> Bookshelf tracked resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Discovery.DiscoveryBookshelfData"/> instance for mocking. </returns>
+        public static DiscoveryBookshelfData DiscoveryBookshelfData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BookshelfProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DiscoveryBookshelfData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> The Private Endpoint Connection resource for Bookshelf. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -151,6 +151,19 @@ namespace Azure.ResourceManager.Discovery.Models
                 systemData,
                 properties,
                 default);
+        }
+
+        /// <summary> Properties of a private link resource. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.DiscoveryPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static DiscoveryPrivateLinkResourceProperties DiscoveryPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new DiscoveryPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> A private link resource for Bookshelf. </summary>
@@ -171,17 +184,18 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
-        /// <summary> Properties of a private link resource. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.DiscoveryPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static DiscoveryPrivateLinkResourceProperties DiscoveryPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        /// <summary> Discovery Tool list item properties. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="version"> The version of a resource definition. </param>
+        /// <param name="environmentVariables"> Environment variables to make available. </param>
+        /// <param name="definitionContent"> The JSON content for defining a resource. </param>
+        /// <returns> A new <see cref="Models.DiscoveryToolProperties"/> instance for mocking. </returns>
+        public static DiscoveryToolProperties DiscoveryToolProperties(DiscoveryProvisioningState? provisioningState = default, string version = default, IDictionary<string, string> environmentVariables = default, IDictionary<string, BinaryData> definitionContent = default)
         {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
+            environmentVariables ??= new ChangeTrackingDictionary<string, string>();
+            definitionContent ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new DiscoveryPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new DiscoveryToolProperties(provisioningState, version, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), definitionContent ?? new ChangeTrackingDictionary<string, BinaryData>(), default);
         }
 
         /// <summary> Tool tracked resource. </summary>
@@ -208,44 +222,6 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
-        /// <summary> Discovery Tool list item properties. </summary>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="version"> The version of a resource definition. </param>
-        /// <param name="environmentVariables"> Environment variables to make available. </param>
-        /// <param name="definitionContent"> The JSON content for defining a resource. </param>
-        /// <returns> A new <see cref="Models.DiscoveryToolProperties"/> instance for mocking. </returns>
-        public static DiscoveryToolProperties DiscoveryToolProperties(DiscoveryProvisioningState? provisioningState = default, string version = default, IDictionary<string, string> environmentVariables = default, IDictionary<string, BinaryData> definitionContent = default)
-        {
-            environmentVariables ??= new ChangeTrackingDictionary<string, string>();
-            definitionContent ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new DiscoveryToolProperties(provisioningState, version, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), definitionContent ?? new ChangeTrackingDictionary<string, BinaryData>(), default);
-        }
-
-        /// <summary> Project tracked resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.DiscoveryProjectData"/> instance for mocking. </returns>
-        public static DiscoveryProjectData DiscoveryProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoveryProjectProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DiscoveryProjectData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="foundryProjectEndpoint"> Foundry project endpoint URI. </param>
         /// <param name="storageContainerIds"> Allowed StorageContainers (Control plane resource references). </param>
@@ -256,30 +232,6 @@ namespace Azure.ResourceManager.Discovery.Models
             storageContainerIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new DiscoveryProjectProperties(provisioningState, foundryProjectEndpoint, (storageContainerIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), behaviorPreferences is null ? default : new ProjectSettings(behaviorPreferences, default), default);
-        }
-
-        /// <summary> Workspace tracked resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.DiscoveryWorkspaceData"/> instance for mocking. </returns>
-        public static DiscoveryWorkspaceData DiscoveryWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoveryWorkspaceProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DiscoveryWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
         }
 
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -342,6 +294,54 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoveryKeyVaultProperties(keyVaultUri, keyName, keyVersion, default);
         }
 
+        /// <summary> Workspace tracked resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Discovery.DiscoveryWorkspaceData"/> instance for mocking. </returns>
+        public static DiscoveryWorkspaceData DiscoveryWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoveryWorkspaceProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DiscoveryWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary> Project tracked resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Discovery.DiscoveryProjectData"/> instance for mocking. </returns>
+        public static DiscoveryProjectData DiscoveryProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoveryProjectProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DiscoveryProjectData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> The Private Endpoint Connection resource for Workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -357,6 +357,26 @@ namespace Azure.ResourceManager.Discovery.Models
                 resourceType,
                 systemData,
                 properties,
+                default);
+        }
+
+        /// <summary> Defines a deployment binding a specific model family to a user-defined deployment name for chat inference. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="modelFormat"> Model format as published by the provider. Verify supported formats per region using the Model Catalog API. </param>
+        /// <param name="modelName"> Canonical provider model name available in the selected region. Verify supported values per region using the Model Catalog API. </param>
+        /// <param name="modelVersion"> Provider-published version of the selected model. </param>
+        /// <param name="skuName"> SKU tier used by this chat model deployment. </param>
+        /// <param name="capacity"> Provisioned SKU capacity units for this chat model deployment. </param>
+        /// <returns> A new <see cref="Models.DiscoveryChatModelDeploymentProperties"/> instance for mocking. </returns>
+        public static DiscoveryChatModelDeploymentProperties DiscoveryChatModelDeploymentProperties(DiscoveryProvisioningState? provisioningState = default, string modelFormat = default, string modelName = default, string modelVersion = default, string skuName = default, int? capacity = default)
+        {
+            return new DiscoveryChatModelDeploymentProperties(
+                provisioningState,
+                modelFormat,
+                modelName,
+                modelVersion,
+                skuName,
+                capacity,
                 default);
         }
 
@@ -384,26 +404,6 @@ namespace Azure.ResourceManager.Discovery.Models
                 default);
         }
 
-        /// <summary> Defines a deployment binding a specific model family to a user-defined deployment name for chat inference. </summary>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="modelFormat"> Model format as published by the provider. Verify supported formats per region using the Model Catalog API. </param>
-        /// <param name="modelName"> Canonical provider model name available in the selected region. Verify supported values per region using the Model Catalog API. </param>
-        /// <param name="modelVersion"> Provider-published version of the selected model. </param>
-        /// <param name="skuName"> SKU tier used by this chat model deployment. </param>
-        /// <param name="capacity"> Provisioned SKU capacity units for this chat model deployment. </param>
-        /// <returns> A new <see cref="Models.DiscoveryChatModelDeploymentProperties"/> instance for mocking. </returns>
-        public static DiscoveryChatModelDeploymentProperties DiscoveryChatModelDeploymentProperties(DiscoveryProvisioningState? provisioningState = default, string modelFormat = default, string modelName = default, string modelVersion = default, string skuName = default, int? capacity = default)
-        {
-            return new DiscoveryChatModelDeploymentProperties(
-                provisioningState,
-                modelFormat,
-                modelName,
-                modelVersion,
-                skuName,
-                capacity,
-                default);
-        }
-
         /// <summary> A private link resource for Workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -418,30 +418,6 @@ namespace Azure.ResourceManager.Discovery.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> NodePool tracked resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.DiscoveryNodePoolData"/> instance for mocking. </returns>
-        public static DiscoveryNodePoolData DiscoveryNodePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoveryNodePoolProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DiscoveryNodePoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 properties,
                 default);
         }
@@ -469,32 +445,6 @@ namespace Azure.ResourceManager.Discovery.Models
                 osDiskSizeGb,
                 imageCacheLowerThreshold,
                 imageCacheUpperThreshold,
-                default);
-        }
-
-        /// <summary> Supercomputer tracked resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Discovery.DiscoverySupercomputerData"/> instance for mocking. </returns>
-        public static DiscoverySupercomputerData DiscoverySupercomputerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoverySupercomputerProperties properties = default, DiscoverySystemAssignedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DiscoverySupercomputerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
                 default);
         }
 
@@ -553,6 +503,32 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoverySupercomputerIdentities(clusterIdentity, kubeletIdentity, workloadIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), default);
         }
 
+        /// <summary> Supercomputer tracked resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Discovery.DiscoverySupercomputerData"/> instance for mocking. </returns>
+        public static DiscoverySupercomputerData DiscoverySupercomputerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoverySupercomputerProperties properties = default, DiscoverySystemAssignedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DiscoverySupercomputerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
         /// <summary> Managed service identity (either system assigned, or none). </summary>
         /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
@@ -563,7 +539,7 @@ namespace Azure.ResourceManager.Discovery.Models
             return new DiscoverySystemAssignedServiceIdentity(principalId, tenantId, @type, default);
         }
 
-        /// <summary> Storage Asset tracked resource. </summary>
+        /// <summary> NodePool tracked resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -571,12 +547,12 @@ namespace Azure.ResourceManager.Discovery.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.DiscoveryStorageAssetData"/> instance for mocking. </returns>
-        public static DiscoveryStorageAssetData DiscoveryStorageAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoveryStorageAssetProperties properties = default)
+        /// <returns> A new <see cref="Discovery.DiscoveryNodePoolData"/> instance for mocking. </returns>
+        public static DiscoveryNodePoolData DiscoveryNodePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoveryNodePoolProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DiscoveryStorageAssetData(
+            return new DiscoveryNodePoolData(
                 id,
                 name,
                 resourceType,
@@ -595,30 +571,6 @@ namespace Azure.ResourceManager.Discovery.Models
         public static DiscoveryStorageAssetProperties DiscoveryStorageAssetProperties(string description = default, DiscoveryProvisioningState? provisioningState = default, string path = default)
         {
             return new DiscoveryStorageAssetProperties(description, provisioningState, path, default);
-        }
-
-        /// <summary> Storage Container tracked resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Discovery.DiscoveryStorageContainerData"/> instance for mocking. </returns>
-        public static DiscoveryStorageContainerData DiscoveryStorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoveryStorageContainerProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DiscoveryStorageContainerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
         }
 
         /// <summary> Storage Container properties. </summary>
@@ -657,6 +609,54 @@ namespace Azure.ResourceManager.Discovery.Models
         public static AzureNetAppFilesStore AzureNetAppFilesStore(NetAppMountProtocol? mountProtocol = default, ResourceIdentifier netAppVolumeId = default)
         {
             return new AzureNetAppFilesStore(default, default, mountProtocol, netAppVolumeId);
+        }
+
+        /// <summary> Storage Container tracked resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Discovery.DiscoveryStorageContainerData"/> instance for mocking. </returns>
+        public static DiscoveryStorageContainerData DiscoveryStorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoveryStorageContainerProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DiscoveryStorageContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary> Storage Asset tracked resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Discovery.DiscoveryStorageAssetData"/> instance for mocking. </returns>
+        public static DiscoveryStorageAssetData DiscoveryStorageAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DiscoveryStorageAssetProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DiscoveryStorageAssetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
         }
     }
 }
