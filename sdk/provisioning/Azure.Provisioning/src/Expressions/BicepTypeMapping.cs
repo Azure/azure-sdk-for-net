@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Reflection;
@@ -21,6 +19,9 @@ namespace Azure.Provisioning.Expressions;
 internal static class BicepTypeMapping
 {
     private const string RoundtripZFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
+    private const string JsonMediaType = "application/json";
+    private const string BicepMediaType = "text/vnd.microsoft.bicep";
+    private static readonly UTF8Encoding s_strictUtf8 = new(false, true);
 
     /// <summary>
     /// Map standard Azure types into Bicep primitive type names like bool,
@@ -132,127 +133,59 @@ internal static class BicepTypeMapping
             return BicepSyntax.Value(Convert.ToBase64String(value.ToArray()));
         }
 
-        ReadOnlySpan<byte> json = value.ToMemory().Span;
-        Utf8JsonReader reader = new(json);
-        BicepExpression expression = ReadJsonValue(ref reader, json);
-        if (reader.Read())
+        string? mediaType = value.MediaType;
+        if (mediaType is null || IsMediaType(mediaType, JsonMediaType))
         {
-            throw CreateJsonException($"Unexpected JSON token {reader.TokenType} after the top-level value.", json, reader.TokenStartIndex);
+            byte[] json = value.ToArray();
+            using JsonDocument document = JsonDocument.Parse(json);
+            return BicepFunction.ParseJson(BicepSyntax.Value(s_strictUtf8.GetString(json))).Compile();
         }
-        return expression;
-    }
 
-    private static BicepExpression ReadJsonValue(ref Utf8JsonReader reader, ReadOnlySpan<byte> json)
-    {
-        if (!reader.Read())
+        if (IsMediaType(mediaType, BicepMediaType))
         {
-            throw CreateJsonException("Expected a JSON value.", json, reader.BytesConsumed);
-        }
-        return ToBicep(ref reader, json);
-    }
-
-    private static BicepExpression ToBicep(ref Utf8JsonReader reader, ReadOnlySpan<byte> json) =>
-        reader.TokenType switch
-        {
-            JsonTokenType.StartObject => new ObjectExpression(ReadObjectProperties(ref reader, json)),
-            JsonTokenType.StartArray => BicepSyntax.Array(ReadArrayValues(ref reader, json)),
-            JsonTokenType.String => BicepSyntax.Value(reader.GetString()!),
-            JsonTokenType.Number => ToBicepNumber(ref reader),
-            JsonTokenType.True => BicepSyntax.Value(true),
-            JsonTokenType.False => BicepSyntax.Value(false),
-            JsonTokenType.Null => BicepSyntax.Null(),
-            _ => throw CreateJsonException($"Unexpected JSON token {reader.TokenType}.", json, reader.TokenStartIndex)
-        };
-
-    private static PropertyExpression[] ReadObjectProperties(ref Utf8JsonReader reader, ReadOnlySpan<byte> json)
-    {
-        List<PropertyExpression> properties = [];
-        while (reader.Read())
-        {
-            if (reader.TokenType == JsonTokenType.EndObject)
+            try
             {
-                return [.. properties];
+                return new RawExpression(s_strictUtf8.GetString(value.ToArray()));
             }
-            if (reader.TokenType != JsonTokenType.PropertyName)
+            catch (DecoderFallbackException exception)
             {
-                throw CreateJsonException($"Expected JSON property name token but found {reader.TokenType}.", json, reader.TokenStartIndex);
-            }
-
-            string propertyName = reader.GetString()!;
-            properties.Add(new PropertyExpression(propertyName, ReadJsonValue(ref reader, json)));
-        }
-        throw CreateJsonException("Expected end of JSON object.", json, reader.BytesConsumed);
-    }
-
-    private static BicepExpression[] ReadArrayValues(ref Utf8JsonReader reader, ReadOnlySpan<byte> json)
-    {
-        List<BicepExpression> values = [];
-        while (reader.Read())
-        {
-            if (reader.TokenType == JsonTokenType.EndArray)
-            {
-                return [.. values];
-            }
-
-            values.Add(ToBicep(ref reader, json));
-        }
-        throw CreateJsonException("Expected end of JSON array.", json, reader.BytesConsumed);
-    }
-
-    private static BicepExpression ToBicepNumber(ref Utf8JsonReader reader)
-    {
-        if (reader.TryGetInt32(out int intValue))
-        {
-            return BicepSyntax.Value(intValue);
-        }
-        if (reader.TryGetInt64(out long longValue))
-        {
-            return BicepSyntax.Value(longValue);
-        }
-        if (reader.TryGetDouble(out double doubleValue) &&
-            !double.IsNaN(doubleValue) &&
-            !double.IsInfinity(doubleValue))
-        {
-            return BicepSyntax.Value(doubleValue);
-        }
-
-        return BicepFunction.ParseJson(BicepSyntax.Value(GetRawTokenText(ref reader))).Compile();
-    }
-
-    private static string GetRawTokenText(ref Utf8JsonReader reader)
-    {
-        byte[] tokenBytes = reader.HasValueSequence ?
-            reader.ValueSequence.ToArray() :
-            reader.ValueSpan.ToArray();
-        return Encoding.UTF8.GetString(tokenBytes);
-    }
-
-    private static JsonException CreateJsonException(string message, ReadOnlySpan<byte> json, long bytePosition)
-    {
-        (long lineNumber, long bytePositionInLine) = GetJsonPosition(json, bytePosition);
-        return new JsonException($"{message} LineNumber: {lineNumber} | BytePositionInLine: {bytePositionInLine} | BytePosition: {bytePosition}.");
-    }
-
-    private static (long LineNumber, long BytePositionInLine) GetJsonPosition(ReadOnlySpan<byte> json, long bytePosition)
-    {
-        long lineNumber = 0;
-        long bytePositionInLine = 0;
-        long end = Math.Min(bytePosition, json.Length);
-
-        for (int i = 0; i < end; i++)
-        {
-            if (json[i] == (byte)'\n')
-            {
-                lineNumber++;
-                bytePositionInLine = 0;
-            }
-            else
-            {
-                bytePositionInLine++;
+                throw new InvalidOperationException($"Cannot compile BinaryData with media type '{mediaType}' because its contents are not valid UTF-8.", exception);
             }
         }
+        throw new InvalidOperationException(
+            $"Cannot compile BinaryData with unsupported media type '{mediaType}'. " +
+            $"Use '{JsonMediaType}', '{BicepMediaType}', or omit the media type for JSON.");
+    }
 
-        return (lineNumber, bytePositionInLine);
+    private static bool IsMediaType(string value, string expected)
+    {
+        string[] parts = value.Split(';');
+        if (!string.Equals(parts[0].Trim(), expected, StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        bool foundCharset = false;
+        for (int i = 1; i < parts.Length; i++)
+        {
+            string parameter = parts[i].Trim();
+            int separator = parameter.IndexOf('=');
+            if (separator < 0 ||
+                !string.Equals(parameter.Substring(0, separator).Trim(), "charset", StringComparison.OrdinalIgnoreCase) ||
+                foundCharset)
+            {
+                return false;
+            }
+
+            string charset = parameter.Substring(separator + 1).Trim().Trim('"');
+            if (!string.Equals(charset, "utf-8", StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            foundCharset = true;
+        }
+
+        return true;
     }
 
     private static string FormatDateTimeOffsetAsString(DateTimeOffset value, string? format) => format switch
