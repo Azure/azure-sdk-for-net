@@ -242,6 +242,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Indicates whether the AI security add-on is enabled for the Azure Firewall. </summary>
+        [WirePath("properties.aiSecurityAddOn")]
+        public bool? AiSecurityAddOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AiSecurityAddOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureFirewallPropertiesFormat();
+                }
+                Properties.AiSecurityAddOn = value;
+            }
+        }
+
         /// <summary> Resource ID. </summary>
         [WirePath("properties.virtualHub.id")]
         public ResourceIdentifier VirtualHubId

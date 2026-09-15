@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ruleSetVersion"u8);
                 writer.WriteStringValue(RuleSetVersion);
             }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string ruleSetType = default;
             string ruleSetVersion = default;
+            string displayName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,12 +147,17 @@ namespace Azure.ResourceManager.Network.Models
                     ruleSetVersion = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("displayName"u8))
+                {
+                    displayName = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, additionalBinaryDataProperties);
+            return new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, displayName, additionalBinaryDataProperties);
         }
     }
 }
