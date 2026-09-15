@@ -91,7 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // routed backlog exhaust the host's own storage quota.
             if (multiEndpointEnabled && storageDirectory != null)
             {
-                _multiEndpointStorage = new MultiEndpointStorage(_applicationInsightsRestClient, _connectionVars, _isAadEnabled, storageDirectory + MultiEndpointStorage.RootDirectorySuffix, MultiEndpointStorage.TotalStorageMaxSizeBytes, _statsbeat?.NetworkSdkStatsManager);
+                _multiEndpointStorage = new MultiEndpointStorage(_applicationInsightsRestClient, _connectionVars, _isAadEnabled, _trustPolicy, storageDirectory + MultiEndpointStorage.RootDirectorySuffix, MultiEndpointStorage.TotalStorageMaxSizeBytes, _statsbeat?.NetworkSdkStatsManager);
             }
         }
 

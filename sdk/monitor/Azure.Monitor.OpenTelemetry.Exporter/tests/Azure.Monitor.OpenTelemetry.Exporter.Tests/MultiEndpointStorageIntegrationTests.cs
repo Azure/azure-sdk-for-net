@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -280,11 +281,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         /// <summary>
         /// A partition that was failing when the process stopped leaves its blobs leased, renamed to
-        /// .lock. Only that partition's own handler reclaims them, so a probe that counted only
-        /// .blob files would strand them for good.
+        /// "&lt;name&gt;.blob@&lt;expiry&gt;.lock". Only that partition's own handler reclaims them, so a probe
+        /// that counted only .blob files would strand them for good.
         /// </summary>
         [Fact]
-        public void ASiblingHoldingOnlyLeasedBlobsIsStillReopened()
+        public void ASiblingHoldingOnlyLeasedBlobsIsStillReopenedAndDrained()
         {
             var ingestion = new MockIngestion();
             ingestion.SetStatus(EastUs, 500);
@@ -297,21 +298,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 strandedDirectory = transmitter._multiEndpointStorage!.TryGet(EastUs)!.Directory;
             }
 
-            // Stand in for the rename a drain performs when it leases a blob and the send fails.
+            // The shape ReclaimExpiredLeases parses, already expired so the next drain reclaims it.
             foreach (var blob in Directory.GetFiles(strandedDirectory, "*.blob"))
             {
-                File.Move(blob, Path.ChangeExtension(blob, ".lock"));
+                var expiry = DateTime.UtcNow.AddMinutes(-1).ToString("yyyy-MM-ddTHHmmss.fffffffZ", CultureInfo.InvariantCulture);
+                File.Move(blob, $"{blob}@{expiry}.lock");
             }
 
             Assert.Empty(Directory.GetFiles(strandedDirectory, "*.blob"));
+
+            ingestion.SetStatus(EastUs, 200);
+            ingestion.Requests.Clear();
 
             using (var exporter = CreateExporter(ingestion, new StorageStubCredential(), out var transmitter))
             {
                 exporter.Export(CreateBatch(CreateActivity("ikey-auth", EastUs, useAadAuth: true)));
 
-                Assert.Contains(
-                    transmitter._multiEndpointStorage!.Partitions,
-                    partition => partition.Directory == strandedDirectory);
+                var reopened = Assert.Single(transmitter._multiEndpointStorage!.Partitions.Where(p => p.Directory == strandedDirectory));
+
+                reopened.TransmitFromStorageHandler.Drain();
+
+                // The lease was reclaimed and the telemetry it held actually arrived.
+                Assert.Contains(ingestion.Requests, request => request.Body.Contains("ikey-key-only", StringComparison.Ordinal));
             }
         }
 

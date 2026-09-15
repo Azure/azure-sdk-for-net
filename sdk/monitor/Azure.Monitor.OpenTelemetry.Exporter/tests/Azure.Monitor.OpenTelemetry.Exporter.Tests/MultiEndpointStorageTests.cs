@@ -657,13 +657,90 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Reopening is the one way an authenticated partition is created without routing having
+        /// authorized the endpoint for a token, so it has to make that check itself.
+        /// </summary>
+        [Fact]
+        public void AnUntrustedEndpointsAuthenticatedBacklogIsNotReopened()
+        {
+            const string Untrusted = "https://ingestion.contoso-other.example/";
+
+            using var storage = CreateStorage(isAadEnabled: true, EndpointTrustPolicy.Unrestricted);
+
+            // Written while the endpoint was still being sent a token.
+            var authenticated = storage.TryGet(Untrusted, useAadAuth: true);
+            Assert.NotNull(authenticated);
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(authenticated!, new byte[] { 1, 2, 3 }));
+
+            using var restricted = CreateStorage(
+                isAadEnabled: true,
+                new EndpointTrustPolicy(enabled: true, ownIngestionEndpoint: null, aadAudience: null));
+
+            restricted.TryGet(Untrusted, useAadAuth: false);
+
+            Assert.DoesNotContain(restricted.Partitions, partition => partition.Directory == authenticated!.Directory);
+        }
+
+        [Fact]
+        public void ATrustedEndpointsAuthenticatedBacklogIsReopened()
+        {
+            using var storage = CreateStorage(isAadEnabled: true, EndpointTrustPolicy.Unrestricted);
+
+            var authenticated = storage.TryGet(EastUs, useAadAuth: true);
+            Assert.NotNull(authenticated);
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(authenticated!, new byte[] { 1, 2, 3 }));
+
+            using var reopening = CreateStorage(
+                isAadEnabled: true,
+                new EndpointTrustPolicy(enabled: true, ownIngestionEndpoint: null, aadAudience: null));
+
+            reopening.TryGet(EastUs, useAadAuth: false);
+
+            Assert.Contains(reopening.Partitions, partition => partition.Directory == authenticated!.Directory);
+        }
+
+        /// <summary>An empty sibling would hold a partition slot for the life of the process.</summary>
+        [Fact]
+        public void AnEmptySiblingIsNotReopened()
+        {
+            using var storage = CreateStorage(isAadEnabled: true, EndpointTrustPolicy.Unrestricted);
+
+            var authenticated = storage.TryGet(EastUs, useAadAuth: true);
+            Assert.NotNull(authenticated);
+
+            using var reopening = CreateStorage(isAadEnabled: true, EndpointTrustPolicy.Unrestricted);
+            reopening.TryGet(EastUs, useAadAuth: false);
+
+            Assert.DoesNotContain(reopening.Partitions, partition => partition.Directory == authenticated!.Directory);
+        }
+
+        /// <summary>Without a credential the authenticated partition would drain with no token.</summary>
+        [Fact]
+        public void NoSiblingIsReopenedWithoutACredential()
+        {
+            using var storage = CreateStorage(isAadEnabled: true, EndpointTrustPolicy.Unrestricted);
+
+            var authenticated = storage.TryGet(EastUs, useAadAuth: true);
+            Assert.NotNull(authenticated);
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(authenticated!, new byte[] { 1, 2, 3 }));
+
+            using var reopening = CreateStorage();
+            reopening.TryGet(EastUs, useAadAuth: false);
+
+            Assert.DoesNotContain(reopening.Partitions, partition => partition.Directory == authenticated!.Directory);
+        }
+
         private MultiEndpointStorage CreateStorage(long maxSizeBytes = 1024 * 1024)
+            => CreateStorage(isAadEnabled: false, EndpointTrustPolicy.Unrestricted, maxSizeBytes);
+
+        private MultiEndpointStorage CreateStorage(bool isAadEnabled, EndpointTrustPolicy trustPolicy, long maxSizeBytes = 1024 * 1024)
         {
             var options = new AzureMonitorExporterOptions();
             var restClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), EastUs);
             var connectionVars = new ConnectionVars("ikey", EastUs, EastUs, aadAudience: null);
 
-            return new MultiEndpointStorage(restClient, connectionVars, isAadEnabled: false, _rootDirectory, maxSizeBytes, networkSdkStatsManager: null);
+            return new MultiEndpointStorage(restClient, connectionVars, isAadEnabled, trustPolicy, _rootDirectory, maxSizeBytes, networkSdkStatsManager: null);
         }
 
         /// <summary>Fails the drain before any request is issued.</summary>

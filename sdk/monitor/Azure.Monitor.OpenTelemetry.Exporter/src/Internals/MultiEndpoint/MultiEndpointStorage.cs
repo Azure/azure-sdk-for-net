@@ -50,6 +50,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         internal const int MaxEndpointPartitions = 64;
 
         /// <summary>
+        /// Bounds the record of which endpoints have been looked for under the other auth mode.
+        /// Separate from the partition cap because partitions stay uncreatable on a read-only
+        /// storage root, which would otherwise leave this growing with endpoint cardinality.
+        /// </summary>
+        private const int MaxProbedEndpoints = MaxEndpointPartitions * 2;
+
+        /// <summary>
         /// One budget for every partition combined, not one each. A per-folder cap would multiply
         /// by the partition count and put the process's disk footprint at the mercy of how many
         /// regions it happens to route to.
@@ -87,17 +94,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         private readonly string _rootDirectory;
         private readonly long _maxSizeBytes;
         private readonly bool _isAadEnabled;
+        private readonly EndpointTrustPolicy _trustPolicy;
         private readonly object _createLock = new();
         private readonly object _evictLock = new();
         private readonly Stopwatch _clock = Stopwatch.StartNew();
         private long _currentSizeBytes;
         private long _lastRecountMilliseconds;
+
+        // Tracked separately because ConcurrentDictionary.Count locks the whole table, and this is
+        // read once per group per export.
+        private int _siblingProbedCount;
         private volatile bool _disposed;
 
         internal MultiEndpointStorage(
             ApplicationInsightsRestClient restClient,
             ConnectionVars connectionVars,
             bool isAadEnabled,
+            EndpointTrustPolicy trustPolicy,
             string rootDirectory,
             long maxSizeBytes,
             NetworkSdkStatsManager? networkSdkStatsManager)
@@ -105,6 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             _restClient = restClient;
             _connectionVars = connectionVars;
             _isAadEnabled = isAadEnabled;
+            _trustPolicy = trustPolicy;
             _rootDirectory = rootDirectory;
             _maxSizeBytes = maxSizeBytes;
             _networkSdkStatsManager = networkSdkStatsManager;
@@ -279,11 +293,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
             try
             {
-                if (!Directory.Exists(_rootDirectory))
-                {
-                    return true;
-                }
-
                 // Only blobs: a leased or half-written file is named .lock or .tmp, which eviction
                 // cannot select. Counting bytes that cannot be reclaimed is what let a restart pin
                 // the budget at zero headroom.
@@ -292,6 +301,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                     size += new FileInfo(file).Length;
                 }
 
+                return true;
+            }
+            catch (DirectoryNotFoundException)
+            {
+                // Nothing has been written yet. Distinguished from an unreadable root, which
+                // Directory.Exists would have reported as absent, zeroing the running total and
+                // leaving the shared budget believing it had full headroom for the rest of the run.
+                size = 0;
                 return true;
             }
             catch (Exception)
@@ -510,8 +527,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// </remarks>
         private void ReopenSiblingWithBacklog(string ingestionEndpoint, bool useAadAuth)
         {
-            if (!_isAadEnabled || _disposed || _partitions.Count >= MaxEndpointPartitions || _siblingProbed.ContainsKey(ingestionEndpoint))
+            // Ordered cheapest first. ConcurrentDictionary.Count locks the whole table, and the
+            // steady state is an endpoint that has already been probed.
+            if (!_isAadEnabled
+                || _disposed
+                || _siblingProbed.ContainsKey(ingestionEndpoint)
+                || Volatile.Read(ref _siblingProbedCount) >= MaxProbedEndpoints
+                || _partitions.Count >= MaxEndpointPartitions)
             {
+                return;
+            }
+
+            // Reopening is the one way an authenticated partition is created without routing having
+            // authorized the endpoint for a token. A stale one for a host that may no longer be sent
+            // a token would drain unauthenticated and retry until eviction, so leave it to age out.
+            if (!useAadAuth && !_trustPolicy.IsTrusted(ApplicationInsightsRestClient.CreateTrackUri(ingestionEndpoint)))
+            {
+                RecordProbed(ingestionEndpoint);
                 return;
             }
 
@@ -523,15 +555,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
                 // Leases count. A partition failing at shutdown leaves its blobs renamed to .lock,
                 // and only its own drain handler reclaims them, so skipping a lease-only directory
-                // would strand it for good. Enumerated rather than probed with Directory.Exists,
-                // which reports an unreadable directory as an absent one.
+                // would strand it for good. A half-written .tmp is deliberately not backlog: it is
+                // not a POSTable payload, and its owner deletes it on the next maintenance tick.
+                // Enumerated rather than probed with Directory.Exists, which reports an unreadable
+                // directory as an absent one.
                 hasBacklog = Directory.EnumerateFiles(directory).Any(
                     file => file.EndsWith(".blob", StringComparison.Ordinal) || file.EndsWith(".lock", StringComparison.Ordinal));
             }
             catch (DirectoryNotFoundException)
             {
                 // Nothing was ever written under the other mode.
-                _siblingProbed.TryAdd(ingestionEndpoint, 0);
+                RecordProbed(ingestionEndpoint);
+                return;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                // A denied directory will not become readable, so stop paying for it every export.
+                RecordProbed(ingestionEndpoint);
                 return;
             }
             catch (Exception)
@@ -540,11 +580,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return;
             }
 
-            // Recorded only once there is nothing left to do, so a failed open is retried. Past the
-            // partition cap nothing is recorded either, so this cannot outgrow the cap it respects.
+            // Recorded only once there is nothing left to do, so a failed open is retried.
             if (!hasBacklog || OpenPartition(ingestionEndpoint, !useAadAuth) != null)
             {
-                _siblingProbed.TryAdd(ingestionEndpoint, 0);
+                RecordProbed(ingestionEndpoint);
+            }
+        }
+
+        /// <remarks>
+        /// Bounded independently of <see cref="_partitions"/>, which stays empty when partitions
+        /// cannot be created at all, and would then leave this growing with endpoint cardinality.
+        /// </remarks>
+        private void RecordProbed(string ingestionEndpoint)
+        {
+            if (_siblingProbed.TryAdd(ingestionEndpoint, 0))
+            {
+                Interlocked.Increment(ref _siblingProbedCount);
             }
         }
 
