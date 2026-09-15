@@ -78,7 +78,7 @@ internal class JsonCollectionReader : CollectionReader
                     }
                     else if (jsonModel is not null)
                     {
-                        collectionWrapper.AddItem(jsonModel!.Create(ref reader, options), propertyName);
+                        collectionWrapper.AddItem(options.ReadWithChain(jsonModel.GetType(), jsonModel, ref reader), propertyName);
                     }
                     else
                     {
@@ -100,7 +100,7 @@ internal class JsonCollectionReader : CollectionReader
                     else
                     {
                         Debug.Assert(jsonModel != null);
-                        collectionWrapper.AddItem(jsonModel!.Create(ref reader, options), propertyName);
+                        collectionWrapper.AddItem(options.ReadWithChain(jsonModel!.GetType(), jsonModel, ref reader), propertyName);
                     }
                     break;
                 case JsonTokenType.EndArray:

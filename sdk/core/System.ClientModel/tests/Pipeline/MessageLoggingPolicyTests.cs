@@ -75,7 +75,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
-        message.Request.Content = BinaryContent.Create(new BinaryData([1,2,3]));
+        message.Request.Content = BinaryContent.Create(new BinaryData([1, 2, 3]));
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
