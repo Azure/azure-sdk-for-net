@@ -354,13 +354,13 @@ namespace Azure.Provisioning.AppService
         LocalMySql = 2,
         PostgreSql = 3,
     }
-    [System.ObsoleteAttribute("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [System.ObsoleteAttribute("Use the corresponding type in the Azure.Provisioning.DomainRegistration namespace instead.")]
     public enum AppServiceDnsType
     {
         AzureDns = 0,
         DefaultDomainRegistrarDns = 1,
     }
-    [System.ObsoleteAttribute("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [System.ObsoleteAttribute("Use the corresponding type in the Azure.Provisioning.DomainRegistration namespace instead.")]
     public partial class AppServiceDomain : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public AppServiceDomain(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -414,7 +414,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2024_11_01;
         }
     }
-    [System.ObsoleteAttribute("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [System.ObsoleteAttribute("Use the corresponding type in the Azure.Provisioning.DomainRegistration namespace instead.")]
     public enum AppServiceDomainStatus
     {
         Unknown = 0,
@@ -582,7 +582,7 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepList<string> ValidationAllowedAudiences { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [System.ObsoleteAttribute("Use the corresponding type in the Azure.Provisioning.DomainRegistration namespace instead.")]
     public partial class AppServiceHostName : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppServiceHostName() { }
@@ -1734,14 +1734,14 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.AppService.DataTableResponseObject Table { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [System.ObsoleteAttribute("Use the corresponding type in the Azure.Provisioning.DomainRegistration namespace instead.")]
     public enum DomainNotRenewableReason
     {
         RegistrationStatusNotSupportedForRenewal = 0,
         ExpirationNotInRenewalTimeRange = 1,
         SubscriptionNotActive = 2,
     }
-    [System.ObsoleteAttribute("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [System.ObsoleteAttribute("Use the corresponding type in the Azure.Provisioning.DomainRegistration namespace instead.")]
     public partial class DomainOwnershipIdentifier : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DomainOwnershipIdentifier(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1775,7 +1775,7 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2024_11_01;
         }
     }
-    [System.ObsoleteAttribute("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [System.ObsoleteAttribute("Use the corresponding type in the Azure.Provisioning.DomainRegistration namespace instead.")]
     public partial class DomainPurchaseConsent : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DomainPurchaseConsent() { }
@@ -2719,7 +2719,7 @@ namespace Azure.Provisioning.AppService
         ActiveActive = 3,
         GeoRedundant = 4,
     }
-    [System.ObsoleteAttribute("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [System.ObsoleteAttribute("Use the corresponding type in the Azure.Provisioning.DomainRegistration namespace instead.")]
     public partial class RegistrationAddressInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RegistrationAddressInfo() { }
@@ -2731,7 +2731,7 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> State { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ObsoleteAttribute("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
+    [System.ObsoleteAttribute("Use the corresponding type in the Azure.Provisioning.DomainRegistration namespace instead.")]
     public partial class RegistrationContactInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RegistrationContactInfo() { }
