@@ -28,14 +28,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="tokenAuthConfiguration"> The token auth configuration. </param>
         /// <param name="actions"> The actions. </param>
         /// <param name="endpoints"> The endpoints. </param>
-        /// <param name="dstsConfiguration"> The dsts configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FanoutLinkedNotificationRule(TokenAuthConfiguration tokenAuthConfiguration, IList<string> actions, IList<ResourceProviderEndpoint> endpoints, ProviderDstsConfiguration dstsConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FanoutLinkedNotificationRule(TokenAuthConfiguration tokenAuthConfiguration, IList<string> actions, IList<ResourceProviderEndpoint> endpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TokenAuthConfiguration = tokenAuthConfiguration;
             Actions = actions;
             Endpoints = endpoints;
-            DstsConfiguration = dstsConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,8 +45,5 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The endpoints. </summary>
         public IList<ResourceProviderEndpoint> Endpoints { get; }
-
-        /// <summary> The dsts configuration. </summary>
-        public ProviderDstsConfiguration DstsConfiguration { get; set; }
     }
 }

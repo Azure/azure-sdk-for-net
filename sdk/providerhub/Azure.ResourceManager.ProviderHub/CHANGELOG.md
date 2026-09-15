@@ -1,10 +1,47 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (Unreleased)
 
 ### Features Added
 
+- Regenerated from the relocated ProviderHub TypeSpec (`specification/providerhub/resource-manager/Microsoft.ProviderHub/ProviderHub`), targeting API version `2025-10-01`.
+- Added `ManifestInfo` and `OperationsPutContent` resources, along with the models supporting them.
+
 ### Breaking Changes
+
+An upstream compliance review removed a set of internal-only Microsoft identifiers from the public `Microsoft.ProviderHub` specification, so the affected surface is no longer generated. The removals below are described by location and shape rather than by name, because naming them would reintroduce the identifiers this change exists to remove. Compiling against 1.3.0 reports every affected member by name, and the complete list is recorded in the API listings under `api/`.
+
+**Removed: internal service-authentication configuration**
+
+- The configuration model for an internal Microsoft service-authentication system, together with the property that exposed it on `FanoutLinkedNotificationRule`, `ResourceProviderManifestProperties`, `ResourceTypeEndpoint` and `ResourceTypeRegistrationProperties`, and the `ArmProviderHubModelFactory` overloads that accepted it. There is no replacement.
+
+**Removed: internal service-metadata**
+
+- The service-metadata model and its associated readiness enum, together with the collection property that exposed them on `ProviderResourceType`, `ResourceProviderManagement` and `ResourceTypeRegistrationProperties`, and the `ArmProviderHubModelFactory` overloads that accepted them. There is no replacement.
+
+**Removed: new-region frontload release**
+
+A property removed by the change above was required on the request model shared by the write operations, so the request could no longer be constructed and the feature is removed in full:
+
+- `ProviderFrontloadPayload` and `ProviderFrontloadPayloadProperties`.
+- `RegistrationNewRegionFrontloadReleaseResource` and `RegistrationNewRegionFrontloadReleaseCollection`.
+- `ProviderRegistrationResource.GenerateManifestNewRegionFrontloadRelease`, `GetRegistrationNewRegionFrontloadRelease` and `GetRegistrationNewRegionFrontloadReleases`, plus the corresponding `ArmClient` extension and mocking methods.
+- `ResourceTypeEndpointBase`, `ManifestLevelPropertyBag`, `AvailableCheckInManifestEnvironment` and `ServiceFeatureFlagAction`, which were referenced only by the models above.
+
+**Changed: `ResourceAccessPolicy`**
+
+- `ResourceAccessPolicy` is now an extensible enum rather than a closed one, and `NotSpecified` is the only well-known value that remains. Two values naming an internal Microsoft management tool were removed. The type was reopened so that any retired value the service still returns round-trips as a string instead of failing to deserialize.
+
+**Changed: generator migration**
+
+These changes are unrelated to the removals above and come from regenerating on the current management-plane generator. Because they name no removed internal identifiers, they are also itemized individually in `eng/apicompatbaselines/Azure.ResourceManager.ProviderHub.xml`:
+
+- `Models.OperationsPutContent` was removed. The put-content operations are now exposed through `OperationsPutContentResource` and `OperationsPutContentData`, reached via `ProviderRegistrationResource.GetOperationsPutContent()`. This replaces `ProviderRegistrationResource.CreateOrUpdate(OperationsPutContent, ...)` and `ProviderRegistrationResource.GetByProviderRegistration()`.
+- `ProviderRegistrationResource.Delete` now takes a `WaitUntil` argument and returns `ArmOperation`.
+- `ManifestResourceDeletionPolicy` was renamed to `RPaaSResourceDeletionPolicy` and gained the `CascadeDeleteAll` and `CascadeDeleteProxyOnlyChildren` values. `ProviderResourceType.ResourceDeletionPolicy` is now typed `ResourceDeletionPolicy` and is read-only, and `ResourceTypeRegistrationProperties.ResourceDeletionPolicy` is now typed `RPaaSResourceDeletionPolicy`.
+- `ResourceTypeRegistrationResourceManagementOptions.BatchProvisioningSupportSupportedOperations` was replaced by `ResourceTypeRegistrationResourceManagementOptions.BatchProvisioningSupport`.
+- Removed the remaining `ArmProviderHubModelFactory` overloads that existed only to match the shape of the 1.2.x contract. Use the current overload for each model instead.
+- Collection properties on several models, including `ProviderResourceType`, `AsyncOperationPollingRules` and `ResourceProviderCapabilities`, are now typed `IList<T>` rather than `IReadOnlyList<T>`.
 
 ### Bugs Fixed
 
@@ -68,7 +105,7 @@ Polishing since last public beta release:
 - Prepended `ProviderHub` / `Provider` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.

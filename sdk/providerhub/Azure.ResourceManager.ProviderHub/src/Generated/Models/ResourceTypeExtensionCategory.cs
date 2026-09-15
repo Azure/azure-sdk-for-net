@@ -33,6 +33,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string ResourceMoveCompletedValue = "ResourceMoveCompleted";
         private const string BestMatchOperationBeginValue = "BestMatchOperationBegin";
         private const string SubscriptionLifecycleNotificationDeletionValue = "SubscriptionLifecycleNotificationDeletion";
+        /// <summary> Resource billing notification extension category. </summary>
+        private const string ResourceBillingNotificationValue = "ResourceBillingNotification";
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeExtensionCategory"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -97,6 +99,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Gets the SubscriptionLifecycleNotificationDeletion. </summary>
         public static ResourceTypeExtensionCategory SubscriptionLifecycleNotificationDeletion { get; } = new ResourceTypeExtensionCategory(SubscriptionLifecycleNotificationDeletionValue);
+
+        /// <summary> Resource billing notification extension category. </summary>
+        public static ResourceTypeExtensionCategory ResourceBillingNotification { get; } = new ResourceTypeExtensionCategory(ResourceBillingNotificationValue);
 
         /// <summary> Determines if two <see cref="ResourceTypeExtensionCategory"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

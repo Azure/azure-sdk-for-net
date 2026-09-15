@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<!--
+  This file records the ApiCompat breaks in Azure.ResourceManager.ProviderHub 1.3.0 that are NOT
+  caused by the upstream compliance change to the Microsoft.ProviderHub specification.
+
+  Everything below comes from regenerating the package on the current management-plane generator:
+  a model that was promoted to an ARM resource, an operation that gained a WaitUntil parameter, an
+  enum that was renamed and widened, and a property that was un-flattened. These are recoverable
+  through client.tsp customizations or retained custom code, so they are recorded individually to
+  keep them reviewable rather than folded into the compliance removals.
+
+  The compliance-driven removals are deliberately NOT listed here. ApiCompat suppression targets are
+  fully qualified signatures, so recording them would reproduce in this repository the internal-only
+  Microsoft identifiers that the upstream change exists to remove. They are described by location and
+  shape in the package CHANGELOG.md instead.
+
+  NOTE: this file is currently not consumed by the build. ApiCompat is gated on a non-empty
+  <ApiCompatVersion> in the project file (see eng/Directory.Build.Common.targets), which is absent
+  for this package, and Azure.ResourceManager.ProviderHub is listed in ApiCompatVersionOptOut.txt.
+  The entries below are therefore a record for reviewers, not active suppressions. If ApiCompat is
+  re-enabled for this package, this file will need the compliance removals added as well or the
+  build will fail on them.
+-->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.ResourceManager.ProviderHub.Models.ManifestResourceDeletionPolicy</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.ResourceManager.ProviderHub.Models.OperationsPutContent</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.ProviderHub.Models.ArmProviderHubModelFactory.OperationsPutContent(Azure.Core.ResourceIdentifier,System.String,Azure.Core.ResourceType,Azure.ResourceManager.Models.SystemData,System.Collections.Generic.IEnumerable{Azure.ResourceManager.ProviderHub.Models.LocalizedOperationDefinition})</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.ProviderHub.Models.ProviderResourceType.get_ResourceDeletionPolicy</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions.get_BatchProvisioningSupportSupportedOperations</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions.set_BatchProvisioningSupportSupportedOperations(System.Nullable{Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation})</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.ProviderHub.ProviderRegistrationResource.CreateOrUpdate(Azure.ResourceManager.ProviderHub.Models.OperationsPutContent,System.Threading.CancellationToken)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.ProviderHub.ProviderRegistrationResource.CreateOrUpdateAsync(Azure.ResourceManager.ProviderHub.Models.OperationsPutContent,System.Threading.CancellationToken)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.ProviderHub.ProviderRegistrationResource.Delete(System.Threading.CancellationToken)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.ProviderHub.ProviderRegistrationResource.DeleteAsync(System.Threading.CancellationToken)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.ProviderHub.ProviderRegistrationResource.GetByProviderRegistration(System.Threading.CancellationToken)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.ResourceManager.ProviderHub.ProviderRegistrationResource.GetByProviderRegistrationAsync(System.Threading.CancellationToken)</Target>
+  </Suppression>
+</Suppressions>
