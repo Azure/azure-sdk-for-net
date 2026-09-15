@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             get
             {
-                return Properties is null ? default : Properties.GateType;
+                return Properties is null ? (ContainerServiceFleetGateType?)default : Properties.GateType;
             }
             set
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             get
             {
-                return Properties is null ? default : Properties.State;
+                return Properties is null ? (ContainerServiceFleetGateState?)default : Properties.State;
             }
             set
             {

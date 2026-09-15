@@ -690,7 +690,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     managedResourceGroupConfiguration,
                     managerExtendedLocation,
                     provisioningState,
-                    new ClusterManagerRelayConfiguration(relayNamespaceId, default),
+                    relayNamespaceId is null ? default : new ClusterManagerRelayConfiguration(relayNamespaceId, default),
                     vmSize,
                     default),
                 eTag,
@@ -810,7 +810,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     secretArchive,
                     secretArchiveSettings,
                     updateStrategy,
-                    new VulnerabilityScanningSettings(vulnerabilityScanningContainerScan, default),
+                    vulnerabilityScanningContainerScan is null ? default : new VulnerabilityScanningSettings(vulnerabilityScanningContainerScan, default),
                     (actionStates ?? new ChangeTrackingList<NetworkCloudActionState>()).ToList(),
                     (availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>()).ToList(),
                     clusterCapacity,
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 secretArchive,
                 secretArchiveSettings,
                 updateStrategy,
-                new VulnerabilityScanningSettingsPatch(vulnerabilityScanningContainerScan, default),
+                vulnerabilityScanningContainerScan is null ? default : new VulnerabilityScanningSettingsPatch(vulnerabilityScanningContainerScan, default),
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 aadAdminGroupObjectIds is null && administratorConfiguration is null && controlPlaneNodeConfiguration is null && initialAgentPoolConfigurations is null && kubernetesVersion is null && managedResourceGroupConfiguration is null && networkConfiguration is null && attachedNetworkIds is null && availableUpgrades is null && clusterId is null && connectedClusterId is null && controlPlaneKubernetesVersion is null && detailedStatus is null && detailedStatusMessage is null && featureStatuses is null && nodes is null && provisioningState is null ? default : new KubernetesClusterProperties(
-                    new NetworkCloudAadConfiguration((aadAdminGroupObjectIds ?? new ChangeTrackingList<string>()).ToList(), default),
+                    aadAdminGroupObjectIds is null ? default : new NetworkCloudAadConfiguration((aadAdminGroupObjectIds ?? new ChangeTrackingList<string>()).ToList(), default),
                     administratorConfiguration,
                     controlPlaneNodeConfiguration,
                     (initialAgentPoolConfigurations ?? new ChangeTrackingList<InitialAgentPoolConfiguration>()).ToList(),
@@ -1542,7 +1542,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkCloudKubernetesClusterPatch(administratorSshPublicKeys is null && controlPlaneNodeConfiguration is null && kubernetesVersion is null ? default : new KubernetesClusterPatchProperties(new AdministratorConfigurationPatch((administratorSshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>()).ToList(), default), controlPlaneNodeConfiguration, kubernetesVersion, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new NetworkCloudKubernetesClusterPatch(administratorSshPublicKeys is null && controlPlaneNodeConfiguration is null && kubernetesVersion is null ? default : new KubernetesClusterPatchProperties(administratorSshPublicKeys is null ? default : new AdministratorConfigurationPatch((administratorSshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>()).ToList(), default), controlPlaneNodeConfiguration, kubernetesVersion, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="administratorSshPublicKeys"> SshPublicKey represents the public key used to authenticate with a resource through SSH. </param>
@@ -2542,7 +2542,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkCloudAgentPoolPatch(administratorSshPublicKeys is null && count is null && upgradeSettings is null ? default : new AgentPoolPatchProperties(new NodePoolAdministratorConfigurationPatch((administratorSshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>()).ToList(), default), count, upgradeSettings, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new NetworkCloudAgentPoolPatch(administratorSshPublicKeys is null && count is null && upgradeSettings is null ? default : new AgentPoolPatchProperties(administratorSshPublicKeys is null ? default : new NodePoolAdministratorConfigurationPatch((administratorSshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>()).ToList(), default), count, upgradeSettings, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2655,7 +2655,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkCloudVirtualMachineConsolePatch(enabled is null && expireOn is null && keyData is null ? default : new ConsolePatchProperties(enabled, expireOn, new NetworkCloudSshPublicKey(keyData, default), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new NetworkCloudVirtualMachineConsolePatch(enabled is null && expireOn is null && keyData is null ? default : new ConsolePatchProperties(enabled, expireOn, keyData is null ? default : new NetworkCloudSshPublicKey(keyData, default), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> KubernetesClusterNode represents the details of a node in a Kubernetes cluster. </summary>
@@ -2992,11 +2992,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     (computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>()).ToList(),
                     managedResourceGroupConfiguration,
                     networkFabricId,
-                    new RuntimeProtectionConfiguration(default, runtimeProtectionEnforcementLevel, default),
+                    runtimeProtectionEnforcementLevel is null ? default : new RuntimeProtectionConfiguration(default, runtimeProtectionEnforcementLevel, default),
                     secretArchive,
                     secretArchiveSettings,
                     updateStrategy,
-                    new VulnerabilityScanningSettings(vulnerabilityScanningContainerScan, default),
+                    vulnerabilityScanningContainerScan is null ? default : new VulnerabilityScanningSettings(vulnerabilityScanningContainerScan, default),
                     (actionStates ?? new ChangeTrackingList<NetworkCloudActionState>()).ToList(),
                     (availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>()).ToList(),
                     clusterCapacity,
@@ -3059,7 +3059,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 aadAdminGroupObjectIds is null && administratorConfiguration is null && controlPlaneNodeConfiguration is null && initialAgentPoolConfigurations is null && kubernetesVersion is null && managedResourceGroupConfiguration is null && networkConfiguration is null && attachedNetworkIds is null && availableUpgrades is null && clusterId is null && connectedClusterId is null && controlPlaneKubernetesVersion is null && detailedStatus is null && detailedStatusMessage is null && featureStatuses is null && nodes is null && provisioningState is null ? default : new KubernetesClusterProperties(
-                    new NetworkCloudAadConfiguration((aadAdminGroupObjectIds ?? new ChangeTrackingList<string>()).ToList(), default),
+                    aadAdminGroupObjectIds is null ? default : new NetworkCloudAadConfiguration((aadAdminGroupObjectIds ?? new ChangeTrackingList<string>()).ToList(), default),
                     administratorConfiguration,
                     controlPlaneNodeConfiguration,
                     (initialAgentPoolConfigurations ?? new ChangeTrackingList<InitialAgentPoolConfiguration>()).ToList(),
@@ -4026,11 +4026,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     (computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>()).ToList(),
                     managedResourceGroupConfiguration,
                     networkFabricId,
-                    new RuntimeProtectionConfiguration(default, runtimeProtectionEnforcementLevel, default),
+                    runtimeProtectionEnforcementLevel is null ? default : new RuntimeProtectionConfiguration(default, runtimeProtectionEnforcementLevel, default),
                     secretArchive,
                     secretArchiveSettings,
                     updateStrategy,
-                    new VulnerabilityScanningSettings(vulnerabilityScanningContainerScan, default),
+                    vulnerabilityScanningContainerScan is null ? default : new VulnerabilityScanningSettings(vulnerabilityScanningContainerScan, default),
                     default,
                     (availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>()).ToList(),
                     clusterCapacity,
@@ -4313,7 +4313,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 location,
                 new ClusterProperties(
                     aggregatorOrSingleRackDefinition,
-                    new AnalyticsOutputSettings(analyticsWorkspaceId, default, default),
+                    analyticsWorkspaceId is null ? default : new AnalyticsOutputSettings(analyticsWorkspaceId, default, default),
                     analyticsWorkspaceId,
                     clusterLocation,
                     clusterServicePrincipal,
@@ -4324,7 +4324,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     (computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>()).ToList(),
                     managedResourceGroupConfiguration,
                     networkFabricId,
-                    new RuntimeProtectionConfiguration(default, runtimeProtectionEnforcementLevel, default),
+                    runtimeProtectionEnforcementLevel is null ? default : new RuntimeProtectionConfiguration(default, runtimeProtectionEnforcementLevel, default),
                     secretArchive,
                     default,
                     updateStrategy,
@@ -4656,7 +4656,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 location,
                 new ClusterProperties(
                     aggregatorOrSingleRackDefinition,
-                    new AnalyticsOutputSettings(analyticsWorkspaceId, default, default),
+                    analyticsWorkspaceId is null ? default : new AnalyticsOutputSettings(analyticsWorkspaceId, default, default),
                     analyticsWorkspaceId,
                     clusterLocation,
                     clusterServicePrincipal,

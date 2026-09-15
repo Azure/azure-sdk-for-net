@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             get
             {
-                return EastWestGateway is null ? default : EastWestGateway.Visibility;
+                return EastWestGateway is null ? (AppLinkEastWestGatewayVisibility?)default : EastWestGateway.Visibility;
             }
             set
             {
