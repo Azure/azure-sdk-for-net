@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService;
 /// </summary>
 // Preserve the API shipped by the reflection-based generator for resource providers absent from the Microsoft.Web TypeSpec.
 [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-[System.Obsolete("This type is deprecated and it will be removed in a future version.")]
+[System.Obsolete("All domain registration APIs are moved to the new Azure.ResourceManager.DomainRegistration namespace.")]
 public partial class DomainOwnershipIdentifier : ProvisionableResource
 {
     /// <summary>
