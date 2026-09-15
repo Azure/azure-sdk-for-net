@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties of the Azure Storage endpoint for file upload. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubStorageEndpointProperties : ProvisionableConstruct
     {
         private BicepValue<TimeSpan> _sasTtlAsIso8601;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the SasTtlAsIso8601. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> SasTtlAsIso8601
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ConnectionString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConnectionString
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ContainerName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ContainerName
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the AuthenticationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubAuthenticationType> AuthenticationType
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         internal ManagedIdentity Identity
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the UserAssignedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> UserAssignedIdentity
         {
             get

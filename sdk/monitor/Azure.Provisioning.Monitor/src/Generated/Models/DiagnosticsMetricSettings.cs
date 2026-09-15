@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Part of MultiTenantDiagnosticSettings. Specifies the settings for a particular metric. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DiagnosticsMetricSettings : ProvisionableConstruct
     {
         private BicepValue<TimeSpan> _timeGrain;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the TimeGrain. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> TimeGrain
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Category. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Category
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Enabled
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the RetentionPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public RetentionPolicy RetentionPolicy
         {
             get

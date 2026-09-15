@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary> The list of supported Kubernetes cluster versions for this extension type. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KubernetesConfigurationExtensionTypeUnsupportedKubernetesVersions : ProvisionableConstruct
     {
         private BicepList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> _connectedCluster;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the ConnectedCluster. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> ConnectedCluster
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the Appliances. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> Appliances
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the ProvisionedCluster. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> ProvisionedCluster
         {
             get
@@ -54,6 +59,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         }
 
         /// <summary> Gets the ManagedCluster. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem> ManagedCluster
         {
             get

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Properties of the connected cluster. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ConnectedClusterProperties : ProvisionableConstruct
     {
         private BicepValue<string> _agentPublicKeyCertificate;
@@ -45,6 +47,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the AgentPublicKeyCertificate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AgentPublicKeyCertificate
         {
             get
@@ -60,6 +63,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the KubernetesVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KubernetesVersion
         {
             get
@@ -70,6 +74,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the TotalNodeCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TotalNodeCount
         {
             get
@@ -80,6 +85,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the TotalCoreCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TotalCoreCount
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the AgentVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AgentVersion
         {
             get
@@ -100,6 +107,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ConnectedClusterProvisioningState> ProvisioningState
         {
             get
@@ -115,6 +123,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Distribution. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Distribution
         {
             get
@@ -130,6 +139,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the DistributionVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DistributionVersion
         {
             get
@@ -145,6 +155,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Infrastructure. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Infrastructure
         {
             get
@@ -160,6 +171,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the Offering. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Offering
         {
             get
@@ -170,6 +182,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the ManagedIdentityCertificateExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ManagedIdentityCertificateExpiresOn
         {
             get
@@ -180,6 +193,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the LastConnectivityOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastConnectivityOn
         {
             get
@@ -190,6 +204,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the ConnectivityStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ConnectedClusterConnectivityStatus> ConnectivityStatus
         {
             get
@@ -200,6 +215,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the PrivateLinkState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ConnectedClusterPrivateLinkState> PrivateLinkState
         {
             get
@@ -215,6 +231,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the PrivateLinkScopeResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateLinkScopeResourceId
         {
             get
@@ -230,6 +247,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the AzureHybridBenefit. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ConnectedClusterAzureHybridBenefit> AzureHybridBenefit
         {
             get
@@ -245,6 +263,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the AadProfile. </summary>
+        [Experimental("AZPROVISION001")]
         public ConnectedClusterAadProfile AadProfile
         {
             get
@@ -260,6 +279,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the ArcAgentProfile. </summary>
+        [Experimental("AZPROVISION001")]
         public ConnectedClusterArcAgentProfile ArcAgentProfile
         {
             get
@@ -275,6 +295,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the SecurityProfile. </summary>
+        [Experimental("AZPROVISION001")]
         internal ConnectedClusterSecurityProfile SecurityProfile
         {
             get
@@ -290,6 +311,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the OidcIssuerProfile. </summary>
+        [Experimental("AZPROVISION001")]
         public ConnectedClusterOidcIssuerProfile OidcIssuerProfile
         {
             get
@@ -305,6 +327,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Gateway. </summary>
+        [Experimental("AZPROVISION001")]
         internal Gateway Gateway
         {
             get
@@ -320,6 +343,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the ArcAgentryConfigurations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ConnectedClusterArcAgentryConfiguration> ArcAgentryConfigurations
         {
             get
@@ -335,6 +359,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets the MiscellaneousProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> MiscellaneousProperties
         {
             get
@@ -345,6 +370,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> SecurityIsWorkloadIdentityEnabled
         {
             get
@@ -362,6 +388,7 @@ namespace Azure.Provisioning.Kubernetes
         }
 
         /// <summary> Gets or sets the IsGatewayEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsGatewayEnabled
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Maps
 {
     /// <summary> Additional Maps account properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MapsAccountProperties : ProvisionableConstruct
     {
         private BicepValue<Guid> _uniqueId;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets the UniqueId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> UniqueId
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the DisableLocalAuth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableLocalAuth
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -65,6 +70,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the LinkedResources. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MapsLinkedResource> LinkedResources
         {
             get
@@ -80,6 +86,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the Cors. </summary>
+        [Experimental("AZPROVISION001")]
         internal MapsCorsRules Cors
         {
             get
@@ -95,6 +102,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
+        [Experimental("AZPROVISION001")]
         public MapsEncryption Encryption
         {
             get
@@ -110,6 +118,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the Locations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MapsLocationItem> Locations
         {
             get
@@ -125,6 +134,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MapsPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -135,6 +145,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MapsPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -150,6 +161,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the CorsRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<MapsCorsRule> CorsRules
         {
             get

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> An Activity Log Alert rule resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ActivityLogAlert : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -82,6 +83,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Tags
         {
             get
@@ -97,6 +99,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Location. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AzureLocation> Location
         {
             get
@@ -112,6 +115,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the TenantScope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TenantScope
         {
             get
@@ -129,6 +133,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Scopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Scopes
         {
             get
@@ -146,6 +151,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -163,6 +169,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -180,6 +187,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AllOf. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ActivityLogAlertAnyOfOrLeafCondition> ConditionAllOf
         {
             get
@@ -197,6 +205,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ActionGroups. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ActivityLogAlertActionGroup> ActionsActionGroups
         {
             get

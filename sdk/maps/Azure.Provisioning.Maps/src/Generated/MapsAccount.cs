@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Maps
 {
     /// <summary> An Azure resource which represents access to a suite of Maps REST APIs. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MapsAccount : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -115,6 +116,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the Sku. </summary>
+        [Experimental("AZPROVISION001")]
         public MapsSku Sku
         {
             get
@@ -130,6 +132,7 @@ namespace Azure.Provisioning.Maps
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MapsAccountKind> Kind
         {
             get
