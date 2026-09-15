@@ -61,7 +61,7 @@ namespace Azure.Provisioning.HealthcareApis
         public Azure.Provisioning.HealthcareApis.FhirServiceAcrConfiguration AcrConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.HealthcareApis.FhirServiceAuthenticationConfiguration AuthenticationConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.HealthcareApis.FhirServiceCorsConfiguration CorsConfiguration { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.FhirServiceEventState> EventState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ExportStorageAccountName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
@@ -174,7 +174,7 @@ namespace Azure.Provisioning.HealthcareApis
     public partial class HealthcareApisIotFhirDestination : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public HealthcareApisIotFhirDestination(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> FhirMappingContent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> FhirServiceResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
@@ -309,7 +309,7 @@ namespace Azure.Provisioning.HealthcareApis
     {
         public HealthcareApisServiceCosmosDBConfiguration() { }
         public Azure.Provisioning.BicepValue<string> CrossTenantCmkApplicationId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> KeyVaultKeyUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> KeyVaultKeyUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> OfferThroughput { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -383,7 +383,7 @@ namespace Azure.Provisioning.HealthcareApis
         public HealthcareApisServiceStorageConfiguration() { }
         public Azure.Provisioning.BicepValue<string> FileSystemName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StorageEventQueueName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> StorageResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> StorageResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class HealthcareApisWorkspace : Azure.Provisioning.Primitives.ProvisionableResource

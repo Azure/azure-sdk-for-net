@@ -8,6 +8,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.HealthcareApis
         private BicepDictionary<string> _tags;
         private BicepValue<AzureLocation> _location;
         private FhirServiceProperties _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private ManagedServiceIdentity _identity;
         private BicepValue<FhirServiceKind> _kind;
         private ResourceReference<HealthcareApisWorkspace> _parent;
@@ -117,7 +118,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -378,7 +379,7 @@ namespace Azure.Provisioning.HealthcareApis
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<FhirServiceProperties>(nameof(Properties), new string[] { "properties" });
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" });
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _kind = DefineProperty<FhirServiceKind>(nameof(Kind), new string[] { "kind" });
             _parent = DefineResource<HealthcareApisWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);

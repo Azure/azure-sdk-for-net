@@ -8,6 +8,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.HealthcareApis
         private BicepValue<string> _name;
         private SystemData _systemData;
         private HealthcareApisIotFhirDestinationProperties _properties;
-        private BicepValue<string> _eTag;
+        private BicepValue<ETag> _eTag;
         private BicepValue<AzureLocation> _location;
         private ResourceReference<HealthcareApisIotConnector> _parent;
 
@@ -84,7 +85,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the ETag. </summary>
-        public BicepValue<string> ETag
+        public BicepValue<ETag> ETag
         {
             get
             {
@@ -200,7 +201,7 @@ namespace Azure.Provisioning.HealthcareApis
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<HealthcareApisIotFhirDestinationProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" });
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _parent = DefineResource<HealthcareApisIotConnector>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();

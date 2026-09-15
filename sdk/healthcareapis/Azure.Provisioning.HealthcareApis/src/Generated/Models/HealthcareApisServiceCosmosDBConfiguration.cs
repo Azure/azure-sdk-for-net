@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.HealthcareApis
     public partial class HealthcareApisServiceCosmosDBConfiguration : ProvisionableConstruct
     {
         private BicepValue<int> _offerThroughput;
-        private BicepValue<string> _keyVaultKeyUri;
+        private BicepValue<Uri> _keyVaultKeyUri;
         private BicepValue<string> _crossTenantCmkApplicationId;
 
         /// <summary> Creates a new HealthcareApisServiceCosmosDBConfiguration. </summary>
@@ -38,7 +39,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the KeyVaultKeyUri. </summary>
-        public BicepValue<string> KeyVaultKeyUri
+        public BicepValue<Uri> KeyVaultKeyUri
         {
             get
             {
@@ -72,7 +73,7 @@ namespace Azure.Provisioning.HealthcareApis
         {
             base.DefineProvisionableProperties();
             _offerThroughput = DefineProperty<int>(nameof(OfferThroughput), new string[] { "offerThroughput" });
-            _keyVaultKeyUri = DefineProperty<string>(nameof(KeyVaultKeyUri), new string[] { "keyVaultKeyUri" });
+            _keyVaultKeyUri = DefineProperty<Uri>(nameof(KeyVaultKeyUri), new string[] { "keyVaultKeyUri" });
             _crossTenantCmkApplicationId = DefineProperty<string>(nameof(CrossTenantCmkApplicationId), new string[] { "crossTenantCmkApplicationId" });
             DefineAdditionalProperties();
         }

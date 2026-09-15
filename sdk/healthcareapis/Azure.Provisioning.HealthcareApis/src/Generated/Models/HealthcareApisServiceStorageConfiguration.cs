@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.HealthcareApis
     /// <summary> The configuration of connected storage. </summary>
     public partial class HealthcareApisServiceStorageConfiguration : ProvisionableConstruct
     {
-        private BicepValue<string> _storageResourceId;
+        private BicepValue<ResourceIdentifier> _storageResourceId;
         private BicepValue<string> _fileSystemName;
         private StorageIndexingConfiguration _storageIndexingConfiguration;
 
@@ -23,7 +24,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets or sets the StorageResourceId. </summary>
-        public BicepValue<string> StorageResourceId
+        public BicepValue<ResourceIdentifier> StorageResourceId
         {
             get
             {
@@ -88,7 +89,7 @@ namespace Azure.Provisioning.HealthcareApis
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _storageResourceId = DefineProperty<string>(nameof(StorageResourceId), new string[] { "storageResourceId" });
+            _storageResourceId = DefineProperty<ResourceIdentifier>(nameof(StorageResourceId), new string[] { "storageResourceId" });
             _fileSystemName = DefineProperty<string>(nameof(FileSystemName), new string[] { "fileSystemName" });
             _storageIndexingConfiguration = DefineModelProperty<StorageIndexingConfiguration>(nameof(StorageIndexingConfiguration), new string[] { "storageIndexingConfiguration" });
             DefineAdditionalProperties();
