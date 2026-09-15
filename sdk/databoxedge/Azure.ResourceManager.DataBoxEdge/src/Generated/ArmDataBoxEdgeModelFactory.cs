@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Represents the networkAdapter on a device. </summary>
         /// <param name="adapterId"> Instance ID of network adapter. </param>
         /// <param name="adapterPosition"> Hardware position of network adapter. </param>
         /// <param name="index"> Logical index of the adapter. </param>
@@ -76,6 +77,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> The network adapter position. </summary>
         /// <param name="networkGroup"> The network group. </param>
         /// <param name="port"> The port. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeNetworkAdapterPosition"/> instance for mocking. </returns>
@@ -84,6 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeNetworkAdapterPosition(networkGroup, port, default);
         }
 
+        /// <summary> Details related to the IPv4 address configuration. </summary>
         /// <param name="ipAddress"> The IPv4 address of the network adapter. </param>
         /// <param name="subnet"> The IPv4 subnet of the network adapter. </param>
         /// <param name="gateway"> The IPv4 gateway of the network adapter. </param>
@@ -93,6 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeIPv4Config(ipAddress, subnet, gateway, default);
         }
 
+        /// <summary> Details related to the IPv6 address configuration. </summary>
         /// <param name="ipAddress"> The IPv6 address of the network adapter. </param>
         /// <param name="prefixLength"> The IPv6 prefix of the network adapter. </param>
         /// <param name="gateway"> The IPv6 gateway of the network adapter. </param>
@@ -171,6 +175,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Fields for tracking resource move. </summary>
         /// <param name="operationInProgress"> Denotes whether move operation is in progress. </param>
         /// <param name="operationInProgressLockTimeoutInUtc"> Denotes the timeout of the operation to finish. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeResourceMoveDetails"/> instance for mocking. </returns>
@@ -208,6 +213,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> The SubscriptionRegisteredFeatures. </summary>
         /// <param name="name"></param>
         /// <param name="state"></param>
         /// <returns> A new <see cref="Models.SubscriptionRegisteredFeatures"/> instance for mocking. </returns>
@@ -216,6 +222,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new SubscriptionRegisteredFeatures(name, state, default);
         }
 
+        /// <summary> The SKU type. </summary>
         /// <param name="name"> SKU name. </param>
         /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeSku"/> instance for mocking. </returns>
@@ -235,6 +242,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, subscriptionId is null ? default : new DataBoxEdgeDevicePropertiesPatch(new EdgeProfilePatch(new EdgeProfileSubscriptionPatch(subscriptionId, default), default), default), default);
         }
 
+        /// <summary> Used in activation key generation flow. </summary>
         /// <param name="publicKey">
         /// Gets or sets base64 encoded certificate raw data,
         /// this is the public part needed to be uploaded to cert vault
@@ -297,6 +305,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Holds device secret either as a KeyVault reference or as an encrypted value. </summary>
         /// <param name="encryptedSecret"> Encrypted (using device public key) secret value. </param>
         /// <param name="keyVaultId"> Id of the Key-Vault where secret is stored (ex: secrets/AuthClientSecret/82ef4346187a4033a10d629cde07d740). </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeDeviceSecret"/> instance for mocking. </returns>
@@ -305,6 +314,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeDeviceSecret(encryptedSecret, keyVaultId, default);
         }
 
+        /// <summary> Represent the secrets intended for encryption with asymmetric key pair. </summary>
         /// <param name="value"> The value of the secret. </param>
         /// <param name="encryptionCertThumbprint"> Thumbprint certificate used to encrypt \"Value\". If the value is unencrypted, it will be null. </param>
         /// <param name="encryptionAlgorithm"> The algorithm used to encrypt "Value". </param>
@@ -319,7 +329,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="deviceAdminPassword"> Device administrator password as an encrypted string (encrypted using RSA PKCS #1) is used to sign into the  local web UI of the device. The Actual password should have at least 8 characters that are a combination of  uppercase, lowercase, numeric, and special characters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceAdminPassword"/> is null. </exception>
         /// <returns> A new <see cref="Models.DataBoxEdgeSecuritySettings"/> instance for mocking. </returns>
         public static DataBoxEdgeSecuritySettings DataBoxEdgeSecuritySettings(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AsymmetricEncryptedSecret deviceAdminPassword = default)
         {
@@ -332,6 +341,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> The Data Box Edge/Gateway device extended info patch. </summary>
         /// <param name="clientSecretStoreId"> The Key Vault ARM Id for client secrets. </param>
         /// <param name="clientSecretStoreUri"> The url to access the Client Key Vault. </param>
         /// <param name="channelIntegrityKeyName"> The name for Channel Integrity Key stored in the Client Key Vault. </param>
@@ -358,6 +368,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new UploadCertificateContent(certificate is null ? default : new RawCertificateData(default, certificate, default), default);
         }
 
+        /// <summary> The upload registration certificate response. </summary>
         /// <param name="authType"> Specifies authentication type. </param>
         /// <param name="resourceId"> The resource ID of the Data Box Edge/Gateway device. </param>
         /// <param name="aadAuthority"> Azure Active Directory tenant authority. </param>
@@ -448,6 +459,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Update Specific attributes. </summary>
         /// <param name="updateTitle"> Title of the Update. </param>
         /// <param name="updateSizeInBytes"> Size of the update(In Bytes). </param>
         /// <param name="updateType"> Type of the Update. </param>
@@ -504,6 +516,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Error details for the alert. </summary>
         /// <param name="errorCode"> Error code. </param>
         /// <param name="errorMessage"> Error Message. </param>
         /// <param name="occurrences"> Number of occurrences. </param>
@@ -530,6 +543,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> RemoteApplicationType for which remote support settings is being modified. </summary>
         /// <param name="remoteApplicationType"> Remote application type. </param>
         /// <param name="accessLevel"> Access level allowed for this remote application type. </param>
         /// <param name="expireOn"> Expiration time stamp. </param>
@@ -582,6 +596,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Details about the download progress of update. </summary>
         /// <param name="downloadPhase"> The download phase. </param>
         /// <param name="percentComplete"> Percentage of completion. </param>
         /// <param name="totalBytesToDownload"> Total bytes to download. </param>
@@ -601,6 +616,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Progress details during installation of updates. </summary>
         /// <param name="percentComplete"> Percentage completed. </param>
         /// <param name="numberOfUpdatesToInstall"> Number of updates to install. </param>
         /// <param name="numberOfUpdatesInstalled"> Number of updates installed. </param>
@@ -610,6 +626,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new UpdateInstallProgress(percentComplete, numberOfUpdatesToInstall, numberOfUpdatesInstalled, default);
         }
 
+        /// <summary> The job error information containing the list of job errors. </summary>
         /// <param name="errorDetails"> The error details. </param>
         /// <param name="code"> The code intended for programmatic access. </param>
         /// <param name="message"> The message that describes the error in detail. </param>
@@ -621,6 +638,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeJobErrorDetails((errorDetails ?? new ChangeTrackingList<DataBoxEdgeJobErrorItem>()).ToList(), code, message, default);
         }
 
+        /// <summary> The job error items. </summary>
         /// <param name="recommendations"> The recommended actions. </param>
         /// <param name="code"> The code intended for programmatic access. </param>
         /// <param name="message"> The message that describes the error in detail. </param>
@@ -669,6 +687,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Contains all the contact details of the customer. </summary>
         /// <param name="contactPerson"> The contact person name. </param>
         /// <param name="companyName"> The name of the company. </param>
         /// <param name="phone"> The phone number. </param>
@@ -681,6 +700,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeContactDetails(contactPerson, companyName, phone, (emailList ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The shipping address of the customer. </summary>
         /// <param name="addressLine1"> The address line1. </param>
         /// <param name="addressLine2"> The address line2. </param>
         /// <param name="addressLine3"> The address line3. </param>
@@ -702,6 +722,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Represents a single status change. </summary>
         /// <param name="status"> Status of the order as per the allowed status types. </param>
         /// <param name="updateOn"> Time of status update. </param>
         /// <param name="comments"> Comments related to this status change. </param>
@@ -724,6 +745,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Tracking courier information. </summary>
         /// <param name="serialNumber"> Serial number of the device being tracked. </param>
         /// <param name="carrierName"> Name of the carrier used in the delivery. </param>
         /// <param name="trackingId"> Tracking ID of the shipment. </param>
@@ -741,6 +763,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeDataCenterAccessCode(authCode is null ? default : new DCAccessCodeProperties(authCode, default), default);
         }
 
+        /// <summary>
+        /// Compute role.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.CloudEdgeManagementRole"/>, <see cref="Models.EdgeIotRole"/>, <see cref="Models.EdgeKubernetesRole"/>, and <see cref="Models.MecRole"/>.
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -822,6 +848,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeIotDeviceInfo(deviceId, iotHostHub, iotHostHubId, symmetricKeyConnectionString is null ? default : new Authentication(new DataBoxEdgeSymmetricKey(symmetricKeyConnectionString, default), default), default);
         }
 
+        /// <summary> The share mount point. </summary>
         /// <param name="shareId"> ID of the share mounted to the role VM. </param>
         /// <param name="roleId"> ID of the role to which share is mounted. </param>
         /// <param name="mountPoint"> Mount point for the share. </param>
@@ -839,6 +866,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> IoT edge agent details is optional, this will be used for download system Agent module while bootstrapping IoT Role if specified. </summary>
         /// <param name="imageName"> Name of the IoT edge agent image. </param>
         /// <param name="tag"> Image Tag. </param>
         /// <param name="imageRepository"> Image repository details. </param>
@@ -848,6 +876,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new IotEdgeAgentInfo(imageName, tag, imageRepository, default);
         }
 
+        /// <summary> Image repository credential. </summary>
         /// <param name="imageRepositoryUri"> Image repository url (e.g.: mcr.microsoft.com). </param>
         /// <param name="userName"> Repository user name. </param>
         /// <param name="password"> Repository user password. </param>
@@ -857,6 +886,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new ImageRepositoryCredential(imageRepositoryUri, userName, password, default);
         }
 
+        /// <summary> Compute infrastructure Resource. </summary>
         /// <param name="processorCount"> Processor count. </param>
         /// <param name="memoryInGB"> Memory in GB. </param>
         /// <returns> A new <see cref="Models.EdgeComputeResourceInfo"/> instance for mocking. </returns>
@@ -895,6 +925,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     default));
         }
 
+        /// <summary> Kubernetes cluster configuration. </summary>
         /// <param name="etcdInfo"> Etcd configuration. </param>
         /// <param name="nodes"> Kubernetes cluster nodes. </param>
         /// <param name="version"> Kubernetes cluster version. </param>
@@ -906,6 +937,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeKubernetesClusterInfo(etcdInfo, (nodes ?? new ChangeTrackingList<EdgeKubernetesNodeInfo>()).ToList(), version, default);
         }
 
+        /// <summary> Etcd configuration. </summary>
         /// <param name="etcdInfoType"> Etcd type. </param>
         /// <param name="version"> Etcd version. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeEtcdInfo"/> instance for mocking. </returns>
@@ -914,6 +946,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeEtcdInfo(etcdInfoType, version, default);
         }
 
+        /// <summary> Kubernetes node info. </summary>
         /// <param name="name"> Node name. </param>
         /// <param name="nodeType"> Node type - Master/Worker. </param>
         /// <param name="ipConfiguration"> IP Configuration of the Kubernetes node. </param>
@@ -925,6 +958,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeKubernetesNodeInfo(name, nodeType, (ipConfiguration ?? new ChangeTrackingList<EdgeKubernetesIPConfiguration>()).ToList(), default);
         }
 
+        /// <summary> Kubernetes node IP configuration. </summary>
         /// <param name="port"> Port of the Kubernetes node. </param>
         /// <param name="ipAddress"> IP address of the Kubernetes node. </param>
         /// <returns> A new <see cref="Models.EdgeKubernetesIPConfiguration"/> instance for mocking. </returns>
@@ -933,6 +967,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeKubernetesIPConfiguration(port, ipAddress, default);
         }
 
+        /// <summary> Kubernetes role resources. </summary>
         /// <param name="storage"> Kubernetes role storage resource. </param>
         /// <param name="compute"> Kubernetes role compute resource. </param>
         /// <param name="network"> Kubernetes role network resource. </param>
@@ -942,6 +977,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeKubernetesRoleResources(storage, compute, network, default);
         }
 
+        /// <summary> Kubernetes role storage resource. </summary>
         /// <param name="storageClasses"> Kubernetes storage class info. </param>
         /// <param name="endpoints"> Mount points of shares in role(s). </param>
         /// <returns> A new <see cref="Models.EdgeKubernetesRoleStorage"/> instance for mocking. </returns>
@@ -953,6 +989,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeKubernetesRoleStorage((storageClasses ?? new ChangeTrackingList<EdgeKubernetesRoleStorageClassInfo>()).ToList(), (endpoints ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>()).ToList(), default);
         }
 
+        /// <summary> Kubernetes storage class info. </summary>
         /// <param name="name"> Storage class name. </param>
         /// <param name="kubernetesRoleStorageClassInfoType"> Storage class type. </param>
         /// <param name="posixCompliant"> If provisioned storage is posix compliant. </param>
@@ -962,6 +999,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeKubernetesRoleStorageClassInfo(name, kubernetesRoleStorageClassInfoType, posixCompliant, default);
         }
 
+        /// <summary> Kubernetes role compute resource. </summary>
         /// <param name="vmProfile"> VM profile. </param>
         /// <param name="memoryInBytes"> Memory in bytes. </param>
         /// <param name="processorCount"> Processor count. </param>
@@ -971,6 +1009,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeKubernetesRoleCompute(vmProfile, memoryInBytes, processorCount, default);
         }
 
+        /// <summary> Kubernetes role network resource. </summary>
         /// <param name="cniConfig"> Cni configuration. </param>
         /// <param name="loadBalancerConfig"> Load balancer configuration. </param>
         /// <returns> A new <see cref="Models.EdgeKubernetesRoleNetwork"/> instance for mocking. </returns>
@@ -979,6 +1018,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeKubernetesRoleNetwork(cniConfig, loadBalancerConfig, default);
         }
 
+        /// <summary> Cni configuration. </summary>
         /// <param name="cniConfigType"> Cni type. </param>
         /// <param name="version"> Cni version. </param>
         /// <param name="podSubnet"> Pod Subnet. </param>
@@ -989,6 +1029,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new CniConfig(cniConfigType, version, podSubnet, serviceSubnet, default);
         }
 
+        /// <summary> Load balancer configuration. </summary>
         /// <param name="loadBalancerConfigType"> Load balancer type. </param>
         /// <param name="version"> Load balancer version. </param>
         /// <param name="ipRange"> Load balancer ipconfig. </param>
@@ -1021,6 +1062,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 connectionString is null && controllerEndpoint is null && resourceUniqueId is null && roleStatus is null ? default : new MECRoleProperties(connectionString, controllerEndpoint, resourceUniqueId, roleStatus, default));
         }
 
+        /// <summary>
+        /// Role Addon
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.EdgeArcAddon"/> and <see cref="Models.EdgeIotAddon"/>.
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1048,7 +1093,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="hostPlatform"> Host OS supported by the IoT addon. </param>
         /// <param name="hostPlatformType"> Platform where the runtime is hosted. </param>
         /// <param name="provisioningState"> Addon Provisioning State. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="iotDeviceDetails"/> or <paramref name="iotEdgeDeviceDetails"/> is null. </exception>
         /// <returns> A new <see cref="Models.EdgeIotAddon"/> instance for mocking. </returns>
         public static EdgeIotAddon EdgeIotAddon(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EdgeIotDeviceInfo iotDeviceDetails = default, EdgeIotDeviceInfo iotEdgeDeviceDetails = default, string version = default, DataBoxEdgeOSPlatformType? hostPlatform = default, HostPlatformType? hostPlatformType = default, DataBoxEdgeRoleAddonProvisioningState? provisioningState = default)
         {
@@ -1062,6 +1106,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Azure container mapping of the endpoint. </summary>
         /// <param name="storageAccountCredentialId"> ID of the storage account credential used to access storage. </param>
         /// <param name="containerName"> Container name (Based on the data format specified, this represents the name of Azure Files/Page blob/Block blob). </param>
         /// <param name="dataFormat"> Storage format used for the file represented by the share. </param>
@@ -1071,6 +1116,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeStorageContainerInfo(storageAccountCredentialId, containerName, dataFormat, default);
         }
 
+        /// <summary> The mapping between a particular user and the access type on the SMB share. </summary>
         /// <param name="userId"> User ID (already existing in the device). </param>
         /// <param name="accessType"> Type of access to be allowed for the user. </param>
         /// <returns> A new <see cref="Models.UserAccessRight"/> instance for mocking. </returns>
@@ -1079,6 +1125,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new UserAccessRight(userId, accessType, default);
         }
 
+        /// <summary> The mapping between a particular client IP and the type of access client has on the NFS share. </summary>
         /// <param name="client"> IP of the client. </param>
         /// <param name="accessPermission"> Type of access to be allowed for the client. </param>
         /// <returns> A new <see cref="Models.ClientAccessRight"/> instance for mocking. </returns>
@@ -1087,6 +1134,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new ClientAccessRight(client, accessPermission, default);
         }
 
+        /// <summary> Fields for tracking refresh job on the share or container. </summary>
         /// <param name="inProgressRefreshJobId"> If a refresh job is currently in progress on this share or container, this field indicates the ARM resource ID of that job. The field is empty if no job is in progress. </param>
         /// <param name="lastCompletedRefreshJobTimeInUtc"> Indicates the completed time for the last refresh job on this particular share or container, if any.This could be a failed job or a successful job. </param>
         /// <param name="errorManifestFile"> Indicates the relative path of the error xml for the last refresh job on this particular share or container, if any. This could be a failed job or a successful job. </param>
@@ -1097,6 +1145,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeRefreshDetails(inProgressRefreshJobId, lastCompletedRefreshJobTimeInUtc, errorManifestFile, lastJob, default);
         }
 
+        /// <summary>
+        /// Trigger details.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.EdgeFileEventTrigger"/> and <see cref="Models.PeriodicTimerEventTrigger"/>.
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1121,7 +1173,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
         /// <param name="sourceInfoShareId"> File share ID. </param>
         /// <param name="sinkInfoRoleId"> Compute role ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceInfoShareId"/> or <paramref name="sinkInfoRoleId"/> is null. </exception>
         /// <returns> A new <see cref="Models.EdgeFileEventTrigger"/> instance for mocking. </returns>
         public static EdgeFileEventTrigger EdgeFileEventTrigger(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string customContextTag = default, ResourceIdentifier sourceInfoShareId = default, ResourceIdentifier sinkInfoRoleId = default)
         {
@@ -1135,6 +1186,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 sourceInfoShareId is null && sinkInfoRoleId is null ? default : new FileTriggerProperties(new EdgeFileSourceInfo(sourceInfoShareId, default), new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), default, default));
         }
 
+        /// <summary> File source details. </summary>
         /// <param name="shareId"> File share ID. </param>
         /// <returns> A new <see cref="Models.EdgeFileSourceInfo"/> instance for mocking. </returns>
         public static EdgeFileSourceInfo EdgeFileSourceInfo(ResourceIdentifier shareId = default)
@@ -1142,6 +1194,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeFileSourceInfo(shareId, default);
         }
 
+        /// <summary> Compute role against which events will be raised. </summary>
         /// <param name="roleId"> Compute role ID. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeRoleSinkInfo"/> instance for mocking. </returns>
         public static DataBoxEdgeRoleSinkInfo DataBoxEdgeRoleSinkInfo(ResourceIdentifier roleId = default)
@@ -1156,7 +1209,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="sourceInfo"> Periodic timer details. </param>
         /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
         /// <param name="sinkInfoRoleId"> Compute role ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceInfo"/> or <paramref name="sinkInfoRoleId"/> is null. </exception>
         /// <returns> A new <see cref="Models.PeriodicTimerEventTrigger"/> instance for mocking. </returns>
         public static PeriodicTimerEventTrigger PeriodicTimerEventTrigger(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PeriodicTimerSourceInfo sourceInfo = default, string customContextTag = default, ResourceIdentifier sinkInfoRoleId = default)
         {
@@ -1170,6 +1222,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 sinkInfoRoleId is null ? default : new PeriodicTimerProperties(default, new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), default, default));
         }
 
+        /// <summary> Periodic timer event source. </summary>
         /// <param name="startOn"> The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified upto seconds. If timezone is not specified the time will considered to be in device timezone. The value will always be returned as UTC time. </param>
         /// <param name="schedule"> Periodic frequency at which timer event needs to be raised. Supports daily, hourly, minutes, and seconds. </param>
         /// <param name="topic"> Topic where periodic events are published to IoT device. </param>
@@ -1179,6 +1232,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new PeriodicTimerSourceInfo(startOn, schedule, topic, default);
         }
 
+        /// <summary> Specifies the mapping between this particular user and the type of access he has on shares on this device. </summary>
         /// <param name="shareId"> The share ID. </param>
         /// <param name="accessType"> Type of access to be allowed on the share for this user. </param>
         /// <returns> A new <see cref="Models.ShareAccessRight"/> instance for mocking. </returns>
@@ -1189,13 +1243,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <param name="vmPlacementQuery"> Array containing the sizes of the VMs for checking if its feasible to create them on the appliance. </param>
         /// <param name="vmPlacementResults"> Array of the VMs of the sizes in VmSizes can be provisioned on the appliance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmPlacementQuery"/> is null. </exception>
         /// <returns> A new <see cref="Models.DeviceCapacityRequestContent"/> instance for mocking. </returns>
         public static DeviceCapacityRequestContent DeviceCapacityRequestContent(IEnumerable<IList<string>> vmPlacementQuery = default, IEnumerable<VmPlacementRequestResult> vmPlacementResults = default)
         {
             return new DeviceCapacityRequestContent(default, default);
         }
 
+        /// <summary> List of VM sizes being checked for creation on appliance along with corresponding result. </summary>
         /// <param name="vmSize"> List of VM sizes being checked. </param>
         /// <param name="isFeasible"> Boolean value indicating if the VM(s) in VmSize can be created. </param>
         /// <param name="messageCode"> MessageCode indicating reason for success or failure. </param>
@@ -1258,7 +1312,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                minimumTimeStamp is null && maximumTimeStamp is null ? default : new SupportPackageRequestProperties(minimumTimeStamp, maximumTimeStamp, default, default),
                 default);
         }
 
@@ -1282,6 +1336,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Cluster Storage Data. </summary>
         /// <param name="clusterTotalStorageInMB"> Total storage on the cluster in MB. </param>
         /// <param name="clusterFreeStorageInMB"> The available or free storage on the cluster in MB. </param>
         /// <returns> A new <see cref="Models.EdgeClusterStorageViewInfo"/> instance for mocking. </returns>
@@ -1290,6 +1345,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeClusterStorageViewInfo(clusterTotalStorageInMB, clusterFreeStorageInMB, default);
         }
 
+        /// <summary> Cluster Compute Data. </summary>
         /// <param name="fqdn"> The FQDN of the cluster. </param>
         /// <param name="gpuCapacity"> The cluster's GPU capacity. </param>
         /// <param name="memoryCapacity"> The cluster's memory capacity. </param>
@@ -1307,6 +1363,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Cluster GPU Data. </summary>
         /// <param name="gpuType"> The cluster GPU Type. </param>
         /// <param name="gpuUsedUnitsCount"> The used GPU units count in the cluster. </param>
         /// <param name="gpuFreeUnitsCount"> The free GPU units count in the cluster. </param>
@@ -1324,6 +1381,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> NodeCapacityInfo defines the required information to determine the placement of a VM. </summary>
         /// <param name="clusterFreeMemoryInMB"> The free memory in the cluster in MB. </param>
         /// <param name="clusterUsedMemoryInMB"> The used memory in the cluster in MB. </param>
         /// <param name="clusterFailoverMemoryInMB"> The failover memory in the cluster in MB. </param>
@@ -1349,6 +1407,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Host Capacity Data. </summary>
         /// <param name="hostName"> The name of the host. </param>
         /// <param name="effectiveAvailableMemoryInMBOnHost"> The available memory on the host accounting for VM placement size and any host VM reservations. </param>
         /// <param name="availableGpuCount"> The available amount of GPUs on the host to use after accounting for GPUS used by reservations on the host. </param>
@@ -1371,6 +1430,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> VmMemory Data. </summary>
         /// <param name="startupMemoryInMB"> The total amount of RAM in the virtual machine, as seen by the guest  operating system. For a virtual machine with dynamic memory enabled, this represents the initial memory available at startup. </param>
         /// <param name="currentMemoryUsageInMB"> The current memory used by the virtual machine. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeVmMemory"/> instance for mocking. </returns>
@@ -1379,6 +1439,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeVmMemory(startupMemoryInMB, currentMemoryUsageInMB, default);
         }
 
+        /// <summary> NUMA node data. </summary>
         /// <param name="numaNodeIndex"> The NUMA node index. </param>
         /// <param name="totalMemoryInMB"> The total memory on the NUMA node. </param>
         /// <param name="logicalCoreCountPerCore"> The logical cores per core count. </param>
@@ -1409,7 +1470,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="metricConfigurations"> The metrics configuration details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricConfigurations"/> is null. </exception>
         /// <returns> A new <see cref="DataBoxEdge.MonitoringMetricConfigurationData"/> instance for mocking. </returns>
         public static MonitoringMetricConfigurationData MonitoringMetricConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<DataBoxEdgeMetricConfiguration> metricConfigurations = default)
         {
@@ -1422,6 +1482,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Metric configuration. </summary>
         /// <param name="resourceId"> The Resource ID on which the metrics should be pushed. </param>
         /// <param name="mdmAccount"> The MDM account to which the counters should be pushed. </param>
         /// <param name="metricNameSpace"> The MDM namespace to which the counters should be pushed. This is required if MDMAccount is specified. </param>
@@ -1434,6 +1495,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeMetricConfiguration(resourceId, mdmAccount, metricNameSpace, (counterSets ?? new ChangeTrackingList<DataBoxEdgeMetricCounterSet>()).ToList(), default);
         }
 
+        /// <summary> The metric counter set. </summary>
         /// <param name="counters"> The counters that should be collected in this set. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeMetricCounterSet"/> instance for mocking. </returns>
         public static DataBoxEdgeMetricCounterSet DataBoxEdgeMetricCounterSet(IEnumerable<DataBoxEdgeMetricCounter> counters = default)
@@ -1443,6 +1505,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeMetricCounterSet((counters ?? new ChangeTrackingList<DataBoxEdgeMetricCounter>()).ToList(), default);
         }
 
+        /// <summary> The metric counter. </summary>
         /// <param name="name"> The counter name. </param>
         /// <param name="instance"> The instance from which counter should be collected. </param>
         /// <param name="dimensionFilter"> The dimension filter. </param>
@@ -1456,6 +1519,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeMetricCounter(name, instance, (dimensionFilter ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>()).ToList(), (additionalDimensions ?? new ChangeTrackingList<DataBoxEdgeMetricDimension>()).ToList(), default);
         }
 
+        /// <summary> The metric dimension. </summary>
         /// <param name="sourceType"> The dimension type. </param>
         /// <param name="sourceName"> The dimension value. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeMetricDimension"/> instance for mocking. </returns>
@@ -1464,6 +1528,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeMetricDimension(sourceType, sourceName, default);
         }
 
+        /// <summary> The Sku information. </summary>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="name"> The Sku name. </param>
         /// <param name="kind"> The Sku kind. </param>
@@ -1508,6 +1573,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> The location info. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones. </param>
         /// <param name="sites"> The sites. </param>
@@ -1520,6 +1586,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeSkuLocationInfo(location, (zones ?? new ChangeTrackingList<string>()).ToList(), (sites ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The metadata for retrieving price info. </summary>
         /// <param name="meterId"> Used for querying price from commerce. </param>
         /// <param name="quantity"> The cost quantity. </param>
         /// <param name="extendedUnit"> The extended unit. </param>
@@ -1529,6 +1596,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeSkuCost(meterId, quantity, extendedUnit, default);
         }
 
+        /// <summary> The metadata to describe the capability. </summary>
         /// <param name="name"> An invariant to describe the feature. </param>
         /// <param name="value"> An invariant if the feature is measured by quantity. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeSkuCapability"/> instance for mocking. </returns>
@@ -1537,16 +1605,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeSkuCapability(name, value, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeDeviceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The Data Box Edge/Gateway device. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU type. </param>
         /// <param name="etag"> The etag for the devices. </param>
-        /// <param name="identity"> Msi identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="kind"> The kind of the device. </param>
         /// <param name="dataBoxEdgeDeviceStatus"> The status of the Data Box Edge/Gateway device. </param>
         /// <param name="serialNumber"> The Serial Number of Data Box Edge/Gateway device. </param>
@@ -1563,8 +1631,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="configuredRoleTypes"> Type of compute roles configured. </param>
         /// <param name="nodeCount"> The number of nodes in the cluster. </param>
         /// <param name="resourceMoveDetails"> The details of the move operation on this resource. </param>
-        /// <param name="edgeSubscription"> The details of Edge Profile for this resource. </param>
-        /// <param name="residencyType"> The details of data-residency related properties for this resource. </param>
+        /// <param name="edgeSubscription"> Edge Profile Subscription. </param>
+        /// <param name="residencyType"> DataResidencyType enum. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeDeviceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataBoxEdgeSku sku = default, ETag? etag = default, ManagedServiceIdentity identity = default, DataBoxEdgeDeviceKind? kind = default, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default, string serialNumber = default, string description = default, string modelDescription = default, DataBoxEdgeDeviceType? deviceType = default, string friendlyName = default, string culture = default, string deviceModel = default, string deviceSoftwareVersion = default, long? deviceLocalCapacity = default, string timeZone = default, string deviceHcsVersion = default, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes = default, int? nodeCount = default, DataBoxEdgeResourceMoveDetails resourceMoveDetails = default, EdgeProfileSubscription edgeSubscription = default, DataBoxEdgeDataResidencyType? residencyType = default)
@@ -1604,11 +1672,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> A device job. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="status"> The current status of the job. </param>
         /// <param name="startOn"> The UTC date and time at which the job started. </param>
         /// <param name="endOn"> The UTC date and time at which the job completed. </param>
@@ -1649,11 +1717,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdge.DataBoxEdgeOrderData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The order details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="kind"> It specify the order api version. </param>
         /// <param name="orderId"> It specify the order resource id. </param>
         /// <param name="contactInformation"> The contact details. </param>
@@ -1688,13 +1756,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CloudEdgeManagementRole"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary>
+        /// The preview of Virtual Machine Cloud Management from the Azure supports deploying and managing VMs on your Azure Stack Edge device from Azure Portal.
+        /// For more information, refer to: https://docs.microsoft.com/en-us/azure/databox-online/azure-stack-edge-gpu-virtual-machine-overview
+        /// By using this feature, you agree to the preview legal terms. See the https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/ for additional details.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="localManagementStatus"> Local Edge Management Status. </param>
-        /// <param name="edgeSubscription"> Edge Profile of the resource. </param>
+        /// <param name="edgeSubscription"> Edge Profile Subscription. </param>
         /// <param name="roleStatus"> Role status. </param>
         /// <returns> A new <see cref="Models.CloudEdgeManagementRole"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1710,13 +1782,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 localManagementStatus is null && edgeSubscription is null && roleStatus is null ? default : new CloudEdgeManagementRoleProperties(localManagementStatus, new EdgeProfile(edgeSubscription, default), roleStatus, default));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeFileEventTrigger"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sourceInfoShareId"> File event source details. </param>
-        /// <param name="sinkInfoRoleId"> Role sink info. </param>
+        /// <summary> Trigger details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="sourceInfoShareId"> File share ID. </param>
+        /// <param name="sinkInfoRoleId"> Compute role ID. </param>
         /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
         /// <returns> A new <see cref="Models.EdgeFileEventTrigger"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1732,7 +1804,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 sourceInfoShareId is null && sinkInfoRoleId is null && customContextTag is null ? default : new FileTriggerProperties(new EdgeFileSourceInfo(sourceInfoShareId, default), new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), customContextTag, default));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxEdgeLoadBalancerConfig"/>. </summary>
+        /// <summary> Load balancer configuration. </summary>
         /// <param name="loadBalancerConfigType"> Load balancer type. </param>
         /// <param name="version"> Load balancer version. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeLoadBalancerConfig"/> instance for mocking. </returns>
@@ -1742,13 +1814,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeLoadBalancerConfig(loadBalancerConfigType, version, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PeriodicTimerEventTrigger"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Trigger details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="sourceInfo"> Periodic timer details. </param>
-        /// <param name="sinkInfoRoleId"> Role Sink information. </param>
+        /// <param name="sinkInfoRoleId"> Compute role ID. </param>
         /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
         /// <returns> A new <see cref="Models.PeriodicTimerEventTrigger"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]

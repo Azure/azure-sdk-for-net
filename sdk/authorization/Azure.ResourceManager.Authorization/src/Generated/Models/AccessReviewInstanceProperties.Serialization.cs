@@ -90,15 +90,15 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Reviewers))
             {
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.Authorization.Models
                 return null;
             }
             AccessReviewInstanceStatus? status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             IList<AccessReviewReviewer> reviewers = default;
             IList<AccessReviewReviewer> backupReviewers = default;
             AccessReviewInstanceReviewersType? reviewersType = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDateTime"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reviewers"u8))
@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             return new AccessReviewInstanceProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 reviewers ?? new ChangeTrackingList<AccessReviewReviewer>(),
                 backupReviewers ?? new ChangeTrackingList<AccessReviewReviewer>(),
                 reviewersType,

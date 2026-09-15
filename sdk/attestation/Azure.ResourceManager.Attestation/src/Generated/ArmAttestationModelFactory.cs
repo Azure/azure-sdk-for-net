@@ -72,6 +72,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.Attestation.Models
             return new AttestationPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Parameters for creating an attestation provider. </summary>
         /// <param name="location"> The supported Azure location where the attestation provider should be created. </param>
         /// <param name="tags"> The tags that will be assigned to the attestation provider. </param>
         /// <param name="properties"> Properties of the attestation provider. </param>
@@ -107,6 +109,7 @@ namespace Azure.ResourceManager.Attestation.Models
             return new AttestationServiceCreationSpecificParams(publicNetworkAccess, policySigningCertificatesKeys is null ? default : new JsonWebKeySet((policySigningCertificatesKeys ?? new ChangeTrackingList<AttestationJsonWebKey>()).ToList(), default), tpmAttestationAuthentication, default);
         }
 
+        /// <summary> The AttestationJsonWebKey. </summary>
         /// <param name="alg">
         /// The "alg" (algorithm) parameter identifies the algorithm intended for
         /// use with the key.  The values used should either be registered in the
@@ -185,6 +188,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 default);
         }
 
+        /// <summary> Parameters for patching an attestation provider. </summary>
         /// <param name="tags"> The tags that will be assigned to the attestation provider. </param>
         /// <param name="properties"> Properties of the attestation provider. </param>
         /// <returns> A new <see cref="Models.AttestationProviderPatch"/> instance for mocking. </returns>
@@ -195,6 +199,7 @@ namespace Azure.ResourceManager.Attestation.Models
             return new AttestationProviderPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> Client supplied parameters used to patch an existing attestation provider. </summary>
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
         /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <returns> A new <see cref="Models.AttestationProviderPatchProperties"/> instance for mocking. </returns>
@@ -203,6 +208,7 @@ namespace Azure.ResourceManager.Attestation.Models
             return new AttestationProviderPatchProperties(publicNetworkAccess, tpmAttestationAuthentication, default);
         }
 
+        /// <summary> A private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -220,6 +226,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>

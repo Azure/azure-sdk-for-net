@@ -62,6 +62,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <summary> The filters that will be applied to determine which resources to remediate. </summary>
         /// <param name="locations"> The resource locations that will be remediated. </param>
         /// <param name="resourceIds"> The IDs of the resources that will be remediated. Can specify at most 100 IDs. This filter cannot be used when ReEvaluateCompliance is set to ReEvaluateCompliance, and cannot be empty if provided. </param>
         /// <returns> A new <see cref="Models.RemediationFilters"/> instance for mocking. </returns>
@@ -73,6 +74,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new RemediationFilters((locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (resourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The deployment status summary for all deployments created by the remediation. </summary>
         /// <param name="totalDeployments"> The number of deployments required by the remediation. </param>
         /// <param name="successfulDeployments"> The number of deployments required by the remediation that have succeeded. </param>
         /// <param name="failedDeployments"> The number of deployments required by the remediation that have failed. </param>
@@ -82,6 +84,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new RemediationDeploymentSummary(totalDeployments, successfulDeployments, failedDeployments, default);
         }
 
+        /// <summary> Parameter group for OData query options. </summary>
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="orderBy"> Ordering expression using OData notation. </param>
         /// <param name="select"> Select expression using OData notation. </param>
@@ -107,6 +110,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <summary> Details of a single deployment created by the remediation. </summary>
         /// <param name="remediatedResourceId"> Resource ID of the resource that is being remediated by the deployment. </param>
         /// <param name="deploymentId"> Resource ID of the template deployment that will remediate the resource. </param>
         /// <param name="status"> Status of the remediation deployment. </param>
@@ -143,7 +147,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="lastComplianceStateChangeOn"> The time the compliance state was last changed in this attestation. </param>
         /// <param name="assessOn"> The time the evidence was assessed. </param>
         /// <param name="metadata"> Additional metadata for this attestation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
         /// <returns> A new <see cref="PolicyInsights.PolicyAttestationData"/> instance for mocking. </returns>
         public static PolicyAttestationData PolicyAttestationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyAssignmentId = default, string policyDefinitionReferenceId = default, PolicyComplianceState? complianceState = default, DateTimeOffset? expireOn = default, string owner = default, string comments = default, IEnumerable<AttestationEvidence> evidence = default, string provisioningState = default, DateTimeOffset? lastComplianceStateChangeOn = default, DateTimeOffset? assessOn = default, BinaryData metadata = default)
         {
@@ -152,10 +155,23 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                expireOn is null && lastComplianceStateChangeOn is null ? default : new AttestationProperties(
+                    default,
+                    default,
+                    default,
+                    expireOn,
+                    default,
+                    default,
+                    default,
+                    default,
+                    lastComplianceStateChangeOn,
+                    default,
+                    default,
+                    default),
                 default);
         }
 
+        /// <summary> A piece of evidence supporting the compliance state set in the attestation. </summary>
         /// <param name="description"> The description for this piece of evidence. </param>
         /// <param name="sourceUri"> The URI location of the evidence. </param>
         /// <returns> A new <see cref="Models.AttestationEvidence"/> instance for mocking. </returns>
@@ -299,6 +315,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Component event details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -405,6 +422,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Policy evaluation details. </summary>
         /// <param name="evaluatedExpressions"> Details of the evaluated expressions. </param>
         /// <param name="ifNotExistsDetails"> Evaluation details of IfNotExists effect. </param>
         /// <returns> A new <see cref="Models.PolicyEvaluationDetails"/> instance for mocking. </returns>
@@ -415,6 +433,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new PolicyEvaluationDetails((evaluatedExpressions ?? new ChangeTrackingList<ExpressionEvaluationDetails>()).ToList(), ifNotExistsDetails, default);
         }
 
+        /// <summary> Evaluation details of policy language expressions. </summary>
         /// <param name="result"> Evaluation result. </param>
         /// <param name="expression"> Expression evaluated. </param>
         /// <param name="expressionKind"> The kind of expression that was evaluated. </param>
@@ -436,6 +455,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <summary> Evaluation details of IfNotExists effect. </summary>
         /// <param name="resourceId"> ID of the last evaluated resource for IfNotExists effect. </param>
         /// <param name="totalResources"> Total number of resources to which the existence condition is applicable. </param>
         /// <returns> A new <see cref="Models.IfNotExistsEvaluationDetails"/> instance for mocking. </returns>
@@ -444,6 +464,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new IfNotExistsEvaluationDetails(resourceId, totalResources, default);
         }
 
+        /// <summary> Component state details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -478,6 +499,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new PolicySummary(odataId, odataContext, results, (policyAssignments ?? new ChangeTrackingList<PolicyAssignmentSummary>()).ToList(), default);
         }
 
+        /// <summary> Compliance summary on a particular summary level. </summary>
         /// <param name="queryResultsUri"> HTTP POST URI for queryResults action on Microsoft.PolicyInsights to retrieve raw results for the compliance summary. This property will not be available by default in future API versions, but could be queried explicitly. </param>
         /// <param name="nonCompliantResources"> Number of non-compliant resources. </param>
         /// <param name="nonCompliantPolicies"> Number of non-compliant policies. </param>
@@ -501,6 +523,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <summary> The compliance state rollup. </summary>
         /// <param name="complianceState"> The compliance state. </param>
         /// <param name="count"> Summarized count value for this compliance state. </param>
         /// <returns> A new <see cref="Models.ComplianceDetail"/> instance for mocking. </returns>
@@ -509,6 +532,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new ComplianceDetail(complianceState, count, default);
         }
 
+        /// <summary> Policy assignment summary. </summary>
         /// <param name="policyAssignmentId"> Policy assignment ID. </param>
         /// <param name="policySetDefinitionId"> Policy set definition ID, if the policy assignment is for a policy set. </param>
         /// <param name="results"> Compliance summary for the policy assignment. </param>
@@ -529,6 +553,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <summary> Policy definition summary. </summary>
         /// <param name="policyDefinitionId"> Policy definition ID. </param>
         /// <param name="policyDefinitionReferenceId"> Policy definition reference ID. </param>
         /// <param name="policyDefinitionGroupNames"> Policy definition group names. </param>
@@ -548,6 +573,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <summary> Policy definition group summary. </summary>
         /// <param name="policyGroupName"> Policy group name. </param>
         /// <param name="results"> Compliance summary for the policy definition group. </param>
         /// <returns> A new <see cref="Models.PolicyGroupSummary"/> instance for mocking. </returns>
@@ -556,6 +582,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new PolicyGroupSummary(policyGroupName, results, default);
         }
 
+        /// <summary> The check policy restrictions parameters describing the resource that is being evaluated. </summary>
         /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
         /// <param name="pendingFields"> The list of fields and values that should be evaluated for potential restrictions. </param>
         /// <param name="includeAuditEffect"> Whether to include policies with the 'audit' effect in the results. Defaults to false. </param>
@@ -567,6 +594,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new CheckPolicyRestrictionsContent(resourceDetails, (pendingFields ?? new ChangeTrackingList<PendingField>()).ToList(), includeAuditEffect, default);
         }
 
+        /// <summary> The information about the resource that will be evaluated. </summary>
         /// <param name="resourceContent"> The resource content. This should include whatever properties are already known and can be a partial set of all resource properties. </param>
         /// <param name="apiVersion"> The api-version of the resource content. </param>
         /// <param name="scope"> The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource's resource ID. </param>
@@ -576,6 +604,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new CheckRestrictionsResourceDetails(resourceContent, apiVersion, scope, default);
         }
 
+        /// <summary> A field that should be evaluated against Azure Policy to determine restrictions. </summary>
         /// <param name="field"> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </param>
         /// <param name="values"> The list of potential values for the field that should be evaluated against Azure Policy. </param>
         /// <returns> A new <see cref="Models.PendingField"/> instance for mocking. </returns>
@@ -586,6 +615,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new PendingField(@field, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The result of a check policy restrictions evaluation on a resource. </summary>
         /// <param name="fieldRestrictions"> The restrictions that will be placed on various fields in the resource by policy. </param>
         /// <param name="policyEvaluations"> Evaluation results for the provided partial resource content. </param>
         /// <returns> A new <see cref="Models.CheckPolicyRestrictionsResult"/> instance for mocking. </returns>
@@ -597,6 +627,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new CheckPolicyRestrictionsResult((fieldRestrictions ?? new ChangeTrackingList<FieldRestrictions>()).ToList(), (policyEvaluations ?? new ChangeTrackingList<PolicyEvaluationResult>()).ToList(), default);
         }
 
+        /// <summary> The restrictions that will be placed on a field in the resource by policy. </summary>
         /// <param name="field"> The name of the field. This can be a top-level property like 'name' or 'type' or an Azure Policy field alias. </param>
         /// <param name="restrictions"> The restrictions placed on that field by policy. </param>
         /// <returns> A new <see cref="Models.FieldRestrictions"/> instance for mocking. </returns>
@@ -607,6 +638,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new FieldRestrictions(@field, (restrictions ?? new ChangeTrackingList<FieldRestriction>()).ToList(), default);
         }
 
+        /// <summary> The restrictions on a field imposed by a specific policy. </summary>
         /// <param name="result"> The type of restriction that is imposed on the field. </param>
         /// <param name="defaultValue"> The value that policy will set for the field if the user does not provide a value. </param>
         /// <param name="values"> The values that policy either requires or denies for the field. </param>
@@ -628,6 +660,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <summary> Resource identifiers for a policy. </summary>
         /// <param name="policyDefinitionId"> The resource identifier of the policy definition. </param>
         /// <param name="policySetDefinitionId"> The resource identifier of the policy set definition. </param>
         /// <param name="policyDefinitionReferenceId"> The reference identifier of a specific policy definition within a policy set definition. </param>
@@ -648,6 +681,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new PolicyEvaluationResult(policyInfo, evaluationResult, checkRestrictionEvaluationDetails, policyEffect is null ? default : new PolicyEffectDetails(policyEffect, default), default);
         }
 
+        /// <summary> Policy evaluation details. </summary>
         /// <param name="evaluatedExpressions"> Details of the evaluated expressions. </param>
         /// <param name="ifNotExistsDetails"> Evaluation details of IfNotExists effect. </param>
         /// <param name="reason"> The reason for the evaluation result. </param>
@@ -659,6 +693,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new CheckRestrictionEvaluationDetails((evaluatedExpressions ?? new ChangeTrackingList<ExpressionEvaluationDetails>()).ToList(), ifNotExistsDetails, reason, default);
         }
 
+        /// <summary> The check policy restrictions parameters describing the resource that is being evaluated. </summary>
         /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
         /// <param name="pendingFields"> The list of fields and values that should be evaluated for potential restrictions. </param>
         /// <returns> A new <see cref="Models.CheckManagementGroupPolicyRestrictionsContent"/> instance for mocking. </returns>
@@ -744,6 +779,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Policy evaluation details. </summary>
         /// <param name="evaluatedExpressions"> Details of the evaluated expressions. </param>
         /// <param name="reason"> Additional textual reason for the evaluation outcome. </param>
         /// <returns> A new <see cref="Models.ComponentPolicyEvaluationDetails"/> instance for mocking. </returns>
@@ -754,6 +790,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new ComponentPolicyEvaluationDetails((evaluatedExpressions ?? new ChangeTrackingList<ComponentExpressionEvaluationDetails>()).ToList(), reason, default);
         }
 
+        /// <summary> Evaluation details of policy language expressions. </summary>
         /// <param name="result"> Evaluation result. </param>
         /// <param name="expression"> Expression evaluated. </param>
         /// <param name="expressionKind"> The kind of expression that was evaluated. </param>
@@ -775,6 +812,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <summary> Policy tracked resource record. </summary>
         /// <param name="trackedResourceId"> The ID of the policy tracked resource. </param>
         /// <param name="policyDetails"> The details of the policy that require the tracked resource. </param>
         /// <param name="createdBy"> The details of the policy triggered deployment that created the tracked resource. </param>
@@ -792,6 +830,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <summary> The policy details. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition. </param>
         /// <param name="policyAssignmentId"> The ID of the policy assignment. </param>
         /// <param name="policyAssignmentDisplayName"> The display name of the policy assignment. </param>
@@ -811,6 +850,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <summary> The details of the policy triggered deployment that created or modified the tracked resource. </summary>
         /// <param name="policyDetails"> The details of the policy that created or modified the tracked resource. </param>
         /// <param name="deploymentId"> The ID of the deployment that created or modified the tracked resource. </param>
         /// <param name="deploymentOn"> Timestamp of the deployment that created or modified the tracked resource. </param>
@@ -820,24 +860,24 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new TrackedResourceModificationDetails(policyDetails, deploymentId, deploymentOn, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyInsights.PolicyRemediationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The remediation definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment that should be remediated. </param>
         /// <param name="policyDefinitionReferenceId"> The policy definition reference ID of the individual definition that should be remediated. Required when the policy assignment being remediated assigns a policy set definition. </param>
         /// <param name="resourceDiscoveryMode"> The way resources to remediate are discovered. Defaults to ExistingNonCompliant if not specified. </param>
-        /// <param name="provisioningState"> The status of the remediation. </param>
+        /// <param name="provisioningState"> The status of the remediation. This refers to the entire remediation task, not individual deployments. Allowed values are Evaluating, Canceled, Cancelling, Failed, Complete, or Succeeded. </param>
         /// <param name="createdOn"> The time at which the remediation was created. </param>
         /// <param name="lastUpdatedOn"> The time at which the remediation was last updated. </param>
-        /// <param name="filterLocations"> The filters that will be applied to determine which resources to remediate. </param>
+        /// <param name="filterLocations"> The resource locations that will be remediated. </param>
         /// <param name="deploymentStatus"> The deployment status summary for all deployments created by the remediation. </param>
         /// <param name="statusMessage"> The remediation status message. Provides additional details regarding the state of the remediation. </param>
         /// <param name="correlationId"> The remediation correlation Id. Can be used to find events related to the remediation in the activity log. </param>
         /// <param name="resourceCount"> Determines the max number of resources that can be remediated by the remediation job. If not provided, the default resource count is used. </param>
         /// <param name="parallelDeployments"> Determines how many resources to remediate at any given time. Can be used to increase or reduce the pace of the remediation. If not provided, the default parallel deployments value is used. </param>
-        /// <param name="failureThresholdPercentage"> The remediation failure threshold settings. </param>
+        /// <param name="failureThresholdPercentage"> A number between 0.0 to 1.0 representing the percentage failure threshold. The remediation will fail if the percentage of failed remediation operations (i.e. failed deployments) exceeds this threshold. </param>
         /// <returns> A new <see cref="PolicyInsights.PolicyRemediationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PolicyRemediationData PolicyRemediationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyAssignmentId = default, string policyDefinitionReferenceId = default, ResourceDiscoveryMode? resourceDiscoveryMode = default, string provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, IEnumerable<AzureLocation> filterLocations = default, RemediationDeploymentSummary deploymentStatus = default, string statusMessage = default, string correlationId = default, int? resourceCount = default, int? parallelDeployments = default, float? failureThresholdPercentage = default)
@@ -865,10 +905,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyEvaluationResult"/>. </summary>
+        /// <summary> The result of a non-compliant policy evaluation against the given resource content. </summary>
         /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
         /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
-        /// <param name="evaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
+        /// <param name="evaluationDetails"></param>
         /// <returns> A new <see cref="Models.PolicyEvaluationResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = default, string evaluationResult = default, PolicyEvaluationDetails evaluationDetails = default)
@@ -876,7 +916,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new PolicyEvaluationResult(policyInfo, evaluationResult, default, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckPolicyRestrictionsContent"/>. </summary>
+        /// <summary> The check policy restrictions parameters describing the resource that is being evaluated. </summary>
         /// <param name="resourceDetails"> The information about the resource that will be evaluated. </param>
         /// <param name="pendingFields"> The list of fields and values that should be evaluated for potential restrictions. </param>
         /// <returns> A new <see cref="Models.CheckPolicyRestrictionsContent"/> instance for mocking. </returns>
@@ -886,7 +926,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new CheckPolicyRestrictionsContent(resourceDetails, (pendingFields ?? new ChangeTrackingList<PendingField>()).ToList(), default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FieldRestriction"/>. </summary>
+        /// <summary> The restrictions on a field imposed by a specific policy. </summary>
         /// <param name="result"> The type of restriction that is imposed on the field. </param>
         /// <param name="defaultValue"> The value that policy will set for the field if the user does not provide a value. </param>
         /// <param name="values"> The values that policy either requires or denies for the field. </param>

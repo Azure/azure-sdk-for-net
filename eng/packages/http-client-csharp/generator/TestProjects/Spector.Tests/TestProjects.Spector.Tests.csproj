@@ -70,11 +70,13 @@
     <ProjectReference Include="..\Spector\http\encode\numeric\src\Encode.Numeric.csproj" />
     <ProjectReference Include="..\Spector\http\parameters\basic\src\Parameters.Basic.csproj" />
     <ProjectReference Include="..\Spector\http\parameters\body-optionality\src\Parameters.BodyOptionality.csproj" />
+    <ProjectReference Include="..\Spector\http\parameters\body-root\src\Parameters.BodyRoot.csproj" />
     <ProjectReference Include="..\Spector\http\parameters\collection-format\src\Parameters.CollectionFormat.csproj" />
     <ProjectReference Include="..\Spector\http\parameters\spread\src\Parameters.Spread.csproj" />
     <ProjectReference Include="..\Spector\http\parameters\path\src\Parameters.Path.csproj" />
     <ProjectReference Include="..\Spector\http\parameters\query\src\Parameters.Query.csproj" />
     <ProjectReference Include="..\Spector\http\payload\content-negotiation\src\Payload.ContentNegotiation.csproj" />
+    <ProjectReference Include="..\Spector\http\payload\head\src\Payload.Head.csproj" />
     <ProjectReference Include="..\Spector\http\payload\json-merge-patch\src\Payload.JsonMergePatch.csproj" />
     <ProjectReference Include="..\Spector\http\payload\media-type\src\Payload.MediaType.csproj" />
     <ProjectReference Include="..\Spector\http\payload\multipart\src\Payload.MultiPart.csproj" />

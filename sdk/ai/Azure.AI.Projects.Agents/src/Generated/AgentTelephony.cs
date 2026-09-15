@@ -1428,5 +1428,1395 @@ namespace Azure.AI.Projects.Agents
             ClientResult result = await ReplaceTelephonyTransferTargetsAsync(agentName, ifMatch, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
         }
+
+        /// <summary>
+        /// [Protocol Method] Creates one durable direct outbound call job. The latest agent definition is resolved when each attempt executes.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that executes the call. </param>
+        /// <param name="idempotencyKey"> A customer-generated idempotency key. Reusing it with an equivalent request returns the same call job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="idempotencyKey"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult CreateTelephonyCallJob(string agentName, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CreateTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(idempotencyKey, nameof(idempotencyKey));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateCreateTelephonyCallJobRequest(agentName, idempotencyKey, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates one durable direct outbound call job. The latest agent definition is resolved when each attempt executes.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"> The name of the voice agent that executes the call. </param>
+        /// <param name="idempotencyKey"> A customer-generated idempotency key. Reusing it with an equivalent request returns the same call job. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="idempotencyKey"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CreateTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(idempotencyKey, nameof(idempotencyKey));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateCreateTelephonyCallJobRequest(agentName, idempotencyKey, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates one durable direct outbound call job. The latest agent definition is resolved when each attempt executes. </summary>
+        /// <param name="agentName"> The name of the voice agent that executes the call. </param>
+        /// <param name="idempotencyKey"> A customer-generated idempotency key. Reusing it with an equivalent request returns the same call job. </param>
+        /// <param name="body"> The direct outbound call to create. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="idempotencyKey"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyCallJob> CreateTelephonyCallJob(string agentName, string idempotencyKey, CreateTelephonyCallJobContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(idempotencyKey, nameof(idempotencyKey));
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = CreateTelephonyCallJob(agentName, idempotencyKey, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
+        }
+
+        /// <summary> Creates one durable direct outbound call job. The latest agent definition is resolved when each attempt executes. </summary>
+        /// <param name="agentName"> The name of the voice agent that executes the call. </param>
+        /// <param name="idempotencyKey"> A customer-generated idempotency key. Reusing it with an equivalent request returns the same call job. </param>
+        /// <param name="body"> The direct outbound call to create. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="idempotencyKey"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyCallJob>> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, CreateTelephonyCallJobContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(idempotencyKey, nameof(idempotencyKey));
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = await CreateTelephonyCallJobAsync(agentName, idempotencyKey, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a durable direct or campaign-created outbound call job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="callJobId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult GetTelephonyCallJob(string agentName, string callJobId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(callJobId, nameof(callJobId));
+
+                using PipelineMessage message = CreateGetTelephonyCallJobRequest(agentName, callJobId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a durable direct or campaign-created outbound call job.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="callJobId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> GetTelephonyCallJobAsync(string agentName, string callJobId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(callJobId, nameof(callJobId));
+
+                using PipelineMessage message = CreateGetTelephonyCallJobRequest(agentName, callJobId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves a durable direct or campaign-created outbound call job. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="callJobId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyCallJob> GetTelephonyCallJob(string agentName, string callJobId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(callJobId, nameof(callJobId));
+
+            ClientResult result = GetTelephonyCallJob(agentName, callJobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
+        }
+
+        /// <summary> Retrieves a durable direct or campaign-created outbound call job. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="callJobId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="callJobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyCallJob>> GetTelephonyCallJobAsync(string agentName, string callJobId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(callJobId, nameof(callJobId));
+
+            ClientResult result = await GetTelephonyCallJobAsync(agentName, callJobId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests cancellation of a durable outbound call job. A connected call is allowed to finish.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="callJobId"></param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult CancelTelephonyCallJob(string agentName, string callJobId, string ifMatch, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CancelTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(callJobId, nameof(callJobId));
+                Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+                using PipelineMessage message = CreateCancelTelephonyCallJobRequest(agentName, callJobId, ifMatch, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Requests cancellation of a durable outbound call job. A connected call is allowed to finish.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="callJobId"></param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> CancelTelephonyCallJobAsync(string agentName, string callJobId, string ifMatch, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CancelTelephonyCallJob");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(callJobId, nameof(callJobId));
+                Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+                using PipelineMessage message = CreateCancelTelephonyCallJobRequest(agentName, callJobId, ifMatch, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Requests cancellation of a durable outbound call job. A connected call is allowed to finish. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="callJobId"></param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyCallJob> CancelTelephonyCallJob(string agentName, string callJobId, string ifMatch, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(callJobId, nameof(callJobId));
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+            ClientResult result = CancelTelephonyCallJob(agentName, callJobId, ifMatch, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
+        }
+
+        /// <summary> Requests cancellation of a durable outbound call job. A connected call is allowed to finish. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="callJobId"></param>
+        /// <param name="ifMatch"> The entity tag returned by the latest read. The request fails if the resource changed since that read. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="callJobId"/> or <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyCallJob>> CancelTelephonyCallJobAsync(string agentName, string callJobId, string ifMatch, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(callJobId, nameof(callJobId));
+            Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
+
+            ClientResult result = await CancelTelephonyCallJobAsync(agentName, callJobId, ifMatch, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a draft outbound campaign. Recipients are imported and validated before the campaign can be published.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult CreateTelephonyCampaign(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CreateTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateCreateTelephonyCampaignRequest(agentName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a draft outbound campaign. Recipients are imported and validated before the campaign can be published.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> CreateTelephonyCampaignAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CreateTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateCreateTelephonyCampaignRequest(agentName, content, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a draft outbound campaign. Recipients are imported and validated before the campaign can be published. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="body"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyCampaign> CreateTelephonyCampaign(string agentName, CreateTelephonyCampaignContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = CreateTelephonyCampaign(agentName, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
+        }
+
+        /// <summary> Creates a draft outbound campaign. Recipients are imported and validated before the campaign can be published. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="body"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyCampaign>> CreateTelephonyCampaignAsync(string agentName, CreateTelephonyCampaignContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = await CreateTelephonyCampaignAsync(agentName, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves an outbound campaign, including configuration, execution state, and aggregate call-job counts.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult GetTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+                using PipelineMessage message = CreateGetTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves an outbound campaign, including configuration, execution state, and aggregate call-job counts.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> GetTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+                using PipelineMessage message = CreateGetTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves an outbound campaign, including configuration, execution state, and aggregate call-job counts. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyCampaign> GetTelephonyCampaign(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+            ClientResult result = GetTelephonyCampaign(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
+        }
+
+        /// <summary> Retrieves an outbound campaign, including configuration, execution state, and aggregate call-job counts. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyCampaign>> GetTelephonyCampaignAsync(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+            ClientResult result = await GetTelephonyCampaignAsync(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
+        }
+
+        /// <summary> Starts an asynchronous import of campaign recipients from a Dataset CSV, JSON array, or JSONL file. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="idempotencyKey"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/>, <paramref name="idempotencyKey"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("SCME0006")]
+        public virtual OperationResult ImportTelephonyCampaignRecipients(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ImportTelephonyCampaignRecipients");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+                Argument.AssertNotNullOrEmpty(idempotencyKey, nameof(idempotencyKey));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateImportTelephonyCampaignRecipientsRequest(agentName, campaignId, idempotencyKey, content, foundryFeatures, options);
+                return OperationResultHelpers.ProcessMessage(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts an asynchronous import of campaign recipients from a Dataset CSV, JSON array, or JSONL file. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="idempotencyKey"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/>, <paramref name="idempotencyKey"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("SCME0006")]
+        public virtual async Task<OperationResult> ImportTelephonyCampaignRecipientsAsync(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ImportTelephonyCampaignRecipients");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+                Argument.AssertNotNullOrEmpty(idempotencyKey, nameof(idempotencyKey));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreateImportTelephonyCampaignRecipientsRequest(agentName, campaignId, idempotencyKey, content, foundryFeatures, options);
+                return await OperationResultHelpers.ProcessMessageAsync(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts an asynchronous import of campaign recipients from a Dataset CSV, JSON array, or JSONL file. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="idempotencyKey"></param>
+        /// <param name="body"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/>, <paramref name="idempotencyKey"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0006")]
+        public virtual OperationResult ImportTelephonyCampaignRecipients(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, ImportTelephonyCampaignRecipientsContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+            Argument.AssertNotNullOrEmpty(idempotencyKey, nameof(idempotencyKey));
+            Argument.AssertNotNull(body, nameof(body));
+
+            OperationResult result = ImportTelephonyCampaignRecipients(waitUntilCompleted, agentName, campaignId, idempotencyKey, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return result;
+        }
+
+        /// <summary> Starts an asynchronous import of campaign recipients from a Dataset CSV, JSON array, or JSONL file. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="idempotencyKey"></param>
+        /// <param name="body"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/>, <paramref name="idempotencyKey"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0006")]
+        public virtual async Task<OperationResult> ImportTelephonyCampaignRecipientsAsync(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, ImportTelephonyCampaignRecipientsContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+            Argument.AssertNotNullOrEmpty(idempotencyKey, nameof(idempotencyKey));
+            Argument.AssertNotNull(body, nameof(body));
+
+            OperationResult result = await ImportTelephonyCampaignRecipientsAsync(waitUntilCompleted, agentName, campaignId, idempotencyKey, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return result;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves the durable status and counters for a campaign recipient import.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="importId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult GetTelephonyCampaignRecipientImport(string agentName, string campaignId, string importId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCampaignRecipientImport");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+                Argument.AssertNotNullOrEmpty(importId, nameof(importId));
+
+                using PipelineMessage message = CreateGetTelephonyCampaignRecipientImportRequest(agentName, campaignId, importId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves the durable status and counters for a campaign recipient import.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="importId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> GetTelephonyCampaignRecipientImportAsync(string agentName, string campaignId, string importId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCampaignRecipientImport");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+                Argument.AssertNotNullOrEmpty(importId, nameof(importId));
+
+                using PipelineMessage message = CreateGetTelephonyCampaignRecipientImportRequest(agentName, campaignId, importId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves the durable status and counters for a campaign recipient import. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="importId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyCampaignRecipientImport> GetTelephonyCampaignRecipientImport(string agentName, string campaignId, string importId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+            Argument.AssertNotNullOrEmpty(importId, nameof(importId));
+
+            ClientResult result = GetTelephonyCampaignRecipientImport(agentName, campaignId, importId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TelephonyCampaignRecipientImport)result, result.GetRawResponse());
+        }
+
+        /// <summary> Retrieves the durable status and counters for a campaign recipient import. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="importId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyCampaignRecipientImport>> GetTelephonyCampaignRecipientImportAsync(string agentName, string campaignId, string importId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+            Argument.AssertNotNullOrEmpty(importId, nameof(importId));
+
+            ClientResult result = await GetTelephonyCampaignRecipientImportAsync(agentName, campaignId, importId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TelephonyCampaignRecipientImport)result, result.GetRawResponse());
+        }
+
+        /// <summary> Starts asynchronous validation of the current campaign draft and imported recipient snapshot. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("SCME0006")]
+        public virtual OperationResult ValidateTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ValidateTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+                using PipelineMessage message = CreateValidateTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
+                return OperationResultHelpers.ProcessMessage(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts asynchronous validation of the current campaign draft and imported recipient snapshot. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("SCME0006")]
+        public virtual async Task<OperationResult> ValidateTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ValidateTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+                using PipelineMessage message = CreateValidateTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
+                return await OperationResultHelpers.ProcessMessageAsync(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts asynchronous validation of the current campaign draft and imported recipient snapshot. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0006")]
+        public virtual OperationResult ValidateTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+            OperationResult result = ValidateTelephonyCampaign(waitUntilCompleted, agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return result;
+        }
+
+        /// <summary> Starts asynchronous validation of the current campaign draft and imported recipient snapshot. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0006")]
+        public virtual async Task<OperationResult> ValidateTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+            OperationResult result = await ValidateTelephonyCampaignAsync(waitUntilCompleted, agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return result;
+        }
+
+        /// <summary> Permanently locks the validated campaign draft and starts asynchronous call-job materialization. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("SCME0006")]
+        public virtual OperationResult PublishTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.PublishTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreatePublishTelephonyCampaignRequest(agentName, campaignId, content, foundryFeatures, options);
+                return OperationResultHelpers.ProcessMessage(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Permanently locks the validated campaign draft and starts asynchronous call-job materialization. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("SCME0006")]
+        public virtual async Task<OperationResult> PublishTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.PublishTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using PipelineMessage message = CreatePublishTelephonyCampaignRequest(agentName, campaignId, content, foundryFeatures, options);
+                return await OperationResultHelpers.ProcessMessageAsync(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Permanently locks the validated campaign draft and starts asynchronous call-job materialization. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="body"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0006")]
+        public virtual OperationResult PublishTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, PublishTelephonyCampaignContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            OperationResult result = PublishTelephonyCampaign(waitUntilCompleted, agentName, campaignId, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return result;
+        }
+
+        /// <summary> Permanently locks the validated campaign draft and starts asynchronous call-job materialization. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="body"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0006")]
+        public virtual async Task<OperationResult> PublishTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, PublishTelephonyCampaignContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            OperationResult result = await PublishTelephonyCampaignAsync(waitUntilCompleted, agentName, campaignId, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return result;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Pauses dispatch of call jobs owned by a published campaign.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult PauseTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.PauseTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+                using PipelineMessage message = CreatePauseTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Pauses dispatch of call jobs owned by a published campaign.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> PauseTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.PauseTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+                using PipelineMessage message = CreatePauseTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Pauses dispatch of call jobs owned by a published campaign. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyCampaign> PauseTelephonyCampaign(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+            ClientResult result = PauseTelephonyCampaign(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
+        }
+
+        /// <summary> Pauses dispatch of call jobs owned by a published campaign. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyCampaign>> PauseTelephonyCampaignAsync(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+            ClientResult result = await PauseTelephonyCampaignAsync(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Resumes dispatch of call jobs owned by a paused campaign.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult ResumeTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ResumeTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+                using PipelineMessage message = CreateResumeTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Resumes dispatch of call jobs owned by a paused campaign.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> ResumeTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ResumeTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+                using PipelineMessage message = CreateResumeTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Resumes dispatch of call jobs owned by a paused campaign. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyCampaign> ResumeTelephonyCampaign(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+            ClientResult result = ResumeTelephonyCampaign(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
+        }
+
+        /// <summary> Resumes dispatch of call jobs owned by a paused campaign. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyCampaign>> ResumeTelephonyCampaignAsync(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+            ClientResult result = await ResumeTelephonyCampaignAsync(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Cancels a campaign and prevents any further call-job dispatch.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult CancelTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CancelTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+                using PipelineMessage message = CreateCancelTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Cancels a campaign and prevents any further call-job dispatch.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> CancelTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CancelTelephonyCampaign");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+                using PipelineMessage message = CreateCancelTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Cancels a campaign and prevents any further call-job dispatch. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyCampaign> CancelTelephonyCampaign(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+            ClientResult result = CancelTelephonyCampaign(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
+        }
+
+        /// <summary> Cancels a campaign and prevents any further call-job dispatch. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="campaignId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyCampaign>> CancelTelephonyCampaignAsync(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(campaignId, nameof(campaignId));
+
+            ClientResult result = await CancelTelephonyCampaignAsync(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves an asynchronous outbound campaign operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="operationId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult GetTelephonyOperation(string agentName, string operationId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyOperation");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+                using PipelineMessage message = CreateGetTelephonyOperationRequest(agentName, operationId, foundryFeatures, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves an asynchronous outbound campaign operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="agentName"></param>
+        /// <param name="operationId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> GetTelephonyOperationAsync(string agentName, string operationId, string foundryFeatures, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyOperation");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+                using PipelineMessage message = CreateGetTelephonyOperationRequest(agentName, operationId, foundryFeatures, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Retrieves an asynchronous outbound campaign operation. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="operationId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual ClientResult<TelephonyOperation> GetTelephonyOperation(string agentName, string operationId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            ClientResult result = GetTelephonyOperation(agentName, operationId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((TelephonyOperation)result, result.GetRawResponse());
+        }
+
+        /// <summary> Retrieves an asynchronous outbound campaign operation. </summary>
+        /// <param name="agentName"></param>
+        /// <param name="operationId"></param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
+        public virtual async Task<ClientResult<TelephonyOperation>> GetTelephonyOperationAsync(string agentName, string operationId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            ClientResult result = await GetTelephonyOperationAsync(agentName, operationId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((TelephonyOperation)result, result.GetRawResponse());
+        }
     }
 }

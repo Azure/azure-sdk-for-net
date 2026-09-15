@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> The key vault properties. </summary>
         /// <param name="keyVaultUri"> The Key Vault uri which holds they key associated with the Log Analytics cluster. </param>
         /// <param name="keyName"> The name of the key associated with the Log Analytics cluster. </param>
         /// <param name="keyVersion"> The version of the key associated with the Log Analytics cluster. </param>
@@ -79,6 +80,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsKeyVaultProperties(keyVaultUri, keyName, keyVersion, keyRsaSize, default);
         }
 
+        /// <summary> The list of Log Analytics workspaces associated with the cluster. </summary>
         /// <param name="workspaceId"> Associated workspace immutable id. </param>
         /// <param name="workspaceName"> Associated workspace resource name. </param>
         /// <param name="resourceId"> Associated workspace arm resource id, in the form of: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </param>
@@ -89,6 +91,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsClusterAssociatedWorkspace(workspaceId, workspaceName, resourceId, associatedOn, default);
         }
 
+        /// <summary> The Capacity Reservation properties. </summary>
         /// <param name="lastSkuUpdatedOn"> The last time Sku was updated. </param>
         /// <param name="minCapacity"> Minimum CapacityReservation value in Gigabytes. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsCapacityReservationProperties"/> instance for mocking. </returns>
@@ -97,6 +100,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsCapacityReservationProperties(lastSkuUpdatedOn, minCapacity, default);
         }
 
+        /// <summary> Cluster replication properties. </summary>
         /// <param name="location"> The secondary location of the replication. If replication is being enabled, enabled must be provided. </param>
         /// <param name="isReplicationEnabled"> Specifies whether the replication is enabled or not. When true the cluster is replicate to the specified location. </param>
         /// <param name="isAvailabilityZonesEnabled"> Should enable AvailabilityZones for the given replicated cluster. </param>
@@ -116,6 +120,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> The cluster sku definition. </summary>
         /// <param name="capacity"> The capacity reservation level in Gigabytes for this cluster. </param>
         /// <param name="name"> The SKU (tier) of a cluster. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsClusterSku"/> instance for mocking. </returns>
@@ -225,6 +230,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> The SKU (tier) of a workspace. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="capacityReservationLevel"> The capacity reservation level in GB for this workspace, when CapacityReservation sku is selected. </param>
         /// <param name="lastSkuUpdatedOn"> The last time when the sku was updated. </param>
@@ -234,6 +240,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspaceSku(name, capacityReservationLevel, lastSkuUpdatedOn, default);
         }
 
+        /// <summary> The daily volume cap for ingestion. </summary>
         /// <param name="dailyQuotaInGB"> The workspace daily quota for ingestion. </param>
         /// <param name="quotaNextResetTime"> The time when the quota will be rest. </param>
         /// <param name="dataIngestionStatus"> The status of data ingestion for this workspace. </param>
@@ -243,6 +250,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspaceCapping(dailyQuotaInGB, quotaNextResetTime, dataIngestionStatus, default);
         }
 
+        /// <summary> The private link scope resource reference. </summary>
         /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
         /// <param name="scopeId"> The private link scope unique Identifier. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsPrivateLinkScopedResourceInfo"/> instance for mocking. </returns>
@@ -251,6 +259,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsPrivateLinkScopedResourceInfo(resourceId, scopeId, default);
         }
 
+        /// <summary> Workspace features. </summary>
         /// <param name="isDataExportEnabled"> Flag that indicate if data should be exported. </param>
         /// <param name="immediatePurgeDataOn30Days"> Flag that describes if we want to remove the data after 30 days. </param>
         /// <param name="isLogAccessUsingOnlyResourcePermissionsEnabled"> Flag that indicate which permission to use - resource or workspace or both. </param>
@@ -276,6 +285,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Workspace replication properties. </summary>
         /// <param name="location"> The location of the replication. </param>
         /// <param name="isReplicationEnabled"> Specifies whether the replication is enabled or not. When true, workspace configuration and data is replicated to the specified location. If replication is been enabled, location must be provided. </param>
         /// <param name="provisioningState"> The provisioning state of the replication. </param>
@@ -293,6 +303,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> The failover state of the replication. </summary>
         /// <param name="state"> The failover state of the replication. </param>
         /// <param name="lastModifiedOn"> The last time when the failover state was updated. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFailoverProperties"/> instance for mocking. </returns>
@@ -356,6 +367,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> Network security perimeter (NSP) configuration resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -373,6 +385,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> Network security configuration properties. </summary>
         /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
         /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
@@ -392,6 +405,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Details of the provisioning issue. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue"/> instance for mocking. </returns>
@@ -400,6 +414,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsNetworkSecurityPerimeterProvisioningIssue(name, properties, default);
         }
 
+        /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
         /// <param name="issueType"> Type of issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
@@ -420,6 +435,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> Access rule in a network security perimeter configuration profile. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"> Properties of the access rule. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterAccessRule"/> instance for mocking. </returns>
@@ -428,6 +444,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsNetworkSecurityPerimeterAccessRule(name, properties, default);
         }
 
+        /// <summary> Properties of Access Rule. </summary>
         /// <param name="direction"> Direction of the access rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
@@ -456,6 +473,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> The OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription. </summary>
         /// <param name="id"> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </param>
         /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription"/> instance for mocking. </returns>
         public static OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription(ResourceIdentifier id = default)
@@ -463,6 +481,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription(id, default);
         }
 
+        /// <summary> Information about a network security perimeter (NSP). </summary>
         /// <param name="id"> Fully qualified Azure resource ID of the NSP resource. </param>
         /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
         /// <param name="location"> Location of the network security perimeter. </param>
@@ -472,6 +491,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsNetworkSecurityPerimeter(id, perimeterGuid, location, default);
         }
 
+        /// <summary> Information about resource association. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access mode of the resource association. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation"/> instance for mocking. </returns>
@@ -480,6 +500,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsNetworkSecurityPerimeterResourceAssociation(name, accessMode, default);
         }
 
+        /// <summary> Network security perimeter configuration profile. </summary>
         /// <param name="name"> Name of the profile. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
@@ -560,7 +581,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="version"> The version number of the query language. The current version is 2 and is the default. </param>
         /// <param name="tags"> The tags attached to the saved search. </param>
         /// <param name="eTag"> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="category"/>, <paramref name="displayName"/> or <paramref name="query"/> is null. </exception>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSavedSearchData"/> instance for mocking. </returns>
         public static OperationalInsightsSavedSearchData OperationalInsightsSavedSearchData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string category = default, string displayName = default, string query = default, string functionAlias = default, string functionParameters = default, long? version = default, IEnumerable<OperationalInsightsTag> tags = default, ETag? eTag = default)
         {
@@ -574,6 +594,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> A tag of a saved search. </summary>
         /// <param name="name"> The tag name. </param>
         /// <param name="value"> The tag value. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsTag"/> instance for mocking. </returns>
@@ -623,6 +644,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> Parameters of the search job that initiated this table. </summary>
         /// <param name="query"> Search job query. </param>
         /// <param name="description"> Search job Description. </param>
         /// <param name="limit"> Limit the search job to return up to specified number of rows. </param>
@@ -644,6 +666,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> Restore parameters. </summary>
         /// <param name="startRestoreOn"> The timestamp to start the restore from (UTC). </param>
         /// <param name="endRestoreOn"> The timestamp to end the restore by (UTC). </param>
         /// <param name="sourceTable"> The table to restore data from. </param>
@@ -654,6 +677,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsTableRestoredLogs(startRestoreOn, endRestoreOn, sourceTable, azureAsyncOperationId, default);
         }
 
+        /// <summary> Search job execution statistics. </summary>
         /// <param name="progress"> Search job completion percentage. </param>
         /// <param name="ingestedRecords"> The number of rows that were returned by the search job. </param>
         /// <param name="scannedGB"> Search job: Amount of scanned data. </param>
@@ -663,6 +687,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsTableResultStatistics(progress, ingestedRecords, scannedGB, default);
         }
 
+        /// <summary> Table's schema. </summary>
         /// <param name="name"> Table name. </param>
         /// <param name="displayName"> Table display name. </param>
         /// <param name="description"> Table description. </param>
@@ -698,6 +723,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> Table column. </summary>
         /// <param name="name"> Column name. </param>
         /// <param name="columnType"> Column data type. </param>
         /// <param name="dataTypeHint"> Column data type logical hint. </param>
@@ -719,6 +745,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> Service Tier details. </summary>
         /// <param name="serviceTier"> The name of the Service Tier. </param>
         /// <param name="isEnabled"> True if the Service Tier is enabled for the workspace. </param>
         /// <param name="minimumRetention"> The minimum retention for the Service Tier, in days. </param>
@@ -740,6 +767,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> Intelligence Pack containing a string name and boolean indicating if it's enabled. </summary>
         /// <param name="name"> The name of the intelligence pack. </param>
         /// <param name="isEnabled"> The enabled boolean for the intelligence pack. </param>
         /// <param name="displayName"> The display name of the intelligence pack. </param>
@@ -772,6 +800,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default), default);
         }
 
+        /// <summary> Value object for schema results. </summary>
         /// <param name="name"> The name of the schema. </param>
         /// <param name="displayName"> The display name of the schema. </param>
         /// <param name="searchSchemaValueType"> The type. </param>
@@ -795,6 +824,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> The shared keys for a workspace. </summary>
         /// <param name="primarySharedKey"> The primary shared key of a workspace. </param>
         /// <param name="secondarySharedKey"> The secondary shared key of a workspace. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceSharedKeys"/> instance for mocking. </returns>
@@ -803,6 +833,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspaceSharedKeys(primarySharedKey, secondarySharedKey, default);
         }
 
+        /// <summary> A metric describing the usage of a resource. </summary>
         /// <param name="name"> The name of the metric. </param>
         /// <param name="unit"> The units used for the metric. </param>
         /// <param name="currentValue"> The current value of the metric. </param>
@@ -822,6 +853,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> The name of a metric. </summary>
         /// <param name="value"> The system name of the metric. </param>
         /// <param name="localizedValue"> The localized name of the metric. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsMetricName"/> instance for mocking. </returns>
@@ -830,6 +862,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsMetricName(value, localizedValue, default);
         }
 
+        /// <summary> Describes the body of a purge request for an App Insights Workspace. </summary>
         /// <param name="table"> Table from which to purge data. </param>
         /// <param name="filters"> The set of columns and filters (queries) to run over them to purge the resulting data. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeContent"/> instance for mocking. </returns>
@@ -840,6 +873,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspacePurgeContent(table, (filters ?? new ChangeTrackingList<OperationalInsightsWorkspacePurgeFilter>()).ToList(), default);
         }
 
+        /// <summary> User-defined filters to return data which will be purged from the table. </summary>
         /// <param name="column"> The column of the table over which the given query should run. </param>
         /// <param name="operator"> A query operator to evaluate over the provided column and value(s). Supported operators are ==, =~, in, in~, &gt;, &gt;=, &lt;, &lt;=, between, and have the same behavior as they would in a KQL query. </param>
         /// <param name="value"> the value for the operator to function over. This can be a number (e.g., &gt; 100), a string (timestamp &gt;= '2017-09-01') or array of values. </param>
@@ -850,6 +884,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspacePurgeFilter(column, @operator, value, key, default);
         }
 
+        /// <summary> Response containing operationId for a specific purge action. </summary>
         /// <param name="operationStringId"> Id to use when querying for status for a particular purge operation. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeResult"/> instance for mocking. </returns>
         public static OperationalInsightsWorkspacePurgeResult OperationalInsightsWorkspacePurgeResult(string operationStringId = default)
@@ -857,6 +892,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspacePurgeResult(operationStringId, default);
         }
 
+        /// <summary> Response containing status for a specific purge operation. </summary>
         /// <param name="status"> Status of the operation represented by the requested Id. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePurgeStatusResult"/> instance for mocking. </returns>
         public static OperationalInsightsWorkspacePurgeStatusResult OperationalInsightsWorkspacePurgeStatusResult(OperationalInsightsWorkspacePurgeState status = default)
@@ -919,6 +955,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> The related metadata items for the function. </summary>
         /// <param name="categories"> The related categories for the function. </param>
         /// <param name="resourceTypes"> The related resource types for the function. </param>
         /// <param name="solutions"> The related Log Analytics solutions for the function. </param>
@@ -932,6 +969,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new LogAnalyticsQueryRelatedMetadata((categories ?? new ChangeTrackingList<string>()).ToList(), (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), (solutions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Properties that define an Log Analytics QueryPack-Query search properties. </summary>
         /// <param name="related"> The related metadata items for the function. </param>
         /// <param name="tags"> Tags associated with the query. </param>
         /// <returns> A new <see cref="Models.LogAnalyticsQuerySearchProperties"/> instance for mocking. </returns>
@@ -942,6 +980,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new LogAnalyticsQuerySearchProperties(related, tags ?? new ChangeTrackingDictionary<string, IList<string>>(), default);
         }
 
+        /// <summary> The related metadata items for the function. </summary>
         /// <param name="categories"> The related categories for the function. </param>
         /// <param name="resourceTypes"> The related resource types for the function. </param>
         /// <param name="solutions"> The related Log Analytics solutions for the function. </param>
@@ -981,6 +1020,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a QueryPack instance. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.LogAnalyticsQueryPackPatch"/> instance for mocking. </returns>
         public static LogAnalyticsQueryPackPatch LogAnalyticsQueryPackPatch(IDictionary<string, string> tags = default)
@@ -1016,6 +1056,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> Describes a storage account connection. </summary>
         /// <param name="id"> The Azure Resource Manager ID of the storage account resource. </param>
         /// <param name="key"> The storage account key. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsStorageAccount"/> instance for mocking. </returns>
@@ -1024,6 +1065,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsStorageAccount(id, key, default);
         }
 
+        /// <summary> The status of the storage insight. </summary>
         /// <param name="state"> The state of the storage insight connection to the workspace. </param>
         /// <param name="description"> Description of the state of the storage insight. </param>
         /// <returns> A new <see cref="Models.StorageInsightStatus"/> instance for mocking. </returns>
@@ -1063,6 +1105,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
+        /// <summary> Rule definition parameters. </summary>
         /// <param name="query"> Summary rule query. </param>
         /// <param name="binSize"> Scheduled window in minutes. Allowed values: 20, 30, 60, 120, 180, 360, 720, 1440. </param>
         /// <param name="binDelay"> The minimum delay in seconds before bin processing. </param>
@@ -1108,14 +1151,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsTableData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="retentionInDays"> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </param>
-        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 2555. Setting this property to -1 will default to table retention. </param>
-        /// <param name="archiveRetentionInDays"> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </param>
+        /// <summary> Workspace data table definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="retentionInDays"> In Analytics table: the tables analytics retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. In Basic and Auxiliary table: read only property. </param>
+        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 4383. Setting this property to -1 will default to retentionInDays. </param>
+        /// <param name="archiveRetentionInDays"> The tables long-term retention in days. Calculated as (totalRetentionInDays-retentionInDays). </param>
         /// <param name="searchResults"> Parameters of the search job that initiated this table. </param>
         /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
         /// <param name="resultStatistics"> Search job execution statistics. </param>
@@ -1123,8 +1166,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
         /// <param name="schema"> Table schema. </param>
         /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
-        /// <param name="retentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
-        /// <param name="totalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
+        /// <param name="retentionInDaysAsDefault"></param>
+        /// <param name="totalRetentionInDaysAsDefault"></param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsTableData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OperationalInsightsTableData OperationalInsightsTableData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? retentionInDays = default, int? totalRetentionInDays = default, int? archiveRetentionInDays = default, OperationalInsightsTableSearchResults searchResults = default, OperationalInsightsTableRestoredLogs restoredLogs = default, OperationalInsightsTableResultStatistics resultStatistics = default, OperationalInsightsTablePlan? plan = default, string lastPlanModifiedDate = default, OperationalInsightsSchema schema = default, OperationalInsightsTableProvisioningState? provisioningState = default, RetentionInDaysAsDefaultState? retentionInDaysAsDefault = default, TotalRetentionInDaysAsDefaultState? totalRetentionInDaysAsDefault = default)
@@ -1151,14 +1194,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Resource's identity. </param>
+        /// <summary> The top level Log Analytics cluster resource container. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The sku properties. </param>
         /// <param name="clusterId"> The ID associated with the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
@@ -1200,11 +1243,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsLinkedServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The top level Linked service resource container. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="resourceId"> The resource id of the resource that will be linked to the workspace. This should be used for linking resources which require read access. </param>
         /// <param name="writeAccessResourceId"> The resource id of the resource that will be linked to the workspace. This should be used for linking resources which require write access. </param>
@@ -1223,11 +1266,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsSavedSearchData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Value object for saved search results. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> The ETag of the saved search. To override an existing saved search, use "*" or specify the current Etag. </param>
         /// <param name="category"> The category of the saved search. This helps the user to find a saved search faster. </param>
         /// <param name="displayName"> Saved search display name. </param>
@@ -1258,11 +1301,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.StorageInsightData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The top level storage insight resource container. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> The ETag of the storage insight. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="containers"> The names of the blob containers that the workspace should read. </param>
@@ -1284,14 +1327,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <summary> The top level Workspace resource container. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The identity of the resource. </param>
         /// <param name="etag"> The etag of the workspace. </param>
         /// <param name="provisioningState"> The provisioning state of the workspace. </param>
         /// <param name="customerId"> This is a read-only property. Represents the ID associated with the workspace. </param>
@@ -1341,14 +1384,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspaceFeatures"/>. </summary>
+        /// <summary> Workspace features. </summary>
         /// <param name="isDataExportEnabled"> Flag that indicate if data should be exported. </param>
         /// <param name="immediatePurgeDataOn30Days"> Flag that describes if we want to remove the data after 30 days. </param>
         /// <param name="isLogAccessUsingOnlyResourcePermissionsEnabled"> Flag that indicate which permission to use - resource or workspace or both. </param>
         /// <param name="clusterResourceId"> Dedicated LA cluster resourceId that is linked to the workspaces. </param>
         /// <param name="isLocalAuthDisabled"> Disable Non-AAD based Auth. </param>
         /// <param name="isUnifiedSentinelBillingOnly"> An indication if the specify workspace is limited to sentinel's unified billing model only. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFeatures"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled = default, bool? immediatePurgeDataOn30Days = default, bool? isLogAccessUsingOnlyResourcePermissionsEnabled = default, ResourceIdentifier clusterResourceId = default, bool? isLocalAuthDisabled = default, bool? isUnifiedSentinelBillingOnly = default, IDictionary<string, BinaryData> additionalProperties = default)
@@ -1364,12 +1407,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <summary> The top level Workspace resource container. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identity"> The identity of the resource. </param>
         /// <param name="tags"> Resource tags. Optional. </param>
         /// <param name="provisioningState"> The provisioning state of the workspace. </param>
         /// <param name="customerId"> This is a read-only property. Represents the ID associated with the workspace. </param>
@@ -1386,7 +1429,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
         /// <param name="replication"> workspace replication properties. </param>
         /// <param name="failover"> workspace failover properties. </param>
-        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="etag"></param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, OperationalInsightsWorkspaceEntityStatus? provisioningState = default, Guid? customerId = default, OperationalInsightsWorkspaceSku sku = default, int? retentionInDays = default, OperationalInsightsWorkspaceCapping workspaceCapping = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default, bool? forceCmkForQuery = default, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default, OperationalInsightsWorkspaceFeatures features = default, ResourceIdentifier defaultDataCollectionRuleResourceId = default, OperationalInsightsWorkspaceReplicationProperties replication = default, OperationalInsightsWorkspaceFailoverProperties failover = default, ETag? etag = default)
@@ -1419,14 +1462,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <summary> The top level Log Analytics cluster resource container. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="sku"> The sku properties. </param>
         /// <param name="clusterId"> The ID associated with the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
@@ -1474,14 +1517,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsights.OperationalInsightsWorkspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <summary> The top level Workspace resource container. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The identity of the resource. </param>
         /// <param name="etag"> The etag of the workspace. </param>
         /// <param name="provisioningState"> The provisioning state of the workspace. </param>
         /// <param name="customerId"> This is a read-only property. Represents the ID associated with the workspace. </param>
@@ -1535,12 +1578,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OperationalInsightsWorkspacePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <summary> The top level Workspace resource container. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identity"> The identity of the resource. </param>
         /// <param name="tags"> Resource tags. Optional. </param>
         /// <param name="provisioningState"> The provisioning state of the workspace. </param>
         /// <param name="customerId"> This is a read-only property. Represents the ID associated with the workspace. </param>
@@ -1555,7 +1598,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
         /// <param name="features"> Workspace features. </param>
         /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
-        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="etag"></param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspacePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static OperationalInsightsWorkspacePatch OperationalInsightsWorkspacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, IDictionary<string, string> tags, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IEnumerable<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, ETag? etag)

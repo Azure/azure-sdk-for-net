@@ -4,7 +4,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
@@ -110,33 +109,15 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string @type = "system";
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            VoiceAgentSystemToolName name = default;
-            string description = default;
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("name"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("type"u8))
+                switch (discriminator.GetString())
                 {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = new VoiceAgentSystemToolName(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("description"u8))
-                {
-                    description = prop.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    case "end_conversation":
+                        return VoiceAgentEndConversationSystemTool.DeserializeVoiceAgentEndConversationSystemTool(element, options);
                 }
             }
-            return new VoiceAgentSystemTool(@type, additionalBinaryDataProperties, name, description);
+            return UnknownVoiceAgentSystemTool.DeserializeUnknownVoiceAgentSystemTool(element, options);
         }
     }
 }

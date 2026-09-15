@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription ClusterFabricSettingsParameterDescription(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsSection ClusterFabricSettingsSection(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ClusterFabricSettingsParameterDescription> parameters = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.EndpointRangeDescription EndpointRangeDescription(int startPort = 0, int endPort = 0) { throw null; }
-        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulation FaultSimulation(string simulationId = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus? status = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationDetails details = null) { throw null; }
+        public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulation FaultSimulation(string simulationId = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus? status = default(Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus?), System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationDetails details = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationContent FaultSimulationContent(string faultKind = null, bool? isForced = default(bool?), System.DateTimeOffset? constraintsExpireOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationContentWrapper FaultSimulationContentWrapper(Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationContent parameters = null) { throw null; }
         public static Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationDetails FaultSimulationDetails(string clusterId = null, string operationId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.Models.NodeTypeFaultSimulation> nodeTypeFaultSimulation = null, Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationContent parameters = null) { throw null; }
@@ -926,9 +926,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal FaultSimulation() { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationDetails Details { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
         public string SimulationId { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationStatus? Status { get { throw null; } }
         protected virtual Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -943,7 +943,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public abstract partial class FaultSimulationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationContent>
     {
         internal FaultSimulationContent() { }
-        public System.DateTimeOffset? ConstraintsExpireOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ConstraintsExpiresOn { get { throw null; } set { } }
         public bool? IsForced { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ServiceFabricManagedClusters.Models.FaultSimulationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

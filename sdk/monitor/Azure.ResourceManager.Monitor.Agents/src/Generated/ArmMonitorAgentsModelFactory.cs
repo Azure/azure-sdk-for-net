@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Models
     public static partial class ArmMonitorAgentsModelFactory
     {
 
+        /// <summary> An observability agent resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Models
                 default);
         }
 
+        /// <summary> Properties for an observability agent resource. </summary>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="monitoringAccountId"> Resource ID of the Azure Monitor workspace where this agent stores the issues it produces. </param>
         /// <param name="isEnabled"> Whether the observability agent is enabled. Defaults to true when not specified. </param>
@@ -55,6 +57,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Models
             return new ObservabilityAgentProperties(provisioningState, monitoringAccountId, isEnabled, (operations ?? new ChangeTrackingList<ObservabilityAgentOperationInfo>()).ToList(), default);
         }
 
+        /// <summary> Configuration for a specific agent operation. </summary>
         /// <param name="type"> Type of operation. </param>
         /// <param name="mode"> Execution mode for this operation. Defaults to Auto when not specified. </param>
         /// <param name="instructions"> Custom instructions that guide the agent's behavior for this operation. </param>
@@ -64,6 +67,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Models
             return new ObservabilityAgentOperationInfo(@type, mode, instructions, default);
         }
 
+        /// <summary> The request body used to update an observability agent resource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> Updatable resource properties. </param>
@@ -75,6 +79,7 @@ namespace Azure.ResourceManager.Monitor.Agents.Models
             return new ObservabilityAgentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, default);
         }
 
+        /// <summary> Updatable properties of an observability agent. </summary>
         /// <param name="monitoringAccountId"> Resource ID of the Azure Monitor workspace where this agent stores the issues it produces. If changed, existing issues remain in the previously configured workspace and are not migrated; only newly created issues are written to the new workspace. </param>
         /// <param name="isEnabled"> Whether the observability agent is enabled. </param>
         /// <param name="operations"> Configuration overrides for agent operations. When omitted, default behavior applies for all operations. </param>

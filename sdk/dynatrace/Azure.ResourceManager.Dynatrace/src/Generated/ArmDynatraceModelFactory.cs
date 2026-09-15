@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
     public static partial class ArmDynatraceModelFactory
     {
 
+        /// <summary> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 default);
         }
 
+        /// <summary> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </summary>
         /// <param name="operation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
@@ -46,6 +48,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMonitoredSubscriptionProperties(operation, (monitoredSubscriptionList ?? new ChangeTrackingList<DynatraceMonitoredSubscriptionStatus>()).ToList(), provisioningState, default);
         }
 
+        /// <summary> The list of subscriptions and it's monitoring status by current Dynatrace monitor. </summary>
         /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
         /// <param name="status"> The state of monitoring. </param>
         /// <param name="error"> The reason of not monitoring the subscription. </param>
@@ -56,6 +59,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMonitoredSubscriptionStatus(subscriptionId, status, error, tagRules, default);
         }
 
+        /// <summary> Properties for the Tag rules resource of a Monitor account. </summary>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -65,6 +69,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceTagRuleProperties(logRules, metricRules, provisioningState, default);
         }
 
+        /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
         /// <param name="sendAadLogs"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
         /// <param name="sendSubscriptionLogs"> Flag specifying if subscription logs should be sent for the Monitor resource. </param>
         /// <param name="sendActivityLogs"> Flag specifying if activity logs from Azure resources should be sent for the Monitor resource. </param>
@@ -80,6 +85,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMonitorResourceLogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, (filteringTags ?? new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>()).ToList(), default);
         }
 
+        /// <summary> The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored. </summary>
         /// <param name="name"> The name (also known as the key) of the tag. </param>
         /// <param name="value"> The value of the tag. </param>
         /// <param name="action"> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </param>
@@ -89,6 +95,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMonitorResourceFilteringTag(name, value, action, default);
         }
 
+        /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
         /// <param name="sendingMetrics"> Flag specifying if metrics from Azure resources should be sent for the Monitor resource. </param>
         /// <param name="filteringTags"> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </param>
         /// <returns> A new <see cref="Models.DynatraceMonitorResourceMetricRules"/> instance for mocking. </returns>
@@ -161,6 +168,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 default);
         }
 
+        /// <summary> Properties of the Dynatrace environment. </summary>
         /// <param name="userId"> User id. </param>
         /// <param name="accountInfo"> Dynatrace Account Information. </param>
         /// <param name="environmentInfo"> Dynatrace Environment Information. </param>
@@ -171,6 +179,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceEnvironmentProperties(userId, accountInfo, environmentInfo, singleSignOnProperties, default);
         }
 
+        /// <summary> Dynatrace Account Information. </summary>
         /// <param name="accountId"> Account Id of the account this environment is linked to. </param>
         /// <param name="regionId"> Region in which the account is created. </param>
         /// <param name="companyName"> Name of the customer account / company. </param>
@@ -180,6 +189,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceAccountInfo(accountId, regionId, companyName, default);
         }
 
+        /// <summary> Dynatrace Environment Information. </summary>
         /// <param name="environmentId"> Id of the environment created. </param>
         /// <param name="ingestionKey"> Ingestion key of the environment. </param>
         /// <param name="logsIngestionEndpoint"> Ingestion endpoint used for sending logs. </param>
@@ -190,6 +200,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceEnvironmentInfo(environmentId, ingestionKey, logsIngestionEndpoint, landingUri, default);
         }
 
+        /// <summary> The details of a Dynatrace single sign-on. </summary>
         /// <param name="singleSignOnState"> State of Single Sign On. </param>
         /// <param name="enterpriseAppId"> Version of the Dynatrace agent installed on the VM. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>
@@ -209,6 +220,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 default);
         }
 
+        /// <summary> User info. </summary>
         /// <param name="firstName"> First Name of the user. </param>
         /// <param name="lastName"> Last Name of the user. </param>
         /// <param name="emailAddress"> Email of the user used by Dynatrace for contacting them if needed. </param>
@@ -226,6 +238,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 default);
         }
 
+        /// <summary> Billing plan information. </summary>
         /// <param name="usageType"> different usage type like PAYG/COMMITTED. this could be enum. </param>
         /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. this could be enum. </param>
         /// <param name="planDetails"> plan id as published by Dynatrace. </param>
@@ -247,6 +260,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMonitorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), monitorUpdatePlanData is null ? default : new MonitorUpdateProperties(monitorUpdatePlanData, default), identity, default);
         }
 
+        /// <summary> Request for getting log status for given monitored resource Ids. </summary>
         /// <param name="monitoredResourceIds"> List of azure resource Id of monitored resources for which we get the log status. </param>
         /// <returns> A new <see cref="Models.DynatraceMonitoredResourceContent"/> instance for mocking. </returns>
         public static DynatraceMonitoredResourceContent DynatraceMonitoredResourceContent(IEnumerable<string> monitoredResourceIds = default)
@@ -256,6 +270,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMonitoredResourceContent((monitoredResourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Details of resource being monitored by Dynatrace monitor resource. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetricsStatus"> Flag indicating if resource is sending metrics to Dynatrace. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
@@ -273,6 +288,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 default);
         }
 
+        /// <summary> Response of payload to be passed while installing VM agent. </summary>
         /// <param name="ingestionKey"> Ingestion key of the environment. </param>
         /// <param name="environmentId"> Id of the environment created. </param>
         /// <returns> A new <see cref="Models.DynatraceVmExtensionPayload"/> instance for mocking. </returns>
@@ -281,6 +297,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceVmExtensionPayload(ingestionKey, environmentId, default);
         }
 
+        /// <summary> Request for performing Dynatrace agent install/uninstall action through the Azure Dynatrace resource on the provided list of agent resources. </summary>
         /// <param name="manageAgentInstallationList"> The list of resources. </param>
         /// <param name="action"> Install/Uninstall action. </param>
         /// <returns> A new <see cref="Models.ManageAgentInstallationContent"/> instance for mocking. </returns>
@@ -291,6 +308,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new ManageAgentInstallationContent((manageAgentInstallationList ?? new ChangeTrackingList<DynatraceManageAgentDetails>()).ToList(), action, default);
         }
 
+        /// <summary> Details of resource that has Dynatrace agent installed through the Azure Dynatrace resource. </summary>
         /// <param name="id"> The ARM id of the resource to install/uninstall agent. </param>
         /// <returns> A new <see cref="Models.DynatraceManageAgentDetails"/> instance for mocking. </returns>
         public static DynatraceManageAgentDetails DynatraceManageAgentDetails(ResourceIdentifier id = default)
@@ -298,6 +316,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceManageAgentDetails(id, default);
         }
 
+        /// <summary> Details of VM Resource having Dynatrace OneAgent installed. </summary>
         /// <param name="resourceId"> Azure VM resource ID. </param>
         /// <param name="version"> Version of the Dynatrace agent installed on the VM. </param>
         /// <param name="monitoringType"> The monitoring mode of OneAgent. </param>
@@ -323,6 +342,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 default);
         }
 
+        /// <summary> Request for getting metric status for given monitored resource Ids. </summary>
         /// <param name="monitoredResourceIds"> List of azure resource Id of monitored resources for which we get the metric status. </param>
         /// <returns> A new <see cref="Models.DynatraceMetricStatusContent"/> instance for mocking. </returns>
         public static DynatraceMetricStatusContent DynatraceMetricStatusContent(IEnumerable<string> monitoredResourceIds = default)
@@ -332,6 +352,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMetricStatusContent((monitoredResourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Response of get metrics status operation. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
         /// <returns> A new <see cref="Models.DynatraceMetricsStatusResult"/> instance for mocking. </returns>
         public static DynatraceMetricsStatusResult DynatraceMetricsStatusResult(IEnumerable<ResourceIdentifier> azureResourceIds = default)
@@ -341,6 +362,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceMetricsStatusResult((azureResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
+        /// <summary> Details of App Services having Dynatrace OneAgent installed. </summary>
         /// <param name="resourceId"> App service resource ID. </param>
         /// <param name="version"> Version of the Dynatrace agent installed on the App Service. </param>
         /// <param name="monitoringType"> The monitoring mode of OneAgent. </param>
@@ -366,6 +388,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 default);
         }
 
+        /// <summary> The billing plan properties for the upgrade plan call. </summary>
         /// <param name="planData"> The new Billing plan information. </param>
         /// <returns> A new <see cref="Models.DynatraceUpgradePlanContent"/> instance for mocking. </returns>
         public static DynatraceUpgradePlanContent DynatraceUpgradePlanContent(DynatraceBillingPlanInfo planData = default)
@@ -373,6 +396,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceUpgradePlanContent(planData, default);
         }
 
+        /// <summary> Request for getting sso details for a user. </summary>
         /// <param name="userPrincipal"> user principal id of the user. </param>
         /// <returns> A new <see cref="Models.DynatraceSsoDetailsContent"/> instance for mocking. </returns>
         public static DynatraceSsoDetailsContent DynatraceSsoDetailsContent(string userPrincipal = default)
@@ -380,6 +404,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceSsoDetailsContent(userPrincipal, default);
         }
 
+        /// <summary> SSO details from the Dynatrace partner. </summary>
         /// <param name="isSsoEnabled"> Whether the SSO is enabled for this resource or not. </param>
         /// <param name="metadataUri"> URL for Azure AD metadata. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this Dynatrace Environment. </param>
@@ -400,6 +425,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 default);
         }
 
+        /// <summary> Request for getting all the linkable environments for a user. </summary>
         /// <param name="tenantId"> Tenant Id of the user in which they want to link the environment. </param>
         /// <param name="userPrincipal"> user principal id of the user. </param>
         /// <param name="region"> Azure region in which we want to link the environment. </param>
@@ -409,6 +435,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new LinkableEnvironmentContent(tenantId, userPrincipal, region, default);
         }
 
+        /// <summary> Response for getting all the linkable environments. </summary>
         /// <param name="environmentId"> environment id for which user is an admin. </param>
         /// <param name="environmentName"> Name of the environment. </param>
         /// <param name="planData"> Billing plan information. </param>
@@ -418,6 +445,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new LinkableEnvironmentResult(environmentId, environmentName, planData, default);
         }
 
+        /// <summary> Request for getting Marketplace SaaS resource details for a tenant Id. </summary>
         /// <param name="tenantId"> Tenant Id. </param>
         /// <returns> A new <see cref="Models.MarketplaceSaaSResourceDetailsContent"/> instance for mocking. </returns>
         public static MarketplaceSaaSResourceDetailsContent MarketplaceSaaSResourceDetailsContent(Guid tenantId = default)
@@ -425,6 +453,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new MarketplaceSaaSResourceDetailsContent(tenantId, default);
         }
 
+        /// <summary> Marketplace SaaS resource details linked to the given tenant Id. </summary>
         /// <param name="marketplaceSaaSResourceId"> Id of the Marketplace SaaS Resource. </param>
         /// <param name="planId"> Id of the plan. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>

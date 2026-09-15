@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="operationFriendlyName"> The friendly name of operation. </param>
         /// <param name="percentComplete"> The percentage of the operation completed. </param>
         /// <param name="serverName"> The name of the server. </param>
-        /// <param name="startOn"> The operation start time. </param>
+        /// <param name="startsOn"> The operation start time. </param>
         /// <param name="state"> The operation state. </param>
         /// <param name="errorCode"> The operation error code. </param>
         /// <param name="errorDescription"> The operation error description. </param>
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <param name="operationPhaseDetails"> The operation phase details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseOperationProperties(string databaseName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, DatabaseOperationPhaseDetails operationPhaseDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseOperationProperties(string databaseName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startsOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, DatabaseOperationPhaseDetails operationPhaseDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             Operation = operation;
             OperationFriendlyName = operationFriendlyName;
             PercentComplete = percentComplete;
             ServerName = serverName;
-            StartOn = startOn;
+            StartsOn = startsOn;
             State = state;
             ErrorCode = errorCode;
             ErrorDescription = errorDescription;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The operation start time. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The operation state. </summary>
         [WirePath("state")]

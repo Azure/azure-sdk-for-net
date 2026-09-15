@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 default);
         }
 
+        /// <summary> Key and identity details for Customer Managed Key encryption of load test resource. </summary>
         /// <param name="identity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
         /// <param name="keyUri"> key encryption key Url, versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
         /// <returns> A new <see cref="Models.LoadTestingCmkEncryptionProperties"/> instance for mocking. </returns>
@@ -55,6 +56,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingCmkEncryptionProperties(identity, keyUri, default);
         }
 
+        /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
         /// <param name="identityType"> Managed identity type to use for accessing encryption key Url. </param>
         /// <param name="resourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/a0a0a0a0-bbbb-cccd-dddd-e1e1e1e1e1e1/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. </param>
         /// <returns> A new <see cref="Models.LoadTestingCmkIdentity"/> instance for mocking. </returns>
@@ -75,6 +77,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingResourcePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), description is null && encryption is null ? default : new LoadTestResourceUpdateProperties(description, encryption, default), default);
         }
 
+        /// <summary> A collection of related endpoints from the same service for which the Batch service requires outbound access. </summary>
         /// <param name="category"> The type of service that Azure Load Testing connects to. </param>
         /// <param name="endpoints"> The endpoints for this service to which the Batch service makes outbound calls. </param>
         /// <returns> A new <see cref="Models.LoadTestingOutboundEnvironmentEndpoint"/> instance for mocking. </returns>
@@ -85,6 +88,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingOutboundEnvironmentEndpoint(category, (endpoints ?? new ChangeTrackingList<LoadTestingEndpointDependency>()).ToList(), default);
         }
 
+        /// <summary> A domain name and connection details used to access a dependency. </summary>
         /// <param name="domainName"> The domain name of the dependency. Domain names may be fully qualified or may contain a * wildcard. </param>
         /// <param name="description"> Human-readable supplemental information about the dependency and when it is applicable. </param>
         /// <param name="endpointDetails"> The list of connection details for this endpoint. </param>
@@ -96,6 +100,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestingEndpointDependency(domainName, description, (endpointDetails ?? new ChangeTrackingList<LoadTestingEndpointDetail>()).ToList(), default);
         }
 
+        /// <summary> Details about the connection between the Batch service and the endpoint. </summary>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <returns> A new <see cref="Models.LoadTestingEndpointDetail"/> instance for mocking. </returns>
         public static LoadTestingEndpointDetail LoadTestingEndpointDetail(int? port = default)
@@ -142,6 +147,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 default);
         }
 
+        /// <summary> Dimensions for new quota request. </summary>
         /// <param name="subscriptionId"> Subscription Id dimension for new quota request of the quota bucket. </param>
         /// <param name="location"> Location dimension for new quota request of the quota bucket. </param>
         /// <returns> A new <see cref="Models.LoadTestingQuotaBucketDimensions"/> instance for mocking. </returns>
@@ -168,6 +174,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 default);
         }
 
+        /// <summary> LoadTest mapping resource details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -185,6 +192,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 default);
         }
 
+        /// <summary> Azure LoadTest mapping resource properties. </summary>
         /// <param name="sourceResourceId"> Mapped source resource Id. </param>
         /// <param name="azureLoadTestingResourceId"> Mapped Azure Load Test resource Id. </param>
         /// <param name="testId"> Mapped Azure Load Test resource test-id. </param>
@@ -194,6 +202,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestMappingProperties(sourceResourceId, azureLoadTestingResourceId, testId, default);
         }
 
+        /// <summary> The type used for update operations of the LoadTestMappingResource. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.LoadTestMappingPatch"/> instance for mocking. </returns>
         public static LoadTestMappingPatch LoadTestMappingPatch(LoadTestMappingUpdateProperties properties = default)
@@ -201,6 +210,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestMappingPatch(properties, default);
         }
 
+        /// <summary> The updatable properties of the LoadTestMappingResource. </summary>
         /// <param name="sourceResourceId"> Mapped source resource Id. </param>
         /// <param name="azureLoadTestingResourceId"> Mapped Azure Load Test resource Id. </param>
         /// <param name="testId"> Mapped Azure Load Test resource test-id. </param>
@@ -210,6 +220,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestMappingUpdateProperties(sourceResourceId, azureLoadTestingResourceId, testId, default);
         }
 
+        /// <summary> LoadTest profile mapping resource details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -227,6 +238,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 default);
         }
 
+        /// <summary> Azure LoadTest profile mapping resource properties. </summary>
         /// <param name="sourceResourceId"> Mapped source resource Id. </param>
         /// <param name="azureLoadTestingResourceId"> Mapped Azure Load Test resource Id. </param>
         /// <param name="testProfileId"> Mapped Azure Load Test resource test-profile-id. </param>
@@ -236,6 +248,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestProfileMappingProperties(sourceResourceId, azureLoadTestingResourceId, testProfileId, default);
         }
 
+        /// <summary> The type used for update operations of the LoadTestProfileMappingResource. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.LoadTestProfileMappingPatch"/> instance for mocking. </returns>
         public static LoadTestProfileMappingPatch LoadTestProfileMappingPatch(LoadTestProfileMappingUpdateProperties properties = default)
@@ -243,6 +256,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestProfileMappingPatch(properties, default);
         }
 
+        /// <summary> The updatable properties of the LoadTestProfileMappingResource. </summary>
         /// <param name="sourceResourceId"> Mapped source resource Id. </param>
         /// <param name="azureLoadTestingResourceId"> Mapped Azure Load Test resource Id. </param>
         /// <param name="testProfileId"> Mapped Azure Load Test resource test-profile-id. </param>
@@ -252,6 +266,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestProfileMappingUpdateProperties(sourceResourceId, azureLoadTestingResourceId, testProfileId, default);
         }
 
+        /// <summary> Max monthly virtual usage hours resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -269,6 +284,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 default);
         }
 
+        /// <summary> Max monthly virtual usage hours resource limit properties. </summary>
         /// <param name="limit"> Current limit value, with -1 indicating that there is no limit. </param>
         /// <param name="usage"> Current usage value. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
@@ -278,6 +294,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new MaxMonthlyVirtualUserHoursProperties(limit, usage, provisioningState, default);
         }
 
+        /// <summary> Max monthly virtual usage hours limit request payload. </summary>
         /// <param name="limit"> The new maxMonthlyVirtualUserHours limit, with -1 indicating that there is no limit. </param>
         /// <returns> A new <see cref="Models.MaxMonthlyVirtualUserHoursLimitContent"/> instance for mocking. </returns>
         public static MaxMonthlyVirtualUserHoursLimitContent MaxMonthlyVirtualUserHoursLimitContent(int? limit = default)
@@ -285,14 +302,14 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new MaxMonthlyVirtualUserHoursLimitContent(limit, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadTesting.LoadTestingResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The type of identity used for the resource. </param>
+        /// <summary> LoadTest details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="description"> Description of the resource. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="dataPlaneUri"> Resource data plane URI. </param>

@@ -85,6 +85,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Properties of a lab's announcement banner. </summary>
         /// <param name="title"> The plain text title for the lab announcement. </param>
         /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
         /// <param name="enabled"> Is the lab announcement active/enabled at this time?. </param>
@@ -106,6 +107,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Properties of a lab's support banner. </summary>
         /// <param name="enabled"> Is the lab support banner active/enabled at this time?. </param>
         /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
         /// <returns> A new <see cref="Models.DevTestLabSupport"/> instance for mocking. </returns>
@@ -114,6 +116,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabSupport(enabled, markdown, default);
         }
 
+        /// <summary> A lab. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabPatch"/> instance for mocking. </returns>
         public static DevTestLabPatch DevTestLabPatch(IDictionary<string, string> tags = default)
@@ -123,6 +126,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Represents an update resource. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabResourcePatch"/> instance for mocking. </returns>
         public static DevTestLabResourcePatch DevTestLabResourcePatch(IDictionary<string, string> tags = default)
@@ -192,6 +196,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default), name, location, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Properties of an artifact. </summary>
         /// <param name="artifactId"> The artifact's identifier. </param>
         /// <param name="artifactTitle"> The artifact's title. </param>
         /// <param name="parameters"> The parameters of the artifact. </param>
@@ -215,6 +220,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Properties of an artifact parameter. </summary>
         /// <param name="name"> The name of the artifact parameter. </param>
         /// <param name="value"> The value of the artifact parameter. </param>
         /// <returns> A new <see cref="Models.DevTestLabArtifactParameter"/> instance for mocking. </returns>
@@ -223,6 +229,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabArtifactParameter(name, value, default);
         }
 
+        /// <summary> The reference information for an Azure Marketplace image. </summary>
         /// <param name="offer"> The offer of the gallery image. </param>
         /// <param name="publisher"> The publisher of the gallery image. </param>
         /// <param name="sku"> The SKU of the gallery image. </param>
@@ -265,6 +272,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> A rule for NAT - exposing a VM's port (backendPort) on the public IP address using a load balancer. </summary>
         /// <param name="transportProtocol"> The transport protocol for the endpoint. </param>
         /// <param name="frontendPort"> The external endpoint port of the inbound connection. Possible values range between 1 and 65535, inclusive. If unspecified, a value will be allocated automatically. </param>
         /// <param name="backendPort"> The port to which the external traffic will be redirected. </param>
@@ -274,6 +282,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabInboundNatRule(transportProtocol, frontendPort, backendPort, default);
         }
 
+        /// <summary> Request body for adding a new or existing data disk to a virtual machine. </summary>
         /// <param name="attachNewDataDiskOptions"> Specifies options to attach a new disk to the virtual machine. </param>
         /// <param name="existingLabDiskId"> Specifies the existing lab disk id to attach to virtual machine. </param>
         /// <param name="hostCaching"> Caching option for a data disk (i.e. None, ReadOnly, ReadWrite). </param>
@@ -283,6 +292,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabDataDiskProperties(attachNewDataDiskOptions, existingLabDiskId, hostCaching, default);
         }
 
+        /// <summary> Properties to attach new disk to the Virtual Machine. </summary>
         /// <param name="diskSizeGiB"> Size of the disk to be attached in Gibibytes. </param>
         /// <param name="diskName"> The name of the disk to be attached. </param>
         /// <param name="diskType"> The storage type for the disk (i.e. Standard, Premium). </param>
@@ -320,6 +330,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default), name, location, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Properties of a weekly schedule. </summary>
         /// <param name="weekdays"> The days of the week for which the schedule is set (e.g. Sunday, Monday, Tuesday, etc.). </param>
         /// <param name="time"> The time of the day the schedule will occur. </param>
         /// <returns> A new <see cref="Models.DevTestLabWeekDetails"/> instance for mocking. </returns>
@@ -330,6 +341,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabWeekDetails((weekdays ?? new ChangeTrackingList<string>()).ToList(), time, default);
         }
 
+        /// <summary> Notification settings for a schedule. </summary>
         /// <param name="status"> If notifications are enabled for this schedule (i.e. Enabled, Disabled). </param>
         /// <param name="timeInMinutes"> Time in minutes before event at which notification will be sent. </param>
         /// <param name="webhookUri"> The webhook URL to which the notification will be sent. </param>
@@ -347,6 +359,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> The parameters of the export operation. </summary>
         /// <param name="blobStorageAbsoluteSasUri"> The blob storage absolute sas uri with write permission to the container which the usage data needs to be uploaded to. </param>
         /// <param name="usageStartOn"> The start time of the usage. If not provided, usage will be reported since the beginning of data collection. </param>
         /// <returns> A new <see cref="Models.DevTestLabExportResourceUsageContent"/> instance for mocking. </returns>
@@ -355,6 +368,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabExportResourceUsageContent(blobStorageAbsoluteSasUri, usageStartOn, default);
         }
 
+        /// <summary> Properties for generating an upload URI. </summary>
         /// <param name="blobName"> The blob name of the upload URI. </param>
         /// <returns> A new <see cref="Models.DevTestLabGenerateUploadUriContent"/> instance for mocking. </returns>
         public static DevTestLabGenerateUploadUriContent DevTestLabGenerateUploadUriContent(string blobName = default)
@@ -362,6 +376,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabGenerateUploadUriContent(blobName, default);
         }
 
+        /// <summary> Response body for generating an upload URI. </summary>
         /// <param name="uploadUri"> The upload URI for the VHD. </param>
         /// <returns> A new <see cref="Models.DevTestLabGenerateUploadUriResult"/> instance for mocking. </returns>
         public static DevTestLabGenerateUploadUriResult DevTestLabGenerateUploadUriResult(Uri uploadUri = default)
@@ -369,6 +384,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabGenerateUploadUriResult(uploadUri, default);
         }
 
+        /// <summary> This represents the payload required to import a virtual machine from a different lab into the current one. </summary>
         /// <param name="sourceVmResourceId"> The full resource ID of the virtual machine to be imported. </param>
         /// <param name="destinationVmName"> The name of the virtual machine in the destination lab. </param>
         /// <returns> A new <see cref="Models.DevTestLabImportVmContent"/> instance for mocking. </returns>
@@ -377,6 +393,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabImportVmContent(sourceVmResourceId, destinationVmName, default);
         }
 
+        /// <summary> Properties of a VHD in the lab. </summary>
         /// <param name="id"> The URI to the VHD. </param>
         /// <returns> A new <see cref="Models.DevTestLabVhd"/> instance for mocking. </returns>
         public static DevTestLabVhd DevTestLabVhd(Uri id = default)
@@ -429,6 +446,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> A schedule. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabSchedulePatch"/> instance for mocking. </returns>
         public static DevTestLabSchedulePatch DevTestLabSchedulePatch(IDictionary<string, string> tags = default)
@@ -438,6 +456,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabSchedulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Properties for retargeting a virtual machine schedule. </summary>
         /// <param name="currentResourceId"> The resource Id of the virtual machine on which the schedule operates. </param>
         /// <param name="targetResourceId"> The resource Id of the virtual machine that the schedule should be retargeted to. </param>
         /// <returns> A new <see cref="Models.DevTestLabGlobalScheduleRetargetContent"/> instance for mocking. </returns>
@@ -491,6 +510,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Properties of an artifact source. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabArtifactSourcePatch"/> instance for mocking. </returns>
         public static DevTestLabArtifactSourcePatch DevTestLabArtifactSourcePatch(IDictionary<string, string> tags = default)
@@ -539,6 +559,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> A file containing a set of parameter values for an ARM template. </summary>
         /// <param name="fileName"> File name. </param>
         /// <param name="parametersValueInfo"> Contents of the file. </param>
         /// <returns> A new <see cref="Models.DevTestLabParametersValueFileInfo"/> instance for mocking. </returns>
@@ -577,6 +598,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Parameters for generating an ARM template for deploying artifacts. </summary>
         /// <param name="vmName"> The resource name of the virtual machine. </param>
         /// <param name="parameters"> The parameters of the ARM template. </param>
         /// <param name="location"> The location of the virtual machine. </param>
@@ -589,6 +611,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabArtifactGenerateArmTemplateContent(vmName, (parameters ?? new ChangeTrackingList<DevTestLabParameter>()).ToList(), location, fileUploadOptions, default);
         }
 
+        /// <summary> Information about an artifact's parameter. </summary>
         /// <param name="name"> The name of the artifact parameter. </param>
         /// <param name="value"> The value of the artifact parameter. </param>
         /// <returns> A new <see cref="Models.DevTestLabParameter"/> instance for mocking. </returns>
@@ -597,6 +620,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabParameter(name, value, default);
         }
 
+        /// <summary> Information about a generated ARM template. </summary>
         /// <param name="template"> The template's contents. </param>
         /// <param name="parameters"> The parameters of the ARM template. </param>
         /// <returns> A new <see cref="Models.DevTestLabArmTemplateInfo"/> instance for mocking. </returns>
@@ -633,14 +657,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                targetCost is null && estimatedLabCost is null && labCostDetails is null ? default : new LabCostProperties(
+                targetCost is null && estimatedLabCost is null && labCostDetails is null && startOn is null && endOn is null ? default : new LabCostProperties(
                     targetCost,
                     new LabCostSummaryProperties(estimatedLabCost, default),
                     (labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>()).ToList(),
                     default,
                     default,
-                    default,
-                    default,
+                    startOn,
+                    endOn,
                     default,
                     default,
                     default,
@@ -648,6 +672,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Properties of a cost target. </summary>
         /// <param name="status"> Target cost status. </param>
         /// <param name="target"> Lab target cost. </param>
         /// <param name="costThresholds"> Cost thresholds. </param>
@@ -686,6 +711,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> The properties of a lab cost item. </summary>
         /// <param name="on"> The date of the cost item. </param>
         /// <param name="cost"> The cost component of the cost item. </param>
         /// <param name="costType"> The type of the cost. </param>
@@ -695,6 +721,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabCostDetails(@on, cost, costType, default);
         }
 
+        /// <summary> The properties of a resource cost item. </summary>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="resourceUniqueId"> The unique identifier of the resource. </param>
         /// <param name="resourceCost"> The cost component of the resource cost item. </param>
@@ -750,12 +777,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                managedImageId is null && customImagePlan is null && isPlanAuthorized is null ? default : new CustomImageProperties(
+                createdOn is null && managedImageId is null && customImagePlan is null && isPlanAuthorized is null ? default : new CustomImageProperties(
                     default,
                     default,
                     default,
                     default,
-                    default,
+                    createdOn,
                     managedImageId,
                     default,
                     default,
@@ -776,6 +803,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabCustomImageVm(sourceVmId, windowsOSState is null ? default : new DevTestLabWindowsOSInfo(windowsOSState, default), linuxOSState is null ? default : new DevTestLabLinuxOSInfo(linuxOSState, default), default);
         }
 
+        /// <summary> Properties for creating a custom image from a VHD. </summary>
         /// <param name="imageName"> The image name. </param>
         /// <param name="isSysPrepEnabled"> Indicates whether sysprep has been run on the VHD. </param>
         /// <param name="osType"> The OS type of the custom image (i.e. Windows, Linux). </param>
@@ -785,6 +813,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabCustomImageVhd(imageName, isSysPrepEnabled, osType, default);
         }
 
+        /// <summary> Storage information about the data disks present in the custom image. </summary>
         /// <param name="lun"> Disk Lun. </param>
         /// <param name="storageType"> Disk Storage Type. </param>
         /// <returns> A new <see cref="Models.DevTestLabDataDiskStorageTypeInfo"/> instance for mocking. </returns>
@@ -793,6 +822,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabDataDiskStorageTypeInfo(lun, storageType, default);
         }
 
+        /// <summary> Properties for plan on a custom image. </summary>
         /// <param name="id"> The id of the plan, equivalent to name of the plan. </param>
         /// <param name="publisher"> The publisher for the plan from the marketplace image the custom image is derived from. </param>
         /// <param name="offer"> The offer for the plan from the marketplace image the custom image is derived from. </param>
@@ -802,6 +832,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabCustomImagePlan(id, publisher, offer, default);
         }
 
+        /// <summary> A custom image. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabCustomImagePatch"/> instance for mocking. </returns>
         public static DevTestLabCustomImagePatch DevTestLabCustomImagePatch(IDictionary<string, string> tags = default)
@@ -837,11 +868,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                formulaContent is null && labVmId is null ? default : new FormulaProperties(
+                createdOn is null && formulaContent is null && labVmId is null ? default : new FormulaProperties(
                     default,
                     default,
                     default,
-                    default,
+                    createdOn,
                     formulaContent,
                     new FormulaPropertiesFromVm(labVmId, default),
                     default,
@@ -850,6 +881,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> A formula for creating a VM, specifying an image base and other parameters. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabFormulaPatch"/> instance for mocking. </returns>
         public static DevTestLabFormulaPatch DevTestLabFormulaPatch(IDictionary<string, string> tags = default)
@@ -937,6 +969,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> An event to be notified for. </summary>
         /// <param name="eventName"> The event type for which this notification is enabled (i.e. AutoShutdown, Cost). </param>
         /// <returns> A new <see cref="Models.DevTestLabNotificationChannelEvent"/> instance for mocking. </returns>
         public static DevTestLabNotificationChannelEvent DevTestLabNotificationChannelEvent(DevTestLabNotificationChannelEventType? eventName = default)
@@ -944,6 +977,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabNotificationChannelEvent(eventName, default);
         }
 
+        /// <summary> A notification. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabNotificationChannelPatch"/> instance for mocking. </returns>
         public static DevTestLabNotificationChannelPatch DevTestLabNotificationChannelPatch(IDictionary<string, string> tags = default)
@@ -953,6 +987,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabNotificationChannelPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Properties for generating a Notification. </summary>
         /// <param name="eventName"> The type of event (i.e. AutoShutdown, Cost). </param>
         /// <param name="jsonPayload"> Properties for the notification in json format. </param>
         /// <returns> A new <see cref="Models.DevTestLabNotificationChannelNotifyContent"/> instance for mocking. </returns>
@@ -1002,6 +1037,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> A Policy. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabPolicyPatch"/> instance for mocking. </returns>
         public static DevTestLabPolicyPatch DevTestLabPolicyPatch(IDictionary<string, string> tags = default)
@@ -1011,6 +1047,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Request body for evaluating a policy set. </summary>
         /// <param name="policies"> Policies to evaluate. </param>
         /// <returns> A new <see cref="Models.DevTestLabEvaluatePoliciesContent"/> instance for mocking. </returns>
         public static DevTestLabEvaluatePoliciesContent DevTestLabEvaluatePoliciesContent(IEnumerable<DevTestLabEvaluatePolicy> policies = default)
@@ -1020,6 +1057,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabEvaluatePoliciesContent((policies ?? new ChangeTrackingList<DevTestLabEvaluatePolicy>()).ToList(), default);
         }
 
+        /// <summary> Properties for evaluating a policy set. </summary>
         /// <param name="factName"> The fact name. </param>
         /// <param name="factData"> The fact data. </param>
         /// <param name="valueOffset"> The value offset. </param>
@@ -1030,6 +1068,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabEvaluatePolicy(factName, factData, valueOffset, userObjectId, default);
         }
 
+        /// <summary> Response body for evaluating a policy set. </summary>
         /// <param name="results"> Results of evaluating a policy set. </param>
         /// <returns> A new <see cref="Models.DevTestLabEvaluatePoliciesResult"/> instance for mocking. </returns>
         public static DevTestLabEvaluatePoliciesResult DevTestLabEvaluatePoliciesResult(IEnumerable<DevTestLabPolicySetResult> results = default)
@@ -1039,6 +1078,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabEvaluatePoliciesResult((results ?? new ChangeTrackingList<DevTestLabPolicySetResult>()).ToList(), default);
         }
 
+        /// <summary> Result of a policy set evaluation. </summary>
         /// <param name="hasError"> A value indicating whether this policy set evaluation has discovered violations. </param>
         /// <param name="policyViolations"> The list of policy violations. </param>
         /// <returns> A new <see cref="Models.DevTestLabPolicySetResult"/> instance for mocking. </returns>
@@ -1049,6 +1089,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabPolicySetResult(hasError, (policyViolations ?? new ChangeTrackingList<DevTestLabPolicyViolation>()).ToList(), default);
         }
 
+        /// <summary> Policy violation. </summary>
         /// <param name="code"> The code of the policy violation. </param>
         /// <param name="message"> The message of the policy violation. </param>
         /// <returns> A new <see cref="Models.DevTestLabPolicyViolation"/> instance for mocking. </returns>
@@ -1057,6 +1098,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabPolicyViolation(code, message, default);
         }
 
+        /// <summary> A container for a managed identity to execute DevTest lab services. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1080,6 +1122,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Properties of a managed identity. </summary>
         /// <param name="managedIdentityType"> Managed identity. </param>
         /// <param name="principalId"> The principal id of resource identity. </param>
         /// <param name="tenantId"> The tenant identifier of resource. </param>
@@ -1117,6 +1160,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Identity attributes of a lab user. </summary>
         /// <param name="principalName"> Set to the principal name / UPN of the client JWT making the request. </param>
         /// <param name="principalId"> Set to the principal Id of the client JWT making the request. Service principal will not have the principal Id. </param>
         /// <param name="tenantId"> Set to the tenant ID of the client JWT making the request. </param>
@@ -1134,6 +1178,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Properties of a user's secret store. </summary>
         /// <param name="keyVaultUri"> The URI of the user's Key vault. </param>
         /// <param name="keyVaultId"> The ID of the user's Key vault. </param>
         /// <returns> A new <see cref="Models.DevTestLabUserSecretStore"/> instance for mocking. </returns>
@@ -1142,6 +1187,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabUserSecretStore(keyVaultUri, keyVaultId, default);
         }
 
+        /// <summary> Profile of a lab user. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabUserPatch"/> instance for mocking. </returns>
         public static DevTestLabUserPatch DevTestLabUserPatch(IDictionary<string, string> tags = default)
@@ -1196,6 +1242,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> A Disk. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabDiskPatch"/> instance for mocking. </returns>
         public static DevTestLabDiskPatch DevTestLabDiskPatch(IDictionary<string, string> tags = default)
@@ -1205,6 +1252,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabDiskPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Properties of the disk to attach. </summary>
         /// <param name="leasedByLabVmId"> The resource ID of the Lab virtual machine to which the disk is attached. </param>
         /// <returns> A new <see cref="Models.DevTestLabDiskAttachContent"/> instance for mocking. </returns>
         public static DevTestLabDiskAttachContent DevTestLabDiskAttachContent(ResourceIdentifier leasedByLabVmId = default)
@@ -1212,6 +1260,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabDiskAttachContent(leasedByLabVmId, default);
         }
 
+        /// <summary> Properties of the disk to detach. </summary>
         /// <param name="leasedByLabVmId"> The resource ID of the Lab VM to which the disk is attached. </param>
         /// <returns> A new <see cref="Models.DevTestLabDiskDetachContent"/> instance for mocking. </returns>
         public static DevTestLabDiskDetachContent DevTestLabDiskDetachContent(ResourceIdentifier leasedByLabVmId = default)
@@ -1247,6 +1296,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Properties of an environment deployment. </summary>
         /// <param name="armTemplateId"> The Azure Resource Manager template's identifier. </param>
         /// <param name="parameters"> The parameters of the Azure Resource Manager template. </param>
         /// <returns> A new <see cref="Models.DevTestLabEnvironmentDeployment"/> instance for mocking. </returns>
@@ -1257,6 +1307,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabEnvironmentDeployment(armTemplateId, (parameters ?? new ChangeTrackingList<DevTestLabArmTemplateParameter>()).ToList(), default);
         }
 
+        /// <summary> Properties of an Azure Resource Manager template parameter. </summary>
         /// <param name="name"> The name of the template parameter. </param>
         /// <param name="value"> The value of the template parameter. </param>
         /// <returns> A new <see cref="Models.DevTestLabArmTemplateParameter"/> instance for mocking. </returns>
@@ -1265,6 +1316,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabArmTemplateParameter(name, value, default);
         }
 
+        /// <summary> An environment, which is essentially an ARM template deployment. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabEnvironmentPatch"/> instance for mocking. </returns>
         public static DevTestLabEnvironmentPatch DevTestLabEnvironmentPatch(IDictionary<string, string> tags = default)
@@ -1299,6 +1351,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> A secret. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabSecretPatch"/> instance for mocking. </returns>
         public static DevTestLabSecretPatch DevTestLabSecretPatch(IDictionary<string, string> tags = default)
@@ -1365,6 +1418,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> A Service Fabric. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabServiceFabricPatch"/> instance for mocking. </returns>
         public static DevTestLabServiceFabricPatch DevTestLabServiceFabricPatch(IDictionary<string, string> tags = default)
@@ -1427,7 +1481,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isAuthenticationWithSshKey is null && labSubnetName is null && labVirtualNetworkId is null && disallowPublicIPAddress is null && allowClaim is null ? default : new LabVirtualMachineProperties(
+                isAuthenticationWithSshKey is null && labSubnetName is null && labVirtualNetworkId is null && disallowPublicIPAddress is null && expireOn is null && allowClaim is null ? default : new LabVirtualMachineProperties(
                     default,
                     default,
                     default,
@@ -1453,7 +1507,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     default,
                     default,
                     default,
-                    default,
+                    expireOn,
                     allowClaim,
                     default,
                     default,
@@ -1467,6 +1521,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Properties of an artifact deployment. </summary>
         /// <param name="deploymentStatus"> The deployment status of the artifact. </param>
         /// <param name="artifactsApplied"> The total count of the artifacts that were successfully applied. </param>
         /// <param name="totalArtifacts"> The total count of the artifacts that were tentatively applied. </param>
@@ -1476,6 +1531,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabArtifactDeploymentStatus(deploymentStatus, artifactsApplied, totalArtifacts, default);
         }
 
+        /// <summary> Properties of a virtual machine returned by the Microsoft.Compute API. </summary>
         /// <param name="statuses"> Gets the statuses of the virtual machine. </param>
         /// <param name="osType"> Gets the OS type of the virtual machine. </param>
         /// <param name="vmSize"> Gets the size of the virtual machine. </param>
@@ -1501,6 +1557,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Status information about a virtual machine. </summary>
         /// <param name="code"> Gets the status Code. </param>
         /// <param name="displayStatus"> Gets the short localizable label for the status. </param>
         /// <param name="message"> Gets the message associated with the status. </param>
@@ -1510,6 +1567,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new ComputeVmInstanceViewStatus(code, displayStatus, message, default);
         }
 
+        /// <summary> A data disks attached to a virtual machine. </summary>
         /// <param name="name"> Gets data disk name. </param>
         /// <param name="diskUri"> When backed by a blob, the URI of underlying blob. </param>
         /// <param name="managedDiskId"> When backed by managed disk, this is the ID of the compute disk resource. </param>
@@ -1520,6 +1578,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new ComputeDataDisk(name, diskUri, managedDiskId, diskSizeGiB, default);
         }
 
+        /// <summary> A virtual machine. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabVmPatch"/> instance for mocking. </returns>
         public static DevTestLabVmPatch DevTestLabVmPatch(IDictionary<string, string> tags = default)
@@ -1529,6 +1588,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabVmPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Request body for applying artifacts to a virtual machine. </summary>
         /// <param name="artifacts"> The list of artifacts to apply. </param>
         /// <returns> A new <see cref="Models.DevTestLabVmApplyArtifactsContent"/> instance for mocking. </returns>
         public static DevTestLabVmApplyArtifactsContent DevTestLabVmApplyArtifactsContent(IEnumerable<DevTestLabArtifactInstallInfo> artifacts = default)
@@ -1538,6 +1598,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabVmApplyArtifactsContent((artifacts ?? new ChangeTrackingList<DevTestLabArtifactInstallInfo>()).ToList(), default);
         }
 
+        /// <summary> Request body for detaching data disk from a virtual machine. </summary>
         /// <param name="existingLabDiskId"> Specifies the disk resource ID to detach from virtual machine. </param>
         /// <returns> A new <see cref="Models.DevTestLabVmDetachDataDiskContent"/> instance for mocking. </returns>
         public static DevTestLabVmDetachDataDiskContent DevTestLabVmDetachDataDiskContent(ResourceIdentifier existingLabDiskId = default)
@@ -1545,6 +1606,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabVmDetachDataDiskContent(existingLabDiskId, default);
         }
 
+        /// <summary> Represents a .rdp file. </summary>
         /// <param name="contents"> The contents of the .rdp file. </param>
         /// <returns> A new <see cref="Models.DevTestLabRdpConnection"/> instance for mocking. </returns>
         public static DevTestLabRdpConnection DevTestLabRdpConnection(string contents = default)
@@ -1552,6 +1614,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabRdpConnection(contents, default);
         }
 
+        /// <summary> Request body for resizing a virtual machine. </summary>
         /// <param name="size"> Specifies the size of the virtual machine. </param>
         /// <returns> A new <see cref="Models.DevTestLabVmResizeContent"/> instance for mocking. </returns>
         public static DevTestLabVmResizeContent DevTestLabVmResizeContent(string size = default)
@@ -1589,6 +1652,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Subnet information. </summary>
         /// <param name="resourceId"> The resource ID of the subnet. </param>
         /// <param name="labSubnetName"> The name of the subnet as seen in the lab. </param>
         /// <param name="allowPublicIP"> The permission policy of the subnet for allowing public IP addresses (i.e. Allow, Deny)). </param>
@@ -1598,6 +1662,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabSubnet(resourceId, labSubnetName, allowPublicIP, default);
         }
 
+        /// <summary> Subnet information as returned by the Microsoft.Network API. </summary>
         /// <param name="id"> Gets or sets the identifier. </param>
         /// <param name="name"> Gets or sets the name. </param>
         /// <returns> A new <see cref="Models.DevTestLabExternalSubnet"/> instance for mocking. </returns>
@@ -1625,6 +1690,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
+        /// <summary> Properties of a network port. </summary>
         /// <param name="transportProtocol"> Protocol type of the port. </param>
         /// <param name="backendPort"> Backend port of the target virtual machine. </param>
         /// <returns> A new <see cref="Models.DevTestLabPort"/> instance for mocking. </returns>
@@ -1633,6 +1699,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabPort(transportProtocol, backendPort, default);
         }
 
+        /// <summary> A virtual network. </summary>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabVirtualNetworkPatch"/> instance for mocking. </returns>
         public static DevTestLabVirtualNetworkPatch DevTestLabVirtualNetworkPatch(IDictionary<string, string> tags = default)
@@ -1642,19 +1709,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabVirtualNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabScheduleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A schedule. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
         /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
         /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
-        /// <param name="dailyRecurrenceTime"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
-        /// <param name="hourlyRecurrenceMinute"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
-        /// <param name="timeZoneId"> The time zone ID (e.g. Pacific Standard time). </param>
+        /// <param name="dailyRecurrenceTime"> The time of day the schedule will occur. </param>
+        /// <param name="hourlyRecurrenceMinute"> Minutes of the hour the schedule will run. </param>
+        /// <param name="timeZoneId"> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </param>
         /// <param name="notificationSettings"> Notification settings. </param>
         /// <param name="createdOn"> The creation date of the schedule. </param>
         /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
@@ -1687,20 +1754,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabCostData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A cost item. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="targetCost"> The target cost properties. </param>
-        /// <param name="estimatedLabCost"> The lab cost summary component of the cost data. </param>
+        /// <param name="estimatedLabCost"> The cost component of the cost item. </param>
         /// <param name="labCostDetails"> The lab cost details component of the cost data. </param>
         /// <param name="resourceCosts"> The resource cost component of the cost data. </param>
         /// <param name="currencyCode"> The currency code of the cost. </param>
-        /// <param name="startOn"> The start time of the cost data. </param>
-        /// <param name="endOn"> The end time of the cost data. </param>
+        /// <param name="startOn"></param>
+        /// <param name="endOn"></param>
         /// <param name="createdOn"> The creation date of the cost. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
@@ -1715,14 +1782,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                targetCost is null && estimatedLabCost is null && labCostDetails is null && resourceCosts is null && currencyCode is null && startOn is null && endOn is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new LabCostProperties(
+                targetCost is null && estimatedLabCost is null && labCostDetails is null && resourceCosts is null && currencyCode is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new LabCostProperties(
                     targetCost,
                     new LabCostSummaryProperties(estimatedLabCost, default),
                     (labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>()).ToList(),
                     (resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>()).ToList(),
                     currencyCode,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     createdOn,
                     provisioningState,
                     uniqueIdentifier,
@@ -1730,19 +1797,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DevTestLabs.DevTestLabFormulaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A formula for creating a VM, specifying an image base and other parameters. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="description"> The description of the formula. </param>
         /// <param name="author"> The author of the formula. </param>
         /// <param name="osType"> The OS type of the formula. </param>
         /// <param name="createdOn"> The creation date of the formula. </param>
         /// <param name="formulaContent"> The content of the formula. </param>
-        /// <param name="labVmId"> Information about a VM from which a formula is to be created. </param>
+        /// <param name="labVmId"> The identifier of the VM from which a formula is to be created. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabFormulaData"/> instance for mocking. </returns>
@@ -1769,16 +1836,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevTestLabScheduleCreationParameter"/>. </summary>
+        /// <summary> Properties for creating a schedule. </summary>
         /// <param name="name"> The name of the virtual machine or environment. </param>
         /// <param name="location"> The location of the new virtual machine or environment. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <param name="status"> The status of the schedule (i.e. Enabled, Disabled). </param>
         /// <param name="taskType"> The task type of the schedule (e.g. LabVmsShutdownTask, LabVmAutoStart). </param>
         /// <param name="weeklyRecurrence"> If the schedule will occur only some days of the week, specify the weekly recurrence. </param>
-        /// <param name="dailyRecurrenceTime"> If the schedule will occur once each day of the week, specify the daily recurrence. </param>
-        /// <param name="hourlyRecurrenceMinute"> If the schedule will occur multiple times a day, specify the hourly recurrence. </param>
-        /// <param name="timeZoneId"> The time zone ID (e.g. Pacific Standard time). </param>
+        /// <param name="dailyRecurrenceTime"> The time of day the schedule will occur. </param>
+        /// <param name="hourlyRecurrenceMinute"> Minutes of the hour the schedule will run. </param>
+        /// <param name="timeZoneId"> The time zone ID (e.g. China Standard Time, Greenland Standard Time, Pacific Standard time, etc.). The possible values for this property can be found in `IReadOnlyCollection&lt;string&gt; TimeZoneConverter.TZConvert.KnownWindowsTimeZoneIds` (https://github.com/mattjohnsonpint/TimeZoneConverter/blob/main/README.md). </param>
         /// <param name="notificationSettings"> Notification settings. </param>
         /// <param name="targetResourceId"> The resource ID to which the schedule belongs. </param>
         /// <returns> A new <see cref="Models.DevTestLabScheduleCreationParameter"/> instance for mocking. </returns>

@@ -117,6 +117,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 default);
         }
 
+        /// <summary> The date encryption for cmk. </summary>
         /// <param name="primaryUserAssignedIdentityId"> Primary user identity resource id. </param>
         /// <param name="primaryKeyUri"> Primary key uri. </param>
         /// <param name="geoBackupUserAssignedIdentityId"> Geo backup user identity resource id as identity can't cross region, need identity in same region as geo backup. </param>
@@ -134,6 +135,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 default);
         }
 
+        /// <summary> Storage Profile properties of a server. </summary>
         /// <param name="storageSizeInGB"> Max storage size allowed for a server. </param>
         /// <param name="iops"> Storage IOPS for a server. </param>
         /// <param name="autoGrow"> Enable Storage Auto Grow or not. </param>
@@ -155,6 +157,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 default);
         }
 
+        /// <summary> Storage Profile properties of a server. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="backupIntervalHours"> Backup interval hours for the server. </param>
         /// <param name="geoRedundantBackup"> Whether or not geo redundant backup is enabled. </param>
@@ -165,6 +168,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerBackupProperties(backupRetentionDays, backupIntervalHours, geoRedundantBackup, earliestRestoreOn, default);
         }
 
+        /// <summary> High availability properties of a server. </summary>
         /// <param name="mode"> High availability mode for a server. </param>
         /// <param name="state"> The state of server high availability. </param>
         /// <param name="standbyAvailabilityZone"> Availability zone of the standby server. </param>
@@ -174,6 +178,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerHighAvailability(mode, state, standbyAvailabilityZone, default);
         }
 
+        /// <summary> Network related properties of a server. </summary>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is 'Disabled' when server has VNet integration. </param>
         /// <param name="delegatedSubnetResourceId"> Delegated subnet resource id used to setup vnet for a server. </param>
         /// <param name="privateDnsZoneResourceId"> Private DNS zone resource id. </param>
@@ -203,6 +208,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -212,6 +218,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServersPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Maintenance window of a server. </summary>
         /// <param name="customWindow"> indicates whether custom window is enabled or disabled. </param>
         /// <param name="startHour"> start hour for maintenance window. </param>
         /// <param name="startMinute"> start minute for maintenance window. </param>
@@ -229,6 +236,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 default);
         }
 
+        /// <summary> Import source related properties. </summary>
         /// <param name="storageType"> Storage type of import source. </param>
         /// <param name="storageUri"> Uri of the import source storage. </param>
         /// <param name="sasToken"> Sas token for accessing source storage. Read and list permissions are required for sas token. </param>
@@ -239,6 +247,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new ImportSourceProperties(storageType, storageUri, sasToken, dataDirPath, default);
         }
 
+        /// <summary> Billing information related properties of a server. </summary>
         /// <param name="name"> The name of the sku, e.g. Standard_D32s_v3. </param>
         /// <param name="tier"> The tier of the particular SKU, e.g. GeneralPurpose. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerSku"/> instance for mocking. </returns>
@@ -279,6 +288,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> High availability validation properties of a server. </summary>
         /// <param name="estimatedDowntime"> Estimated seconds of downtime for the deployment. </param>
         /// <param name="scheduledStandbyAvailabilityZone"> Scheduled Availability zone of the standby server. </param>
         /// <param name="expectedStandbyAvailabilityZone"> Expected Availability zone of the standby server. </param>
@@ -288,6 +298,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new HighAvailabilityValidationEstimation(estimatedDowntime, scheduledStandbyAvailabilityZone, expectedStandbyAvailabilityZone, default);
         }
 
+        /// <summary> Server restart parameters. </summary>
         /// <param name="restartWithFailover"> Whether or not failover to standby server when restarting a server with high availability enabled. </param>
         /// <param name="maxFailoverSeconds"> The maximum allowed failover time in seconds. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerRestartParameter"/> instance for mocking. </returns>
@@ -296,6 +307,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerRestartParameter(restartWithFailover, maxFailoverSeconds, default);
         }
 
+        /// <summary> Server Gtid set parameters: Replication with Global Transaction Identifiers. </summary>
         /// <param name="gtidSet"> The Gtid set of server. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerGtidSetContent"/> instance for mocking. </returns>
         public static MySqlFlexibleServerGtidSetContent MySqlFlexibleServerGtidSetContent(string gtidSet = default)
@@ -303,6 +315,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerGtidSetContent(gtidSet, default);
         }
 
+        /// <summary> Parameters to detach Vnet. </summary>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is 'Disabled' when server has VNet integration. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerDetachVnetContent"/> instance for mocking. </returns>
         public static MySqlFlexibleServerDetachVnetContent MySqlFlexibleServerDetachVnetContent(MySqlFlexibleServerEnableStatusEnum? publicNetworkAccess = default)
@@ -310,6 +323,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerDetachVnetContent(publicNetworkAccess, default);
         }
 
+        /// <summary> BackupAndExport API Request. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <param name="targetDetails"> Backup Target Store Details. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupAndExportContent"/> instance for mocking. </returns>
@@ -318,6 +332,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerBackupAndExportContent(backupSettings, default, targetDetails);
         }
 
+        /// <summary>
+        /// Details about the target where the backup content will be stored.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MySqlFlexibleServerFullBackupStoreDetails"/>.
+        /// </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupStoreDetails"/> instance for mocking. </returns>
         public static MySqlFlexibleServerBackupStoreDetails MySqlFlexibleServerBackupStoreDetails(string objectType = default)
@@ -325,6 +343,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new UnknownBackupStoreDetails(objectType, default);
         }
 
+        /// <summary> FullBackupStoreDetails is used for scenarios where backup data is streamed/copied over to a storage destination. </summary>
         /// <param name="sasUriList"> SASUriList of storage containers where backup data is to be streamed/copied. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerFullBackupStoreDetails"/> instance for mocking. </returns>
         public static MySqlFlexibleServerFullBackupStoreDetails MySqlFlexibleServerFullBackupStoreDetails(IEnumerable<string> sasUriList = default)
@@ -334,6 +353,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerFullBackupStoreDetails(default, default, (sasUriList ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> BackupRequestBase is the base for all backup request. </summary>
         /// <param name="backupSettings"> Backup Settings. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupContentBase"/> instance for mocking. </returns>
         public static MySqlFlexibleServerBackupContentBase MySqlFlexibleServerBackupContentBase(MySqlFlexibleServerBackupSettings backupSettings = default)
@@ -341,6 +361,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerBackupContentBase(backupSettings, default);
         }
 
+        /// <summary> Backup Settings. </summary>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="backupFormat"> Backup Format for the current backup. (CollatedFormat is INTERNAL – DO NOT USE). </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupSettings"/> instance for mocking. </returns>
@@ -497,6 +518,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 default);
         }
 
+        /// <summary> The response of a Configuration list operation. </summary>
         /// <param name="value"> The Configuration items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerConfigurations"/> instance for mocking. </returns>
@@ -507,6 +529,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerConfigurations((value ?? new ChangeTrackingList<MySqlFlexibleServerConfigurationData>()).ToList(), nextLink, default);
         }
 
+        /// <summary> A list of server configurations to update. </summary>
         /// <param name="values"> The list of server configurations. </param>
         /// <param name="resetAllToDefault"> Whether to reset all server parameters to default. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerConfigurationListForBatchUpdate"/> instance for mocking. </returns>
@@ -550,7 +573,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerFirewallRuleData"/> instance for mocking. </returns>
         public static MySqlFlexibleServerFirewallRuleData MySqlFlexibleServerFirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IPAddress startIPAddress = default, IPAddress endIPAddress = default)
         {
@@ -609,6 +631,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 default);
         }
 
+        /// <summary> Server edition capabilities. </summary>
         /// <param name="name"> Server edition name. </param>
         /// <param name="defaultSku"> Default Sku name. </param>
         /// <param name="defaultStorageSize"> Default storage size. </param>
@@ -629,6 +652,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 default);
         }
 
+        /// <summary> storage edition capability. </summary>
         /// <param name="name"> storage edition name. </param>
         /// <param name="minStorageSize"> The minimal supported storage size. </param>
         /// <param name="maxStorageSize"> The maximum supported storage size. </param>
@@ -650,6 +674,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 default);
         }
 
+        /// <summary> Sku capability. </summary>
         /// <param name="name"> vCore name. </param>
         /// <param name="vCores"> supported vCores. </param>
         /// <param name="supportedIops"> supported IOPS. </param>
@@ -672,6 +697,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 default);
         }
 
+        /// <summary> Server version capabilities. </summary>
         /// <param name="name"> server version. </param>
         /// <returns> A new <see cref="Models.ServerVersionCapabilityV2"/> instance for mocking. </returns>
         public static ServerVersionCapabilityV2 ServerVersionCapabilityV2(string name = default)
@@ -679,6 +705,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new ServerVersionCapabilityV2(name, default);
         }
 
+        /// <summary> Server version capabilities. </summary>
         /// <param name="featureName"> feature name. </param>
         /// <param name="featureValue"> feature value. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerFeatureProperty"/> instance for mocking. </returns>
@@ -733,6 +760,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerMaintenancePatch(maintenanceStartOn is null ? default : new MaintenancePropertiesForUpdate(maintenanceStartOn, default), default);
         }
 
+        /// <summary> Location capabilities. </summary>
         /// <param name="zone"> zone name. </param>
         /// <param name="supportedHAMode"> Supported high availability mode. </param>
         /// <param name="supportedGeoBackupRegions"> supported geo backup regions. </param>
@@ -747,6 +775,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerCapabilityProperties(zone, (supportedHAMode ?? new ChangeTrackingList<string>()).ToList(), (supportedGeoBackupRegions ?? new ChangeTrackingList<string>()).ToList(), (supportedFlexibleServerEditions ?? new ChangeTrackingList<MySqlFlexibleServerEditionCapability>()).ToList(), default);
         }
 
+        /// <summary> Server edition capabilities. </summary>
         /// <param name="name"> Server edition name. </param>
         /// <param name="supportedStorageEditions"> A list of supported storage editions. </param>
         /// <param name="supportedServerVersions"> A list of supported server versions. </param>
@@ -759,6 +788,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerEditionCapability(name, (supportedStorageEditions ?? new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>()).ToList(), (supportedServerVersions ?? new ChangeTrackingList<MySqlFlexibleServerServerVersionCapability>()).ToList(), default);
         }
 
+        /// <summary> Server version capabilities. </summary>
         /// <param name="name"> server version. </param>
         /// <param name="supportedSkus"> A list of supported Skus. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerServerVersionCapability"/> instance for mocking. </returns>
@@ -769,6 +799,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerServerVersionCapability(name, (supportedSkus ?? new ChangeTrackingList<MySqlFlexibleServerSkuCapability>()).ToList(), default);
         }
 
+        /// <summary> Sku capability. </summary>
         /// <param name="name"> vCore name. </param>
         /// <param name="vCores"> supported vCores. </param>
         /// <param name="supportedIops"> supported IOPS. </param>
@@ -779,6 +810,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerSkuCapability(name, vCores, supportedIops, supportedMemoryPerVCoreInMB, default);
         }
 
+        /// <summary> Virtual network subnet usage parameter. </summary>
         /// <param name="virtualNetworkResourceId"> Virtual network resource id. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> instance for mocking. </returns>
         public static MySqlFlexibleServerVirtualNetworkSubnetUsageParameter MySqlFlexibleServerVirtualNetworkSubnetUsageParameter(ResourceIdentifier virtualNetworkResourceId = default)
@@ -786,6 +818,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerVirtualNetworkSubnetUsageParameter(virtualNetworkResourceId, default);
         }
 
+        /// <summary> Virtual network subnet usage data. </summary>
         /// <param name="location"> The location name. </param>
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="delegatedSubnetsUsage"> A list of delegated subnet usage. </param>
@@ -797,6 +830,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerVirtualNetworkSubnetUsageResult(location, subscriptionId, (delegatedSubnetsUsage ?? new ChangeTrackingList<MySqlFlexibleServerDelegatedSubnetUsage>()).ToList(), default);
         }
 
+        /// <summary> Delegated subnet usage data. </summary>
         /// <param name="subnetName"> name of the subnet. </param>
         /// <param name="usage"> Number of used delegated subnets. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerDelegatedSubnetUsage"/> instance for mocking. </returns>
@@ -805,6 +839,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerDelegatedSubnetUsage(subnetName, usage, default);
         }
 
+        /// <summary> Request from client to check resource name availability. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="resourceType"> Resource type used for verification. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerNameAvailabilityContent"/> instance for mocking. </returns>
@@ -813,6 +848,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerNameAvailabilityContent(name, resourceType, default);
         }
 
+        /// <summary> Represents a resource name availability. </summary>
         /// <param name="message"> Error Message. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
         /// <param name="reason"> Reason for name being unavailable. </param>
@@ -822,6 +858,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerNameAvailabilityResult(message, isNameAvailable, reason, default);
         }
 
+        /// <summary> The response of get private dns zone suffix. </summary>
         /// <param name="privateDnsZoneSuffix"> Represents the private DNS zone suffix. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse"/> instance for mocking. </returns>
         public static MySqlFlexibleServerPrivateDnsZoneSuffixResponse MySqlFlexibleServerPrivateDnsZoneSuffixResponse(string privateDnsZoneSuffix = default)

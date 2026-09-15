@@ -55,7 +55,7 @@ public class VoiceAgentWebSocketTests
             Store = true
         };
         definition.OutputModalities.Add(VoiceOutputModality.Audio);
-        definition.Tools.Add(new VoiceAgentSystemTool(VoiceAgentSystemToolName.EndConversation));
+        definition.Tools.Add(new VoiceAgentEndConversationSystemTool());
 
         BinaryData data = ((IPersistableModel<VoiceAgentDefinition>)definition).Write(ModelReaderWriterOptions.Json);
         using JsonDocument document = JsonDocument.Parse(data);
@@ -103,8 +103,6 @@ public class VoiceAgentWebSocketTests
         VoiceResponse response = VoiceResponse.DeserializeVoiceResponse(
             document.RootElement,
             ModelReaderWriterOptions.Json);
-        // "message" is no longer a modeled RealtimeConversationItem discriminator in this spec revision
-        // (only function-call/MCP item types remain); it now round-trips via the base type.
         RealtimeItem assistantMessage = response.Output.Single();
         BinaryData outputData = ModelReaderWriter.Write(assistantMessage);
         using JsonDocument outputDocument = JsonDocument.Parse(outputData);
@@ -290,10 +288,20 @@ public class VoiceAgentWebSocketTests
         await using VoiceAgentSession session = new(webSocket);
         using MemoryStream input = new(inputAudio);
 
-        // Mirrors the sample's usage: SendAudioInputAsync only sends; the caller owns a single
-        // receive loop that runs concurrently since VoiceAgentSession.ReceiveUpdatesAsync is a
+        // Verifies VoiceAgentSession supports concurrent Send/Receive on the same session: a
+        // send-only loop runs alongside a single receive loop, since ReceiveUpdatesAsync is a
         // one-shot stream that must only be enumerated once per session.
-        Task sendTask = Sample_VoiceAgent.SendAudioInputAsync(session, input);
+        static async Task SendAllAsync(VoiceAgentSession session, Stream inputPcm)
+        {
+            byte[] buffer = new byte[1200];
+            int bytesRead;
+            while ((bytesRead = await inputPcm.ReadAsync(buffer, 0, buffer.Length)) > 0)
+            {
+                await session.SendInputAudioAsync(BinaryData.FromBytes(buffer.AsMemory(0, bytesRead)));
+            }
+        }
+
+        Task sendTask = SendAllAsync(session, input);
         List<VoiceAgentSessionMessage> received = new();
         await foreach (VoiceAgentSessionMessage message in session.ReceiveUpdatesAsync())
         {
@@ -321,13 +329,90 @@ public class VoiceAgentWebSocketTests
         });
     }
 
+    [TestCase("{\"type\":\"error\",\"error\":{\"message\":\"Invalid audio configuration\"}}", "Invalid audio configuration")]
+    [TestCase("{\"type\":\"response.done\",\"response\":{\"status\":\"failed\",\"status_details\":{\"error\":{\"message\":\"Model unavailable\"}}}}", "Model unavailable")]
+    [TestCase("{\"type\":\"response.done\",\"response\":{\"status\":\"incomplete\"}}", "incomplete")]
+    public void SampleSurfacesRealtimeFailures(string payload, string expectedMessage)
+    {
+        TestWebSocket webSocket = new(
+            new TestWebSocket.Frame(payload, WebSocketMessageType.Text, endOfMessage: true));
+        using VoiceAgentSession session = new(webSocket);
+        using MemoryStream input = new();
+        using MemoryStream output = new();
+
+        InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(
+            async () => await Sample_VoiceAgent.StreamAudioTurnAsync(session, input, output));
+
+        Assert.That(exception.Message, Does.Contain(expectedMessage));
+    }
+
+    [Test]
+    public void SampleRejectsPrematureSessionClosure()
+    {
+        TestWebSocket webSocket = new(TestWebSocket.Frame.Close());
+        using VoiceAgentSession session = new(webSocket);
+        using MemoryStream input = new();
+        using MemoryStream output = new();
+
+        InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(
+            async () => await Sample_VoiceAgent.StreamAudioTurnAsync(session, input, output));
+
+        Assert.That(exception.Message, Does.Contain("closed before the audio response completed"));
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task SampleCapturesSessionConversationAndDrainsGreeting(bool hasGreeting)
+    {
+        TestWebSocket webSocket = new(
+            new TestWebSocket.Frame(
+                "{\"type\":\"session.created\",\"conversation_id\":\"conv_session\",\"session\":{\"id\":\"session_123\"}}",
+                WebSocketMessageType.Text,
+                endOfMessage: true),
+            new TestWebSocket.Frame(
+                "{\"type\":\"response.done\",\"response\":{\"status\":\"completed\"}}",
+                WebSocketMessageType.Text,
+                endOfMessage: true));
+        await using VoiceAgentSession session = new(webSocket);
+
+        string conversationId = await Sample_VoiceAgent.WaitForSessionReadyAsync(session, hasGreeting);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(conversationId, Is.EqualTo("conv_session"));
+            Assert.That(webSocket.SentFrames, Is.Empty);
+            Assert.That(webSocket.PendingFrameCount, Is.EqualTo(hasGreeting ? 0 : 1));
+        });
+    }
+
+    [Test]
+    public async Task SampleUsesSessionConversationWhenResponseOmitsIt()
+    {
+        TestWebSocket webSocket = new(
+            new TestWebSocket.Frame(
+                "{\"type\":\"session.created\",\"conversation_id\":\"conv_session\"}",
+                WebSocketMessageType.Text,
+                endOfMessage: true),
+            new TestWebSocket.Frame(
+                "{\"type\":\"response.done\",\"response\":{\"status\":\"completed\"}}",
+                WebSocketMessageType.Text,
+                endOfMessage: true));
+        await using VoiceAgentSession session = new(webSocket);
+        using MemoryStream input = new();
+        using MemoryStream output = new();
+
+        string conversationId = await Sample_VoiceAgent.StreamAudioTurnAsync(session, input, output);
+
+        Assert.That(conversationId, Is.EqualTo("conv_session"));
+    }
+
     [Test]
     public async Task SendsRealtimeConvenienceEvents()
     {
         TestWebSocket webSocket = new();
         await using VoiceAgentSession session = new(webSocket);
 
-        await session.ConfigureSessionAsync(BinaryData.FromObjectAsJson(new { instructions = "Be concise." }));
+        await session.ConfigureSessionAsync(BinaryData.FromObjectAsJson(new { type = "realtime", instructions = "Be concise." }));
         await session.AddItemAsync(
             BinaryData.FromObjectAsJson(new { type = "message", role = "user" }),
             previousItemId: "item-0");
@@ -354,6 +439,7 @@ public class VoiceAgentWebSocketTests
                 "response.cancel"
             }));
             Assert.That(events[0].GetProperty("session").GetProperty("instructions").GetString(), Is.EqualTo("Be concise."));
+            Assert.That(events[0].GetProperty("session").GetProperty("type").GetString(), Is.EqualTo("realtime"));
             Assert.That(events[1].GetProperty("previous_item_id").GetString(), Is.EqualTo("item-0"));
             Assert.That(events[1].GetProperty("item").GetProperty("role").GetString(), Is.EqualTo("user"));
             Assert.That(events[4].GetProperty("content_index").GetInt32(), Is.EqualTo(1));
@@ -563,6 +649,7 @@ public class VoiceAgentWebSocketTests
         }
 
         internal List<SentFrame> SentFrames { get; } = new();
+        internal int PendingFrameCount => _receivedFrames.Count;
 
         public override WebSocketCloseStatus? CloseStatus => _closeStatus;
         public override string CloseStatusDescription => _closeStatusDescription;

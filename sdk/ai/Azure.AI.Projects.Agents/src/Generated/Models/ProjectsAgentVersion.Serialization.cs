@@ -77,6 +77,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // The implementation handles experimental model members without exposing them in its signature.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentVersion>)this).GetFormatFromOptions(options) : options.Format;
@@ -167,6 +168,7 @@ namespace Azure.AI.Projects.Agents
                 }
             }
         }
+#pragma warning restore AAIP001 // The implementation handles experimental model members without exposing them in its signature.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

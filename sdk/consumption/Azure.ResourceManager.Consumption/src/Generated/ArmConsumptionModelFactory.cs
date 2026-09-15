@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> The properties of the price sheet. </summary>
         /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
         /// <param name="meterId"> The meter id (GUID). </param>
         /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it's specified in $expand. </param>
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> The properties of the meter detail. </summary>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
         /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
         /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
@@ -97,6 +99,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> The properties of the SavingsPlan. </summary>
         /// <param name="term"> SavingsPlan term. </param>
         /// <param name="marketPrice"> SavingsPlan Market Price. </param>
         /// <param name="effectivePrice"> SavingsPlan Effective Price. </param>
@@ -150,6 +153,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> The start and end date for a budget. </summary>
         /// <param name="startOn"> The start date for the budget. </param>
         /// <param name="endOn"> The end date for the budget. If not provided, we default this to 10 years from the start date. </param>
         /// <returns> A new <see cref="Models.BudgetTimePeriod"/> instance for mocking. </returns>
@@ -158,6 +162,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new BudgetTimePeriod(startOn, endOn, default);
         }
 
+        /// <summary> May be used to filter budgets by resource group, resource, or meter. </summary>
         /// <param name="and"> The logical "AND" expression. Must have at least 2 items. </param>
         /// <param name="dimensions"> Has comparison expression for a dimension. </param>
         /// <param name="tags"> Has comparison expression for a tag. </param>
@@ -169,6 +174,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionBudgetFilter((@and ?? new ChangeTrackingList<BudgetFilterProperties>()).ToList(), dimensions, tags, default);
         }
 
+        /// <summary> The Dimensions or Tags to filter a budget by. </summary>
         /// <param name="dimensions"> Has comparison expression for a dimension. </param>
         /// <param name="tags"> Has comparison expression for a tag. </param>
         /// <returns> A new <see cref="Models.BudgetFilterProperties"/> instance for mocking. </returns>
@@ -177,6 +183,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new BudgetFilterProperties(dimensions, tags, default);
         }
 
+        /// <summary> The comparison expression to be used in the budgets. </summary>
         /// <param name="name"> The name of the column to use in comparison. </param>
         /// <param name="operator"> The operator to use for comparison. </param>
         /// <param name="values"> Array of values to use for comparison. </param>
@@ -188,6 +195,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new BudgetComparisonExpression(name, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The current amount of cost which is being tracked for a budget. </summary>
         /// <param name="amount"> The total amount of cost which is being tracked by the budget. </param>
         /// <param name="unit"> The unit of measure for the budget amount. </param>
         /// <returns> A new <see cref="Models.BudgetCurrentSpend"/> instance for mocking. </returns>
@@ -196,6 +204,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new BudgetCurrentSpend(amount, unit, default);
         }
 
+        /// <summary> The notification associated with a budget. </summary>
         /// <param name="isEnabled"> The notification is enabled or not. </param>
         /// <param name="operator"> The comparison operator. </param>
         /// <param name="threshold"> Threshold value associated with a notification. Notification is sent when the cost exceeded the threshold. It is always percent and has to be between 0 and 1000. </param>
@@ -223,6 +232,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> The forecasted cost which is being tracked for a budget. </summary>
         /// <param name="amount"> The forecasted cost for the total time period which is being tracked by the budget. This value is only provided if the budget contains a forecast alert type. </param>
         /// <param name="unit"> The unit of measure for the budget amount. </param>
         /// <returns> A new <see cref="Models.BudgetForecastSpend"/> instance for mocking. </returns>
@@ -272,6 +282,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> Summary of credit balances. </summary>
         /// <param name="estimatedBalance"> Estimated balance. </param>
         /// <param name="currentBalance"> Current balance. </param>
         /// <param name="estimatedBalanceInBillingCurrency"> Estimated balance in billing currency. </param>
@@ -281,6 +292,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new CreditBalanceSummary(estimatedBalance, currentBalance, estimatedBalanceInBillingCurrency, default);
         }
 
+        /// <summary> The amount plus currency . </summary>
         /// <param name="currency"> Amount currency. </param>
         /// <param name="value"> Amount. </param>
         /// <returns> A new <see cref="Models.ConsumptionAmount"/> instance for mocking. </returns>
@@ -289,6 +301,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionAmount(currency, value, default);
         }
 
+        /// <summary> The amount with exchange rate. </summary>
         /// <param name="currency"> Amount currency. </param>
         /// <param name="value"> Amount. </param>
         /// <param name="exchangeRate"> The exchange rate. </param>
@@ -299,6 +312,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionAmountWithExchangeRate(currency, value, default, exchangeRate, exchangeRateMonth);
         }
 
+        /// <summary> The reseller properties. </summary>
         /// <param name="resellerId"> The reseller property ID. </param>
         /// <param name="resellerDescription"> The reseller property description. </param>
         /// <returns> A new <see cref="Models.ConsumptionReseller"/> instance for mocking. </returns>
@@ -373,11 +387,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                isAzureCreditEligible is null ? default : new LegacyUsageDetailProperties(
+                billingPeriodStartOn is null && billingPeriodEndOn is null && isAzureCreditEligible is null ? default : new LegacyUsageDetailProperties(
                     default,
                     default,
-                    default,
-                    default,
+                    billingPeriodStartOn,
+                    billingPeriodEndOn,
                     default,
                     default,
                     default,
@@ -423,6 +437,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     default));
         }
 
+        /// <summary> The properties of the meter detail. </summary>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
         /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
         /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
@@ -532,13 +547,13 @@ namespace Azure.ResourceManager.Consumption.Models
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                isAzureCreditEligible is null ? default : new ModernUsageDetailProperties(
+                billingPeriodStartOn is null && billingPeriodEndOn is null && isAzureCreditEligible is null && servicePeriodStartOn is null && servicePeriodEndOn is null ? default : new ModernUsageDetailProperties(
                     default,
                     default,
                     default,
                     default,
-                    default,
-                    default,
+                    billingPeriodStartOn,
+                    billingPeriodEndOn,
                     default,
                     default,
                     default,
@@ -585,8 +600,8 @@ namespace Azure.ResourceManager.Consumption.Models
                     default,
                     default,
                     default,
-                    default,
-                    default,
+                    servicePeriodStartOn,
+                    servicePeriodEndOn,
                     default,
                     default,
                     default,
@@ -683,6 +698,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> The tag resource. </summary>
         /// <param name="key"> Tag key. </param>
         /// <param name="value"> Tag values. </param>
         /// <returns> A new <see cref="Models.ConsumptionTag"/> instance for mocking. </returns>
@@ -693,6 +709,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionTag(key, (value ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Result of listing charge summary. </summary>
         /// <param name="value"> The list of charge summary. </param>
         /// <returns> A new <see cref="Models.ChargesListResult"/> instance for mocking. </returns>
         public static ChargesListResult ChargesListResult(IEnumerable<ConsumptionChargeSummary> value = default)
@@ -827,6 +844,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> The ConsumptionBalanceNewPurchasesDetail. </summary>
         /// <param name="name"> the name of new purchase. </param>
         /// <param name="value"> the value of new purchase. </param>
         /// <returns> A new <see cref="Models.ConsumptionBalanceNewPurchasesDetail"/> instance for mocking. </returns>
@@ -835,6 +853,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionBalanceNewPurchasesDetail(name, value, default);
         }
 
+        /// <summary> The ConsumptionBalanceAdjustmentDetail. </summary>
         /// <param name="name"> the name of new adjustment. </param>
         /// <param name="value"> the value of new adjustment. </param>
         /// <returns> A new <see cref="Models.ConsumptionBalanceAdjustmentDetail"/> instance for mocking. </returns>
@@ -941,6 +960,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary>
+        /// The ConsumptionReservationRecommendation.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConsumptionLegacyReservationRecommendation"/> and <see cref="Models.ConsumptionModernReservationRecommendation"/>.
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -968,6 +991,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> The ConsumptionLegacyReservationRecommendation. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -996,6 +1020,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 properties);
         }
 
+        /// <summary>
+        /// The properties of the reservation recommendation.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LegacySingleScopeReservationRecommendationProperties"/> and <see cref="Models.LegacySharedScopeReservationRecommendationProperties"/>.
+        /// </summary>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
         /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
@@ -1039,6 +1067,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> The Sku property. </summary>
         /// <param name="name"> The name of sku property. </param>
         /// <param name="value"> The value of sku property. </param>
         /// <returns> A new <see cref="Models.ConsumptionSkuProperty"/> instance for mocking. </returns>
@@ -1047,6 +1076,7 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionSkuProperty(name, value, default);
         }
 
+        /// <summary> The properties of the legacy reservation recommendation for single scope. </summary>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
         /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
@@ -1091,6 +1121,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 subscriptionId);
         }
 
+        /// <summary> The properties of the legacy reservation recommendation for shared scope. </summary>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
         /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
@@ -1133,6 +1164,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> The ConsumptionModernReservationRecommendation. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1161,6 +1193,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 properties);
         }
 
+        /// <summary>
+        /// The properties of the reservation recommendation.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ModernSingleScopeReservationRecommendationProperties"/> and <see cref="Models.ModernSharedScopeReservationRecommendationProperties"/>.
+        /// </summary>
         /// <param name="location"> Resource Location. </param>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
@@ -1208,6 +1244,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> The properties of the modern reservation recommendation for single scope. </summary>
         /// <param name="location"> Resource Location. </param>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
@@ -1256,6 +1293,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 subscriptionId);
         }
 
+        /// <summary> The properties of the modern reservation recommendation for shared scope. </summary>
         /// <param name="location"> Resource Location. </param>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
@@ -1341,6 +1379,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> Details of the resource. </summary>
         /// <param name="appliedScopes"> List of subscriptions for which the reservation is applied. </param>
         /// <param name="onDemandRate"> On-demand rate of the resource. Most resources use hourly rates, except for BlockBlob, ManagedDisk, Backup, and Azure Files, which use monthly rates. Only hardware rates are included; software rates are excluded.  Note: there could be new resources that use hourly rates in the future. </param>
         /// <param name="product"> Azure product ex: Standard_E8s_v3 etc. </param>
@@ -1362,6 +1401,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> Details of the estimated savings. </summary>
         /// <param name="calculatedSavings"> List of calculated savings. </param>
         /// <param name="lookBackPeriod"> Number of days of usage to look back used for computing the recommendation. </param>
         /// <param name="recommendedQuantity"> Number of recommended units of the resource. </param>
@@ -1383,6 +1423,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> Details of estimated savings. The costs and savings are estimated for the term. </summary>
         /// <param name="onDemandCost"> The cost without reservation. Includes hardware and software cost. </param>
         /// <param name="overageCost"> The estimated cost for resource meters that are not covered by the reservation and are billed at pay-as-you-go rates. </param>
         /// <param name="quantity"> The quantity for calculated savings. </param>
@@ -1404,6 +1445,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <summary> Details about historical usage data that has been used for computing the recommendation. </summary>
         /// <param name="firstConsumptionDate"> The first usage date used for looking back for computing the recommendation. </param>
         /// <param name="lastConsumptionDate"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="lookBackUnitType"> What the usage data values represent ex: virtual machine instance. </param>
@@ -1718,11 +1760,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> A balance resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="currency"> The ISO currency in which the meter is charged, for example, USD. </param>
         /// <param name="beginningBalance"> The beginning balance for the billing period. </param>
         /// <param name="endingBalance"> The ending balance for the billing period (for open periods this will be updated daily). </param>
@@ -1772,7 +1814,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PriceSheetProperties"/>. </summary>
+        /// <summary> The properties of the price sheet. </summary>
         /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
         /// <param name="meterId"> The meter id (GUID). </param>
         /// <param name="meterDetails"> The details about the meter. By default this is not populated, unless it's specified in $expand. </param>
@@ -1800,18 +1842,18 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionEventSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> An event summary resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="transactOn"> The date of the event. </param>
         /// <param name="description"> The description of the event. </param>
         /// <param name="newCredit"> The amount of new credit or commitment for NewCredit or SettleCharges event. </param>
         /// <param name="adjustments"> The amount of balance adjustment. The property is not available for ConsumptionCommitment lots. </param>
         /// <param name="creditExpired"> The amount of expired credit or commitment for NewCredit or SettleCharges event. </param>
         /// <param name="charges"> The amount of charges for events of type SettleCharges and PendingEligibleCharges. </param>
-        /// <param name="closedBalance"> The balance after the event. </param>
+        /// <param name="closedBalance"> The balance after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
         /// <param name="eventType"> Identifies the type of the event. </param>
         /// <param name="invoiceNumber"> The number which uniquely identifies the invoice on which the event was billed. This will be empty for unbilled events. </param>
         /// <param name="billingProfileId"> The ID that uniquely identifies the billing profile for which the event happened. The property is only available for billing account of type MicrosoftCustomerAgreement. </param>
@@ -1826,8 +1868,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="newCreditInBillingCurrency"> The amount of new credit or commitment for NewCredit or SettleCharges event in billing currency. </param>
         /// <param name="adjustmentsInBillingCurrency"> The amount of balance adjustment in billing currency. </param>
         /// <param name="chargesInBillingCurrency"> The amount of charges for events of type SettleCharges and PendingEligibleCharges in billing currency. </param>
-        /// <param name="closedBalanceInBillingCurrency"> The balance in billing currency after the event. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="closedBalanceInBillingCurrency"> The balance in billing currency after the event, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
+        /// <param name="etag"></param>
         /// <returns> A new <see cref="Models.ConsumptionEventSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConsumptionEventSummary ConsumptionEventSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? transactOn = default, string description = default, ConsumptionAmount newCredit = default, ConsumptionAmount adjustments = default, ConsumptionAmount creditExpired = default, ConsumptionAmount charges = default, ConsumptionAmount closedBalance = default, ConsumptionEventType? eventType = default, string invoiceNumber = default, ResourceIdentifier billingProfileId = default, string billingProfileDisplayName = default, ResourceIdentifier lotId = default, string lotSource = default, ConsumptionAmount canceledCredit = default, string creditCurrency = default, string billingCurrency = default, ConsumptionReseller reseller = default, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = default, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = default, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = default, ConsumptionAmountWithExchangeRate chargesInBillingCurrency = default, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default, ETag? etag = default)
@@ -1869,22 +1911,22 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLotSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="originalAmount"> The original amount of a lot. </param>
+        /// <summary> A lot summary resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="originalAmount"> The original amount of a lot, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
         /// <param name="closedBalance"> The balance as of the last invoice. </param>
         /// <param name="source"> The source of the lot. </param>
-        /// <param name="startOn"> The date when the lot became effective. </param>
-        /// <param name="expireOn"> The expiration date of a lot. </param>
+        /// <param name="startOn"></param>
+        /// <param name="expireOn"></param>
         /// <param name="poNumber"> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </param>
         /// <param name="purchasedOn"> The date when the lot was added. </param>
         /// <param name="status"> The status of the lot. </param>
         /// <param name="creditCurrency"> The currency of the lot. </param>
         /// <param name="billingCurrency"> The billing currency of the lot. </param>
-        /// <param name="originalAmountInBillingCurrency"> The original amount of a lot in billing currency. </param>
+        /// <param name="originalAmountInBillingCurrency"> The original amount of a lot in billing currency,  Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
         /// <param name="closedBalanceInBillingCurrency"> The balance as of the last invoice in billing currency. </param>
         /// <param name="reseller"> The reseller of the lot. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
@@ -1897,12 +1939,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                originalAmount is null && closedBalance is null && source is null && startOn is null && expireOn is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null ? default : new LotProperties(
+                originalAmount is null && closedBalance is null && source is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null ? default : new LotProperties(
                     originalAmount,
                     closedBalance,
                     source,
-                    startOn,
-                    expireOn,
+                    default,
+                    default,
                     poNumber,
                     purchasedOn,
                     status,
@@ -1920,11 +1962,11 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernChargeSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Modern charge summary. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
         /// <param name="usageStart"> Usage start date. </param>

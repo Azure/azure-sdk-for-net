@@ -59,6 +59,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="blueprintReference"> The blueprint for the agent. </param>
         /// <param name="agentGuidInternal"> The unique GUID identifier of the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // The implementation handles experimental model members without exposing them in its signature.
         internal ProjectsAgentVersion(IDictionary<string, string> metadata, string @object, string id, string name, string version, string description, DateTimeOffset createdAt, ProjectsAgentDefinition definition, bool? draft, AgentVersionStatus? status, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, string agentGuidInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
@@ -77,6 +78,7 @@ namespace Azure.AI.Projects.Agents
             AgentGuidInternal = agentGuidInternal;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // The implementation handles experimental model members without exposing them in its signature.
 
         /// <summary>
         /// Set of 16 key-value pairs that can be attached to an object. This can be

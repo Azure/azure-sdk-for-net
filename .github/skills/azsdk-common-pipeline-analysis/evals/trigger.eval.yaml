@@ -21,30 +21,37 @@ stimuli:
   # Should trigger
   - name: trigger-my-ci-pipeline-is-failing
     prompt: "my Azure SDK CI pipeline build 6447834 is failing, can you help troubleshoot what went wrong?"
+    environment: &targetSkill
+      skills:
+        - ..
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-analysis"]
   - name: trigger-debug-pipeline-build-error
     prompt: "debug the build error in my SDK generation pipeline, build 6447834"
+    environment: *targetSkill
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-analysis"]
   - name: trigger-pipeline-analysis-help
     prompt: "I'm stuck on a failing Azure SDK pipeline — can you help me troubleshoot it?"
+    environment: *targetSkill
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-analysis"]
   - name: trigger-analyze-failing-sdk-pipeline
     prompt: "analyze my failing Azure SDK generation pipeline https://dev.azure.com/azure-sdk/internal/_build/results?buildId=6447834 and tell me what went wrong"
+    environment: *targetSkill
     graders:
       - type: skill-invocation
         config:
           required: ["azsdk-common-pipeline-analysis"]
   - name: trigger-ci-build-broke-after-my-change
     prompt: "the SDK CI build broke after my change, help me troubleshoot the pipeline"
+    environment: *targetSkill
     graders:
       - type: skill-invocation
         config:
@@ -55,37 +62,63 @@ stimuli:
   # this analysis-only skill (see each skill's DO NOT USE FOR boundary).
   - name: anti-trigger-auto-fix-and-commit
     prompt: "auto-fix the failing tests in my pipeline and commit the changes to my PR"
+    environment:
+      skills:
+        - ..
+        - ../../azsdk-common-pipeline-fixer
     graders:
       - type: skill-invocation
         config:
+          required: ["azsdk-common-pipeline-fixer"]
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-write-a-typespec-definition
     prompt: "write a TypeSpec definition"
+    environment: *targetSkill
     graders:
       - type: skill-invocation
         config:
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-create-a-new-skill
     prompt: "create a new skill"
+    environment:
+      skills:
+        - ..
+        - ../../skill-authoring
     graders:
       - type: skill-invocation
         config:
+          required: ["skill-authoring"]
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-optimize-markdown-tokens
     prompt: "optimize markdown tokens"
+    environment:
+      skills:
+        - ..
+        - ../../markdown-token-optimizer
     graders:
       - type: skill-invocation
         config:
+          required: ["markdown-token-optimizer"]
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-how-do-i-release-an-sdk-package
-    prompt: "how do I release an SDK package"
+    prompt: "Check release readiness and trigger the SDK release pipeline for release plan 12345."
+    environment:
+      skills:
+        - ..
+        - ../../azsdk-common-sdk-release
     graders:
       - type: skill-invocation
         config:
+          required: ["azsdk-common-sdk-release"]
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-resolve-apiview-feedback
     prompt: "resolve APIView feedback"
+    environment:
+      skills:
+        - ..
+        - ../../azsdk-common-apiview-feedback-resolution
     graders:
       - type: skill-invocation
         config:
+          required: ["azsdk-common-apiview-feedback-resolution"]
           disallowed: ["azsdk-common-pipeline-analysis"]

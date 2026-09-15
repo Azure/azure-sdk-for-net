@@ -31,7 +31,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="resourceGuid"> The resourceGuid property of the DNS resolver resource. </param>
         /// <param name="virtualNetworkId"> Resource ID. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverData"/> instance for mocking. </returns>
         public static DnsResolverData DnsResolverData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverState? dnsResolverState = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ResourceIdentifier virtualNetworkId = default, ETag? eTag = default)
         {
@@ -49,6 +48,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 default);
         }
 
+        /// <summary> Describes a DNS resolver for PATCH operation. </summary>
         /// <param name="tags"> Tags for DNS Resolver. </param>
         /// <returns> A new <see cref="Models.DnsResolverPatch"/> instance for mocking. </returns>
         public static DnsResolverPatch DnsResolverPatch(IDictionary<string, string> tags = default)
@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="provisioningState"> The current provisioning state of the inbound endpoint. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="resourceGuid"> The resourceGuid property of the inbound endpoint resource. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurations"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverInboundEndpointData"/> instance for mocking. </returns>
         public static DnsResolverInboundEndpointData DnsResolverInboundEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<InboundEndpointIPConfiguration> ipConfigurations = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? eTag = default)
         {
@@ -96,6 +95,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             return new InboundEndpointIPConfiguration(subnetId is null ? default : new SubResource(subnetId, default), privateIPAddress, privateIPAllocationMethod, default);
         }
 
+        /// <summary> Describes an inbound endpoint for a DNS resolver for PATCH operation. </summary>
         /// <param name="tags"> Tags for inbound endpoint. </param>
         /// <returns> A new <see cref="Models.DnsResolverInboundEndpointPatch"/> instance for mocking. </returns>
         public static DnsResolverInboundEndpointPatch DnsResolverInboundEndpointPatch(IDictionary<string, string> tags = default)
@@ -115,7 +115,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="resourceGuid"> The resourceGuid property of the outbound endpoint resource. </param>
         /// <param name="subnetId"> Resource ID. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverOutboundEndpointData"/> instance for mocking. </returns>
         public static DnsResolverOutboundEndpointData DnsResolverOutboundEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, ResourceIdentifier subnetId = default, ETag? eTag = default)
         {
@@ -133,6 +132,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 default);
         }
 
+        /// <summary> Describes an outbound endpoint for a DNS resolver for PATCH operation. </summary>
         /// <param name="tags"> Tags for outbound endpoint. </param>
         /// <returns> A new <see cref="Models.DnsResolverOutboundEndpointPatch"/> instance for mocking. </returns>
         public static DnsResolverOutboundEndpointPatch DnsResolverOutboundEndpointPatch(IDictionary<string, string> tags = default)
@@ -153,7 +153,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="resourceGuid"> The resourceGuid for the DNS forwarding ruleset. </param>
         /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverOutboundEndpoints"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsForwardingRulesetData"/> instance for mocking. </returns>
         public static DnsForwardingRulesetData DnsForwardingRulesetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<WritableSubResource> dnsResolverOutboundEndpoints = default, DnsResolverProvisioningState? provisioningState = default, Guid? resourceGuid = default, string rulesetName = default, ETag? eTag = default)
         {
@@ -172,6 +171,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 default);
         }
 
+        /// <summary> Describes a DNS forwarding ruleset PATCH operation. </summary>
         /// <param name="dnsResolverOutboundEndpoints"> The reference to the DNS resolver outbound endpoints that are used to route DNS queries matching the forwarding rules in the ruleset to the target DNS servers. </param>
         /// <param name="tags"> Tags for DNS Resolver. </param>
         /// <returns> A new <see cref="Models.DnsForwardingRulesetPatch"/> instance for mocking. </returns>
@@ -201,7 +201,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="dnsForwardingRuleState"> The state of forwarding rule. </param>
         /// <param name="provisioningState"> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="targetDnsServers"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsForwardingRuleData"/> instance for mocking. </returns>
         public static DnsForwardingRuleData DnsForwardingRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string domainName = default, IEnumerable<TargetDnsServer> targetDnsServers = default, IDictionary<string, string> metadata = default, DnsForwardingRuleState? dnsForwardingRuleState = default, DnsResolverProvisioningState? provisioningState = default, ETag? eTag = default)
         {
@@ -221,6 +220,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 default);
         }
 
+        /// <summary> Describes a server to forward the DNS queries to. </summary>
         /// <param name="ipAddress"> DNS server IP address. </param>
         /// <param name="port"> DNS server port. </param>
         /// <returns> A new <see cref="Models.TargetDnsServer"/> instance for mocking. </returns>
@@ -246,7 +246,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="provisioningState"> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="virtualNetworkId"> Resource ID. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/> instance for mocking. </returns>
         public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default, DnsResolverProvisioningState? provisioningState = default, ResourceIdentifier virtualNetworkId = default, ETag? eTag = default)
         {
@@ -293,6 +292,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 default);
         }
 
+        /// <summary> Describes a DNS resolver policy for PATCH operation. </summary>
         /// <param name="tags"> Tags for DNS resolver policy. </param>
         /// <returns> A new <see cref="Models.DnsResolverPolicyPatch"/> instance for mocking. </returns>
         public static DnsResolverPolicyPatch DnsResolverPolicyPatch(IDictionary<string, string> tags = default)
@@ -339,6 +339,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 default);
         }
 
+        /// <summary> The action to take on DNS requests that match the DNS security rule. </summary>
         /// <param name="actionType"> The type of action to take. </param>
         /// <returns> A new <see cref="Models.DnsSecurityRuleAction"/> instance for mocking. </returns>
         public static DnsSecurityRuleAction DnsSecurityRuleAction(DnsSecurityRuleActionType? actionType = default)
@@ -375,7 +376,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="provisioningState"> The current provisioning state of the DNS resolver policy virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="virtualNetworkId"> Resource ID. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkId"/> is null. </exception>
         /// <returns> A new <see cref="DnsResolver.DnsResolverPolicyVirtualNetworkLinkData"/> instance for mocking. </returns>
         public static DnsResolverPolicyVirtualNetworkLinkData DnsResolverPolicyVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DnsResolverProvisioningState? provisioningState = default, ResourceIdentifier virtualNetworkId = default, ETag? eTag = default)
         {
@@ -393,6 +393,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 default);
         }
 
+        /// <summary> Describes a DNS resolver policy virtual network link for PATCH operation. </summary>
         /// <param name="tags"> Tags for the DNS resolver policy virtual network link. </param>
         /// <returns> A new <see cref="Models.DnsResolverPolicyVirtualNetworkLinkPatch"/> instance for mocking. </returns>
         public static DnsResolverPolicyVirtualNetworkLinkPatch DnsResolverPolicyVirtualNetworkLinkPatch(IDictionary<string, string> tags = default)
@@ -442,7 +443,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         /// <param name="storageUri"> The storage account blob file URL to be used in the bulk upload or download request of DNS resolver domain list. </param>
         /// <param name="action"> The action to take in the request, Upload or Download. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageUri"/> is null. </exception>
         /// <returns> A new <see cref="Models.DnsResolverDomainListBulk"/> instance for mocking. </returns>
         public static DnsResolverDomainListBulk DnsResolverDomainListBulk(Uri storageUri = default, DnsResolverDomainListBulkAction action = default)
         {

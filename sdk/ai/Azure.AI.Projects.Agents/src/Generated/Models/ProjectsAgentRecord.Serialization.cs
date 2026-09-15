@@ -77,6 +77,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // The implementation handles experimental model members without exposing them in its signature.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ProjectsAgentRecord>)this).GetFormatFromOptions(options) : options.Format;
@@ -94,6 +95,11 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("configuration_state"u8);
+                writer.WriteStringValue(ConfigurationState.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(StateSource))
             {
@@ -148,6 +154,7 @@ namespace Azure.AI.Projects.Agents
                 }
             }
         }
+#pragma warning restore AAIP001 // The implementation handles experimental model members without exposing them in its signature.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -178,6 +185,7 @@ namespace Azure.AI.Projects.Agents
             string id = default;
             string name = default;
             AgentState state = default;
+            AgentState configurationState = default;
             AgentStateSource? stateSource = default;
             AgentObjectVersions versions = default;
             AgentEndpointConfiguration agentEndpoint = default;
@@ -207,6 +215,11 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("state"u8))
                 {
                     state = new AgentState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("configuration_state"u8))
+                {
+                    configurationState = new AgentState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state_source"u8))
@@ -287,6 +300,7 @@ namespace Azure.AI.Projects.Agents
                 id,
                 name,
                 state,
+                configurationState,
                 stateSource,
                 versions,
                 agentEndpoint,

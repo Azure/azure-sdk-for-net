@@ -69,6 +69,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // The implementation handles experimental model members without exposing them in its signature.
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DeclarativeAgentDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -77,12 +78,27 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(DeclarativeAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Harness))
+            {
+                writer.WritePropertyName("harness"u8);
+                writer.WriteObjectValue(Harness, options);
+            }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
             if (Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);
+            }
+            if (Optional.IsCollectionDefined(Skills))
+            {
+                writer.WritePropertyName("skills"u8);
+                writer.WriteStartArray();
+                foreach (SkillReference item in Skills)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Temperature))
             {
@@ -138,6 +154,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteEndObject();
             }
         }
+#pragma warning restore AAIP001 // The implementation handles experimental model members without exposing them in its signature.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -158,6 +175,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // The implementation handles experimental model members without exposing them in its signature.
         internal static DeclarativeAgentDefinition DeserializeDeclarativeAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -167,8 +185,10 @@ namespace Azure.AI.Projects.Agents
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AgentHarness harness = default;
             string model = default;
             string instructions = default;
+            IList<SkillReference> skills = default;
             float? temperature = default;
             float? topP = default;
             ResponseReasoningOptions reasoningOptions = default;
@@ -192,6 +212,15 @@ namespace Azure.AI.Projects.Agents
                     contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("harness"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    harness = AgentHarness.DeserializeAgentHarness(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("model"u8))
                 {
                     model = prop.Value.GetString();
@@ -205,6 +234,20 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     instructions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("skills"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SkillReference> array = new List<SkillReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SkillReference.DeserializeSkillReference(item, options));
+                    }
+                    skills = array;
                     continue;
                 }
                 if (prop.NameEquals("temperature"u8))
@@ -274,8 +317,10 @@ namespace Azure.AI.Projects.Agents
                 kind,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,
+                harness,
                 model,
                 instructions,
+                skills ?? new ChangeTrackingList<SkillReference>(),
                 temperature,
                 topP,
                 reasoningOptions,
@@ -284,5 +329,6 @@ namespace Azure.AI.Projects.Agents
                 textOptions,
                 structuredInputs ?? new ChangeTrackingDictionary<string, StructuredInputDefinition>());
         }
+#pragma warning restore AAIP001 // The implementation handles experimental model members without exposing them in its signature.
     }
 }

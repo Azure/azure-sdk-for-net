@@ -17,9 +17,9 @@ namespace Extensions.Plugin;
 /// assembly that is annotated with <see cref="System.Diagnostics.CodeAnalysis.ExperimentalAttribute"/>.
 /// </summary>
 /// <remarks>
-/// Only membership matters: the visitor stamps its own <c>AAIP002</c> diagnostic id (meaning "experimental
+/// The public-surface visitor stamps its own <c>AAIP002</c> diagnostic id (meaning "experimental
 /// because it exposes OpenAI-experimental surface") rather than propagating OpenAI's own id, so the specific
-/// OpenAI id (<c>OPENAI001</c>, <c>OPENAICUA001</c>, …) is intentionally discarded here.
+/// OpenAI id (<c>OPENAI001</c>, <c>OPENAICUA001</c>, …) is retained only for implementation-local opt-ins.
 /// </remarks>
 /// <remarks>
 /// The set of experimental OpenAI types is derived at code-generation time directly from the
@@ -40,9 +40,9 @@ internal sealed class OpenAIExperimentalCatalog
         typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
         genericsOptions: SymbolDisplayGenericsOptions.None);
 
-    private readonly HashSet<string> _experimentalTypes;
+    private readonly Dictionary<string, HashSet<string>> _experimentalTypes;
 
-    private OpenAIExperimentalCatalog(HashSet<string> experimentalTypes)
+    private OpenAIExperimentalCatalog(Dictionary<string, HashSet<string>> experimentalTypes)
     {
         _experimentalTypes = experimentalTypes;
     }
@@ -65,8 +65,12 @@ internal sealed class OpenAIExperimentalCatalog
         {
             return false;
         }
-        return _experimentalTypes.Contains(Normalize(fullyQualifiedName));
+        return _experimentalTypes.ContainsKey(Normalize(fullyQualifiedName));
     }
+
+    /// <summary>Gets upstream diagnostic ids for local implementation opt-ins, not public attribution.</summary>
+    public IEnumerable<string> GetDiagnosticIds(string fullyQualifiedName) =>
+        !string.IsNullOrEmpty(fullyQualifiedName) && _experimentalTypes.TryGetValue(Normalize(fullyQualifiedName), out var ids) ? ids : [];
 
     /// <summary>Normalizes a fully-qualified name so catalog keys and query values compare equal.</summary>
     private static string Normalize(string fullyQualifiedName)
@@ -111,7 +115,7 @@ internal sealed class OpenAIExperimentalCatalog
         IAssemblySymbol openAiAssembly = compilation.SourceModule.ReferencedAssemblySymbols
             .FirstOrDefault(a => string.Equals(a.Name, OpenAIAssemblyName, StringComparison.OrdinalIgnoreCase));
 
-        var experimentalTypes = new HashSet<string>(StringComparer.Ordinal);
+        var experimentalTypes = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
         if (openAiAssembly is not null)
         {
             // When the consuming library does not reference OpenAI there is nothing to propagate, so the
@@ -121,7 +125,7 @@ internal sealed class OpenAIExperimentalCatalog
         return new OpenAIExperimentalCatalog(experimentalTypes);
     }
 
-    private static void CollectExperimentalTypes(INamespaceSymbol ns, HashSet<string> experimentalTypes)
+    private static void CollectExperimentalTypes(INamespaceSymbol ns, Dictionary<string, HashSet<string>> experimentalTypes)
     {
         foreach (INamedTypeSymbol type in ns.GetTypeMembers())
         {
@@ -133,11 +137,18 @@ internal sealed class OpenAIExperimentalCatalog
         }
     }
 
-    private static void CollectExperimentalTypes(INamedTypeSymbol type, HashSet<string> experimentalTypes)
+    private static void CollectExperimentalTypes(INamedTypeSymbol type, Dictionary<string, HashSet<string>> experimentalTypes)
     {
-        if (IsExperimentalType(type))
+        string diagnosticId = GetExperimentalDiagnosticId(type);
+        if (diagnosticId is not null)
         {
-            experimentalTypes.Add(type.ToDisplayString(s_fqnFormat));
+            // Normalization intentionally combines generic and non-generic types with the same name.
+            string name = type.ToDisplayString(s_fqnFormat);
+            if (!experimentalTypes.TryGetValue(name, out var ids))
+            {
+                experimentalTypes[name] = ids = new HashSet<string>(StringComparer.Ordinal);
+            }
+            ids.Add(diagnosticId);
         }
         foreach (INamedTypeSymbol nested in type.GetTypeMembers())
         {
@@ -145,7 +156,7 @@ internal sealed class OpenAIExperimentalCatalog
         }
     }
 
-    private static bool IsExperimentalType(ISymbol symbol)
+    private static string GetExperimentalDiagnosticId(ISymbol symbol)
     {
         foreach (AttributeData attribute in symbol.GetAttributes())
         {
@@ -156,15 +167,14 @@ internal sealed class OpenAIExperimentalCatalog
             {
                 continue;
             }
-            // A valid experimental marker carries a non-empty diagnostic id; the id value itself is not
-            // retained because the visitor stamps its own AAIP002 id instead of OpenAI's.
+            // Public attribution uses AAIP002; implementation-local opt-ins need the actual upstream id.
             if (attribute.ConstructorArguments.Length >= 1
                 && attribute.ConstructorArguments[0].Value is string id
                 && !string.IsNullOrEmpty(id))
             {
-                return true;
+                return id;
             }
         }
-        return false;
+        return null;
     }
 }

@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 default);
         }
 
+        /// <summary> MarketplaceDetails of Qumulo FileSystem resource. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="planId"> Plan Id. </param>
         /// <param name="offerId"> Offer Id. </param>
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 default);
         }
 
+        /// <summary> User Details of Qumulo FileSystem resource. </summary>
         /// <param name="email"> User Email. </param>
         /// <returns> A new <see cref="Models.QumuloUserDetails"/> instance for mocking. </returns>
         public static QumuloUserDetails QumuloUserDetails(string email = default)
@@ -93,6 +95,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             return new QumuloUserDetails(email, default);
         }
 
+        /// <summary> The type used for update operations of the FileSystemResource. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the FileSystemResource. </param>
@@ -125,6 +128,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 default);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -141,7 +145,7 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="adminPassword"> Initial administrator password of the resource. </param>
         /// <param name="availabilityZone"> Availability zone. </param>
         /// <param name="userDetailsEmail"> User Email. </param>
-        /// <param name="name0"> Name of the File System resource. </param>
+        /// <param name="name0"></param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="initialCapacity"></param>
         /// <returns> A new <see cref="Qumulo.QumuloFileSystemResourceData"/> instance for mocking. </returns>

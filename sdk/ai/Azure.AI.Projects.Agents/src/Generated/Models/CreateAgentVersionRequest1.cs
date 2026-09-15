@@ -16,11 +16,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="CreateAgentVersionRequest1"/>. </summary>
         /// <param name="definition"> The agent definition. This can be a prompt, workflow, hosted, external, or voice agent definition. </param>
+#pragma warning disable AAIP001 // The implementation handles experimental model members without exposing them in its signature.
         internal CreateAgentVersionRequest1(ProjectsAgentDefinition definition)
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             Definition = definition;
         }
+#pragma warning restore AAIP001 // The implementation handles experimental model members without exposing them in its signature.
 
         /// <summary> Initializes a new instance of <see cref="CreateAgentVersionRequest1"/>. </summary>
         /// <param name="metadata">
@@ -36,6 +38,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
         /// <param name="draft"> (Preview) Whether this agent version is a draft (candidate) rather than a release. The service defaults to `false` if a value is not specified by the caller. Draft versions are recorded but excluded from default 'latest' resolution and are not auto-promoted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // The implementation handles experimental model members without exposing them in its signature.
         internal CreateAgentVersionRequest1(IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, DigitalWorkerType? digitalWorkerType, bool? draft, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Metadata = metadata;
@@ -46,6 +49,7 @@ namespace Azure.AI.Projects.Agents
             Draft = draft;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // The implementation handles experimental model members without exposing them in its signature.
 
         /// <summary>
         /// Set of 16 key-value pairs that can be attached to an object. This can be

@@ -125,7 +125,7 @@ public class BasicAppContainersTests
             }
 
             resource env 'Microsoft.App/managedEnvironments@2024-03-01' = {
-              name: take('env${uniqueString(resourceGroup().id)}', 24)
+              name: take('env-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
                 appLogsConfiguration: {

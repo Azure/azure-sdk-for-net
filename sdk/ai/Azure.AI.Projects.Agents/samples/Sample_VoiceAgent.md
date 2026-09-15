@@ -1,10 +1,12 @@
 # Use a Foundry voice agent with REST and realtime APIs
 
-This sample configures and manages a voice agent over REST, exchanges OpenAI Realtime GA events over its Foundry WebSocket endpoint, streams PCM audio, and reads persisted conversations and recordings.
+This sample configures and manages a voice agent over REST, exchanges OpenAI Realtime GA events over its Foundry WebSocket endpoint, uses an Azure neural voice with a runtime pitch update, streams PCM audio, and reads persisted conversations and recordings.
 
 Set `FOUNDRY_VOICE_AGENT_NAME` to run against an existing voice agent. In that mode, the sample uses the agent's latest version and does not create, disable, enable, or delete the agent.
 
-When creating a temporary agent, set `FOUNDRY_VOICE_MODEL_TYPE` to `managed` for a service-managed model such as `gpt-realtime`. If omitted, the sample treats `FOUNDRY_MODEL_NAME` as a self-deployed Foundry model deployment.
+When creating a temporary agent, set `FOUNDRY_VOICE_MODEL_TYPE` to `managed` for a service-managed model such as `gpt-realtime`. Set `FOUNDRY_VOICE_MODEL_NAME` to select a voice model independently of the text model used by other samples; otherwise, the sample uses `FOUNDRY_MODEL_NAME`. If the model type is omitted, the selected name is treated as a self-deployed Foundry model deployment.
+
+The temporary agent uses `en-US-AvaNeural` with `azure-standard` speech synthesis and 24 kHz PCM16 mono audio. Set `FOUNDRY_VOICE_INPUT_AUDIO_PATH` to supply input in that format. When it is omitted, the temporary-agent sample streams its first spoken response back as input, so the audio-streaming path still runs without a microphone or an audio file. Set `FOUNDRY_VOICE_OUTPUT_AUDIO_PATH` to choose the output file; otherwise, a uniquely named file is written to the temporary directory.
 
 1. Create a managed or self-deployed voice agent. Set `Store` to `true` when its conversations and audio should be available through the Foundry REST APIs.
 
@@ -18,7 +20,7 @@ VoiceAgentDefinition definition = new()
     {
         Input = new VoiceAgentAudioInputConfig
         {
-            Format = new RealtimePcmAudioFormat { Rate = 24000 },
+            Format = CreatePcmAudioFormat(24000),
             NoiseReduction = new VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType.NearField),
             TurnDetection = new VoiceAgentServerVadTurnDetection
             {
@@ -30,14 +32,15 @@ VoiceAgentDefinition definition = new()
         },
         Output = new VoiceAgentAudioOutputConfig
         {
-            Voice = "alloy",
-            VoiceType = VoiceType.Openai
+            Format = CreatePcmAudioFormat(24000),
+            Voice = "en-US-AvaNeural",
+            VoiceType = VoiceType.AzureStandard
         }
     },
     Store = true
 };
 definition.OutputModalities.Add(VoiceOutputModality.Audio);
-definition.Tools.Add(new VoiceAgentSystemTool(VoiceAgentSystemToolName.EndConversation));
+definition.Tools.Add(new VoiceAgentEndConversationSystemTool());
 ClientResult<ProjectsAgentVersion> createResult = await agentsClient.CreateAgentVersionAsync(
     agentName,
     new ProjectsAgentVersionCreationOptions(definition));
@@ -47,13 +50,11 @@ agentVersion = createResult;
 1. Retrieve the agent and its versions, and use the same enable and disable operations shared by other Foundry agent kinds.
 
 ```C# Snippet:Sample_VoiceAgent_Manage
-ClientResult<ProjectsAgentRecord> agentResult = await agentsClient.GetAgentAsync(agentName);
-ProjectsAgentRecord agent = agentResult;
-ClientResult<ProjectsAgentVersion> versionResult = await agentsClient.GetAgentVersionAsync(
+ProjectsAgentRecord agent = await agentsClient.GetAgentAsync(agentName);
+ProjectsAgentVersion version = await agentsClient.GetAgentVersionAsync(
     agentName,
     agentVersion.Version);
-ProjectsAgentVersion version = versionResult;
-Console.WriteLine($"Voice agent {agent.Name}, version {version.Version} (GetAgent status: {(int)agentResult.GetRawResponse().Status}, GetAgentVersion status: {(int)versionResult.GetRawResponse().Status})");
+Console.WriteLine($"Voice agent {agent.Name}, version {version.Version}");
 
 await foreach (ProjectsAgentVersion listedVersion in agentsClient.GetAgentVersionsAsync(agentName))
 {
@@ -64,30 +65,22 @@ ClientResult disableResult = await agentsClient.DisableAgentAsync(agentName);
 ClientResult enableResult = await agentsClient.EnableAgentAsync(agentName);
 ```
 
-1. Connect to the agent's real-time endpoint. OpenAI's realtime session exposes `ReceiveUpdatesAsync` as a single, one-shot event stream, so every turn -- a text turn, a streamed PCM16 audio turn, and a turn that exercises the `end_conversation` system tool -- is driven from one continuous `await foreach`, advancing to the next turn as each response completes. The raw event payload remains available through `Data` for forward compatibility. Set `FOUNDRY_VOICE_INPUT_AUDIO_PATH` to a raw PCM16, mono, 24 kHz input file to run the audio streaming turn; otherwise that turn is skipped and the tool-call turn runs directly after the text turn. Set `FOUNDRY_VOICE_OUTPUT_AUDIO_PATH` to choose where the streamed PCM16 response is written; otherwise the sample uses the system temporary directory.
+1. Connect to the agent's real-time endpoint, add a text turn, and stream the PCM16 audio response. The raw event payload remains available through `Data` for forward compatibility.
 
 ```C# Snippet:Sample_VoiceAgent_Realtime
 VoiceAgentWebSocket realtimeClient = agentsClient.GetVoiceAgentWebSocket();
-using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(8));
+using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(5));
 AgentEndpointConversations conversationsClient = agentsClient.GetAgentEndpointConversations();
-HashSet<string> existingConversationIds = new();
-await foreach (VoiceConversation conversation in conversationsClient.GetAgentConversationsAsync(
-    agentName,
-    cancellationToken: timeout.Token))
-{
-    existingConversationIds.Add(conversation.Id);
-}
+HashSet<string> newConversationIds = new();
+bool hasGreeting = agentVersion.Definition is VoiceAgentDefinition voiceDefinition
+    && voiceDefinition.Greeting is not null;
 
 await using VoiceAgentSession session = await realtimeClient.StartSessionAsync(
     agentName,
     new VoiceAgentConnectionOptions { AgentVersion = agentVersion.Version, Store = true },
     timeout.Token);
+newConversationIds.Add(await WaitForSessionReadyAsync(session, hasGreeting, timeout.Token));
 
-// OpenAI's realtime session exposes ReceiveUpdatesAsync as a single, one-shot event
-// stream: once it has been enumerated -- even just to `break` out early -- calling it
-// again on the same session fails immediately. All turns below are therefore driven from
-// one continuous `await foreach`, advancing to the next turn as each response completes
-// rather than starting a new receive loop per turn.
 await session.AddItemAsync(BinaryData.FromObjectAsJson(new
 {
     type = "message",
@@ -96,30 +89,68 @@ await session.AddItemAsync(BinaryData.FromObjectAsJson(new
 }), cancellationToken: timeout.Token);
 await session.StartResponseAsync(cancellationToken: timeout.Token);
 
-async Task StartToolTurnAsync()
-{
-    // The agent was configured with the "end_conversation" system tool. Prompting the
-    // model to end the conversation exercises that tool end-to-end: the service invokes
-    // it as a function_call item and reflects the outcome in the response, without the
-    // client having to submit a function_call_output (system tools are handled entirely
-    // server-side, unlike custom/user-defined function tools). This is the last turn on
-    // the session, since the service ends the underlying conversation once this tool is
-    // invoked.
-    await session.AddItemAsync(BinaryData.FromObjectAsJson(new
-    {
-        type = "message",
-        role = "user",
-        content = new[] { new { type = "input_text", text = "Please say a brief goodbye and then end our conversation." } }
-    }), cancellationToken: timeout.Token);
-    await session.StartResponseAsync(cancellationToken: timeout.Token);
-}
-
 using MemoryStream responseAudio = new();
-FileStream inputPcm = null;
-FileStream outputPcm = null;
-Task sendAudioTask = null;
-long inputAudioBytes = 0;
-int turn = 1;
+await foreach (VoiceAgentSessionMessage update in session.ReceiveUpdatesAsync(timeout.Token))
+{
+    if (update.MessageType != WebSocketMessageType.Text)
+    {
+        continue;
+    }
+
+    using JsonDocument document = JsonDocument.Parse(update.Data);
+    LogRealtimeEvent(update.EventType, document.RootElement);
+    if (update.EventType == RealtimeServerEventType.ResponseOutputAudioDelta)
+    {
+        byte[] audioChunk = Convert.FromBase64String(document.RootElement.GetProperty("delta").GetString());
+        await responseAudio.WriteAsync(audioChunk, 0, audioChunk.Length, timeout.Token);
+    }
+    else if (update.EventType == RealtimeServerEventType.ResponseDone)
+    {
+        break;
+    }
+}
+if (responseAudio.Length == 0)
+{
+    throw new InvalidOperationException("The voice response did not contain audio.");
+}
+Console.WriteLine($"Received {responseAudio.Length} bytes of PCM response audio.");
+```
+
+`WaitForSessionReadyAsync` captures the canonical persisted conversation ID from `session.created` and drains any configured greeting before the first user turn. The executable [sample source](../tests/Samples/Sample_VoiceAgent.cs) includes this helper and the audio-streaming and persistence helpers below. Service errors, unsuccessful responses, and premature session closure fail the sample rather than producing a successful-looking empty result.
+
+1. Change the Azure voice pitch for the active session. This does not change the stored agent definition. The sample only applies this update to the temporary Azure-voice agent it created.
+
+```C# Snippet:Sample_VoiceAgent_UpdatePitch
+await session.ConfigureSessionAsync(BinaryData.FromObjectAsJson(new
+{
+    type = "realtime",
+    audio = new
+    {
+        output = new
+        {
+            voice = "en-US-AvaNeural",
+            voice_type = "azure-standard",
+            pitch = "+10%"
+        }
+    }
+}), timeout.Token);
+```
+
+1. Send a follow-up turn that asks the agent to end the conversation, which exercises the `end_conversation` system tool registered on the agent definition end-to-end.
+
+```C# Snippet:Sample_VoiceAgent_Tools
+// The agent was configured with the "end_conversation" system tool. Prompting the model
+// to end the conversation exercises that tool end-to-end: the service invokes it as a
+// function_call item and reflects the outcome in the response, without the client having
+// to submit a function_call_output (system tools are handled entirely server-side, unlike
+// custom/user-defined function tools).
+await session.AddItemAsync(BinaryData.FromObjectAsJson(new
+{
+    type = "message",
+    role = "user",
+    content = new[] { new { type = "input_text", text = "Please say a brief goodbye and then end our conversation." } }
+}), cancellationToken: timeout.Token);
+await session.StartResponseAsync(cancellationToken: timeout.Token);
 
 await foreach (VoiceAgentSessionMessage update in session.ReceiveUpdatesAsync(timeout.Token))
 {
@@ -130,149 +161,135 @@ await foreach (VoiceAgentSessionMessage update in session.ReceiveUpdatesAsync(ti
 
     using JsonDocument document = JsonDocument.Parse(update.Data);
     LogRealtimeEvent(update.EventType, document.RootElement);
-
-    if (update.EventType == RealtimeServerEventType.ResponseOutputAudioDelta)
+    if (update.EventType == RealtimeServerEventType.ResponseDone)
     {
-        byte[] audioChunk = Convert.FromBase64String(document.RootElement.GetProperty("delta").GetString());
-        if (turn == 2)
-        {
-            await outputPcm.WriteAsync(audioChunk, 0, audioChunk.Length, timeout.Token);
-        }
-        else
-        {
-            await responseAudio.WriteAsync(audioChunk, 0, audioChunk.Length, timeout.Token);
-        }
-    }
-    else if (update.EventType == RealtimeServerEventType.ResponseDone)
-    {
-        if (turn == 2 && IsCancelledResponse(document.RootElement))
-        {
-            // Turn detection can produce an interim cancelled response while audio is
-            // still streaming in; keep receiving until the final response.done.
-            continue;
-        }
-
-        if (turn == 1)
-        {
-            Console.WriteLine($"Received response audio: {DescribeAudio(responseAudio.Length)}");
-            if (!string.IsNullOrEmpty(inputAudioPath))
-            {
-                // Turn 2: stream a PCM16 audio input file over the same open session and
-                // capture the streamed PCM16 response. Sending runs concurrently with
-                // this receive loop; the service auto-starts the response via server-side
-                // turn detection, so no explicit StartResponseAsync call is needed here.
-                inputAudioBytes = new FileInfo(inputAudioPath).Length;
-                inputPcm = File.OpenRead(inputAudioPath);
-                outputPcm = File.Create(outputAudioPath);
-                sendAudioTask = SendAudioInputAsync(session, inputPcm, appendTrailingSilence: true, timeout.Token);
-                turn = 2;
-            }
-            else
-            {
-                await StartToolTurnAsync();
-                turn = 3;
-            }
-        }
-        else if (turn == 2)
-        {
-            await sendAudioTask;
-            if (outputPcm.Length == 0)
-            {
-                throw new InvalidOperationException("The streaming response did not contain audio.");
-            }
-            long outputAudioBytes = outputPcm.Length;
-            Console.WriteLine($"Streamed response audio to {outputAudioPath}");
-            Console.WriteLine($"Input audio sent: {DescribeAudio(inputAudioBytes)}");
-            Console.WriteLine($"Output audio received: {DescribeAudio(outputAudioBytes)}");
-            Console.WriteLine($"Total audio transferred: {DescribeAudio(inputAudioBytes + outputAudioBytes)}");
-            await StartToolTurnAsync();
-            turn = 3;
-        }
-        else
-        {
-            break;
-        }
+        break;
     }
 }
-
-inputPcm?.Dispose();
-outputPcm?.Dispose();
 ```
 
-1. The audio-streaming turn's send helper accepts any `Stream`, so applications can replace the file stream with a microphone adapter without adding an audio-device dependency to the SDK. It runs concurrently with the caller's own receive loop above; the trailing silence lets server-side turn detection (VAD) finalize the turn and auto-start the response.
+1. Stream an audio turn. A newly created agent's first spoken response is used as input by default; set `FOUNDRY_VOICE_INPUT_AUDIO_PATH` to use a raw PCM16, mono, 24 kHz input file instead. Set `FOUNDRY_VOICE_OUTPUT_AUDIO_PATH` to choose where the streamed PCM16 response is written; otherwise the sample uses a uniquely named file in the system temporary directory.
+
+```C# Snippet:Sample_VoiceAgent_AudioStreaming
+if (!string.IsNullOrEmpty(inputAudioPath) || deleteAgent)
+{
+    await using VoiceAgentSession audioSession = await realtimeClient.StartSessionAsync(
+        agentName,
+        new VoiceAgentConnectionOptions { AgentVersion = agentVersion.Version, Store = true },
+        timeout.Token);
+    newConversationIds.Add(await WaitForSessionReadyAsync(audioSession, hasGreeting, timeout.Token));
+    using Stream inputPcm = string.IsNullOrEmpty(inputAudioPath)
+        ? new MemoryStream(responseAudio.ToArray())
+        : File.OpenRead(inputAudioPath);
+    using FileStream outputPcm = File.Create(outputAudioPath);
+
+    await StreamAudioTurnAsync(
+        audioSession,
+        inputPcm,
+        outputPcm,
+        appendTrailingSilence: true,
+        cancellationToken: timeout.Token);
+    await audioSession.CloseAsync(timeout.Token);
+    if (outputPcm.Length == 0)
+    {
+        throw new InvalidOperationException("The streaming response did not contain audio.");
+    }
+    Console.WriteLine($"Streamed response audio to {outputAudioPath}");
+}
+```
+
+1. The streaming helper sends input and receives output concurrently. It accepts any `Stream`, so applications can replace the file streams with microphone and speaker adapters without adding an audio-device dependency to the SDK.
 
 ```C# Snippet:Sample_VoiceAgent_StreamAudio
-/// <summary>
-/// Streams PCM16 input audio to an already-open realtime session at real-time pace, optionally
-/// appending a short trailing silence so server-side turn detection can finalize the turn.
-/// Accepts any <see cref="Stream"/>, so applications can replace the file stream with a
-/// microphone adapter without adding an audio-device dependency to the SDK. Runs concurrently
-/// with the caller's own receive loop -- <see cref="VoiceAgentSession.ReceiveUpdatesAsync(CancellationToken)"/>
-/// is a one-shot stream, so it must only be called once per session, from the caller.
-/// </summary>
-public static async Task SendAudioInputAsync(
+public static async Task<string> StreamAudioTurnAsync(
     VoiceAgentSession session,
     Stream inputPcm,
+    Stream outputPcm,
     bool appendTrailingSilence = false,
     CancellationToken cancellationToken = default)
 {
-    const int bytesPerSecond = 24000 * sizeof(short);
-    const int chunkSize = bytesPerSecond / 20;
-    byte[] buffer = new byte[chunkSize];
+    Task<string> receiveTask = ReceiveOutputAsync();
+    Task sendTask = SendInputAsync();
+    await Task.WhenAll(sendTask, receiveTask);
+    return await receiveTask;
 
-    while (true)
+    async Task SendInputAsync()
     {
-        int bytesRead = await inputPcm.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
-        if (bytesRead == 0)
+        const int bytesPerSecond = 24000 * sizeof(short);
+        const int chunkSize = bytesPerSecond / 20;
+        byte[] buffer = new byte[chunkSize];
+
+        while (true)
         {
-            break;
+            int bytesRead = await inputPcm.ReadAsync(buffer, 0, buffer.Length, cancellationToken);
+            if (bytesRead == 0)
+            {
+                break;
+            }
+
+            await session.SendInputAudioAsync(
+                BinaryData.FromBytes(buffer.AsMemory(0, bytesRead)),
+                cancellationToken);
+            await Task.Delay(TimeSpan.FromSeconds((double)bytesRead / bytesPerSecond), cancellationToken);
         }
 
-        await session.SendInputAudioAsync(
-            BinaryData.FromBytes(buffer.AsMemory(0, bytesRead)),
-            cancellationToken);
-        await Task.Delay(TimeSpan.FromSeconds((double)bytesRead / bytesPerSecond), cancellationToken);
+        if (appendTrailingSilence)
+        {
+            Array.Clear(buffer, 0, buffer.Length);
+            for (int i = 0; i < 20; i++)
+            {
+                await session.SendInputAudioAsync(BinaryData.FromBytes(buffer), cancellationToken);
+                await Task.Delay(TimeSpan.FromMilliseconds(50), cancellationToken);
+            }
+        }
     }
 
-    if (appendTrailingSilence)
+    async Task<string> ReceiveOutputAsync()
     {
-        Array.Clear(buffer, 0, buffer.Length);
-        for (int i = 0; i < 20; i++)
+        string conversationId = null;
+        await foreach (VoiceAgentSessionMessage update in session.ReceiveUpdatesAsync(cancellationToken))
         {
-            await session.SendInputAudioAsync(BinaryData.FromBytes(buffer), cancellationToken);
-            await Task.Delay(TimeSpan.FromMilliseconds(50), cancellationToken);
+            if (update.MessageType != WebSocketMessageType.Text)
+            {
+                continue;
+            }
+            using JsonDocument document = JsonDocument.Parse(update.Data);
+            LogRealtimeEvent(update.EventType, document.RootElement);
+            conversationId = GetConversationId(document.RootElement) ?? conversationId;
+            if (update.EventType == RealtimeServerEventType.ResponseOutputAudioDelta)
+            {
+                byte[] audioChunk = Convert.FromBase64String(document.RootElement.GetProperty("delta").GetString());
+                await outputPcm.WriteAsync(audioChunk, 0, audioChunk.Length, cancellationToken);
+            }
+            else if (update.EventType == RealtimeServerEventType.ResponseDone)
+            {
+                if (IsCancelledResponse(document.RootElement))
+                {
+                    continue;
+                }
+                return conversationId;
+            }
         }
+        throw new InvalidOperationException("The voice session closed before the audio response completed.");
     }
 }
 ```
 
-1. Use the generated Foundry conversation client to retrieve conversations persisted by an agent configured with `Store = true`. Conversation retrieval and download get their own timeout budget, independent of the realtime session above.
+1. Use the generated Foundry conversation client to retrieve conversations persisted by an agent configured with `Store = true`.
 
 ```C# Snippet:Sample_VoiceAgent_Conversations
-// Conversation retrieval/download also gets its own timeout budget, independent of the
-// realtime sessions above.
-using CancellationTokenSource conversationsTimeout = new(TimeSpan.FromMinutes(5));
-List<string> newConversationIds = new();
-await foreach (VoiceConversation conversation in conversationsClient.GetAgentConversationsAsync(
-    agentName,
-    limit: 10,
-    order: AgentListOrder.Descending,
-    cancellationToken: conversationsTimeout.Token))
-{
-    Console.WriteLine($"Conversation {conversation.Id}: {conversation.Status}");
-    if (!existingConversationIds.Contains(conversation.Id))
-    {
-        newConversationIds.Add(conversation.Id);
-    }
-}
-
 foreach (string conversationId in newConversationIds)
 {
+    await WaitForConversationPersistenceAsync(
+        conversationsClient,
+        agentName,
+        conversationId,
+        timeout.Token);
     string assistantItemId = await ReadPersistedConversationAsync(
         conversationsClient,
         agentName,
         conversationId,
-        conversationsTimeout.Token);
+        timeout.Token);
 
     using MemoryStream conversationAudio = new();
     await DownloadConversationAudioAsync(
@@ -280,7 +297,7 @@ foreach (string conversationId in newConversationIds)
         agentName,
         conversationId,
         conversationAudio,
-        conversationsTimeout.Token);
+        timeout.Token);
     Console.WriteLine($"Downloaded {conversationAudio.Length} bytes of conversation audio.");
 
     if (!string.IsNullOrEmpty(assistantItemId))
@@ -292,12 +309,11 @@ foreach (string conversationId in newConversationIds)
             conversationId,
             assistantItemId,
             itemAudio,
-            conversationsTimeout.Token);
+            timeout.Token);
         Console.WriteLine($"Downloaded {itemAudio.Length} bytes of assistant item audio.");
     }
 }
 ```
-
 
 1. Read a persisted conversation, its inference responses, and the ordered response and conversation items.
 
@@ -353,6 +369,13 @@ private static async Task<string> ReadPersistedConversationAsync(
     {
         Console.WriteLine($"Conversation item: {DescribeItem(conversationItem)}");
     }
+    if (assistantItemId is null)
+    {
+        throw new InvalidOperationException("The persisted conversation did not contain an assistant message.");
+    }
+    RealtimeItem persistedItem = await conversationsClient.GetAgentConversationItemAsync(
+        agentName, conversationId, assistantItemId, cancellationToken);
+    Console.WriteLine($"Retrieved item: {DescribeItem(persistedItem)}");
     return assistantItemId;
 }
 

@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 default);
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="logRules"> Set of rules for sending logs for the Monitor resource. </param>
         /// <param name="metricRules"> Set of rules for sending metrics for the Monitor resource. </param>
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicMonitoringTagRules(provisioningState, logRules, metricRules, default);
         }
 
+        /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
         /// <param name="sendAadLogs"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
         /// <param name="sendSubscriptionLogs"> Flag specifying if subscription logs should be sent for the Monitor resource. </param>
         /// <param name="sendActivityLogs"> Flag specifying if activity logs from Azure resources should be sent for the Monitor resource. </param>
@@ -61,6 +63,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityLogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, (filteringTags ?? new ChangeTrackingList<NewRelicObservabilityFilteringTag>()).ToList(), default);
         }
 
+        /// <summary> The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored. </summary>
         /// <param name="name"> The name (also known as the key) of the tag. </param>
         /// <param name="value"> The value of the tag. </param>
         /// <param name="action"> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </param>
@@ -70,6 +73,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityFilteringTag(name, value, action, default);
         }
 
+        /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
         /// <param name="sendMetrics"> Flag specifying if metrics should be sent for the Monitor resource. </param>
         /// <param name="filteringTags"> List of filtering tags to be used for capturing metrics. </param>
         /// <param name="userEmail"> Reusable representation of an email address. </param>
@@ -89,6 +93,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityTagRulePatch(logRules is null && metricRules is null ? default : new TagRuleUpdateProperties(logRules, metricRules, default), default);
         }
 
+        /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -106,6 +111,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 default);
         }
 
+        /// <summary> The request to update subscriptions needed to be monitored by the NewRelic monitor resource. </summary>
         /// <param name="patchOperation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
@@ -117,6 +123,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicMonitoredSubscriptionProperties(patchOperation, (monitoredSubscriptionList ?? new ChangeTrackingList<NewRelicMonitoredSubscriptionInfo>()).ToList(), provisioningState, default);
         }
 
+        /// <summary> The list of subscriptions and it's monitoring status by current NewRelic monitor. </summary>
         /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
         /// <param name="status"> The state of monitoring. </param>
         /// <param name="error"> The reason of not monitoring the subscription. </param>
@@ -190,6 +197,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicAccountProperties(userId, accountInfo, organizationId is null ? default : new NewRelicObservabilityOrganizationInfo(organizationId, default), singleSignOnProperties, default);
         }
 
+        /// <summary> Account Info of the NewRelic account. </summary>
         /// <param name="accountId"> Account id. </param>
         /// <param name="ingestionKey"> Credential string. </param>
         /// <param name="region"> Region where New Relic account is present. </param>
@@ -199,6 +207,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityAccountInfo(accountId, ingestionKey, region, default);
         }
 
+        /// <summary> Single sign on Info of the NewRelic account. </summary>
         /// <param name="singleSignOnState"> Single sign-on state. </param>
         /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>
         /// <param name="singleSignOnUri"> The login URL specific to this NewRelic Organization. </param>
@@ -209,6 +218,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicSingleSignOnProperties(singleSignOnState, enterpriseAppId, singleSignOnUri, provisioningState, default);
         }
 
+        /// <summary> User Info of NewRelic Monitor resource. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="emailAddress"> Reusable representation of an email address. </param>
@@ -226,6 +236,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 default);
         }
 
+        /// <summary> Plan data of NewRelic Monitor resource. </summary>
         /// <param name="usageType"> Different usage type like PAYG/COMMITTED. this could be enum. </param>
         /// <param name="newRelicPlanBillingCycle"> Different billing cycles like Monthly/Weekly. </param>
         /// <param name="planDetails"> plan id as published by NewRelic. </param>
@@ -236,6 +247,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicPlanDetails(usageType, newRelicPlanBillingCycle, planDetails, effectiveOn, default);
         }
 
+        /// <summary> SaaS details. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <returns> A new <see cref="Models.NewRelicObservabilitySaaSInfo"/> instance for mocking. </returns>
         public static NewRelicObservabilitySaaSInfo NewRelicObservabilitySaaSInfo(string saaSResourceId = default)
@@ -266,6 +278,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 default), default);
         }
 
+        /// <summary> Request of get metrics Operation. </summary>
         /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <returns> A new <see cref="Models.NewRelicMetricsContent"/> instance for mocking. </returns>
         public static NewRelicMetricsContent NewRelicMetricsContent(string userEmail = default)
@@ -273,6 +286,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicMetricsContent(userEmail, default);
         }
 
+        /// <summary> Request of get metrics status Operation. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
         /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <returns> A new <see cref="Models.NewRelicMetricsStatusContent"/> instance for mocking. </returns>
@@ -283,6 +297,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicMetricsStatusContent((azureResourceIds ?? new ChangeTrackingList<string>()).ToList(), userEmail, default);
         }
 
+        /// <summary> Response of get metrics status Operation. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
         /// <returns> A new <see cref="Models.NewRelicMetricsStatusResult"/> instance for mocking. </returns>
         public static NewRelicMetricsStatusResult NewRelicMetricsStatusResult(IEnumerable<string> azureResourceIds = default)
@@ -292,6 +307,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicMetricsStatusResult((azureResourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Request of a app services get Operation. </summary>
         /// <param name="azureResourceIds"> Azure resource IDs. </param>
         /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <returns> A new <see cref="Models.NewRelicAppServicesGetContent"/> instance for mocking. </returns>
@@ -302,6 +318,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicAppServicesGetContent((azureResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), userEmail, default);
         }
 
+        /// <summary> Details of VM Resource having NewRelic OneAgent installed. </summary>
         /// <param name="azureResourceId"> Azure App service resource ID. </param>
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the App service. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the App service. </param>
@@ -311,6 +328,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityAppServiceInfo(azureResourceId, agentVersion, agentStatus, default);
         }
 
+        /// <summary> Request of a switch billing Operation. </summary>
         /// <param name="azureResourceId"> Azure resource Id. </param>
         /// <param name="organizationId"> Organization id. </param>
         /// <param name="planData"> Plan details. </param>
@@ -321,6 +339,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicSwitchBillingContent(azureResourceId, organizationId, planData, userEmail, default);
         }
 
+        /// <summary> Request of a Hosts get Operation. </summary>
         /// <param name="vmIds"> VM resource IDs. </param>
         /// <param name="userEmail"> Reusable representation of an email address. </param>
         /// <returns> A new <see cref="Models.NewRelicHostsGetContent"/> instance for mocking. </returns>
@@ -331,6 +350,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicHostsGetContent((vmIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), userEmail, default);
         }
 
+        /// <summary> Details of VM Resource having NewRelic OneAgent installed. </summary>
         /// <param name="vmId"> Azure VM resource ID. </param>
         /// <param name="agentVersion"> Version of the NewRelic agent installed on the VM. </param>
         /// <param name="agentStatus"> Status of the NewRelic agent installed on the VM. </param>
@@ -340,6 +360,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityVmInfo(vmId, agentVersion, agentStatus, default);
         }
 
+        /// <summary> Details of resource being monitored by NewRelic monitor resource. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="sendingMetrics"> Flag indicating if resource is sending metrics to NewRelic. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
@@ -357,6 +378,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 default);
         }
 
+        /// <summary> Response of payload to be passed while installing VM agent. </summary>
         /// <param name="ingestionKey"> Ingestion key of the account. </param>
         /// <returns> A new <see cref="Models.NewRelicObservabilityVmExtensionPayload"/> instance for mocking. </returns>
         public static NewRelicObservabilityVmExtensionPayload NewRelicObservabilityVmExtensionPayload(string ingestionKey = default)
@@ -364,6 +386,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityVmExtensionPayload(ingestionKey, default);
         }
 
+        /// <summary> Response of get latest linked SaaS resource operation. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <returns> A new <see cref="Models.NewRelicObservabilityLatestLinkedSaaSResult"/> instance for mocking. </returns>
@@ -372,6 +395,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityLatestLinkedSaaSResult(saaSResourceId, isHiddenSaaS, default);
         }
 
+        /// <summary> Resubscribe Properties. </summary>
         /// <param name="planId"> Newly selected plan Id to create the new Marketplace subscription for Resubscribe. </param>
         /// <param name="termId"> Newly selected term Id to create the new Marketplace subscription for Resubscribe. </param>
         /// <param name="subscriptionId"> Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe. </param>
@@ -393,6 +417,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 default);
         }
 
+        /// <summary> Marketplace Subscription and Organization details to which resource gets billed into. </summary>
         /// <param name="marketplaceSaasInfo"> Marketplace Subscription details. </param>
         /// <param name="partnerBillingEntity"> Partner Billing Entity details: Organization Info. </param>
         /// <returns> A new <see cref="Models.NewRelicBillingInfoResult"/> instance for mocking. </returns>
@@ -401,6 +426,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicBillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, default);
         }
 
+        /// <summary> Marketplace SAAS Info of the resource. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. This is a GUID-formatted string. </param>
         /// <param name="marketplaceSubscriptionName"> Marketplace Subscription Details: SAAS Name. </param>
         /// <param name="marketplaceResourceId"> Marketplace Subscription Details: Resource URI. </param>
@@ -422,6 +448,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 default);
         }
 
+        /// <summary> Partner Billing details associated with the resource. </summary>
         /// <param name="organizationId"> The New Relic Organization Id. </param>
         /// <param name="organizationName"> The New Relic Organization Name. </param>
         /// <returns> A new <see cref="Models.PartnerBillingEntity"/> instance for mocking. </returns>
@@ -430,6 +457,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new PartnerBillingEntity(organizationId, organizationName, default);
         }
 
+        /// <summary> Connected Partner Resources List Format. </summary>
         /// <param name="properties"> Connected Partner Resource Properties. </param>
         /// <returns> A new <see cref="Models.NewRelicConnectedPartnerResourceInfo"/> instance for mocking. </returns>
         public static NewRelicConnectedPartnerResourceInfo NewRelicConnectedPartnerResourceInfo(NewRelicConnectedPartnerResourceProperties properties = default)
@@ -437,6 +465,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicConnectedPartnerResourceInfo(properties, default);
         }
 
+        /// <summary> Connected Partner Resource Properties. </summary>
         /// <param name="accountName"> NewRelic account name. </param>
         /// <param name="accountId"> NewRelic Account Id. </param>
         /// <param name="azureResourceId"> The azure resource Id of the deployment. </param>
@@ -447,6 +476,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicConnectedPartnerResourceProperties(accountName, accountId, azureResourceId, location, default);
         }
 
+        /// <summary> SaaS guid &amp; PublishedId for Activate and Validate SaaS Resource. </summary>
         /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <param name="publisherId"> Publisher Id for NewRelic resource. </param>
         /// <returns> A new <see cref="Models.ActivateSaaSParameterContent"/> instance for mocking. </returns>
@@ -455,6 +485,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new ActivateSaaSParameterContent(saasGuid, publisherId, default);
         }
 
+        /// <summary> Marketplace SaaS resource details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

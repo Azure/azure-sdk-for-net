@@ -48,6 +48,7 @@ namespace Extensions.Plugin
             generator.AddVisitor(new SerializationOverrideVisitor());
             generator.AddVisitor(new ExperimentalAttributeVisitor());
             generator.AddVisitor(new OpenAIExperimentalVisitor());
+            generator.AddVisitor(new ExperimentalImplementationVisitor());
         }
     }
 }

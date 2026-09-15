@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 default);
         }
 
+        /// <summary> Specify the Datadog organization name. In the case of linking to existing organizations, Id, ApiKey, and Applicationkey is required as well. </summary>
         /// <param name="name"> Name of the Datadog organization. </param>
         /// <param name="id"> Id of the Datadog organization. </param>
         /// <param name="linkingAuthCode"> The auth code used to linking to an existing Datadog organization. </param>
@@ -106,6 +107,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 default);
         }
 
+        /// <summary> Includes name, email and optionally, phone number. User Information can't be null. </summary>
         /// <param name="name"> Name of the user. </param>
         /// <param name="emailAddress"> Email of the user used by Datadog for contacting them if needed. </param>
         /// <param name="phoneNumber"> Phone number of the user used by Datadog for contacting them if needed. </param>
@@ -115,6 +117,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogUserInfo(name, emailAddress, phoneNumber, default);
         }
 
+        /// <summary> SaaS details. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <returns> A new <see cref="Models.DatadogSaaSInfo"/> instance for mocking. </returns>
         public static DatadogSaaSInfo DatadogSaaSInfo(ResourceIdentifier saaSResourceId = default)
@@ -122,6 +125,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogSaaSInfo(saaSResourceId, default);
         }
 
+        /// <summary> SRE Agent configuration to connect to MCP server of Datadog for a given organization. </summary>
         /// <param name="mcpConnectorResourceId"> The ARM resource ID of the MCP connector integrated with SRE Agent resource. </param>
         /// <returns> A new <see cref="Models.DatadogSreAgentConfiguration"/> instance for mocking. </returns>
         public static DatadogSreAgentConfiguration DatadogSreAgentConfiguration(ResourceIdentifier mcpConnectorResourceId = default)
@@ -129,6 +133,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogSreAgentConfiguration(mcpConnectorResourceId, default);
         }
 
+        /// <summary> Details about the marketplace offer associated with the monitor resource. </summary>
         /// <param name="publisherId"> The publisher ID (e.g., "datadog1591740804488"). </param>
         /// <param name="offerId"> The offer ID (e.g., "dd_liftr_v3_decoupled"). </param>
         /// <returns> A new <see cref="Models.DatadogMarketplaceOfferDetails"/> instance for mocking. </returns>
@@ -137,6 +142,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogMarketplaceOfferDetails(publisherId, offerId, default);
         }
 
+        /// <summary> Response of get latest linked SaaS resource operation. </summary>
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <returns> A new <see cref="Models.DatadogLatestLinkedSaaSResult"/> instance for mocking. </returns>
@@ -145,6 +151,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogLatestLinkedSaaSResult(isHiddenSaaS, saaSResourceId, default);
         }
 
+        /// <summary> Capture logs and metrics of Azure resources based on ARM tags. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -181,6 +188,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 default);
         }
 
+        /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
         /// <param name="isAadLogsSent"> Flag specifying if AAD logs should be sent for the Monitor resource. </param>
         /// <param name="isSubscriptionLogsSent"> Flag specifying if Azure subscription logs should be sent for the Monitor resource. </param>
         /// <param name="isResourceLogsSent"> Flag specifying if Azure resource logs should be sent for the Monitor resource. </param>
@@ -193,6 +201,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogMonitorLogRules(isAadLogsSent, isSubscriptionLogsSent, isResourceLogsSent, (filteringTags ?? new ChangeTrackingList<DatadogMonitorFilteringTag>()).ToList(), default);
         }
 
+        /// <summary> The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored. </summary>
         /// <param name="name"> The name (also known as the key) of the tag. </param>
         /// <param name="value"> The value of the tag. </param>
         /// <param name="action"> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </param>
@@ -202,6 +211,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogMonitorFilteringTag(name, value, action, default);
         }
 
+        /// <summary> Set of rules for managing agents for the Monitor resource. </summary>
         /// <param name="isAgentMonitoringEnabled"> Flag specifying if agent monitoring should be enabled for the Monitor resource. </param>
         /// <param name="filteringTags"> List of filtering tags to be used for capturing metrics. If empty, all resources will be captured. If only Exclude action is specified, the rules will apply to the list of all available resources. If Include actions are specified, the rules will only include resources with the associated tags. </param>
         /// <returns> A new <see cref="Models.DatadogMonitorAgentRules"/> instance for mocking. </returns>
@@ -212,6 +222,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogMonitorAgentRules(isAgentMonitoringEnabled, (filteringTags ?? new ChangeTrackingList<DatadogMonitorFilteringTag>()).ToList(), default);
         }
 
+        /// <summary> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -229,6 +240,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 default);
         }
 
+        /// <summary> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </summary>
         /// <param name="operation"> The operation for the patch on the resource. </param>
         /// <param name="monitoredSubscriptionList"> List of subscriptions and the state of the monitoring. </param>
         /// <returns> A new <see cref="Models.DatadogSubscriptionProperties"/> instance for mocking. </returns>
@@ -239,6 +251,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogSubscriptionProperties(operation, (monitoredSubscriptionList ?? new ChangeTrackingList<DatadogMonitoredSubscriptionItem>()).ToList(), default);
         }
 
+        /// <summary> The list of subscriptions and it's monitoring status by current Datadog monitor. </summary>
         /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
         /// <param name="status"> The state of monitoring. </param>
         /// <param name="error"> The reason of not monitoring the subscription. </param>
@@ -249,6 +262,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogMonitoredSubscriptionItem(subscriptionId, status, error, tagRules, default);
         }
 
+        /// <summary> SaaS resource details for Activate and Validate SaaS Resource. </summary>
         /// <param name="saaSResourceId"> SaaS resource id of marketplace saas subscription to be activated. </param>
         /// <param name="userInfo"> User information of the person activating the SaaS resource. </param>
         /// <param name="datadogOrganizationProperties"> Datadog organization properties to link the Saas resource to. </param>
@@ -258,6 +272,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogActivateSaaSContent(saaSResourceId, userInfo, datadogOrganizationProperties, default);
         }
 
+        /// <summary> Marketplace SaaS resource details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -286,6 +301,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogMonitorPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), skuName is null ? default : new DatadogSku(skuName, default), default);
         }
 
+        /// <summary> The set of properties that can be update in a PATCH request to a monitor resource. </summary>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="isCspm"> The new cloud security posture management value of the monitor resource. This collects configuration information for all resources in a subscription and track conformance to industry benchmarks. </param>
         /// <param name="isResourceCollection"> The new resource collection value of the monitor resource. This collects configuration information for all resources in a subscription. </param>
@@ -295,6 +311,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogMonitorResourcePatchProperties(monitoringStatus, isCspm, isResourceCollection, default);
         }
 
+        /// <summary> Request for adding/removing Datadog MCP connectors on SRE Agent resource. </summary>
         /// <param name="mcpConnectorResourceIdList"> The list of ARM resource ID of the MCP connector integrated with SRE Agent resource. </param>
         /// <param name="action"> Add/Remove action. </param>
         /// <returns> A new <see cref="Models.DatadogSreAgentConnectorContent"/> instance for mocking. </returns>
@@ -305,6 +322,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogSreAgentConnectorContent((mcpConnectorResourceIdList ?? new ChangeTrackingList<DatadogSreAgentConfiguration>()).ToList(), action, default);
         }
 
+        /// <summary> Represents a Datadog Application key and its associated properties. </summary>
         /// <param name="createdBy"> The user that created the Application key. </param>
         /// <param name="name"> The name of the Application key. </param>
         /// <param name="key"> The value of the Application key. </param>
@@ -314,6 +332,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogApplicationKey(createdBy, name, key, default);
         }
 
+        /// <summary> The DatadogApiKey. </summary>
         /// <param name="createdBy"> The user that created the API key. </param>
         /// <param name="name"> The name of the API key. </param>
         /// <param name="key"> The value of the API key. </param>
@@ -324,6 +343,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogApiKey(createdBy, name, key, created, default);
         }
 
+        /// <summary> The DatadogHost. </summary>
         /// <param name="name"> The name of the host. </param>
         /// <param name="aliases"> The aliases for the host installed via the Datadog agent. </param>
         /// <param name="apps"> The Datadog integrations reporting metrics for the host. </param>
@@ -346,6 +366,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogHostMetadata(agentVersion, installMethod, logsAgentTransport is null ? default : new DatadogLogsAgent(logsAgentTransport, default), default);
         }
 
+        /// <summary> The DatadogInstallMethod. </summary>
         /// <param name="tool"> The tool. </param>
         /// <param name="toolVersion"> The tool version. </param>
         /// <param name="installerVersion"> The installer version. </param>
@@ -355,6 +376,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogInstallMethod(tool, toolVersion, installerVersion, default);
         }
 
+        /// <summary> The definition of a linked resource. </summary>
         /// <param name="id"> The ARM id of the linked resource. </param>
         /// <param name="location"> The location of the linked resource. </param>
         /// <returns> A new <see cref="Models.DatadogLinkedResourceResult"/> instance for mocking. </returns>
@@ -363,6 +385,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogLinkedResourceResult(id, location, default);
         }
 
+        /// <summary> The properties of a resource currently being monitored by the Datadog monitor resource. </summary>
         /// <param name="id"> The ARM id of the resource. </param>
         /// <param name="isSendingMetricsEnabled"> Flag indicating if resource is sending metrics to Datadog. </param>
         /// <param name="reasonForMetricsStatus"> Reason for why the resource is sending metrics (or why it is not sending). </param>
@@ -380,6 +403,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 default);
         }
 
+        /// <summary> The DatadogSetPasswordLink. </summary>
         /// <param name="setPasswordLink"></param>
         /// <returns> A new <see cref="Models.DatadogSetPasswordLink"/> instance for mocking. </returns>
         public static DatadogSetPasswordLink DatadogSetPasswordLink(string setPasswordLink = default)
@@ -387,6 +411,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogSetPasswordLink(setPasswordLink, default);
         }
 
+        /// <summary> Marketplace Subscription and Organization details to which resource gets billed into. </summary>
         /// <param name="marketplaceSaasInfo"> Marketplace Subscription details. </param>
         /// <param name="partnerBillingEntity"> Partner Billing Entity details: Organization Info. </param>
         /// <returns> A new <see cref="Models.DatadogBillingInfoResult"/> instance for mocking. </returns>
@@ -395,6 +420,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogBillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, default);
         }
 
+        /// <summary> Marketplace SAAS Info of the resource. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. This is a GUID-formatted string. </param>
         /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
         /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
@@ -414,6 +440,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 default);
         }
 
+        /// <summary> Partner Billing details associated with the resource. </summary>
         /// <param name="id"> The Datadog Organization Id. </param>
         /// <param name="name"> The Datadog Organization Name. </param>
         /// <param name="partnerEntityUri"> Link to the datadog organization page. </param>
@@ -432,6 +459,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new ResubscribeOrganizationContent(skuName is null ? default : new DatadogSku(skuName, default), azureSubscriptionId, resourceGroup, default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -449,6 +477,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 default);
         }
 
+        /// <summary> The DatadogSingleSignOnProperties. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="singleSignOnState"> Various states of the SSO resource. </param>
         /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>
@@ -459,6 +488,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUri, default);
         }
 
+        /// <summary> The DatadogAgreement. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -476,6 +506,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 default);
         }
 
+        /// <summary> Terms properties. </summary>
         /// <param name="publisher"> Publisher identifier string. </param>
         /// <param name="product"> Product identifier string. </param>
         /// <param name="plan"> Plan identifier string. </param>
@@ -499,6 +530,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 default);
         }
 
+        /// <summary> Datadog resource can be created or not. </summary>
         /// <param name="properties"> Represents the properties of the resource. </param>
         /// <returns> A new <see cref="Models.DatadogSubscriptionStatusResult"/> instance for mocking. </returns>
         public static DatadogSubscriptionStatusResult DatadogSubscriptionStatusResult(DatadogSubscriptionStatusProperties properties = default)
@@ -506,6 +538,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogSubscriptionStatusResult(properties, default);
         }
 
+        /// <summary> Datadog resource can be created or not properties. </summary>
         /// <param name="name"> The ARM id of the subscription. </param>
         /// <param name="isCreationSupported"> Indicates if selected subscription supports Datadog resource creation, if not it is already being monitored for the selected organization via multi subscription feature. </param>
         /// <returns> A new <see cref="Models.DatadogSubscriptionStatusProperties"/> instance for mocking. </returns>
@@ -514,7 +547,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogSubscriptionStatusProperties(name, isCreationSupported, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DatadogMonitorProperties"/>. </summary>
+        /// <summary> Properties specific to the monitor resource. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="marketplaceSubscriptionStatus"> Flag specifying the Marketplace Subscription Status of the resource. If payment is not made in time, the resource will go in Suspended state. </param>
@@ -540,7 +573,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
+        /// <summary> Marketplace SAAS Info of the resource. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. This is a GUID-formatted string. </param>
         /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
         /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>

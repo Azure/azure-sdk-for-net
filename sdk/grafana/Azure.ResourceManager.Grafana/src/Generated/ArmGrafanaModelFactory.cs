@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Grafana.Models
     public static partial class ArmGrafanaModelFactory
     {
 
+        /// <summary> The grafana resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -108,6 +109,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -117,6 +119,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new GrafanaPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Integrations for Azure Monitor Workspace. </summary>
         /// <param name="monitorWorkspaceResourceId"> The resource Id of the connected Azure Monitor Workspace. </param>
         /// <returns> A new <see cref="Models.MonitorWorkspaceIntegration"/> instance for mocking. </returns>
         public static MonitorWorkspaceIntegration MonitorWorkspaceIntegration(ResourceIdentifier monitorWorkspaceResourceId = default)
@@ -124,6 +127,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new MonitorWorkspaceIntegration(monitorWorkspaceResourceId, default);
         }
 
+        /// <summary> Enterprise settings of a Grafana instance. </summary>
         /// <param name="marketplacePlanId"> The Plan Id of the Azure Marketplace subscription for the Enterprise plugins. </param>
         /// <param name="marketplaceAutoRenew"> The AutoRenew setting of the Enterprise subscription. </param>
         /// <returns> A new <see cref="Models.EnterpriseConfigurations"/> instance for mocking. </returns>
@@ -152,6 +156,10 @@ namespace Azure.ResourceManager.Grafana.Models
                 default);
         }
 
+        /// <summary>
+        /// Email server settings.
+        /// https://grafana.com/docs/grafana/v9.0/setup-grafana/configure-grafana/#smtp
+        /// </summary>
         /// <param name="isEnabled"> Enable this to allow Grafana to send email. Default is false. </param>
         /// <param name="host"> SMTP server hostname with port, e.g. test.email.net:587. </param>
         /// <param name="user"> User of SMTP auth. </param>
@@ -187,6 +195,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 default);
         }
 
+        /// <summary> Grafana users settings. </summary>
         /// <param name="canViewersEdit"> Set to true so viewers can access and use explore and perform temporary edits on panels in dashboards they have access to. They cannot save their changes. </param>
         /// <param name="canEditorsAdmin"> Set to true so editors can administrate dashboards, folders and teams they create. </param>
         /// <returns> A new <see cref="Models.GrafanaUserSettings"/> instance for mocking. </returns>
@@ -195,6 +204,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new GrafanaUserSettings(canViewersEdit, canEditorsAdmin, default);
         }
 
+        /// <summary> Plugin of Grafana. </summary>
         /// <param name="pluginId"> Grafana plugin id. </param>
         /// <returns> A new <see cref="Models.GrafanaPlugin"/> instance for mocking. </returns>
         public static GrafanaPlugin GrafanaPlugin(string pluginId = default)
@@ -202,6 +212,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new GrafanaPlugin(pluginId, default);
         }
 
+        /// <summary> Represents the SKU of a resource. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="size"> Specifies the capacity tier of the Grafana instance. </param>
         /// <returns> A new <see cref="Models.ManagedGrafanaSku"/> instance for mocking. </returns>
@@ -210,6 +221,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new ManagedGrafanaSku(name, size, default);
         }
 
+        /// <summary> The parameters for a PATCH request to a grafana resource. </summary>
         /// <param name="sku"></param>
         /// <param name="identity"> The managed identity of the grafana resource. </param>
         /// <param name="tags"> The new tags of the grafana resource. </param>
@@ -251,6 +263,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 default);
         }
 
+        /// <summary> Enterprise details of a Grafana instance. </summary>
         /// <param name="saasSubscriptionDetails"> SaaS subscription details of a Grafana instance. </param>
         /// <param name="marketplaceTrialQuota"> The allocation details of the per subscription free trial slot of the subscription. </param>
         /// <returns> A new <see cref="Models.EnterpriseDetails"/> instance for mocking. </returns>
@@ -259,6 +272,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new EnterpriseDetails(saasSubscriptionDetails, marketplaceTrialQuota, default);
         }
 
+        /// <summary> SaaS subscription details of a Grafana instance. </summary>
         /// <param name="planId"> The plan Id of the SaaS subscription. </param>
         /// <param name="offerId"> The offer Id of the SaaS subscription. </param>
         /// <param name="publisherId"> The publisher Id of the SaaS subscription. </param>
@@ -269,6 +283,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new SaasSubscriptionDetails(planId, offerId, publisherId, term, default);
         }
 
+        /// <summary> The current billing term of the SaaS Subscription. </summary>
         /// <param name="termUnit"> The unit of the billing term. </param>
         /// <param name="startOn"> The date and time in UTC of when the billing term starts. </param>
         /// <param name="endOn"> The date and time in UTC of when the billing term ends. </param>
@@ -278,6 +293,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new SubscriptionTerm(termUnit, startOn, endOn, default);
         }
 
+        /// <summary> The allocation details of the per subscription free trial slot of the subscription. </summary>
         /// <param name="availablePromotion"> Available enterprise promotion for the subscription. </param>
         /// <param name="grafanaResourceId"> Resource Id of the Grafana resource which is doing the trial. </param>
         /// <param name="trialStartOn"> The date and time in UTC of when the trial starts. </param>
@@ -288,6 +304,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, trialStartOn, trialEndOn, default);
         }
 
+        /// <summary> Available plugins of grafana. </summary>
         /// <param name="pluginId"> Grafana plugin id. </param>
         /// <param name="name"> Grafana plugin display name. </param>
         /// <param name="type"> Grafana plugin type. </param>
@@ -357,6 +374,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 default);
         }
 
+        /// <summary> The state of managed private endpoint connection. </summary>
         /// <param name="status"> The approval/rejection status of managed private endpoint connection. </param>
         /// <param name="description"> Gets or sets the reason for approval/rejection of the connection. </param>
         /// <returns> A new <see cref="Models.ManagedPrivateEndpointConnectionState"/> instance for mocking. </returns>
@@ -365,6 +383,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new ManagedPrivateEndpointConnectionState(status, description, default);
         }
 
+        /// <summary> The parameters for a PATCH request to a managed private endpoint. </summary>
         /// <param name="tags"> The new tags of the managed private endpoint. </param>
         /// <returns> A new <see cref="Models.ManagedPrivateEndpointModelPatch"/> instance for mocking. </returns>
         public static ManagedPrivateEndpointModelPatch ManagedPrivateEndpointModelPatch(IDictionary<string, string> tags = default)
@@ -374,6 +393,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new ManagedPrivateEndpointModelPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The integration fabric resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -397,6 +417,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 default);
         }
 
+        /// <summary> The GrafanaIntegrationFabricProperties. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="targetResourceId"> The resource Id of the Azure resource being integrated with Azure Managed Grafana. E.g., an Azure Kubernetes Service cluster. </param>
         /// <param name="dataSourceResourceId"> The resource Id of the Azure resource which is used to configure Grafana data source. E.g., an Azure Monitor Workspace, an Azure Data Explorer cluster, etc. </param>
@@ -442,6 +463,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 default);
         }
 
+        /// <summary> The parameters for a PATCH request to a managed dashboard resource. </summary>
         /// <param name="tags"> The new tags of the managed dashboard resource. </param>
         /// <returns> A new <see cref="Models.ManagedDashboardPatch"/> instance for mocking. </returns>
         public static ManagedDashboardPatch ManagedDashboardPatch(IDictionary<string, string> tags = default)
@@ -451,6 +473,7 @@ namespace Azure.ResourceManager.Grafana.Models
             return new ManagedDashboardPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The dashboard definition resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -468,6 +491,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 default);
         }
 
+        /// <summary> Properties specific to the dashboard definition. </summary>
         /// <param name="serializedData"> The dashboard definition data in JSON format. </param>
         /// <param name="provisioningState"> The provisioning state of the dashboard definition resource. </param>
         /// <returns> A new <see cref="Models.DashboardDefinitionProperties"/> instance for mocking. </returns>
