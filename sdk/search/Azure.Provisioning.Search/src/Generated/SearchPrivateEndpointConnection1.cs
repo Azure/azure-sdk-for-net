@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Search
 {
     /// <summary> Describes an existing private endpoint connection to the Azure AI Search service. </summary>
-    public partial class SearchPrivateEndpointConnection : ProvisionableResource
+    public partial class SearchPrivateEndpointConnection1 : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -21,10 +21,10 @@ namespace Azure.Provisioning.Search
         private SearchServicePrivateEndpointConnectionProperties _properties;
         private ResourceReference<SearchService> _parent;
 
-        /// <summary> Creates a new SearchPrivateEndpointConnection. </summary>
+        /// <summary> Creates a new SearchPrivateEndpointConnection1. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SearchPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Search/searchServices/privateEndpointConnections", resourceVersion ?? "2025-05-01")
+        public SearchPrivateEndpointConnection1(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Search/searchServices/privateEndpointConnections", resourceVersion ?? "2025-05-01")
         {
         }
 
@@ -33,7 +33,7 @@ namespace Azure.Provisioning.Search
         {
             get
             {
-                Initialize();
+                this.Initialize();
                 return _id;
             }
         }
@@ -43,12 +43,12 @@ namespace Azure.Provisioning.Search
         {
             get
             {
-                Initialize();
+                this.Initialize();
                 return _name;
             }
             set
             {
-                Initialize();
+                this.Initialize();
                 _name.Assign(value);
             }
         }
@@ -58,7 +58,7 @@ namespace Azure.Provisioning.Search
         {
             get
             {
-                Initialize();
+                this.Initialize();
                 return _systemData;
             }
         }
@@ -68,13 +68,13 @@ namespace Azure.Provisioning.Search
         {
             get
             {
-                Initialize();
+                this.Initialize();
                 return _properties;
             }
             set
             {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                this.Initialize();
+                this.AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -83,39 +83,39 @@ namespace Azure.Provisioning.Search
         {
             get
             {
-                Initialize();
+                this.Initialize();
                 return _parent.Value;
             }
             set
             {
-                Initialize();
+                this.Initialize();
                 _parent.Value = value;
             }
         }
 
-        /// <summary> Define all the provisionable properties for SearchPrivateEndpointConnection. </summary>
+        /// <summary> Define all the provisionable properties for SearchPrivateEndpointConnection1. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<SearchServicePrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SearchService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
-            DefineAdditionalProperties();
+            _id = this.DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = this.DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _systemData = this.DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = this.DefineModelProperty<SearchServicePrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
+            _parent = this.DefineResource<SearchService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            this.DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing SearchPrivateEndpointConnection. </summary>
+        /// <summary> Creates a reference to an existing SearchPrivateEndpointConnection1. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static SearchPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static SearchPrivateEndpointConnection1 FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            SearchPrivateEndpointConnection result = new SearchPrivateEndpointConnection(bicepIdentifier, resourceVersion);
+            SearchPrivateEndpointConnection1 result = new SearchPrivateEndpointConnection1(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for SearchPrivateEndpointConnection that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SearchPrivateEndpointConnection1 that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

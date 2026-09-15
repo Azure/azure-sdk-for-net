@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Properties of Redis Enterprise clusters, as opposed to general resource properties like location, tags. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ClusterProperties : ProvisionableConstruct
     {
         private BicepValue<RedisEnterpriseHighAvailability> _highAvailability;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the HighAvailability. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseHighAvailability> HighAvailability
         {
             get
@@ -46,6 +49,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the MinimumTlsVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseTlsVersion> MinimumTlsVersion
         {
             get
@@ -61,6 +65,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
+        [Experimental("AZPROVISION001")]
         internal ClusterPropertiesEncryption Encryption
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the MaintenanceConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal MaintenanceConfiguration MaintenanceConfiguration
         {
             get
@@ -91,6 +97,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the HostName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> HostName
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseProvisioningStatus> ProvisioningState
         {
             get
@@ -111,6 +119,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the RedundancyMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseRedundancyMode> RedundancyMode
         {
             get
@@ -121,6 +130,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the ResourceState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseClusterResourceState> ResourceState
         {
             get
@@ -131,6 +141,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the RedisVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RedisVersion
         {
             get
@@ -141,6 +152,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RedisEnterprisePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -151,6 +163,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets the MigratedEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MigratedEndpoint
         {
             get
@@ -161,6 +174,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the CustomerManagedKeyEncryption. </summary>
+        [Experimental("AZPROVISION001")]
         public RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption
         {
             get
@@ -178,6 +192,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the MaintenanceWindows. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RedisEnterpriseMaintenanceWindow> MaintenanceWindows
         {
             get

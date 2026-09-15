@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> SKU parameters supplied to the create Redis Enterprise cluster operation. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RedisEnterpriseSku : ProvisionableConstruct
     {
         private BicepValue<RedisEnterpriseSkuName> _name;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<RedisEnterpriseSkuName> Name
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the Capacity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Capacity
         {
             get

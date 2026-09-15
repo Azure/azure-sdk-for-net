@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Optional set of properties to configure geo replication for this database. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RedisEnterpriseDatabaseGeoReplication : ProvisionableConstruct
     {
         private BicepValue<string> _groupNickname;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the GroupNickname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> GroupNickname
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the LinkedDatabases. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RedisEnterpriseLinkedDatabase> LinkedDatabases
         {
             get
