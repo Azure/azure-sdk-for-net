@@ -12,7 +12,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.HealthcareApis
 {
     /// <summary> Properties of the private endpoint connection. </summary>
-    internal partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
+    public partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
     {
         private PrivateEndpoint _privateEndpoint;
         private HealthcareApisPrivateLinkServiceConnectionState _connectionState;
