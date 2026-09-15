@@ -202,13 +202,6 @@
   ],
   "overrides": [
     {
-      "filename": "**/sdk/aimanager/**/*.cs",
-      "words": [
-        "Kubeconfigs",
-        "kubeconfigs"
-      ]
-    },
-    {
       "filename": "**/eng/pipelines/templates/jobs/ci.yml",
       "words": [
         "warnaserror"
