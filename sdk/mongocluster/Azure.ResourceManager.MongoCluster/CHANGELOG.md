@@ -7,12 +7,6 @@
 - Upgraded API version to `2026-06-15-preview`.
 - Added member `Planned` to enum `MongoClusterPromoteOption`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.1.0 (2026-06-24)
 
 ### Features Added
