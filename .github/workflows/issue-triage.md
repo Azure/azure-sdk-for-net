@@ -6,6 +6,14 @@ description: |
   analysis notes including debugging strategies and resource links
   Implements the initial issue triage rules for the Azure SDK repository
 
+imports:
+  - shared/copilot-cli-version-probe-guard.md
+  - shared/agent-output-validation.md
+
+engine:
+  id: copilot
+  version: "1.0.83"
+
 on:
   issues:
     types: [opened]
@@ -17,6 +25,9 @@ on:
         type: string
   roles: all
   reaction: eyes
+
+concurrency:
+  job-discriminator: ${{ github.event.issue.number || github.event.inputs.issue_number || github.run_id }}
 
 permissions:
   copilot-requests: write

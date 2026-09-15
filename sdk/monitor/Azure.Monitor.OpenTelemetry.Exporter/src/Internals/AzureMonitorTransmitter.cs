@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// <summary>
     /// This class encapsulates transmitting a collection of <see cref="TelemetryItem"/> to the configured Ingestion Endpoint.
     /// </summary>
-    internal class AzureMonitorTransmitter : ITransmitter, IMultiTenantTransmitter
+    internal class AzureMonitorTransmitter : ITransmitter, IMultiEndpointTransmitter
     {
         private const long StorageMaxSizeBytes = 52428800;
 
@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly ConnectionVars _connectionVars;
         internal readonly TransmissionStateManager _transmissionStateManager;
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
-        internal readonly MultiTenantStorage? _multiTenantStorage;
+        internal readonly MultiEndpointStorage? _multiEndpointStorage;
         private readonly bool _isAadEnabled;
         private readonly string? _storageDirectory;
         private readonly object _drainLock = new();
@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal bool _disposed;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
-            : this(options, platform, MultiTenantConfig.Enabled)
+            : this(options, platform, MultiEndpointConfig.Enabled)
         {
         }
 
@@ -57,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// The gate is a parameter so a test can exercise the routed path without mutating
         /// process-wide state, matching <see cref="AzureMonitorTraceExporter"/>.
         /// </remarks>
-        internal AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform, bool multiTenantEnabled)
+        internal AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform, bool multiEndpointEnabled)
         {
             if (options == null)
             {
@@ -75,12 +75,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // BearerTokenAuthenticationPolicy sits in the shared pipeline, so it would attach a token
             // for the exporter's own audience to every routed request, including ones addressed to a
             // host named by an Activity tag. Refuse the combination rather than disclose the token.
-            if (multiTenantEnabled && _isAadEnabled)
+            if (multiEndpointEnabled && _isAadEnabled)
             {
                 _transmissionStateManager.Dispose();
 
                 throw new NotSupportedException(
-                    "Multi-tenant export cannot be used with Microsoft Entra ID authentication. The credential is scoped to this exporter's audience and would be sent to endpoints supplied by telemetry, so either clear AzureMonitorExporterOptions.Credential or disable the Azure.Monitor.OpenTelemetry.EnableMultiTenantExport switch.");
+                    "Multi-endpoint routing cannot be used with Microsoft Entra ID authentication. The credential is scoped to this exporter's audience and would be sent to endpoints supplied by telemetry, so either clear AzureMonitorExporterOptions.Credential or disable the Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting switch.");
             }
 
             _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory, out var storageDirectory);
@@ -96,10 +96,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Partitions live in a sibling directory, never under storageDirectory: the blob
             // provider's size tracker sums subdirectories recursively, so nesting them would let a
-            // tenant backlog exhaust the host's own storage quota.
-            if (multiTenantEnabled && storageDirectory != null)
+            // routed backlog exhaust the host's own storage quota.
+            if (multiEndpointEnabled && storageDirectory != null)
             {
-                _multiTenantStorage = new MultiTenantStorage(_applicationInsightsRestClient, _connectionVars, _isAadEnabled, storageDirectory + MultiTenantStorage.RootDirectorySuffix, MultiTenantStorage.TotalStorageMaxSizeBytes, _statsbeat?.NetworkSdkStatsManager);
+                _multiEndpointStorage = new MultiEndpointStorage(_applicationInsightsRestClient, _connectionVars, _isAadEnabled, storageDirectory + MultiEndpointStorage.RootDirectorySuffix, MultiEndpointStorage.TotalStorageMaxSizeBytes, _statsbeat?.NetworkSdkStatsManager);
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public void DrainStorage(int waitMilliseconds)
         {
             var handler = _transmitFromStorageHandler;
-            if (handler == null && _multiTenantStorage == null)
+            if (handler == null && _multiEndpointStorage == null)
             {
                 return;
             }
@@ -247,7 +247,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     // nothing new to gather: reuse what is running, because a composite completes
                     // after its inner drain does, and starting a fresh pass in that window spends a
                     // budget that may already be gone and leaves the pipeline disposed underneath it.
-                    if (_multiTenantStorage == null)
+                    if (_multiEndpointStorage == null)
                     {
                         drain = existing;
                     }
@@ -273,7 +273,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         /// <summary>
-        /// Drains the host's own storage and every tenant partition, so a shutdown budget covers
+        /// Drains the host's own storage and every endpoint partition, so a shutdown budget covers
         /// routed telemetry rather than only the exporter's own.
         /// </summary>
         private Task DrainAllAsync(TransmitFromStorageHandler? handler)
@@ -285,9 +285,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 drains.Add(handler.DrainAsync());
             }
 
-            if (_multiTenantStorage != null)
+            if (_multiEndpointStorage != null)
             {
-                foreach (var partition in _multiTenantStorage.Partitions)
+                foreach (var partition in _multiEndpointStorage.Partitions)
                 {
                     drains.Add(partition.TransmitFromStorageHandler.DrainAsync());
                 }
@@ -389,7 +389,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // regions. A failing region does not stop the rest.
             for (int i = 0; i < routeBatch.Count; i++)
             {
-                if (SendGroupAsync(routeBatch[i], origin, async: false, cancellationToken).EnsureCompleted() != ExportResult.Success)
+                if (SendGroupAsync(routeBatch[i], routeBatch.Sequence, origin, async: false, cancellationToken).EnsureCompleted() != ExportResult.Success)
                 {
                     result = ExportResult.Failure;
                 }
@@ -402,17 +402,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// A group that cannot be sent is written to its endpoint's own storage partition, so one
         /// region's backlog and back-off never affect another's.
         /// </remarks>
-        private async ValueTask<ExportResult> SendGroupAsync(EndpointRouteBatch.Group group, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
+        private async ValueTask<ExportResult> SendGroupAsync(EndpointRouteBatch.Group group, long exportSequence, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
-            var storage = _multiTenantStorage?.TryGet(group.IngestionEndpoint);
+            var itemCount = group.TelemetryItems.Count;
+            var storage = _multiEndpointStorage?.TryGet(group.IngestionEndpoint);
 
             if (storage != null && (IsPersistOnly || storage.TransmissionStateManager.State != TransmissionState.Closed))
             {
-                return SaveGroupForLaterTransmission(group, storage);
+                var deferred = SaveGroupForLaterTransmission(group, storage);
+                ReportDelivery(exportSequence, group, itemCount, deferred == ExportResult.Success ? "persisted" : "dropped");
+
+                return deferred;
             }
 
             var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
             Uri? trackUri = null;
+            var statusCode = 0;
 
             try
             {
@@ -426,12 +431,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 stopwatch?.Stop();
 
+                statusCode = httpMessage.HasResponse ? httpMessage.Response.Status : 0;
+
                 var result = HttpPipelineHelper.IsSuccess(httpMessage);
 
                 if (networkSdkStats != null)
                 {
                     // Uri.Host reflects any redirect that was followed, so it names the stamp that
-                    // actually answered rather than the endpoint the tenant was routed to.
+                    // actually answered rather than the endpoint the telemetry was routed to.
                     var requestHost = httpMessage.Request.Uri.Host;
 
                     if (httpMessage.HasResponse)
@@ -457,13 +464,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     storage?.TransmissionStateManager.ResetConsecutiveErrors();
                     storage?.TransmissionStateManager.CloseTransmission();
+                    ReportDelivery(exportSequence, group, itemCount, "transmitted", itemCount, statusCode);
 
                     return result;
                 }
 
                 storage?.TransmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
 
-                return HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats).ExportResult;
+                var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats);
+                var accepted = AcceptedCount(transmission.ItemsAccepted, itemCount);
+                ReportDelivery(exportSequence, group, itemCount, DescribeDelivery(transmission.ExportResult, accepted, itemCount, statusCode), accepted, statusCode);
+
+                return transmission.ExportResult;
             }
             catch (Exception ex)
             {
@@ -472,16 +484,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 networkSdkStats?.TrackException(trackUri?.Host, exceptionType: ex.GetType().FullName);
                 AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
 
-                return storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
+                // An unreachable endpoint arrives here, so this is the outcome most worth reporting.
+                var thrown = storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
+
+                // Reading the response can throw after ingestion answered, so acceptance is unknown.
+                ReportDelivery(exportSequence, group, itemCount, thrown == ExportResult.Success ? "persisted" : "dropped", accepted: -1, statusCode);
+
+                return thrown;
             }
         }
 
-        private ExportResult SaveGroupForLaterTransmission(EndpointRouteBatch.Group group, MultiTenantStorage.EndpointStorage storage)
+        private static void ReportDelivery(long exportSequence, EndpointRouteBatch.Group group, int itemCount, string outcome, int accepted = -1, int statusCode = 0)
+            => AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.IngestionEndpoint, outcome, accepted, statusCode);
+
+        /// <summary>
+        /// Only the accepted count is asserted. A 206 settles each item separately, and which of the
+        /// rest were persisted for retry and which were rejected is not knowable from the result.
+        /// </summary>
+        private static string DescribeDelivery(ExportResult result, int accepted, int itemCount, int statusCode)
+        {
+            if (statusCode == ResponseStatusCodes.PartialSuccess)
+            {
+                return "partially accepted";
+            }
+
+            if (accepted >= itemCount)
+            {
+                return "transmitted";
+            }
+
+            return result == ExportResult.Success ? "persisted" : "dropped";
+        }
+
+        /// <summary>Returns -1 when ingestion reported no count, or one the batch cannot support.</summary>
+        private static int AcceptedCount(int? reported, int itemCount)
+            => reported is int value && value >= 0 && value <= itemCount ? value : -1;
+
+        private ExportResult SaveGroupForLaterTransmission(EndpointRouteBatch.Group group, MultiEndpointStorage.EndpointStorage storage)
         {
             try
             {
                 // A refusal is reported by BudgetedBlobProvider, which every persistence path shares.
-                return _multiTenantStorage!.SaveTelemetry(storage, HttpPipelineHelper.GetSerializedContent(group.TelemetryItems));
+                return _multiEndpointStorage!.SaveTelemetry(storage, HttpPipelineHelper.GetSerializedContent(group.TelemetryItems));
             }
             catch (Exception ex)
             {
@@ -633,7 +677,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
 
                     _transmitFromStorageHandler?.Dispose();
-                    _multiTenantStorage?.Dispose();
+                    _multiEndpointStorage?.Dispose();
                     _statsbeat?.Dispose();
                     var fileBlobProvider = _fileBlobProvider as FileBlobProvider;
                     if (fileBlobProvider != null)

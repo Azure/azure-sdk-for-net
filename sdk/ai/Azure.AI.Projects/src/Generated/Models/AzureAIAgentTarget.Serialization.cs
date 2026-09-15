@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Projects;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Evaluation
 {
@@ -94,12 +95,17 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InternalTools))
+            if (Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (InternalTool item in InternalTools)
+                foreach (ResponseTool item in Tools)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
@@ -136,7 +142,7 @@ namespace Azure.AI.Projects.Evaluation
             string name = default;
             string version = default;
             IList<ToolDescription> toolDescriptions = default;
-            IList<InternalTool> internalTools = default;
+            IList<ResponseTool> tools = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -170,16 +176,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<InternalTool> array = new List<InternalTool>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(InternalTool.DeserializeInternalTool(item, options));
-                    }
-                    internalTools = array;
+                    DeserializeToolsValue(prop, ref tools);
                     continue;
                 }
                 if (options.Format != "W")
@@ -193,7 +190,7 @@ namespace Azure.AI.Projects.Evaluation
                 name,
                 version,
                 toolDescriptions ?? new ChangeTrackingList<ToolDescription>(),
-                internalTools ?? new ChangeTrackingList<InternalTool>());
+                tools ?? new ChangeTrackingList<ResponseTool>());
         }
     }
 }

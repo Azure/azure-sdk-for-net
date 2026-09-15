@@ -28,6 +28,10 @@
 
 description: "Auto-repair custom-code build failures on release-planner Auto SDK PRs labeled auto-sdk-build-fix, by driving the shared azsdk customized-update engine in custom-code-only scope."
 
+imports:
+  - shared/copilot-cli-version-probe-guard.md
+  - shared/agent-output-validation.md
+
 on:
   # Primary, fully-automatic path: the release pipeline labels an eligible Auto SDK PR.
   # We use `pull_request` (not `pull_request_target`): under `pull_request`, fork PRs get
@@ -71,7 +75,9 @@ if: >-
                   || github.event.pull_request.user.login == 'azure-sdk-automation[bot]')
               && startsWith(github.event.pull_request.head.ref, 'sdkauto/'))) }}
 
-engine: copilot
+engine:
+  id: copilot
+  version: "1.0.83"
 
 # Agent job runs read-only; copilot-requests:write bills Copilot CLI usage to the org.
 # The separate safe-outputs jobs receive the write scopes they need (contents/pull-requests).
@@ -91,6 +97,8 @@ network:
     - defaults
     - dotnet
     - github
+    # The nested azsdk Copilot client calls this API directly, unlike the outer managed-proxy agent.
+    - api.githubcopilot.com
 
 # Toolchain: the SDK build + the azsdk engine both require the .NET 10 SDK.
 runtimes:
@@ -119,12 +127,8 @@ tools:
 safe-outputs:
   steps:
     - name: Disable implicit tag fetching
-      run: |
-        if git rev-parse --git-dir >/dev/null 2>&1; then
-          git config remote.origin.tagOpt --no-tags
-        else
-          echo "::notice::No checkout yet at this point in the job; skipping tagOpt config."
-        fi
+      if: ${{ (!cancelled()) && needs.agent.result != 'skipped' && contains(needs.agent.outputs.output_types, 'push_to_pull_request_branch') }}
+      run: git config remote.origin.tagOpt --no-tags
   # Commit a successful repair (custom-code edits + regenerated Generated/) to the PR branch.
   # Forks are refused by this safe output; the label is re-checked at apply time; the
   # protected-files denylist blocks .github/, dot-dirs, manifests and instruction files.

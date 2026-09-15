@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (LoadBalancingTransportProtocol?)default : Properties.Protocol;
             }
             set
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.FrontendPortRangeStart;
+                return Properties is null ? (int?)default : Properties.FrontendPortRangeStart;
             }
             set
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.FrontendPortRangeEnd;
+                return Properties is null ? (int?)default : Properties.FrontendPortRangeEnd;
             }
             set
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             get
             {
-                return Properties is null ? default : Properties.BackendPort;
+                return Properties is null ? (int?)default : Properties.BackendPort;
             }
             set
             {

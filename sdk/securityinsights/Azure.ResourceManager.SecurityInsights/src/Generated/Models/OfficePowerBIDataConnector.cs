@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.TenantId;
+                return Properties is null ? (Guid?)default : Properties.TenantId;
             }
             set
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.DataTypesLogsState;
+                return Properties is null ? (SecurityInsightsDataTypeConnectionState?)default : Properties.DataTypesLogsState;
             }
             set
             {
