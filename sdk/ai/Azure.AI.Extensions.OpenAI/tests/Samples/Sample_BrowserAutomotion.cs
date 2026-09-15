@@ -63,7 +63,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
         BrowserAutomationPreviewTool playwrightTool = new(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+                new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
             ));
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -127,7 +127,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
         BrowserAutomationPreviewTool playwrightTool = new(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+                new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
             ));
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The enrollment details for the subscription. Available for billing accounts with agreement type Enterprise Agreement. </summary>
-    public partial class BillingPropertyPropertiesEnrollmentDetails : SubscriptionEnrollmentDetails, IJsonModel<BillingPropertyPropertiesEnrollmentDetails>
+    internal partial class BillingPropertyPropertiesEnrollmentDetails : SubscriptionEnrollmentDetails, IJsonModel<BillingPropertyPropertiesEnrollmentDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

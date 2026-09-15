@@ -18,41 +18,41 @@ namespace Azure.Provisioning.CostManagement
     /// </summary>
     public partial class BudgetTimePeriod : ProvisionableConstruct
     {
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
 
         /// <summary> Creates a new BudgetTimePeriod. </summary>
         public BudgetTimePeriod()
         {
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets or sets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
             set
             {
                 Initialize();
-                _startOn.Assign(value);
+                _startsOn.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets or sets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
             set
             {
                 Initialize();
-                _endOn.Assign(value);
+                _endsOn.Assign(value);
             }
         }
 
@@ -60,8 +60,8 @@ namespace Azure.Provisioning.CostManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" }, isRequired: true);
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" });
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startDate" }, isRequired: true, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endDate" }, format: "O");
             DefineAdditionalProperties();
         }
 

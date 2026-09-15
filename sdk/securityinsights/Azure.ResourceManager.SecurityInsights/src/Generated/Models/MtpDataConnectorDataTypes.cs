@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Alerts is null ? default : Alerts.State;
+                return Alerts is null ? (SecurityInsightsDataTypeConnectionState?)default : Alerts.State;
             }
             set
             {

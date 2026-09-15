@@ -90,7 +90,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _serviceMethod = method;
             _parameterMappings = parameterMappings;
             _isAsync = isAsync;
-            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
+            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync, enclosingType);
             _resourceOperationKind = resourceOperationKind;
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _description = description ?? _convenienceMethod.Signature.Description;
@@ -213,14 +213,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
         {
-            var methodProvider = new ScmMethodProvider(
+            var methodProvider = new ManagementMethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
                 resourceOperationMethodProvider._enclosingType,
                 ScmMethodKind.Convenience,
-                null,
-                null,
-                resourceOperationMethodProvider._serviceMethod);
+                serviceMethod: resourceOperationMethodProvider._serviceMethod,
+                additionalBodyDependencyTypes: resourceOperationMethodProvider.BuildBodyDependencyTypes());
 
             // Add enhanced XML documentation with structured tags
             ResourceHelpers.BuildEnhancedXmlDocs(
@@ -230,6 +229,41 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 methodProvider.XmlDocs);
 
             return methodProvider;
+        }
+
+        private IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+        {
+            if (!ShouldApplyLroHandling)
+            {
+                return [];
+            }
+
+            var outputLibrary = ManagementClientGenerator.Instance.OutputLibrary;
+            var dependencies = new List<CSharpType>
+            {
+                HasTypedResultForPublicSurface
+                    ? outputLibrary.ArmOperationOfT.Type
+                    : outputLibrary.ArmOperation.Type
+            };
+
+            if (IsFakeLongRunningOperation || !HasTypedResultForPublicSurface)
+            {
+                return dependencies;
+            }
+
+            if (_returnBodyResourceClient != null)
+            {
+                dependencies.Add(outputLibrary.GetOperationSource(_returnBodyResourceClient).Type);
+                return dependencies;
+            }
+
+            if (_originalBodyType != null &&
+                outputLibrary.OperationSourceDict.TryGetValue(_originalBodyType, out var operationSource))
+            {
+                dependencies.Add(operationSource.Type);
+            }
+
+            return dependencies;
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()

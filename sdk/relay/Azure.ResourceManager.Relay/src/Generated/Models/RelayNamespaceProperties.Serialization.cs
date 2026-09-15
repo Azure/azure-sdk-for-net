@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Relay.Models
             string metricId = default;
             IList<RelayPrivateEndpointConnectionData> privateEndpointConnections = default;
             RelayPublicNetworkAccess? publicNetworkAccess = default;
-            TlsVersion? minimumTlsVersion = default;
+            RelayTlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Relay.Models
                     {
                         continue;
                     }
-                    minimumTlsVersion = new TlsVersion(prop.Value.GetString());
+                    minimumTlsVersion = new RelayTlsVersion(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

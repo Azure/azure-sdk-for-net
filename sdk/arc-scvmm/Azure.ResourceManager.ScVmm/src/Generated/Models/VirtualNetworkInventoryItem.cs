@@ -14,21 +14,19 @@ namespace Azure.ResourceManager.ScVmm.Models
     public partial class VirtualNetworkInventoryItem : ScVmmInventoryItemProperties
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkInventoryItem"/>. </summary>
-        public VirtualNetworkInventoryItem()
+        public VirtualNetworkInventoryItem() : base(ScVmmInventoryType.VirtualNetwork)
         {
-            InventoryType = ScVmmInventoryType.VirtualNetwork;
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkInventoryItem"/>. </summary>
         /// <param name="inventoryType"> They inventory type. </param>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
-        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
-        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkInventoryItem(ScVmmInventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkInventoryItem(ScVmmInventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, additionalBinaryDataProperties)
         {
-            InventoryType = inventoryType;
         }
     }
 }

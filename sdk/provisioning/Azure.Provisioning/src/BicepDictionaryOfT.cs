@@ -65,7 +65,10 @@ public class BicepDictionary<T> :
         }
     }
 
-    // Move literal elements when assigning values to a dictionary
+    /// <summary>
+    /// Assigns a source dictionary to this instance, copying its literal or expression state.
+    /// </summary>
+    /// <param name="source">The source dictionary to assign from.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Assign(BicepDictionary<T> source) => Assign((BicepValue)source);
     internal override void Assign(IBicepValue source)
@@ -147,6 +150,7 @@ public class BicepDictionary<T> :
         }
     }
 
+    /// <inheritdoc />
     public void Add(string key, BicepValue<T> value)
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -164,8 +168,10 @@ public class BicepDictionary<T> :
         SetSelfForItem(addedItem, key);
     }
 
+    /// <inheritdoc />
     public void Add(KeyValuePair<string, BicepValue<T>> item) => Add(item.Key, item.Value);
 
+    /// <inheritdoc />
     public bool Remove(string key)
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -184,6 +190,7 @@ public class BicepDictionary<T> :
         return _values.Remove(key);
     }
 
+    /// <inheritdoc />
     public void Clear()
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -201,20 +208,31 @@ public class BicepDictionary<T> :
         _values.Clear();
     }
 
+    /// <inheritdoc />
     public ICollection<string> Keys => _values.Keys;
+    /// <inheritdoc />
     public ICollection<BicepValue<T>> Values => _values.Values;
+    /// <inheritdoc />
     public int Count => _values.Count;
+    /// <inheritdoc />
     public bool IsReadOnly => false;
 
+    /// <inheritdoc />
     public bool ContainsKey(string key) => _values.ContainsKey(key);
 #if NET6_0_OR_GREATER
+    /// <inheritdoc />
     public bool TryGetValue(string key, [MaybeNullWhen(false)] out BicepValue<T> value) => _values.TryGetValue(key, out value);
 #else
+    /// <inheritdoc />
     public bool TryGetValue(string key, out BicepValue<T> value) => _values.TryGetValue(key, out value);
 #endif
+    /// <inheritdoc />
     public bool Contains(KeyValuePair<string, BicepValue<T>> item) => _values.Contains(item);
+    /// <inheritdoc />
     public void CopyTo(KeyValuePair<string, BicepValue<T>>[] array, int arrayIndex) => _values.CopyTo(array, arrayIndex);
+    /// <inheritdoc />
     public bool Remove(KeyValuePair<string, BicepValue<T>> item) => Remove(item.Key);
+    /// <inheritdoc />
     public IEnumerator<KeyValuePair<string, BicepValue<T>>> GetEnumerator() => _values.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => _values.GetEnumerator();
     IEnumerable<string> IReadOnlyDictionary<string, BicepValue<T>>.Keys => _values.Keys;
@@ -245,12 +263,12 @@ public class BicepDictionary<T> :
     IEnumerator<KeyValuePair<string, IBicepValue>> IEnumerable<KeyValuePair<string, IBicepValue>>.GetEnumerator() =>
         _values.Select(p => new KeyValuePair<string, IBicepValue>(p.Key, p.Value)).GetEnumerator();
 
-    private protected override BicepExpression CompileLiteralValue()
+    private protected override BicepExpression CompileLiteralValue(string? format)
     {
         Dictionary<string, BicepExpression> compiledValues = [];
         foreach (var kv in _values)
         {
-            compiledValues[kv.Key] = kv.Value.Compile();
+            compiledValues[kv.Key] = kv.Value.Compile(format);
         }
         return BicepSyntax.Object(compiledValues);
     }

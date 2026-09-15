@@ -586,7 +586,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> DeleteAgentAsync(string agentName, RequestOptions options)
     {
-        return await DeleteAgentAsync(agentName:agentName, force: null, options: options).ConfigureAwait(false);
+        return await DeleteAgentAsync(agentName: agentName, force: null, options: options).ConfigureAwait(false);
     }
 
     /// <summary>

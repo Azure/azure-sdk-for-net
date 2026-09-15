@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Subscription.Models;
 
@@ -26,7 +25,6 @@ namespace Azure.ResourceManager.Subscription
     [ModelReaderWriterBuildable(typeof(EnabledSubscriptionId))]
     [ModelReaderWriterBuildable(typeof(PutAliasRequestProperties))]
     [ModelReaderWriterBuildable(typeof(RenamedSubscriptionId))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceTenant))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasAdditionalProperties))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasCreateOrUpdateContent))]

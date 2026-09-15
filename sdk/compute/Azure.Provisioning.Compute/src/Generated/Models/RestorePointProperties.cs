@@ -164,7 +164,7 @@ namespace Azure.Provisioning.Compute
             _sourceMetadata = DefineModelProperty<RestorePointSourceMetadata>(nameof(SourceMetadata), new string[] { "sourceMetadata" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _consistencyMode = DefineProperty<ConsistencyModeType>(nameof(ConsistencyMode), new string[] { "consistencyMode" });
-            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" });
+            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, format: "O");
             _sourceRestorePoint = DefineModelProperty<ComputeApiEntityReference>(nameof(SourceRestorePoint), new string[] { "sourceRestorePoint" });
             _instanceView = DefineModelProperty<RestorePointInstanceView>(nameof(InstanceView), new string[] { "instanceView" }, isOutput: true);
             _instantAccessDurationMinutes = DefineProperty<int>(nameof(InstantAccessDurationMinutes), new string[] { "instantAccessDurationMinutes" });

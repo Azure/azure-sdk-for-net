@@ -108,7 +108,7 @@ namespace Azure.Provisioning.Compute
             _level = DefineProperty<ComputeStatusLevelType>(nameof(Level), new string[] { "level" });
             _displayStatus = DefineProperty<string>(nameof(DisplayStatus), new string[] { "displayStatus" });
             _message = DefineProperty<string>(nameof(Message), new string[] { "message" });
-            _time = DefineProperty<DateTimeOffset>(nameof(Time), new string[] { "time" });
+            _time = DefineProperty<DateTimeOffset>(nameof(Time), new string[] { "time" }, format: "O");
             DefineAdditionalProperties();
         }
 

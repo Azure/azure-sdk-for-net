@@ -14,111 +14,140 @@ using Azure.ResourceManager.ScVmm.Models;
 
 namespace Azure.ResourceManager.ScVmm
 {
-    /// <summary>
-    /// A class representing the ScVmmServer data model.
-    /// The VmmServers resource definition.
-    /// </summary>
+    /// <summary> The VmmServers resource definition. </summary>
     public partial class ScVmmServerData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScVmmServerData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="extendedLocation"> The extended location. </param>
-        /// <param name="fqdn"> Fqdn is the hostname/ip of the vmmServer. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> or <paramref name="fqdn"/> is null. </exception>
-        public ScVmmServerData(AzureLocation location, ExtendedLocation extendedLocation, string fqdn) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
+        public ScVmmServerData(AzureLocation location, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(fqdn, nameof(fqdn));
 
             ExtendedLocation = extendedLocation;
-            Fqdn = fqdn;
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmmServerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extended location. </param>
-        /// <param name="credentials"> Credentials to connect to VMMServer. </param>
-        /// <param name="fqdn"> Fqdn is the hostname/ip of the vmmServer. </param>
-        /// <param name="port"> Port is the port on which the vmmServer is listening. </param>
-        /// <param name="connectionStatus"> Gets the connection status to the vmmServer. </param>
-        /// <param name="errorMessage"> Gets any error message if connection to vmmServer is having any issue. </param>
-        /// <param name="uuid"> Unique ID of vmmServer. </param>
-        /// <param name="version"> Version is the version of the vmmSever. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, VmmCredential credentials, string fqdn, int? port, string connectionStatus, string errorMessage, string uuid, string version, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VmmServerProperties properties, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             ExtendedLocation = extendedLocation;
-            Credentials = credentials;
-            Fqdn = fqdn;
-            Port = port;
-            ConnectionStatus = connectionStatus;
-            ErrorMessage = errorMessage;
-            Uuid = uuid;
-            Version = version;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScVmmServerData"/> for deserialization. </summary>
-        internal ScVmmServerData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal VmmServerProperties Properties { get; set; }
 
         /// <summary> The extended location. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> Credentials to connect to VMMServer. </summary>
-        public VmmCredential Credentials { get; set; }
+
+        /// <summary> Credentials to connect to VmmServer. </summary>
+        public VmmCredential Credentials
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Credentials;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmmServerProperties();
+                }
+                Properties.Credentials = value;
+            }
+        }
+
         /// <summary> Fqdn is the hostname/ip of the vmmServer. </summary>
-        public string Fqdn { get; set; }
+        public string Fqdn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Fqdn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmmServerProperties();
+                }
+                Properties.Fqdn = value;
+            }
+        }
+
         /// <summary> Port is the port on which the vmmServer is listening. </summary>
-        public int? Port { get; set; }
+        public int? Port
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Port;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VmmServerProperties();
+                }
+                Properties.Port = value;
+            }
+        }
+
         /// <summary> Gets the connection status to the vmmServer. </summary>
-        public string ConnectionStatus { get; }
+        public string ConnectionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionStatus;
+            }
+        }
+
         /// <summary> Gets any error message if connection to vmmServer is having any issue. </summary>
-        public string ErrorMessage { get; }
+        public string ErrorMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorMessage;
+            }
+        }
+
         /// <summary> Unique ID of vmmServer. </summary>
-        public string Uuid { get; }
+        public string Uuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Uuid;
+            }
+        }
+
         /// <summary> Version is the version of the vmmSever. </summary>
-        public string Version { get; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public ScVmmProvisioningState? ProvisioningState { get; }
+        public ScVmmProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

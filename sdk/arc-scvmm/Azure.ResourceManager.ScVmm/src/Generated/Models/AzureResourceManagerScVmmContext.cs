@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ScVmm.Models;
@@ -14,14 +15,16 @@ namespace Azure.ResourceManager.ScVmm
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AvailabilitySetListResult))]
+    [ModelReaderWriterBuildable(typeof(AvailabilitySetProperties))]
     [ModelReaderWriterBuildable(typeof(CloudInventoryItem))]
     [ModelReaderWriterBuildable(typeof(CloudListResult))]
+    [ModelReaderWriterBuildable(typeof(CloudProperties))]
     [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
-    [ModelReaderWriterBuildable(typeof(GuestAgentList))]
-    [ModelReaderWriterBuildable(typeof(InventoryItemsList))]
+    [ModelReaderWriterBuildable(typeof(GuestAgentProperties))]
+    [ModelReaderWriterBuildable(typeof(InventoryItemListResult))]
     [ModelReaderWriterBuildable(typeof(OSProfileForVmInstance))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScVmmAvailabilitySetData))]
@@ -70,16 +73,20 @@ namespace Azure.ResourceManager.ScVmm
     [ModelReaderWriterBuildable(typeof(UnknownInventoryItemProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineCreateCheckpointContent))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineDeleteCheckpointContent))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceListResult))]
+    [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceProperties))]
+    [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineInventoryItem))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineRestoreCheckpointContent))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineTemplateInventoryItem))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineTemplateListResult))]
+    [ModelReaderWriterBuildable(typeof(VirtualMachineTemplateProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkInventoryItem))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkListResult))]
-    [ModelReaderWriterBuildable(typeof(VmInstanceHybridIdentityMetadataList))]
+    [ModelReaderWriterBuildable(typeof(VirtualNetworkProperties))]
+    [ModelReaderWriterBuildable(typeof(VmInstanceHybridIdentityMetadataProperties))]
     [ModelReaderWriterBuildable(typeof(VmmCredential))]
     [ModelReaderWriterBuildable(typeof(VmmServerListResult))]
+    [ModelReaderWriterBuildable(typeof(VmmServerProperties))]
     public partial class AzureResourceManagerScVmmContext : ModelReaderWriterContext
     {
     }

@@ -22,7 +22,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="IngestionSource"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
-        private protected IngestionSource(Guid id, IngestionSourceType kind)
+        private protected IngestionSource(Guid id, IngestionSourceKind kind)
         {
             Id = id;
             Kind = kind;
@@ -30,13 +30,13 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Initializes a new instance of <see cref="IngestionSource"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
-        /// <param name="created"> Created time in UTC format. </param>
+        /// <param name="createdOn"> Created time in UTC format. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IngestionSource(Guid id, DateTimeOffset? createdOn, IngestionSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Created = created;
+            CreatedOn = createdOn;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,9 +45,9 @@ namespace Azure.Analytics.PlanetaryComputer
         public Guid Id { get; set; }
 
         /// <summary> Created time in UTC format. </summary>
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Discriminator for the ingestion source. </summary>
-        internal IngestionSourceType Kind { get; set; }
+        internal IngestionSourceKind Kind { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
@@ -114,6 +115,26 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 writer.WritePropertyName("isEphemeral"u8);
                 writer.WriteBooleanValue(IsEphemeral.Value);
             }
+            if (Optional.IsDefined(ProvisioningScriptStorageAccountResourceId))
+            {
+                writer.WritePropertyName("provisioningScriptStorageAccountResourceId"u8);
+                writer.WriteStringValue(ProvisioningScriptStorageAccountResourceId);
+            }
+            if (Optional.IsDefined(ProvisioningScriptManagedIdentityClientId))
+            {
+                writer.WritePropertyName("provisioningScriptManagedIdentityClientId"u8);
+                writer.WriteStringValue(ProvisioningScriptManagedIdentityClientId);
+            }
+            if (Optional.IsDefined(ProvisioningScriptShouldRestart))
+            {
+                writer.WritePropertyName("provisioningScriptShouldRestart"u8);
+                writer.WriteBooleanValue(ProvisioningScriptShouldRestart.Value);
+            }
+            if (Optional.IsDefined(ProvisioningScriptEntryPoint))
+            {
+                writer.WritePropertyName("provisioningScriptEntryPoint"u8);
+                writer.WriteStringValue(ProvisioningScriptEntryPoint);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -162,6 +183,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             string buffer = default;
             DevOpsEphemeralType? ephemeralType = default;
             bool? isEphemeral = default;
+            ResourceIdentifier provisioningScriptStorageAccountResourceId = default;
+            string provisioningScriptManagedIdentityClientId = default;
+            bool? provisioningScriptShouldRestart = default;
+            string provisioningScriptEntryPoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -219,6 +244,34 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     isEphemeral = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("provisioningScriptStorageAccountResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningScriptStorageAccountResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("provisioningScriptManagedIdentityClientId"u8))
+                {
+                    provisioningScriptManagedIdentityClientId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("provisioningScriptShouldRestart"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningScriptShouldRestart = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("provisioningScriptEntryPoint"u8))
+                {
+                    provisioningScriptEntryPoint = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -231,6 +284,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 buffer,
                 ephemeralType,
                 isEphemeral,
+                provisioningScriptStorageAccountResourceId,
+                provisioningScriptManagedIdentityClientId,
+                provisioningScriptShouldRestart,
+                provisioningScriptEntryPoint,
                 additionalBinaryDataProperties);
         }
     }

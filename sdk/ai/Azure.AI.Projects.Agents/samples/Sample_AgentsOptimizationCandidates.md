@@ -2,42 +2,19 @@
 
 The Agent optimization Job is optimizing Agent parameters: model, skills, system prompt or tool description. In this example we will show how to run the Agent optimization and list optimized candidates scores and parameters.
 
-To use Agents Optimization, we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.
-
-```C# Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
-{
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-We also need to ignore the `AAIP001` warning.
+To use Agents Optimization, the `AAIP001` warning needs to be ignored.
 
 ```C#
 #pragma warning disable AAIP001
 ```
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps. In this example we will need two models, so that we can optimize the model used by an Agent. We will also set `AgentsOptimization=V2Preview` preview header.
+1. First, we need to create agent client and read the environment variables, which will be used in the next steps. In this example we will need two models, so that we can optimize the model used by an Agent.
 
 ```C# Snippet:Sample_CreateClient_AgentsOptimizationCandidates
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var anotherModelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME2");
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("AgentsOptimization=V2Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 AgentOptimizationJobs jobsClient = agentsClient.GetAgentOptimizationJobs();
 ```
 
@@ -72,7 +49,7 @@ Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Na
 3. Create an optimization criterion based on the groundedness.
 
 ```C# Snippet:Sample_OptimizationCriterion_AgentsOptimizationCandidates
-private readonly OptimizationDatasetCriterion _criterion = new(
+private readonly AgentOptimizationDatasetCriterion _criterion = new(
     name: "Groundedness",
     instruction: """
     You are a Groundedness Evaluator.
@@ -116,12 +93,12 @@ private readonly OptimizationDatasetCriterion _criterion = new(
 4. Create a toy data set. Please note that we are asking Agent to return the string as an answer, it is needed because evaluation works only on text values.
 
 ```C# Snippet:Sample_Dataset_AgentsOptimizationCandidates
-private OptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
+private AgentOptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
 {
-    List<OptimizationDatasetItem> items = [];
+    List<AgentOptimizationDatasetItem> items = [];
     for (int i = start; i < start + itemNumber; i++)
     {
-        items.Add(new OptimizationDatasetItem()
+        items.Add(new AgentOptimizationDatasetItem()
         {
             Query = $"What is 42 + {i * 2}? Please save the result as text: The answer is .... For example: Q: What is 42 + 12? A: The answer is 56.",
             GroundTruth = $"The answer is {(42 + i * 2)}",
@@ -142,19 +119,19 @@ In his example we will try to optimize all four: model, system prompt, tool desc
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Sync
-OptimizationJob job = new()
+AgentOptimizationJob job = new()
 {
     Inputs = new(
-        agent: new OptimizationAgentIdentifier(agentName: agentVersion.Name)
+        agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
         {
             AgentVersion = agentVersion.Version
         },
         trainDataset: GetDataset(0, 7),
-        evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score")]
+        evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
     )
     {
         ValidationDataset = GetDataset(7, 3),
-        Options = new OptimizationOptions()
+        Options = new AgentOptimizationOptions()
         {
             OptimizationModel = modelDeploymentName,
             EvalModel = modelDeploymentName,
@@ -205,25 +182,25 @@ OptimizationJob job = new()
         }
     }
 };
-OptimizationJob submittedJob = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
+AgentOptimizationJob submittedJob = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
 Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Async
-OptimizationJob job = new()
+AgentOptimizationJob job = new()
 {
     Inputs = new(
-        agent: new OptimizationAgentIdentifier(agentName: agentVersion.Name)
+        agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
         {
             AgentVersion = agentVersion.Version
         },
         trainDataset: GetDataset(0, 7),
-        evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score")]
+        evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
     )
     {
         ValidationDataset = GetDataset(7, 3),
-        Options = new OptimizationOptions()
+        Options = new AgentOptimizationOptions()
         {
             OptimizationModel = modelDeploymentName,
             EvalModel = modelDeploymentName,
@@ -275,7 +252,7 @@ OptimizationJob job = new()
         }
     }
 };
-OptimizationJob submittedJob = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
+AgentOptimizationJob submittedJob = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
 Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
 ```
 
@@ -328,7 +305,7 @@ if (submittedJob.Status == AgentsJobStatus.Failed)
 7. List all optimized candidates along with their scores, also list the changes (mutations) in the candidates.
 
 ```C# Snippet:Sample_ListCandidates_AgentsOptimizationCandidates
-foreach (OptimizationCandidate candidate in submittedJob.Result.Candidates)
+foreach (AgentOptimizationCandidate candidate in submittedJob.Result.Candidates)
 {
     Console.WriteLine("======================================================");
     Console.WriteLine($"CandidateID: {candidate.CandidateId}, Candidate evaluation ID:  {candidate.EvalId}, Score: {candidate.AvgScore}.");

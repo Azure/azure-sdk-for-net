@@ -13,7 +13,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The scheduler profile for a single scheduler instance. </summary>
+    /// <summary> Profile with settings related to a specific instance of an AKS-managed scheduler. </summary>
     internal partial class SchedulerInstanceProfile : IJsonModel<SchedulerInstanceProfile>
     {
         /// <param name="data"> The data to parse. </param>

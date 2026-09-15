@@ -9,6 +9,9 @@ using Microsoft.Azure.WebJobs.EventHubs;
 
 namespace Microsoft.Azure.WebJobs
 {
+    /// <summary>
+    /// Event Hubs specific extension methods for the WebJobs binding types.
+    /// </summary>
     public static class EventHubWebJobsExtensions
     {
         /// <summary>

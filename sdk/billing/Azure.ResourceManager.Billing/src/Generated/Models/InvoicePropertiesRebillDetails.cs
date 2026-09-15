@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Rebill details for an invoice. </summary>
-    public partial class InvoicePropertiesRebillDetails : RebillDetails
+    internal partial class InvoicePropertiesRebillDetails : RebillDetails
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesRebillDetails"/>. </summary>
         public InvoicePropertiesRebillDetails()

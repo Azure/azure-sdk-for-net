@@ -144,7 +144,7 @@ namespace BasicTypeSpec
                     List<ThingModel> array = new List<ThingModel>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ThingModel.DeserializeThingModel(item, options));
+                        array.Add(ThingModel.DeserializeThingModel(item, item.GetUtf8Bytes(), options));
                     }
                     things = array;
                     continue;

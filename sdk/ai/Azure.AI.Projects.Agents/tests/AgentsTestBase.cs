@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -18,6 +19,7 @@ using OpenAI.Responses;
 
 #pragma warning disable OPENAICUA001
 #pragma warning disable AAIP001
+#pragma warning disable AAIP002
 namespace Azure.AI.Projects.Agents.Tests;
 
 public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
@@ -30,9 +32,6 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     protected const string SKILL = "test-skill";
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
     protected readonly int PAGE_SIZE = 3;
-
-    protected const string FOUNDRY_HEADER = "Foundry-Features";
-    protected const string FOUNDRY_HEADER_VALUE = "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V1Preview,ExternalAgents=V1Preview";
 
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
@@ -140,7 +139,6 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 {
                     message.NetworkTimeout = TimeSpan.FromMinutes(5);
                 }
-                message.Request.Headers.Set(FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE);
             }),
             PipelinePosition.PerCall);
         return CreateProxyFromClient(new AgentAdministrationClient(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), InstrumentClientOptions(options)));
@@ -159,7 +157,6 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
 
     public static void AssertListEqual(string[] expected, List<string> observed)
     {
-        // Assert.AreEqual(expected.Length, observed.Count, $"The length of arrays are different. Expected: {expected}, Observed: {observed.ToArray()}");
         HashSet<string> expectedHash = [.. expected];
         HashSet<string> observedHash = [.. observed];
         if (!expectedHash.SetEquals(observedHash))
@@ -216,7 +213,8 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         BrowserAutomation,
         ReminderPreview,
         WorkIQ,
-        FabricIQ
+        FabricIQ,
+        WebIQ
     }
 
     private AzureAISearchToolIndex GetAISearchIndex()
@@ -227,7 +225,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             IndexName = "sample_index",
             TopK = 5,
             Filter = "category eq 'sleeping bag'",
-            QueryType = AzureAISearchQueryType.Simple
+            QueryType = AzureAISearchQueryKind.Simple
         };
         return index;
     }
@@ -269,7 +267,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                             fileIds: []
                     ))
             },
-            ToolType.FileSearch =>new FileSearchToolboxTool()
+            ToolType.FileSearch => new FileSearchToolboxTool()
             {
                 Name = "file-search",
                 Description = "Test file search",
@@ -279,7 +277,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "web-search",
                 Description = "Test web search",
-                UserLocation = new OpenAI.WebSearchApproximateLocation()
+                UserLocation = new WebSearchToolApproximateLocation()
                 {
                     Country = "US",
                     Region = "Pennsylvania",
@@ -300,8 +298,8 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             },
             ToolType.OpenAPI => new OpenApiToolboxTool(new OpenApiFunctionDefinition(
                 name: "get_weather",
-                specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(GetTestFile("weather_openapi.json"))),
-                authentication: new OpenAPIAnonymousAuthenticationDetails()
+                specification: BinaryData.FromBytes(File.ReadAllBytes(GetTestFile("weather_openapi.json"))),
+                authentication: new OpenApiAnonymousAuthenticationDetails()
             ))
             {
                 Name = "open-api",
@@ -309,7 +307,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             },
             ToolType.BrowserAutomation => new BrowserAutomationPreviewToolboxTool(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+                new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             ))
             {
                 Name = "browser-automation",
@@ -337,6 +335,12 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "reminder-preview",
                 Description = "Test reminder preview"
             },
+            ToolType.WebIQ => new WebIQPreviewToolboxTool(TestEnvironment.WEBIQ_CONNECTION_ID)
+            {
+                Name = "web-iq",
+                Description = "Test Web IQ",
+                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+            },
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return tool;
@@ -363,14 +367,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
     {
         if (Mode == RecordedTestMode.Playback)
             return;
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(
-            new TestPipelinePolicy(message =>
-            {
-                message.Request.Headers.Set(FOUNDRY_HEADER, FOUNDRY_HEADER_VALUE);
-            }),
-            PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider(), options);
+        AgentAdministrationClient agentsClient = new(new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT), GetTestTokenProvider());
 
         // Remove Agents.
         foreach (ProjectsAgentVersion ag in agentsClient.GetAgentVersions(agentName: AGENT_NAME))
@@ -381,7 +378,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         {
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        List<string> hostedAgents = [..agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
+        List<string> hostedAgents = [.. agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
         foreach (string agentName in hostedAgents)
         {
             await agentsClient.DeleteAgentAsync(agentName, force: true);

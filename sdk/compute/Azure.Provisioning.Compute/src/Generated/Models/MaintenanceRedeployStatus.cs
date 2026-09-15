@@ -15,10 +15,10 @@ namespace Azure.Provisioning.Compute
     public partial class MaintenanceRedeployStatus : ProvisionableConstruct
     {
         private BicepValue<bool> _isCustomerInitiatedMaintenanceAllowed;
-        private BicepValue<DateTimeOffset> _preMaintenanceWindowStartOn;
-        private BicepValue<DateTimeOffset> _preMaintenanceWindowEndOn;
-        private BicepValue<DateTimeOffset> _maintenanceWindowStartOn;
-        private BicepValue<DateTimeOffset> _maintenanceWindowEndOn;
+        private BicepValue<DateTimeOffset> _preMaintenanceWindowStartsOn;
+        private BicepValue<DateTimeOffset> _preMaintenanceWindowEndsOn;
+        private BicepValue<DateTimeOffset> _maintenanceWindowStartsOn;
+        private BicepValue<DateTimeOffset> _maintenanceWindowEndsOn;
         private BicepValue<MaintenanceOperationResultCodeType> _lastOperationResultCode;
         private BicepValue<string> _lastOperationMessage;
 
@@ -37,43 +37,43 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the PreMaintenanceWindowStartOn. </summary>
-        public BicepValue<DateTimeOffset> PreMaintenanceWindowStartOn
+        /// <summary> Gets the PreMaintenanceWindowStartsOn. </summary>
+        public BicepValue<DateTimeOffset> PreMaintenanceWindowStartsOn
         {
             get
             {
                 Initialize();
-                return _preMaintenanceWindowStartOn;
+                return _preMaintenanceWindowStartsOn;
             }
         }
 
-        /// <summary> Gets the PreMaintenanceWindowEndOn. </summary>
-        public BicepValue<DateTimeOffset> PreMaintenanceWindowEndOn
+        /// <summary> Gets the PreMaintenanceWindowEndsOn. </summary>
+        public BicepValue<DateTimeOffset> PreMaintenanceWindowEndsOn
         {
             get
             {
                 Initialize();
-                return _preMaintenanceWindowEndOn;
+                return _preMaintenanceWindowEndsOn;
             }
         }
 
-        /// <summary> Gets the MaintenanceWindowStartOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceWindowStartOn
+        /// <summary> Gets the MaintenanceWindowStartsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceWindowStartsOn
         {
             get
             {
                 Initialize();
-                return _maintenanceWindowStartOn;
+                return _maintenanceWindowStartsOn;
             }
         }
 
-        /// <summary> Gets the MaintenanceWindowEndOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceWindowEndOn
+        /// <summary> Gets the MaintenanceWindowEndsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceWindowEndsOn
         {
             get
             {
                 Initialize();
-                return _maintenanceWindowEndOn;
+                return _maintenanceWindowEndsOn;
             }
         }
 
@@ -102,10 +102,10 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _isCustomerInitiatedMaintenanceAllowed = DefineProperty<bool>(nameof(IsCustomerInitiatedMaintenanceAllowed), new string[] { "isCustomerInitiatedMaintenanceAllowed" });
-            _preMaintenanceWindowStartOn = DefineProperty<DateTimeOffset>(nameof(PreMaintenanceWindowStartOn), new string[] { "preMaintenanceWindowStartTime" });
-            _preMaintenanceWindowEndOn = DefineProperty<DateTimeOffset>(nameof(PreMaintenanceWindowEndOn), new string[] { "preMaintenanceWindowEndTime" });
-            _maintenanceWindowStartOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceWindowStartOn), new string[] { "maintenanceWindowStartTime" });
-            _maintenanceWindowEndOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceWindowEndOn), new string[] { "maintenanceWindowEndTime" });
+            _preMaintenanceWindowStartsOn = DefineProperty<DateTimeOffset>(nameof(PreMaintenanceWindowStartsOn), new string[] { "preMaintenanceWindowStartTime" }, format: "O");
+            _preMaintenanceWindowEndsOn = DefineProperty<DateTimeOffset>(nameof(PreMaintenanceWindowEndsOn), new string[] { "preMaintenanceWindowEndTime" }, format: "O");
+            _maintenanceWindowStartsOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceWindowStartsOn), new string[] { "maintenanceWindowStartTime" }, format: "O");
+            _maintenanceWindowEndsOn = DefineProperty<DateTimeOffset>(nameof(MaintenanceWindowEndsOn), new string[] { "maintenanceWindowEndTime" }, format: "O");
             _lastOperationResultCode = DefineProperty<MaintenanceOperationResultCodeType>(nameof(LastOperationResultCode), new string[] { "lastOperationResultCode" });
             _lastOperationMessage = DefineProperty<string>(nameof(LastOperationMessage), new string[] { "lastOperationMessage" });
             DefineAdditionalProperties();

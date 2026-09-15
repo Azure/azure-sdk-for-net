@@ -2,41 +2,17 @@
 
 In this example we will demonstrate management of External Agents step by step. External Agents are the third-party Agents hosted outside Foundry (for example, on GCP or AWS). Registration is metadata-only: Foundry records the agent definition to light up observability experiences (traces, evaluations) over customer-emitted OpenTelemetry data.
 
-To use external Agents, we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.
-
-```C# Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
-{
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-We also need to ignore the `AAIP001` warning.
+To use external Agents, we need to ignore the `AAIP001` warning.
 
 ```C#
 #pragma warning disable AAIP001
 ```
 
-1. First, we need to create agent client and read the environment variables, which will be used in the next steps. We also will add the experimental `Foundry-Features: ExternalAgents=V1Preview` header policy to the client.
-**Note:** If the `AgentAdministrationClient` client was created using `AgentAdministrationClient` property of `AIProjectClient`, the `Foundry-Features` will already contain all the experimental features and no additional actions will be needed.
+1. First, we need to create agent client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateClient_ExternalAgentsCRUD
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("ExternalAgents=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create the Agent version object.

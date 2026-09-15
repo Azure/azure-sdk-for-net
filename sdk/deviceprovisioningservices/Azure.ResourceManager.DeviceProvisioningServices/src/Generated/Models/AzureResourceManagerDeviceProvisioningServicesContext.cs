@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Models;
 
@@ -41,13 +40,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesSharedAccessKey))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesSkuDefinition))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesSkuInfo))]
-    [ModelReaderWriterBuildable(typeof(DeviceRegistryNamespaceDescription))]
     [ModelReaderWriterBuildable(typeof(IotDpsSkuDefinitionListResult))]
     [ModelReaderWriterBuildable(typeof(IotHubDefinitionDescription))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResources))]
     [ModelReaderWriterBuildable(typeof(ProvisioningServiceDescriptionListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SharedAccessSignatureAuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

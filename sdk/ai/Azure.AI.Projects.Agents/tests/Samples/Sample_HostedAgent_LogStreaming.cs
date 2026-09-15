@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -41,10 +40,7 @@ public class Sample_HostedAgentLogStreaming : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
-        Uri uriEndpoint = new(projectEndpoint);
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage
         );
@@ -81,10 +77,7 @@ public class Sample_HostedAgentLogStreaming : SamplesBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
 #endif
-        Uri uriEndpoint = new(projectEndpoint);
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("HostedAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         HostedAgentDefinition agentDefinition = GetAgentDefinition(
             dockerImage: dockerImage
         );

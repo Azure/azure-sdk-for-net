@@ -15,7 +15,7 @@ using Azure.ResourceManager.ApiManagement;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API Create or Update Properties. </summary>
-    public partial class ApiCreateOrUpdateProperties : ApiContractProperties, IJsonModel<ApiCreateOrUpdateProperties>
+    internal partial class ApiCreateOrUpdateProperties : ApiContractProperties, IJsonModel<ApiCreateOrUpdateProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ApiCreateOrUpdateProperties"/> for deserialization. </summary>
         internal ApiCreateOrUpdateProperties()

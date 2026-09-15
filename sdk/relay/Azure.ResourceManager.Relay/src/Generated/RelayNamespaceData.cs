@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Relay
         /// The service defaults to 1.2 when the property is omitted.
         /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
         /// </summary>
-        public TlsVersion? MinimumTlsVersion
+        public RelayTlsVersion? MinimumTlsVersion
         {
             get
             {

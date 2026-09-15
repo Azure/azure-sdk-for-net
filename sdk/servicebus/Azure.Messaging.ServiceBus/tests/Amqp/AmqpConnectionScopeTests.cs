@@ -11,7 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
+using Azure.Messaging.ServiceBus.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Authorization;
+using Azure.Messaging.ServiceBus.Core;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Transport;
 using Moq;
@@ -258,7 +260,7 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
-        ///   Verifies functionality of the <see cref="AmqpConnectionScope.OpenReceiverLinkAsync(string, string, TimeSpan, uint, ServiceBusReceiveMode, string, bool, CancellationToken)" />
+        ///   Verifies functionality of the <see cref="AmqpConnectionScope.OpenReceiverLinkAsync(string, string, TimeSpan, uint, ServiceBusReceiveMode, string, bool, bool, System.Guid?, CancellationToken)" />
         ///   method.
         /// </summary>
         ///
@@ -321,9 +323,191 @@ namespace Azure.Messaging.ServiceBus.Tests
                 .Returns(Task.CompletedTask)
                 .Verifiable();
 
-            var link = await mockScope.Object.OpenReceiverLinkAsync(linkIdentifier, "fake/path", TimeSpan.FromDays(1), 100, ServiceBusReceiveMode.ReceiveAndDelete, "0", false, cancellationSource.Token);
+            var link = await mockScope.Object.OpenReceiverLinkAsync(linkIdentifier, "fake/path", TimeSpan.FromDays(1), 100, ServiceBusReceiveMode.ReceiveAndDelete, "0", false, cancellationToken: cancellationSource.Token);
             Assert.That(link, Is.Not.Null, "The link produced was null");
             Assert.That(link.Settings.Target.ToString(), Contains.Substring(linkIdentifier));
+        }
+
+        /// <summary>
+        ///   Verifies that <see cref="AmqpConnectionScope.OpenReceiverLinkAsync" /> adds a single composite
+        ///   non-exclusive session filter (carrying both the session id and the supplied lock token) to the
+        ///   receive link source, and omits the plain session filter, when a non-exclusive session takeover
+        ///   is requested.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OpenReceiverLinkAddsNonExclusiveSessionFilters()
+        {
+            var sessionLockToken = Guid.NewGuid();
+            var mockScope = CreateMockReceiverScope();
+            using var cancellationSource = new CancellationTokenSource();
+
+            var link = await mockScope.Object.OpenReceiverLinkAsync(
+                "MyAmqpConnectionScope",
+                "fake/path",
+                TimeSpan.FromDays(1),
+                100,
+                ServiceBusReceiveMode.PeekLock,
+                "sessionId",
+                isSessionReceiver: true,
+                isSessionExclusive: false,
+                sessionLockToken: sessionLockToken,
+                cancellationToken: cancellationSource.Token);
+
+            var filterSet = ((Microsoft.Azure.Amqp.Framing.Source)link.Settings.Source).FilterSet;
+            Assert.That(filterSet.TryGetValue<AmqpNonExclusiveSessionFilterCodec>(AmqpClientConstants.NonExclusiveSessionFilterName, out var nonExclusiveFilter), Is.True, "The non-exclusive session filter should be present.");
+            Assert.That(nonExclusiveFilter.SessionId, Is.EqualTo("sessionId"), "The composite filter should carry the session id.");
+            Assert.That(nonExclusiveFilter.LockToken, Is.EqualTo(sessionLockToken), "The composite filter should carry the supplied lock token.");
+            Assert.That(filterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out _), Is.False, "The plain session filter should be omitted for a non-exclusive session.");
+
+            // The link name is built from the source, which renders the filter set, and it reaches the event source and
+            // the associated-link-name on every management request. Assert on the link name itself rather than only on
+            // the codec, so that a change to either one re-opens this leak loudly.
+            Assert.That(link.Settings.LinkName, Does.Not.Contain(sessionLockToken.ToString()), "The lock token must not reach the link name, which is logged.");
+        }
+
+        /// <summary>
+        ///   Verifies that <see cref="AmqpConnectionScope.OpenReceiverLinkAsync" /> omits the non-exclusive
+        ///   session filters for a standard (exclusive) session receiver, preserving back-compatibility with
+        ///   services that predate the non-exclusive session feature.
+        /// </summary>
+        ///
+        [Test]
+        public async Task OpenReceiverLinkUsesPlainSessionFilterWhenExclusive()
+        {
+            var mockScope = CreateMockReceiverScope();
+            using var cancellationSource = new CancellationTokenSource();
+
+            var link = await mockScope.Object.OpenReceiverLinkAsync(
+                "MyAmqpConnectionScope",
+                "fake/path",
+                TimeSpan.FromDays(1),
+                100,
+                ServiceBusReceiveMode.PeekLock,
+                "sessionId",
+                isSessionReceiver: true,
+                cancellationToken: cancellationSource.Token);
+
+            var filterSet = ((Microsoft.Azure.Amqp.Framing.Source)link.Settings.Source).FilterSet;
+            Assert.That(filterSet.TryGetValue<string>(AmqpClientConstants.SessionFilterName, out _), Is.True, "The session filter should still be present for an exclusive session.");
+            Assert.That(filterSet.TryGetValue<AmqpNonExclusiveSessionFilterCodec>(AmqpClientConstants.NonExclusiveSessionFilterName, out _), Is.False, "The non-exclusive session filter should be absent for an exclusive session.");
+        }
+
+        /// <summary>
+        ///   Verifies that <see cref="AmqpConnectionScope.OpenReceiverLinkAsync" /> adds the composite non-exclusive
+        ///   session filter with a null lock token for a fresh non-exclusive acquire (the first holder presents no token).
+        /// </summary>
+        ///
+        [Test]
+        public async Task OpenReceiverLinkAddsCompositeFilterWithoutTokenForFreshNonExclusiveSession()
+        {
+            var mockScope = CreateMockReceiverScope();
+            using var cancellationSource = new CancellationTokenSource();
+
+            var link = await mockScope.Object.OpenReceiverLinkAsync(
+                "MyAmqpConnectionScope",
+                "fake/path",
+                TimeSpan.FromDays(1),
+                100,
+                ServiceBusReceiveMode.PeekLock,
+                "sessionId",
+                isSessionReceiver: true,
+                isSessionExclusive: false,
+                sessionLockToken: null,
+                cancellationToken: cancellationSource.Token);
+
+            var filterSet = ((Microsoft.Azure.Amqp.Framing.Source)link.Settings.Source).FilterSet;
+            Assert.That(filterSet.TryGetValue<AmqpNonExclusiveSessionFilterCodec>(AmqpClientConstants.NonExclusiveSessionFilterName, out var nonExclusiveFilter), Is.True, "The non-exclusive session filter should be present for a fresh acquire.");
+            Assert.That(nonExclusiveFilter.SessionId, Is.EqualTo("sessionId"), "The composite filter should carry the session id.");
+            Assert.That(nonExclusiveFilter.LockToken, Is.Null, "No token should be present when none is presented.");
+        }
+
+        /// <summary>
+        ///   Creates a mocked <see cref="AmqpConnectionScope" /> with the transport, authorization, and link
+        ///   open operations stubbed so that <see cref="AmqpConnectionScope.OpenReceiverLinkAsync" /> can be
+        ///   exercised without a live connection.
+        /// </summary>
+        ///
+        /// <param name="assignedSessionLockToken">When set, the attach echoes back a non-exclusive session filter carrying this token.</param>
+        /// <param name="attachFailure">When set, the attach fails with this exception, simulating an endpoint that refuses the link.</param>
+        ///
+        /// <returns>A scope whose receiver link attach behaves as requested.</returns>
+        ///
+        internal static Mock<AmqpConnectionScope> CreateMockReceiverScope(
+            Guid? assignedSessionLockToken = null,
+            Exception attachFailure = null)
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var endpoint = new Uri("amqp://mine.hubs.com");
+            var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
+
+            var mockScope = new Mock<AmqpConnectionScope>(endpoint, endpoint, credential.Object, ServiceBusTransportType.AmqpTcp, null, false, default, default, default)
+            {
+                CallBase = true,
+            };
+
+            mockScope
+                .Protected()
+                .Setup<Task<AmqpConnection>>("CreateAndOpenConnectionAsync",
+                    ItExpr.IsAny<Version>(),
+                    ItExpr.IsAny<Uri>(),
+                    ItExpr.IsAny<Uri>(),
+                    ItExpr.IsAny<ServiceBusTransportType>(),
+                    ItExpr.IsAny<IWebProxy>(),
+                    ItExpr.IsAny<RemoteCertificateValidationCallback>(),
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<TimeSpan>())
+                .Returns(Task.FromResult(mockConnection))
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task<DateTime>>("RequestAuthorizationUsingCbsAsync",
+                    ItExpr.IsAny<AmqpConnection>(),
+                    ItExpr.IsAny<CbsTokenProvider>(),
+                    ItExpr.IsAny<Uri>(),
+                    ItExpr.IsAny<string[]>(),
+                    ItExpr.IsAny<string[]>(),
+                    ItExpr.IsAny<TimeSpan>(),
+                    ItExpr.IsAny<string>())
+                .Returns(Task.FromResult(DateTime.UtcNow.AddDays(1)))
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task>("OpenAmqpObjectAsync",
+                    ItExpr.IsAny<AmqpObject>(),
+                    ItExpr.IsAny<TimeSpan>())
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+
+            mockScope
+                .Protected()
+                .Setup<Task>("OpenAmqpLinkAsync",
+                    ItExpr.IsAny<ReceivingAmqpLink>(),
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Callback(new InvocationAction(invocation =>
+                {
+                    if (attachFailure != null)
+                    {
+                        throw attachFailure;
+                    }
+
+                    // Simulate the service honoring the non-exclusive session on attach: echo back the composite
+                    // non-exclusive session filter carrying the assigned session id and lock token, so the receiver's
+                    // non-exclusive read can be exercised without a live link.
+                    if (assignedSessionLockToken.HasValue)
+                    {
+                        var openedLink = (ReceivingAmqpLink)invocation.Arguments[0];
+                        ((Microsoft.Azure.Amqp.Framing.Source)openedLink.Settings.Source).FilterSet[AmqpClientConstants.NonExclusiveSessionFilterName] =
+                            new AmqpNonExclusiveSessionFilterCodec { SessionId = "sessionId", LockToken = assignedSessionLockToken.Value };
+                    }
+                }))
+                .Returns(Task.CompletedTask)
+                .Verifiable();
+
+            return mockScope;
         }
 
         /// <summary>

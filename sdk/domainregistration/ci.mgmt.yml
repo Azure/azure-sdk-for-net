@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DomainRegistration
       safeName: AzureResourceManagerDomainRegistration
+    - name: Azure.Provisioning.DomainRegistration
+      safeName: AzureProvisioningDomainRegistration

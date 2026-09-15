@@ -88,7 +88,7 @@ namespace Azure.Provisioning.Batch
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resizeTimeout = DefineProperty<TimeSpan>(nameof(ResizeTimeout), new string[] { "resizeTimeout" });
+            _resizeTimeout = DefineProperty<TimeSpan>(nameof(ResizeTimeout), new string[] { "resizeTimeout" }, format: "P");
             _targetDedicatedNodes = DefineProperty<int>(nameof(TargetDedicatedNodes), new string[] { "targetDedicatedNodes" });
             _targetLowPriorityNodes = DefineProperty<int>(nameof(TargetLowPriorityNodes), new string[] { "targetLowPriorityNodes" });
             _nodeDeallocationOption = DefineProperty<BatchNodeDeallocationOption>(nameof(NodeDeallocationOption), new string[] { "nodeDeallocationOption" });

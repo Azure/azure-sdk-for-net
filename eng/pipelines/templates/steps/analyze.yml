@@ -105,6 +105,7 @@ steps:
     env:
       EnableSourceLink: false
       NPM_CONFIG_USERCONFIG: $(Agent.TempDirectory)/analyze-job/.npmrc
+      autorest_registry: 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js/npm/registry/'
 
   - pwsh: |
       $failed = $false

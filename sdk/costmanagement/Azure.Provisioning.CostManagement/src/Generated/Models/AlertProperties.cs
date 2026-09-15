@@ -151,11 +151,11 @@ namespace Azure.Provisioning.CostManagement
             _details = DefineModelProperty<AlertPropertiesDetails>(nameof(Details), new string[] { "details" });
             _costEntityId = DefineProperty<string>(nameof(CostEntityId), new string[] { "costEntityId" });
             _status = DefineProperty<CostManagementAlertStatus>(nameof(Status), new string[] { "status" });
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" });
-            _closeOn = DefineProperty<DateTimeOffset>(nameof(CloseOn), new string[] { "closeTime" });
-            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modificationTime" });
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, format: "O");
+            _closeOn = DefineProperty<DateTimeOffset>(nameof(CloseOn), new string[] { "closeTime" }, format: "O");
+            _modifiedOn = DefineProperty<DateTimeOffset>(nameof(ModifiedOn), new string[] { "modificationTime" }, format: "O");
             _statusModificationUserName = DefineProperty<string>(nameof(StatusModificationUserName), new string[] { "statusModificationUserName" });
-            _statusModifiedOn = DefineProperty<DateTimeOffset>(nameof(StatusModifiedOn), new string[] { "statusModificationTime" });
+            _statusModifiedOn = DefineProperty<DateTimeOffset>(nameof(StatusModifiedOn), new string[] { "statusModificationTime" }, format: "O");
             DefineAdditionalProperties();
         }
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -16,6 +17,7 @@ namespace Azure.Data.AppConfiguration
     [ModelReaderWriterBuildable(typeof(ConfigurationSetting))]
     [ModelReaderWriterBuildable(typeof(ConfigurationSettingsFilter))]
     [ModelReaderWriterBuildable(typeof(ConfigurationSnapshot))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SettingLabel))]
     [ModelReaderWriterBuildable(typeof(SnapshotUpdateParameters))]
     public partial class AzureDataAppConfigurationContext : ModelReaderWriterContext

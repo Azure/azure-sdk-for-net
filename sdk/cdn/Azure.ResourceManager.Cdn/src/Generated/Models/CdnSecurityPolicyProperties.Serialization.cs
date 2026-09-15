@@ -14,7 +14,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The json object that contains properties required to create a security policy. </summary>
-    public partial class CdnSecurityPolicyProperties : FrontDoorStateProperties, IJsonModel<CdnSecurityPolicyProperties>
+    internal partial class CdnSecurityPolicyProperties : FrontDoorStateProperties, IJsonModel<CdnSecurityPolicyProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

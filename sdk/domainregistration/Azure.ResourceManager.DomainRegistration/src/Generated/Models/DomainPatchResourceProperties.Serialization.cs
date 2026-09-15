@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DomainRegistration;
 
 namespace Azure.ResourceManager.DomainRegistration.Models
@@ -122,10 +123,10 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastRenewedOn))
             {
@@ -235,7 +236,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             IReadOnlyList<string> nameServers = default;
             bool? isDomainPrivacyEnabled = default;
             DateTimeOffset? createdOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             DateTimeOffset? lastRenewedOn = default;
             bool? isAutoRenew = default;
             bool? isDnsRecordManagementReady = default;
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             DomainPurchaseConsent consent = default;
             IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons = default;
             AppServiceDnsType? dnsType = default;
-            string dnsZoneId = default;
+            ResourceIdentifier dnsZoneId = default;
             AppServiceDnsType? targetDnsType = default;
             string authCode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastRenewedTime"u8))
@@ -406,7 +407,11 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 }
                 if (prop.NameEquals("dnsZoneId"u8))
                 {
-                    dnsZoneId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dnsZoneId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetDnsType"u8))
@@ -438,7 +443,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 nameServers ?? new ChangeTrackingList<string>(),
                 isDomainPrivacyEnabled,
                 createdOn,
-                expireOn,
+                expiresOn,
                 lastRenewedOn,
                 isAutoRenew,
                 isDnsRecordManagementReady,

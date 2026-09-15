@@ -10,6 +10,8 @@ Content Understanding supports both local binary inputs (see [Sample01_AnalyzeBi
 
 Documents, HTML, and images with text are returned as `DocumentContent` (derived from `AnalysisContent`), while audio and video are returned as `AudioVisualContent` (also derived from `AnalysisContent`). These prebuilt RAG analyzers return markdown and a one-paragraph `Summary` for each content item; `prebuilt-videoSearch` can return multiple segments, so iterate over all contents rather than just the first.
 
+`AnalyzeAsync` uses a **long-running operation (LRO)** and polls until the result is ready. For the URL inline alternative and guidance on choosing between the patterns, see [Sample 18: Analyze URL input inline][sample18-inline].
+
 ## Prerequisites
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
@@ -35,8 +37,6 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 ## Document from a URL
 
 Use the `prebuilt-documentSearch` analyzer with a public document URL. Note that for URL inputs, use `AnalyzeAsync()` with `AnalysisInput` objects (as shown below). For binary data from local files, use `AnalyzeBinaryAsync()` instead (see [Sample01_AnalyzeBinary][sample01-analyze-binary]).
-
-> Content Understanding operations are long-running; the SDK handles polling when using `WaitUntil.Completed`.
 
 For a list of supported document types for `prebuilt-documentSearch`, see [Service limits][cu-service-limits].
 
@@ -341,6 +341,7 @@ Console.WriteLine($"Summary: {summary}");
 - **[Sample01_AnalyzeBinary][sample01-analyze-binary]** - Basics of analysis and result processing
 
 [sample01-analyze-binary]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample18-inline]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample18_AnalyzeInline.md
 [sample03]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample03_AnalyzeInvoice.md
 [samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
 [cu-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/overview

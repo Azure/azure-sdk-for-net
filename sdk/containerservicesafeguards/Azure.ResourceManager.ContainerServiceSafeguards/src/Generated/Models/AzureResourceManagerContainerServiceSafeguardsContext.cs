@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ContainerServiceSafeguards.Models;
 using Azure.ResourceManager.Models;
 
@@ -19,7 +18,6 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards
     [ModelReaderWriterBuildable(typeof(DeploymentSafeguardData))]
     [ModelReaderWriterBuildable(typeof(DeploymentSafeguardResource))]
     [ModelReaderWriterBuildable(typeof(DeploymentSafeguardsProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerContainerServiceSafeguardsContext : ModelReaderWriterContext
     {

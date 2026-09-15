@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Total amount of payments on accounts. </summary>
-    public partial class AvailableBalancePropertiesTotalPaymentsOnAccount : BillingAmount, IJsonModel<AvailableBalancePropertiesTotalPaymentsOnAccount>
+    internal partial class AvailableBalancePropertiesTotalPaymentsOnAccount : BillingAmount, IJsonModel<AvailableBalancePropertiesTotalPaymentsOnAccount>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

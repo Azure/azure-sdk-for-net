@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> SummaryRules rule type: User. </summary>
         [WirePath("properties.ruleType")]
-        public OperationalInsightsNetworkSecurityPerimeterRuleType? RuleType
+        public OperationalInsightsSummaryLogsRuleType? SummaryLogsRuleType
         {
             get
             {
-                return Properties is null ? default : Properties.RuleType;
+                return Properties is null ? default : Properties.SummaryLogsRuleType;
             }
             set
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     Properties = new SummaryLogsProperties();
                 }
-                Properties.RuleType = value;
+                Properties.SummaryLogsRuleType = value;
             }
         }
 
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.OperationalInsights
 
         /// <summary> Indicates the reason for rule deactivation. </summary>
         [WirePath("properties.statusCode")]
-        public OperationalInsightsNetworkSecurityPerimeterStatusCode? StatusCode
+        public OperationalInsightsSummaryLogsStatusCode? SummaryLogsStatusCode
         {
             get
             {
-                return Properties is null ? default : Properties.StatusCode;
+                return Properties is null ? default : Properties.SummaryLogsStatusCode;
             }
         }
 
         /// <summary> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </summary>
         [WirePath("properties.provisioningState")]
-        public OperationalInsightsNetworkSecurityPerimeterProvisioningState? ProvisioningState
+        public OperationalInsightsSummaryLogsProvisioningState? SummaryLogsProvisioningState
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisioningState;
+                return Properties is null ? default : Properties.SummaryLogsProvisioningState;
             }
         }
 

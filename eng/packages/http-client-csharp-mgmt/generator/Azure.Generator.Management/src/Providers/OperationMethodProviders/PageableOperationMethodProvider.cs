@@ -49,7 +49,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _restClientInfo = restClientInfo;
             _method = method;
             _parameterMappings = parameterMappings;
-            _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
+            _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync, enclosingType);
             _isAsync = isAsync;
             _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
             InitializeTypeInfo(
@@ -99,10 +99,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(PageableOperationMethodProvider pageableOperationMethodProvider)
         {
-            var methodProvider = new MethodProvider(
+            var methodProvider = new ManagementMethodProvider(
                 pageableOperationMethodProvider._signature,
                 pageableOperationMethodProvider._bodyStatements,
-                pageableOperationMethodProvider._enclosingType);
+                pageableOperationMethodProvider._enclosingType,
+                ScmMethodKind.Convenience,
+                collectionDefinition: ((ScmMethodProvider)pageableOperationMethodProvider._convenienceMethod).CollectionDefinition,
+                serviceMethod: pageableOperationMethodProvider._method);
 
             // Add enhanced XML documentation with structured tags
             ResourceHelpers.BuildEnhancedXmlDocs(

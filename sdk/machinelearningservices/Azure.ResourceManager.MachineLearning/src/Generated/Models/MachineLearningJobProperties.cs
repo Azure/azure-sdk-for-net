@@ -12,7 +12,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition for a job. </summary>
+    /// <summary>
+    /// Base definition for a job.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/>, and <see cref="MachineLearningSweepJob"/>.
+    /// </summary>
     public partial class MachineLearningJobProperties : MachineLearningResourceBase
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobProperties"/>. </summary>
@@ -39,13 +42,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="notificationSetting"> Notification setting for the job. </param>
-        /// <param name="parentJobName"> Parent job name. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
         /// </param>
         /// <param name="status"> Status of the job. </param>
-        internal MachineLearningJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, string parentJobName, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status) : base(description, properties, tags, additionalBinaryDataProperties)
+        internal MachineLearningJobProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status) : base(description, properties, tags, additionalBinaryDataProperties)
         {
             ComponentId = componentId;
             ComputeId = computeId;
@@ -55,7 +57,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IsArchived = isArchived;
             JobType = jobType;
             NotificationSetting = notificationSetting;
-            ParentJobName = parentJobName;
             Services = services;
             Status = status;
         }
@@ -94,10 +95,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Notification setting for the job. </summary>
         [WirePath("notificationSetting")]
         public NotificationSetting NotificationSetting { get; set; }
-
-        /// <summary> Parent job name. </summary>
-        [WirePath("parentJobName")]
-        public string ParentJobName { get; set; }
 
         /// <summary>
         /// List of JobEndpoints.

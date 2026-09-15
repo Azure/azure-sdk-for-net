@@ -159,7 +159,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             GeoJsonGeometry geometry = default;
-            FeatureType @type = default;
+            FeatureKind @type = default;
             IDictionary<string, BinaryData> properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new FeatureType(prop.Value.GetString());
+                    @type = new FeatureKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

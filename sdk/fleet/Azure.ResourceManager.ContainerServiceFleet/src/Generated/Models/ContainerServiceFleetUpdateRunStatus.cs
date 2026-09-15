@@ -27,12 +27,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="status"> The status of the UpdateRun. </param>
         /// <param name="stages"> The stages composing an update run. Stages are run sequentially withing an UpdateRun. </param>
         /// <param name="nodeImageSelection"> The node image upgrade specs for the update run. It is only set in update run when `NodeImageSelection.type` is `Consistent`. </param>
+        /// <param name="failureCount"> Total member upgrade failures across the entire UpdateRun. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateRunStatus(ContainerServiceFleetUpdateStatus status, IReadOnlyList<ContainerServiceFleetUpdateStageStatus> stages, NodeImageSelectionStatus nodeImageSelection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetUpdateRunStatus(ContainerServiceFleetUpdateStatus status, IReadOnlyList<ContainerServiceFleetUpdateStageStatus> stages, NodeImageSelectionStatus nodeImageSelection, int? failureCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Stages = stages;
             NodeImageSelection = nodeImageSelection;
+            FailureCount = failureCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,6 +46,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> The node image upgrade specs for the update run. It is only set in update run when `NodeImageSelection.type` is `Consistent`. </summary>
         internal NodeImageSelectionStatus NodeImageSelection { get; }
+
+        /// <summary> Total member upgrade failures across the entire UpdateRun. </summary>
+        public int? FailureCount { get; }
 
         /// <summary> The image versions to upgrade the nodes to. </summary>
         public IReadOnlyList<NodeImageVersion> SelectedNodeImageVersions

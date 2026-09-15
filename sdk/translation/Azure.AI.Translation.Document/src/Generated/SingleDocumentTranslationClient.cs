@@ -122,6 +122,7 @@ namespace Azure.AI.Translation.Document
         /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator 
         /// project details to this parameter to use your deployed customized system. Default value is: general.
         /// </param>
+        /// <param name="deploymentName"> Deployment name of the custom translation model for the translation request. </param>
         /// <param name="allowFallback">
         /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist. 
         /// Possible values are: true (default) or false.
@@ -132,7 +133,7 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Translate(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = default, string category = default, bool? allowFallback = default, bool? translateTextWithinImage = default, RequestContext context = null)
+        public virtual Response Translate(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = default, string category = default, string deploymentName = default, bool? allowFallback = default, bool? translateTextWithinImage = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SingleDocumentTranslationClient.Translate");
             scope.Start();
@@ -142,7 +143,7 @@ namespace Azure.AI.Translation.Document
                 Argument.AssertNotNull(content, nameof(content));
                 Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
-                using HttpMessage message = CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
+                using HttpMessage message = CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, deploymentName, allowFallback, translateTextWithinImage, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -177,6 +178,7 @@ namespace Azure.AI.Translation.Document
         /// from a customized system built with Custom Translator. Add the Category ID from your Custom Translator 
         /// project details to this parameter to use your deployed customized system. Default value is: general.
         /// </param>
+        /// <param name="deploymentName"> Deployment name of the custom translation model for the translation request. </param>
         /// <param name="allowFallback">
         /// Specifies that the service is allowed to fall back to a general system when a custom system doesn't exist. 
         /// Possible values are: true (default) or false.
@@ -187,7 +189,7 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> TranslateAsync(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = default, string category = default, bool? allowFallback = default, bool? translateTextWithinImage = default, RequestContext context = null)
+        public virtual async Task<Response> TranslateAsync(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = default, string category = default, string deploymentName = default, bool? allowFallback = default, bool? translateTextWithinImage = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SingleDocumentTranslationClient.Translate");
             scope.Start();
@@ -197,7 +199,7 @@ namespace Azure.AI.Translation.Document
                 Argument.AssertNotNull(content, nameof(content));
                 Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
-                using HttpMessage message = CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
+                using HttpMessage message = CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, deploymentName, allowFallback, translateTextWithinImage, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

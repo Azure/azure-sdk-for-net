@@ -150,15 +150,10 @@ namespace Azure.Generator
         {
             return fullyQualifiedTypeName switch
             {
-                "Azure.Core.ResourceIdentifier" => typeof(ResourceIdentifier),
-                "Azure.Core.AzureLocation" => typeof(AzureLocation),
                 "Azure.Core.Pipeline.ClientDiagnostics" => typeof(ClientDiagnostics),
-                "Azure.ResponseError" => typeof(ResponseError),
-                "Azure.ETag" => typeof(ETag),
-                "Azure.Core.Expressions.DataFactory.DataFactorySecret" => typeof(DataFactorySecret),
-                "Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference" => typeof(DataFactoryLinkedServiceReference),
-                "Azure.Core.Expressions.DataFactory.DataFactorySecretString" => typeof(DataFactorySecretString),
                 _ => base.CreateFrameworkType(fullyQualifiedTypeName)
+                    ?? typeof(Response).Assembly.GetType(fullyQualifiedTypeName)
+                    ?? typeof(DataFactoryElement<>).Assembly.GetType(fullyQualifiedTypeName)
             };
         }
 

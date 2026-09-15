@@ -25,7 +25,7 @@ CodeTransparencyClient client = new(new Uri("https://<< service name >>.confiden
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
 bool waitForCommit = true;
-Response<BinaryData> receiptResponse = await client.CreateEntryAsync(content, waitForCommit);
+NullableResponse<BinaryData> receiptResponse = await client.CreateEntryAsync(content, waitForCommit);
 ```
 
 ## Transparent statement

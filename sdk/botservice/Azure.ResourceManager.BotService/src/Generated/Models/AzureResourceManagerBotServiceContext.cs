@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.BotService.Models;
 using Azure.ResourceManager.Models;
 
@@ -88,7 +87,6 @@ namespace Azure.ResourceManager.BotService
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ProvisioningIssue))]
     [ModelReaderWriterBuildable(typeof(ProvisioningIssueProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SearchAssistant))]
     [ModelReaderWriterBuildable(typeof(ServiceProviderParameterMetadata))]
     [ModelReaderWriterBuildable(typeof(ServiceProviderParameterMetadataConstraints))]

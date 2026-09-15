@@ -234,7 +234,7 @@ namespace Azure.Provisioning.Compute
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
+            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true, format: "O");
             _sourceResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceResourceId), new string[] { "sourceResourceId" }, isOutput: true);
             _osType = DefineProperty<SupportedOperatingSystemType>(nameof(OSType), new string[] { "osType" }, isOutput: true);
             _hyperVGeneration = DefineProperty<HyperVGeneration>(nameof(HyperVGeneration), new string[] { "hyperVGeneration" });

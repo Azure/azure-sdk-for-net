@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Models
     public partial class VectorizableImageUrlQuery : VectorQuery
     {
         /// <summary> Initializes a new instance of <see cref="VectorizableImageUrlQuery"/>. </summary>
-        public VectorizableImageUrlQuery() : base(VectorQueryKind.ImageUrl)
+        public VectorizableImageUrlQuery() : base(VectorQueryKind.ImageUri)
         {
         }
 

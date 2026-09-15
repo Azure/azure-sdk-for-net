@@ -1,0 +1,354 @@
+name: Close Stale Generator Upgrade PRs
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - synchronize
+  push:
+    branches:
+      - main
+    paths:
+      - eng/azure-typespec-http-client-csharp-emitter-package.json
+      - eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
+      - eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json
+      - eng/centralpackagemanagement/Directory.Generation.Packages.props
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Report stale PRs without commenting or closing them
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency: close-stale-generator-upgrade-prs
+
+jobs:
+  close-stale-prs:
+    name: Close stale generator upgrade PRs
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name != 'pull_request_target' ||
+      (
+        github.event.pull_request.user.login == 'azure-sdk-automation[bot]' &&
+        (
+          contains(github.event.pull_request.title, 'azure-typespec/http-client-csharp') ||
+          contains(github.event.pull_request.title, 'UnbrandedGeneratorVersion')
+        )
+      )
+    steps:
+      - name: Find and close stale generator upgrade PRs
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const dryRun = process.env.DRY_RUN === "true";
+            const closureCommentMarker =
+              "<!-- stale-generator-upgrade-pr-closure -->";
+            // Stay below GitHub's 80 content-generating requests per minute limit.
+            const minimumWriteIntervalMs = 1100;
+            let lastWriteAt = 0;
+
+            function sleep(milliseconds) {
+              return new Promise((resolve) => setTimeout(resolve, milliseconds));
+            }
+
+            async function paceWrite() {
+              const waitMilliseconds = Math.max(
+                0,
+                lastWriteAt + minimumWriteIntervalMs - Date.now(),
+              );
+              if (waitMilliseconds > 0) {
+                await sleep(waitMilliseconds);
+              }
+              lastWriteAt = Date.now();
+            }
+
+            function getRetryDelayMilliseconds(error) {
+              const retryAfter = Number(
+                error.response?.headers?.["retry-after"],
+              );
+              if (Number.isFinite(retryAfter) && retryAfter >= 0) {
+                return (retryAfter + 1) * 1000;
+              }
+
+              const rateLimitReset = Number(
+                error.response?.headers?.["x-ratelimit-reset"],
+              );
+              if (
+                (error.status === 403 || error.status === 429) &&
+                Number.isFinite(rateLimitReset)
+              ) {
+                return Math.max(1000, rateLimitReset * 1000 - Date.now() + 1000);
+              }
+
+              return undefined;
+            }
+
+            async function runContentWrite({
+              description,
+              operation,
+              isComplete,
+            }) {
+              const maximumAttempts = 4;
+              for (let attempt = 1; attempt <= maximumAttempts; attempt++) {
+                if (isComplete && (await isComplete())) {
+                  core.info(`${description} was already completed`);
+                  return;
+                }
+
+                await paceWrite();
+                try {
+                  await operation();
+                  return;
+                } catch (error) {
+                  if (isComplete && (await isComplete())) {
+                    core.info(`${description} completed despite an API error`);
+                    return;
+                  }
+
+                  const retryDelayMilliseconds =
+                    getRetryDelayMilliseconds(error);
+                  if (
+                    retryDelayMilliseconds === undefined ||
+                    attempt === maximumAttempts
+                  ) {
+                    throw error;
+                  }
+
+                  core.warning(
+                    `${description} was rate limited; retrying in ` +
+                      `${Math.ceil(retryDelayMilliseconds / 1000)} seconds`,
+                  );
+                  await sleep(retryDelayMilliseconds);
+                }
+              }
+            }
+
+            function parseSemVer(version) {
+              const match = version.match(
+                /^(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z.-]+))?(?:\+[0-9A-Za-z.-]+)?$/,
+              );
+              if (!match) {
+                throw new Error(`Unsupported generator version: ${version}`);
+              }
+
+              return {
+                core: match.slice(1, 4).map((part) => BigInt(part)),
+                prerelease: match[4]?.split("."),
+              };
+            }
+
+            function compareSemVer(leftVersion, rightVersion) {
+              const left = parseSemVer(leftVersion);
+              const right = parseSemVer(rightVersion);
+
+              for (let index = 0; index < left.core.length; index++) {
+                if (left.core[index] < right.core[index]) return -1;
+                if (left.core[index] > right.core[index]) return 1;
+              }
+
+              if (!left.prerelease && !right.prerelease) return 0;
+              if (!left.prerelease) return 1;
+              if (!right.prerelease) return -1;
+
+              const length = Math.max(
+                left.prerelease.length,
+                right.prerelease.length,
+              );
+              for (let index = 0; index < length; index++) {
+                const leftPart = left.prerelease[index];
+                const rightPart = right.prerelease[index];
+
+                if (leftPart === undefined) return -1;
+                if (rightPart === undefined) return 1;
+                if (leftPart === rightPart) continue;
+
+                const leftIsNumeric = /^\d+$/.test(leftPart);
+                const rightIsNumeric = /^\d+$/.test(rightPart);
+                if (leftIsNumeric && rightIsNumeric) {
+                  return BigInt(leftPart) < BigInt(rightPart) ? -1 : 1;
+                }
+                if (leftIsNumeric) return -1;
+                if (rightIsNumeric) return 1;
+                return leftPart < rightPart ? -1 : 1;
+              }
+
+              return 0;
+            }
+
+            async function getMainFile(path) {
+              const response = await github.rest.repos.getContent({
+                owner,
+                repo,
+                path,
+                ref: context.payload.repository.default_branch,
+              });
+
+              if (Array.isArray(response.data) || response.data.type !== "file") {
+                throw new Error(`Expected ${path} to be a file`);
+              }
+
+              return Buffer.from(response.data.content, "base64").toString("utf8");
+            }
+
+            const [
+              brandedEmitterPackage,
+              managementEmitterPackage,
+              provisioningEmitterPackage,
+              generationPackages,
+            ] = await Promise.all([
+              getMainFile(
+                "eng/azure-typespec-http-client-csharp-emitter-package.json",
+              ),
+              getMainFile(
+                "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json",
+              ),
+              getMainFile(
+                "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json",
+              ),
+              getMainFile(
+                "eng/centralpackagemanagement/Directory.Generation.Packages.props",
+              ),
+            ]);
+
+            const currentVersions = {
+              branded: JSON.parse(brandedEmitterPackage).dependencies[
+                "@azure-typespec/http-client-csharp"
+              ],
+              management: JSON.parse(managementEmitterPackage).dependencies[
+                "@azure-typespec/http-client-csharp-mgmt"
+              ],
+              provisioning: JSON.parse(provisioningEmitterPackage).dependencies[
+                "@azure-typespec/http-client-csharp-provisioning"
+              ],
+              unbranded: generationPackages.match(
+                /<UnbrandedGeneratorVersion>([^<]+)<\/UnbrandedGeneratorVersion>/,
+              )?.[1],
+            };
+
+            for (const [generator, version] of Object.entries(currentVersions)) {
+              if (!version) {
+                throw new Error(`Could not determine the current ${generator} version`);
+              }
+              parseSemVer(version);
+              core.info(`Current ${generator} version: ${version}`);
+            }
+
+            const titlePatterns = [
+              {
+                generator: "provisioning",
+                pattern:
+                  /^(?:Failed: )?Update azure-typespec\/http-client-csharp-provisioning version to prerelease (\S+)$/,
+              },
+              {
+                generator: "management",
+                pattern:
+                  /^(?:Failed: )?Update azure-typespec\/http-client-csharp-mgmt version to prerelease (\S+)$/,
+              },
+              {
+                generator: "branded",
+                pattern:
+                  /^(?:Failed: )?Update azure-typespec\/http-client-csharp version to prerelease (\S+)$/,
+              },
+              {
+                generator: "unbranded",
+                pattern:
+                  /^(?:Failed: )?Update UnbrandedGeneratorVersion to (\S+)$/,
+              },
+            ];
+
+            const pulls = await github.paginate(github.rest.pulls.list, {
+              owner,
+              repo,
+              state: "open",
+              base: context.payload.repository.default_branch,
+              per_page: 100,
+            });
+
+            let staleCount = 0;
+            for (const pull of pulls) {
+              if (pull.user?.login !== "azure-sdk-automation[bot]") continue;
+
+              const match = titlePatterns
+                .map(({ generator, pattern }) => ({
+                  generator,
+                  match: pull.title.match(pattern),
+                }))
+                .find((candidate) => candidate.match);
+              if (!match) continue;
+
+              const proposedVersion = match.match[1];
+              const currentVersion = currentVersions[match.generator];
+              if (compareSemVer(proposedVersion, currentVersion) >= 0) continue;
+
+              staleCount++;
+              const message =
+                `${closureCommentMarker}\n` +
+                `Closing because this PR updates the ${match.generator} generator ` +
+                `to ${proposedVersion}, which is older than ${currentVersion} on ` +
+                `\`${context.payload.repository.default_branch}\`.\n\n` +
+                "--generated by Copilot";
+
+              if (dryRun) {
+                core.info(`[dry run] Would close #${pull.number}: ${message}`);
+                continue;
+              }
+
+              const hasClosureComment = async () => {
+                const comments = await github.paginate(
+                  github.rest.issues.listComments,
+                  {
+                    owner,
+                    repo,
+                    issue_number: pull.number,
+                    per_page: 100,
+                  },
+                );
+                return comments.some((comment) =>
+                  comment.body?.includes(closureCommentMarker),
+                );
+              };
+
+              await runContentWrite({
+                description: `Commenting on stale PR #${pull.number}`,
+                isComplete: hasClosureComment,
+                operation: () =>
+                  github.rest.issues.createComment({
+                    owner,
+                    repo,
+                    issue_number: pull.number,
+                    body: message,
+                  }),
+              });
+
+              await runContentWrite({
+                description: `Closing stale PR #${pull.number}`,
+                operation: () =>
+                  github.rest.pulls.update({
+                    owner,
+                    repo,
+                    pull_number: pull.number,
+                    state: "closed",
+                  }),
+              });
+              core.info(`Closed stale generator upgrade PR #${pull.number}`);
+            }
+
+            core.summary.addHeading("Stale generator upgrade PRs");
+            core.summary.addRaw(
+              staleCount === 0
+                ? "No stale generator upgrade PRs found."
+                : `${dryRun ? "Found" : "Closed"} ${staleCount} stale generator upgrade PR(s).`,
+            );
+            await core.summary.write();

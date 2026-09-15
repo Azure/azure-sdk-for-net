@@ -120,7 +120,7 @@ namespace Azure.Provisioning.ServiceFabric
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _upgradeReplicaSetCheckTimeout = DefineProperty<TimeSpan>(nameof(UpgradeReplicaSetCheckTimeout), new string[] { "upgradeReplicaSetCheckTimeout" });
+            _upgradeReplicaSetCheckTimeout = DefineProperty<TimeSpan>(nameof(UpgradeReplicaSetCheckTimeout), new string[] { "upgradeReplicaSetCheckTimeout" }, format: "P");
             _forceRestart = DefineProperty<bool>(nameof(ForceRestart), new string[] { "forceRestart" });
             _rollingUpgradeMonitoringPolicy = DefineModelProperty<ArmRollingUpgradeMonitoringPolicy>(nameof(RollingUpgradeMonitoringPolicy), new string[] { "rollingUpgradeMonitoringPolicy" });
             _applicationHealthPolicy = DefineModelProperty<ArmApplicationHealthPolicy>(nameof(ApplicationHealthPolicy), new string[] { "applicationHealthPolicy" });

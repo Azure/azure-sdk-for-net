@@ -6,19 +6,13 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.FrontDoor
 {
     /// <summary> The JSON object that contains the properties required to create a health probe settings. </summary>
-    internal partial class HealthProbeSettingsProperties : ProvisionableConstruct
+    internal partial class HealthProbeSettingsProperties : HealthProbeSettingsUpdateParameters
     {
         private BicepValue<FrontDoorResourceState> _resourceState;
-        private BicepValue<string> _path;
-        private BicepValue<FrontDoorProtocol> _protocol;
-        private BicepValue<int> _intervalInSeconds;
-        private BicepValue<FrontDoorHealthProbeMethod> _healthProbeMethod;
-        private BicepValue<HealthProbeEnabled> _enabledState;
 
         /// <summary> Creates a new HealthProbeSettingsProperties. </summary>
         public HealthProbeSettingsProperties()
@@ -35,91 +29,11 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the Path. </summary>
-        public BicepValue<string> Path
-        {
-            get
-            {
-                Initialize();
-                return _path;
-            }
-            set
-            {
-                Initialize();
-                _path.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Protocol. </summary>
-        public BicepValue<FrontDoorProtocol> Protocol
-        {
-            get
-            {
-                Initialize();
-                return _protocol;
-            }
-            set
-            {
-                Initialize();
-                _protocol.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the IntervalInSeconds. </summary>
-        public BicepValue<int> IntervalInSeconds
-        {
-            get
-            {
-                Initialize();
-                return _intervalInSeconds;
-            }
-            set
-            {
-                Initialize();
-                _intervalInSeconds.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the HealthProbeMethod. </summary>
-        public BicepValue<FrontDoorHealthProbeMethod> HealthProbeMethod
-        {
-            get
-            {
-                Initialize();
-                return _healthProbeMethod;
-            }
-            set
-            {
-                Initialize();
-                _healthProbeMethod.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the EnabledState. </summary>
-        public BicepValue<HealthProbeEnabled> EnabledState
-        {
-            get
-            {
-                Initialize();
-                return _enabledState;
-            }
-            set
-            {
-                Initialize();
-                _enabledState.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for HealthProbeSettingsProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _resourceState = DefineProperty<FrontDoorResourceState>(nameof(ResourceState), new string[] { "resourceState" }, isOutput: true);
-            _path = DefineProperty<string>(nameof(Path), new string[] { "path" });
-            _protocol = DefineProperty<FrontDoorProtocol>(nameof(Protocol), new string[] { "protocol" });
-            _intervalInSeconds = DefineProperty<int>(nameof(IntervalInSeconds), new string[] { "intervalInSeconds" });
-            _healthProbeMethod = DefineProperty<FrontDoorHealthProbeMethod>(nameof(HealthProbeMethod), new string[] { "healthProbeMethod" });
-            _enabledState = DefineProperty<HealthProbeEnabled>(nameof(EnabledState), new string[] { "enabledState" });
             DefineAdditionalProperties();
         }
 

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The address of the individual or organization where service subscription is being used. Available for agreement type Microsoft Online Services Program. This property can be updated via patch. </summary>
-    public partial class BillingPropertyPropertiesSubscriptionServiceUsageAddress : BillingAddressDetails, IJsonModel<BillingPropertyPropertiesSubscriptionServiceUsageAddress>
+    internal partial class BillingPropertyPropertiesSubscriptionServiceUsageAddress : BillingAddressDetails, IJsonModel<BillingPropertyPropertiesSubscriptionServiceUsageAddress>
     {
         /// <summary> Initializes a new instance of <see cref="BillingPropertyPropertiesSubscriptionServiceUsageAddress"/> for deserialization. </summary>
         internal BillingPropertyPropertiesSubscriptionServiceUsageAddress()

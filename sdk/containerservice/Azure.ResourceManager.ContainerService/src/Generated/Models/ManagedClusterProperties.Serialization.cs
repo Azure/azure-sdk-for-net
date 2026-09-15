@@ -201,6 +201,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enableFIPS"u8);
                 writer.WriteBooleanValue(IsFipsEnabled.Value);
             }
+            if (Optional.IsDefined(EnableNodeHardening))
+            {
+                writer.WritePropertyName("enableNodeHardening"u8);
+                writer.WriteBooleanValue(EnableNodeHardening.Value);
+            }
             if (Optional.IsDefined(IsNamespaceResourcesEnabled))
             {
                 writer.WritePropertyName("enableNamespaceResources"u8);
@@ -427,6 +432,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             bool? isRbacEnabled = default;
             KubernetesSupportPlan? supportPlan = default;
             bool? isFipsEnabled = default;
+            bool? enableNodeHardening = default;
             bool? isNamespaceResourcesEnabled = default;
             ContainerServiceNetworkProfile networkProfile = default;
             ManagedClusterAadProfile aadProfile = default;
@@ -639,6 +645,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     isFipsEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("enableNodeHardening"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableNodeHardening = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableNamespaceResources"u8))
@@ -950,6 +965,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 isRbacEnabled,
                 supportPlan,
                 isFipsEnabled,
+                enableNodeHardening,
                 isNamespaceResourcesEnabled,
                 networkProfile,
                 aadProfile,

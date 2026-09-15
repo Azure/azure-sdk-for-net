@@ -32,9 +32,9 @@ namespace Specs.Azure.Versioning.PreviewVersion
 
         public virtual Task<Response> GetWidgetAsync(string id, RequestContext context) => throw null;
 
-        public virtual Response<Widget> GetWidget(string id, CancellationToken cancellationToken = default) => throw null;
+        public virtual NullableResponse<Widget> GetWidget(string id, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Widget>> GetWidgetAsync(string id, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<NullableResponse<Widget>> GetWidgetAsync(string id, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response UpdateWidgetColor(string id, RequestContent content, RequestContext context = null) => throw null;
 

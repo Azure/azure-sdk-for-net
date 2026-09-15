@@ -14,7 +14,7 @@ using Azure.ResourceManager.Cdn;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The JSON object that contains the properties of the Secret to create. </summary>
-    public partial class CdnSecretProperties : FrontDoorStateProperties, IJsonModel<CdnSecretProperties>
+    internal partial class CdnSecretProperties : FrontDoorStateProperties, IJsonModel<CdnSecretProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

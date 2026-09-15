@@ -40,7 +40,7 @@
     <PackageVersion Include="Azure.ResourceManager.Compute" Version="1.16.0" />
     <PackageVersion Include="Azure.ResourceManager.ExtendedLocations" Version="1.1.2" />
     <PackageVersion Include="Azure.ResourceManager.PrivateDns" Version="1.2.3" />
-    <PackageVersion Include="Azure.ResourceManager.RecoveryServices" Version="1.3.0" />
+    <PackageVersion Include="Azure.ResourceManager.RecoveryServices" Version="1.4.0" />
     <PackageVersion Include="Castle.Core" Version="$(CastleCoreVersion)" />
     <PackageVersion Include="CloudNative.CloudEvents.SystemTextJson" Version="$(CloudNativeCloudEventsSystemTextJsonVersion)" />
     <PackageVersion Include="CommandLineParser" Version="2.9.1" />
@@ -112,11 +112,11 @@
     <PackageVersion Include="NAudio" Version="2.2.1" />
     <PackageVersion Include="Newtonsoft.Json" Version="$(NewtonsoftJsonVersion)" />
     <PackageVersion Include="OpenTelemetry" Version="$(OpenTelemetryVersion)" />
-    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.15.3" />
-    <PackageVersion Include="OpenTelemetry.Exporter.InMemory" Version="1.15.3" />
-    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.15.3" />
+    <PackageVersion Include="OpenTelemetry.Exporter.Console" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.InMemory" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.18.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="$(OpenTelemetryInstrumentationHttpVersion)" />
-    <PackageVersion Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.15.2" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.18.0" />
 
     <!-- Note: Polly v8+ is a complete rewrite with a new resilience pipeline API and significant breaking changes -->
     <PackageVersion Include="Polly" Version="7.1.0" />
@@ -126,7 +126,7 @@
     <PackageVersion Include="System.IO.Compression" Version="4.3.0" />
     <PackageVersion Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
     <PackageVersion Include="System.IO.Pipelines" Version="$(SystemIOPipelinesVersion)" />
-    <PackageVersion Include="System.Linq.AsyncEnumerable" Version="10.0.9" />
+    <PackageVersion Include="System.Linq.AsyncEnumerable" Version="10.0.10" />
     <PackageVersion Include="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageVersion Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageVersion Include="System.Runtime.InteropServices" Version="4.3.0" />

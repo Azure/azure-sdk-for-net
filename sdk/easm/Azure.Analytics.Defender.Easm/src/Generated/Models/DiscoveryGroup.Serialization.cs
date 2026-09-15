@@ -151,10 +151,10 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("latestRun"u8);
                 writer.WriteObjectValue(LatestRun, options);
             }
-            if (Optional.IsDefined(CreatedDate))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedDate.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(TemplateId))
             {
@@ -213,7 +213,7 @@ namespace Azure.Analytics.Defender.Easm
             IList<string> names = default;
             IList<DiscoverySource> excludes = default;
             DiscoveryRunResult latestRun = default;
-            DateTimeOffset? createdDate = default;
+            DateTimeOffset? createdOn = default;
             string templateId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -316,7 +316,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    createdDate = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("templateId"u8))
@@ -340,7 +340,7 @@ namespace Azure.Analytics.Defender.Easm
                 names ?? new ChangeTrackingList<string>(),
                 excludes ?? new ChangeTrackingList<DiscoverySource>(),
                 latestRun,
-                createdDate,
+                createdOn,
                 templateId,
                 additionalBinaryDataProperties);
         }

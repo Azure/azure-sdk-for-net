@@ -169,6 +169,26 @@ namespace Azure.AI.ContentUnderstanding
                 writer.WritePropertyName("omitContent"u8);
                 writer.WriteBooleanValue(ShouldOmitContent.Value);
             }
+            if (Optional.IsDefined(Workflow))
+            {
+                writer.WritePropertyName("workflow"u8);
+                writer.WriteStringValue(Workflow.Value.ToString());
+            }
+            if (Optional.IsDefined(AllowInputTruncation))
+            {
+                writer.WritePropertyName("allowInputTruncation"u8);
+                writer.WriteBooleanValue(AllowInputTruncation.Value);
+            }
+            if (Optional.IsDefined(AllowInPageSegments))
+            {
+                writer.WritePropertyName("allowInPageSegments"u8);
+                writer.WriteBooleanValue(AllowInPageSegments.Value);
+            }
+            if (Optional.IsDefined(ChunkingStrategy))
+            {
+                writer.WritePropertyName("chunkingStrategy"u8);
+                writer.WriteObjectValue(ChunkingStrategy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -227,6 +247,10 @@ namespace Azure.AI.ContentUnderstanding
             bool? enableSegment = default;
             bool? segmentPerPage = default;
             bool? shouldOmitContent = default;
+            ContentAnalyzerWorkflow? workflow = default;
+            bool? allowInputTruncation = default;
+            bool? allowInPageSegments = default;
+            ChunkingStrategy chunkingStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -391,6 +415,42 @@ namespace Azure.AI.ContentUnderstanding
                     shouldOmitContent = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("workflow"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    workflow = new ContentAnalyzerWorkflow(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("allowInputTruncation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowInputTruncation = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("allowInPageSegments"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowInPageSegments = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("chunkingStrategy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    chunkingStrategy = ChunkingStrategy.DeserializeChunkingStrategy(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -413,6 +473,10 @@ namespace Azure.AI.ContentUnderstanding
                 enableSegment,
                 segmentPerPage,
                 shouldOmitContent,
+                workflow,
+                allowInputTruncation,
+                allowInPageSegments,
+                chunkingStrategy,
                 additionalBinaryDataProperties);
         }
     }
