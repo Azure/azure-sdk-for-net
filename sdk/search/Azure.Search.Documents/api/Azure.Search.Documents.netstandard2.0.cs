@@ -598,8 +598,8 @@ namespace Azure.Search.Documents.Indexes
         public bool IsSortable { get { throw null; } set { } }
         public string NormalizerName { get { throw null; } set { } }
         public string PermissionFilter { get { throw null; } set { } }
-        public bool? SensitivityLabelId { get { throw null; } set { } }
-        public bool? SensitivityLabelName { get { throw null; } set { } }
+        public bool SensitivityLabelId { get { throw null; } set { } }
+        public bool SensitivityLabelName { get { throw null; } set { } }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Field | System.AttributeTargets.Property, AllowMultiple=false, Inherited=true)]
     public partial class VectorSearchFieldAttribute : System.Attribute

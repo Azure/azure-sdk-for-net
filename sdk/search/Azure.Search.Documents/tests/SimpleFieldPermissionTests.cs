@@ -3,6 +3,7 @@
 
 #if AZURE_SEARCH_PREVIEW
 
+using System.Linq;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
@@ -105,15 +106,43 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public void SimpleFieldAttributeSupportsDecoratedModel()
+        {
+            SearchField field = new FieldBuilder().Build(typeof(PermissionModel)).Single();
+
+            Assert.AreEqual(PermissionFilter.GroupIds, field.PermissionFilter);
+            Assert.IsTrue(field.SensitivityLabelId);
+            Assert.IsFalse(field.SensitivityLabelName);
+        }
+
+        [Test]
+        public void SimpleFieldAttributeSetsSensitivityLabelsToFalse()
+        {
+            var attribute = new SimpleFieldAttribute
+            {
+                SensitivityLabelId = false,
+                SensitivityLabelName = false,
+            };
+            SearchField field = new SearchField("myField", SearchFieldDataType.String)
+            {
+                SensitivityLabelId = true,
+                SensitivityLabelName = true,
+            };
+
+            ((ISearchFieldAttribute)attribute).SetField(field);
+
+            Assert.IsFalse(field.SensitivityLabelId);
+            Assert.IsFalse(field.SensitivityLabelName);
+        }
+
+        [Test]
         public void SimpleFieldAttributeDoesNotSetPermissionFilterWhenNull()
         {
-            // First set a value on the field directly.
             SearchField field = new SearchField("myField", SearchFieldDataType.String)
             {
                 PermissionFilter = PermissionFilter.RbacScope,
             };
 
-            // Attribute with no PermissionFilter should NOT clear the existing value.
             var attribute = new SimpleFieldAttribute();
             ((ISearchFieldAttribute)attribute).SetField(field);
 
@@ -132,6 +161,20 @@ namespace Azure.Search.Documents.Tests
             ((ISearchFieldAttribute)attribute).SetField(field);
 
             Assert.IsTrue(field.SensitivityLabelId);
+        }
+
+        [Test]
+        public void SimpleFieldAttributeDoesNotSetSensitivityLabelNameWhenUnset()
+        {
+            SearchField field = new SearchField("myField", SearchFieldDataType.String)
+            {
+                SensitivityLabelName = true,
+            };
+
+            var attribute = new SimpleFieldAttribute();
+            ((ISearchFieldAttribute)attribute).SetField(field);
+
+            Assert.IsTrue(field.SensitivityLabelName);
         }
 
         [Test]
@@ -166,6 +209,12 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(PermissionFilter.GroupIds, field.PermissionFilter);
             Assert.IsTrue(field.SensitivityLabelId);
             Assert.IsTrue(field.SensitivityLabelName);
+        }
+
+        private class PermissionModel
+        {
+            [SimpleField(PermissionFilter = "groupIds", SensitivityLabelId = true, SensitivityLabelName = false)]
+            public string AllowedPrincipals { get; set; }
         }
     }
 }
