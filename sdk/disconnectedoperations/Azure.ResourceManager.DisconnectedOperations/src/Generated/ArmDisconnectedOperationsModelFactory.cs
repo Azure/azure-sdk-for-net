@@ -17,30 +17,6 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDisconnectedOperationsModelFactory
     {
-        /// <summary> Disconnected operation resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DisconnectedOperations.DisconnectedOperationData"/> instance for mocking. </returns>
-        public static DisconnectedOperationData DisconnectedOperationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DisconnectedOperationProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DisconnectedOperationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <summary> The disconnected operation properties. </summary>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="stampId"> The unique GUID of the stamp. </param>
@@ -96,6 +72,30 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         public static DisconnectedOperationsBenefitPlans DisconnectedOperationsBenefitPlans(DisconnectedOperationsBenefitPlanStatus? azureHybridWindowsServerBenefit = default, int? windowsServerVmCount = default)
         {
             return new DisconnectedOperationsBenefitPlans(azureHybridWindowsServerBenefit, windowsServerVmCount, default);
+        }
+
+        /// <summary> Disconnected operation resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DisconnectedOperations.DisconnectedOperationData"/> instance for mocking. </returns>
+        public static DisconnectedOperationData DisconnectedOperationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DisconnectedOperationProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DisconnectedOperationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
         }
 
         /// <summary> The type used for update operations of the DisconnectedOperation. </summary>

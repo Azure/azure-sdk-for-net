@@ -153,6 +153,50 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubOperationDisplay(provider, resource, operation, description, default);
         }
 
+        /// <summary> Properties of a Stage. </summary>
+        /// <param name="stageName"> Stage Name. </param>
+        /// <param name="dependencies"></param>
+        /// <param name="gitEnvironment"></param>
+        /// <returns> A new <see cref="Models.DevHubStageInfo"/> instance for mocking. </returns>
+        public static DevHubStageInfo DevHubStageInfo(string stageName = default, IEnumerable<string> dependencies = default, string gitEnvironment = default)
+        {
+            dependencies ??= new ChangeTrackingList<string>();
+
+            return new DevHubStageInfo(stageName, (dependencies ?? new ChangeTrackingList<string>()).ToList(), gitEnvironment, default);
+        }
+
+        /// <summary> Properties of a IacTemplate. </summary>
+        /// <param name="templateName"> Template Name. </param>
+        /// <param name="sourceResourceId"> the source store of the template. </param>
+        /// <param name="instanceStage"> the source stage of the template. </param>
+        /// <param name="instanceName"> the sample instance name of the template. </param>
+        /// <param name="templateDetails"></param>
+        /// <param name="quickStartTemplateType"> Determines the authorization status of requests. </param>
+        /// <returns> A new <see cref="Models.DevHubIacTemplateProperties"/> instance for mocking. </returns>
+        public static DevHubIacTemplateProperties DevHubIacTemplateProperties(string templateName = default, ResourceIdentifier sourceResourceId = default, string instanceStage = default, string instanceName = default, IEnumerable<DevHubIacTemplateDetails> templateDetails = default, DevHubQuickStartTemplateType? quickStartTemplateType = default)
+        {
+            templateDetails ??= new ChangeTrackingList<DevHubIacTemplateDetails>();
+
+            return new DevHubIacTemplateProperties(
+                templateName,
+                sourceResourceId,
+                instanceStage,
+                instanceName,
+                (templateDetails ?? new ChangeTrackingList<DevHubIacTemplateDetails>()).ToList(),
+                quickStartTemplateType,
+                default);
+        }
+
+        /// <summary> The DevHubIacTemplateDetails. </summary>
+        /// <param name="productName"> The name of the products. </param>
+        /// <param name="count"> Count of the product. </param>
+        /// <param name="namingConvention"> Naming convention of this product. </param>
+        /// <returns> A new <see cref="Models.DevHubIacTemplateDetails"/> instance for mocking. </returns>
+        public static DevHubIacTemplateDetails DevHubIacTemplateDetails(string productName = default, int? count = default, string namingConvention = default)
+        {
+            return new DevHubIacTemplateDetails(productName, count, namingConvention, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -196,50 +240,6 @@ namespace Azure.ResourceManager.DevHub.Models
                     default), storageAccountSubscription is null && storageAccountResourceGroup is null && storageAccountName is null && storageContainerName is null ? default : new TerraformProfile(storageAccountSubscription, storageAccountResourceGroup, storageAccountName, storageContainerName, default), (stages ?? new ChangeTrackingList<DevHubStageInfo>()).ToList(), (templates ?? new ChangeTrackingList<DevHubIacTemplateProperties>()).ToList(), default),
                 eTag,
                 default);
-        }
-
-        /// <summary> Properties of a Stage. </summary>
-        /// <param name="stageName"> Stage Name. </param>
-        /// <param name="dependencies"></param>
-        /// <param name="gitEnvironment"></param>
-        /// <returns> A new <see cref="Models.DevHubStageInfo"/> instance for mocking. </returns>
-        public static DevHubStageInfo DevHubStageInfo(string stageName = default, IEnumerable<string> dependencies = default, string gitEnvironment = default)
-        {
-            dependencies ??= new ChangeTrackingList<string>();
-
-            return new DevHubStageInfo(stageName, (dependencies ?? new ChangeTrackingList<string>()).ToList(), gitEnvironment, default);
-        }
-
-        /// <summary> Properties of a IacTemplate. </summary>
-        /// <param name="templateName"> Template Name. </param>
-        /// <param name="sourceResourceId"> the source store of the template. </param>
-        /// <param name="instanceStage"> the source stage of the template. </param>
-        /// <param name="instanceName"> the sample instance name of the template. </param>
-        /// <param name="templateDetails"></param>
-        /// <param name="quickStartTemplateType"> Determines the authorization status of requests. </param>
-        /// <returns> A new <see cref="Models.DevHubIacTemplateProperties"/> instance for mocking. </returns>
-        public static DevHubIacTemplateProperties DevHubIacTemplateProperties(string templateName = default, ResourceIdentifier sourceResourceId = default, string instanceStage = default, string instanceName = default, IEnumerable<DevHubIacTemplateDetails> templateDetails = default, DevHubQuickStartTemplateType? quickStartTemplateType = default)
-        {
-            templateDetails ??= new ChangeTrackingList<DevHubIacTemplateDetails>();
-
-            return new DevHubIacTemplateProperties(
-                templateName,
-                sourceResourceId,
-                instanceStage,
-                instanceName,
-                (templateDetails ?? new ChangeTrackingList<DevHubIacTemplateDetails>()).ToList(),
-                quickStartTemplateType,
-                default);
-        }
-
-        /// <summary> The DevHubIacTemplateDetails. </summary>
-        /// <param name="productName"> The name of the products. </param>
-        /// <param name="count"> Count of the product. </param>
-        /// <param name="namingConvention"> Naming convention of this product. </param>
-        /// <returns> A new <see cref="Models.DevHubIacTemplateDetails"/> instance for mocking. </returns>
-        public static DevHubIacTemplateDetails DevHubIacTemplateDetails(string productName = default, int? count = default, string namingConvention = default)
-        {
-            return new DevHubIacTemplateDetails(productName, count, namingConvention, default);
         }
 
         /// <summary> Resource tags. </summary>
@@ -299,30 +299,6 @@ namespace Azure.ResourceManager.DevHub.Models
         public static DevHubScaleProperty DevHubScaleProperty(string region = default, string stage = default, int? numberOfStores = default)
         {
             return new DevHubScaleProperty(region, stage, numberOfStores, default);
-        }
-
-        /// <summary> Workflow. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of a workflow. </param>
-        /// <returns> A new <see cref="DevHub.DevHubWorkflowData"/> instance for mocking. </returns>
-        public static DevHubWorkflowData DevHubWorkflowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevHubWorkflowProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DevHubWorkflowData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
         }
 
         /// <summary> Workflow properties. </summary>
@@ -570,6 +546,30 @@ namespace Azure.ResourceManager.DevHub.Models
             return new AdoProviderProfile(repository, armServiceConnection, default);
         }
 
+        /// <summary> Workflow. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of a workflow. </param>
+        /// <returns> A new <see cref="DevHub.DevHubWorkflowData"/> instance for mocking. </returns>
+        public static DevHubWorkflowData DevHubWorkflowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevHubWorkflowProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevHubWorkflowData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -584,24 +584,6 @@ namespace Azure.ResourceManager.DevHub.Models
                 resourceType,
                 systemData,
                 adoOAuthUsername is null ? default : new AdoOAuth(adoOAuthUsername, default),
-                default);
-        }
-
-        /// <summary> Template. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of a Template. </param>
-        /// <returns> A new <see cref="DevHub.DevHubTemplateData"/> instance for mocking. </returns>
-        public static DevHubTemplateData DevHubTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevHubTemplateProperties properties = default)
-        {
-            return new DevHubTemplateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
                 default);
         }
 
@@ -625,16 +607,16 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
-        /// <summary> VersionedTemplate. </summary>
+        /// <summary> Template. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of a VersionedTemplate. </param>
-        /// <returns> A new <see cref="DevHub.DevHubVersionedTemplateData"/> instance for mocking. </returns>
-        public static DevHubVersionedTemplateData DevHubVersionedTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevHubVersionedTemplateProperties properties = default)
+        /// <param name="properties"> Properties of a Template. </param>
+        /// <returns> A new <see cref="DevHub.DevHubTemplateData"/> instance for mocking. </returns>
+        public static DevHubTemplateData DevHubTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevHubTemplateProperties properties = default)
         {
-            return new DevHubVersionedTemplateData(
+            return new DevHubTemplateData(
                 id,
                 name,
                 resourceType,
@@ -682,6 +664,24 @@ namespace Azure.ResourceManager.DevHub.Models
         public static DevHubTemplateParameterDefault DevHubTemplateParameterDefault(string value = default, string referenceParameter = default)
         {
             return new DevHubTemplateParameterDefault(value, referenceParameter, default);
+        }
+
+        /// <summary> VersionedTemplate. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of a VersionedTemplate. </param>
+        /// <returns> A new <see cref="DevHub.DevHubVersionedTemplateData"/> instance for mocking. </returns>
+        public static DevHubVersionedTemplateData DevHubVersionedTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevHubVersionedTemplateProperties properties = default)
+        {
+            return new DevHubVersionedTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Generated template files returned as a map&lt;path string,content string&gt;. </summary>

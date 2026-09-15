@@ -19,32 +19,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public static partial class ArmDeviceRegistryModelFactory
     {
 
-        /// <summary> Asset definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extended location. </param>
-        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetData"/> instance for mocking. </returns>
-        public static DeviceRegistryAssetData DeviceRegistryAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AssetProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DeviceRegistryAssetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                default);
-        }
-
         /// <summary> Defines the asset properties. </summary>
         /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
         /// <param name="isEnabled"> Enabled/Disabled status of the asset. </param>
@@ -230,6 +204,32 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryAssetStatusEvent(name, messageSchemaReference, default);
         }
 
+        /// <summary> Asset definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetData"/> instance for mocking. </returns>
+        public static DeviceRegistryAssetData DeviceRegistryAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AssetProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DeviceRegistryAssetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
         /// <summary> The extended location. </summary>
         /// <param name="extendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
@@ -296,32 +296,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
-        /// <summary> Asset Endpoint Profile definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extended location. </param>
-        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetEndpointProfileData"/> instance for mocking. </returns>
-        public static DeviceRegistryAssetEndpointProfileData DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryAssetEndpointProfileProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DeviceRegistryAssetEndpointProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                default);
-        }
-
         /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
         /// <param name="targetAddress"> The local valid URI specifying the network address/DNS name of a southbound device. The scheme part of the targetAddress URI specifies the type of the device. The additionalConfiguration field holds further connector type specific configuration. </param>
         /// <param name="endpointProfileType"> Defines the configuration for the connector type that is being used with the endpoint profile. </param>
@@ -372,6 +346,32 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new AssetEndpointProfileStatusError(code, message, default);
         }
 
+        /// <summary> Asset Endpoint Profile definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryAssetEndpointProfileData"/> instance for mocking. </returns>
+        public static DeviceRegistryAssetEndpointProfileData DeviceRegistryAssetEndpointProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryAssetEndpointProfileProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DeviceRegistryAssetEndpointProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
         /// <summary> The type used for update operations of the AssetEndpointProfile. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -413,6 +413,25 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <param name="uuid"> Globally unique, immutable, non-reusable ID. </param>
+        /// <param name="messagingEndpoints"> Dictionary of messaging endpoints. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceProperties"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceProperties DeviceRegistryNamespaceProperties(string uuid = default, IDictionary<string, MessagingEndpoint> messagingEndpoints = default, DeviceRegistryProvisioningState? provisioningState = default)
+        {
+            return new DeviceRegistryNamespaceProperties(uuid, messagingEndpoints is null ? default : new Messaging(messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpoint>(), default), provisioningState, default);
+        }
+
+        /// <summary> Namespace messaging endpoint model used by a device to connect to a service. </summary>
+        /// <param name="endpointType"> Type of connection used for messaging endpoint. </param>
+        /// <param name="address"> The endpoint address to connect to. </param>
+        /// <param name="resourceId"> The messaging endpoint Azure resource Id. </param>
+        /// <returns> A new <see cref="Models.MessagingEndpoint"/> instance for mocking. </returns>
+        public static MessagingEndpoint MessagingEndpoint(string endpointType = default, string address = default, string resourceId = default)
+        {
+            return new MessagingEndpoint(endpointType, address, resourceId, default);
+        }
+
         /// <summary> Namespace definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -437,25 +456,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 properties,
                 identity,
                 default);
-        }
-
-        /// <param name="uuid"> Globally unique, immutable, non-reusable ID. </param>
-        /// <param name="messagingEndpoints"> Dictionary of messaging endpoints. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceProperties"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceProperties DeviceRegistryNamespaceProperties(string uuid = default, IDictionary<string, MessagingEndpoint> messagingEndpoints = default, DeviceRegistryProvisioningState? provisioningState = default)
-        {
-            return new DeviceRegistryNamespaceProperties(uuid, messagingEndpoints is null ? default : new Messaging(messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpoint>(), default), provisioningState, default);
-        }
-
-        /// <summary> Namespace messaging endpoint model used by a device to connect to a service. </summary>
-        /// <param name="endpointType"> Type of connection used for messaging endpoint. </param>
-        /// <param name="address"> The endpoint address to connect to. </param>
-        /// <param name="resourceId"> The messaging endpoint Azure resource Id. </param>
-        /// <returns> A new <see cref="Models.MessagingEndpoint"/> instance for mocking. </returns>
-        public static MessagingEndpoint MessagingEndpoint(string endpointType = default, string address = default, string resourceId = default)
-        {
-            return new MessagingEndpoint(endpointType, address, resourceId, default);
         }
 
         /// <summary> Managed service identity (either system assigned, or none). </summary>
@@ -534,24 +534,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new CredentialPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> A Credential Policy. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DeviceRegistry.PolicyData"/> instance for mocking. </returns>
-        public static PolicyData PolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyProperties properties = default)
-        {
-            return new PolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Details of the Credential Policy. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="certificate"> The certificate configuration. </param>
@@ -598,6 +580,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new BringYourOwnRoot(enabled, certificateSigningRequest, issuingCertificateThumbprint, status, default);
         }
 
+        /// <summary> A Credential Policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DeviceRegistry.PolicyData"/> instance for mocking. </returns>
+        public static PolicyData PolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyProperties properties = default)
+        {
+            return new PolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <param name="policyUpdateCertificate"> The certificate configuration. </param>
         /// <returns> A new <see cref="Models.PolicyPatch"/> instance for mocking. </returns>
         public static PolicyPatch PolicyPatch(CertificateConfiguration policyUpdateCertificate = default)
@@ -611,32 +611,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static ActivateBringYourOwnRootContent ActivateBringYourOwnRootContent(string certificateChain = default)
         {
             return new ActivateBringYourOwnRootContent(certificateChain, default);
-        }
-
-        /// <summary> Asset definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extended location. </param>
-        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceAssetData"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceAssetData DeviceRegistryNamespaceAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceAssetProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DeviceRegistryNamespaceAssetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                default);
         }
 
         /// <summary> Defines the asset properties. </summary>
@@ -1085,6 +1059,32 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceAssetStatusManagementAction(name, requestMessageSchemaReference, responseMessageSchemaReference, error, default);
         }
 
+        /// <summary> Asset definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceAssetData"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceAssetData DeviceRegistryNamespaceAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceAssetProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DeviceRegistryNamespaceAssetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
         /// <summary> The type used for update operations of the NamespaceAsset. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -1159,34 +1159,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 (eventGroups ?? new ChangeTrackingList<NamespaceEventGroup>()).ToList(),
                 (streams ?? new ChangeTrackingList<NamespaceStream>()).ToList(),
                 (managementGroups ?? new ChangeTrackingList<ManagementGroup>()).ToList(),
-                default);
-        }
-
-        /// <summary> Device definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="eTag"> Resource Tag. </param>
-        /// <param name="extendedLocation"> The extended location. </param>
-        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDeviceData"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceDeviceData DeviceRegistryNamespaceDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDeviceProperties properties = default, string eTag = default, DeviceRegistryExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DeviceRegistryNamespaceDeviceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
-                extendedLocation,
                 default);
         }
 
@@ -1316,6 +1288,34 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceStatusEndpoint(error, default);
         }
 
+        /// <summary> Device definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> Resource Tag. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDeviceData"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceDeviceData DeviceRegistryNamespaceDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDeviceProperties properties = default, string eTag = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DeviceRegistryNamespaceDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                extendedLocation,
+                default);
+        }
+
         /// <summary> The type used for update operations of the NamespaceDevice. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -1352,32 +1352,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static DeviceCredentialsRevokeContent DeviceCredentialsRevokeContent(bool? disable = default)
         {
             return new DeviceCredentialsRevokeContent(disable, default);
-        }
-
-        /// <summary> Discovered asset definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extended location. </param>
-        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDiscoveredAssetData"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceDiscoveredAssetData DeviceRegistryNamespaceDiscoveredAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDiscoveredAssetProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DeviceRegistryNamespaceDiscoveredAssetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                default);
         }
 
         /// <summary> Defines the discovered asset properties. </summary>
@@ -1612,6 +1586,32 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Discovered asset definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDiscoveredAssetData"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceDiscoveredAssetData DeviceRegistryNamespaceDiscoveredAssetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDiscoveredAssetProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DeviceRegistryNamespaceDiscoveredAssetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
         /// <summary> The type used for update operations of the NamespaceDiscoveredAsset. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -1693,32 +1693,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
-        /// <summary> Discovered device definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extended location. </param>
-        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDiscoveredDeviceData"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceDiscoveredDeviceData DeviceRegistryNamespaceDiscoveredDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDiscoveredDeviceProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DeviceRegistryNamespaceDiscoveredDeviceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                default);
-        }
-
         /// <summary> Defines the discovered device properties. </summary>
         /// <param name="externalDeviceId"> A device ID that represents the device in a system external to Azure. Unique within scope of an Azure tenant. </param>
         /// <param name="endpoints"> Endpoints for discovered devices. </param>
@@ -1781,6 +1755,32 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Discovered device definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceDiscoveredDeviceData"/> instance for mocking. </returns>
+        public static DeviceRegistryNamespaceDiscoveredDeviceData DeviceRegistryNamespaceDiscoveredDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceDiscoveredDeviceProperties properties = default, DeviceRegistryExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DeviceRegistryNamespaceDiscoveredDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
         /// <summary> The type used for update operations of the NamespaceDiscoveredDevice. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -1814,6 +1814,26 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the schema registry properties. </summary>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
+        /// <param name="namespace"> Schema registry namespace. Uniquely identifies a schema registry within a tenant. </param>
+        /// <param name="displayName"> Human-readable display name. </param>
+        /// <param name="description"> Human-readable description of the schema registry. </param>
+        /// <param name="storageAccountContainerUri"> The Storage Account's Container URL where schemas will be stored. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.DeviceRegistrySchemaRegistryProperties"/> instance for mocking. </returns>
+        public static DeviceRegistrySchemaRegistryProperties DeviceRegistrySchemaRegistryProperties(string uuid = default, string @namespace = default, string displayName = default, string description = default, Uri storageAccountContainerUri = default, DeviceRegistryProvisioningState? provisioningState = default)
+        {
+            return new DeviceRegistrySchemaRegistryProperties(
+                uuid,
+                @namespace,
+                displayName,
+                description,
+                storageAccountContainerUri,
+                provisioningState,
+                default);
+        }
+
         /// <summary> Schema registry definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1840,26 +1860,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
-        /// <summary> Defines the schema registry properties. </summary>
-        /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
-        /// <param name="namespace"> Schema registry namespace. Uniquely identifies a schema registry within a tenant. </param>
-        /// <param name="displayName"> Human-readable display name. </param>
-        /// <param name="description"> Human-readable description of the schema registry. </param>
-        /// <param name="storageAccountContainerUri"> The Storage Account's Container URL where schemas will be stored. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.DeviceRegistrySchemaRegistryProperties"/> instance for mocking. </returns>
-        public static DeviceRegistrySchemaRegistryProperties DeviceRegistrySchemaRegistryProperties(string uuid = default, string @namespace = default, string displayName = default, string description = default, Uri storageAccountContainerUri = default, DeviceRegistryProvisioningState? provisioningState = default)
-        {
-            return new DeviceRegistrySchemaRegistryProperties(
-                uuid,
-                @namespace,
-                displayName,
-                description,
-                storageAccountContainerUri,
-                provisioningState,
-                default);
-        }
-
         /// <summary> The type used for update operations of the SchemaRegistry. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -1879,24 +1879,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static SchemaRegistryUpdateProperties SchemaRegistryUpdateProperties(string displayName = default, string description = default)
         {
             return new SchemaRegistryUpdateProperties(displayName, description, default);
-        }
-
-        /// <summary> Schema definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistrySchemaData"/> instance for mocking. </returns>
-        public static DeviceRegistrySchemaData DeviceRegistrySchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistrySchemaProperties properties = default)
-        {
-            return new DeviceRegistrySchemaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> Defines the schema properties. </summary>
@@ -1923,16 +1905,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
-        /// <summary> Schema version's definition. </summary>
+        /// <summary> Schema definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistrySchemaVersionData"/> instance for mocking. </returns>
-        public static DeviceRegistrySchemaVersionData DeviceRegistrySchemaVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistrySchemaVersionProperties properties = default)
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistrySchemaData"/> instance for mocking. </returns>
+        public static DeviceRegistrySchemaData DeviceRegistrySchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistrySchemaProperties properties = default)
         {
-            return new DeviceRegistrySchemaVersionData(
+            return new DeviceRegistrySchemaData(
                 id,
                 name,
                 resourceType,
@@ -1956,6 +1938,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 schemaContent,
                 hash,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> Schema version's definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DeviceRegistry.DeviceRegistrySchemaVersionData"/> instance for mocking. </returns>
+        public static DeviceRegistrySchemaVersionData DeviceRegistrySchemaVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceRegistrySchemaVersionProperties properties = default)
+        {
+            return new DeviceRegistrySchemaVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
     }

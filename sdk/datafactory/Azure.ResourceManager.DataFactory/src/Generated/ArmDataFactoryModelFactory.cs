@@ -22,51 +22,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public static partial class ArmDataFactoryModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Factory provisioning state, example Succeeded. </param>
-        /// <param name="createdOn"> Time the factory was created in ISO8601 format. </param>
-        /// <param name="version"> Version of the factory. </param>
-        /// <param name="repoConfiguration"> Git repo information of the factory. </param>
-        /// <param name="globalParameters"> List of parameters for factory. </param>
-        /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
-        /// <param name="purviewResourceId"> Purview resource id. </param>
-        /// <param name="identity"> Managed service identity of the factory. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="DataFactory.DataFactoryData"/> instance for mocking. </returns>
-        public static DataFactoryData DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, DateTimeOffset? createdOn, string version, FactoryRepoConfiguration repoConfiguration, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters, DataFactoryEncryptionConfiguration encryption, DataFactoryPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier purviewResourceId, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, BinaryData> additionalProperties)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new DataFactoryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && createdOn is null && version is null && purviewResourceId is null && repoConfiguration is null && globalParameters is null && encryption is null && publicNetworkAccess is null ? default : new FactoryProperties(
-                    provisioningState,
-                    createdOn,
-                    version,
-                    purviewResourceId is null ? default : new PurviewConfiguration(purviewResourceId, default),
-                    repoConfiguration,
-                    globalParameters ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
-                    encryption,
-                    publicNetworkAccess,
-                    default),
-                identity,
-                eTag,
-                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
         /// <summary>
         /// Factory's git repo information.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FactoryVstsConfiguration"/> and <see cref="Models.FactoryGitHubConfiguration"/>.
@@ -170,6 +125,51 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static DataFactoryEncryptionConfiguration DataFactoryEncryptionConfiguration(string keyName = default, Uri vaultBaseUri = default, string keyVersion = default, string userAssignedIdentity = default)
         {
             return new DataFactoryEncryptionConfiguration(keyName, vaultBaseUri, keyVersion, userAssignedIdentity is null ? default : new DataFactoryCmkIdentity(userAssignedIdentity, default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Factory provisioning state, example Succeeded. </param>
+        /// <param name="createdOn"> Time the factory was created in ISO8601 format. </param>
+        /// <param name="version"> Version of the factory. </param>
+        /// <param name="repoConfiguration"> Git repo information of the factory. </param>
+        /// <param name="globalParameters"> List of parameters for factory. </param>
+        /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
+        /// <param name="purviewResourceId"> Purview resource id. </param>
+        /// <param name="identity"> Managed service identity of the factory. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="DataFactory.DataFactoryData"/> instance for mocking. </returns>
+        public static DataFactoryData DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, DateTimeOffset? createdOn, string version, FactoryRepoConfiguration repoConfiguration, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters, DataFactoryEncryptionConfiguration encryption, DataFactoryPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier purviewResourceId, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, BinaryData> additionalProperties)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new DataFactoryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && createdOn is null && version is null && purviewResourceId is null && repoConfiguration is null && globalParameters is null && encryption is null && publicNetworkAccess is null ? default : new FactoryProperties(
+                    provisioningState,
+                    createdOn,
+                    version,
+                    purviewResourceId is null ? default : new PurviewConfiguration(purviewResourceId, default),
+                    repoConfiguration,
+                    globalParameters ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
+                    encryption,
+                    publicNetworkAccess,
+                    default),
+                identity,
+                eTag,
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="tags"> The resource tags. </param>
@@ -6937,46 +6937,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 properties,
                 eTag,
                 default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> The description of the pipeline. </param>
-        /// <param name="activities"> List of activities in pipeline. </param>
-        /// <param name="parameters"> List of parameters for pipeline. </param>
-        /// <param name="variables"> List of variables for pipeline. </param>
-        /// <param name="concurrency"> The max number of concurrent runs for the pipeline. </param>
-        /// <param name="annotations"> List of tags that can be used for describing the Pipeline. </param>
-        /// <param name="runDimensions"> Dimensions emitted by Pipeline. </param>
-        /// <param name="folderName"> The name of the folder that this Pipeline is in. </param>
-        /// <param name="elapsedTimeMetricDuration"> TimeSpan value, after which an Azure Monitoring Metric is fired. </param>
-        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="DataFactory.DataFactoryPipelineData"/> instance for mocking. </returns>
-        public static DataFactoryPipelineData DataFactoryPipelineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<PipelineActivity> activities = default, IDictionary<string, EntityParameterSpecification> parameters = default, IDictionary<string, PipelineVariableSpecification> variables = default, int? concurrency = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> runDimensions = default, string folderName = default, BinaryData elapsedTimeMetricDuration = default, ETag? eTag = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new DataFactoryPipelineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null && activities is null && parameters is null && variables is null && concurrency is null && annotations is null && runDimensions is null && folderName is null && elapsedTimeMetricDuration is null ? default : new Pipeline(
-                    description,
-                    (activities ?? new ChangeTrackingList<PipelineActivity>()).ToList(),
-                    parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
-                    variables ?? new ChangeTrackingDictionary<string, PipelineVariableSpecification>(),
-                    concurrency,
-                    (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
-                    runDimensions ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                    folderName is null ? default : new PipelineFolder(folderName, default),
-                    elapsedTimeMetricDuration is null ? default : new PipelinePolicy(elapsedTimeMetricDuration is null ? default : new PipelineElapsedTimeMetricPolicy(elapsedTimeMetricDuration, default), default),
-                    default),
-                eTag,
-                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <summary>
@@ -14191,6 +14151,46 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PipelineVariableSpecification(variableType, defaultValue, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="description"> The description of the pipeline. </param>
+        /// <param name="activities"> List of activities in pipeline. </param>
+        /// <param name="parameters"> List of parameters for pipeline. </param>
+        /// <param name="variables"> List of variables for pipeline. </param>
+        /// <param name="concurrency"> The max number of concurrent runs for the pipeline. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the Pipeline. </param>
+        /// <param name="runDimensions"> Dimensions emitted by Pipeline. </param>
+        /// <param name="folderName"> The name of the folder that this Pipeline is in. </param>
+        /// <param name="elapsedTimeMetricDuration"> TimeSpan value, after which an Azure Monitoring Metric is fired. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="DataFactory.DataFactoryPipelineData"/> instance for mocking. </returns>
+        public static DataFactoryPipelineData DataFactoryPipelineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<PipelineActivity> activities = default, IDictionary<string, EntityParameterSpecification> parameters = default, IDictionary<string, PipelineVariableSpecification> variables = default, int? concurrency = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> runDimensions = default, string folderName = default, BinaryData elapsedTimeMetricDuration = default, ETag? eTag = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new DataFactoryPipelineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && activities is null && parameters is null && variables is null && concurrency is null && annotations is null && runDimensions is null && folderName is null && elapsedTimeMetricDuration is null ? default : new Pipeline(
+                    description,
+                    (activities ?? new ChangeTrackingList<PipelineActivity>()).ToList(),
+                    parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                    variables ?? new ChangeTrackingDictionary<string, PipelineVariableSpecification>(),
+                    concurrency,
+                    (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    runDimensions ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                    folderName is null ? default : new PipelineFolder(folderName, default),
+                    elapsedTimeMetricDuration is null ? default : new PipelinePolicy(elapsedTimeMetricDuration is null ? default : new PipelineElapsedTimeMetricPolicy(elapsedTimeMetricDuration, default), default),
+                    default),
+                eTag,
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
         /// <summary> Response body with a run identifier. </summary>
         /// <param name="runId"> Identifier of a run. </param>
         /// <returns> A new <see cref="Models.PipelineCreateRunResult"/> instance for mocking. </returns>
@@ -14228,26 +14228,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
-        /// <summary> Managed Virtual Network resource type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Managed Virtual Network properties. </param>
-        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <returns> A new <see cref="DataFactory.DataFactoryManagedVirtualNetworkData"/> instance for mocking. </returns>
-        public static DataFactoryManagedVirtualNetworkData DataFactoryManagedVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataFactoryManagedVirtualNetworkProperties properties = default, ETag? eTag = default)
-        {
-            return new DataFactoryManagedVirtualNetworkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                eTag,
-                default);
-        }
-
         /// <summary> A managed Virtual Network associated with the Azure Data Factory. </summary>
         /// <param name="vnetId"> Managed Virtual Network ID. </param>
         /// <param name="alias"> Managed Virtual Network alias. </param>
@@ -14260,17 +14240,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryManagedVirtualNetworkProperties(vnetId, @alias, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Managed private endpoint resource type. </summary>
+        /// <summary> Managed Virtual Network resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Managed private endpoint properties. </param>
+        /// <param name="properties"> Managed Virtual Network properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <returns> A new <see cref="DataFactory.DataFactoryPrivateEndpointData"/> instance for mocking. </returns>
-        public static DataFactoryPrivateEndpointData DataFactoryPrivateEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataFactoryPrivateEndpointProperties properties = default, ETag? eTag = default)
+        /// <returns> A new <see cref="DataFactory.DataFactoryManagedVirtualNetworkData"/> instance for mocking. </returns>
+        public static DataFactoryManagedVirtualNetworkData DataFactoryManagedVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataFactoryManagedVirtualNetworkProperties properties = default, ETag? eTag = default)
         {
-            return new DataFactoryPrivateEndpointData(
+            return new DataFactoryManagedVirtualNetworkData(
                 id,
                 name,
                 resourceType,
@@ -14314,17 +14294,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ConnectionStateProperties(actionsRequired, description, status, default);
         }
 
-        /// <summary> Credential resource type. </summary>
+        /// <summary> Managed private endpoint resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of credentials. </param>
+        /// <param name="properties"> Managed private endpoint properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <returns> A new <see cref="DataFactory.DataFactoryServiceCredentialData"/> instance for mocking. </returns>
-        public static DataFactoryServiceCredentialData DataFactoryServiceCredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataFactoryCredential properties = default, ETag? eTag = default)
+        /// <returns> A new <see cref="DataFactory.DataFactoryPrivateEndpointData"/> instance for mocking. </returns>
+        public static DataFactoryPrivateEndpointData DataFactoryPrivateEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataFactoryPrivateEndpointProperties properties = default, ETag? eTag = default)
         {
-            return new DataFactoryServiceCredentialData(
+            return new DataFactoryPrivateEndpointData(
                 id,
                 name,
                 resourceType,
@@ -14364,17 +14344,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryManagedIdentityCredentialProperties(default, description, (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), resourceId is null ? default : new ManagedIdentityTypeProperties(resourceId, default));
         }
 
-        /// <summary> Private Endpoint Connection ARM resource. </summary>
+        /// <summary> Credential resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Core resource properties. </param>
+        /// <param name="properties"> Properties of credentials. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <returns> A new <see cref="DataFactory.DataFactoryPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static DataFactoryPrivateEndpointConnectionData DataFactoryPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataFactoryPrivateEndpointConnectionProperties properties = default, ETag? eTag = default)
+        /// <returns> A new <see cref="DataFactory.DataFactoryServiceCredentialData"/> instance for mocking. </returns>
+        public static DataFactoryServiceCredentialData DataFactoryServiceCredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataFactoryCredential properties = default, ETag? eTag = default)
         {
-            return new DataFactoryPrivateEndpointConnectionData(
+            return new DataFactoryServiceCredentialData(
                 id,
                 name,
                 resourceType,
@@ -14401,6 +14381,26 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static PrivateLinkConnectionState PrivateLinkConnectionState(string status = default, string description = default, string actionsRequired = default)
         {
             return new PrivateLinkConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <summary> Private Endpoint Connection ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Core resource properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <returns> A new <see cref="DataFactory.DataFactoryPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static DataFactoryPrivateEndpointConnectionData DataFactoryPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataFactoryPrivateEndpointConnectionProperties properties = default, ETag? eTag = default)
+        {
+            return new DataFactoryPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
         }
 
         /// <summary> Private Endpoint Connection Approval ARM resource. </summary>
@@ -14451,42 +14451,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 properties ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
                 eTag,
                 default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> The description of the change data capture. </param>
-        /// <param name="sourceConnectionsInfo"> List of sources connections that can be used as sources in the CDC. </param>
-        /// <param name="targetConnectionsInfo"> List of target connections that can be used as sources in the CDC. </param>
-        /// <param name="policy"> CDC policy. </param>
-        /// <param name="allowVnetOverride"> A boolean to determine if the vnet configuration needs to be overwritten. </param>
-        /// <param name="status"> Status of the CDC as to if it is running or stopped. </param>
-        /// <param name="folderName"> The name of the folder that this CDC is in. </param>
-        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="DataFactory.DataFactoryChangeDataCaptureData"/> instance for mocking. </returns>
-        public static DataFactoryChangeDataCaptureData DataFactoryChangeDataCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IEnumerable<MapperSourceConnectionsInfo> sourceConnectionsInfo, IEnumerable<MapperTargetConnectionsInfo> targetConnectionsInfo, MapperPolicy policy, bool? allowVnetOverride, string status, string folderName, ETag? eTag, IDictionary<string, BinaryData> additionalProperties)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new DataFactoryChangeDataCaptureData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                folderName is null && description is null && sourceConnectionsInfo is null && targetConnectionsInfo is null && policy is null && allowVnetOverride is null && status is null ? default : new ChangeDataCapture(
-                    folderName is null ? default : new ChangeDataCaptureFolder(folderName, default),
-                    description,
-                    (sourceConnectionsInfo ?? new ChangeTrackingList<MapperSourceConnectionsInfo>()).ToList(),
-                    (targetConnectionsInfo ?? new ChangeTrackingList<MapperTargetConnectionsInfo>()).ToList(),
-                    policy,
-                    allowVnetOverride,
-                    status,
-                    default),
-                eTag,
-                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <summary> A object which contains list of tables and connection details for a source connection. </summary>
@@ -14636,6 +14600,42 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static MapperPolicyRecurrence MapperPolicyRecurrence(MapperPolicyRecurrenceFrequencyType? frequency = default, int? interval = default)
         {
             return new MapperPolicyRecurrence(frequency, interval, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="description"> The description of the change data capture. </param>
+        /// <param name="sourceConnectionsInfo"> List of sources connections that can be used as sources in the CDC. </param>
+        /// <param name="targetConnectionsInfo"> List of target connections that can be used as sources in the CDC. </param>
+        /// <param name="policy"> CDC policy. </param>
+        /// <param name="allowVnetOverride"> A boolean to determine if the vnet configuration needs to be overwritten. </param>
+        /// <param name="status"> Status of the CDC as to if it is running or stopped. </param>
+        /// <param name="folderName"> The name of the folder that this CDC is in. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="DataFactory.DataFactoryChangeDataCaptureData"/> instance for mocking. </returns>
+        public static DataFactoryChangeDataCaptureData DataFactoryChangeDataCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IEnumerable<MapperSourceConnectionsInfo> sourceConnectionsInfo, IEnumerable<MapperTargetConnectionsInfo> targetConnectionsInfo, MapperPolicy policy, bool? allowVnetOverride, string status, string folderName, ETag? eTag, IDictionary<string, BinaryData> additionalProperties)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new DataFactoryChangeDataCaptureData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                folderName is null && description is null && sourceConnectionsInfo is null && targetConnectionsInfo is null && policy is null && allowVnetOverride is null && status is null ? default : new ChangeDataCapture(
+                    folderName is null ? default : new ChangeDataCaptureFolder(folderName, default),
+                    description,
+                    (sourceConnectionsInfo ?? new ChangeTrackingList<MapperSourceConnectionsInfo>()).ToList(),
+                    (targetConnectionsInfo ?? new ChangeTrackingList<MapperTargetConnectionsInfo>()).ToList(),
+                    policy,
+                    allowVnetOverride,
+                    status,
+                    default),
+                eTag,
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <summary> Factory resource type. </summary>

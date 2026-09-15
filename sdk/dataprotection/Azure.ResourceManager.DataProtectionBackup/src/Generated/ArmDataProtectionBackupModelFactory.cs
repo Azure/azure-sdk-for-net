@@ -417,33 +417,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataProtectionIdentityDetails(useSystemAssignedIdentity, userAssignedIdentityId, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> BackupVaultResource properties. </param>
-        /// <param name="identity"> Input Managed Identity Details. </param>
-        /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupVaultData"/> instance for mocking. </returns>
-        public static DataProtectionBackupVaultData DataProtectionBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataProtectionBackupVaultProperties properties = default, ManagedServiceIdentity identity = default, ETag? etag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DataProtectionBackupVaultData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                etag,
-                default);
-        }
-
         /// <param name="monitoringAlertSettingsForAllJobFailures"> Gets or sets the AlertSettingsForAllJobFailures. </param>
         /// <param name="costManagementGranularityLevel"> Settings for granularity level. </param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
@@ -553,6 +526,33 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new BackupVaultFeatureSettings(crossSubscriptionRestoreState is null ? default : new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), crossRegionRestoreState is null ? default : new CrossRegionRestoreSettings(crossRegionRestoreState, default), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> BackupVaultResource properties. </param>
+        /// <param name="identity"> Input Managed Identity Details. </param>
+        /// <param name="etag"> Optional ETag. </param>
+        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupVaultData"/> instance for mocking. </returns>
+        public static DataProtectionBackupVaultData DataProtectionBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataProtectionBackupVaultProperties properties = default, ManagedServiceIdentity identity = default, ETag? etag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataProtectionBackupVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                etag,
+                default);
+        }
+
         /// <summary> Patch Request content for Microsoft.DataProtection resources. </summary>
         /// <param name="identity"> Input Managed Identity Details. </param>
         /// <param name="properties"> Resource properties. </param>
@@ -611,24 +611,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new UnknownOperationExtendedInfo(objectType, default);
         }
 
-        /// <summary> Deleted Backup Vault Resource (available from version 2025-09-01). </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionDeletedBackupVaultData"/> instance for mocking. </returns>
-        public static DataProtectionDeletedBackupVaultData DataProtectionDeletedBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataProtectionDeletedBackupVaultProperties properties = default)
-        {
-            return new DataProtectionDeletedBackupVaultData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <param name="monitoringAlertSettingsForAllJobFailures"> Gets or sets the AlertSettingsForAllJobFailures. </param>
         /// <param name="costManagementGranularityLevel"> Settings for granularity level. </param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
@@ -684,16 +666,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataProtectionResourceDeletionInfo(deletedOn, scheduledPurgeOn, deleteActivityId, default);
         }
 
-        /// <summary> BaseBackupPolicy resource. </summary>
+        /// <summary> Deleted Backup Vault Resource (available from version 2025-09-01). </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> BaseBackupPolicyResource properties. </param>
-        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupPolicyData"/> instance for mocking. </returns>
-        public static DataProtectionBackupPolicyData DataProtectionBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataProtectionBackupPolicyPropertiesBase properties = default)
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionDeletedBackupVaultData"/> instance for mocking. </returns>
+        public static DataProtectionDeletedBackupVaultData DataProtectionDeletedBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataProtectionDeletedBackupVaultProperties properties = default)
         {
-            return new DataProtectionBackupPolicyData(
+            return new DataProtectionDeletedBackupVaultData(
                 id,
                 name,
                 resourceType,
@@ -998,6 +980,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static ImmediateCopySetting ImmediateCopySetting()
         {
             return new ImmediateCopySetting(default, default);
+        }
+
+        /// <summary> BaseBackupPolicy resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> BaseBackupPolicyResource properties. </param>
+        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupPolicyData"/> instance for mocking. </returns>
+        public static DataProtectionBackupPolicyData DataProtectionBackupPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataProtectionBackupPolicyPropertiesBase properties = default)
+        {
+            return new DataProtectionBackupPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Trigger backup request. </summary>
@@ -1475,24 +1475,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new RestorableTimeRange(startOn, endOn, objectType, default);
         }
 
-        /// <summary> Azure backup recoveryPoint resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> AzureBackupRecoveryPointResource properties. </param>
-        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupRecoveryPointData"/> instance for mocking. </returns>
-        public static DataProtectionBackupRecoveryPointData DataProtectionBackupRecoveryPointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataProtectionBackupRecoveryPointProperties properties = default)
-        {
-            return new DataProtectionBackupRecoveryPointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary>
         /// Azure backup recoveryPoint
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/>.
@@ -1563,16 +1545,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 default);
         }
 
-        /// <summary> AzureBackup Job Resource Class. </summary>
+        /// <summary> Azure backup recoveryPoint resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> AzureBackupJobResource properties. </param>
-        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupJobData"/> instance for mocking. </returns>
-        public static DataProtectionBackupJobData DataProtectionBackupJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataProtectionBackupJobProperties properties = default)
+        /// <param name="properties"> AzureBackupRecoveryPointResource properties. </param>
+        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupRecoveryPointData"/> instance for mocking. </returns>
+        public static DataProtectionBackupRecoveryPointData DataProtectionBackupRecoveryPointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataProtectionBackupRecoveryPointProperties properties = default)
         {
-            return new DataProtectionBackupJobData(
+            return new DataProtectionBackupRecoveryPointData(
                 id,
                 name,
                 resourceType,
@@ -1719,16 +1701,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new UserFacingWarningDetail(resourceName, warningDetails, default);
         }
 
-        /// <summary> Deleted Backup Instance. </summary>
+        /// <summary> AzureBackup Job Resource Class. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> DeletedBackupInstanceResource properties. </param>
-        /// <returns> A new <see cref="DataProtectionBackup.DeletedDataProtectionBackupInstanceData"/> instance for mocking. </returns>
-        public static DeletedDataProtectionBackupInstanceData DeletedDataProtectionBackupInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeletedDataProtectionBackupInstanceProperties properties = default)
+        /// <param name="properties"> AzureBackupJobResource properties. </param>
+        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionBackupJobData"/> instance for mocking. </returns>
+        public static DataProtectionBackupJobData DataProtectionBackupJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataProtectionBackupJobProperties properties = default)
         {
-            return new DeletedDataProtectionBackupInstanceData(
+            return new DataProtectionBackupJobData(
                 id,
                 name,
                 resourceType,
@@ -1789,39 +1771,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new BackupInstanceDeletionInfo(deleteOn, billingEndOn, scheduledPurgeOn, deleteActivityId, default);
         }
 
-        /// <summary> Base resource under Microsoft.DataProtection provider namespace. </summary>
+        /// <summary> Deleted Backup Instance. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <returns> A new <see cref="Models.ResourceGuardProtectedObjectData"/> instance for mocking. </returns>
-        public static ResourceGuardProtectedObjectData ResourceGuardProtectedObjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default)
+        /// <param name="properties"> DeletedBackupInstanceResource properties. </param>
+        /// <returns> A new <see cref="DataProtectionBackup.DeletedDataProtectionBackupInstanceData"/> instance for mocking. </returns>
+        public static DeletedDataProtectionBackupInstanceData DeletedDataProtectionBackupInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeletedDataProtectionBackupInstanceProperties properties = default)
         {
-            return new ResourceGuardProtectedObjectData(id, name, resourceType, systemData, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ResourceGuardResource properties. </param>
-        /// <param name="etag"> Optional ETag. </param>
-        /// <returns> A new <see cref="DataProtectionBackup.ResourceGuardData"/> instance for mocking. </returns>
-        public static ResourceGuardData ResourceGuardData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceGuardProperties properties = default, ETag? etag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ResourceGuardData(
+            return new DeletedDataProtectionBackupInstanceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 properties,
-                etag,
                 default);
         }
 
@@ -1855,6 +1819,42 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new ResourceGuardOperationDetails(vaultCriticalOperation, requestResourceType, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> ResourceGuardResource properties. </param>
+        /// <param name="etag"> Optional ETag. </param>
+        /// <returns> A new <see cref="DataProtectionBackup.ResourceGuardData"/> instance for mocking. </returns>
+        public static ResourceGuardData ResourceGuardData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceGuardProperties properties = default, ETag? etag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceGuardData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                etag,
+                default);
+        }
+
+        /// <summary> Base resource under Microsoft.DataProtection provider namespace. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Models.ResourceGuardProtectedObjectData"/> instance for mocking. </returns>
+        public static ResourceGuardProtectedObjectData ResourceGuardProtectedObjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default)
+        {
+            return new ResourceGuardProtectedObjectData(id, name, resourceType, systemData, default);
+        }
+
         /// <summary> Patch Request content for Microsoft.DataProtection Resource Guard resources. </summary>
         /// <param name="tags"> Resource Guard tags. </param>
         /// <returns> A new <see cref="Models.ResourceGuardPatch"/> instance for mocking. </returns>
@@ -1863,24 +1863,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ResourceGuardPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> ResourceGuardProxyBaseResource object, used for response and request bodies for ResourceGuardProxy APIs. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
-        /// <returns> A new <see cref="DataProtectionBackup.ResourceGuardProxyBaseResourceData"/> instance for mocking. </returns>
-        public static ResourceGuardProxyBaseResourceData ResourceGuardProxyBaseResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceGuardProxyBase properties = default)
-        {
-            return new ResourceGuardProxyBaseResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> ResourceGuardProxyBase object, used in ResourceGuardProxyBaseResource. </summary>
@@ -1903,6 +1885,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static ResourceGuardOperationDetail ResourceGuardOperationDetail(string vaultCriticalOperation = default, string defaultResourceRequest = default)
         {
             return new ResourceGuardOperationDetail(vaultCriticalOperation, defaultResourceRequest, default);
+        }
+
+        /// <summary> ResourceGuardProxyBaseResource object, used for response and request bodies for ResourceGuardProxy APIs. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
+        /// <returns> A new <see cref="DataProtectionBackup.ResourceGuardProxyBaseResourceData"/> instance for mocking. </returns>
+        public static ResourceGuardProxyBaseResourceData ResourceGuardProxyBaseResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceGuardProxyBase properties = default)
+        {
+            return new ResourceGuardProxyBaseResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Request body of unlock delete API. </summary>

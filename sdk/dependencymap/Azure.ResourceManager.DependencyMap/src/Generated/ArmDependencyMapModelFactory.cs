@@ -181,6 +181,28 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 default);
         }
 
+        /// <summary>
+        /// The properties of Discovery Source resource
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.OffAzureDiscoverySourceProperties"/>.
+        /// </summary>
+        /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
+        /// <param name="sourceType"> Source type of Discovery Source resource. </param>
+        /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
+        /// <returns> A new <see cref="Models.DependencyMapDiscoverySourceProperties"/> instance for mocking. </returns>
+        public static DependencyMapDiscoverySourceProperties DependencyMapDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = default, string sourceType = default, ResourceIdentifier sourceId = default)
+        {
+            return new UnknownDependencyMapDiscoverySourceProperties(provisioningState, default, sourceId, default);
+        }
+
+        /// <summary> OffAzure discovery source resource properties. </summary>
+        /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
+        /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
+        /// <returns> A new <see cref="Models.OffAzureDiscoverySourceProperties"/> instance for mocking. </returns>
+        public static OffAzureDiscoverySourceProperties OffAzureDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = default, ResourceIdentifier sourceId = default)
+        {
+            return new OffAzureDiscoverySourceProperties(provisioningState, default, sourceId, default);
+        }
+
         /// <summary> A Discovery Source resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -203,28 +225,6 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 location,
                 properties,
                 default);
-        }
-
-        /// <summary>
-        /// The properties of Discovery Source resource
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.OffAzureDiscoverySourceProperties"/>.
-        /// </summary>
-        /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
-        /// <param name="sourceType"> Source type of Discovery Source resource. </param>
-        /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
-        /// <returns> A new <see cref="Models.DependencyMapDiscoverySourceProperties"/> instance for mocking. </returns>
-        public static DependencyMapDiscoverySourceProperties DependencyMapDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = default, string sourceType = default, ResourceIdentifier sourceId = default)
-        {
-            return new UnknownDependencyMapDiscoverySourceProperties(provisioningState, default, sourceId, default);
-        }
-
-        /// <summary> OffAzure discovery source resource properties. </summary>
-        /// <param name="provisioningState"> Provisioning state of Discovery Source resource. </param>
-        /// <param name="sourceId"> Source ArmId of Discovery Source resource. </param>
-        /// <returns> A new <see cref="Models.OffAzureDiscoverySourceProperties"/> instance for mocking. </returns>
-        public static OffAzureDiscoverySourceProperties OffAzureDiscoverySourceProperties(DependencyMapProvisioningState? provisioningState = default, ResourceIdentifier sourceId = default)
-        {
-            return new OffAzureDiscoverySourceProperties(provisioningState, default, sourceId, default);
         }
 
         /// <summary> The type used for updating tags in DiscoverySourceResource resources. </summary>
