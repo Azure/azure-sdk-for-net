@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DevHub
       safeName: AzureResourceManagerDevHub
+    - name: Azure.Provisioning.DevHub
+      safeName: AzureProvisioningDevHub

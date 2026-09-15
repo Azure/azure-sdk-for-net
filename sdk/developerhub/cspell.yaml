@@ -1,0 +1,10 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/developerhub/Azure.Provisioning.DevHub/**/*'
+    words:
+      - AZPROVISION
+      - gomodule
+      - HCIAKS
+      - HCIARCVM
+      - inprogress
