@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Recurrence schedule model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HourlyRecurrenceSchedule"/>, <see cref="DailyRecurrenceSchedule"/>, <see cref="WeeklyRecurrenceSchedule"/>, and <see cref="MonthlyRecurrenceSchedule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrenceSchedule"/>, <see cref="HourlyRecurrenceSchedule"/>, <see cref="MonthlyRecurrenceSchedule"/>, and <see cref="WeeklyRecurrenceSchedule"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRecurrenceSchedule))]
     public abstract partial class RecurrenceSchedule : IJsonModel<RecurrenceSchedule>
@@ -127,14 +127,14 @@ namespace Azure.AI.Projects.Evaluation
             {
                 switch (discriminator.GetString())
                 {
-                    case "Hourly":
-                        return HourlyRecurrenceSchedule.DeserializeHourlyRecurrenceSchedule(element, options);
                     case "Daily":
                         return DailyRecurrenceSchedule.DeserializeDailyRecurrenceSchedule(element, options);
-                    case "Weekly":
-                        return WeeklyRecurrenceSchedule.DeserializeWeeklyRecurrenceSchedule(element, options);
+                    case "Hourly":
+                        return HourlyRecurrenceSchedule.DeserializeHourlyRecurrenceSchedule(element, options);
                     case "Monthly":
                         return MonthlyRecurrenceSchedule.DeserializeMonthlyRecurrenceSchedule(element, options);
+                    case "Weekly":
+                        return WeeklyRecurrenceSchedule.DeserializeWeeklyRecurrenceSchedule(element, options);
                 }
             }
             return UnknownRecurrenceSchedule.DeserializeUnknownRecurrenceSchedule(element, options);
