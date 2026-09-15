@@ -1,14 +1,14 @@
 # Release History
 
-## 1.6.0-beta.5 (Unreleased)
+## 1.6.0 (2026-09-10)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded API version to 2026-07-01.
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.62.0.
 
 ## 1.6.0-beta.4 (2026-08-31)
 

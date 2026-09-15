@@ -13,59 +13,52 @@ using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    internal partial class UnknownCognitiveServicesOutboundRuleBasicProperties : CognitiveServicesOutboundRuleBasicProperties, IJsonModel<CognitiveServicesOutboundRuleBasicProperties>
+    /// <summary> Service Tag outbound rule for the managed network of a cognitive services account. </summary>
+    public partial class CognitiveServicesServiceTagOutboundRule : CognitiveServicesOutboundRuleBasicProperties, IJsonModel<CognitiveServicesServiceTagOutboundRule>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownCognitiveServicesOutboundRuleBasicProperties"/> for deserialization. </summary>
-        internal UnknownCognitiveServicesOutboundRuleBasicProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override CognitiveServicesOutboundRuleBasicProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesOutboundRuleBasicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceTagOutboundRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCognitiveServicesOutboundRuleBasicProperties(document.RootElement, options);
+                        return DeserializeCognitiveServicesServiceTagOutboundRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesOutboundRuleBasicProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesServiceTagOutboundRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesOutboundRuleBasicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceTagOutboundRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesOutboundRuleBasicProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesServiceTagOutboundRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CognitiveServicesOutboundRuleBasicProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CognitiveServicesServiceTagOutboundRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServicesOutboundRuleBasicProperties IPersistableModel<CognitiveServicesOutboundRuleBasicProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return PersistableModelCreateCore(data, options);
-        }
+        CognitiveServicesServiceTagOutboundRule IPersistableModel<CognitiveServicesServiceTagOutboundRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (CognitiveServicesServiceTagOutboundRule)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CognitiveServicesOutboundRuleBasicProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesServiceTagOutboundRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CognitiveServicesOutboundRuleBasicProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesServiceTagOutboundRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,37 +69,39 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesOutboundRuleBasicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceTagOutboundRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesOutboundRuleBasicProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesServiceTagOutboundRule)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Destination))
+            {
+                writer.WritePropertyName("destination"u8);
+                writer.WriteObjectValue(Destination, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CognitiveServicesOutboundRuleBasicProperties IJsonModel<CognitiveServicesOutboundRuleBasicProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return JsonModelCreateCore(ref reader, options);
-        }
+        CognitiveServicesServiceTagOutboundRule IJsonModel<CognitiveServicesServiceTagOutboundRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CognitiveServicesServiceTagOutboundRule)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override CognitiveServicesOutboundRuleBasicProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesOutboundRuleBasicProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceTagOutboundRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesOutboundRuleBasicProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesServiceTagOutboundRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCognitiveServicesOutboundRuleBasicProperties(document.RootElement, options);
+            return DeserializeCognitiveServicesServiceTagOutboundRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownCognitiveServicesOutboundRuleBasicProperties DeserializeUnknownCognitiveServicesOutboundRuleBasicProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CognitiveServicesServiceTagOutboundRule DeserializeCognitiveServicesServiceTagOutboundRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -118,6 +113,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string errorInformation = default;
             IReadOnlyList<string> parentRuleNames = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            CognitiveServicesServiceTagOutboundRuleDestination destination = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("category"u8))
@@ -169,18 +165,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     parentRuleNames = array;
                     continue;
                 }
+                if (prop.NameEquals("destination"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    destination = CognitiveServicesServiceTagOutboundRuleDestination.DeserializeCognitiveServicesServiceTagOutboundRuleDestination(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownCognitiveServicesOutboundRuleBasicProperties(
+            return new CognitiveServicesServiceTagOutboundRule(
                 category,
                 status,
                 @type,
                 errorInformation,
                 parentRuleNames ?? new ChangeTrackingList<string>(),
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties,
+                destination);
         }
     }
 }
