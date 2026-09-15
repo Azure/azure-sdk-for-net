@@ -545,6 +545,20 @@ namespace Azure.Storage
             public const string ChangeFeedContainerHeader = "x-ms-file-blob-container-for-xfiles-change-feed";
 
             /// <summary>
+            /// Schema version of the Files change-feed continuation-token envelope
+            /// (<c>ShareChangeFeedCursor</c>). Bump when the on-the-wire cursor shape
+            /// changes and gate resume in <c>ShareChangeFeedCursorSerializer.Validate</c>.
+            /// </summary>
+            public const int CursorSchemaVersion = 1;
+
+            /// <summary>
+            /// Schema version of the Files snapshot-mode continuation-token envelope
+            /// (<c>ShareChangeFeedSnapshotCursor</c>). Bump when the on-the-wire cursor
+            /// shape changes and gate resume in <c>SnapshotCursorSerializer.Validate</c>.
+            /// </summary>
+            public const int SnapshotCursorSchemaVersion = 1;
+
+            /// <summary>
             /// Path (relative to the change-feed container) of the mutable pointer blob
             /// that identifies the most recent reset marker for the share.
             /// </summary>

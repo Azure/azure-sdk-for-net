@@ -25,7 +25,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public static ShareChangeFeedSnapshotCursor Deserialize(string continuationToken)
         {
             if (continuationToken == null)
-                throw new ArgumentNullException(nameof(continuationToken));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(continuationToken));
 
             ShareChangeFeedSnapshotCursor cursor;
             try
@@ -34,24 +34,17 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             }
             catch (JsonException ex)
             {
-                throw new ArgumentException(
-                    "Continuation token is not a valid snapshot cursor envelope.",
-                    nameof(continuationToken),
-                    ex);
+                throw ShareChangeFeedErrors.InvalidSnapshotCursorEnvelope(nameof(continuationToken), ex);
             }
 
             if (cursor == null)
-                throw new ArgumentException(
-                    "Continuation token is not a valid snapshot cursor envelope.",
-                    nameof(continuationToken));
+                throw ShareChangeFeedErrors.InvalidSnapshotCursorEnvelope(nameof(continuationToken));
 
             if (string.IsNullOrEmpty(cursor.BeginSnapshot)
                 || string.IsNullOrEmpty(cursor.EndSnapshot)
                 || string.IsNullOrEmpty(cursor.UrlHost))
             {
-                throw new ArgumentException(
-                    "Continuation token is missing required snapshot context.",
-                    nameof(continuationToken));
+                throw ShareChangeFeedErrors.MissingSnapshotContext(nameof(continuationToken));
             }
 
             return cursor;
@@ -65,10 +58,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public static void Validate(BlobContainerClient containerClient, ShareChangeFeedSnapshotCursor cursor)
         {
             if (!string.Equals(containerClient.Uri.Host, cursor.UrlHost, StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException("Cursor URL Host does not match container URL host.");
+                throw ShareChangeFeedErrors.CursorUrlHostMismatch();
 
-            if (cursor.CursorVersion != 1)
-                throw new ArgumentException("Unsupported cursor version.");
+            if (cursor.CursorVersion != Constants.FilesChangeFeed.SnapshotCursorSchemaVersion)
+                throw ShareChangeFeedErrors.UnsupportedCursorVersion();
         }
     }
 }

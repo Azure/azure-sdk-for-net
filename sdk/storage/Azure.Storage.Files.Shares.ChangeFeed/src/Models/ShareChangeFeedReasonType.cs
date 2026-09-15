@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// Initializes a new <see cref="ShareChangeFeedReasonType"/> with a custom string value.
         /// </summary>
         /// <param name="value">The reason type string.</param>
-        public ShareChangeFeedReasonType(string value) { _value = value ?? throw new ArgumentNullException(nameof(value)); }
+        public ShareChangeFeedReasonType(string value) { _value = value ?? throw ShareChangeFeedErrors.ArgumentNull(nameof(value)); }
 
         /// <summary> A file or directory was created via SMB. </summary>
         public static ShareChangeFeedReasonType SmbCreate { get; } = new ShareChangeFeedReasonType("SmbCreate");

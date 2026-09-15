@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public static ShareChangeFeedCursor Deserialize(string continuationToken)
         {
             if (continuationToken == null)
-                throw new ArgumentNullException(nameof(continuationToken));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(continuationToken));
 
             ShareChangeFeedCursor cursor;
             try
@@ -35,17 +35,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             }
             catch (JsonException ex)
             {
-                throw new ArgumentException(
-                    "Continuation token is not a valid Files change feed cursor envelope.",
-                    nameof(continuationToken),
-                    ex);
+                throw ShareChangeFeedErrors.InvalidCursorEnvelope(nameof(continuationToken), ex);
             }
 
             if (cursor == null || string.IsNullOrEmpty(cursor.UrlHost) || cursor.InnerCursor == null)
             {
-                throw new ArgumentException(
-                    "Continuation token is not a valid Files change feed cursor envelope.",
-                    nameof(continuationToken));
+                throw ShareChangeFeedErrors.InvalidCursorEnvelope(nameof(continuationToken));
             }
 
             return cursor;
@@ -58,10 +53,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public static void Validate(BlobContainerClient containerClient, ShareChangeFeedCursor cursor)
         {
             if (!string.Equals(containerClient.Uri.Host, cursor.UrlHost, StringComparison.OrdinalIgnoreCase))
-                throw new ArgumentException("Cursor URL Host does not match container URL host.");
+                throw ShareChangeFeedErrors.CursorUrlHostMismatch();
 
-            if (cursor.CursorVersion != 1)
-                throw new ArgumentException("Unsupported cursor version.");
+            if (cursor.CursorVersion != Constants.FilesChangeFeed.CursorSchemaVersion)
+                throw ShareChangeFeedErrors.UnsupportedCursorVersion();
         }
     }
 }

@@ -67,9 +67,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedResetMarker perEvent)
         {
             if (pointer == null)
-                throw new ArgumentNullException(nameof(pointer));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(pointer));
             if (perEvent == null)
-                throw new ArgumentNullException(nameof(perEvent));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(perEvent));
 
             // Populate base ShareChangeFeedEvent fields so the reset event flows through the
             // ordered stream indistinguishably from a normal event, except for Reason and the

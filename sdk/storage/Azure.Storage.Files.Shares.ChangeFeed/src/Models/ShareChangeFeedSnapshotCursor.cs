@@ -20,8 +20,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     internal class ShareChangeFeedSnapshotCursor
     {
         /// <summary>
-        /// Schema version of the snapshot cursor envelope. Pinned at 1 today; bump and gate
-        /// in <see cref="SnapshotCursorSerializer.Validate"/> when the shape changes.
+        /// Schema version of the snapshot cursor envelope. Pinned at
+        /// <see cref="Constants.FilesChangeFeed.SnapshotCursorSchemaVersion"/> today; bump and
+        /// gate in <see cref="SnapshotCursorSerializer.Validate"/> when the shape changes.
         /// </summary>
         public int CursorVersion { get; set; }
 
@@ -99,7 +100,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             System.Guid? lastSeenResetId = null,
             long? lastSeenResetFileTime = null)
         {
-            CursorVersion = 1;
+            CursorVersion = Constants.FilesChangeFeed.SnapshotCursorSchemaVersion;
             UrlHost = urlHost;
             BeginSnapshot = beginSnapshot;
             EndSnapshot = endSnapshot;
