@@ -698,7 +698,7 @@ namespace BasicTypeSpec
                 }
                 if (prop.NameEquals("requiredUnknown"u8))
                 {
-                    requiredUnknown = BinaryData.FromString(prop.Value.GetRawText());
+                    requiredUnknown = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("optionalUnknown"u8))
@@ -707,7 +707,7 @@ namespace BasicTypeSpec
                     {
                         continue;
                     }
-                    optionalUnknown = BinaryData.FromString(prop.Value.GetRawText());
+                    optionalUnknown = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("requiredRecordUnknown"u8))
@@ -721,7 +721,7 @@ namespace BasicTypeSpec
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     requiredRecordUnknown = dictionary;
@@ -742,7 +742,7 @@ namespace BasicTypeSpec
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     optionalRecordUnknown = dictionary;
@@ -759,7 +759,7 @@ namespace BasicTypeSpec
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     readOnlyRequiredRecordUnknown = dictionary;
@@ -780,7 +780,7 @@ namespace BasicTypeSpec
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     readOnlyOptionalRecordUnknown = dictionary;

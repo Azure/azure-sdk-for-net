@@ -69,7 +69,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The ProjectsAgentDefinition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.HostedAgentDefinition"/>, <see cref="Agents.DeclarativeAgentDefinition"/>, <see cref="Agents.WorkflowAgentDefinition"/>, and <see cref="Agents.ExternalAgentDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.DeclarativeAgentDefinition"/>, <see cref="Agents.ExternalAgentDefinition"/>, <see cref="Agents.HostedAgentDefinition"/>, and <see cref="Agents.WorkflowAgentDefinition"/>.
         /// </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
@@ -511,7 +511,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The AgentEndpointAuthorizationScheme.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.EntraAuthorizationScheme"/>, <see cref="Agents.BotServiceAuthorizationScheme"/>, <see cref="Agents.BotServiceRbacAuthorizationScheme"/>, and <see cref="Agents.BotServiceTenantAuthorizationScheme"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.BotServiceAuthorizationScheme"/>, <see cref="Agents.BotServiceRbacAuthorizationScheme"/>, <see cref="Agents.BotServiceTenantAuthorizationScheme"/>, and <see cref="Agents.EntraAuthorizationScheme"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.AgentEndpointAuthorizationScheme"/> instance for mocking. </returns>
@@ -593,7 +593,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The ContainerSkill.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.SkillReferenceParam"/> and <see cref="OpenAI.InlineSkillParam"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.InlineSkillParam"/> and <see cref="OpenAI.SkillReferenceParam"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="OpenAI.ContainerSkill"/> instance for mocking. </returns>
@@ -747,7 +747,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// An abstract representation of a tool stored in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="Agents.FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.FileSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.ShellToolboxTool"/>, <see cref="Agents.ToolSearchToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, and <see cref="Agents.WorkIQPreviewToolboxTool"/>.
         /// </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
