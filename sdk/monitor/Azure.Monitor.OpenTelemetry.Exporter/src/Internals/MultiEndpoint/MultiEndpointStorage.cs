@@ -17,7 +17,7 @@ using OpenTelemetry;
 using OpenTelemetry.PersistentStorage.Abstractions;
 using OpenTelemetry.PersistentStorage.FileSystem;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 {
     /// <summary>
     /// Offline storage and back-off state, partitioned by ingestion endpoint. The directory is derived
@@ -25,15 +25,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
     /// is routed again. The instrumentation key is not part of the path because it already travels
     /// inside each serialized envelope.
     /// </summary>
-    internal sealed class MultiTenantStorage : IDisposable
+    internal sealed class MultiEndpointStorage : IDisposable
     {
         /// <summary>
         /// Appended to the host's storage directory to form a sibling root. Partitions must not be
-        /// nested inside it: <c>DirectorySizeTracker</c> sums subdirectories recursively, so a tenant
+        /// nested inside it: <c>DirectorySizeTracker</c> sums subdirectories recursively, so a routed
         /// backlog would consume the host's own storage quota while its top-level capacity probe
         /// still reported the directory as empty.
         /// </summary>
-        internal const string RootDirectorySuffix = ".tenants";
+        internal const string RootDirectorySuffix = ".endpoints";
 
         /// <summary>
         /// Bounds the number of endpoint partitions, each of which owns a directory, a drain timer,
@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         internal const int MaxEndpointPartitions = 64;
 
         /// <summary>
-        /// One budget for every tenant combined, not per endpoint. A per-folder cap would multiply
+        /// One budget for every partition combined, not one each. A per-folder cap would multiply
         /// by the partition count and put the process's disk footprint at the mercy of how many
         /// regions it happens to route to.
         /// </summary>
@@ -66,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         /// The staleness allowed before refusing a write or deleting anything. A drain removes blobs
         /// through the provider without telling this class, so the running total can read high by a
         /// whole backlog; refusing on that is a permanent drop and evicting on it takes another
-        /// tenant's telemetry to satisfy a shortfall that no longer exists.
+        /// endpoint's telemetry to satisfy a shortfall that no longer exists.
         /// </summary>
         private const long EvictionRecountIntervalMilliseconds = 1000;
 
@@ -84,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         private long _lastRecountMilliseconds;
         private volatile bool _disposed;
 
-        internal MultiTenantStorage(
+        internal MultiEndpointStorage(
             ApplicationInsightsRestClient restClient,
             ConnectionVars connectionVars,
             bool isAadEnabled,
@@ -117,7 +117,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         /// Eviction only runs when the shared budget is what is in the way, and only after the
         /// candidates have been shown to cover the shortfall. A write can also fail for reasons
         /// eviction cannot help with - a removed directory, a full disk, a denied ACL - and deleting
-        /// the backlog for those destroys other tenants' telemetry without saving this batch.
+        /// the backlog for those destroys other endpoints' telemetry without saving this batch.
         /// </remarks>
         internal bool TryCreateBlobWithinBudget(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, string requestingEndpoint, out PersistentBlob? blob)
         {
@@ -500,7 +500,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 {
                     if (!_disposed)
                     {
-                        AzureMonitorExporterEventSource.Log.MultiTenantPartitionCapReached(ingestionEndpoint, MaxEndpointPartitions);
+                        AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCapReached(ingestionEndpoint, MaxEndpointPartitions);
                     }
 
                     return null;
@@ -530,7 +530,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
                     // The directory is a one-way hash, so without this there is no way to tell which
                     // endpoint a partition on disk belongs to.
-                    AzureMonitorExporterEventSource.Log.MultiTenantPartitionCreated(ingestionEndpoint, directory);
+                    AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCreated(ingestionEndpoint, directory);
 
                     return created;
                 }

@@ -5,9 +5,9 @@ using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 {
-    internal interface IMultiTenantTransmitter : ITransmitter
+    internal interface IMultiEndpointTransmitter : ITransmitter
     {
         /// <summary>
         /// Sends each endpoint group to its own ingestion endpoint and blocks until every group has
