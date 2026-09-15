@@ -20,27 +20,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public static partial class ArmContainerServiceFleetModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of the cluster mesh profile. </param>
-        /// <param name="status"> The cluster mesh profile status. </param>
-        /// <param name="memberSelectorByLabel"> Kubernetes-style label selector for selecting Fleet members, e.g. `env=production`. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.ClusterMeshProfileData"/> instance for mocking. </returns>
-        public static ClusterMeshProfileData ClusterMeshProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ClusterMeshProfileProvisioningState? provisioningState = default, ClusterMeshProfileStatus status = default, string memberSelectorByLabel = default, ETag? eTag = default)
-        {
-            return new ClusterMeshProfileData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && memberSelectorByLabel is null && status is null ? default : new ClusterMeshProfileProperties(provisioningState, memberSelectorByLabel is null ? default : new MemberSelector(memberSelectorByLabel, default), status, default),
-                eTag,
-                default);
-        }
-
         /// <param name="state"> The state of the cluster mesh. </param>
         /// <param name="lastAppliedMemberSelectorByLabel"> Kubernetes-style label selector for selecting Fleet members, e.g. `env=production`. </param>
         /// <param name="lastOperationId"> The last operation ID for the cluster mesh profile. </param>
@@ -49,35 +28,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static ClusterMeshProfileStatus ClusterMeshProfileStatus(ClusterMeshState state = default, string lastAppliedMemberSelectorByLabel = default, string lastOperationId = default, ResponseError lastOperationError = default)
         {
             return new ClusterMeshProfileStatus(state, lastAppliedMemberSelectorByLabel is null ? default : new MemberSelector(lastAppliedMemberSelectorByLabel, default), lastOperationId, lastOperationError, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
-        /// <param name="status"> Status information for the fleet. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Managed identity. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetProvisioningState? provisioningState = default, FleetHubProfile hubProfile = default, ContainerServiceFleetStatus status = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ContainerServiceFleetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && hubProfile is null && status is null ? default : new FleetProperties(provisioningState, hubProfile, status, default),
-                eTag,
-                identity,
-                default);
         }
 
         /// <summary> The FleetHubProfile configures the fleet hub. </summary>
@@ -128,6 +78,56 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetStatus(lastOperationId, lastOperationError, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="hubProfile"> The FleetHubProfile configures the Fleet's hub. </param>
+        /// <param name="status"> Status information for the fleet. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> Managed identity. </param>
+        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetData"/> instance for mocking. </returns>
+        public static ContainerServiceFleetData ContainerServiceFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetProvisioningState? provisioningState = default, FleetHubProfile hubProfile = default, ContainerServiceFleetStatus status = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ContainerServiceFleetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && hubProfile is null && status is null ? default : new FleetProperties(provisioningState, hubProfile, status, default),
+                eTag,
+                identity,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster mesh profile. </param>
+        /// <param name="status"> The cluster mesh profile status. </param>
+        /// <param name="memberSelectorByLabel"> Kubernetes-style label selector for selecting Fleet members, e.g. `env=production`. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="ContainerServiceFleet.ClusterMeshProfileData"/> instance for mocking. </returns>
+        public static ClusterMeshProfileData ClusterMeshProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ClusterMeshProfileProvisioningState? provisioningState = default, ClusterMeshProfileStatus status = default, string memberSelectorByLabel = default, ETag? eTag = default)
+        {
+            return new ClusterMeshProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && memberSelectorByLabel is null && status is null ? default : new ClusterMeshProfileProperties(provisioningState, memberSelectorByLabel is null ? default : new MemberSelector(memberSelectorByLabel, default), status, default),
+                eTag,
+                default);
+        }
+
         /// <summary> Properties of a Fleet that can be patched. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Managed identity. </param>
@@ -156,37 +156,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static FleetCredentialResult FleetCredentialResult(string name = default, byte[] value = default)
         {
             return new FleetCredentialResult(name, value, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="clusterResourceId"> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}'. </param>
-        /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="labels"> The labels for the fleet member. </param>
-        /// <param name="status"> Status information of the last operation for fleet member. </param>
-        /// <param name="meshProperties"> The Mesh Member Properties associated with this Fleet Member. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier clusterResourceId, string @group, FleetMemberProvisioningState? provisioningState, IDictionary<string, string> labels, ContainerServiceFleetMemberStatus status, ContainerServiceFleetMeshMemberProperties meshProperties, ETag? eTag)
-        {
-            return new ContainerServiceFleetMemberData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                clusterResourceId is null && @group is null && provisioningState is null && labels is null && status is null && meshProperties is null ? default : new FleetMemberProperties(
-                    clusterResourceId,
-                    @group,
-                    provisioningState,
-                    labels ?? new ChangeTrackingDictionary<string, string>(),
-                    status,
-                    meshProperties,
-                    default),
-                eTag,
-                default);
         }
 
         /// <summary> Status information for the fleet member. </summary>
@@ -228,51 +197,43 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetMeshMemberStatus(state, lastUpdatedOn, lastOperationId, error, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="clusterResourceId"> The ARM resource id of the cluster that joins the Fleet. Must be a valid Azure resource id. e.g.: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{clusterName}'. </param>
+        /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="labels"> The labels for the fleet member. </param>
+        /// <param name="status"> Status information of the last operation for fleet member. </param>
+        /// <param name="meshProperties"> The Mesh Member Properties associated with this Fleet Member. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetMemberData"/> instance for mocking. </returns>
+        public static ContainerServiceFleetMemberData ContainerServiceFleetMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier clusterResourceId, string @group, FleetMemberProvisioningState? provisioningState, IDictionary<string, string> labels, ContainerServiceFleetMemberStatus status, ContainerServiceFleetMeshMemberProperties meshProperties, ETag? eTag)
+        {
+            return new ContainerServiceFleetMemberData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                clusterResourceId is null && @group is null && provisioningState is null && labels is null && status is null && meshProperties is null ? default : new FleetMemberProperties(
+                    clusterResourceId,
+                    @group,
+                    provisioningState,
+                    labels ?? new ChangeTrackingDictionary<string, string>(),
+                    status,
+                    meshProperties,
+                    default),
+                eTag,
+                default);
+        }
+
         /// <param name="group"> The group this member belongs to for multi-cluster update management. </param>
         /// <param name="labels"> The labels for the fleet member. </param>
         /// <returns> A new <see cref="Models.ContainerServiceFleetMemberPatch"/> instance for mocking. </returns>
         public static ContainerServiceFleetMemberPatch ContainerServiceFleetMemberPatch(string @group = default, IDictionary<string, string> labels = default)
         {
             return new ContainerServiceFleetMemberPatch(@group is null && labels is null ? default : new FleetMemberUpdateProperties(@group, labels ?? new ChangeTrackingDictionary<string, string>(), default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="managedNamespaceProperties"> The namespace properties for the fleet managed namespace. </param>
-        /// <param name="adoptionPolicy"> Action if the managed namespace with the same name already exists. Default is Never. </param>
-        /// <param name="deletePolicy"> Delete options of a fleet managed namespace. Default is Keep. </param>
-        /// <param name="propagationPolicy"> The profile of the propagation to create the namespace. </param>
-        /// <param name="status"> Status information of the last operation for fleet managed namespace. </param>
-        /// <param name="portalFqdn"> The Azure Portal FQDN of the Fleet hub. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetManagedNamespaceData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetManagedNamespaceData ContainerServiceFleetManagedNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetManagedNamespaceProvisioningState? provisioningState = default, ContainerServiceFleetManagedNamespaceProperties managedNamespaceProperties = default, ContainerServiceFleetAdoptionPolicy? adoptionPolicy = default, ContainerServiceFleetDeletePolicy? deletePolicy = default, ContainerServiceFleetPropagationPolicy propagationPolicy = default, FleetManagedNamespaceStatus status = default, string portalFqdn = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ContainerServiceFleetManagedNamespaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && managedNamespaceProperties is null && adoptionPolicy is null && deletePolicy is null && propagationPolicy is null && status is null && portalFqdn is null ? default : new FleetManagedNamespaceProperties(
-                    provisioningState,
-                    managedNamespaceProperties,
-                    adoptionPolicy.GetValueOrDefault(),
-                    deletePolicy.GetValueOrDefault(),
-                    propagationPolicy,
-                    status,
-                    portalFqdn,
-                    default),
-                eTag,
-                default);
         }
 
         /// <summary> The namespace properties for the fleet managed namespace. </summary>
@@ -411,6 +372,45 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new FleetManagedNamespaceStatus(lastOperationId, lastOperationError, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="managedNamespaceProperties"> The namespace properties for the fleet managed namespace. </param>
+        /// <param name="adoptionPolicy"> Action if the managed namespace with the same name already exists. Default is Never. </param>
+        /// <param name="deletePolicy"> Delete options of a fleet managed namespace. Default is Keep. </param>
+        /// <param name="propagationPolicy"> The profile of the propagation to create the namespace. </param>
+        /// <param name="status"> Status information of the last operation for fleet managed namespace. </param>
+        /// <param name="portalFqdn"> The Azure Portal FQDN of the Fleet hub. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetManagedNamespaceData"/> instance for mocking. </returns>
+        public static ContainerServiceFleetManagedNamespaceData ContainerServiceFleetManagedNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetManagedNamespaceProvisioningState? provisioningState = default, ContainerServiceFleetManagedNamespaceProperties managedNamespaceProperties = default, ContainerServiceFleetAdoptionPolicy? adoptionPolicy = default, ContainerServiceFleetDeletePolicy? deletePolicy = default, ContainerServiceFleetPropagationPolicy propagationPolicy = default, FleetManagedNamespaceStatus status = default, string portalFqdn = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ContainerServiceFleetManagedNamespaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && managedNamespaceProperties is null && adoptionPolicy is null && deletePolicy is null && propagationPolicy is null && status is null && portalFqdn is null ? default : new FleetManagedNamespaceProperties(
+                    provisioningState,
+                    managedNamespaceProperties,
+                    adoptionPolicy.GetValueOrDefault(),
+                    deletePolicy.GetValueOrDefault(),
+                    propagationPolicy,
+                    status,
+                    portalFqdn,
+                    default),
+                eTag,
+                default);
+        }
+
         /// <summary> The properties of a fleet managed namespace that can be patched. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the fleet managed namespace. </param>
@@ -507,37 +507,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetPropertySelectorRequirementPatch(name, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of the Gate resource. </param>
-        /// <param name="displayName"> The human-readable display name of the Gate. </param>
-        /// <param name="gateType"> The type of the Gate determines how it is completed. </param>
-        /// <param name="scheduledStartProperties"> Details for ScheduledStart gate. </param>
-        /// <param name="target"> The target that the Gate is controlling, e.g. an Update Run. </param>
-        /// <param name="state"> The state of the Gate. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetGateData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetGateData ContainerServiceFleetGateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerServiceFleetGateProvisioningState? provisioningState, string displayName, ContainerServiceFleetGateType? gateType, ContainerServiceFleetScheduledStartProperties scheduledStartProperties, ContainerServiceFleetGateTarget target, ContainerServiceFleetGateState? state, ETag? eTag)
-        {
-            return new ContainerServiceFleetGateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && displayName is null && gateType is null && scheduledStartProperties is null && target is null && state is null ? default : new GateProperties(
-                    provisioningState,
-                    displayName,
-                    gateType.GetValueOrDefault(),
-                    scheduledStartProperties,
-                    target,
-                    state.GetValueOrDefault(),
-                    default),
-                eTag,
-                default);
-        }
-
         /// <summary> Properties for ScheduledStart gate. </summary>
         /// <param name="startDay"> The day of the week when the scheduled start occurs. </param>
         /// <param name="startTime"> The local time of day when the scheduled start occurs in 24-hour (HH:mm) format. </param>
@@ -569,50 +538,42 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             return new ContainerServiceFleetUpdateRunGateTargetProperties(name, stage, @group, timing, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning state of the Gate resource. </param>
+        /// <param name="displayName"> The human-readable display name of the Gate. </param>
+        /// <param name="gateType"> The type of the Gate determines how it is completed. </param>
+        /// <param name="scheduledStartProperties"> Details for ScheduledStart gate. </param>
+        /// <param name="target"> The target that the Gate is controlling, e.g. an Update Run. </param>
+        /// <param name="state"> The state of the Gate. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetGateData"/> instance for mocking. </returns>
+        public static ContainerServiceFleetGateData ContainerServiceFleetGateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerServiceFleetGateProvisioningState? provisioningState, string displayName, ContainerServiceFleetGateType? gateType, ContainerServiceFleetScheduledStartProperties scheduledStartProperties, ContainerServiceFleetGateTarget target, ContainerServiceFleetGateState? state, ETag? eTag)
+        {
+            return new ContainerServiceFleetGateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && displayName is null && gateType is null && scheduledStartProperties is null && target is null && state is null ? default : new GateProperties(
+                    provisioningState,
+                    displayName,
+                    gateType.GetValueOrDefault(),
+                    scheduledStartProperties,
+                    target,
+                    state.GetValueOrDefault(),
+                    default),
+                eTag,
+                default);
+        }
+
         /// <param name="gatePatchState"> The state of the Gate. </param>
         /// <returns> A new <see cref="Models.ContainerServiceFleetGatePatch"/> instance for mocking. </returns>
         public static ContainerServiceFleetGatePatch ContainerServiceFleetGatePatch(ContainerServiceFleetGateState gatePatchState = default)
         {
             return new ContainerServiceFleetGatePatch(new GatePatchProperties(gatePatchState, default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of the UpdateRun resource. </param>
-        /// <param name="updateStrategyId">
-        /// The resource id of the FleetUpdateStrategy resource to reference.
-        /// When creating a new run, there are three ways to define a strategy for the run:
-        /// <list type="number"><item><description>Define a new strategy in place: Set the "strategy" field.</description></item><item><description>Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)</description></item><item><description>Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)</description></item></list>
-        /// Setting both "updateStrategyId" and "strategy" is invalid.
-        /// UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field. 
-        /// Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
-        /// UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
-        /// </param>
-        /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
-        /// <param name="status"> The status of the UpdateRun. </param>
-        /// <param name="autoUpgradeProfileId"> AutoUpgradeProfileId is the id of an auto upgrade profile resource. </param>
-        /// <param name="strategyStages"> The list of stages that compose this update run. Min size: 1. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetUpdateRunData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetUpdateRunData ContainerServiceFleetUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServiceFleetUpdateRunProvisioningState? provisioningState = default, ResourceIdentifier updateStrategyId = default, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate = default, ContainerServiceFleetUpdateRunStatus status = default, ResourceIdentifier autoUpgradeProfileId = default, IEnumerable<ContainerServiceFleetUpdateStage> strategyStages = default, ETag? eTag = default)
-        {
-            return new ContainerServiceFleetUpdateRunData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && updateStrategyId is null && strategyStages is null && managedClusterUpdate is null && status is null && autoUpgradeProfileId is null ? default : new UpdateRunProperties(
-                    provisioningState,
-                    updateStrategyId,
-                    strategyStages is null ? default : new ContainerServiceFleetUpdateRunStrategy((strategyStages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStage>()).ToList(), default),
-                    managedClusterUpdate,
-                    status,
-                    autoUpgradeProfileId,
-                    default),
-                eTag,
-                default);
         }
 
         /// <param name="name"> The name of the stage. Must be unique within the UpdateRun. </param>
@@ -889,6 +850,45 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static ContainerServiceFleetWaitStatus ContainerServiceFleetWaitStatus(ContainerServiceFleetUpdateStatus status = default, int? waitDurationInSeconds = default)
         {
             return new ContainerServiceFleetWaitStatus(status, waitDurationInSeconds, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning state of the UpdateRun resource. </param>
+        /// <param name="updateStrategyId">
+        /// The resource id of the FleetUpdateStrategy resource to reference.
+        /// When creating a new run, there are three ways to define a strategy for the run:
+        /// <list type="number"><item><description>Define a new strategy in place: Set the "strategy" field.</description></item><item><description>Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)</description></item><item><description>Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)</description></item></list>
+        /// Setting both "updateStrategyId" and "strategy" is invalid.
+        /// UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field. 
+        /// Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
+        /// UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
+        /// </param>
+        /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
+        /// <param name="status"> The status of the UpdateRun. </param>
+        /// <param name="autoUpgradeProfileId"> AutoUpgradeProfileId is the id of an auto upgrade profile resource. </param>
+        /// <param name="strategyStages"> The list of stages that compose this update run. Min size: 1. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetUpdateRunData"/> instance for mocking. </returns>
+        public static ContainerServiceFleetUpdateRunData ContainerServiceFleetUpdateRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServiceFleetUpdateRunProvisioningState? provisioningState = default, ResourceIdentifier updateStrategyId = default, ContainerServiceFleetManagedClusterUpdate managedClusterUpdate = default, ContainerServiceFleetUpdateRunStatus status = default, ResourceIdentifier autoUpgradeProfileId = default, IEnumerable<ContainerServiceFleetUpdateStage> strategyStages = default, ETag? eTag = default)
+        {
+            return new ContainerServiceFleetUpdateRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && updateStrategyId is null && strategyStages is null && managedClusterUpdate is null && status is null && autoUpgradeProfileId is null ? default : new UpdateRunProperties(
+                    provisioningState,
+                    updateStrategyId,
+                    strategyStages is null ? default : new ContainerServiceFleetUpdateRunStrategy((strategyStages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStage>()).ToList(), default),
+                    managedClusterUpdate,
+                    status,
+                    autoUpgradeProfileId,
+                    default),
+                eTag,
+                default);
         }
 
         /// <summary> The properties of a skip operation containing multiple skip requests. </summary>

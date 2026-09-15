@@ -79,6 +79,157 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new AvailableCluster(location, default);
         }
 
+        /// <summary> Properties to configure Encryption. </summary>
+        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
+        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
+        /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
+        /// <returns> A new <see cref="Models.EventHubsEncryption"/> instance for mocking. </returns>
+        public static EventHubsEncryption EventHubsEncryption(IEnumerable<EventHubsKeyVaultProperties> keyVaultProperties = default, EventHubsKeySource? keySource = default, bool? requireInfrastructureEncryption = default)
+        {
+            keyVaultProperties ??= new ChangeTrackingList<EventHubsKeyVaultProperties>();
+
+            return new EventHubsEncryption((keyVaultProperties ?? new ChangeTrackingList<EventHubsKeyVaultProperties>()).ToList(), keySource, requireInfrastructureEncryption, default);
+        }
+
+        /// <param name="keyName"> Name of the Key from KeyVault. </param>
+        /// <param name="keyVaultUri"> Uri of KeyVault. </param>
+        /// <param name="keyVersion"> Key Version. </param>
+        /// <param name="userAssignedIdentity"> ARM ID of user Identity selected for encryption. </param>
+        /// <returns> A new <see cref="Models.EventHubsKeyVaultProperties"/> instance for mocking. </returns>
+        public static EventHubsKeyVaultProperties EventHubsKeyVaultProperties(string keyName = default, Uri keyVaultUri = default, string keyVersion = default, string userAssignedIdentity = default)
+        {
+            return new EventHubsKeyVaultProperties(keyName, keyVaultUri, keyVersion, userAssignedIdentity is null ? default : new UserAssignedIdentityProperties(userAssignedIdentity, default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="connectionState"> Details about the state of the connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
+        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="EventHubs.EventHubsPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static EventHubsPrivateEndpointConnectionData EventHubsPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventHubsPrivateLinkServiceConnectionState connectionState = default, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, AzureLocation? location = default)
+        {
+            return new EventHubsPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                location,
+                default);
+        }
+
+        /// <summary> ConnectionState information. </summary>
+        /// <param name="status"> Status of the connection. </param>
+        /// <param name="description"> Description of the connection state. </param>
+        /// <returns> A new <see cref="Models.EventHubsPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static EventHubsPrivateLinkServiceConnectionState EventHubsPrivateLinkServiceConnectionState(EventHubsPrivateLinkConnectionStatus? status = default, string description = default)
+        {
+            return new EventHubsPrivateLinkServiceConnectionState(status, description, default);
+        }
+
+        /// <summary> GeoDR Replication properties. </summary>
+        /// <param name="maxReplicationLagDurationInSeconds"> The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed. The allowed values are 0 and 5 minutes to 1 day. </param>
+        /// <param name="locations"> A list of regions where replicas of the namespace are maintained. </param>
+        /// <returns> A new <see cref="Models.EventHubsNamespaceGeoDataReplicationProperties"/> instance for mocking. </returns>
+        public static EventHubsNamespaceGeoDataReplicationProperties EventHubsNamespaceGeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds = default, IEnumerable<EventHubsNamespaceReplicaLocation> locations = default)
+        {
+            locations ??= new ChangeTrackingList<EventHubsNamespaceReplicaLocation>();
+
+            return new EventHubsNamespaceGeoDataReplicationProperties(maxReplicationLagDurationInSeconds, (locations ?? new ChangeTrackingList<EventHubsNamespaceReplicaLocation>()).ToList(), default);
+        }
+
+        /// <summary> Namespace replication properties. </summary>
+        /// <param name="locationName"> Azure regions where a replica of the namespace is maintained. </param>
+        /// <param name="roleType"> GeoDR Role Types. </param>
+        /// <param name="replicaState"> state of Namespace replica. </param>
+        /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
+        /// <returns> A new <see cref="Models.EventHubsNamespaceReplicaLocation"/> instance for mocking. </returns>
+        public static EventHubsNamespaceReplicaLocation EventHubsNamespaceReplicaLocation(string locationName = default, EventHubsNamespaceGeoDrRoleType? roleType = default, string replicaState = default, ResourceIdentifier clusterArmId = default)
+        {
+            return new EventHubsNamespaceReplicaLocation(locationName, roleType, replicaState, clusterArmId, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
+        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
+        /// <param name="status"> Status of the Namespace. </param>
+        /// <param name="createdOn"> The time the Namespace was created. </param>
+        /// <param name="updatedOn"> The time the Namespace was updated. </param>
+        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
+        /// <param name="clusterArmId"> Cluster ARM ID of the Namespace. </param>
+        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
+        /// <param name="isAutoInflateEnabled"> Value that indicates whether AutoInflate is enabled for eventhub namespace. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="maximumThroughputUnits"> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true). </param>
+        /// <param name="kafkaEnabled"> Value that indicates whether Kafka is enabled for eventhub namespace. </param>
+        /// <param name="zoneRedundant"> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </param>
+        /// <param name="encryption"> Properties of BYOK Encryption description. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="disableLocalAuth"> This property disables SAS authentication for the Event Hubs namespace. </param>
+        /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
+        /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
+        /// <param name="ipAddressType"> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </param>
+        /// <param name="platformCapabilitiesConfidentialComputeMode"> Setting to Enable or Disable Confidential Compute. </param>
+        /// <param name="sku"> Properties of sku resource. </param>
+        /// <param name="identity"> Properties of BYOK Identity description. </param>
+        /// <returns> A new <see cref="EventHubs.EventHubsNamespaceData"/> instance for mocking. </returns>
+        public static EventHubsNamespaceData EventHubsNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventHubsTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, ResourceIdentifier clusterArmId = default, string metricId = default, bool? isAutoInflateEnabled = default, EventHubsPublicNetworkAccess? publicNetworkAccess = default, int? maximumThroughputUnits = default, bool? kafkaEnabled = default, bool? zoneRedundant = default, EventHubsEncryption encryption = default, IEnumerable<EventHubsPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, EventHubsNamespaceGeoDataReplicationProperties geoDataReplication = default, EventHubsIPAddressType? ipAddressType = default, EventHubsConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, EventHubsSku sku = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EventHubsNamespaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                minimumTlsVersion is null && provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && clusterArmId is null && metricId is null && isAutoInflateEnabled is null && publicNetworkAccess is null && maximumThroughputUnits is null && kafkaEnabled is null && zoneRedundant is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null && platformCapabilitiesConfidentialComputeMode is null && geoDataReplication is null && ipAddressType is null ? default : new EHNamespaceProperties(
+                    minimumTlsVersion,
+                    provisioningState,
+                    status,
+                    createdOn,
+                    updatedOn,
+                    serviceBusEndpoint,
+                    clusterArmId,
+                    metricId,
+                    isAutoInflateEnabled,
+                    publicNetworkAccess,
+                    maximumThroughputUnits,
+                    kafkaEnabled,
+                    zoneRedundant,
+                    encryption,
+                    (privateEndpointConnections ?? new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>()).ToList(),
+                    disableLocalAuth,
+                    alternateName,
+                    platformCapabilitiesConfidentialComputeMode is null ? default : new PlatformCapabilities(platformCapabilitiesConfidentialComputeMode is null ? default : new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
+                    geoDataReplication,
+                    ipAddressType,
+                    default),
+                sku,
+                identity,
+                default);
+        }
+
+        /// <summary> SKU parameters supplied to the create namespace operation. </summary>
+        /// <param name="name"> Name of this SKU. </param>
+        /// <param name="tier"> The billing tier of this particular SKU. </param>
+        /// <param name="capacity"> The Event Hubs throughput units for Basic or Standard tiers, where value should be 0 to 20 throughput units. The Event Hubs premium units for Premium tier, where value should be 0 to 10 premium units. </param>
+        /// <returns> A new <see cref="Models.EventHubsSku"/> instance for mocking. </returns>
+        public static EventHubsSku EventHubsSku(EventHubsSkuName name = default, EventHubsSkuTier? tier = default, int? capacity = default)
+        {
+            return new EventHubsSku(name, tier, capacity, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -176,47 +327,6 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubsRegenerateAccessKeyContent(keyType, key, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="partitionIds"> Current number of shards on the Event Hub. </param>
-        /// <param name="createdOn"> Exact time the Event Hub was created. </param>
-        /// <param name="updatedOn"> The exact time the message was updated. </param>
-        /// <param name="messageRetentionInDays"> Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </param>
-        /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
-        /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
-        /// <param name="captureDescription"> Properties of capture description. </param>
-        /// <param name="retentionDescription"> Event Hub retention settings. </param>
-        /// <param name="identifier"> Denotes the unique identifier for event hub and is generated by service while creating topic. This identifier can be used in kafka runtime apis wherever a UUID is required e.g Fetch &amp; Delete Topic. This identifier is not supported in AMQP runtime operations yet. </param>
-        /// <param name="userMetadata"> Gets and Sets Metadata of User. </param>
-        /// <param name="messageTimestampType"> Denotes the type of timestamp the message will hold.Two types of timestamp types - "AppendTime" and "CreateTime". AppendTime refers the time in which message got appended inside broker log. CreateTime refers to the time in which the message was generated on source side and producers can set this timestamp while sending the message. Default value is AppendTime. If you are using AMQP protocol, CreateTime equals AppendTime and its behavior remains the same. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="EventHubs.EventHubData"/> instance for mocking. </returns>
-        public static EventHubData EventHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> partitionIds = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, long? messageRetentionInDays = default, long? partitionCount = default, EventHubEntityStatus? status = default, CaptureDescription captureDescription = default, RetentionDescription retentionDescription = default, string identifier = default, string userMetadata = default, EventHubsTimestampType? messageTimestampType = default, AzureLocation? location = default)
-        {
-            return new EventHubData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                partitionIds is null && createdOn is null && updatedOn is null && messageRetentionInDays is null && partitionCount is null && status is null && captureDescription is null && retentionDescription is null && messageTimestampType is null && identifier is null && userMetadata is null ? default : new EventhubProperties(
-                    (partitionIds ?? new ChangeTrackingList<string>()).ToList(),
-                    createdOn,
-                    updatedOn,
-                    messageRetentionInDays,
-                    partitionCount,
-                    status,
-                    captureDescription,
-                    retentionDescription,
-                    messageTimestampType is null ? default : new MessageTimestampDescription(messageTimestampType, default),
-                    identifier,
-                    userMetadata,
-                    default),
-                location,
-                default);
-        }
-
         /// <summary> Properties to configure capture description for eventhub. </summary>
         /// <param name="enabled"> A value that indicates whether capture description is enabled. </param>
         /// <param name="encoding"> Enumerates the possible values for the encoding format of capture description. Note: 'AvroDeflate' will be deprecated in New API Version. </param>
@@ -282,64 +392,38 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> Details about the state of the connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
+        /// <param name="partitionIds"> Current number of shards on the Event Hub. </param>
+        /// <param name="createdOn"> Exact time the Event Hub was created. </param>
+        /// <param name="updatedOn"> The exact time the message was updated. </param>
+        /// <param name="messageRetentionInDays"> Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </param>
+        /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
+        /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
+        /// <param name="captureDescription"> Properties of capture description. </param>
+        /// <param name="retentionDescription"> Event Hub retention settings. </param>
+        /// <param name="identifier"> Denotes the unique identifier for event hub and is generated by service while creating topic. This identifier can be used in kafka runtime apis wherever a UUID is required e.g Fetch &amp; Delete Topic. This identifier is not supported in AMQP runtime operations yet. </param>
+        /// <param name="userMetadata"> Gets and Sets Metadata of User. </param>
+        /// <param name="messageTimestampType"> Denotes the type of timestamp the message will hold.Two types of timestamp types - "AppendTime" and "CreateTime". AppendTime refers the time in which message got appended inside broker log. CreateTime refers to the time in which the message was generated on source side and producers can set this timestamp while sending the message. Default value is AppendTime. If you are using AMQP protocol, CreateTime equals AppendTime and its behavior remains the same. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="EventHubs.EventHubsPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static EventHubsPrivateEndpointConnectionData EventHubsPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventHubsPrivateLinkServiceConnectionState connectionState = default, EventHubsPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, AzureLocation? location = default)
+        /// <returns> A new <see cref="EventHubs.EventHubData"/> instance for mocking. </returns>
+        public static EventHubData EventHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> partitionIds = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, long? messageRetentionInDays = default, long? partitionCount = default, EventHubEntityStatus? status = default, CaptureDescription captureDescription = default, RetentionDescription retentionDescription = default, string identifier = default, string userMetadata = default, EventHubsTimestampType? messageTimestampType = default, AzureLocation? location = default)
         {
-            return new EventHubsPrivateEndpointConnectionData(
+            return new EventHubData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                location,
-                default);
-        }
-
-        /// <summary> ConnectionState information. </summary>
-        /// <param name="status"> Status of the connection. </param>
-        /// <param name="description"> Description of the connection state. </param>
-        /// <returns> A new <see cref="Models.EventHubsPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static EventHubsPrivateLinkServiceConnectionState EventHubsPrivateLinkServiceConnectionState(EventHubsPrivateLinkConnectionStatus? status = default, string description = default)
-        {
-            return new EventHubsPrivateLinkServiceConnectionState(status, description, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Provisioning state of NetworkSecurityPerimeter configuration propagation. </param>
-        /// <param name="provisioningIssues"> List of Provisioning Issues if any. </param>
-        /// <param name="networkSecurityPerimeter"> NetworkSecurityPerimeter related information. </param>
-        /// <param name="resourceAssociation"> Information about resource association. </param>
-        /// <param name="profile"> Information about current network profile. </param>
-        /// <param name="isBackingResource"> True if the EventHub namespace is backed by another Azure resource and not visible to end users. </param>
-        /// <param name="applicableFeatures"> Indicates that the NSP controls related to backing association are only applicable to a specific feature in backing resource's data plane. </param>
-        /// <param name="parentAssociationName"> Source Resource Association name. </param>
-        /// <param name="sourceResourceId"> ARM Id of source resource. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="EventHubs.EventHubsNetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
-        public static EventHubsNetworkSecurityPerimeterConfigurationData EventHubsNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<EventHubsProvisioningIssue> provisioningIssues = default, EventHubsNetworkSecurityPerimeter networkSecurityPerimeter = default, EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = default, EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile = default, bool? isBackingResource = default, IEnumerable<string> applicableFeatures = default, string parentAssociationName = default, ResourceIdentifier sourceResourceId = default, AzureLocation? location = default)
-        {
-            return new EventHubsNetworkSecurityPerimeterConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && provisioningIssues is null && networkSecurityPerimeter is null && resourceAssociation is null && profile is null && isBackingResource is null && applicableFeatures is null && parentAssociationName is null && sourceResourceId is null ? default : new NetworkSecurityPerimeterConfigurationProperties(
-                    provisioningState,
-                    (provisioningIssues ?? new ChangeTrackingList<EventHubsProvisioningIssue>()).ToList(),
-                    networkSecurityPerimeter,
-                    resourceAssociation,
-                    profile,
-                    isBackingResource,
-                    (applicableFeatures ?? new ChangeTrackingList<string>()).ToList(),
-                    parentAssociationName,
-                    sourceResourceId,
+                partitionIds is null && createdOn is null && updatedOn is null && messageRetentionInDays is null && partitionCount is null && status is null && captureDescription is null && retentionDescription is null && messageTimestampType is null && identifier is null && userMetadata is null ? default : new EventhubProperties(
+                    (partitionIds ?? new ChangeTrackingList<string>()).ToList(),
+                    createdOn,
+                    updatedOn,
+                    messageRetentionInDays,
+                    partitionCount,
+                    status,
+                    captureDescription,
+                    retentionDescription,
+                    messageTimestampType is null ? default : new MessageTimestampDescription(messageTimestampType, default),
+                    identifier,
+                    userMetadata,
                     default),
                 location,
                 default);
@@ -439,6 +523,43 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning state of NetworkSecurityPerimeter configuration propagation. </param>
+        /// <param name="provisioningIssues"> List of Provisioning Issues if any. </param>
+        /// <param name="networkSecurityPerimeter"> NetworkSecurityPerimeter related information. </param>
+        /// <param name="resourceAssociation"> Information about resource association. </param>
+        /// <param name="profile"> Information about current network profile. </param>
+        /// <param name="isBackingResource"> True if the EventHub namespace is backed by another Azure resource and not visible to end users. </param>
+        /// <param name="applicableFeatures"> Indicates that the NSP controls related to backing association are only applicable to a specific feature in backing resource's data plane. </param>
+        /// <param name="parentAssociationName"> Source Resource Association name. </param>
+        /// <param name="sourceResourceId"> ARM Id of source resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="EventHubs.EventHubsNetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static EventHubsNetworkSecurityPerimeterConfigurationData EventHubsNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<EventHubsProvisioningIssue> provisioningIssues = default, EventHubsNetworkSecurityPerimeter networkSecurityPerimeter = default, EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = default, EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile = default, bool? isBackingResource = default, IEnumerable<string> applicableFeatures = default, string parentAssociationName = default, ResourceIdentifier sourceResourceId = default, AzureLocation? location = default)
+        {
+            return new EventHubsNetworkSecurityPerimeterConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && provisioningIssues is null && networkSecurityPerimeter is null && resourceAssociation is null && profile is null && isBackingResource is null && applicableFeatures is null && parentAssociationName is null && sourceResourceId is null ? default : new NetworkSecurityPerimeterConfigurationProperties(
+                    provisioningState,
+                    (provisioningIssues ?? new ChangeTrackingList<EventHubsProvisioningIssue>()).ToList(),
+                    networkSecurityPerimeter,
+                    resourceAssociation,
+                    profile,
+                    isBackingResource,
+                    (applicableFeatures ?? new ChangeTrackingList<string>()).ToList(),
+                    parentAssociationName,
+                    sourceResourceId,
+                    default),
+                location,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="createdOn"> Exact time the message was created. </param>
         /// <param name="updatedOn"> The exact time the message was updated. </param>
         /// <param name="userMetadata"> User Metadata is a placeholder to store user-defined string data with maximum length 1024. e.g. it can be used to store descriptive data, such as list of teams and their contact information also user-defined configuration settings can be stored. </param>
@@ -452,26 +573,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 resourceType,
                 systemData,
                 createdOn is null && updatedOn is null && userMetadata is null ? default : new ConsumerGroupProperties(createdOn, updatedOn, userMetadata, default),
-                location,
-                default);
-        }
-
-        /// <summary> A Microsoft Fabric shortcut attached to an Event Hub. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the Microsoft Fabric shortcut. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="EventHubs.EventHubsFabricShortcutData"/> instance for mocking. </returns>
-        public static EventHubsFabricShortcutData EventHubsFabricShortcutData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventHubsFabricShortcutProperties properties = default, string location = default)
-        {
-            return new EventHubsFabricShortcutData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
                 location,
                 default);
         }
@@ -518,21 +619,23 @@ namespace Azure.ResourceManager.EventHubs.Models
                 default);
         }
 
-        /// <summary> Upgrade preferences for an Event Hubs Dedicated cluster. </summary>
+        /// <summary> A Microsoft Fabric shortcut attached to an Event Hub. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Upgrade preference properties for the Event Hubs Dedicated cluster. </param>
-        /// <returns> A new <see cref="EventHubs.EventHubsUpgradePreferencesData"/> instance for mocking. </returns>
-        public static EventHubsUpgradePreferencesData EventHubsUpgradePreferencesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventHubsUpgradePreferencesProperties properties = default)
+        /// <param name="properties"> Properties of the Microsoft Fabric shortcut. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="EventHubs.EventHubsFabricShortcutData"/> instance for mocking. </returns>
+        public static EventHubsFabricShortcutData EventHubsFabricShortcutData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventHubsFabricShortcutProperties properties = default, string location = default)
         {
-            return new EventHubsUpgradePreferencesData(
+            return new EventHubsFabricShortcutData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
+                location,
                 default);
         }
 
@@ -580,6 +683,24 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubsUpgradeStatus(hasPendingUpgrade, isInProgress, completesOn, default);
         }
 
+        /// <summary> Upgrade preferences for an Event Hubs Dedicated cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Upgrade preference properties for the Event Hubs Dedicated cluster. </param>
+        /// <returns> A new <see cref="EventHubs.EventHubsUpgradePreferencesData"/> instance for mocking. </returns>
+        public static EventHubsUpgradePreferencesData EventHubsUpgradePreferencesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EventHubsUpgradePreferencesProperties properties = default)
+        {
+            return new EventHubsUpgradePreferencesData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> Contains all settings for the cluster. </summary>
         /// <param name="settings"> All possible Cluster settings - a collection of key/value paired settings which apply to quotas and configurations imposed on the cluster. </param>
         /// <returns> A new <see cref="Models.ClusterQuotaConfigurationProperties"/> instance for mocking. </returns>
@@ -590,133 +711,29 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new ClusterQuotaConfigurationProperties(settings ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
-        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
-        /// <param name="status"> Status of the Namespace. </param>
-        /// <param name="createdOn"> The time the Namespace was created. </param>
-        /// <param name="updatedOn"> The time the Namespace was updated. </param>
-        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
-        /// <param name="clusterArmId"> Cluster ARM ID of the Namespace. </param>
-        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
-        /// <param name="isAutoInflateEnabled"> Value that indicates whether AutoInflate is enabled for eventhub namespace. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        /// <param name="maximumThroughputUnits"> Upper limit of throughput units when AutoInflate is enabled, value should be within 0 to 20 throughput units. ( '0' if AutoInflateEnabled = true). </param>
-        /// <param name="kafkaEnabled"> Value that indicates whether Kafka is enabled for eventhub namespace. </param>
-        /// <param name="zoneRedundant"> Enabling this property creates a Standard Event Hubs Namespace in regions supported availability zones. </param>
-        /// <param name="encryption"> Properties of BYOK Encryption description. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="disableLocalAuth"> This property disables SAS authentication for the Event Hubs namespace. </param>
-        /// <param name="alternateName"> Alternate name specified when alias and namespace names are same. </param>
-        /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
-        /// <param name="ipAddressType"> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </param>
-        /// <param name="platformCapabilitiesConfidentialComputeMode"> Setting to Enable or Disable Confidential Compute. </param>
-        /// <param name="sku"> Properties of sku resource. </param>
-        /// <param name="identity"> Properties of BYOK Identity description. </param>
-        /// <returns> A new <see cref="EventHubs.EventHubsNamespaceData"/> instance for mocking. </returns>
-        public static EventHubsNamespaceData EventHubsNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, EventHubsTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, ResourceIdentifier clusterArmId = default, string metricId = default, bool? isAutoInflateEnabled = default, EventHubsPublicNetworkAccess? publicNetworkAccess = default, int? maximumThroughputUnits = default, bool? kafkaEnabled = default, bool? zoneRedundant = default, EventHubsEncryption encryption = default, IEnumerable<EventHubsPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, EventHubsNamespaceGeoDataReplicationProperties geoDataReplication = default, EventHubsIPAddressType? ipAddressType = default, EventHubsConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, EventHubsSku sku = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new EventHubsNamespaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                minimumTlsVersion is null && provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && clusterArmId is null && metricId is null && isAutoInflateEnabled is null && publicNetworkAccess is null && maximumThroughputUnits is null && kafkaEnabled is null && zoneRedundant is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null && platformCapabilitiesConfidentialComputeMode is null && geoDataReplication is null && ipAddressType is null ? default : new EHNamespaceProperties(
-                    minimumTlsVersion,
-                    provisioningState,
-                    status,
-                    createdOn,
-                    updatedOn,
-                    serviceBusEndpoint,
-                    clusterArmId,
-                    metricId,
-                    isAutoInflateEnabled,
-                    publicNetworkAccess,
-                    maximumThroughputUnits,
-                    kafkaEnabled,
-                    zoneRedundant,
-                    encryption,
-                    (privateEndpointConnections ?? new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>()).ToList(),
-                    disableLocalAuth,
-                    alternateName,
-                    platformCapabilitiesConfidentialComputeMode is null ? default : new PlatformCapabilities(platformCapabilitiesConfidentialComputeMode is null ? default : new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
-                    geoDataReplication,
-                    ipAddressType,
-                    default),
-                sku,
-                identity,
-                default);
-        }
-
-        /// <summary> Properties to configure Encryption. </summary>
-        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
-        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
-        /// <returns> A new <see cref="Models.EventHubsEncryption"/> instance for mocking. </returns>
-        public static EventHubsEncryption EventHubsEncryption(IEnumerable<EventHubsKeyVaultProperties> keyVaultProperties = default, EventHubsKeySource? keySource = default, bool? requireInfrastructureEncryption = default)
-        {
-            keyVaultProperties ??= new ChangeTrackingList<EventHubsKeyVaultProperties>();
-
-            return new EventHubsEncryption((keyVaultProperties ?? new ChangeTrackingList<EventHubsKeyVaultProperties>()).ToList(), keySource, requireInfrastructureEncryption, default);
-        }
-
-        /// <param name="keyName"> Name of the Key from KeyVault. </param>
-        /// <param name="keyVaultUri"> Uri of KeyVault. </param>
-        /// <param name="keyVersion"> Key Version. </param>
-        /// <param name="userAssignedIdentity"> ARM ID of user Identity selected for encryption. </param>
-        /// <returns> A new <see cref="Models.EventHubsKeyVaultProperties"/> instance for mocking. </returns>
-        public static EventHubsKeyVaultProperties EventHubsKeyVaultProperties(string keyName = default, Uri keyVaultUri = default, string keyVersion = default, string userAssignedIdentity = default)
-        {
-            return new EventHubsKeyVaultProperties(keyName, keyVaultUri, keyVersion, userAssignedIdentity is null ? default : new UserAssignedIdentityProperties(userAssignedIdentity, default), default);
-        }
-
-        /// <summary> GeoDR Replication properties. </summary>
-        /// <param name="maxReplicationLagDurationInSeconds"> The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed. The allowed values are 0 and 5 minutes to 1 day. </param>
-        /// <param name="locations"> A list of regions where replicas of the namespace are maintained. </param>
-        /// <returns> A new <see cref="Models.EventHubsNamespaceGeoDataReplicationProperties"/> instance for mocking. </returns>
-        public static EventHubsNamespaceGeoDataReplicationProperties EventHubsNamespaceGeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds = default, IEnumerable<EventHubsNamespaceReplicaLocation> locations = default)
-        {
-            locations ??= new ChangeTrackingList<EventHubsNamespaceReplicaLocation>();
-
-            return new EventHubsNamespaceGeoDataReplicationProperties(maxReplicationLagDurationInSeconds, (locations ?? new ChangeTrackingList<EventHubsNamespaceReplicaLocation>()).ToList(), default);
-        }
-
-        /// <summary> Namespace replication properties. </summary>
-        /// <param name="locationName"> Azure regions where a replica of the namespace is maintained. </param>
-        /// <param name="roleType"> GeoDR Role Types. </param>
-        /// <param name="replicaState"> state of Namespace replica. </param>
-        /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
-        /// <returns> A new <see cref="Models.EventHubsNamespaceReplicaLocation"/> instance for mocking. </returns>
-        public static EventHubsNamespaceReplicaLocation EventHubsNamespaceReplicaLocation(string locationName = default, EventHubsNamespaceGeoDrRoleType? roleType = default, string replicaState = default, ResourceIdentifier clusterArmId = default)
-        {
-            return new EventHubsNamespaceReplicaLocation(locationName, roleType, replicaState, clusterArmId, default);
-        }
-
-        /// <summary> SKU parameters supplied to the create namespace operation. </summary>
-        /// <param name="name"> Name of this SKU. </param>
-        /// <param name="tier"> The billing tier of this particular SKU. </param>
-        /// <param name="capacity"> The Event Hubs throughput units for Basic or Standard tiers, where value should be 0 to 20 throughput units. The Event Hubs premium units for Premium tier, where value should be 0 to 10 premium units. </param>
-        /// <returns> A new <see cref="Models.EventHubsSku"/> instance for mocking. </returns>
-        public static EventHubsSku EventHubsSku(EventHubsSkuName name = default, EventHubsSkuTier? tier = default, int? capacity = default)
-        {
-            return new EventHubsSku(name, tier, capacity, default);
-        }
-
         /// <param name="primaryLocation"> Query parameter for the new primary location after failover. </param>
         /// <param name="isForced"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
         /// <returns> A new <see cref="Models.EventHubsNamespaceFailover"/> instance for mocking. </returns>
         public static EventHubsNamespaceFailover EventHubsNamespaceFailover(AzureLocation? primaryLocation = default, bool? isForced = default)
         {
             return new EventHubsNamespaceFailover(primaryLocation is null && isForced is null ? default : new FailOverProperties(primaryLocation, isForced, default), default);
+        }
+
+        /// <param name="subnetId"> Resource ID of Virtual Network Subnet. </param>
+        /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing Vnet Service Endpoint. </param>
+        /// <returns> A new <see cref="Models.EventHubsNetworkRuleSetVirtualNetworkRules"/> instance for mocking. </returns>
+        public static EventHubsNetworkRuleSetVirtualNetworkRules EventHubsNetworkRuleSetVirtualNetworkRules(ResourceIdentifier subnetId = default, bool? ignoreMissingVnetServiceEndpoint = default)
+        {
+            return new EventHubsNetworkRuleSetVirtualNetworkRules(subnetId is null ? default : new Subnet(subnetId, default), ignoreMissingVnetServiceEndpoint, default);
+        }
+
+        /// <summary> The response from the List namespace operation. </summary>
+        /// <param name="ipMask"> IP Mask. </param>
+        /// <param name="action"> The IP Filter Action. </param>
+        /// <returns> A new <see cref="Models.EventHubsNetworkRuleSetIPRules"/> instance for mocking. </returns>
+        public static EventHubsNetworkRuleSetIPRules EventHubsNetworkRuleSetIPRules(string ipMask = default, EventHubsNetworkRuleIPAction? action = default)
+        {
+            return new EventHubsNetworkRuleSetIPRules(ipMask, action, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -746,23 +763,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                     default),
                 location,
                 default);
-        }
-
-        /// <param name="subnetId"> Resource ID of Virtual Network Subnet. </param>
-        /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing Vnet Service Endpoint. </param>
-        /// <returns> A new <see cref="Models.EventHubsNetworkRuleSetVirtualNetworkRules"/> instance for mocking. </returns>
-        public static EventHubsNetworkRuleSetVirtualNetworkRules EventHubsNetworkRuleSetVirtualNetworkRules(ResourceIdentifier subnetId = default, bool? ignoreMissingVnetServiceEndpoint = default)
-        {
-            return new EventHubsNetworkRuleSetVirtualNetworkRules(subnetId is null ? default : new Subnet(subnetId, default), ignoreMissingVnetServiceEndpoint, default);
-        }
-
-        /// <summary> The response from the List namespace operation. </summary>
-        /// <param name="ipMask"> IP Mask. </param>
-        /// <param name="action"> The IP Filter Action. </param>
-        /// <returns> A new <see cref="Models.EventHubsNetworkRuleSetIPRules"/> instance for mocking. </returns>
-        public static EventHubsNetworkRuleSetIPRules EventHubsNetworkRuleSetIPRules(string ipMask = default, EventHubsNetworkRuleIPAction? action = default)
-        {
-            return new EventHubsNetworkRuleSetIPRules(ipMask, action, default);
         }
 
         /// <summary> Paged collection of NetworkRuleSet items. </summary>
@@ -826,27 +826,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="isEnabled"> Determines if Application Group is allowed to create connection with namespace or not. Once the isEnabled is set to false, all the existing connections of application group gets dropped and no new connections will be allowed. </param>
-        /// <param name="clientAppGroupIdentifier"> The Unique identifier for application group.Supports SAS(SASKeyName=KeyName) or AAD(AADAppID=Guid). </param>
-        /// <param name="policies"> List of group policies that define the behavior of application group. The policies can support resource governance scenarios such as limiting ingress or egress traffic. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="EventHubs.EventHubsApplicationGroupData"/> instance for mocking. </returns>
-        public static EventHubsApplicationGroupData EventHubsApplicationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, string clientAppGroupIdentifier = default, IEnumerable<EventHubsApplicationGroupPolicy> policies = default, AzureLocation? location = default)
-        {
-            return new EventHubsApplicationGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isEnabled is null && clientAppGroupIdentifier is null && policies is null ? default : new ApplicationGroupProperties(isEnabled, clientAppGroupIdentifier, (policies ?? new ChangeTrackingList<EventHubsApplicationGroupPolicy>()).ToList(), default),
-                location,
-                default);
-        }
-
         /// <summary>
         /// Properties of the Application Group policy
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EventHubsThrottlingPolicy"/>.
@@ -867,6 +846,27 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static EventHubsThrottlingPolicy EventHubsThrottlingPolicy(string name = default, long rateLimitThreshold = default, EventHubsMetricId metricId = default)
         {
             return new EventHubsThrottlingPolicy(name, default, default, rateLimitThreshold, metricId);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="isEnabled"> Determines if Application Group is allowed to create connection with namespace or not. Once the isEnabled is set to false, all the existing connections of application group gets dropped and no new connections will be allowed. </param>
+        /// <param name="clientAppGroupIdentifier"> The Unique identifier for application group.Supports SAS(SASKeyName=KeyName) or AAD(AADAppID=Guid). </param>
+        /// <param name="policies"> List of group policies that define the behavior of application group. The policies can support resource governance scenarios such as limiting ingress or egress traffic. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="EventHubs.EventHubsApplicationGroupData"/> instance for mocking. </returns>
+        public static EventHubsApplicationGroupData EventHubsApplicationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, string clientAppGroupIdentifier = default, IEnumerable<EventHubsApplicationGroupPolicy> policies = default, AzureLocation? location = default)
+        {
+            return new EventHubsApplicationGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isEnabled is null && clientAppGroupIdentifier is null && policies is null ? default : new ApplicationGroupProperties(isEnabled, clientAppGroupIdentifier, (policies ?? new ChangeTrackingList<EventHubsApplicationGroupPolicy>()).ToList(), default),
+                location,
+                default);
         }
 
         /// <summary> Single Event Hubs Cluster resource in List or Get operations. </summary>

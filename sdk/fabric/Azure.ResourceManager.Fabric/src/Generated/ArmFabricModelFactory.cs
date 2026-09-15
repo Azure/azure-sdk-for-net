@@ -17,32 +17,6 @@ namespace Azure.ResourceManager.Fabric.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmFabricModelFactory
     {
-        /// <summary> Fabric Capacity resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="sku"> The SKU details. </param>
-        /// <returns> A new <see cref="Fabric.FabricCapacityData"/> instance for mocking. </returns>
-        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FabricCapacityProperties properties = default, FabricSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new FabricCapacityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                sku,
-                default);
-        }
-
         /// <param name="provisioningState"> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="overage"> The capacity overage properties of the Fabric capacity resource. </param>
@@ -70,6 +44,32 @@ namespace Azure.ResourceManager.Fabric.Models
             members ??= new ChangeTrackingList<string>();
 
             return new FabricCapacityAdministration((members ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Fabric Capacity resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="sku"> The SKU details. </param>
+        /// <returns> A new <see cref="Fabric.FabricCapacityData"/> instance for mocking. </returns>
+        public static FabricCapacityData FabricCapacityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FabricCapacityProperties properties = default, FabricSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FabricCapacityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                sku,
+                default);
         }
 
         /// <summary> Represents the SKU name and Azure pricing tier for Microsoft Fabric capacity resource. </summary>

@@ -376,6 +376,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorValidateCustomDomainResult(isCustomDomainValidated, reason, message, default);
         }
 
+        /// <param name="resourceState"> Resource status. </param>
+        /// <param name="enabledState"> The state of the Experiment. </param>
+        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/> instance for mocking. </returns>
+        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(NetworkExperimentResourceState? resourceState, FrontDoorExperimentState? enabledState, ETag? eTag)
+        {
+            return new FrontDoorNetworkExperimentProfileData(resourceState is null && enabledState is null ? default : new ProfileProperties(resourceState, enabledState, default), eTag, default);
+        }
+
         /// <param name="description"> The description of the details or intents of the Experiment. </param>
         /// <param name="experimentEndpointA"> The endpoint A of an experiment. </param>
         /// <param name="experimentEndpointB"> The endpoint B of an experiment. </param>
@@ -687,15 +696,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
             contentPaths ??= new ChangeTrackingList<string>();
 
             return new FrontDoorEndpointPurgeContent((contentPaths ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
-        /// <param name="resourceState"> Resource status. </param>
-        /// <param name="enabledState"> The state of the Experiment. </param>
-        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/> instance for mocking. </returns>
-        public static FrontDoorNetworkExperimentProfileData FrontDoorNetworkExperimentProfileData(NetworkExperimentResourceState? resourceState, FrontDoorExperimentState? enabledState, ETag? eTag)
-        {
-            return new FrontDoorNetworkExperimentProfileData(resourceState is null && enabledState is null ? default : new ProfileProperties(resourceState, enabledState, default), eTag, default);
         }
 
         /// <param name="enabledState"> The enabled state of the Profile. </param>

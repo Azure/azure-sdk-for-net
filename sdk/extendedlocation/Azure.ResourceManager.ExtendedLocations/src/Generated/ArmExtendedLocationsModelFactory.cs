@@ -32,6 +32,15 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             return new CustomLocationOperationInfo(description is null && operation is null && provider is null && resource is null ? default : new CustomLocationOperationValueDisplay(description, operation, provider, resource, default), isDataAction, name, origin, default);
         }
 
+        /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>
+        /// <param name="customLocationPropertiesAuthenticationType"> The type of the Custom Locations authentication. </param>
+        /// <param name="value"> The kubeconfig value. </param>
+        /// <returns> A new <see cref="Models.CustomLocationAuthentication"/> instance for mocking. </returns>
+        public static CustomLocationAuthentication CustomLocationAuthentication(string customLocationPropertiesAuthenticationType = default, string value = default)
+        {
+            return new CustomLocationAuthentication(customLocationPropertiesAuthenticationType, value, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -69,15 +78,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                     default),
                 identity,
                 default);
-        }
-
-        /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>
-        /// <param name="customLocationPropertiesAuthenticationType"> The type of the Custom Locations authentication. </param>
-        /// <param name="value"> The kubeconfig value. </param>
-        /// <returns> A new <see cref="Models.CustomLocationAuthentication"/> instance for mocking. </returns>
-        public static CustomLocationAuthentication CustomLocationAuthentication(string customLocationPropertiesAuthenticationType = default, string value = default)
-        {
-            return new CustomLocationAuthentication(customLocationPropertiesAuthenticationType, value, default);
         }
 
         /// <param name="identity"> Identity for the resource. </param>
@@ -153,6 +153,30 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             return new CustomLocationFindTargetResourceGroupResult(matchedResourceSyncRule, targetResourceGroup, default);
         }
 
+        /// <summary> A label selector is composed of two parts, matchLabels and matchExpressions. The first part, matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. The second part, matchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. All of the requirements, from both matchLabels and matchExpressions must all be satisfied in order to match. </summary>
+        /// <param name="matchExpressions"> MatchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. </param>
+        /// <param name="matchLabels"> MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. </param>
+        /// <returns> A new <see cref="Models.ResourceSyncRulePropertiesSelector"/> instance for mocking. </returns>
+        public static ResourceSyncRulePropertiesSelector ResourceSyncRulePropertiesSelector(IEnumerable<ResourceSyncRuleMatchExpression> matchExpressions = default, IDictionary<string, string> matchLabels = default)
+        {
+            matchExpressions ??= new ChangeTrackingList<ResourceSyncRuleMatchExpression>();
+            matchLabels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceSyncRulePropertiesSelector((matchExpressions ?? new ChangeTrackingList<ResourceSyncRuleMatchExpression>()).ToList(), matchLabels ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> Resource Sync Rules matchExpression property definition. </summary>
+        /// <param name="key"> Key is the label key that the selector applies to. </param>
+        /// <param name="operator"> The Operator field represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
+        /// <param name="values"> The label value. </param>
+        /// <returns> A new <see cref="Models.ResourceSyncRuleMatchExpression"/> instance for mocking. </returns>
+        public static ResourceSyncRuleMatchExpression ResourceSyncRuleMatchExpression(string key = default, string @operator = default, IEnumerable<string> values = default)
+        {
+            values ??= new ChangeTrackingList<string>();
+
+            return new ResourceSyncRuleMatchExpression(key, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -177,30 +201,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 location,
                 priority is null && provisioningState is null && selector is null && targetResourceGroup is null ? default : new ResourceSyncRuleProperties(priority, provisioningState, selector, targetResourceGroup, default),
                 default);
-        }
-
-        /// <summary> A label selector is composed of two parts, matchLabels and matchExpressions. The first part, matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. The second part, matchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. All of the requirements, from both matchLabels and matchExpressions must all be satisfied in order to match. </summary>
-        /// <param name="matchExpressions"> MatchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. </param>
-        /// <param name="matchLabels"> MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. </param>
-        /// <returns> A new <see cref="Models.ResourceSyncRulePropertiesSelector"/> instance for mocking. </returns>
-        public static ResourceSyncRulePropertiesSelector ResourceSyncRulePropertiesSelector(IEnumerable<ResourceSyncRuleMatchExpression> matchExpressions = default, IDictionary<string, string> matchLabels = default)
-        {
-            matchExpressions ??= new ChangeTrackingList<ResourceSyncRuleMatchExpression>();
-            matchLabels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ResourceSyncRulePropertiesSelector((matchExpressions ?? new ChangeTrackingList<ResourceSyncRuleMatchExpression>()).ToList(), matchLabels ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> Resource Sync Rules matchExpression property definition. </summary>
-        /// <param name="key"> Key is the label key that the selector applies to. </param>
-        /// <param name="operator"> The Operator field represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
-        /// <param name="values"> The label value. </param>
-        /// <returns> A new <see cref="Models.ResourceSyncRuleMatchExpression"/> instance for mocking. </returns>
-        public static ResourceSyncRuleMatchExpression ResourceSyncRuleMatchExpression(string key = default, string @operator = default, IEnumerable<string> values = default)
-        {
-            values ??= new ChangeTrackingList<string>();
-
-            return new ResourceSyncRuleMatchExpression(key, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="priority"> Priority represents a priority of the Resource Sync Rule. </param>
