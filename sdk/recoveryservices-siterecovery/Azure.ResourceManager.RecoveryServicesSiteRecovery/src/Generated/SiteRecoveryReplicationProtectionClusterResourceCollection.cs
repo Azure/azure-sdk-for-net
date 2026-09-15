@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(SiteRecoveryReplicationProtectionClusterResource.ResourceType, out string siteRecoveryReplicationProtectionClusterResourceApiVersion);
             _replicationProtectionClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", SiteRecoveryReplicationProtectionClusterResource.ResourceType.Namespace, Diagnostics);
-            _replicationProtectionClustersRestClient = new ReplicationProtectionClusters(_replicationProtectionClustersClientDiagnostics, Pipeline, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
+            _replicationProtectionClustersRestClient = new ReplicationProtectionClusters(_replicationProtectionClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecoveryReplicationProtectionClusterResourceApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

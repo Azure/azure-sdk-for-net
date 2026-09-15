@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> List of rule sets. </summary>
         [WirePath("managedRuleSets")]
-        public IList<ManagedRuleSetFrontDoor> ManagedRuleSets { get; }
+        public IList<ManagedRuleSetFrontDoor> ManagedRuleSets { get; } = new ChangeTrackingList<ManagedRuleSetFrontDoor>();
     }
 }

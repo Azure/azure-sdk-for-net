@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string restorableDroppedManagedDatabaseApiVersion);
             _restorableDroppedManagedDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _restorableDroppedManagedDatabasesRestClient = new RestorableDroppedManagedDatabases(_restorableDroppedManagedDatabasesClientDiagnostics, Pipeline, Endpoint, restorableDroppedManagedDatabaseApiVersion ?? "2025-02-01-preview");
+            _restorableDroppedManagedDatabasesRestClient = new RestorableDroppedManagedDatabases(_restorableDroppedManagedDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, restorableDroppedManagedDatabaseApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

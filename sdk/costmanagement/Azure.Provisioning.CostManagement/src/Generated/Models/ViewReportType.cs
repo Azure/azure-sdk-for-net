@@ -11,6 +11,6 @@ namespace Azure.Provisioning.CostManagement
     public enum ViewReportType
     {
         /// <summary> Usage. </summary>
-        Usage
+        Usage = 0
     }
 }

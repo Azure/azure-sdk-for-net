@@ -14,15 +14,15 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> Network policies will not be enforced. This is the default value when NetworkPolicy is not specified. </summary>
         [DataMember(Name = "none")]
-        None,
+        None = 0,
         /// <summary> Use Calico network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
         [DataMember(Name = "calico")]
-        Calico,
+        Calico = 1,
         /// <summary> Use Azure network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
         [DataMember(Name = "azure")]
-        Azure,
+        Azure = 2,
         /// <summary> Use Cilium to enforce network policies. This requires networkDataplane to be 'cilium'. </summary>
         [DataMember(Name = "cilium")]
-        Cilium
+        Cilium = 3
     }
 }

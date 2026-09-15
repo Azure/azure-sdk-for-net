@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
 
         private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2024-04-01-preview");
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01-preview");
 
         /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.

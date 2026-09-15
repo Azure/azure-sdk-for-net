@@ -89,9 +89,9 @@ namespace Azure.AI.AnomalyDetector
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
             writer.WritePropertyName("createdTime"u8);
-            writer.WriteStringValue(CreatedTime, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             writer.WritePropertyName("lastUpdatedTime"u8);
-            writer.WriteStringValue(LastUpdatedTime, "O");
+            writer.WriteStringValue(LastUpdatedOn, "O");
             if (Optional.IsDefined(ModelInfo))
             {
                 writer.WritePropertyName("modelInfo"u8);
@@ -140,8 +140,8 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             Guid modelId = default;
-            DateTimeOffset createdTime = default;
-            DateTimeOffset lastUpdatedTime = default;
+            DateTimeOffset createdOn = default;
+            DateTimeOffset lastUpdatedOn = default;
             ModelInfo modelInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -153,12 +153,12 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (prop.NameEquals("createdTime"u8))
                 {
-                    createdTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedTime"u8))
                 {
-                    lastUpdatedTime = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("modelInfo"u8))
@@ -175,7 +175,7 @@ namespace Azure.AI.AnomalyDetector
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo, additionalBinaryDataProperties);
+            return new AnomalyDetectionModel(modelId, createdOn, lastUpdatedOn, modelInfo, additionalBinaryDataProperties);
         }
     }
 }

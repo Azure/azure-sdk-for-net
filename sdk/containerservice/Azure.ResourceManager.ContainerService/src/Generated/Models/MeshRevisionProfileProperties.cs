@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Available mesh revisions. </summary>
         [WirePath("meshRevisions")]
-        public IList<MeshRevision> MeshRevisions { get; }
+        public IList<MeshRevision> MeshRevisions { get; } = new ChangeTrackingList<MeshRevision>();
     }
 }

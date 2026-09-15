@@ -710,6 +710,63 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
+        internal HttpMessage CreateGetAllRangesRequest(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, string marker, int? maxresults, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendQuery("comp", "rangelist", true);
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            if (prevsharesnapshot != null)
+            {
+                uri.AppendQuery("prevsharesnapshot", prevsharesnapshot, true);
+            }
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", TypeFormatters.ConvertToString(timeout), true);
+            }
+            if (marker != null)
+            {
+                uri.AppendQuery("marker", marker, true);
+            }
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", TypeFormatters.ConvertToString(maxresults), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            if (_version != null)
+            {
+                request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (range != null)
+            {
+                request.Headers.SetValue("Range", range);
+            }
+            if (leaseId != null)
+            {
+                request.Headers.SetValue("x-ms-lease-id", leaseId);
+            }
+            if (_allowTrailingDot != null)
+            {
+                request.Headers.SetValue("x-ms-allow-trailing-dot", TypeFormatters.ConvertToString(_allowTrailingDot));
+            }
+            if (_fileRequestIntent?.ToString() != null)
+            {
+                request.Headers.SetValue("x-ms-file-request-intent", TypeFormatters.ConvertToString(_fileRequestIntent?.ToString()));
+            }
+            if (supportRename != null)
+            {
+                request.Headers.SetValue("x-ms-file-support-rename", TypeFormatters.ConvertToString(supportRename));
+            }
+            request.Headers.SetValue("Accept", "application/xml");
+            return message;
+        }
+
         internal HttpMessage CreateStartCopyRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionFormat, string filePermissionKey, string filePermissionCopyMode, bool? ignoreReadOnly, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, bool? setArchiveAttribute, string leaseId, string owner, string @group, string fileMode, string fileModeCopyMode, string fileOwnerCopyMode, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

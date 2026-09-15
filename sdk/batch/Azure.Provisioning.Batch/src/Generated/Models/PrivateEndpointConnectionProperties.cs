@@ -54,18 +54,13 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets or sets the ConnectionState. </summary>
+        /// <summary> Gets the ConnectionState. </summary>
         public BatchPrivateLinkServiceConnectionState ConnectionState
         {
             get
             {
                 Initialize();
                 return _connectionState;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _connectionState, value);
             }
         }
 
@@ -74,7 +69,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return PrivateEndpoint.Id;
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             }
         }
 

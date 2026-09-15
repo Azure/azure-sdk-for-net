@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string advancedThreatProtectionSettingApiVersion);
             _advancedThreatProtectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _advancedThreatProtectionRestClient = new AdvancedThreatProtection(_advancedThreatProtectionClientDiagnostics, Pipeline, Endpoint, advancedThreatProtectionSettingApiVersion ?? "2019-01-01");
+            _advancedThreatProtectionRestClient = new AdvancedThreatProtection(_advancedThreatProtectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advancedThreatProtectionSettingApiVersion ?? "2019-01-01");
             ValidateResourceId(id);
         }
 

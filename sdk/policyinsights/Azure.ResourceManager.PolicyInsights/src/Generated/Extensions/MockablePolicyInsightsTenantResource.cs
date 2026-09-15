@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
 
         private ClientDiagnostics PolicyMetadataClientDiagnostics => _policyMetadataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PolicyMetadata PolicyMetadataRestClient => _policyMetadataRestClient ??= new PolicyMetadata(PolicyMetadataClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
+        private PolicyMetadata PolicyMetadataRestClient => _policyMetadataRestClient ??= new PolicyMetadata(PolicyMetadataClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-10-01");
 
         /// <summary> Gets a collection of PolicyMetadata in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of PolicyMetadata and their operations over a PolicyMetadataResource. </returns>

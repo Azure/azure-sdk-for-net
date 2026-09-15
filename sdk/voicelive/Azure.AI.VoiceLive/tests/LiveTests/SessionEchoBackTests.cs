@@ -82,21 +82,5 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsNotNull(updated.Session.InterimResponse,
                 "InterimResponse config must be echoed back in session.updated");
         }
-
-        // -----------------------------------------------------------------------
-        // Mirrors: SmartEndOfTurnDetection session update pattern (Python PR #47299)
-        // Verifies: SmartEndOfTurnDetection EOU config sent in session.update is
-        // echoed back by the server with correct type and settings.
-        // NOTE: Requires API version 2026-06-01-preview (TypeSpec regen). Enable
-        // once the regen branch is merged into main.
-        // -----------------------------------------------------------------------
-        [Ignore("Requires SmartEndOfTurnDetection / EouDetection from 2026-06-01-preview TypeSpec regen")]
-        [LiveOnly]
-        [TestCase]
-        public async Task SmartEndOfTurnDetectionIsEchoedInSessionUpdated()
-        {
-            await Task.CompletedTask; // placeholder until TypeSpec regen is merged
-            Assert.Inconclusive("Enable once 2026-06-01-preview TypeSpec regen is on main.");
-        }
     }
 }

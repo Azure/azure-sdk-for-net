@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DurableTask
       safeName: AzureResourceManagerDurableTask
+    - name: Azure.Provisioning.DurableTask
+      safeName: AzureProvisioningDurableTask

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     public readonly partial struct ApplicationInsightsPublicNetworkAccessType : IEquatable<ApplicationInsightsPublicNetworkAccessType>
     {
         private readonly string _value;
+        /// <summary> Enables connectivity to Application Insights through public DNS. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disables public connectivity to Application Insights through public DNS. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsPublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationInsightsPublicNetworkAccessType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Enables connectivity to Application Insights through public DNS. </summary>
         public static ApplicationInsightsPublicNetworkAccessType Enabled { get; } = new ApplicationInsightsPublicNetworkAccessType(EnabledValue);
+
         /// <summary> Disables public connectivity to Application Insights through public DNS. </summary>
         public static ApplicationInsightsPublicNetworkAccessType Disabled { get; } = new ApplicationInsightsPublicNetworkAccessType(DisabledValue);
+
         /// <summary> Determines if two <see cref="ApplicationInsightsPublicNetworkAccessType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationInsightsPublicNetworkAccessType left, ApplicationInsightsPublicNetworkAccessType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationInsightsPublicNetworkAccessType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationInsightsPublicNetworkAccessType left, ApplicationInsightsPublicNetworkAccessType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationInsightsPublicNetworkAccessType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationInsightsPublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationInsightsPublicNetworkAccessType(string value) => new ApplicationInsightsPublicNetworkAccessType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationInsightsPublicNetworkAccessType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationInsightsPublicNetworkAccessType?(string value) => value == null ? null : new ApplicationInsightsPublicNetworkAccessType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationInsightsPublicNetworkAccessType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationInsightsPublicNetworkAccessType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

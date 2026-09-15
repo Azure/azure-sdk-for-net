@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<ResourceIdentifier> IPExtendedCommunityIds { get; }
+        public IList<ResourceIdentifier> IPExtendedCommunityIds { get; } = new ChangeTrackingList<ResourceIdentifier>();
     }
 }

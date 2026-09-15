@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Batch
         /// <summary> Creates a new NetworkSecurityPerimeterConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public NetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/networkSecurityPerimeterConfigurations", resourceVersion ?? "2025-06-01")
+        internal NetworkSecurityPerimeterConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Batch/batchAccounts/networkSecurityPerimeterConfigurations", resourceVersion ?? "2025-06-01")
         {
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.Batch
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<NetworkSecurityPerimeterConfigurationProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<BatchAccount>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BatchAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

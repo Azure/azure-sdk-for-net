@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ScVmm.Models
     /// <summary> Virtual disk model. </summary>
     public partial class ScVmmVirtualDisk
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScVmmVirtualDisk"/>. </summary>
         public ScVmmVirtualDisk()
@@ -65,8 +36,8 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="templateDiskId"> Gets or sets the disk id in the template. </param>
         /// <param name="storageQosPolicy"> The QoS policy for the disk. </param>
         /// <param name="createDiffDisk"> Gets or sets a value indicating diff disk. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmVirtualDisk(string name, string displayName, string diskId, int? diskSizeGB, int? maxDiskSizeGB, int? bus, int? lun, string busType, string vhdType, string volumeType, string vhdFormatType, string templateDiskId, ScVmmStorageQosPolicyDetails storageQosPolicy, CreateDiffDisk? createDiffDisk, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmVirtualDisk(string name, string displayName, string diskId, int? diskSizeGB, int? maxDiskSizeGB, int? bus, int? lun, string busType, string vhdType, string volumeType, string vhdFormatType, string templateDiskId, ScVmmStorageQosPolicyDetails storageQosPolicy, CreateDiffDisk? createDiffDisk, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -82,35 +53,48 @@ namespace Azure.ResourceManager.ScVmm.Models
             TemplateDiskId = templateDiskId;
             StorageQosPolicy = storageQosPolicy;
             CreateDiffDisk = createDiffDisk;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the name of the disk. </summary>
         public string Name { get; set; }
+
         /// <summary> Gets the display name of the virtual disk as shown in the vmmServer. This is the fallback label for a disk when the name is not set. </summary>
         public string DisplayName { get; }
+
         /// <summary> Gets or sets the disk id. </summary>
         public string DiskId { get; set; }
+
         /// <summary> Gets or sets the disk total size. </summary>
         public int? DiskSizeGB { get; set; }
+
         /// <summary> Gets the max disk size. </summary>
         public int? MaxDiskSizeGB { get; }
+
         /// <summary> Gets or sets the disk bus. </summary>
         public int? Bus { get; set; }
+
         /// <summary> Gets or sets the disk lun. </summary>
         public int? Lun { get; set; }
+
         /// <summary> Gets or sets the disk bus type. </summary>
         public string BusType { get; set; }
+
         /// <summary> Gets or sets the disk vhd type. </summary>
         public string VhdType { get; set; }
+
         /// <summary> Gets the disk volume type. </summary>
         public string VolumeType { get; }
+
         /// <summary> Gets the disk vhd format type. </summary>
         public string VhdFormatType { get; }
+
         /// <summary> Gets or sets the disk id in the template. </summary>
         public string TemplateDiskId { get; set; }
+
         /// <summary> The QoS policy for the disk. </summary>
         public ScVmmStorageQosPolicyDetails StorageQosPolicy { get; set; }
+
         /// <summary> Gets or sets a value indicating diff disk. </summary>
         public CreateDiffDisk? CreateDiffDisk { get; set; }
     }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmAttestationStatusApiVersion);
             _attestationStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _attestationStatusesRestClient = new AttestationStatuses(_attestationStatusesClientDiagnostics, Pipeline, Endpoint, hciVmAttestationStatusApiVersion ?? "2025-09-01-preview");
+            _attestationStatusesRestClient = new AttestationStatuses(_attestationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmAttestationStatusApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

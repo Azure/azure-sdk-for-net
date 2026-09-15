@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(StorageAccountMigrationResource.ResourceType, out string storageAccountMigrationApiVersion);
             _storageAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", StorageAccountMigrationResource.ResourceType.Namespace, Diagnostics);
-            _storageAccountsRestClient = new StorageAccounts(_storageAccountsClientDiagnostics, Pipeline, Endpoint, storageAccountMigrationApiVersion ?? "2025-08-01");
+            _storageAccountsRestClient = new StorageAccounts(_storageAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountMigrationApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

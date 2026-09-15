@@ -14,6 +14,7 @@ namespace Azure.Core.Http.Multipart
     /// <summary>
     /// Tokenizes a <see cref="string"/> into <see cref="StringSegment"/>s.
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal readonly struct StringTokenizer : IEnumerable<StringSegment>
     {
         private readonly StringSegment _value;

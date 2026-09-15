@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Token usage for cluster analysis. </summary>
+    [Experimental("AAIP001")]
     public partial class ClusterTokenUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

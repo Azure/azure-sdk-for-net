@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ResourceType, out string expressRouteAuthorizationApiVersion);
             _authorizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _authorizationsRestClient = new Authorizations(_authorizationsClientDiagnostics, Pipeline, Endpoint, expressRouteAuthorizationApiVersion ?? "2025-09-01");
+            _authorizationsRestClient = new Authorizations(_authorizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteAuthorizationApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

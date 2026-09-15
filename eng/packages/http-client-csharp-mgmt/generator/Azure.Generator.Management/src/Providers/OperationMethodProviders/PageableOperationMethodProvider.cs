@@ -20,7 +20,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class PageableOperationMethodProvider
     {
         private readonly TypeProvider _enclosingType;
-        private readonly OperationContext _operationContext;
         private readonly RestClientInfo _restClientInfo;
         private readonly InputPagingServiceMethod _method;
         private readonly MethodProvider _convenienceMethod;
@@ -37,7 +36,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public PageableOperationMethodProvider(
             TypeProvider enclosingType,
-            OperationContext operationContext,
+            ParameterContextRegistry parameterMappings,
             RestClientInfo restClientInfo,
             InputPagingServiceMethod method,
             bool isAsync,
@@ -46,12 +45,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
-            _operationContext = operationContext;
             _scopeParameter = scopeParameter;
             _restClientInfo = restClientInfo;
             _method = method;
-            _parameterMappings = operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
-            _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync);
+            _parameterMappings = parameterMappings;
+            _convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_method.Operation, isAsync, enclosingType);
             _isAsync = isAsync;
             _itemType = _convenienceMethod.Signature.ReturnType!.Arguments[0]; // a paging method's return type should be `Pageable<T>` or `AsyncPageable<T>`, so we can safely access the first argument as the item type.
             InitializeTypeInfo(
@@ -101,10 +99,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(PageableOperationMethodProvider pageableOperationMethodProvider)
         {
-            var methodProvider = new MethodProvider(
+            var methodProvider = new ManagementMethodProvider(
                 pageableOperationMethodProvider._signature,
                 pageableOperationMethodProvider._bodyStatements,
-                pageableOperationMethodProvider._enclosingType);
+                pageableOperationMethodProvider._enclosingType,
+                ScmMethodKind.Convenience,
+                collectionDefinition: ((ScmMethodProvider)pageableOperationMethodProvider._convenienceMethod).CollectionDefinition,
+                serviceMethod: pageableOperationMethodProvider._method);
 
             // Add enhanced XML documentation with structured tags
             ResourceHelpers.BuildEnhancedXmlDocs(

@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.BotService.Mocking
 
         private ClientDiagnostics BotsClientDiagnostics => _botsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Bots BotsRestClient => _botsRestClient ??= new Bots(BotsClientDiagnostics, Pipeline, Endpoint, "2023-09-15-preview");
+        private Bots BotsRestClient => _botsRestClient ??= new Bots(BotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-09-15-preview");
 
         private ClientDiagnostics BotConnectionOperationGroupClientDiagnostics => _botConnectionOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BotConnectionOperationGroup BotConnectionOperationGroupRestClient => _botConnectionOperationGroupRestClient ??= new BotConnectionOperationGroup(BotConnectionOperationGroupClientDiagnostics, Pipeline, Endpoint, "2023-09-15-preview");
+        private BotConnectionOperationGroup BotConnectionOperationGroupRestClient => _botConnectionOperationGroupRestClient ??= new BotConnectionOperationGroup(BotConnectionOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-09-15-preview");
 
         private ClientDiagnostics QnAMakerEndpointKeysOperationGroupClientDiagnostics => _qnAMakerEndpointKeysOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private QnAMakerEndpointKeysOperationGroup QnAMakerEndpointKeysOperationGroupRestClient => _qnAMakerEndpointKeysOperationGroupRestClient ??= new QnAMakerEndpointKeysOperationGroup(QnAMakerEndpointKeysOperationGroupClientDiagnostics, Pipeline, Endpoint, "2023-09-15-preview");
+        private QnAMakerEndpointKeysOperationGroup QnAMakerEndpointKeysOperationGroupRestClient => _qnAMakerEndpointKeysOperationGroupRestClient ??= new QnAMakerEndpointKeysOperationGroup(QnAMakerEndpointKeysOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-09-15-preview");
 
         private ClientDiagnostics HostSettingsOperationGroupClientDiagnostics => _hostSettingsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HostSettingsOperationGroup HostSettingsOperationGroupRestClient => _hostSettingsOperationGroupRestClient ??= new HostSettingsOperationGroup(HostSettingsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2023-09-15-preview");
+        private HostSettingsOperationGroup HostSettingsOperationGroupRestClient => _hostSettingsOperationGroupRestClient ??= new HostSettingsOperationGroup(HostSettingsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-09-15-preview");
 
         /// <summary>
         /// Returns all the resources of a particular type belonging to a subscription.

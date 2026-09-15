@@ -76,16 +76,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 throw new FormatException($"The model {nameof(VmWorkloadSqlDatabaseProtectedItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ParentProtectedItem))
-            {
-                writer.WritePropertyName("parentProtectedItem"u8);
-                writer.WriteStringValue(ParentProtectedItem);
-            }
-            if (Optional.IsDefined(ProtectionLevel))
-            {
-                writer.WritePropertyName("protectionLevel"u8);
-                writer.WriteStringValue(ProtectionLevel.Value.ToString());
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -131,6 +121,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             bool? isArchiveEnabled = default;
             string policyName = default;
             int? softDeleteRetentionPeriodInDays = default;
+            AzureLocation? sourceLocation = default;
             string vaultId = default;
             BackupSourceSideScanInfo sourceSideScanInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,8 +139,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             VmWorkloadProtectedItemExtendedInfo extendedInfo = default;
             IDictionary<string, KpiResourceHealthDetails> kpisHealths = default;
             IList<DistributedNodesInfo> nodesList = default;
-            string parentProtectedItem = default;
-            BackupProtectionLevel? protectionLevel = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("protectedItemType"u8))
@@ -306,6 +295,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     softDeleteRetentionPeriodInDays = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceLocation = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("vaultId"u8))
                 {
                     vaultId = prop.Value.GetString();
@@ -432,20 +430,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     nodesList = array;
                     continue;
                 }
-                if (prop.NameEquals("parentProtectedItem"u8))
-                {
-                    parentProtectedItem = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("protectionLevel"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    protectionLevel = new BackupProtectionLevel(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -470,6 +454,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 isArchiveEnabled,
                 policyName,
                 softDeleteRetentionPeriodInDays,
+                sourceLocation,
                 vaultId,
                 sourceSideScanInfo,
                 additionalBinaryDataProperties,
@@ -486,9 +471,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 protectedItemHealthStatus,
                 extendedInfo,
                 kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(),
-                nodesList ?? new ChangeTrackingList<DistributedNodesInfo>(),
-                parentProtectedItem,
-                protectionLevel);
+                nodesList ?? new ChangeTrackingList<DistributedNodesInfo>());
         }
     }
 }

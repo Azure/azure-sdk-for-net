@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ContainerServiceArtifactSource
     {
         /// <summary> pull images from Azure Container Registry with cache. </summary>
-        Cache,
+        Cache = 0,
         /// <summary> pull images from Microsoft Artifact Registry. </summary>
-        Direct
+        Direct = 1
     }
 }

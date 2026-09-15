@@ -12,7 +12,10 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for token filters. </summary>
+    /// <summary>
+    /// Base type for token filters.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AsciiFoldingTokenFilter"/>, <see cref="CjkBigramTokenFilter"/>, <see cref="CommonGramTokenFilter"/>, <see cref="DictionaryDecompounderTokenFilter"/>, <see cref="ElisionTokenFilter"/>, <see cref="KeepTokenFilter"/>, <see cref="KeywordMarkerTokenFilter"/>, <see cref="LengthTokenFilter"/>, <see cref="LimitTokenFilter"/>, <see cref="NGramTokenFilter"/>, <see cref="PatternCaptureTokenFilter"/>, <see cref="PatternReplaceTokenFilter"/>, <see cref="PhoneticTokenFilter"/>, <see cref="ShingleTokenFilter"/>, <see cref="SnowballTokenFilter"/>, <see cref="StemmerTokenFilter"/>, <see cref="StemmerOverrideTokenFilter"/>, <see cref="StopwordsTokenFilter"/>, <see cref="SynonymTokenFilter"/>, <see cref="TruncateTokenFilter"/>, <see cref="UniqueTokenFilter"/>, and <see cref="WordDelimiterTokenFilter"/>.
+    /// </summary>
     public partial class TokenFilter : IJsonModel<TokenFilter>
     {
         /// <summary> Initializes a new instance of <see cref="TokenFilter"/> for deserialization. </summary>

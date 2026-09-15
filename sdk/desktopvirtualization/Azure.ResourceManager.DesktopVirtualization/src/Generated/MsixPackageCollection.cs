@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(MsixPackageResource.ResourceType, out string msixPackageApiVersion);
             _msixPackagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", MsixPackageResource.ResourceType.Namespace, Diagnostics);
-            _msixPackagesRestClient = new MSIXPackages(_msixPackagesClientDiagnostics, Pipeline, Endpoint, msixPackageApiVersion ?? "2026-03-01-preview");
+            _msixPackagesRestClient = new MSIXPackages(_msixPackagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, msixPackageApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

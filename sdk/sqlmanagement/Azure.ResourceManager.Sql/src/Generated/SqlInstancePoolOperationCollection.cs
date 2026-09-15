@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlInstancePoolOperationResource.ResourceType, out string sqlInstancePoolOperationApiVersion);
             _instancePoolOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlInstancePoolOperationResource.ResourceType.Namespace, Diagnostics);
-            _instancePoolOperationsRestClient = new InstancePoolOperations(_instancePoolOperationsClientDiagnostics, Pipeline, Endpoint, sqlInstancePoolOperationApiVersion ?? "2025-02-01-preview");
+            _instancePoolOperationsRestClient = new InstancePoolOperations(_instancePoolOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlInstancePoolOperationApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

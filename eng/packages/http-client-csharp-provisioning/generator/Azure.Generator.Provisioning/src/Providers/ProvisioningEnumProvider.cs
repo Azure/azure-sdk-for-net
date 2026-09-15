@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Provisioning.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -8,7 +9,9 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -18,14 +21,17 @@ namespace Azure.Generator.Provisioning.Providers
     /// Generates a simple C# enum from an InputEnumType.
     /// Provisioning enums are plain enums (not extensible structs) with optional
     /// [DataMember(Name = "...")] attributes when the serialized value differs
-    /// from the C# member name.
+    /// from the C# member name. Accessibility follows the base enum provider pattern,
+    /// allowing the reference map analyzer to internalize enums not exposed by the public API.
     /// </summary>
     internal class ProvisioningEnumProvider : EnumProvider
     {
         private readonly EnumProvider _baseEnumProvider;
+        private readonly InputEnumType _inputEnum;
 
         public ProvisioningEnumProvider(InputEnumType inputEnum) : base(inputEnum)
         {
+            _inputEnum = inputEnum;
             _baseEnumProvider = EnumProvider.Create(inputEnum, null);
         }
 
@@ -38,14 +44,24 @@ namespace Azure.Generator.Provisioning.Providers
             => Path.Combine("src", "Generated", "Models", $"{Name}.cs");
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
-            => TypeSignatureModifiers.Public | TypeSignatureModifiers.Enum;
+        {
+            var modifiers = TypeSignatureModifiers.Enum;
+            if (_inputEnum.Access == "internal")
+            {
+                modifiers |= TypeSignatureModifiers.Internal;
+            }
+            return modifiers;
+        }
 
         protected override bool GetIsEnum() => true;
 
         protected override FieldProvider[] BuildFields()
         {
             var baseEnumValues = _baseEnumProvider.EnumValues;
-            var fields = new FieldProvider[baseEnumValues.Count];
+            var fields = new List<FieldProvider>(baseEnumValues.Count);
+            var usedOrdinals = ProvisioningGenerator.Instance.EnumValueCustomizationResolver.GetReservedOrdinals(Name);
+            var existingMemberNames = new HashSet<string>();
+            int nextOrdinal = 0;
 
             for (int i = 0; i < baseEnumValues.Count; i++)
             {
@@ -53,34 +69,77 @@ namespace Azure.Generator.Provisioning.Providers
                 var baseField = baseEnumValue.Field;
                 var memberName = baseEnumValue.Name;
                 var serializedValue = baseEnumValue.Value?.ToString();
+                var customization = ProvisioningGenerator.Instance.EnumValueCustomizationResolver.GetValue(Name, memberName);
+                var fieldOrdinal = customization?.Value ?? GetNextAvailableOrdinal(usedOrdinals, ref nextOrdinal);
+                existingMemberNames.Add(memberName);
                 var description = string.IsNullOrEmpty(baseField.Description?.ToString())
                     ? (FormattableString)$"{memberName}."
                     : baseField.Description;
 
-                // Add [DataMember(Name = "...")] when the serialized value differs from the member name.
-                IEnumerable<AttributeStatement>? attributes = baseField.Attributes;
-                if (serializedValue != null && serializedValue != memberName)
-                {
-                    attributes =
-                    [
-                        .. baseField.Attributes,
-                        new AttributeStatement(typeof(DataMemberAttribute),
-                            [new KeyValuePair<string, ValueExpression>("Name", Literal(serializedValue))])
-                    ];
-                }
+                var field = CreateEnumField(memberName, serializedValue, fieldOrdinal, description, baseField.Attributes, customization);
 
-                var field = new FieldProvider(
-                    FieldModifiers.Public,
-                    typeof(int), // placeholder — enum members don't need an explicit type
-                    memberName,
-                    this,
-                    description: description,
-                    attributes: attributes);
-
-                fields[i] = field;
+                fields.Add(field);
             }
 
-            return fields;
+            foreach (var customization in ProvisioningGenerator.Instance.EnumValueCustomizationResolver.GetAdditionalValues(Name, existingMemberNames))
+            {
+                fields.Add(CreateEnumField(
+                    customization.MemberName,
+                    customization.WireName,
+                    customization.Value,
+                    (FormattableString)$"{customization.MemberName}.",
+                    [],
+                    customization));
+            }
+
+            return [.. fields];
+        }
+
+        private FieldProvider CreateEnumField(
+            string memberName,
+            string? serializedValue,
+            int fieldOrdinal,
+            FormattableString description,
+            IEnumerable<AttributeStatement> existingAttributes,
+            EnumValueCustomizationResolver.EnumValueCustomization? customization)
+        {
+            var attributes = existingAttributes.ToList();
+            if (customization?.EditorBrowsableNever == true)
+            {
+                attributes.Add(new AttributeStatement(
+                    typeof(EditorBrowsableAttribute),
+                    [new MemberExpression(typeof(EditorBrowsableState), nameof(EditorBrowsableState.Never))]));
+            }
+            if (customization?.ObsoleteMessage is not null)
+            {
+                attributes.Add(new AttributeStatement(typeof(ObsoleteAttribute), [Literal(customization.ObsoleteMessage)]));
+            }
+
+            // Add [DataMember(Name = "...")] when the serialized value differs from the member name.
+            if (serializedValue != null && serializedValue != memberName)
+            {
+                attributes.Add(new AttributeStatement(
+                    typeof(DataMemberAttribute),
+                    [new KeyValuePair<string, ValueExpression>("Name", Literal(serializedValue))]));
+            }
+
+            return new FieldProvider(
+                FieldModifiers.Public,
+                typeof(int), // placeholder — enum members don't need an explicit type
+                memberName,
+                this,
+                description: description,
+                initializationValue: Literal(fieldOrdinal),
+                attributes: attributes);
+        }
+
+        private static int GetNextAvailableOrdinal(HashSet<int> usedOrdinals, ref int nextOrdinal)
+        {
+            while (usedOrdinals.Contains(nextOrdinal))
+            {
+                nextOrdinal++;
+            }
+            return nextOrdinal++;
         }
 
         protected override TypeProvider[] BuildSerializationProviders()
@@ -89,11 +148,22 @@ namespace Azure.Generator.Provisioning.Providers
         protected override IReadOnlyList<EnumTypeMember> BuildEnumValues()
         {
             var baseEnumValues = _baseEnumProvider.EnumValues;
-            var members = new EnumTypeMember[baseEnumValues.Count];
+            var members = new List<EnumTypeMember>(Fields.Count);
             for (int i = 0; i < baseEnumValues.Count; i++)
             {
-                members[i] = new EnumTypeMember(Fields[i].Name, Fields[i], baseEnumValues[i].Value);
+                members.Add(new EnumTypeMember(Fields[i].Name, Fields[i], baseEnumValues[i].Value));
             }
+
+            var existingMemberNames = baseEnumValues.Select(v => v.Name).ToHashSet();
+            foreach (var customization in ProvisioningGenerator.Instance.EnumValueCustomizationResolver.GetAdditionalValues(Name, existingMemberNames))
+            {
+                var field = Fields.FirstOrDefault(f => f.Name == customization.MemberName);
+                if (field != null)
+                {
+                    members.Add(new EnumTypeMember(field.Name, field, customization.WireName ?? customization.MemberName));
+                }
+            }
+
             return members;
         }
     }

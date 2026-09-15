@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.LargeInstance.Mocking
 
         private ClientDiagnostics AzureLargeInstanceClientDiagnostics => _azureLargeInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LargeInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureLargeInstance AzureLargeInstanceRestClient => _azureLargeInstanceRestClient ??= new AzureLargeInstance(AzureLargeInstanceClientDiagnostics, Pipeline, Endpoint, "2024-08-01-preview");
+        private AzureLargeInstance AzureLargeInstanceRestClient => _azureLargeInstanceRestClient ??= new AzureLargeInstance(AzureLargeInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01-preview");
 
         private ClientDiagnostics AzureLargeStorageInstanceClientDiagnostics => _azureLargeStorageInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.LargeInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureLargeStorageInstance AzureLargeStorageInstanceRestClient => _azureLargeStorageInstanceRestClient ??= new AzureLargeStorageInstance(AzureLargeStorageInstanceClientDiagnostics, Pipeline, Endpoint, "2024-08-01-preview");
+        private AzureLargeStorageInstance AzureLargeStorageInstanceRestClient => _azureLargeStorageInstanceRestClient ??= new AzureLargeStorageInstance(AzureLargeStorageInstanceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01-preview");
 
         /// <summary>
         /// Gets a list of Azure Large Instances in the specified subscription. The

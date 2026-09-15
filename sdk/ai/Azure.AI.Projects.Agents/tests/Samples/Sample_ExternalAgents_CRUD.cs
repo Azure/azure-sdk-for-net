@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
@@ -23,9 +22,7 @@ public class Sample_ExternalAgents_CRUD : SamplesBase
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("ExternalAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         #endregion
 
         #region Snippet:Sample_CreateAgentVersion_ExternalAgentsCRUD_Async
@@ -83,9 +80,7 @@ public class Sample_ExternalAgents_CRUD : SamplesBase
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
 #endif
-        AgentAdministrationClientOptions options = new();
-        options.AddPolicy(new FeaturePolicy("ExternalAgents=V1Preview"), PipelinePosition.PerCall);
-        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+        AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 
         #region Snippet:Sample_CreateAgentVersion_ExternalAgentsCRUD_Sync
         ExternalAgentDefinition agentDefinition = new()

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string informationProtectionPolicyApiVersion);
             _informationProtectionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _informationProtectionPoliciesRestClient = new InformationProtectionPolicies(_informationProtectionPoliciesClientDiagnostics, Pipeline, Endpoint, informationProtectionPolicyApiVersion ?? "2017-08-01-preview");
+            _informationProtectionPoliciesRestClient = new InformationProtectionPolicies(_informationProtectionPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, informationProtectionPolicyApiVersion ?? "2017-08-01-preview");
             ValidateResourceId(id);
         }
 

@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Search
     public enum SearchDataExfiltrationProtection
     {
         /// <summary> Indicates that all data exfiltration scenarios are disabled. </summary>
-        BlockAll
+        BlockAll = 0
     }
 }

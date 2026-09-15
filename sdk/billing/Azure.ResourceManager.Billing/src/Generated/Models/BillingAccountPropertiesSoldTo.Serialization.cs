@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The address of the individual or organization that is responsible for the billing account. </summary>
-    public partial class BillingAccountPropertiesSoldTo : BillingAddressDetails, IJsonModel<BillingAccountPropertiesSoldTo>
+    internal partial class BillingAccountPropertiesSoldTo : BillingAddressDetails, IJsonModel<BillingAccountPropertiesSoldTo>
     {
         /// <summary> Initializes a new instance of <see cref="BillingAccountPropertiesSoldTo"/> for deserialization. </summary>
         internal BillingAccountPropertiesSoldTo()

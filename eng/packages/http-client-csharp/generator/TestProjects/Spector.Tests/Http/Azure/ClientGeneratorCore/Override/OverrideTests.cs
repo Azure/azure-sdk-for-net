@@ -28,9 +28,9 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.Override
             Assert.IsNotNull(typeof(GroupParameters).GetMethod("GroupAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(GroupParametersOptions), typeof(CancellationToken) }));
             Assert.IsNotNull(typeof(GroupParameters).GetMethod("Group", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(GroupParametersOptions), typeof(CancellationToken) }));
 
-            // Verify that the protocol method exists with individual parameters
-            Assert.IsNotNull(typeof(GroupParameters).GetMethod("GroupAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(string), typeof(RequestContext) }));
-            Assert.IsNotNull(typeof(GroupParameters).GetMethod("Group", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(string), typeof(string), typeof(RequestContext) }));
+            // Verify that the protocol method exists with GroupParametersOptions and RequestContext parameters
+            Assert.IsNotNull(typeof(GroupParameters).GetMethod("GroupAsync", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(GroupParametersOptions), typeof(RequestContext) }));
+            Assert.IsNotNull(typeof(GroupParameters).GetMethod("Group", BindingFlags.Instance | BindingFlags.Public, new[] { typeof(GroupParametersOptions), typeof(RequestContext) }));
         });
 
         [SpectorTest]

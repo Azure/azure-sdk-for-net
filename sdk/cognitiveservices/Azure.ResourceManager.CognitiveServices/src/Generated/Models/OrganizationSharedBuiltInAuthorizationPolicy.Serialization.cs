@@ -14,11 +14,11 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Built-in authorization policy scoped to organization/tenant. </summary>
-    public partial class OrganizationSharedBuiltInAuthorizationPolicy : ApplicationAuthorizationPolicy, IJsonModel<OrganizationSharedBuiltInAuthorizationPolicy>
+    public partial class OrganizationSharedBuiltInAuthorizationPolicy : CognitiveServicesApplicationAuthorizationPolicy, IJsonModel<OrganizationSharedBuiltInAuthorizationPolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ApplicationAuthorizationPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CognitiveServicesApplicationAuthorizationPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OrganizationSharedBuiltInAuthorizationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ApplicationAuthorizationPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CognitiveServicesApplicationAuthorizationPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<OrganizationSharedBuiltInAuthorizationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

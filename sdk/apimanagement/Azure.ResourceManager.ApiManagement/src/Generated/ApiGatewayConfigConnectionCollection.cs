@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiGatewayConfigConnectionResource.ResourceType, out string apiGatewayConfigConnectionApiVersion);
             _apiGatewayConfigConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiGatewayConfigConnectionResource.ResourceType.Namespace, Diagnostics);
-            _apiGatewayConfigConnectionRestClient = new ApiGatewayConfigConnection(_apiGatewayConfigConnectionClientDiagnostics, Pipeline, Endpoint, apiGatewayConfigConnectionApiVersion ?? "2025-09-01-preview");
+            _apiGatewayConfigConnectionRestClient = new ApiGatewayConfigConnection(_apiGatewayConfigConnectionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiGatewayConfigConnectionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

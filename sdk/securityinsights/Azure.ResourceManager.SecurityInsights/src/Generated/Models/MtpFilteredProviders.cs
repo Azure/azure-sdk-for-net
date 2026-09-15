@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Alerts filtered providers. When filters are not applied, all alerts will stream through the MTP pipeline, still in private preview for all products EXCEPT MDA and MDI, which are in GA state. </summary>
         [WirePath("alerts")]
-        public IList<MtpProvider> Alerts { get; }
+        public IList<MtpProvider> Alerts { get; } = new ChangeTrackingList<MtpProvider>();
     }
 }

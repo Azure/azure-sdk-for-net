@@ -13,6 +13,7 @@ using NUnit.Framework;
 using OpenAI.Evals;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
+#pragma warning disable AAIP001
 
 public class Sample_EvaluationClusterInsight : EvaluationSampleBase
 {
@@ -173,7 +174,7 @@ public class Sample_EvaluationClusterInsight : EvaluationSampleBase
                 displayName: "Cluster analysis",
                 request: new EvaluationRunClusterInsightRequest(
                     evalId: evaluationId,
-                    runIds: [ runId ])
+                    runIds: [runId])
                 {
                     ModelConfiguration = new InsightModelConfiguration(modelDeploymentName)
                 }));
@@ -318,7 +319,7 @@ public class Sample_EvaluationClusterInsight : EvaluationSampleBase
                 displayName: "Cluster analysis",
                 request: new EvaluationRunClusterInsightRequest(
                     evalId: evaluationId,
-                    runIds: [ runId ])
+                    runIds: [runId])
                 {
                     ModelConfiguration = new InsightModelConfiguration(modelDeploymentName)
                 }));

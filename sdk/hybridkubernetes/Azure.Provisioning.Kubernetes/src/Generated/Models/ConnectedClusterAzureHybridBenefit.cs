@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Kubernetes
     public enum ConnectedClusterAzureHybridBenefit
     {
         /// <summary> True. </summary>
-        True,
+        True = 0,
         /// <summary> False. </summary>
-        False,
+        False = 1,
         /// <summary> NotApplicable. </summary>
-        NotApplicable
+        NotApplicable = 2
     }
 }

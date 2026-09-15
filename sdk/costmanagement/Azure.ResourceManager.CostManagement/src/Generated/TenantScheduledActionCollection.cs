@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(TenantScheduledActionResource.ResourceType, out string tenantScheduledActionApiVersion);
             _scheduledActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", TenantScheduledActionResource.ResourceType.Namespace, Diagnostics);
-            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Endpoint, tenantScheduledActionApiVersion ?? "2025-03-01");
+            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tenantScheduledActionApiVersion ?? "2025-03-01");
             ValidateResourceId(id);
         }
 

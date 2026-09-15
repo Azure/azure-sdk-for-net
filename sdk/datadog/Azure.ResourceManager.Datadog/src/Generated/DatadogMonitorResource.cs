@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(ResourceType, out string datadogMonitorApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
+            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             _datadogMonitorResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", ResourceType.Namespace, Diagnostics);
-            _datadogMonitorResourcesRestClient = new DatadogMonitorResources(_datadogMonitorResourcesClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
+            _datadogMonitorResourcesRestClient = new DatadogMonitorResources(_datadogMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             _billingInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", ResourceType.Namespace, Diagnostics);
-            _billingInfoRestClient = new BillingInfo(_billingInfoClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
+            _billingInfoRestClient = new BillingInfo(_billingInfoClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitorApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 

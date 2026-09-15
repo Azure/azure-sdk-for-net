@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Cdn
     public enum DomainNameLabelScope
     {
         /// <summary> TenantReuse. </summary>
-        TenantReuse,
+        TenantReuse = 0,
         /// <summary> SubscriptionReuse. </summary>
-        SubscriptionReuse,
+        SubscriptionReuse = 1,
         /// <summary> ResourceGroupReuse. </summary>
-        ResourceGroupReuse,
+        ResourceGroupReuse = 2,
         /// <summary> NoReuse. </summary>
-        NoReuse
+        NoReuse = 3
     }
 }

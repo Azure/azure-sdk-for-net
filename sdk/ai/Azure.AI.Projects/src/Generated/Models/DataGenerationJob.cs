@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Data Generation Job resource. </summary>
+    [Experimental("AAIP001")]
     public partial class DataGenerationJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -24,18 +26,18 @@ namespace Azure.AI.Projects
         /// <param name="result"> Result produced on success. </param>
         /// <param name="status"> Current lifecycle status. </param>
         /// <param name="error"> Error details — populated only on failure. </param>
-        /// <param name="createdAt"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
-        /// <param name="finishedAt"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
+        /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
+        /// <param name="finishedOn"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJob(string id, DataGenerationJobInputs inputs, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdAt, DateTimeOffset? finishedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJob(string id, DataGenerationJobInputs inputs, DataGenerationJobResult result, ProjectsJobStatus status, FoundryOpenAIError error, DateTimeOffset createdOn, DateTimeOffset? finishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Inputs = inputs;
             Result = result;
             Status = status;
             Error = error;
-            CreatedAt = createdAt;
-            FinishedAt = finishedAt;
+            CreatedOn = createdOn;
+            FinishedOn = finishedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,9 +54,9 @@ namespace Azure.AI.Projects
         public ProjectsJobStatus Status { get; }
 
         /// <summary> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </summary>
-        public DateTimeOffset? FinishedAt { get; }
+        public DateTimeOffset? FinishedOn { get; }
     }
 }

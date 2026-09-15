@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A specific version of a skill. </summary>
+    [Experimental("AAIP001")]
     public partial class SkillVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -19,15 +21,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill version. </param>
         /// <param name="version"> The version identifier. Skill versions are immutable. </param>
         /// <param name="description"> A human-readable description of the skill version. </param>
-        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill version was created. </param>
-        internal SkillVersion(string id, string skillId, string name, string version, string description, DateTimeOffset createdAt)
+        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill version was created. </param>
+        internal SkillVersion(string id, string skillId, string name, string version, string description, DateTimeOffset createdOn)
         {
             Id = id;
             SkillId = skillId;
             Name = name;
             Version = version;
             Description = description;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="SkillVersion"/>. </summary>
@@ -36,16 +38,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill version. </param>
         /// <param name="version"> The version identifier. Skill versions are immutable. </param>
         /// <param name="description"> A human-readable description of the skill version. </param>
-        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill version was created. </param>
+        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill version was created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkillVersion(string id, string skillId, string name, string version, string description, DateTimeOffset createdAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkillVersion(string id, string skillId, string name, string version, string description, DateTimeOffset createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SkillId = skillId;
             Name = name;
             Version = version;
             Description = description;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -65,6 +67,6 @@ namespace Azure.AI.Projects.Agents
         public string Description { get; }
 
         /// <summary> The Unix timestamp (seconds) when the skill version was created. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
     }
 }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CostManagement
     public enum CostManagementAlertSource
     {
         /// <summary> Preset. </summary>
-        Preset,
+        Preset = 0,
         /// <summary> User. </summary>
-        User
+        User = 1
     }
 }

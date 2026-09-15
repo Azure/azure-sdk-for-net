@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     internal static partial class ComponentFavoriteTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ComponentFavoriteType value) => value switch
         {
             ComponentFavoriteType.Shared => "shared",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComponentFavoriteType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ComponentFavoriteType ToComponentFavoriteType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "shared")) return ComponentFavoriteType.Shared;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "user")) return ComponentFavoriteType.User;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "shared"))
+            {
+                return ComponentFavoriteType.Shared;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "user"))
+            {
+                return ComponentFavoriteType.User;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ComponentFavoriteType value.");
         }
     }

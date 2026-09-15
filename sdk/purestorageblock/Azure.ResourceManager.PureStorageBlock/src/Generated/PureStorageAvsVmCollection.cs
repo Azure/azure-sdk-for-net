@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(PureStorageAvsVmResource.ResourceType, out string pureStorageAvsVmApiVersion);
             _avsVmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", PureStorageAvsVmResource.ResourceType.Namespace, Diagnostics);
-            _avsVmsRestClient = new AvsVms(_avsVmsClientDiagnostics, Pipeline, Endpoint, pureStorageAvsVmApiVersion ?? "2024-11-01");
+            _avsVmsRestClient = new AvsVms(_avsVmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageAvsVmApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 

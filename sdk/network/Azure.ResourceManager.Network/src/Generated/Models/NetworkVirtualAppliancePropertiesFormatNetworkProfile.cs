@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Gets the NetworkInterfaceConfigurations. </summary>
         [WirePath("networkInterfaceConfigurations")]
-        public IList<VirtualApplianceNetworkInterfaceConfiguration> NetworkInterfaceConfigurations { get; }
+        public IList<VirtualApplianceNetworkInterfaceConfiguration> NetworkInterfaceConfigurations { get; } = new ChangeTrackingList<VirtualApplianceNetworkInterfaceConfiguration>();
     }
 }

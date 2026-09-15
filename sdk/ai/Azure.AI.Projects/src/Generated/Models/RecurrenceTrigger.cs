@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Recurrence based trigger. </summary>
+    [Experimental("AAIP001")]
     public partial class RecurrenceTrigger : ScheduleTrigger
     {
         /// <summary> Initializes a new instance of <see cref="RecurrenceTrigger"/>. </summary>

@@ -18,10 +18,10 @@ namespace Azure.Provisioning.CostManagement
         private BicepValue<ExportRunExecutionStatus> _status;
         private BicepValue<string> _submittedBy;
         private BicepValue<DateTimeOffset> _submittedOn;
-        private BicepValue<DateTimeOffset> _processingStartOn;
-        private BicepValue<DateTimeOffset> _processingEndOn;
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _processingStartsOn;
+        private BicepValue<DateTimeOffset> _processingEndsOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<string> _fileName;
         private BicepValue<string> _manifestFile;
         private CommonExportProperties _runSettings;
@@ -32,7 +32,7 @@ namespace Azure.Provisioning.CostManagement
         {
         }
 
-        /// <summary> Gets or sets the ExecutionType. </summary>
+        /// <summary> Gets the ExecutionType. </summary>
         public BicepValue<ExportRunExecutionType> ExecutionType
         {
             get
@@ -40,14 +40,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _executionType;
             }
-            set
-            {
-                Initialize();
-                _executionType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Status. </summary>
+        /// <summary> Gets the Status. </summary>
         public BicepValue<ExportRunExecutionStatus> Status
         {
             get
@@ -55,14 +50,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _status;
             }
-            set
-            {
-                Initialize();
-                _status.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SubmittedBy. </summary>
+        /// <summary> Gets the SubmittedBy. </summary>
         public BicepValue<string> SubmittedBy
         {
             get
@@ -70,14 +60,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _submittedBy;
             }
-            set
-            {
-                Initialize();
-                _submittedBy.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the SubmittedOn. </summary>
+        /// <summary> Gets the SubmittedOn. </summary>
         public BicepValue<DateTimeOffset> SubmittedOn
         {
             get
@@ -85,74 +70,49 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _submittedOn;
             }
-            set
-            {
-                Initialize();
-                _submittedOn.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ProcessingStartOn. </summary>
-        public BicepValue<DateTimeOffset> ProcessingStartOn
+        /// <summary> Gets the ProcessingStartsOn. </summary>
+        public BicepValue<DateTimeOffset> ProcessingStartsOn
         {
             get
             {
                 Initialize();
-                return _processingStartOn;
-            }
-            set
-            {
-                Initialize();
-                _processingStartOn.Assign(value);
+                return _processingStartsOn;
             }
         }
 
-        /// <summary> Gets or sets the ProcessingEndOn. </summary>
-        public BicepValue<DateTimeOffset> ProcessingEndOn
+        /// <summary> Gets the ProcessingEndsOn. </summary>
+        public BicepValue<DateTimeOffset> ProcessingEndsOn
         {
             get
             {
                 Initialize();
-                return _processingEndOn;
-            }
-            set
-            {
-                Initialize();
-                _processingEndOn.Assign(value);
+                return _processingEndsOn;
             }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
-            }
-            set
-            {
-                Initialize();
-                _startOn.Assign(value);
+                return _startsOn;
             }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
-            }
-            set
-            {
-                Initialize();
-                _endOn.Assign(value);
+                return _endsOn;
             }
         }
 
-        /// <summary> Gets or sets the FileName. </summary>
+        /// <summary> Gets the FileName. </summary>
         public BicepValue<string> FileName
         {
             get
@@ -160,14 +120,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _fileName;
             }
-            set
-            {
-                Initialize();
-                _fileName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ManifestFile. </summary>
+        /// <summary> Gets the ManifestFile. </summary>
         public BicepValue<string> ManifestFile
         {
             get
@@ -175,14 +130,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _manifestFile;
             }
-            set
-            {
-                Initialize();
-                _manifestFile.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the RunSettings. </summary>
+        /// <summary> Gets the RunSettings. </summary>
         public CommonExportProperties RunSettings
         {
             get
@@ -190,25 +140,15 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _runSettings;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _runSettings, value);
-            }
         }
 
-        /// <summary> Gets or sets the Error. </summary>
+        /// <summary> Gets the Error. </summary>
         public ExportRunErrorDetails Error
         {
             get
             {
                 Initialize();
                 return _error;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _error, value);
             }
         }
 
@@ -219,11 +159,11 @@ namespace Azure.Provisioning.CostManagement
             _executionType = DefineProperty<ExportRunExecutionType>(nameof(ExecutionType), new string[] { "executionType" });
             _status = DefineProperty<ExportRunExecutionStatus>(nameof(Status), new string[] { "status" });
             _submittedBy = DefineProperty<string>(nameof(SubmittedBy), new string[] { "submittedBy" });
-            _submittedOn = DefineProperty<DateTimeOffset>(nameof(SubmittedOn), new string[] { "submittedTime" });
-            _processingStartOn = DefineProperty<DateTimeOffset>(nameof(ProcessingStartOn), new string[] { "processingStartTime" });
-            _processingEndOn = DefineProperty<DateTimeOffset>(nameof(ProcessingEndOn), new string[] { "processingEndTime" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" });
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" });
+            _submittedOn = DefineProperty<DateTimeOffset>(nameof(SubmittedOn), new string[] { "submittedTime" }, format: "O");
+            _processingStartsOn = DefineProperty<DateTimeOffset>(nameof(ProcessingStartsOn), new string[] { "processingStartTime" }, format: "O");
+            _processingEndsOn = DefineProperty<DateTimeOffset>(nameof(ProcessingEndsOn), new string[] { "processingEndTime" }, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startDate" }, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endDate" }, format: "O");
             _fileName = DefineProperty<string>(nameof(FileName), new string[] { "fileName" });
             _manifestFile = DefineProperty<string>(nameof(ManifestFile), new string[] { "manifestFile" });
             _runSettings = DefineModelProperty<CommonExportProperties>(nameof(RunSettings), new string[] { "runSettings" });

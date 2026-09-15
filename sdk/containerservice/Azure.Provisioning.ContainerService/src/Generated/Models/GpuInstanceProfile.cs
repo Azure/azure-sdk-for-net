@@ -14,18 +14,18 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> MIG 1g GPU instance profile. </summary>
         [DataMember(Name = "MIG1g")]
-        Mig1G,
+        Mig1G = 0,
         /// <summary> MIG 2g GPU instance profile. </summary>
         [DataMember(Name = "MIG2g")]
-        Mig2G,
+        Mig2G = 1,
         /// <summary> MIG 3g GPU instance profile. </summary>
         [DataMember(Name = "MIG3g")]
-        Mig3G,
+        Mig3G = 2,
         /// <summary> MIG 4g GPU instance profile. </summary>
         [DataMember(Name = "MIG4g")]
-        Mig4G,
+        Mig4G = 3,
         /// <summary> MIG 7g GPU instance profile. </summary>
         [DataMember(Name = "MIG7g")]
-        Mig7G
+        Mig7G = 4
     }
 }

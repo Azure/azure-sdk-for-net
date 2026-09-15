@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.KeyVault
         {
             TryGetApiVersion(KeyVaultSecretResource.ResourceType, out string keyVaultSecretApiVersion);
             _secretsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KeyVault", KeyVaultSecretResource.ResourceType.Namespace, Diagnostics);
-            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Endpoint, keyVaultSecretApiVersion ?? "2026-02-01");
+            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultSecretApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

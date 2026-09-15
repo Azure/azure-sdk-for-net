@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string majorVersionUpgradePrecheckApiVersion);
             _majorVersionUpgradePrecheckClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _majorVersionUpgradePrecheckRestClient = new MajorVersionUpgradePrecheck(_majorVersionUpgradePrecheckClientDiagnostics, Pipeline, Endpoint, majorVersionUpgradePrecheckApiVersion ?? "2026-04-01-preview");
+            _majorVersionUpgradePrecheckRestClient = new MajorVersionUpgradePrecheck(_majorVersionUpgradePrecheckClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, majorVersionUpgradePrecheckApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     [ModelReaderWriterBuildable(typeof(MarkAsCompleteContent))]
     [ModelReaderWriterBuildable(typeof(MonitoringPropertiesOfDrill))]
     [ModelReaderWriterBuildable(typeof(OperationQualificationDetails))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(RecommendationsData))]
     [ModelReaderWriterBuildable(typeof(RecommendationsHighAvailabilityInfo))]
     [ModelReaderWriterBuildable(typeof(RecommendCapacityContent))]

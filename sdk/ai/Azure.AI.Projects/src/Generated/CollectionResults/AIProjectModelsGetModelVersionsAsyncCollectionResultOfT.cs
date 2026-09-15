@@ -6,11 +6,13 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.AI.Projects
 {
+    [Experimental("AAIP001")]
     internal partial class AIProjectModelsGetModelVersionsAsyncCollectionResultOfT : AsyncCollectionResult<ModelVersion>
     {
         private readonly AIProjectModels _client;
@@ -80,7 +82,17 @@ namespace Azure.AI.Projects
         /// <param name="message"> The pipeline message containing the request to send. </param>
         private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
-            return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AIProjectModels.GetModelVersions");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

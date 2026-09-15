@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> ClusterSelectorTerms is a list of cluster selector terms. The terms are `ORed`. </summary>
-        public IList<ContainerServiceFleetClusterSelectorTerm> ClusterSelectorTerms { get; }
+        public IList<ContainerServiceFleetClusterSelectorTerm> ClusterSelectorTerms { get; } = new ChangeTrackingList<ContainerServiceFleetClusterSelectorTerm>();
     }
 }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
 
         private ClientDiagnostics PolicyAssignmentsClientDiagnostics => _policyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PolicyAssignments PolicyAssignmentsRestClient => _policyAssignmentsRestClient ??= new PolicyAssignments(PolicyAssignmentsClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private PolicyAssignments PolicyAssignmentsRestClient => _policyAssignmentsRestClient ??= new PolicyAssignments(PolicyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         /// <summary> Gets a collection of DataPolicyManifests in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of DataPolicyManifests and their operations over a DataPolicyManifestResource. </returns>

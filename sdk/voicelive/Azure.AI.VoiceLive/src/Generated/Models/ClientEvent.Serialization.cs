@@ -168,8 +168,6 @@ namespace Azure.AI.VoiceLive
                         return ClientEventConversationItemRetrieve.DeserializeClientEventConversationItemRetrieve(element, options);
                     case "output_audio_buffer.clear":
                         return ClientEventOutputAudioBufferClear.DeserializeClientEventOutputAudioBufferClear(element, options);
-                    case "rtc.call.sdp.create":
-                        return ClientEventRtcCallSdpCreate.DeserializeClientEventRtcCallSdpCreate(element, options);
                 }
             }
             return UnknownClientEvent.DeserializeUnknownClientEvent(element, options);

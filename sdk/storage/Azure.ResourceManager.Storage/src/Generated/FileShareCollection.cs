@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(FileShareResource.ResourceType, out string fileShareApiVersion);
             _fileSharesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", FileShareResource.ResourceType.Namespace, Diagnostics);
-            _fileSharesRestClient = new FileShares(_fileSharesClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-08-01");
+            _fileSharesRestClient = new FileShares(_fileSharesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fileShareApiVersion ?? "2025-08-01");
             _fileServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", FileShareResource.ResourceType.Namespace, Diagnostics);
-            _fileServicesRestClient = new FileServices(_fileServicesClientDiagnostics, Pipeline, Endpoint, fileShareApiVersion ?? "2025-08-01");
+            _fileServicesRestClient = new FileServices(_fileServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fileShareApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

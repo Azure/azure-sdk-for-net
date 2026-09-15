@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         {
             TryGetApiVersion(AutoScaleVCoreResource.ResourceType, out string autoScaleVCoreApiVersion);
             _autoScaleVCoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated", AutoScaleVCoreResource.ResourceType.Namespace, Diagnostics);
-            _autoScaleVCoresRestClient = new AutoScaleVCores(_autoScaleVCoresClientDiagnostics, Pipeline, Endpoint, autoScaleVCoreApiVersion ?? "2021-01-01");
+            _autoScaleVCoresRestClient = new AutoScaleVCores(_autoScaleVCoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autoScaleVCoreApiVersion ?? "2021-01-01");
             ValidateResourceId(id);
         }
 

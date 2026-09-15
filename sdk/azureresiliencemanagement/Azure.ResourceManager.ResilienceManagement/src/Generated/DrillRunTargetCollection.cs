@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(DrillRunTargetResource.ResourceType, out string drillRunTargetApiVersion);
             _drillRunResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", DrillRunTargetResource.ResourceType.Namespace, Diagnostics);
-            _drillRunResourcesRestClient = new DrillRunResources(_drillRunResourcesClientDiagnostics, Pipeline, Endpoint, drillRunTargetApiVersion ?? "2026-04-01-preview");
+            _drillRunResourcesRestClient = new DrillRunResources(_drillRunResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, drillRunTargetApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

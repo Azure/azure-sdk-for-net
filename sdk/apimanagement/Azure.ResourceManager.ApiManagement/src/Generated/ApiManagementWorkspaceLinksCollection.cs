@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementWorkspaceLinksResource.ResourceType, out string apiManagementWorkspaceLinksApiVersion);
             _apiManagementWorkspaceLinkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementWorkspaceLinksResource.ResourceType.Namespace, Diagnostics);
-            _apiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLink(_apiManagementWorkspaceLinkClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksApiVersion ?? "2025-09-01-preview");
+            _apiManagementWorkspaceLinkRestClient = new ApiManagementWorkspaceLink(_apiManagementWorkspaceLinkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementWorkspaceLinksApiVersion ?? "2025-09-01-preview");
             _apiManagementWorkspaceLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementWorkspaceLinksResource.ResourceType.Namespace, Diagnostics);
-            _apiManagementWorkspaceLinksRestClient = new ApiManagementWorkspaceLinks(_apiManagementWorkspaceLinksClientDiagnostics, Pipeline, Endpoint, apiManagementWorkspaceLinksApiVersion ?? "2025-09-01-preview");
+            _apiManagementWorkspaceLinksRestClient = new ApiManagementWorkspaceLinks(_apiManagementWorkspaceLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementWorkspaceLinksApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

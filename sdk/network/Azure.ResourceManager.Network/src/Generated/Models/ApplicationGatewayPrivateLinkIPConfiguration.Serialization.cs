@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string @type = default;
-            ApplicationGatewayPrivateLinkIpConfigurationProperties properties = default;
+            ApplicationGatewayPrivateLinkIPConfigurationProperties properties = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    properties = ApplicationGatewayPrivateLinkIpConfigurationProperties.DeserializeApplicationGatewayPrivateLinkIpConfigurationProperties(prop.Value, options);
+                    properties = ApplicationGatewayPrivateLinkIPConfigurationProperties.DeserializeApplicationGatewayPrivateLinkIPConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))

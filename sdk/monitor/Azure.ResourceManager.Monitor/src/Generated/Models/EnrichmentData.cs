@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> All the storage blobs used as enrichment data sources. </summary>
-        public IList<DataCollectionRuleEnrichmentStorageBlob> StorageBlobs { get; }
+        public IList<DataCollectionRuleEnrichmentStorageBlob> StorageBlobs { get; } = new ChangeTrackingList<DataCollectionRuleEnrichmentStorageBlob>();
     }
 }

@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> TCP protocol. </summary>
         [DataMember(Name = "TCP")]
-        Tcp,
+        Tcp = 0,
         /// <summary> UDP protocol. </summary>
         [DataMember(Name = "UDP")]
-        Udp
+        Udp = 1
     }
 }

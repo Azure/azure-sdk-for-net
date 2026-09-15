@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Selected recovery resource Ids to be processed. If not provided, all qualified resources will be processed. </summary>
-        public IList<ResourceIdentifier> SelectedResourceIds { get; }
+        public IList<ResourceIdentifier> SelectedResourceIds { get; } = new ChangeTrackingList<ResourceIdentifier>();
     }
 }

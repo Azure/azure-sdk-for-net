@@ -88,7 +88,7 @@ namespace Azure.AI.VoiceLive
             writer.WritePropertyName("content_index"u8);
             writer.WriteNumberValue(ContentIndex);
             writer.WritePropertyName("delta"u8);
-            writer.WriteBase64StringValue(Delta.ToArray(), "D");
+            writer.WriteBase64StringValue(Delta, "D");
         }
 
         /// <param name="reader"> The JSON reader. </param>

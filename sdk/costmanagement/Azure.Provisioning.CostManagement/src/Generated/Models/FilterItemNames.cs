@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CostManagement
     public enum FilterItemNames
     {
         /// <summary> ReservationScope. </summary>
-        ReservationScope,
+        ReservationScope = 0,
         /// <summary> ResourceType. </summary>
-        ResourceType,
+        ResourceType = 1,
         /// <summary> LookBackPeriod. </summary>
-        LookBackPeriod
+        LookBackPeriod = 2
     }
 }

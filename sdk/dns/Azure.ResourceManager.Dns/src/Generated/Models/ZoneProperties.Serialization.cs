@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Dns;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -111,33 +109,23 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WritePropertyName("zoneType"u8);
                 writer.WriteStringValue(ZoneType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(RegistrationVirtualNetworks))
+            if (Optional.IsCollectionDefined(RegistrationVirtualNetworkReferences))
             {
                 writer.WritePropertyName("registrationVirtualNetworks"u8);
                 writer.WriteStartArray();
-                foreach (WritableSubResource item in RegistrationVirtualNetworks)
+                foreach (DnsSubResourceInfo item in RegistrationVirtualNetworkReferences)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResolutionVirtualNetworks))
+            if (Optional.IsCollectionDefined(ResolutionVirtualNetworkReferences))
             {
                 writer.WritePropertyName("resolutionVirtualNetworks"u8);
                 writer.WriteStartArray();
-                foreach (WritableSubResource item in ResolutionVirtualNetworks)
+                foreach (DnsSubResourceInfo item in ResolutionVirtualNetworkReferences)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -198,8 +186,8 @@ namespace Azure.ResourceManager.Dns.Models
             long? numberOfRecords = default;
             IReadOnlyList<string> nameServers = default;
             DnsZoneType? zoneType = default;
-            IList<WritableSubResource> registrationVirtualNetworks = default;
-            IList<WritableSubResource> resolutionVirtualNetworks = default;
+            IList<DnsSubResourceInfo> registrationVirtualNetworkReferences = default;
+            IList<DnsSubResourceInfo> resolutionVirtualNetworkReferences = default;
             IReadOnlyList<DnsSigningKey> signingKeys = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -267,19 +255,12 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<DnsSubResourceInfo> array = new List<DnsSubResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsContext.Default));
-                        }
+                        array.Add(DnsSubResourceInfo.DeserializeDnsSubResourceInfo(item, options));
                     }
-                    registrationVirtualNetworks = array;
+                    registrationVirtualNetworkReferences = array;
                     continue;
                 }
                 if (prop.NameEquals("resolutionVirtualNetworks"u8))
@@ -288,19 +269,12 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<DnsSubResourceInfo> array = new List<DnsSubResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsContext.Default));
-                        }
+                        array.Add(DnsSubResourceInfo.DeserializeDnsSubResourceInfo(item, options));
                     }
-                    resolutionVirtualNetworks = array;
+                    resolutionVirtualNetworkReferences = array;
                     continue;
                 }
                 if (prop.NameEquals("signingKeys"u8))
@@ -328,8 +302,8 @@ namespace Azure.ResourceManager.Dns.Models
                 numberOfRecords,
                 nameServers ?? new ChangeTrackingList<string>(),
                 zoneType,
-                registrationVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>(),
-                resolutionVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>(),
+                registrationVirtualNetworkReferences ?? new ChangeTrackingList<DnsSubResourceInfo>(),
+                resolutionVirtualNetworkReferences ?? new ChangeTrackingList<DnsSubResourceInfo>(),
                 signingKeys ?? new ChangeTrackingList<DnsSigningKey>(),
                 additionalBinaryDataProperties);
         }

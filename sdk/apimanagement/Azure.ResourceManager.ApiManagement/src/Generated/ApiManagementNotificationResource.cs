@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementNotificationApiVersion);
             _notificationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _notificationRestClient = new Notification(_notificationClientDiagnostics, Pipeline, Endpoint, apiManagementNotificationApiVersion ?? "2025-09-01-preview");
+            _notificationRestClient = new Notification(_notificationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementNotificationApiVersion ?? "2025-09-01-preview");
             _notificationRecipientUserClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _notificationRecipientUserRestClient = new NotificationRecipientUser(_notificationRecipientUserClientDiagnostics, Pipeline, Endpoint, apiManagementNotificationApiVersion ?? "2025-09-01-preview");
+            _notificationRecipientUserRestClient = new NotificationRecipientUser(_notificationRecipientUserClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementNotificationApiVersion ?? "2025-09-01-preview");
             _notificationRecipientEmailClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _notificationRecipientEmailRestClient = new NotificationRecipientEmail(_notificationRecipientEmailClientDiagnostics, Pipeline, Endpoint, apiManagementNotificationApiVersion ?? "2025-09-01-preview");
+            _notificationRecipientEmailRestClient = new NotificationRecipientEmail(_notificationRecipientEmailClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementNotificationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

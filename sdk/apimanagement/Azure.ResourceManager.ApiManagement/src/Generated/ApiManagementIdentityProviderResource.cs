@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementIdentityProviderApiVersion);
             _identityProviderClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _identityProviderRestClient = new IdentityProvider(_identityProviderClientDiagnostics, Pipeline, Endpoint, apiManagementIdentityProviderApiVersion ?? "2025-09-01-preview");
+            _identityProviderRestClient = new IdentityProvider(_identityProviderClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementIdentityProviderApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

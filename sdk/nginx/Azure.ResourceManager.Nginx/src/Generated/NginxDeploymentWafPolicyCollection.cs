@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Nginx
         {
             TryGetApiVersion(NginxDeploymentWafPolicyResource.ResourceType, out string nginxDeploymentWafPolicyApiVersion);
             _nginxDeploymentWafPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", NginxDeploymentWafPolicyResource.ResourceType.Namespace, Diagnostics);
-            _nginxDeploymentWafPoliciesRestClient = new NginxDeploymentWafPolicies(_nginxDeploymentWafPoliciesClientDiagnostics, Pipeline, Endpoint, nginxDeploymentWafPolicyApiVersion ?? "2025-11-01");
+            _nginxDeploymentWafPoliciesRestClient = new NginxDeploymentWafPolicies(_nginxDeploymentWafPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nginxDeploymentWafPolicyApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeLimit
         {
             TryGetApiVersion(ResourceType, out string computeLimitFeatureApiVersion);
             _featuresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeLimit", ResourceType.Namespace, Diagnostics);
-            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Endpoint, computeLimitFeatureApiVersion ?? "2026-07-01");
+            _featuresRestClient = new Features(_featuresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, computeLimitFeatureApiVersion ?? "2026-07-31");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Disables a compute limit feature for the subscription at the specified location.
+        /// Disables a compute limit feature for the subscription at the specified location. Requires the Contributor role.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Disables a compute limit feature for the subscription at the specified location.
+        /// Disables a compute limit feature for the subscription at the specified location. Requires the Contributor role.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Enables a compute limit feature for the subscription at the specified location.
+        /// Enables a compute limit feature for the subscription at the specified location. Requires the Contributor role.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Enables a compute limit feature for the subscription at the specified location.
+        /// Enables a compute limit feature for the subscription at the specified location. Requires the Contributor role.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ComputeLimit
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-07-31. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

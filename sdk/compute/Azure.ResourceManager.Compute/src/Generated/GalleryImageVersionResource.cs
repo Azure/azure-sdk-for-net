@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string galleryImageVersionApiVersion);
             _galleryImageVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _galleryImageVersionsRestClient = new GalleryImageVersions(_galleryImageVersionsClientDiagnostics, Pipeline, Endpoint, galleryImageVersionApiVersion ?? "2025-12-03");
+            _galleryImageVersionsRestClient = new GalleryImageVersions(_galleryImageVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, galleryImageVersionApiVersion ?? "2025-12-03");
             ValidateResourceId(id);
         }
 

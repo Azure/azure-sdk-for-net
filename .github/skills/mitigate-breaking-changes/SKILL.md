@@ -1,10 +1,10 @@
 ---
 name: mitigate-breaking-changes
-description: Patterns and techniques for mitigating breaking changes during Azure management-plane SDK migration from Swagger/AutoRest to TypeSpec. Covers SDK-side customizations (partial classes, CodeGenType, CodeGenSuppress) and TypeSpec decorator customizations (clientName, access, markAsPageable, alternateType, hierarchyBuilding).
+description: Patterns and techniques for mitigating breaking changes in Azure management-plane SDKs. Covers SDK-side customizations (partial classes, CodeGenType, CodeGenSuppress) and TypeSpec decorator customizations (clientName, access, markAsPageable, alternateType, hierarchyBuilding).
 ---
 # Skill: mitigate-breaking-changes
 
-Patterns and techniques for mitigating breaking changes when migrating or regenerating Azure management-plane .NET SDKs. Use these to preserve backward compatibility in the generated SDK surface.
+Patterns and techniques for mitigating breaking changes when regenerating Azure management-plane .NET SDKs. Use these to preserve backward compatibility in the generated SDK surface.
 
 ## When Invoked
 
@@ -91,9 +91,9 @@ When the spec uses older common types that generate incorrect C# types (e.g., `s
 ```
 
 ### `@@hierarchyBuilding` Decorator — Legacy base-type override
-Do **not** use `@@hierarchyBuilding` for C# base-model/base-type compatibility during MPG migrations. Follow the `mpg-migration` skill instead: verify resource-hierarchy parity first, fix structural resource hierarchy issues in the TypeSpec resource shape, and use SDK-side custom code only for C# base-model/base-type compatibility after the generated surface is stable.
+Do **not** use `@@hierarchyBuilding` for C# base-model/base-type compatibility. First verify resource-hierarchy parity, fix structural resource hierarchy issues in the TypeSpec resource shape, and use SDK-side custom code only for C# base-model/base-type compatibility after the generated surface is stable.
 
-`@@hierarchyBuilding` is a legacy escape hatch. Use it only when the migration owner explicitly approves it and no TypeSpec resource-shape fix or SDK-side customization is appropriate.
+`@@hierarchyBuilding` is a legacy escape hatch. Use it only with explicit owner approval when no TypeSpec resource-shape fix or SDK-side customization is appropriate.
 
 **Syntax:**
 ```typespec
@@ -111,7 +111,7 @@ Do **not** use `@@hierarchyBuilding` for C# base-model/base-type compatibility d
 - `Azure.ResourceManager.Foundations.Resource` — generates `ResourceData` (ARM resource base)
 
 **Legacy-only scenarios that require explicit approval:**
-- The old SDK had `MyData : ResourceData` or `MyData : TrackedResourceData`, the new TypeSpec-generated SDK produces `MyData : SomeOtherType` (e.g., a service-local `Resource` model), and the migration owner has explicitly rejected the normal MPG migration fix path.
+- The old SDK had `MyData : ResourceData` or `MyData : TrackedResourceData`, the regenerated SDK produces `MyData : SomeOtherType` (e.g., a service-local `Resource` model), and the owner has explicitly rejected the normal resource-shape and SDK-customization fixes.
 - The `CannotRemoveBaseTypeOrInterface` API compatibility violation remains after verifying resource-hierarchy parity and attempting the normal SDK-side customization approach.
 
 **Requirements:**
@@ -119,7 +119,7 @@ Do **not** use `@@hierarchyBuilding` for C# base-model/base-type compatibility d
 2. Add `#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "..."` before each `@@hierarchyBuilding` call
 3. After adding the decorator, regenerate the SDK code
 
-**Legacy-approved example** (from KeyVault migration):
+**Legacy-approved example** (from Key Vault):
 ```typespec
 import "@azure-tools/typespec-client-generator-core";
 using Azure.ClientGenerator.Core.Legacy;
@@ -132,9 +132,9 @@ using Azure.ClientGenerator.Core.Legacy;
 );
 ```
 
-## WirePathAttribute Breaking Changes [MPG only]
+## WirePathAttribute Breaking Changes
 
-When the previous SDK version included `WirePathAttribute` on model properties (used by Azure.Provisioning libraries), migrating to TypeSpec may produce ApiCompat `CannotRemoveAttribute` errors for the missing attribute — because the emitter defaults to **not** generating it.
+When the previous SDK version included `WirePathAttribute` on model properties (used by Azure.Provisioning libraries), regeneration may produce ApiCompat `CannotRemoveAttribute` errors for the missing attribute because the emitter defaults to **not** generating it.
 
 ### How to detect
 
@@ -155,7 +155,7 @@ options:
 
 Then regenerate the SDK.
 
-If the remaining ApiCompat diff is only `WirePathAttribute` removal, it is acceptable to add targeted entries to the centralized baseline file under `eng/apicompatbaselines/<Project>.txt`. Do not add SDK custom code just to restore `WirePathAttribute`; the maintenance cost is not worth it for this compatibility diff.
+If the remaining ApiCompat diff is only `WirePathAttribute` removal, it is acceptable to add targeted entries to the centralized baseline file under `eng/apicompatbaselines/<Project>.xml`. Do not add SDK custom code just to restore `WirePathAttribute`; the maintenance cost is not worth it for this compatibility diff.
 
 Do not create a local `ApiCompatBaseline.txt`, do not baseline unrelated ApiCompat errors, and do not disable ApiCompat.
 

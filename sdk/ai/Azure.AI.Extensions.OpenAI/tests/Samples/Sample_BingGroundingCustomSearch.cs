@@ -11,6 +11,7 @@ using NUnit.Framework;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
+#pragma warning disable AAIP001
 
 public class Sample_CustomBingSearch : ProjectsOpenAITestBase
 {
@@ -36,7 +37,7 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_CustomBingSearch_Async
         AIProjectConnection bingConnectionName = await projectClient.Connections.GetConnectionAsync(connectionName: connectionName);
         BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
-            searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+            searchConfigurations: [new BingCustomSearchOptions(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
             )
         );
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -84,7 +85,7 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_CustomBingSearch_Sync
         AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
         BingCustomSearchPreviewTool customBingSearchAgentTool = new(new BingCustomSearchToolOptions(
-            searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
+            searchConfigurations: [new BingCustomSearchOptions(projectConnectionId: bingConnectionName.Id, instanceName: customInstanceName)]
             )
         );
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

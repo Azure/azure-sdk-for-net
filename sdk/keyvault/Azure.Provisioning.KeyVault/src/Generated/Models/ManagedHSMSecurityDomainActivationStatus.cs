@@ -11,12 +11,12 @@ namespace Azure.Provisioning.KeyVault
     public enum ManagedHSMSecurityDomainActivationStatus
     {
         /// <summary> The managed HSM Pool is active. </summary>
-        Active,
+        Active = 0,
         /// <summary> The managed HSM Pool is not yet activated. </summary>
-        NotActivated,
+        NotActivated = 1,
         /// <summary> An unknown error occurred while activating managed hsm. </summary>
-        Unknown,
+        Unknown = 2,
         /// <summary> Failed to activate managed hsm. </summary>
-        Failed
+        Failed = 3
     }
 }

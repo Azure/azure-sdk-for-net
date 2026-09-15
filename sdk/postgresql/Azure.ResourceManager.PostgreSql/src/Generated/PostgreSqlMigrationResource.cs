@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string postgreSqlMigrationApiVersion);
             _migrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Endpoint, postgreSqlMigrationApiVersion ?? "2026-04-01-preview");
+            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlMigrationApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

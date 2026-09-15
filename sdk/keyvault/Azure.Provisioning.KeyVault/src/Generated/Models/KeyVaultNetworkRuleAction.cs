@@ -11,8 +11,8 @@ namespace Azure.Provisioning.KeyVault
     public enum KeyVaultNetworkRuleAction
     {
         /// <summary> Allow. </summary>
-        Allow,
+        Allow = 0,
         /// <summary> Deny. </summary>
-        Deny
+        Deny = 1
     }
 }

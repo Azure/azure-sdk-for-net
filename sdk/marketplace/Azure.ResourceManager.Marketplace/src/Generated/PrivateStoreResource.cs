@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.Marketplace
         {
             TryGetApiVersion(ResourceType, out string privateStoreApiVersion);
             _privateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
-            _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
+            _privateStoreRestClient = new PrivateStore(_privateStoreClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreApiVersion ?? "2025-01-01");
             _marketplaceClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
-            _marketplaceClientRestClient = new MarketplaceClient(_marketplaceClientClientDiagnostics, Pipeline, Endpoint, privateStoreApiVersion ?? "2025-01-01");
+            _marketplaceClientRestClient = new MarketplaceClient(_marketplaceClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreApiVersion ?? "2025-01-01");
             ValidateResourceId(id);
         }
 

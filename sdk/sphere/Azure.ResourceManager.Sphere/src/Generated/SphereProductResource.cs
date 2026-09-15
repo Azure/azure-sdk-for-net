@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sphere
         {
             TryGetApiVersion(ResourceType, out string sphereProductApiVersion);
             _productsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", ResourceType.Namespace, Diagnostics);
-            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Endpoint, sphereProductApiVersion ?? "2024-04-01");
+            _productsRestClient = new Products(_productsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereProductApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

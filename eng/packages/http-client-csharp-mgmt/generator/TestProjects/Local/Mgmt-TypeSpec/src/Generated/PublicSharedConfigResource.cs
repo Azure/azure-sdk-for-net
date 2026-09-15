@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string publicSharedConfigApiVersion);
             _publicSharedConfigsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _publicSharedConfigsRestClient = new PublicSharedConfigs(_publicSharedConfigsClientDiagnostics, Pipeline, Endpoint, publicSharedConfigApiVersion ?? "2024-05-01");
+            _publicSharedConfigsRestClient = new PublicSharedConfigs(_publicSharedConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicSharedConfigApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

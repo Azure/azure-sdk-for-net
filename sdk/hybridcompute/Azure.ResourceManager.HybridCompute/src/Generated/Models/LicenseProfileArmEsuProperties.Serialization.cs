@@ -14,7 +14,7 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes the properties of a License Profile ARM model. </summary>
-    public partial class LicenseProfileArmEsuProperties : LicenseProfileArmEsuPropertiesWithoutAssignedLicense, IJsonModel<LicenseProfileArmEsuProperties>
+    internal partial class LicenseProfileArmEsuProperties : LicenseProfileArmEsuPropertiesWithoutAssignedLicense, IJsonModel<LicenseProfileArmEsuProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

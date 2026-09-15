@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageCache
         {
             TryGetApiVersion(ResourceType, out string storageCacheApiVersion);
             _cachesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
-            _cachesRestClient = new Caches(_cachesClientDiagnostics, Pipeline, Endpoint, storageCacheApiVersion ?? "2026-01-01");
+            _cachesRestClient = new Caches(_cachesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageCacheApiVersion ?? "2026-08-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1006,7 +1006,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1155,7 +1155,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1254,7 +1254,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1304,7 +1304,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1353,7 +1353,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-01. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

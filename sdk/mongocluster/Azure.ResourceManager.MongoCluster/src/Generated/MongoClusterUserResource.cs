@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             TryGetApiVersion(ResourceType, out string mongoClusterUserApiVersion);
             _usersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", ResourceType.Namespace, Diagnostics);
-            _usersRestClient = new Users(_usersClientDiagnostics, Pipeline, Endpoint, mongoClusterUserApiVersion ?? "2026-06-01");
+            _usersRestClient = new Users(_usersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoClusterUserApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

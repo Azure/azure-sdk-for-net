@@ -9,7 +9,11 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The workflow agent definition. </summary>
+    /// <summary>
+    /// The workflow agent definition. Microsoft Foundry is retiring workflows on December 1, 2026.
+    /// If you're looking to build new workflows, use Microsoft Agent Framework. To migrate existing workflows,
+    /// see the [Migration guide](https://learn.microsoft.com/azure/foundry/agents/concepts/workflow#migration-guide).
+    /// </summary>
     public partial class WorkflowAgentDefinition : ProjectsAgentDefinition, IJsonModel<WorkflowAgentDefinition>
     {
         /// <param name="data"> The data to parse. </param>

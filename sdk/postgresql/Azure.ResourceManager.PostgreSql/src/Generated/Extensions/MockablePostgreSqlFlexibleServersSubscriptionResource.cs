@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
 
         private ClientDiagnostics ServersClientDiagnostics => _serversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Servers ServersRestClient => _serversRestClient ??= new Servers(ServersClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private Servers ServersRestClient => _serversRestClient ??= new Servers(ServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics CapabilitiesByLocationClientDiagnostics => _capabilitiesByLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CapabilitiesByLocation CapabilitiesByLocationRestClient => _capabilitiesByLocationRestClient ??= new CapabilitiesByLocation(CapabilitiesByLocationClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private CapabilitiesByLocation CapabilitiesByLocationRestClient => _capabilitiesByLocationRestClient ??= new CapabilitiesByLocation(CapabilitiesByLocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics NameAvailabilityClientDiagnostics => _nameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NameAvailability NameAvailabilityRestClient => _nameAvailabilityRestClient ??= new NameAvailability(NameAvailabilityClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private NameAvailability NameAvailabilityRestClient => _nameAvailabilityRestClient ??= new NameAvailability(NameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics QuotaUsagesClientDiagnostics => _quotaUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private QuotaUsages QuotaUsagesRestClient => _quotaUsagesRestClient ??= new QuotaUsages(QuotaUsagesClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private QuotaUsages QuotaUsagesRestClient => _quotaUsagesRestClient ??= new QuotaUsages(QuotaUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         private ClientDiagnostics VirtualNetworkSubnetUsageClientDiagnostics => _virtualNetworkSubnetUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworkSubnetUsage VirtualNetworkSubnetUsageRestClient => _virtualNetworkSubnetUsageRestClient ??= new VirtualNetworkSubnetUsage(VirtualNetworkSubnetUsageClientDiagnostics, Pipeline, Endpoint, "2026-04-01-preview");
+        private VirtualNetworkSubnetUsage VirtualNetworkSubnetUsageRestClient => _virtualNetworkSubnetUsageRestClient ??= new VirtualNetworkSubnetUsage(VirtualNetworkSubnetUsageClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01-preview");
 
         /// <summary>
         /// Lists all servers in a subscription.

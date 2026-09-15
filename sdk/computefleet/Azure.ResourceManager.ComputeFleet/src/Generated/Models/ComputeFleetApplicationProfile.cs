@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<ComputeFleetVmGalleryApplication> GalleryApplications { get; }
+        public IList<ComputeFleetVmGalleryApplication> GalleryApplications { get; } = new ChangeTrackingList<ComputeFleetVmGalleryApplication>();
     }
 }

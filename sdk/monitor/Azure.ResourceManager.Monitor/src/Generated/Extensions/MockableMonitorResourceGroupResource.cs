@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
         private ClientDiagnostics AlertRuleIncidentsClientDiagnostics => _alertRuleIncidentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AlertRuleIncidents AlertRuleIncidentsRestClient => _alertRuleIncidentsRestClient ??= new AlertRuleIncidents(AlertRuleIncidentsClientDiagnostics, Pipeline, Endpoint, "2016-03-01");
+        private AlertRuleIncidents AlertRuleIncidentsRestClient => _alertRuleIncidentsRestClient ??= new AlertRuleIncidents(AlertRuleIncidentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2016-03-01");
 
         /// <summary> Gets a collection of DataCollectionEndpoints in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DataCollectionEndpoints and their operations over a DataCollectionEndpointResource. </returns>

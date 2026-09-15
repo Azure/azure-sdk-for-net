@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Search
     public enum SearchServiceNetworkSecurityPerimeterAccessRuleDirection
     {
         /// <summary> Applies to inbound network traffic to the secured resources. </summary>
-        Inbound,
+        Inbound = 0,
         /// <summary> Applies to outbound network traffic from the secured resources. </summary>
-        Outbound
+        Outbound = 1
     }
 }

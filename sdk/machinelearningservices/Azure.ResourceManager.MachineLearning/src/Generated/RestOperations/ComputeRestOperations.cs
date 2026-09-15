@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.MachineLearning
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
         /// <summary> Initializes a new instance of Compute for mocking. </summary>
         protected Compute()
@@ -25,14 +26,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Initializes a new instance of Compute. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Compute(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Compute(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(Compute).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -61,6 +64,7 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -85,6 +89,7 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Put;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -111,6 +116,7 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Patch;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
@@ -138,6 +144,7 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -164,6 +171,7 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -187,33 +195,8 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateCustomServicesRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/computes/", false);
-            uri.AppendPath(computeName, true);
-            uri.AppendPath("/customServices", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Content = content;
             return message;
         }
 
@@ -238,6 +221,7 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -261,6 +245,7 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -286,33 +271,8 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateDataMountsRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/computes/", false);
-            uri.AppendPath(computeName, true);
-            uri.AppendPath("/updateDataMounts", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Content = content;
             return message;
         }
 
@@ -337,6 +297,7 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -361,6 +322,7 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
             return message;
         }
 
@@ -385,83 +347,7 @@ namespace Azure.ResourceManager.MachineLearning
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            return message;
-        }
-
-        internal HttpMessage CreateUpdateIdleShutdownSettingRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/computes/", false);
-            uri.AppendPath(computeName, true);
-            uri.AppendPath("/updateIdleShutdownSetting", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetAllowedResizeSizesRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/computes/", false);
-            uri.AppendPath(computeName, true);
-            uri.AppendPath("/getAllowedVmSizesForResize", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateResizeRequest(string subscriptionId, string resourceGroupName, string workspaceName, string computeName, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces/", false);
-            uri.AppendPath(workspaceName, true);
-            uri.AppendPath("/computes/", false);
-            uri.AppendPath(computeName, true);
-            uri.AppendPath("/resize", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Content = content;
+            _userAgent.Apply(message);
             return message;
         }
     }

@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string storageAccountApiVersion);
             _storageAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _storageAccountsRestClient = new StorageAccounts(_storageAccountsClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-08-01");
+            _storageAccountsRestClient = new StorageAccounts(_storageAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountApiVersion ?? "2025-08-01");
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, storageAccountApiVersion ?? "2025-08-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageAccountApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

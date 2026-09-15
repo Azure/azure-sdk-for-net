@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<ComputeBulkActionsSshPublicKey> PublicKeys { get; }
+        public IList<ComputeBulkActionsSshPublicKey> PublicKeys { get; } = new ChangeTrackingList<ComputeBulkActionsSshPublicKey>();
     }
 }

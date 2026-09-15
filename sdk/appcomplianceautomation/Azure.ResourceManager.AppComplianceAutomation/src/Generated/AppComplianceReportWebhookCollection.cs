@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             TryGetApiVersion(AppComplianceReportWebhookResource.ResourceType, out string appComplianceReportWebhookApiVersion);
             _webhookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportWebhookResource.ResourceType.Namespace, Diagnostics);
-            _webhookRestClient = new Webhook(_webhookClientDiagnostics, Pipeline, Endpoint, appComplianceReportWebhookApiVersion ?? "2024-06-27");
+            _webhookRestClient = new Webhook(_webhookClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportWebhookApiVersion ?? "2024-06-27");
             ValidateResourceId(id);
         }
 

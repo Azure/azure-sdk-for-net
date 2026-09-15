@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             TryGetApiVersion(GuestConfigurationHcrpAssignmentResource.ResourceType, out string guestConfigurationHcrpAssignmentApiVersion);
             _guestConfigurationHCRPAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationHcrpAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _guestConfigurationHCRPAssignmentsRestClient = new GuestConfigurationHCRPAssignments(_guestConfigurationHCRPAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationHcrpAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationHCRPAssignmentsRestClient = new GuestConfigurationHCRPAssignments(_guestConfigurationHCRPAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationHcrpAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 

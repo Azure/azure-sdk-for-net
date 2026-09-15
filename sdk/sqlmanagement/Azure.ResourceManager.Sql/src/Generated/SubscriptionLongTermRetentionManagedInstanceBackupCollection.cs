@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
             _managedInstanceName = managedInstanceName;
             _databaseName = databaseName;
             _longTermRetentionManagedInstanceBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionLongTermRetentionManagedInstanceBackupResource.ResourceType.Namespace, Diagnostics);
-            _longTermRetentionManagedInstanceBackupsRestClient = new LongTermRetentionManagedInstanceBackups(_longTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, Endpoint, subscriptionLongTermRetentionManagedInstanceBackupApiVersion ?? "2025-02-01-preview");
+            _longTermRetentionManagedInstanceBackupsRestClient = new LongTermRetentionManagedInstanceBackups(_longTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionLongTermRetentionManagedInstanceBackupApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

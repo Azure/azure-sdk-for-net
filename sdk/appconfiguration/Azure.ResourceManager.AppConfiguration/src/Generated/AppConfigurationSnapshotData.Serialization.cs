@@ -96,11 +96,8 @@ namespace Azure.ResourceManager.AppConfiguration
                 throw new FormatException($"The model {nameof(AppConfigurationSnapshotData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -185,10 +182,6 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = SnapshotProperties.DeserializeSnapshotProperties(prop.Value, options);
                     continue;
                 }

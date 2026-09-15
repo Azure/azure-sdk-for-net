@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabGlobalScheduleResource.ResourceType, out string devTestLabGlobalScheduleApiVersion);
             _devTestLabGlobalSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabGlobalScheduleResource.ResourceType.Namespace, Diagnostics);
-            _devTestLabGlobalSchedulesRestClient = new DevTestLabGlobalSchedules(_devTestLabGlobalSchedulesClientDiagnostics, Pipeline, Endpoint, devTestLabGlobalScheduleApiVersion ?? "2018-09-15");
+            _devTestLabGlobalSchedulesRestClient = new DevTestLabGlobalSchedules(_devTestLabGlobalSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabGlobalScheduleApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlFirewallRuleResource.ResourceType, out string sqlFirewallRuleApiVersion);
             _firewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlFirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Endpoint, sqlFirewallRuleApiVersion ?? "2025-02-01-preview");
+            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlFirewallRuleApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

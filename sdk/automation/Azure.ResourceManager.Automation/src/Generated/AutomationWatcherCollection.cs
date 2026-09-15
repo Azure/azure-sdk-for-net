@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationWatcherResource.ResourceType, out string automationWatcherApiVersion);
             _watcherClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationWatcherResource.ResourceType.Namespace, Diagnostics);
-            _watcherRestClient = new Watcher(_watcherClientDiagnostics, Pipeline, Endpoint, automationWatcherApiVersion ?? "2024-10-23");
+            _watcherRestClient = new Watcher(_watcherClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationWatcherApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

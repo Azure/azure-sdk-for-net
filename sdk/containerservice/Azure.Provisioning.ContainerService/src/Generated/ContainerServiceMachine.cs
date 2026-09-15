@@ -26,7 +26,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new ContainerServiceMachine. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerServiceMachine(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools/machines", resourceVersion ?? "2026-01-01")
+        internal ContainerServiceMachine(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/agentPools/machines", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.ContainerService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ContainerServiceMachineProperties>(nameof(Properties), new string[] { "properties" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" }, isOutput: true);
-            _parent = DefineResource<ContainerServiceAgentPool>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerServiceAgentPool>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

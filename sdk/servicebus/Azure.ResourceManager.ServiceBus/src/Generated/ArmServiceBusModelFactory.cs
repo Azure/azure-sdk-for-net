@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceBus;
@@ -39,6 +38,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
+        /// <summary> Namespace/ServiceBus Connection String. </summary>
         /// <param name="primaryConnectionString"> Primary connection string of the created namespace authorization rule. </param>
         /// <param name="secondaryConnectionString"> Secondary connection string of the created namespace authorization rule. </param>
         /// <param name="aliasPrimaryConnectionString"> Primary connection string of the alias if GEO DR is enabled. </param>
@@ -96,6 +96,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new FailoverProperties(isSafeFailover is null ? default : new FailoverPropertiesProperties(isSafeFailover, default), default);
         }
 
+        /// <summary> Description of a Check Name availability request properties. </summary>
         /// <param name="name"> The Name to check the namespace name availability and The namespace name can contain only letters, numbers, and hyphens. The namespace must start with a letter, and it must end with a letter or number. </param>
         /// <returns> A new <see cref="Models.ServiceBusNameAvailabilityContent"/> instance for mocking. </returns>
         public static ServiceBusNameAvailabilityContent ServiceBusNameAvailabilityContent(string name = default)
@@ -103,6 +104,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNameAvailabilityContent(name, default);
         }
 
+        /// <summary> Description of a Check Name availability request properties. </summary>
         /// <param name="message"> The detailed info regarding the reason associated with the namespace. </param>
         /// <param name="isNameAvailable"> Value indicating namespace is availability, true if the namespace is available; otherwise, false. </param>
         /// <param name="reason"> The reason for unavailability of a namespace. </param>
@@ -112,6 +114,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNameAvailabilityResult(message, isNameAvailable, reason, default);
         }
 
+        /// <summary> Parameters supplied to the Regenerate Authorization Rule operation, specifies which key needs to be reset. </summary>
         /// <param name="keyType"> The access key to regenerate. </param>
         /// <param name="key"> Optional, if the key value provided, is reset for KeyType value or autogenerate Key value set for keyType. </param>
         /// <returns> A new <see cref="Models.ServiceBusRegenerateAccessKeyContent"/> instance for mocking. </returns>
@@ -185,6 +188,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
+        /// <summary> Message Count Details. </summary>
         /// <param name="activeMessageCount"> Number of active messages in the queue, topic, or subscription. </param>
         /// <param name="deadLetterMessageCount"> Number of messages that are dead lettered. </param>
         /// <param name="scheduledMessageCount"> Number of scheduled messages. </param>
@@ -278,6 +282,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
+        /// <summary> ConnectionState information. </summary>
         /// <param name="status"> Status of the connection. </param>
         /// <param name="description"> Description of the connection state. </param>
         /// <returns> A new <see cref="Models.ServiceBusPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
@@ -323,6 +328,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
+        /// <summary> Describes Provisioning issue for given NetworkSecurityPerimeterConfiguration. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Properties of Provisioning Issue. </param>
         /// <returns> A new <see cref="Models.ServiceBusNspConfigurationProvisioningIssue"/> instance for mocking. </returns>
@@ -331,6 +337,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNspConfigurationProvisioningIssue(name, properties, default);
         }
 
+        /// <summary> Properties of Provisioning Issue. </summary>
         /// <param name="issueType"> Type of Issue. </param>
         /// <param name="description"> Description of the issue. </param>
         /// <returns> A new <see cref="Models.ServiceBusNspConfigurationProvisioningIssueProperties"/> instance for mocking. </returns>
@@ -339,6 +346,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNspConfigurationProvisioningIssueProperties(issueType, description, default);
         }
 
+        /// <summary> NetworkSecurityPerimeter related information. </summary>
         /// <param name="id"> Fully qualified identifier of the resource. </param>
         /// <param name="perimeterGuid"> Guid of the resource. </param>
         /// <param name="location"> Location of the resource. </param>
@@ -348,6 +356,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNetworkSecurityPerimeter(id, perimeterGuid, location, default);
         }
 
+        /// <summary> Information about resource association. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access Mode of the resource association. </param>
         /// <returns> A new <see cref="Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/> instance for mocking. </returns>
@@ -356,6 +365,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(name, accessMode, default);
         }
 
+        /// <summary> Information about current network profile. </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
@@ -367,6 +377,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile(name, accessRulesVersion, (accessRules ?? new ChangeTrackingList<ServiceBusNspAccessRule>()).ToList(), default);
         }
 
+        /// <summary> Information of Access Rule in Network Profile. </summary>
         /// <param name="id"> Fully qualified identifier of the resource. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="type"> Type of the resource. </param>
@@ -377,6 +388,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNspAccessRule(id, name, @type, properties, default);
         }
 
+        /// <summary> Properties of Access Rule. </summary>
         /// <param name="direction"> Direction of Access Rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
@@ -399,6 +411,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
+        /// <summary> Subscription for inbound rule. </summary>
         /// <param name="id"> Fully qualified identifier of subscription. </param>
         /// <returns> A new <see cref="Models.NspAccessRulePropertiesSubscriptionsItem"/> instance for mocking. </returns>
         public static NspAccessRulePropertiesSubscriptionsItem NspAccessRulePropertiesSubscriptionsItem(string id = default)
@@ -457,6 +470,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
+        /// <summary> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </summary>
         /// <param name="sqlExpression"> SQL expression. e.g. MyProperty='ABC'. </param>
         /// <param name="compatibilityLevel"> This property is reserved for future use. An integer value showing the compatibility level, currently hard-coded to 20. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
@@ -466,6 +480,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusFilterAction(sqlExpression, compatibilityLevel, requiresPreprocessing, default);
         }
 
+        /// <summary> Represents a filter which is a composition of an expression and an action that is executed in the pub/sub pipeline. </summary>
         /// <param name="sqlExpression"> The SQL expression. e.g. MyProperty='ABC'. </param>
         /// <param name="compatibilityLevel"> This property is reserved for future use. An integer value showing the compatibility level, currently hard-coded to 20. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
@@ -475,7 +490,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusSqlFilter(sqlExpression, compatibilityLevel, requiresPreprocessing, default);
         }
 
-        /// <param name="applicationProperties"> dictionary object for custom filters. </param>
+        /// <summary> Represents the correlation filter expression. </summary>
+        /// <param name="properties"> dictionary object for custom filters. </param>
         /// <param name="correlationId"> Identifier of the correlation. </param>
         /// <param name="messageId"> Identifier of the message. </param>
         /// <param name="sendTo"> Address to send to. </param>
@@ -486,12 +502,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="contentType"> Content type of the message. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
         /// <returns> A new <see cref="Models.ServiceBusCorrelationFilter"/> instance for mocking. </returns>
-        public static ServiceBusCorrelationFilter ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties = default, string correlationId = default, string messageId = default, string sendTo = default, string replyTo = default, string subject = default, string sessionId = default, string replyToSessionId = default, string contentType = default, bool? requiresPreprocessing = default)
+        public static ServiceBusCorrelationFilter ServiceBusCorrelationFilter(IDictionary<string, string> properties = default, string correlationId = default, string messageId = default, string sendTo = default, string replyTo = default, string subject = default, string sessionId = default, string replyToSessionId = default, string contentType = default, bool? requiresPreprocessing = default)
         {
-            applicationProperties ??= new ChangeTrackingDictionary<string, object>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
 
             return new ServiceBusCorrelationFilter(
-                applicationProperties ?? new ChangeTrackingDictionary<string, object>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
                 correlationId,
                 messageId,
                 sendTo,
@@ -525,11 +541,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="premiumMessagingPartitions"> The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4. </param>
         /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
+        /// <param name="ipAddressType"> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </param>
         /// <param name="platformCapabilitiesConfidentialComputeMode"> Setting to Enable or Disable Confidential Compute. </param>
         /// <param name="sku"> Properties of SKU. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusNamespaceData"/> instance for mocking. </returns>
-        public static ServiceBusNamespaceData ServiceBusNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServiceBusMinimumTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, bool? isZoneRedundant = default, ServiceBusEncryption encryption = default, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, ServiceBusPublicNetworkAccess? publicNetworkAccess = default, int? premiumMessagingPartitions = default, GeoDataReplicationProperties geoDataReplication = default, ServiceBusConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, ServiceBusSku sku = default, ManagedServiceIdentity identity = default)
+        public static ServiceBusNamespaceData ServiceBusNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServiceBusMinimumTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, bool? isZoneRedundant = default, ServiceBusEncryption encryption = default, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, ServiceBusPublicNetworkAccess? publicNetworkAccess = default, int? premiumMessagingPartitions = default, GeoDataReplicationProperties geoDataReplication = default, ServiceBusIPAddressType? ipAddressType = default, ServiceBusConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, ServiceBusSku sku = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -540,7 +557,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                minimumTlsVersion is null && provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && isZoneRedundant is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null && publicNetworkAccess is null && premiumMessagingPartitions is null && platformCapabilitiesConfidentialComputeMode is null && geoDataReplication is null ? default : new SBNamespaceProperties(
+                minimumTlsVersion is null && provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && isZoneRedundant is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null && publicNetworkAccess is null && premiumMessagingPartitions is null && platformCapabilitiesConfidentialComputeMode is null && geoDataReplication is null && ipAddressType is null ? default : new SBNamespaceProperties(
                     minimumTlsVersion,
                     provisioningState,
                     status,
@@ -557,12 +574,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     premiumMessagingPartitions,
                     new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
                     geoDataReplication,
+                    ipAddressType,
                     default),
                 sku,
                 identity,
                 default);
         }
 
+        /// <summary> Properties to configure Encryption. </summary>
         /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
         /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
@@ -584,6 +603,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusKeyVaultProperties(keyName, keyVaultUri, keyVersion, userAssignedIdentity is null ? default : new UserAssignedIdentityProperties(userAssignedIdentity, default), default);
         }
 
+        /// <summary> GeoDR Replication properties. </summary>
         /// <param name="maxReplicationLagDurationInSeconds"> The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed. The allowed values are 0 and 5 minutes to 1 day. </param>
         /// <param name="locations"> A list of regions where replicas of the namespace are maintained. </param>
         /// <returns> A new <see cref="Models.GeoDataReplicationProperties"/> instance for mocking. </returns>
@@ -594,15 +614,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new GeoDataReplicationProperties(maxReplicationLagDurationInSeconds, (locations ?? new ChangeTrackingList<ServiceBusNamespaceReplicaLocation>()).ToList(), default);
         }
 
+        /// <summary> Namespace replication properties. </summary>
         /// <param name="locationName"> Azure regions where a replica of the namespace is maintained. </param>
         /// <param name="roleType"> GeoDR Role Types. </param>
-        /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
         /// <returns> A new <see cref="Models.ServiceBusNamespaceReplicaLocation"/> instance for mocking. </returns>
-        public static ServiceBusNamespaceReplicaLocation ServiceBusNamespaceReplicaLocation(string locationName = default, GeoDRRoleType? roleType = default, string clusterArmId = default)
+        public static ServiceBusNamespaceReplicaLocation ServiceBusNamespaceReplicaLocation(string locationName = default, GeoDRRoleType? roleType = default)
         {
-            return new ServiceBusNamespaceReplicaLocation(locationName, roleType, clusterArmId, default);
+            return new ServiceBusNamespaceReplicaLocation(locationName, roleType, default);
         }
 
+        /// <summary> SKU of the namespace. </summary>
         /// <param name="name"> Name of this SKU. </param>
         /// <param name="tier"> The billing tier of this particular SKU. </param>
         /// <param name="capacity"> Messaging units for your service bus premium namespace. Valid capacities are {1, 2, 4, 8, 16} multiples of your properties.premiumMessagingPartitions setting. For example, If properties.premiumMessagingPartitions is 1 then possible capacity values are 1, 2, 4, 8, and 16. If properties.premiumMessagingPartitions is 4 then possible capacity values are 4, 8, 16, 32 and 64. </param>
@@ -660,11 +681,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <param name="primaryLocation"> Query parameter for the new primary location after failover. </param>
-        /// <param name="force"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
+        /// <param name="isForced"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
         /// <returns> A new <see cref="Models.ServiceBusNamespaceFailOver"/> instance for mocking. </returns>
-        public static ServiceBusNamespaceFailOver ServiceBusNamespaceFailOver(string primaryLocation = default, bool? force = default)
+        public static ServiceBusNamespaceFailOver ServiceBusNamespaceFailOver(string primaryLocation = default, bool? isForced = default)
         {
-            return new ServiceBusNamespaceFailOver(primaryLocation is null && force is null ? default : new ServiceBusFailOverDetail(primaryLocation, force, default), default);
+            return new ServiceBusNamespaceFailOver(primaryLocation is null && isForced is null ? default : new ServiceBusFailOverDetail(primaryLocation, isForced, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -704,6 +725,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNetworkRuleSetVirtualNetworkRules(subnetId is null ? default : new Subnet(subnetId, default), ignoreMissingVnetServiceEndpoint, default);
         }
 
+        /// <summary> Description of NetWorkRuleSet - IpRules resource. </summary>
         /// <param name="ipMask"> IP Mask. </param>
         /// <param name="action"> The IP Filter Action. </param>
         /// <returns> A new <see cref="Models.ServiceBusNetworkRuleSetIPRules"/> instance for mocking. </returns>
@@ -790,6 +812,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
+        /// <summary> Properties specific to client affine subscriptions. </summary>
         /// <param name="clientId"> Indicates the Client ID of the application that created the client-affine subscription. </param>
         /// <param name="isDurable"> For client-affine subscriptions, this value indicates whether the subscription is durable or not. </param>
         /// <param name="isShared"> For client-affine subscriptions, this value indicates whether the subscription is shared or not. </param>
@@ -799,13 +822,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusClientAffineProperties(clientId, isDurable, isShared, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusNamespaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Description of a namespace resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> Properties of SKU. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
         /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
@@ -850,18 +873,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     premiumMessagingPartitions,
                     default,
                     default,
+                    default,
                     default),
                 sku,
                 identity,
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpointId"> The Private Endpoint resource for this Connection. </param>
+        /// <summary> Properties of the PrivateEndpointConnection. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
         /// <param name="connectionState"> Details about the state of the connection. </param>
         /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
@@ -879,13 +903,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusNamespacePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Parameters supplied to the Patch Namespace operation. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> Properties of SKU. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
         /// <param name="provisioningState"> Provisioning state of the namespace. </param>
@@ -926,11 +950,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusQueueData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Description of queue Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="countDetails"> Message Count Details. </param>
         /// <param name="createdOn"> The exact time the message was created. </param>
         /// <param name="updatedOn"> The exact time the message was updated. </param>
@@ -992,11 +1016,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusTopicData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Description of topic resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="sizeInBytes"> Size of the topic, in bytes. </param>
         /// <param name="createdOn"> Exact time the message was created. </param>
         /// <param name="updatedOn"> The exact time the message was updated. </param>
@@ -1048,11 +1072,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusSubscriptionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Description of subscription resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="messageCount"> Number of messages. </param>
         /// <param name="createdOn"> Exact time the message was created. </param>
         /// <param name="accessedOn"> Last time there was a receive request to this subscription. </param>

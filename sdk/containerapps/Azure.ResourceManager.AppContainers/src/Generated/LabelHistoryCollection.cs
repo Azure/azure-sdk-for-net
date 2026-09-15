@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(LabelHistoryResource.ResourceType, out string labelHistoryApiVersion);
             _containerAppsLabelHistoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", LabelHistoryResource.ResourceType.Namespace, Diagnostics);
-            _containerAppsLabelHistoryRestClient = new ContainerAppsLabelHistory(_containerAppsLabelHistoryClientDiagnostics, Pipeline, Endpoint, labelHistoryApiVersion ?? "2025-10-02-preview");
+            _containerAppsLabelHistoryRestClient = new ContainerAppsLabelHistory(_containerAppsLabelHistoryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, labelHistoryApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the history of a label.
+        /// Gets the revision history associated with a Container App label.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the history of a label.
+        /// Gets the revision history associated with a Container App label.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string tableServiceApiVersion);
             _tableServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _tableServicesRestClient = new TableServices(_tableServicesClientDiagnostics, Pipeline, Endpoint, tableServiceApiVersion ?? "2025-08-01");
+            _tableServicesRestClient = new TableServices(_tableServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, tableServiceApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

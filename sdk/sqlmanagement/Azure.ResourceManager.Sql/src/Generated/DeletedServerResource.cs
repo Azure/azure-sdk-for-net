@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string deletedServerApiVersion);
             _deletedServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _deletedServersRestClient = new DeletedServers(_deletedServersClientDiagnostics, Pipeline, Endpoint, deletedServerApiVersion ?? "2025-02-01-preview");
+            _deletedServersRestClient = new DeletedServers(_deletedServersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedServerApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

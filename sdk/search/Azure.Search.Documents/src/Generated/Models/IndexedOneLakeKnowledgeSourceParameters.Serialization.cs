@@ -94,6 +94,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("ingestionParameters"u8);
                 writer.WriteObjectValue(IngestionParameters, options);
             }
+            if (Optional.IsDefined(QueryHints))
+            {
+                writer.WritePropertyName("queryHints"u8);
+                writer.WriteObjectValue(QueryHints, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(CreatedResources))
             {
                 writer.WritePropertyName("createdResources"u8);
@@ -145,6 +150,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string lakehouseId = default;
             string targetPath = default;
             KnowledgeSourceIngestionParameters ingestionParameters = default;
+            SearchIndexKnowledgeSourceQueryHints queryHints = default;
             CreatedResources createdResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,6 +184,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     ingestionParameters = KnowledgeSourceIngestionParameters.DeserializeKnowledgeSourceIngestionParameters(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("queryHints"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryHints = SearchIndexKnowledgeSourceQueryHints.DeserializeSearchIndexKnowledgeSourceQueryHints(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("createdResources"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -197,6 +212,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 lakehouseId,
                 targetPath,
                 ingestionParameters,
+                queryHints,
                 createdResources,
                 additionalBinaryDataProperties);
         }

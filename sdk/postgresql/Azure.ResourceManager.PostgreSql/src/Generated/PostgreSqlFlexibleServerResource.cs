@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             _migrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             _backupsLongTermRetentionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _backupsLongTermRetentionRestClient = new BackupsLongTermRetention(_backupsLongTermRetentionClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _backupsLongTermRetentionRestClient = new BackupsLongTermRetention(_backupsLongTermRetentionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             _capabilitiesByServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _capabilitiesByServerRestClient = new CapabilitiesByServer(_capabilitiesByServerClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _capabilitiesByServerRestClient = new CapabilitiesByServer(_capabilitiesByServerClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             _capturedLogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _capturedLogsRestClient = new CapturedLogs(_capturedLogsClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _capturedLogsRestClient = new CapturedLogs(_capturedLogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             _replicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
-            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
+            _replicasRestClient = new Replicas(_replicasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DbMigrateNetworkStatus>> MigrateNetworkModeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DBMigrateNetworkStatus>> MigrateNetworkModeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _serversClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.MigrateNetworkMode");
             scope.Start();
@@ -820,8 +820,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _serversRestClient.CreateMigrateNetworkModeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FlexibleServersArmOperation<DbMigrateNetworkStatus> operation = new FlexibleServersArmOperation<DbMigrateNetworkStatus>(
-                    new DbMigrateNetworkStatusOperationSource(),
+                FlexibleServersArmOperation<DBMigrateNetworkStatus> operation = new FlexibleServersArmOperation<DBMigrateNetworkStatus>(
+                    new DBMigrateNetworkStatusOperationSource(),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DbMigrateNetworkStatus> MigrateNetworkMode(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DBMigrateNetworkStatus> MigrateNetworkMode(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _serversClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.MigrateNetworkMode");
             scope.Start();
@@ -875,8 +875,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _serversRestClient.CreateMigrateNetworkModeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                FlexibleServersArmOperation<DbMigrateNetworkStatus> operation = new FlexibleServersArmOperation<DbMigrateNetworkStatus>(
-                    new DbMigrateNetworkStatusOperationSource(),
+                FlexibleServersArmOperation<DBMigrateNetworkStatus> operation = new FlexibleServersArmOperation<DBMigrateNetworkStatus>(
+                    new DBMigrateNetworkStatusOperationSource(),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,

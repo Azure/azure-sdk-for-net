@@ -85,6 +85,7 @@ namespace Azure.AI.Inference
         public string ParticipantName { get; set; }
 
         // CUSTOM: Common initialization for input model collection property.
+        /// <summary> The tool calls that the assistant message requested, as returned by the model. </summary>
         [CodeGenMember("ToolCalls")]
         public IList<ChatCompletionsToolCall> ToolCalls { get; } = new ChangeTrackingList<ChatCompletionsToolCall>();
 

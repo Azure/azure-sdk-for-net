@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ContainerService
     public enum NamespaceAdoptionPolicy
     {
         /// <summary> If the namespace already exists in Kubernetes, attempts to create that same namespace in ARM will fail. </summary>
-        Never,
+        Never = 0,
         /// <summary> Take over the existing namespace to be managed by ARM, if there is no difference. </summary>
-        IfIdentical,
+        IfIdentical = 1,
         /// <summary> Always take over the existing namespace to be managed by ARM, some fields might be overwritten. </summary>
-        Always
+        Always = 2
     }
 }

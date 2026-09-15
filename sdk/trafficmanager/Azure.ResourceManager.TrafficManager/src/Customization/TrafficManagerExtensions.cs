@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
@@ -22,6 +23,8 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TrafficManagerEndpointResource"/> object. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete and will be removed in a future release. Use GetAzureEndpointTrafficManagerEndpointResource, GetExternalEndpointTrafficManagerEndpointResource, or GetNestedEndpointTrafficManagerEndpointResource instead.", false)]
         public static TrafficManagerEndpointResource GetTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));

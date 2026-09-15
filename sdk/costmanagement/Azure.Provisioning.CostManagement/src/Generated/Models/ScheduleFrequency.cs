@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CostManagement
     public enum ScheduleFrequency
     {
         /// <summary> Cost analysis data will be emailed every day. </summary>
-        Daily,
+        Daily = 0,
         /// <summary> Cost analysis data will be emailed every week. </summary>
-        Weekly,
+        Weekly = 1,
         /// <summary> Cost analysis data will be emailed every month. </summary>
-        Monthly
+        Monthly = 2
     }
 }

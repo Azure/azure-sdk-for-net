@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(RecoveryPlanResource.ResourceType, out string recoveryPlanApiVersion);
             _recoveryPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", RecoveryPlanResource.ResourceType.Namespace, Diagnostics);
-            _recoveryPlansRestClient = new RecoveryPlans(_recoveryPlansClientDiagnostics, Pipeline, Endpoint, recoveryPlanApiVersion ?? "2026-04-01-preview");
+            _recoveryPlansRestClient = new RecoveryPlans(_recoveryPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryPlanApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

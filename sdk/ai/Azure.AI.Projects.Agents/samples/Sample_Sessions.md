@@ -102,15 +102,31 @@ ProjectAgentSession session = await agentsClient.GetSessionAsync(agentName: agen
 Console.WriteLine($"Retrieved session with ID {session.AgentSessionId}");
 ```
 
-5. List all sessions, we have created for the Agent.
+5. You can stop a session.
+
+Synchronous sample:
+```C# Snippet:Sample_Stop_SessionsCRUD_Sync
+agentsClient.StopSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+session = agentsClient.GetSession(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+Console.WriteLine($"Session {session.AgentSessionId} status is now {session.Status}");
+```
+
+Asynchronous sample:
+```C# Snippet:Sample_Stop_SessionsCRUD_Async
+await agentsClient.StopSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session.AgentSessionId);
+Console.WriteLine($"Session {session.AgentSessionId} status is now {session.Status}");
+```
+
+6. List all sessions, we have created for the Agent.
 
 Synchronous sample:
 ```C# Snippet:Sample_List_SessionsCRUD_Sync
-List<ProjectAgentSession> sessions = [..agentsClient.GetSessions(agentName: agentVersion.Name)];
+List<ProjectAgentSession> sessions = [.. agentsClient.GetSessions(agentName: agentVersion.Name)];
 Console.WriteLine($"Found {sessions.Count} sessions.");
 foreach (ProjectAgentSession item in sessions)
 {
-    Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedAt}.");
+    Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedOn}.");
 }
 ```
 
@@ -120,11 +136,11 @@ List<ProjectAgentSession> sessions = await agentsClient.GetSessionsAsync(agentNa
 Console.WriteLine($"Found {sessions.Count} sessions.");
 foreach (ProjectAgentSession item in sessions)
 {
-    Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedAt}.");
+    Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedOn}.");
 }
 ```
 
-6. Delete sessions and we have created.
+7. Delete sessions and we created.
 
 Synchronous sample:
 ```C# Snippet:Sample_Delete_SessionsCRUD_Sync

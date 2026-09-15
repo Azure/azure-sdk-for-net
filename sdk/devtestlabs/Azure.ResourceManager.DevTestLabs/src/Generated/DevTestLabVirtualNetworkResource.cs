@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(ResourceType, out string devTestLabVirtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
-            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Endpoint, devTestLabVirtualNetworkApiVersion ?? "2018-09-15");
+            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabVirtualNetworkApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 

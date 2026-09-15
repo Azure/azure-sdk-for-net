@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(AdvisorSuppressionContractResource.ResourceType, out string advisorSuppressionContractApiVersion);
             _suppressionContractsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", AdvisorSuppressionContractResource.ResourceType.Namespace, Diagnostics);
-            _suppressionContractsRestClient = new SuppressionContracts(_suppressionContractsClientDiagnostics, Pipeline, Endpoint, advisorSuppressionContractApiVersion ?? "2025-05-01-preview");
+            _suppressionContractsRestClient = new SuppressionContracts(_suppressionContractsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorSuppressionContractApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 

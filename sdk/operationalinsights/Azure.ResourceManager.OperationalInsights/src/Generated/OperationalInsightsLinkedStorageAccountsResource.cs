@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(ResourceType, out string operationalInsightsLinkedStorageAccountsApiVersion);
             _linkedStorageAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _linkedStorageAccountsRestClient = new LinkedStorageAccounts(_linkedStorageAccountsClientDiagnostics, Pipeline, Endpoint, operationalInsightsLinkedStorageAccountsApiVersion ?? "2025-07-01");
+            _linkedStorageAccountsRestClient = new LinkedStorageAccounts(_linkedStorageAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsLinkedStorageAccountsApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

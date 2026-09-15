@@ -4,32 +4,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A memory search tool call. </summary>
-    public partial class MemorySearchToolCall : AgentResponseItem
+    [Experimental("AAIP001")]
+    public partial class MemorySearchToolCall : ResponseItem
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
         /// <param name="status"> The status of the tool call. </param>
-        public MemorySearchToolCall(ToolCallStatus status) : base(AgentResponseItemKind.MemorySearchCall)
+        public MemorySearchToolCall(ToolCallStatus status) : base("memory_search_call")
         {
             Status = status;
             Memories = new ChangeTrackingList<MemoryOutputItem>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MemorySearchToolCall"/>. </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <param name="agentReference"> The agent that created the item. </param>
-        /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="status"> The status of the tool call. </param>
-        /// <param name="memories"> The results returned from the memory search. </param>
-        internal MemorySearchToolCall(AgentResponseItemKind @type, string id, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolCallStatus status, IList<MemoryOutputItem> memories) : base(@type, id, agentReference, responseId, additionalBinaryDataProperties)
-        {
-            Status = status;
-            Memories = memories;
         }
 
         /// <summary> The status of the tool call. </summary>

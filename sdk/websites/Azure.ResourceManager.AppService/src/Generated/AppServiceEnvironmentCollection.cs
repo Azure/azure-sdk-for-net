@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(AppServiceEnvironmentResource.ResourceType, out string appServiceEnvironmentApiVersion);
             _appServiceEnvironmentResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", AppServiceEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _appServiceEnvironmentResourcesRestClient = new AppServiceEnvironmentResources(_appServiceEnvironmentResourcesClientDiagnostics, Pipeline, Endpoint, appServiceEnvironmentApiVersion ?? "2026-03-15");
+            _appServiceEnvironmentResourcesRestClient = new AppServiceEnvironmentResources(_appServiceEnvironmentResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceEnvironmentApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

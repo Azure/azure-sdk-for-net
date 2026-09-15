@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensibility;
 using MSAL = Microsoft.Identity.Client.ManagedIdentity;
+using MtlsBindingStrength = Microsoft.Identity.Client.AppConfig.MtlsBindingStrength;
 
 namespace Azure.Identity
 {
@@ -92,13 +93,16 @@ namespace Azure.Identity
             }
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(capabilities.Source.ToString(), _options.ManagedIdentityId.ToString());
+            bool isKeyGuardAvailable =
+                capabilities.IsMtlsPopSupportedByHost &&
+                capabilities.MaxSupportedBindingStrength >= MtlsBindingStrength.KeyGuard;
 
             // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
 #pragma warning disable CS0618 // DefaultToImds is obsolete but still returned by the sync GetManagedIdentitySource path
             if ((capabilities.Source == MSAL.ManagedIdentitySource.DefaultToImds || capabilities.Source == MSAL.ManagedIdentitySource.Imds) && _isChainedCredential && !_probeRequestSent)
 #pragma warning restore CS0618
             {
-                var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
+                var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false);
                 _probeRequestSent = true;
                 return probedFlowTokenResult;
             }
@@ -120,8 +124,8 @@ namespace Azure.Identity
             {
                 // The default case is to use the MSAL implementation, which does no probing of the IMDS endpoint.
                 result = async ?
-                    await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, capabilities.IsMtlsPopSupportedByHost, cancellationToken).ConfigureAwait(false) :
-                    _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, capabilities.IsMtlsPopSupportedByHost, cancellationToken);
+                    await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false) :
+                    _msalManagedIdentityClient.AcquireTokenForManagedIdentity(context, isKeyGuardAvailable, cancellationToken);
             }
             // If the IMDS endpoint is not available, we will throw a CredentialUnavailableException.
             catch (MsalServiceException ex) when (HasInnerExceptionMatching(ex, e => e is RequestFailedException && e.Message.Contains("timed out")))
@@ -129,13 +133,27 @@ namespace Azure.Identity
                 // If the managed identity is not found, throw a more specific exception.
                 throw new CredentialUnavailableException(MsiUnavailableError, ex);
             }
+            // MSAL reports that every managed identity source was probed and none is available (for example, on a
+            // developer machine with no managed identity configured). When chained, surface a CredentialUnavailableException
+            // so DefaultAzureCredential continues to the next credential instead of aborting the chain.
+            catch (MsalException ex) when (_isChainedCredential && ex.ErrorCode == MsalError.ManagedIdentityAllSourcesUnavailable)
+            {
+                AzureIdentityEventSource.Singleton.ManagedIdentitySourcesUnavailable(ex);
+                throw new CredentialUnavailableException(MsiUnavailableError, ex);
+            }
 
             return result.ToAccessToken();
         }
 
-        public virtual async ValueTask<AccessToken> AuthenticateCoreAsync(bool async, TokenRequestContext context,
+        public virtual async ValueTask<AccessToken> AuthenticateCoreAsync(bool async, TokenRequestContext context, bool isKeyGuardAvailable,
             CancellationToken cancellationToken)
         {
+            // IMDS re-enters MSAL after its probe, so preserve the binding capability discovered before probing.
+            if (_identitySource.Value is ImdsManagedIdentityProbeSource imdsSource)
+            {
+                return await imdsSource.AuthenticateAsync(async, context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false);
+            }
+
             return await _identitySource.Value.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
         }
 
@@ -143,7 +161,7 @@ namespace Azure.Identity
         {
             TokenRequestContext requestContext = new TokenRequestContext(parameters.Scopes.ToArray(), claims: parameters.Claims);
 
-            AccessToken token = await AuthenticateCoreAsync(true, requestContext, parameters.CancellationToken).ConfigureAwait(false);
+            AccessToken token = await AuthenticateCoreAsync(true, requestContext, false, parameters.CancellationToken).ConfigureAwait(false);
 
             var resfreshOn = ManagedIdentitySource.InferManagedIdentityRefreshInValue(token.ExpiresOn);
             long? refreshInSeconds = resfreshOn switch

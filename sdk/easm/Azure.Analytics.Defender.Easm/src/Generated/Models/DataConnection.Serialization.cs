@@ -111,10 +111,10 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDate))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedDate.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(Frequency))
             {
@@ -126,15 +126,15 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedDate))
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedDate"u8);
-                writer.WriteStringValue(UpdatedDate.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UserUpdatedAt))
+            if (options.Format != "W" && Optional.IsDefined(UserUpdatedOn))
             {
                 writer.WritePropertyName("userUpdatedAt"u8);
-                writer.WriteStringValue(UserUpdatedAt.Value, "O");
+                writer.WriteStringValue(UserUpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(Active))
             {

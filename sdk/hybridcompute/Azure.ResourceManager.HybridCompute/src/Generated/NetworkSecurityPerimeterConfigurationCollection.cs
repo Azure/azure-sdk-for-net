@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             TryGetApiVersion(NetworkSecurityPerimeterConfigurationResource.ResourceType, out string networkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", NetworkSecurityPerimeterConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2025-09-16-preview");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2026-07-15");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, perimeterName, context);
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, perimeterName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, perimeterName, context);
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, perimeterName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkSecurityPerimeterConfigurationData> response = Response.FromValue(NetworkSecurityPerimeterConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HybridCompute
             };
             return new AsyncPageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetByPrivateLinkScopeAsyncCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.HybridCompute
             };
             return new PageableWrapper<NetworkSecurityPerimeterConfigurationData, NetworkSecurityPerimeterConfigurationResource>(new NetworkSecurityPerimeterConfigurationsGetByPrivateLinkScopeCollectionResultOfT(
                 _networkSecurityPerimeterConfigurationsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, perimeterName, context);
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, perimeterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, perimeterName, context);
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, perimeterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, perimeterName, context);
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, perimeterName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-16-preview. </description>
+        /// <description> 2026-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, perimeterName, context);
+                HttpMessage message = _networkSecurityPerimeterConfigurationsRestClient.CreateGetByPrivateLinkScopeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, perimeterName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkSecurityPerimeterConfigurationData> response = default;

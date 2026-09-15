@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             TryGetApiVersion(DisconnectedOperationsImageResource.ResourceType, out string disconnectedOperationsImageApiVersion);
             _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationsImageResource.ResourceType.Namespace, Diagnostics);
-            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, disconnectedOperationsImageApiVersion ?? "2026-03-15");
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, disconnectedOperationsImageApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

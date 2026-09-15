@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new QueryUserRulesContent(subscriptionIds is null ? default : new QueryUserRulesDetails((subscriptionIds ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
+        /// <summary> The MarketplaceRule. </summary>
         /// <param name="ruleType"> Rule type. </param>
         /// <param name="value"></param>
         /// <returns> A new <see cref="Models.MarketplaceRule"/> instance for mocking. </returns>
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new MarketplaceRule(ruleType, (value ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The SetRulesContent. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> URL to get the next set of rules list results if there are any. </param>
         /// <returns> A new <see cref="Models.SetRulesContent"/> instance for mocking. </returns>
@@ -82,6 +84,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 default);
         }
 
+        /// <summary> Describes the json payload for a notified recipient for new requests. </summary>
         /// <param name="principalId"> Principal ID. </param>
         /// <param name="emailAddress"> Email Address. </param>
         /// <param name="displayName"> Display Name. </param>
@@ -91,6 +94,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new NotificationRecipient(principalId, emailAddress, displayName, default);
         }
 
+        /// <summary> Response object of query if are there existing offers in the collections. </summary>
         /// <param name="value"> Boolean answer, true if exists at least a single offer in an enabled collection, otherwise, false. </param>
         /// <returns> A new <see cref="Models.AnyExistingOffersInTheCollectionsResult"/> instance for mocking. </returns>
         public static AnyExistingOffersInTheCollectionsResult AnyExistingOffersInTheCollectionsResult(bool? value = default)
@@ -133,6 +137,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 default);
         }
 
+        /// <summary> The PrivateStorePlan. </summary>
         /// <param name="skuId"> Identifier for this plan. </param>
         /// <param name="planId"> Text identifier for this plan. </param>
         /// <param name="planDisplayName"> Friendly name for the plan for display in the marketplace. </param>
@@ -162,6 +167,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new QueryUserOffersContent(offerIds is null && subscriptionIds is null ? default : new QueryUserOffersDetails((offerIds ?? new ChangeTrackingList<string>()).ToList(), (subscriptionIds ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
+        /// <summary> Billing accounts response object. </summary>
         /// <param name="billingAccounts"> Billing accounts list. </param>
         /// <returns> A new <see cref="Models.PrivateStoreBillingAccountsResult"/> instance for mocking. </returns>
         public static PrivateStoreBillingAccountsResult PrivateStoreBillingAccountsResult(IEnumerable<string> billingAccounts = default)
@@ -178,6 +184,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new CollectionsToSubscriptionsMappingContent(collectionsToSubscriptionsMappingSubscriptionIds is null ? default : new CollectionsToSubscriptionsMappingProperties((collectionsToSubscriptionsMappingSubscriptionIds ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
+        /// <summary> A map of collections subscriptions details. </summary>
         /// <param name="details"> The map of collections subscriptions. </param>
         /// <returns> A new <see cref="Models.CollectionsToSubscriptionsMappingResult"/> instance for mocking. </returns>
         public static CollectionsToSubscriptionsMappingResult CollectionsToSubscriptionsMappingResult(IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails> details = default)
@@ -187,6 +194,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new CollectionsToSubscriptionsMappingResult(details ?? new ChangeTrackingDictionary<string, CollectionsSubscriptionsMappingDetails>(), default);
         }
 
+        /// <summary> Collection name and related subscriptions list. </summary>
         /// <param name="collectionName"> Collection name. </param>
         /// <param name="subscriptions"> Subscriptions ids list. </param>
         /// <returns> A new <see cref="Models.CollectionsSubscriptionsMappingDetails"/> instance for mocking. </returns>
@@ -206,6 +214,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new QueryApprovedPlansContent(offerId is null && planIds is null && subscriptionIds is null ? default : new QueryApprovedPlans(offerId, (planIds ?? new ChangeTrackingList<string>()).ToList(), (subscriptionIds ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
+        /// <summary> Query approved plans response. </summary>
         /// <param name="details"> A list indicating for each plan which subscriptions are approved. Plan Id is unique. </param>
         /// <returns> A new <see cref="Models.QueryApprovedPlansResult"/> instance for mocking. </returns>
         public static QueryApprovedPlansResult QueryApprovedPlansResult(IEnumerable<QueryApprovedPlansDetails> details = default)
@@ -215,6 +224,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new QueryApprovedPlansResult((details ?? new ChangeTrackingList<QueryApprovedPlansDetails>()).ToList(), default);
         }
 
+        /// <summary> Query approved plans response. </summary>
         /// <param name="planId"> Plan id. </param>
         /// <param name="subscriptionIds"> Approved subscription ids list. In case all subscriptions are approved for a plan, allSubscriptions flag is true and list is empty ( else flag is set to false). In case both subscriptions list is empty and allSubscriptions flag is false, the plan is not approved for any subscription. </param>
         /// <param name="allSubscriptions"> Indicates whether all subscriptions are approved for this plan. </param>
@@ -234,6 +244,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new BulkCollectionsActionContent(collectionIds is null && action is null ? default : new BulkCollectionsDetails((collectionIds ?? new ChangeTrackingList<Guid>()).ToList(), action, default), default);
         }
 
+        /// <summary> The bulk collections response. The response contains two lists that indicate for each collection whether the operation succeeded or failed. </summary>
         /// <param name="succeeded"> Succeeded collections. </param>
         /// <param name="failed"> Failed collections. </param>
         /// <returns> A new <see cref="Models.BulkCollectionsActionResult"/> instance for mocking. </returns>
@@ -245,6 +256,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new BulkCollectionsActionResult((succeeded ?? new ChangeTrackingList<PrivateStoreCollectionDetails>()).ToList(), (failed ?? new ChangeTrackingList<PrivateStoreCollectionDetails>()).ToList(), default);
         }
 
+        /// <summary> Collection name and id. </summary>
         /// <param name="collectionName"> Collection name. </param>
         /// <param name="collectionId"> Collection id. </param>
         /// <returns> A new <see cref="Models.PrivateStoreCollectionDetails"/> instance for mocking. </returns>
@@ -253,6 +265,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new PrivateStoreCollectionDetails(collectionName, collectionId, default);
         }
 
+        /// <summary> Get private store notifications state. </summary>
         /// <param name="stopSellNotifications"></param>
         /// <param name="newNotifications"></param>
         /// <param name="approvalRequests"></param>
@@ -266,6 +279,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new PrivateStoreNotificationsState((stopSellNotifications ?? new ChangeTrackingList<StopSellNotifications>()).ToList(), (newNotifications ?? new ChangeTrackingList<NewPlanNotification>()).ToList(), (approvalRequests ?? new ChangeTrackingList<RequestApprovalsDetails>()).ToList(), default);
         }
 
+        /// <summary> Stop sell notification details. </summary>
         /// <param name="offerId"> Gets offer id. </param>
         /// <param name="displayName"> Gets offer display name. </param>
         /// <param name="isEntire"> Gets a value indicating whether entire offer is in stop sell or only few of its plans. </param>
@@ -287,6 +301,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 default);
         }
 
+        /// <summary> Plan notification details. </summary>
         /// <param name="planId"> Gets or sets the plan id. </param>
         /// <param name="planDisplayName"> Gets or sets the plan display name. </param>
         /// <returns> A new <see cref="Models.PlanNotificationDetails"/> instance for mocking. </returns>
@@ -295,6 +310,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new PlanNotificationDetails(planId, planDisplayName, default);
         }
 
+        /// <summary> New plans notification details. </summary>
         /// <param name="offerId"> Gets offer id. </param>
         /// <param name="displayName"> Gets offer display name. </param>
         /// <param name="isFuturePlansEnabled"> Gets a value indicating whether future plans is enabled. </param>
@@ -316,6 +332,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 default);
         }
 
+        /// <summary> Request approvals details. </summary>
         /// <param name="offerId"> Gets offer id. </param>
         /// <param name="displayName"> Gets offer display name. </param>
         /// <param name="publisherId"> Gets or sets publisher id. </param>
@@ -354,6 +371,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 default), default);
         }
 
+        /// <summary> Subscription information. </summary>
         /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription display name. </param>
@@ -364,6 +382,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new MarketplaceSubscription(id, subscriptionId, displayName, state, default);
         }
 
+        /// <summary> List of all new plans notifications for public offers. </summary>
         /// <param name="newPlansNotifications"></param>
         /// <returns> A new <see cref="Models.NewPlanNotificationListResult"/> instance for mocking. </returns>
         public static NewPlanNotificationListResult NewPlanNotificationListResult(IEnumerable<NewPlanNotification> newPlansNotifications = default)
@@ -373,6 +392,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new NewPlanNotificationListResult((newPlansNotifications ?? new ChangeTrackingList<NewPlanNotification>()).ToList(), default);
         }
 
+        /// <summary> Private plans subscriptions. </summary>
         /// <param name="subscriptions"></param>
         /// <returns> A new <see cref="Models.StopSellSubscriptions"/> instance for mocking. </returns>
         public static StopSellSubscriptions StopSellSubscriptions(IEnumerable<string> subscriptions = default)
@@ -382,6 +402,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new StopSellSubscriptions((subscriptions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> List of stop sell offers and plans notifications. </summary>
         /// <param name="stopSellNotifications"></param>
         /// <returns> A new <see cref="Models.StopSellOffersPlansNotificationsList"/> instance for mocking. </returns>
         public static StopSellOffersPlansNotificationsList StopSellOffersPlansNotificationsList(IEnumerable<StopSellOffersPlansNotificationsResult> stopSellNotifications = default)
@@ -391,6 +412,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new StopSellOffersPlansNotificationsList((stopSellNotifications ?? new ChangeTrackingList<StopSellOffersPlansNotificationsResult>()).ToList(), default);
         }
 
+        /// <summary> List of stop sell offers and plans notifications. </summary>
         /// <param name="offerId"> The offer id. </param>
         /// <param name="displayName"> The offer display name. </param>
         /// <param name="isEntireInStopSell"> A value indicating whether entire offer is in stop sell or only few of its plans. </param>
@@ -417,6 +439,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 default);
         }
 
+        /// <summary> List of subscription Ids in the private store. </summary>
         /// <param name="subscriptionsIds"></param>
         /// <returns> A new <see cref="Models.SubscriptionsContextList"/> instance for mocking. </returns>
         public static SubscriptionsContextList SubscriptionsContextList(IEnumerable<string> subscriptionsIds = default)
@@ -455,6 +478,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 default);
         }
 
+        /// <summary> Return plan with request details. </summary>
         /// <param name="planId"> Gets or sets Plan Id. </param>
         /// <param name="status"> Gets the plan status. </param>
         /// <param name="requestDate"> Gets request date. </param>
@@ -540,6 +564,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 default);
         }
 
+        /// <summary> Plan with requesters details. </summary>
         /// <param name="planId"> Gets the plan id. </param>
         /// <param name="planDisplayName"> Gets the plan display name. </param>
         /// <param name="requesters"> Gets requesters details list. </param>
@@ -551,6 +576,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new PlanRequesterDetails(planId, planDisplayName, (requesters ?? new ChangeTrackingList<PlanRequesterInfo>()).ToList(), default);
         }
 
+        /// <summary> user request details. </summary>
         /// <param name="user"> Gets user id. </param>
         /// <param name="date"> Gets request date. </param>
         /// <param name="justification"> Gets justification. </param>
@@ -614,6 +640,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new TransferOffersContent(targetCollections is null && operation is null && offerIdsList is null ? default : new TransferOffersDetails((targetCollections ?? new ChangeTrackingList<string>()).ToList(), operation, (offerIdsList ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
+        /// <summary> The transfer items response. The response contains two lists that indicate for each collection whether the operation succeeded or failed. </summary>
         /// <param name="succeeded"> Succeeded collections. </param>
         /// <param name="failed"> Failed collections. </param>
         /// <returns> A new <see cref="Models.TransferOffersResult"/> instance for mocking. </returns>
@@ -690,6 +717,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new MultiContextAndPlansContent(offerId is null && eTag is null && plansContext is null ? default : new MultiContextAndPlansProperties(offerId, eTag, (plansContext ?? new ChangeTrackingList<ContextAndPlansDetails>()).ToList(), default), default);
         }
 
+        /// <summary> Object of plans per context. </summary>
         /// <param name="context"> Plan's context, e.g. subscription ID, tenant ID. </param>
         /// <param name="planIds"> List of plan IDs. </param>
         /// <returns> A new <see cref="Models.ContextAndPlansDetails"/> instance for mocking. </returns>
@@ -700,7 +728,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new ContextAndPlansDetails(context, (planIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateStoreOfferResult"/>. </summary>
+        /// <summary> The PrivateStoreOfferResult. </summary>
         /// <param name="uniqueOfferId"> Offers unique id. </param>
         /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
@@ -732,7 +760,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrivateStorePlan"/>. </summary>
+        /// <summary> The PrivateStorePlan. </summary>
         /// <param name="skuId"> Identifier for this plan. </param>
         /// <param name="planId"> Text identifier for this plan. </param>
         /// <param name="planDisplayName"> Friendly name for the plan for display in the marketplace. </param>
@@ -754,11 +782,11 @@ namespace Azure.ResourceManager.Marketplace.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Marketplace.PrivateStoreOfferData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The privateStore offer data structure. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="uniqueOfferId"> Offers unique id. </param>
         /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>

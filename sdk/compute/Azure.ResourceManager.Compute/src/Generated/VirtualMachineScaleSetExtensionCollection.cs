@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(VirtualMachineScaleSetExtensionResource.ResourceType, out string virtualMachineScaleSetExtensionApiVersion);
             _virtualMachineScaleSetExtensionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetExtensionResource.ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetExtensionsRestClient = new VirtualMachineScaleSetExtensions(_virtualMachineScaleSetExtensionsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetExtensionApiVersion ?? "2026-03-01");
+            _virtualMachineScaleSetExtensionsRestClient = new VirtualMachineScaleSetExtensions(_virtualMachineScaleSetExtensionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetExtensionApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

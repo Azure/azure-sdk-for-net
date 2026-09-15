@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Batch
     public enum BatchDiskCachingType
     {
         /// <summary> The caching mode for the disk is not enabled. </summary>
-        None,
+        None = 0,
         /// <summary> The caching mode for the disk is read only. </summary>
-        ReadOnly,
+        ReadOnly = 1,
         /// <summary> The caching mode for the disk is read and write. </summary>
-        ReadWrite
+        ReadWrite = 2
     }
 }

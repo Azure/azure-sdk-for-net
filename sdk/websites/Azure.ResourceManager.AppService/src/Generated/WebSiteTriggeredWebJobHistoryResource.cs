@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSiteTriggeredWebJobHistoryApiVersion);
             _triggeredJobHistoryOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _triggeredJobHistoryOperationGroupRestClient = new TriggeredJobHistoryOperationGroup(_triggeredJobHistoryOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteTriggeredWebJobHistoryApiVersion ?? "2026-03-15");
+            _triggeredJobHistoryOperationGroupRestClient = new TriggeredJobHistoryOperationGroup(_triggeredJobHistoryOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteTriggeredWebJobHistoryApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

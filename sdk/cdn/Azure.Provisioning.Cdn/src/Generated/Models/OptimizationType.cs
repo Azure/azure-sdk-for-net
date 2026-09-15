@@ -11,14 +11,14 @@ namespace Azure.Provisioning.Cdn
     public enum OptimizationType
     {
         /// <summary> GeneralWebDelivery. </summary>
-        GeneralWebDelivery,
+        GeneralWebDelivery = 0,
         /// <summary> GeneralMediaStreaming. </summary>
-        GeneralMediaStreaming,
+        GeneralMediaStreaming = 1,
         /// <summary> VideoOnDemandMediaStreaming. </summary>
-        VideoOnDemandMediaStreaming,
+        VideoOnDemandMediaStreaming = 2,
         /// <summary> LargeFileDownload. </summary>
-        LargeFileDownload,
+        LargeFileDownload = 3,
         /// <summary> DynamicSiteAcceleration. </summary>
-        DynamicSiteAcceleration
+        DynamicSiteAcceleration = 4
     }
 }

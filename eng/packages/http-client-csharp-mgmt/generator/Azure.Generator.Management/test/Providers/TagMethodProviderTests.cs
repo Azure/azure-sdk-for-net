@@ -292,6 +292,22 @@ namespace Azure.Generator.Management.Tests.Providers
             }
         }
 
+        [TestCase]
+        public void Verify_NoTagMethods_WhenUpdatePathHasQuerySuffix()
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchBodyAfterNonContextualPathParameters(includeQueryInUpdatePath: true);
+            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceClientProvider = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().First();
+            Assert.That(resourceClientProvider, Is.Not.Null);
+
+            var tagMethodNames = new[] { "AddTag", "AddTagAsync", "SetTags", "SetTagsAsync", "RemoveTag", "RemoveTagAsync" };
+            foreach (var tagMethodName in tagMethodNames)
+            {
+                var method = resourceClientProvider.Methods.SingleOrDefault(m => m.Signature.Name == tagMethodName);
+                Assert.That(method, Is.Null, $"Tag method '{tagMethodName}' should not be generated when the update path has unresolved query-suffixed parameters.");
+            }
+        }
+
         private static MethodProvider GetTagMethodByName(string methodName, bool isAsync, string[]? customizationSources = null)
         {
             var (resource, restClient) = GetResourceClientProvider(customizationSources);

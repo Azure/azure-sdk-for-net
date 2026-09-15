@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> NeighborAddress administrative status. </summary>
-        public IList<NeighborAddressBfdAdministrativeStatus> NeighborAddressAdministrativeStatus { get; }
+        public IList<NeighborAddressBfdAdministrativeStatus> NeighborAddressAdministrativeStatus { get; } = new ChangeTrackingList<NeighborAddressBfdAdministrativeStatus>();
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(CostManagementViewsResource.ResourceType, out string costManagementViewsApiVersion);
             _viewOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementViewsResource.ResourceType.Namespace, Diagnostics);
-            _viewOperationGroupRestClient = new ViewOperationGroup(_viewOperationGroupClientDiagnostics, Pipeline, Endpoint, costManagementViewsApiVersion ?? "2025-03-01");
+            _viewOperationGroupRestClient = new ViewOperationGroup(_viewOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementViewsApiVersion ?? "2025-03-01");
         }
 
         /// <summary>

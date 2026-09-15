@@ -99,11 +99,6 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("hostNetwork"u8);
                 writer.WriteObjectValue(HostNetwork, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(SdnProperties))
-            {
-                writer.WritePropertyName("sdnProperties"u8);
-                writer.WriteObjectValue(SdnProperties, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -149,7 +144,6 @@ namespace Azure.ResourceManager.Hci.Models
             IReadOnlyList<HciNicDetail> nicDetails = default;
             IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails = default;
             HciEdgeDeviceHostNetwork hostNetwork = default;
-            SdnProperties sdnProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -190,21 +184,12 @@ namespace Azure.ResourceManager.Hci.Models
                     hostNetwork = HciEdgeDeviceHostNetwork.DeserializeHciEdgeDeviceHostNetwork(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("sdnProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sdnProperties = SdnProperties.DeserializeSdnProperties(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HciNetworkProfile(nicDetails ?? new ChangeTrackingList<HciNicDetail>(), switchDetails ?? new ChangeTrackingList<HciEdgeDeviceSwitchDetail>(), hostNetwork, sdnProperties, additionalBinaryDataProperties);
+            return new HciNetworkProfile(nicDetails ?? new ChangeTrackingList<HciNicDetail>(), switchDetails ?? new ChangeTrackingList<HciEdgeDeviceSwitchDetail>(), hostNetwork, additionalBinaryDataProperties);
         }
     }
 }

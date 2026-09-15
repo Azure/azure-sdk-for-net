@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string cdnDeploymentVersionApiVersion);
             _deploymentVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _deploymentVersionsRestClient = new DeploymentVersions(_deploymentVersionsClientDiagnostics, Pipeline, Endpoint, cdnDeploymentVersionApiVersion ?? "2025-09-01-preview");
+            _deploymentVersionsRestClient = new DeploymentVersions(_deploymentVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnDeploymentVersionApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

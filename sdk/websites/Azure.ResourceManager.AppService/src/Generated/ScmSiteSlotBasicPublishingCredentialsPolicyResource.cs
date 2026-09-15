@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string scmSiteSlotBasicPublishingCredentialsPolicyApiVersion);
             _csmPublishingCredentialsPoliciesEntityScmAllowedSlotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _csmPublishingCredentialsPoliciesEntityScmAllowedSlotRestClient = new CsmPublishingCredentialsPoliciesEntityScmAllowedSlot(_csmPublishingCredentialsPoliciesEntityScmAllowedSlotClientDiagnostics, Pipeline, Endpoint, scmSiteSlotBasicPublishingCredentialsPolicyApiVersion ?? "2026-03-15");
+            _csmPublishingCredentialsPoliciesEntityScmAllowedSlotRestClient = new CsmPublishingCredentialsPoliciesEntityScmAllowedSlot(_csmPublishingCredentialsPoliciesEntityScmAllowedSlotClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scmSiteSlotBasicPublishingCredentialsPolicyApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The CreateSkillVersionRequest. </summary>
     internal partial class CreateSkillVersionRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

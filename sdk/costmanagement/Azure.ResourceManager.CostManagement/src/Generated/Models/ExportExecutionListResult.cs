@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> A list of export runs. </summary>
-        public IReadOnlyList<ExportRun> Value { get; }
+        public IReadOnlyList<ExportRun> Value { get; } = new ChangeTrackingList<ExportRun>();
     }
 }

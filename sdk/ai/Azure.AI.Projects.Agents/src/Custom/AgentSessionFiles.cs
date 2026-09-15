@@ -20,13 +20,15 @@ public partial class AgentSessionFiles
     private readonly string _agentName;
     private readonly string _sessionId;
     /// <summary> Initializes a new instance of AgentSessionFiles. </summary>
+    /// <param name="clientDiagnostics"> The client diagnostics instance. </param>
     /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
     /// <param name="endpoint"> Service endpoint. </param>
     /// <param name="apiVersion"></param>
     /// <param name="agentName"> The name of the agent. </param>
     /// <param name="sessionId"> The session ID. </param>
-    internal AgentSessionFiles(ClientPipeline pipeline, Uri endpoint, string apiVersion, string agentName, string sessionId)
+    internal AgentSessionFiles(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion, string agentName, string sessionId)
     {
+        ClientDiagnostics = clientDiagnostics;
         _endpoint = endpoint;
         Pipeline = pipeline;
         _apiVersion = apiVersion;
@@ -50,7 +52,7 @@ public partial class AgentSessionFiles
     /// <exception cref="ArgumentException"> <paramref name="localPath"/> or <paramref name="sessionStoragePath"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<ClientResult<SessionFileWriteResponse>> UploadAsync(string sessionStoragePath, string localPath, CancellationToken cancellationToken=default)
+    public virtual async Task<ClientResult<SessionFileWriteResponse>> UploadAsync(string sessionStoragePath, string localPath, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(localPath, nameof(localPath));
         Argument.AssertNotNullOrEmpty(sessionStoragePath, nameof(sessionStoragePath));
@@ -124,7 +126,7 @@ public partial class AgentSessionFiles
                     path: string.Equals(localCollectionOptions.Filters[2], "<unset>") ? null : localCollectionOptions.Filters[2],
                     limit: localCollectionOptions.Limit,
                     order: localCollectionOptions.Order,
-                    after:localCollectionOptions.AfterId,
+                    after: localCollectionOptions.AfterId,
                     before: localCollectionOptions.BeforeId,
                     options: localRequestOptions),
             dataItemDeserializer: (e, o) => SessionDirectoryEntry.DeserializeSessionDirectoryEntry(e, o),

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.KeyVault
     public enum KeyVaultNetworkRuleBypassOption
     {
         /// <summary> AzureServices. </summary>
-        AzureServices,
+        AzureServices = 0,
         /// <summary> None. </summary>
-        None
+        None = 1
     }
 }

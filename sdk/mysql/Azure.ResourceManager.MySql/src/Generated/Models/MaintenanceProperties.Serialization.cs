@@ -85,25 +85,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("maintenanceState"u8);
                 writer.WriteStringValue(MaintenanceState.Value.ToString());
             }
-            if (Optional.IsDefined(MaintenanceStartOn))
+            if (Optional.IsDefined(MaintenanceStartsOn))
             {
                 writer.WritePropertyName("maintenanceStartTime"u8);
-                writer.WriteStringValue(MaintenanceStartOn.Value, "O");
+                writer.WriteStringValue(MaintenanceStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MaintenanceEndOn))
+            if (options.Format != "W" && Optional.IsDefined(MaintenanceEndsOn))
             {
                 writer.WritePropertyName("maintenanceEndTime"u8);
-                writer.WriteStringValue(MaintenanceEndOn.Value, "O");
+                writer.WriteStringValue(MaintenanceEndsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MaintenanceExecutionStartOn))
+            if (options.Format != "W" && Optional.IsDefined(MaintenanceExecutionStartsOn))
             {
                 writer.WritePropertyName("maintenanceExecutionStartTime"u8);
-                writer.WriteStringValue(MaintenanceExecutionStartOn.Value, "O");
+                writer.WriteStringValue(MaintenanceExecutionStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MaintenanceExecutionEndOn))
+            if (options.Format != "W" && Optional.IsDefined(MaintenanceExecutionEndsOn))
             {
                 writer.WritePropertyName("maintenanceExecutionEndTime"u8);
-                writer.WriteStringValue(MaintenanceExecutionEndOn.Value, "O");
+                writer.WriteStringValue(MaintenanceExecutionEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(MaintenanceAvailableScheduleMinOn))
             {
@@ -174,10 +174,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             MySqlFlexibleServerMaintenanceType? maintenanceType = default;
             MySqlFlexibleServerMaintenanceState? maintenanceState = default;
-            DateTimeOffset? maintenanceStartOn = default;
-            DateTimeOffset? maintenanceEndOn = default;
-            DateTimeOffset? maintenanceExecutionStartOn = default;
-            DateTimeOffset? maintenanceExecutionEndOn = default;
+            DateTimeOffset? maintenanceStartsOn = default;
+            DateTimeOffset? maintenanceEndsOn = default;
+            DateTimeOffset? maintenanceExecutionStartsOn = default;
+            DateTimeOffset? maintenanceExecutionEndsOn = default;
             DateTimeOffset? maintenanceAvailableScheduleMinOn = default;
             DateTimeOffset? maintenanceAvailableScheduleMaxOn = default;
             string maintenanceTitle = default;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    maintenanceStartOn = prop.Value.GetDateTimeOffset("O");
+                    maintenanceStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("maintenanceEndTime"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    maintenanceEndOn = prop.Value.GetDateTimeOffset("O");
+                    maintenanceEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("maintenanceExecutionStartTime"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    maintenanceExecutionStartOn = prop.Value.GetDateTimeOffset("O");
+                    maintenanceExecutionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("maintenanceExecutionEndTime"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    maintenanceExecutionEndOn = prop.Value.GetDateTimeOffset("O");
+                    maintenanceExecutionEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("maintenanceAvailableScheduleMinTime"u8))
@@ -285,10 +285,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MaintenanceProperties(
                 maintenanceType,
                 maintenanceState,
-                maintenanceStartOn,
-                maintenanceEndOn,
-                maintenanceExecutionStartOn,
-                maintenanceExecutionEndOn,
+                maintenanceStartsOn,
+                maintenanceEndsOn,
+                maintenanceExecutionStartsOn,
+                maintenanceExecutionEndsOn,
                 maintenanceAvailableScheduleMinOn,
                 maintenanceAvailableScheduleMaxOn,
                 maintenanceTitle,

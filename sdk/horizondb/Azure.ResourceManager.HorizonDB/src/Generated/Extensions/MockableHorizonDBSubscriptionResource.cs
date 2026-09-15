@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
 
         private ClientDiagnostics HorizonDBClustersClientDiagnostics => _horizonDBClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HorizonDBClusters HorizonDBClustersRestClient => _horizonDBClustersRestClient ??= new HorizonDBClusters(HorizonDBClustersClientDiagnostics, Pipeline, Endpoint, "2026-01-20-preview");
+        private HorizonDBClusters HorizonDBClustersRestClient => _horizonDBClustersRestClient ??= new HorizonDBClusters(HorizonDBClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics HorizonDBParameterGroupsClientDiagnostics => _horizonDBParameterGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HorizonDBParameterGroups HorizonDBParameterGroupsRestClient => _horizonDBParameterGroupsRestClient ??= new HorizonDBParameterGroups(HorizonDBParameterGroupsClientDiagnostics, Pipeline, Endpoint, "2026-01-20-preview");
+        private HorizonDBParameterGroups HorizonDBParameterGroupsRestClient => _horizonDBParameterGroupsRestClient ??= new HorizonDBParameterGroups(HorizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         /// <summary>
         /// Lists all HorizonDB clusters in a subscription.
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-01-20-preview. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -80,11 +80,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("workLoadType"u8);
                 writer.WriteStringValue(WorkLoadType.Value.ToString());
             }
-            if (Optional.IsDefined(VmWorkloadPolicyType))
-            {
-                writer.WritePropertyName("vmWorkloadPolicyType"u8);
-                writer.WriteStringValue(VmWorkloadPolicyType.Value.ToString());
-            }
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
@@ -137,7 +132,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BackupWorkloadType? workLoadType = default;
-            VmWorkloadPolicyType? vmWorkloadPolicyType = default;
             BackupCommonSettings settings = default;
             IList<SubProtectionPolicy> subProtectionPolicy = default;
             bool? doesMakePolicyConsistent = default;
@@ -187,15 +181,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     workLoadType = new BackupWorkloadType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("vmWorkloadPolicyType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    vmWorkloadPolicyType = new VmWorkloadPolicyType(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("settings"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -239,7 +224,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties,
                 workLoadType,
-                vmWorkloadPolicyType,
                 settings,
                 subProtectionPolicy ?? new ChangeTrackingList<SubProtectionPolicy>(),
                 doesMakePolicyConsistent);

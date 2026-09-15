@@ -630,7 +630,7 @@ namespace Azure.Generator.Tests.Common
                 path ?? string.Empty,
                 null,
                 requestMediaTypes is null ? null : [.. requestMediaTypes],
-                false,
+                true,
                 true,
                 true,
                 name,
@@ -649,15 +649,22 @@ namespace Azure.Generator.Tests.Common
         /// </summary>
         /// <param name="statusCodes"></param>
         /// <param name="bodytype"></param>
+        /// <param name="contentTypes"></param>
+        /// <param name="serializationOptions"></param>
         /// <returns></returns>
-        public static InputOperationResponse OperationResponse(IEnumerable<int>? statusCodes = null, InputType? bodytype = null)
+        public static InputOperationResponse OperationResponse(
+            IEnumerable<int>? statusCodes = null,
+            InputType? bodytype = null,
+            IReadOnlyList<string>? contentTypes = null,
+            InputSerializationOptions? serializationOptions = null)
         {
             return new InputOperationResponse(
                 statusCodes is null ? [200] : [.. statusCodes],
                 bodytype,
                 [],
                 false,
-                ["application/json"]);
+                contentTypes ?? ["application/json"],
+                serializationOptions);
         }
 
         private static readonly Dictionary<InputClient, IList<InputClient>> _childClientsCache = new();

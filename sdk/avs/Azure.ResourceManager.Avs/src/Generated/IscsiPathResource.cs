@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ResourceType, out string iscsiPathApiVersion);
             _iscsiPathsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _iscsiPathsRestClient = new IscsiPaths(_iscsiPathsClientDiagnostics, Pipeline, Endpoint, iscsiPathApiVersion ?? "2025-09-01");
+            _iscsiPathsRestClient = new IscsiPaths(_iscsiPathsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iscsiPathApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

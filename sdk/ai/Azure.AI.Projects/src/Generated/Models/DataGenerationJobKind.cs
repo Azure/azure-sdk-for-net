@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The supported data generation job types. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct DataGenerationJobKind : IEquatable<DataGenerationJobKind>
     {
         private readonly string _value;
@@ -17,6 +19,8 @@ namespace Azure.AI.Projects
         private const string TracesValue = "traces";
         /// <summary> Tool calling conversation between user and agent. </summary>
         private const string ToolUseValue = "tool_use";
+        /// <summary> Simulation seed for evaluation scenarios. </summary>
+        private const string SimulationSeedValue = "simulation_seed";
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,6 +40,9 @@ namespace Azure.AI.Projects
 
         /// <summary> Tool calling conversation between user and agent. </summary>
         public static DataGenerationJobKind ToolUse { get; } = new DataGenerationJobKind(ToolUseValue);
+
+        /// <summary> Simulation seed for evaluation scenarios. </summary>
+        public static DataGenerationJobKind SimulationSeed { get; } = new DataGenerationJobKind(SimulationSeedValue);
 
         /// <summary> Determines if two <see cref="DataGenerationJobKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

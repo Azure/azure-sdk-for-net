@@ -126,15 +126,15 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("gsd"u8);
                 writer.WriteNumberValue(Gsd.Value);
             }
-            if (Optional.IsDefined(Created))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
-                writer.WriteStringValue(Created.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(Updated))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
-                writer.WriteStringValue(Updated.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(Title))
             {
@@ -148,15 +148,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             writer.WritePropertyName("datetime"u8);
             writer.WriteStringValue(Datetime);
-            if (Optional.IsDefined(StartDatetime))
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("start_datetime"u8);
-                writer.WriteStringValue(StartDatetime.Value, "O");
+                writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsDefined(EndDatetime))
+            if (Optional.IsDefined(EndedOn))
             {
                 writer.WritePropertyName("end_datetime"u8);
-                writer.WriteStringValue(EndDatetime.Value, "O");
+                writer.WriteStringValue(EndedOn.Value, "O");
             }
             foreach (var item in AdditionalProperties)
             {
@@ -203,13 +203,13 @@ namespace Azure.Analytics.PlanetaryComputer
             string mission = default;
             IList<StacProvider> providers = default;
             float? gsd = default;
-            DateTimeOffset? created = default;
-            DateTimeOffset? updated = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
             string title = default;
             string description = default;
             string datetime = default;
-            DateTimeOffset? startDatetime = default;
-            DateTimeOffset? endDatetime = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -278,7 +278,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    created = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("updated"u8))
@@ -287,7 +287,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    updated = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("title"u8))
@@ -311,7 +311,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    startDatetime = prop.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("end_datetime"u8))
@@ -320,7 +320,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    endDatetime = prop.Value.GetDateTimeOffset("O");
+                    endedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -332,13 +332,13 @@ namespace Azure.Analytics.PlanetaryComputer
                 mission,
                 providers ?? new ChangeTrackingList<StacProvider>(),
                 gsd,
-                created,
-                updated,
+                createdOn,
+                updatedOn,
                 title,
                 description,
                 datetime,
-                startDatetime,
-                endDatetime,
+                startedOn,
+                endedOn,
                 additionalProperties);
         }
     }

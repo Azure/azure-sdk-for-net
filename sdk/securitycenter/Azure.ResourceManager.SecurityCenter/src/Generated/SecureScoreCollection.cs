@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecureScoreResource.ResourceType, out string secureScoreApiVersion);
             _secureScoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecureScoreResource.ResourceType.Namespace, Diagnostics);
-            _secureScoresRestClient = new SecureScores(_secureScoresClientDiagnostics, Pipeline, Endpoint, secureScoreApiVersion ?? "2020-01-01");
+            _secureScoresRestClient = new SecureScores(_secureScoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, secureScoreApiVersion ?? "2020-01-01");
             ValidateResourceId(id);
         }
 

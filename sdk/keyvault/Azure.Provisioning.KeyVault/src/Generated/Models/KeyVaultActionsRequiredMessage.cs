@@ -11,6 +11,6 @@ namespace Azure.Provisioning.KeyVault
     public enum KeyVaultActionsRequiredMessage
     {
         /// <summary> None. </summary>
-        None
+        None = 0
     }
 }

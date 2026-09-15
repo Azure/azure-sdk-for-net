@@ -7,12 +7,22 @@ using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 
 namespace Azure.Generator.Tests.Providers
 {
     public class RawRequestUriBuilderExtensionsTests
     {
+        [Test]
+        public void IsInternalHelperProvider()
+        {
+            MockHelpers.LoadMockGenerator();
+            var uriBuilderDefinition = new RawRequestUriBuilderExtensionsDefinition();
+
+            Assert.AreEqual(nameof(InternalHelperProvider), uriBuilderDefinition.GetType().BaseType?.Name);
+        }
+
         [Test]
         public void AddsAppendExtensionMethods()
         {

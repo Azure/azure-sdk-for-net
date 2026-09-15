@@ -134,6 +134,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings, options);
             }
+            if (Optional.IsDefined(CostManagementSettings))
+            {
+                writer.WritePropertyName("costManagementSettings"u8);
+                writer.WriteObjectValue(CostManagementSettings, options);
+            }
             if (Optional.IsDefined(RestoreSettings))
             {
                 writer.WritePropertyName("restoreSettings"u8);
@@ -173,6 +178,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RegionOfChoiceSettings))
+            {
+                writer.WritePropertyName("regionOfChoiceSettings"u8);
+                writer.WriteObjectValue(RegionOfChoiceSettings, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -227,12 +237,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             BackupStorageVersion? backupStorageVersion = default;
             VaultPublicNetworkAccess? publicNetworkAccess = default;
             VaultMonitoringSettings monitoringSettings = default;
+            CostManagementSettings costManagementSettings = default;
             RestoreSettings restoreSettings = default;
             VaultPropertiesRedundancySettings redundancySettings = default;
             RecoveryServicesSecuritySettings securitySettings = default;
             SecureScoreLevel? secureScore = default;
             BcdrSecurityLevel? bcdrSecurityLevel = default;
             IList<string> resourceGuardOperationRequests = default;
+            RegionOfChoiceSettings regionOfChoiceSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -336,6 +348,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     monitoringSettings = VaultMonitoringSettings.DeserializeVaultMonitoringSettings(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("costManagementSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    costManagementSettings = CostManagementSettings.DeserializeCostManagementSettings(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("restoreSettings"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -402,6 +423,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     resourceGuardOperationRequests = array;
                     continue;
                 }
+                if (prop.NameEquals("regionOfChoiceSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    regionOfChoiceSettings = RegionOfChoiceSettings.DeserializeRegionOfChoiceSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -419,12 +449,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 backupStorageVersion,
                 publicNetworkAccess,
                 monitoringSettings,
+                costManagementSettings,
                 restoreSettings,
                 redundancySettings,
                 securitySettings,
                 secureScore,
                 bcdrSecurityLevel,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                regionOfChoiceSettings,
                 additionalBinaryDataProperties);
         }
     }

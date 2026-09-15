@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.KeyVault.Mocking
 
         private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ManagedHsmsClientDiagnostics => _managedHsmsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedHsms ManagedHsmsRestClient => _managedHsmsRestClient ??= new ManagedHsms(ManagedHsmsClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ManagedHsms ManagedHsmsRestClient => _managedHsmsRestClient ??= new ManagedHsms(ManagedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
 
         private ClientDiagnostics VaultsOperationGroupClientDiagnostics => _vaultsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VaultsOperationGroup VaultsOperationGroupRestClient => _vaultsOperationGroupRestClient ??= new VaultsOperationGroup(VaultsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private VaultsOperationGroup VaultsOperationGroupRestClient => _vaultsOperationGroupRestClient ??= new VaultsOperationGroup(VaultsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
 
         private ClientDiagnostics ManagedHsmsOperationGroupClientDiagnostics => _managedHsmsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KeyVault.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedHsmsOperationGroup ManagedHsmsOperationGroupRestClient => _managedHsmsOperationGroupRestClient ??= new ManagedHsmsOperationGroup(ManagedHsmsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private ManagedHsmsOperationGroup ManagedHsmsOperationGroupRestClient => _managedHsmsOperationGroupRestClient ??= new ManagedHsmsOperationGroup(ManagedHsmsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
 
         /// <summary> Gets a collection of DeletedKeyVaults in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of DeletedKeyVaults and their operations over a DeletedKeyVaultResource. </returns>

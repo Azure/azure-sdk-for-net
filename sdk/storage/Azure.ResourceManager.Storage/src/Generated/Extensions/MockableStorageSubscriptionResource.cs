@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.Storage.Mocking
 
         private ClientDiagnostics StorageAccountsClientDiagnostics => _storageAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageAccounts StorageAccountsRestClient => _storageAccountsRestClient ??= new StorageAccounts(StorageAccountsClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
+        private StorageAccounts StorageAccountsRestClient => _storageAccountsRestClient ??= new StorageAccounts(StorageAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01");
 
         private ClientDiagnostics DeletedAccountsClientDiagnostics => _deletedAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
+        private DeletedAccounts DeletedAccountsRestClient => _deletedAccountsRestClient ??= new DeletedAccounts(DeletedAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Storage.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01");
 
         /// <summary> Gets a collection of DeletedAccounts in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of DeletedAccounts and their operations over a DeletedAccountResource. </returns>

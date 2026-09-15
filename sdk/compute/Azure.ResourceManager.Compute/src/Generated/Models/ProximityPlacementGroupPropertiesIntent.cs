@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies possible sizes of virtual machines that can be created in the proximity placement group. </summary>
-        public IList<string> VmSizes { get; }
+        public IList<string> VmSizes { get; } = new ChangeTrackingList<string>();
     }
 }

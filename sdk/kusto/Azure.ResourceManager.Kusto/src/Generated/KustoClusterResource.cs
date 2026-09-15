@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(ResourceType, out string kustoClusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
+            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
             _attachedDatabaseConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _attachedDatabaseConfigurationsRestClient = new AttachedDatabaseConfigurations(_attachedDatabaseConfigurationsClientDiagnostics, Pipeline, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
+            _attachedDatabaseConfigurationsRestClient = new AttachedDatabaseConfigurations(_attachedDatabaseConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
             _clusterPrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _clusterPrincipalAssignmentsRestClient = new ClusterPrincipalAssignments(_clusterPrincipalAssignmentsClientDiagnostics, Pipeline, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
+            _clusterPrincipalAssignmentsRestClient = new ClusterPrincipalAssignments(_clusterPrincipalAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
             _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
             _managedPrivateEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _managedPrivateEndpointsRestClient = new ManagedPrivateEndpoints(_managedPrivateEndpointsClientDiagnostics, Pipeline, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
+            _managedPrivateEndpointsRestClient = new ManagedPrivateEndpoints(_managedPrivateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
             _sandboxCustomImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
-            _sandboxCustomImagesRestClient = new SandboxCustomImages(_sandboxCustomImagesClientDiagnostics, Pipeline, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
+            _sandboxCustomImagesRestClient = new SandboxCustomImages(_sandboxCustomImagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoClusterApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 

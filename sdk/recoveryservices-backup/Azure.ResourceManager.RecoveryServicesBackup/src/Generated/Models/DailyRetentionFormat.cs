@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> List of days of the month. </summary>
-        public IList<BackupDay> DaysOfTheMonth { get; }
+        public IList<BackupDay> DaysOfTheMonth { get; } = new ChangeTrackingList<BackupDay>();
     }
 }

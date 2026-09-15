@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotSiteContainerResource.ResourceType, out string siteSlotSiteContainerApiVersion);
             _siteContainerOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotSiteContainerResource.ResourceType.Namespace, Diagnostics);
-            _siteContainerOperationGroupRestClient = new SiteContainerOperationGroup(_siteContainerOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotSiteContainerApiVersion ?? "2026-03-15");
+            _siteContainerOperationGroupRestClient = new SiteContainerOperationGroup(_siteContainerOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotSiteContainerApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

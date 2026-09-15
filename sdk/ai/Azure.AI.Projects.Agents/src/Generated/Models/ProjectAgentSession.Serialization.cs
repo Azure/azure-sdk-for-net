@@ -93,17 +93,17 @@ namespace Azure.AI.Projects.Agents
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedAt, "U");
+                writer.WriteNumberValue(CreatedOn, "U");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("last_accessed_at"u8);
-                writer.WriteNumberValue(LastAccessedAt, "U");
+                writer.WriteNumberValue(LastAccessedOn, "U");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("expires_at"u8);
-                writer.WriteNumberValue(ExpiresAt, "U");
+                writer.WriteNumberValue(ExpiresOn, "U");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -150,9 +150,9 @@ namespace Azure.AI.Projects.Agents
             string agentSessionId = default;
             VersionIndicator versionIndicator = default;
             AgentSessionStatus status = default;
-            DateTimeOffset createdAt = default;
-            DateTimeOffset lastAccessedAt = default;
-            DateTimeOffset expiresAt = default;
+            DateTimeOffset createdOn = default;
+            DateTimeOffset lastAccessedOn = default;
+            DateTimeOffset expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,17 +173,17 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("last_accessed_at"u8))
                 {
-                    lastAccessedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    lastAccessedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("expires_at"u8))
                 {
-                    expiresAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    expiresOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
@@ -195,9 +195,9 @@ namespace Azure.AI.Projects.Agents
                 agentSessionId,
                 versionIndicator,
                 status,
-                createdAt,
-                lastAccessedAt,
-                expiresAt,
+                createdOn,
+                lastAccessedOn,
+                expiresOn,
                 additionalBinaryDataProperties);
         }
     }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             TryGetApiVersion(DisconnectedOperationsHardwareSettingResource.ResourceType, out string disconnectedOperationsHardwareSettingApiVersion);
             _hardwareSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationsHardwareSettingResource.ResourceType.Namespace, Diagnostics);
-            _hardwareSettingsRestClient = new HardwareSettings(_hardwareSettingsClientDiagnostics, Pipeline, Endpoint, disconnectedOperationsHardwareSettingApiVersion ?? "2026-03-15");
+            _hardwareSettingsRestClient = new HardwareSettings(_hardwareSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, disconnectedOperationsHardwareSettingApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

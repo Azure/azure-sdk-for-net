@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(BillingProfileResource.ResourceType, out string billingProfileApiVersion);
             _billingProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingProfileResource.ResourceType.Namespace, Diagnostics);
-            _billingProfilesRestClient = new BillingProfiles(_billingProfilesClientDiagnostics, Pipeline, Endpoint, billingProfileApiVersion ?? "2024-04-01");
+            _billingProfilesRestClient = new BillingProfiles(_billingProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingProfileApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

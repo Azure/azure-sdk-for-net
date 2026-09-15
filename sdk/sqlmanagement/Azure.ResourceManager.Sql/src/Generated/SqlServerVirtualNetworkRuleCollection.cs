@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlServerVirtualNetworkRuleResource.ResourceType, out string sqlServerVirtualNetworkRuleApiVersion);
             _virtualNetworkRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerVirtualNetworkRuleResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworkRulesRestClient = new VirtualNetworkRules(_virtualNetworkRulesClientDiagnostics, Pipeline, Endpoint, sqlServerVirtualNetworkRuleApiVersion ?? "2025-02-01-preview");
+            _virtualNetworkRulesRestClient = new VirtualNetworkRules(_virtualNetworkRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerVirtualNetworkRuleApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

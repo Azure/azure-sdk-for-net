@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             TryGetApiVersion(MySqlFlexibleServersCapabilityResource.ResourceType, out string mySqlFlexibleServersCapabilityApiVersion);
             _locationName = locationName;
             _locationBasedCapabilitySetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServersCapabilityResource.ResourceType.Namespace, Diagnostics);
-            _locationBasedCapabilitySetRestClient = new LocationBasedCapabilitySet(_locationBasedCapabilitySetClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServersCapabilityApiVersion ?? "2024-12-30");
+            _locationBasedCapabilitySetRestClient = new LocationBasedCapabilitySet(_locationBasedCapabilitySetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServersCapabilityApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 

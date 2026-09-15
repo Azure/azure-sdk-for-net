@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlServerDatabaseReplicationLinkResource.ResourceType, out string sqlServerDatabaseReplicationLinkApiVersion);
             _replicationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDatabaseReplicationLinkResource.ResourceType.Namespace, Diagnostics);
-            _replicationLinksRestClient = new ReplicationLinks(_replicationLinksClientDiagnostics, Pipeline, Endpoint, sqlServerDatabaseReplicationLinkApiVersion ?? "2025-02-01-preview");
+            _replicationLinksRestClient = new ReplicationLinks(_replicationLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDatabaseReplicationLinkApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

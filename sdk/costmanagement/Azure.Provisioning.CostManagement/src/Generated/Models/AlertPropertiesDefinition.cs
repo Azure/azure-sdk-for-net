@@ -22,7 +22,7 @@ namespace Azure.Provisioning.CostManagement
         {
         }
 
-        /// <summary> Gets or sets the AlertType. </summary>
+        /// <summary> Gets the AlertType. </summary>
         public BicepValue<CostManagementAlertType> AlertType
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _alertType;
             }
-            set
-            {
-                Initialize();
-                _alertType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Category. </summary>
+        /// <summary> Gets the Category. </summary>
         public BicepValue<CostManagementAlertCategory> Category
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _category;
             }
-            set
-            {
-                Initialize();
-                _category.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Criteria. </summary>
+        /// <summary> Gets the Criteria. </summary>
         public BicepValue<AlertCriterion> Criteria
         {
             get
             {
                 Initialize();
                 return _criteria;
-            }
-            set
-            {
-                Initialize();
-                _criteria.Assign(value);
             }
         }
 

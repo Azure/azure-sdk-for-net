@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             TryGetApiVersion(TopLevelDomainResource.ResourceType, out string topLevelDomainApiVersion);
             _topLevelDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainRegistration", TopLevelDomainResource.ResourceType.Namespace, Diagnostics);
-            _topLevelDomainsRestClient = new TopLevelDomains(_topLevelDomainsClientDiagnostics, Pipeline, Endpoint, topLevelDomainApiVersion ?? "2024-11-01");
+            _topLevelDomainsRestClient = new TopLevelDomains(_topLevelDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, topLevelDomainApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 

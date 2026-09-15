@@ -10,48 +10,67 @@ using System.ComponentModel;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The BlobExpiryOptions. </summary>
     internal readonly partial struct BlobExpiryOptions : IEquatable<BlobExpiryOptions>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BlobExpiryOptions"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BlobExpiryOptions(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
+        /// <summary> Never expire. </summary>
         private const string NeverExpireValue = "NeverExpire";
+        /// <summary> Relative to creation time. </summary>
         private const string RelativeToCreationValue = "RelativeToCreation";
+        /// <summary> Relative to now. </summary>
         private const string RelativeToNowValue = "RelativeToNow";
+        /// <summary> Absolute time. </summary>
         private const string AbsoluteValue = "Absolute";
 
-        /// <summary> NeverExpire. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobExpiryOptions"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public BlobExpiryOptions(string value)
+        {
+            _value = value;
+        }
+
+        /// <summary> Never expire. </summary>
         public static BlobExpiryOptions NeverExpire { get; } = new BlobExpiryOptions(NeverExpireValue);
-        /// <summary> RelativeToCreation. </summary>
+
+        /// <summary> Relative to creation time. </summary>
         public static BlobExpiryOptions RelativeToCreation { get; } = new BlobExpiryOptions(RelativeToCreationValue);
-        /// <summary> RelativeToNow. </summary>
+
+        /// <summary> Relative to now. </summary>
         public static BlobExpiryOptions RelativeToNow { get; } = new BlobExpiryOptions(RelativeToNowValue);
-        /// <summary> Absolute. </summary>
+
+        /// <summary> Absolute time. </summary>
         public static BlobExpiryOptions Absolute { get; } = new BlobExpiryOptions(AbsoluteValue);
+
         /// <summary> Determines if two <see cref="BlobExpiryOptions"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BlobExpiryOptions left, BlobExpiryOptions right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BlobExpiryOptions"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BlobExpiryOptions left, BlobExpiryOptions right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BlobExpiryOptions"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BlobExpiryOptions"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BlobExpiryOptions(string value) => new BlobExpiryOptions(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BlobExpiryOptions"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BlobExpiryOptions?(string value) => value == null ? null : new BlobExpiryOptions(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BlobExpiryOptions other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BlobExpiryOptions other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,9 +7,11 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Net.ServerSentEvents;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -1356,17 +1358,14 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response InternalProtocol(RequestContent content, RequestContext context = null)
+        internal virtual Response InternalProtocol(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.InternalProtocol");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateInternalProtocolRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -1387,17 +1386,14 @@ namespace BasicTypeSpec
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> InternalProtocolAsync(RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> InternalProtocolAsync(RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.InternalProtocol");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(content, nameof(content));
-
                 using HttpMessage message = CreateInternalProtocolRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -1445,7 +1441,7 @@ namespace BasicTypeSpec
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response StillConvenient(RequestContext context)
+        internal virtual Response StillConvenient(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.StillConvenient");
             scope.Start();
@@ -1472,7 +1468,7 @@ namespace BasicTypeSpec
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> StillConvenientAsync(RequestContext context)
+        internal virtual async Task<Response> StillConvenientAsync(RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.StillConvenient");
             scope.Start();
@@ -2690,6 +2686,247 @@ namespace BasicTypeSpec
             using MultiPartFormContent content = body.ToMultipartFormContent();
             using RequestContent requestContent = RequestContent.Create(content);
             return await UploadCatAsync(requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] SendJsonLines
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SendJsonLines(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.SendJsonLines");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSendJsonLinesRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] SendJsonLines
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SendJsonLinesAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.SendJsonLines");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateSendJsonLinesRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> SendJsonLines. </summary>
+        /// <param name="stream"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="stream"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SendJsonLinesAsync(IAsyncEnumerable<StreamingItem> stream, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(stream, nameof(stream));
+
+            using RequestContent content = new JsonLinesBinaryContent<StreamingItem>(stream);
+            return await SendJsonLinesAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] ReceiveJsonLines
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        public virtual async Task<AsyncStreamingClientResult<BinaryData>> ReceiveJsonLinesAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ReceiveJsonLines");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReceiveJsonLinesRequest(context);
+                message.BufferResponse = false;
+                await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return AsyncStreamingClientResult.CreateJsonLines(new AzurePipelineResponse(message));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary> ReceiveJsonLines. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        public virtual async Task<AsyncStreamingClientResult<StreamingItem>> ReceiveJsonLinesAsync(CancellationToken cancellationToken = default)
+        {
+            using HttpMessage message = CreateReceiveJsonLinesRequest(cancellationToken.ToRequestContext());
+            message.BufferResponse = false;
+            await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return AsyncStreamingClientResult.CreateJsonLines<StreamingItem>(new AzurePipelineResponse(message), data => ModelReaderWriter.Read<StreamingItem>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), cancellationToken);
+        }
+#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary>
+        /// [Protocol Method] ReceiveSse
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        public virtual async Task<AsyncStreamingClientResult<SseItem<BinaryData>>> ReceiveSseAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.ReceiveSse");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateReceiveSseRequest(context);
+                message.BufferResponse = false;
+                await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return AsyncStreamingClientResult.CreateSse(new AzurePipelineResponse(message), item => item.Data.ToString() == "[DONE]");
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary> ReceiveSse. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        public virtual async Task<AsyncStreamingClientResult<SseItem<StreamingItem>>> ReceiveSseAsync(CancellationToken cancellationToken = default)
+        {
+            using HttpMessage message = CreateReceiveSseRequest(cancellationToken.ToRequestContext());
+            message.BufferResponse = false;
+            await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return AsyncStreamingClientResult.CreateSse<StreamingItem>(new AzurePipelineResponse(message), (@_, data) => ModelReaderWriter.Read<StreamingItem>(BinaryData.FromBytes(data.ToArray()), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), item => item.Data.ToString() == "[DONE]", cancellationToken);
+        }
+#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary>
+        /// [Protocol Method] GetOptionalResponse
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetOptionalResponse(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetOptionalResponse");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOptionalResponseRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] GetOptionalResponse
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetOptionalResponseAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetOptionalResponse");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOptionalResponseRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> GetOptionalResponse. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual NullableResponse<ThingModel> GetOptionalResponse(CancellationToken cancellationToken = default)
+        {
+            Response result = GetOptionalResponse(cancellationToken.ToRequestContext());
+            if (result.Status == 204)
+            {
+                return new NoValueResponse<ThingModel>(result);
+            }
+            return Response.FromValue((ThingModel)result, result);
+        }
+
+        /// <summary> GetOptionalResponse. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual async Task<NullableResponse<ThingModel>> GetOptionalResponseAsync(CancellationToken cancellationToken = default)
+        {
+            Response result = await GetOptionalResponseAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            if (result.Status == 204)
+            {
+                return new NoValueResponse<ThingModel>(result);
+            }
+            return Response.FromValue((ThingModel)result, result);
         }
 
         /// <summary> Initializes a new instance of PlantOperations. </summary>

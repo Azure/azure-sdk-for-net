@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string imageVersionApiVersion);
             _imageVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _imageVersionsRestClient = new ImageVersions(_imageVersionsClientDiagnostics, Pipeline, Endpoint, imageVersionApiVersion ?? "2026-01-01-preview");
+            _imageVersionsRestClient = new ImageVersions(_imageVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, imageVersionApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

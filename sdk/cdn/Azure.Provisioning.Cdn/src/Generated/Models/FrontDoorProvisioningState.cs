@@ -11,14 +11,14 @@ namespace Azure.Provisioning.Cdn
     public enum FrontDoorProvisioningState
     {
         /// <summary> Succeeded. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 1,
         /// <summary> Updating. </summary>
-        Updating,
+        Updating = 2,
         /// <summary> Deleting. </summary>
-        Deleting,
+        Deleting = 3,
         /// <summary> Creating. </summary>
-        Creating
+        Creating = 4
     }
 }

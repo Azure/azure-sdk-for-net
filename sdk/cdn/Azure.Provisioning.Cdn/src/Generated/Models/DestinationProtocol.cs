@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Cdn
     public enum DestinationProtocol
     {
         /// <summary> MatchRequest. </summary>
-        MatchRequest,
+        MatchRequest = 0,
         /// <summary> Http. </summary>
-        Http,
+        Http = 1,
         /// <summary> Https. </summary>
-        Https
+        Https = 2
     }
 }

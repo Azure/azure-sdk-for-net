@@ -13,11 +13,11 @@ namespace Azure.Provisioning.Batch
     public enum BatchAuthenticationMode
     {
         /// <summary> The authentication mode using shared keys. </summary>
-        SharedKey,
+        SharedKey = 0,
         /// <summary> The authentication mode using Microsoft Entra ID. </summary>
         [DataMember(Name = "AAD")]
-        Aad,
+        Aad = 1,
         /// <summary> The authentication mode using task authentication tokens. </summary>
-        TaskAuthenticationToken
+        TaskAuthenticationToken = 2
     }
 }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Internet Gateway Rule Properties defines the resource properties. </summary>
-    public partial class InternetGatewayRuleProperties : AnnotationResourceProperties
+    internal partial class InternetGatewayRuleProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="InternetGatewayRuleProperties"/>. </summary>
         /// <param name="ruleProperties"> Rules for the InternetGateways. </param>

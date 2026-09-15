@@ -237,6 +237,60 @@ namespace RandomNamespace
             await Verifier.VerifyAnalyzerAsync(code);
         }
 
+        // An SCM client may take the ClientPipelineOptions base type directly (including a
+        // nullable/optional 'ClientPipelineOptions? options = null'), not only a derived options type.
+        [Test]
+        public async Task AZC0007NotProducedForScmClientWithBaseClientPipelineOptions()
+        {
+            const string code = @"
+#nullable enable
+namespace System.ClientModel.Primitives
+{
+    public class ClientPipelineOptions {}
+}
+
+namespace RandomNamespace
+{
+    using System;
+    using System.ClientModel.Primitives;
+
+    public class SomeClient
+    {
+        protected SomeClient() {}
+        public SomeClient(Uri endpoint, ClientPipelineOptions? options = null) {}
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        // System.ClientModel (SCM) clients follow a different constructor convention than
+        // Azure.Core clients: a convenience parameterless constructor plus a
+        // (endpoint, ClientPipelineOptions-derived options) constructor, without the Azure.Core
+        // split of with/without-options overloads. AZC0007 should not fire on that shape.
+        [Test]
+        public async Task AZC0007NotProducedForScmClientWithPipelineOptions()
+        {
+            const string code = @"
+namespace System.ClientModel.Primitives
+{
+    public class ClientPipelineOptions {}
+}
+
+namespace RandomNamespace
+{
+    using System;
+
+    public class SomeClientOptions : System.ClientModel.Primitives.ClientPipelineOptions {}
+
+    public class SomeClient
+    {
+        public SomeClient() : this(new Uri(""https://localhost""), new SomeClientOptions()) {}
+        public SomeClient(Uri endpoint, SomeClientOptions options) {}
+    }
+}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
 #if !NETFRAMEWORK // Deriving from Azure.Core.ClientOptions requires netstandard2.0+ support (net472+)
         // Regression for azure-sdk-tools#127: a sub-client constructed from another client
         // (Storage's BlobLeaseClient takes a BlobBaseClient/BlobContainerClient plus an optional

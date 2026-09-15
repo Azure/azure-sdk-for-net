@@ -11,14 +11,14 @@ namespace Azure.Provisioning.Search
     public enum SearchServiceSharedPrivateLinkResourceProvisioningState
     {
         /// <summary> The shared private link resource is in the process of being created along with other resources for it to be fully functional. </summary>
-        Updating,
+        Updating = 0,
         /// <summary> The shared private link resource is in the process of being deleted. </summary>
-        Deleting,
+        Deleting = 1,
         /// <summary> The shared private link resource has failed to be provisioned or deleted. </summary>
-        Failed,
+        Failed = 2,
         /// <summary> The shared private link resource has finished provisioning and is ready for approval. </summary>
-        Succeeded,
+        Succeeded = 3,
         /// <summary> Provisioning request for the shared private link resource has been accepted but the process of creation has not commenced yet. </summary>
-        Incomplete
+        Incomplete = 4
     }
 }

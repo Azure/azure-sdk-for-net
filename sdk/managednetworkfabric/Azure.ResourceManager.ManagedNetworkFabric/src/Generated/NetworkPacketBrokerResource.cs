@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(ResourceType, out string networkPacketBrokerApiVersion);
             _networkPacketBrokersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _networkPacketBrokersRestClient = new NetworkPacketBrokers(_networkPacketBrokersClientDiagnostics, Pipeline, Endpoint, networkPacketBrokerApiVersion ?? "2025-07-15");
+            _networkPacketBrokersRestClient = new NetworkPacketBrokers(_networkPacketBrokersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkPacketBrokerApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

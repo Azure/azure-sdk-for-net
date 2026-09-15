@@ -27,36 +27,36 @@ namespace Azure.Provisioning.CostManagement
     public partial class AlertPropertiesDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AlertPropertiesDefinition() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertType> AlertType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertCategory> Category { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.AlertCriterion> Criteria { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertType> AlertType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertCategory> Category { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.AlertCriterion> Criteria { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class AlertPropertiesDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AlertPropertiesDetails() { }
-        public Azure.Provisioning.BicepValue<decimal> Amount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CompanyName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> ContactEmails { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> ContactGroups { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> ContactRoles { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<decimal> CurrentSpend { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DepartmentName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EnrollmentEndDate { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EnrollmentNumber { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EnrollmentStartDate { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<decimal> InvoicingThreshold { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<System.BinaryData> MeterFilter { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertOperator> Operator { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> OverridingAlert { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> PeriodStartDate { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<System.BinaryData> ResourceFilter { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<System.BinaryData> ResourceGroupFilter { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.BinaryData> TagFilter { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<decimal> Threshold { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.AlertTimeGrainType> TimeGrainType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TriggeredBy { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Unit { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<decimal> Amount { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CompanyName { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> ContactEmails { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> ContactGroups { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> ContactRoles { get { throw null; } }
+        public Azure.Provisioning.BicepValue<decimal> CurrentSpend { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DepartmentName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> EnrollmentEndDate { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> EnrollmentNumber { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> EnrollmentStartDate { get { throw null; } }
+        public Azure.Provisioning.BicepValue<decimal> InvoicingThreshold { get { throw null; } }
+        public Azure.Provisioning.BicepList<System.BinaryData> MeterFilter { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertOperator> Operator { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> OverridingAlert { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PeriodStartDate { get { throw null; } }
+        public Azure.Provisioning.BicepList<System.BinaryData> ResourceFilter { get { throw null; } }
+        public Azure.Provisioning.BicepList<System.BinaryData> ResourceGroupFilter { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.BinaryData> TagFilter { get { throw null; } }
+        public Azure.Provisioning.BicepValue<decimal> Threshold { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.AlertTimeGrainType> TimeGrainType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TriggeredBy { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Unit { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum AlertTimeGrainType
@@ -120,8 +120,8 @@ namespace Azure.Provisioning.CostManagement
     public partial class BudgetTimePeriod : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BudgetTimePeriod() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CategoryType
@@ -158,6 +158,13 @@ namespace Azure.Provisioning.CostManagement
         [System.Runtime.Serialization.DataMemberAttribute(Name="none")]
         None = 2,
     }
+    public partial class CostAllocationEntity : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CostAllocationEntity() { }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostAllocationResourceType> ResourceType { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum CostAllocationPolicyType
     {
         FixedProportion = 0,
@@ -178,7 +185,7 @@ namespace Azure.Provisioning.CostManagement
     {
         public CostAllocationRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.CostManagement.CostAllocationRuleProperties Properties { get { throw null; } set { } }
         public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -209,22 +216,21 @@ namespace Azure.Provisioning.CostManagement
     }
     public partial class CostManagementAlert : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public CostManagementAlert(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CloseOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> CostEntityId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } set { } }
-        public Azure.Provisioning.CostManagement.AlertPropertiesDefinition Definition { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.CostManagement.AlertPropertiesDetails Details { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
+        internal CostManagementAlert() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CloseOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> CostEntityId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
+        public Azure.Provisioning.CostManagement.AlertPropertiesDefinition Definition { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
+        public Azure.Provisioning.CostManagement.AlertPropertiesDetails Details { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ModifiedOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertSource> Source { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertStatus> Status { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> StatusModificationUserName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StatusModifiedOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ModifiedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertSource> Source { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostManagementAlertStatus> Status { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> StatusModificationUserName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StatusModifiedOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.CostManagement.CostManagementAlert FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -284,7 +290,7 @@ namespace Azure.Provisioning.CostManagement
         public Azure.Provisioning.CostManagement.BudgetFilter Filter { get { throw null; } set { } }
         public Azure.Provisioning.CostManagement.ForecastSpend ForecastSpend { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.CostManagement.BudgetNotification> Notifications { get { throw null; } set { } }
         public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -310,7 +316,7 @@ namespace Azure.Provisioning.CostManagement
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> NextRunTimeEstimate { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> PartitionData { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CostManagement.ExportRun> RunHistoryValue { get { throw null; } }
@@ -329,7 +335,7 @@ namespace Azure.Provisioning.CostManagement
     {
         public CostManagementSetting(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -355,7 +361,7 @@ namespace Azure.Provisioning.CostManagement
         public Azure.Provisioning.BicepList<Azure.Provisioning.CostManagement.ViewKpiProperties> Kpis { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ViewMetricType> Metric { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ModifiedOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CostManagement.ViewPivotProperties> Pivots { get { throw null; } set { } }
         public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -481,21 +487,21 @@ namespace Azure.Provisioning.CostManagement
     public partial class ExportRun : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ExportRun() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
-        public Azure.Provisioning.CostManagement.ExportRunErrorDetails Error { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ExportRunExecutionType> ExecutionType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> FileName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
+        public Azure.Provisioning.CostManagement.ExportRunErrorDetails Error { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ExportRunExecutionType> ExecutionType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> FileName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ManifestFile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ManifestFile { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingEndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingStartOn { get { throw null; } set { } }
-        public Azure.Provisioning.CostManagement.CommonExportProperties RunSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ExportRunExecutionStatus> Status { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SubmittedBy { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SubmittedOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingEndsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ProcessingStartsOn { get { throw null; } }
+        public Azure.Provisioning.CostManagement.CommonExportProperties RunSettings { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ExportRunExecutionStatus> Status { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SubmittedBy { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SubmittedOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -545,9 +551,9 @@ namespace Azure.Provisioning.CostManagement
     public partial class ExportSuspensionContext : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ExportSuspensionContext() { }
-        public Azure.Provisioning.BicepValue<string> SuspensionCode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SuspensionOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SuspensionReason { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SuspensionCode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SuspensionOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SuspensionReason { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ExportTimePeriod : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -600,11 +606,11 @@ namespace Azure.Provisioning.CostManagement
     }
     public partial class GenerateDetailedCostReportOperationResult : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public GenerateDetailedCostReportOperationResult(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal GenerateDetailedCostReportOperationResult() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Uri> DownloadUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiryOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ValidTill { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -616,13 +622,13 @@ namespace Azure.Provisioning.CostManagement
     }
     public partial class GenerateDetailedCostReportOperationStatuses : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public GenerateDetailedCostReportOperationStatuses(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        internal GenerateDetailedCostReportOperationStatuses() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Uri> DownloadUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> EndTime { get { throw null; } }
         public Azure.Provisioning.CostManagement.ExportRunErrorDetails Error { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiryOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> StartTime { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ReportOperationStatusType> StatusValue { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -751,7 +757,7 @@ namespace Azure.Provisioning.CostManagement
         public Azure.Provisioning.BicepList<Azure.Provisioning.CostManagement.ScheduledActionFileFormat> FileFormats { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ScheduledActionKind> Kind { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.CostManagement.NotificationProperties Notification { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> NotificationEmail { get { throw null; } set { } }
         public Azure.Provisioning.CostManagement.ScheduleProperties Schedule { get { throw null; } set { } }
@@ -811,18 +817,16 @@ namespace Azure.Provisioning.CostManagement
         public ScheduleProperties() { }
         public Azure.Provisioning.BicepValue<int> DayOfMonth { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CostManagement.ScheduledActionDaysOfWeek> DaysOfWeek { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.ScheduleFrequency> Frequency { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> HourOfDay { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CostManagement.ScheduledActionWeeksOfMonth> WeeksOfMonth { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class SourceCostAllocationEntity : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class SourceCostAllocationEntity : Azure.Provisioning.CostManagement.CostAllocationEntity
     {
         public SourceCostAllocationEntity() { }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostAllocationResourceType> ResourceType { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Values { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -832,12 +836,10 @@ namespace Azure.Provisioning.CostManagement
         public Azure.Provisioning.BicepValue<bool> TagInheritancePreferContainerTags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class TargetCostAllocationEntity : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class TargetCostAllocationEntity : Azure.Provisioning.CostManagement.CostAllocationEntity
     {
         public TargetCostAllocationEntity() { }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostAllocationPolicyType> PolicyType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CostManagement.CostAllocationResourceType> ResourceType { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CostManagement.CostAllocationProportion> Values { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }

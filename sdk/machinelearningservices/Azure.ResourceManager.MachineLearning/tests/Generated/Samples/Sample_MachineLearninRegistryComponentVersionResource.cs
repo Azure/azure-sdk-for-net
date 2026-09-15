@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             string registryName = "my-aml-registry";
             string componentName = "string";
             string version = "string";
-            ResourceIdentifier machineLearninRegistryComponentVersionResourceId = MachineLearninRegistryComponentVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, componentName, version);
-            MachineLearninRegistryComponentVersionResource machineLearninRegistryComponentVersion = client.GetMachineLearninRegistryComponentVersionResource(machineLearninRegistryComponentVersionResourceId);
+            ResourceIdentifier machineLearningRegistryComponentVersionResourceId = MachineLearningRegistryComponentVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, componentName, version);
+            MachineLearningRegistryComponentVersionResource machineLearningRegistryComponentVersion = client.GetMachineLearningRegistryComponentVersionResource(machineLearningRegistryComponentVersionResourceId);
 
             // invoke the operation
-            MachineLearninRegistryComponentVersionResource result = await machineLearninRegistryComponentVersion.GetAsync();
+            MachineLearningRegistryComponentVersionResource result = await machineLearningRegistryComponentVersion.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             string registryName = "my-aml-registry";
             string componentName = "string";
             string version = "string";
-            ResourceIdentifier machineLearninRegistryComponentVersionResourceId = MachineLearninRegistryComponentVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, componentName, version);
-            MachineLearninRegistryComponentVersionResource machineLearninRegistryComponentVersion = client.GetMachineLearninRegistryComponentVersionResource(machineLearninRegistryComponentVersionResourceId);
+            ResourceIdentifier machineLearningRegistryComponentVersionResourceId = MachineLearningRegistryComponentVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, componentName, version);
+            MachineLearningRegistryComponentVersionResource machineLearningRegistryComponentVersion = client.GetMachineLearningRegistryComponentVersionResource(machineLearningRegistryComponentVersionResourceId);
 
             // invoke the operation
-            await machineLearninRegistryComponentVersion.DeleteAsync(WaitUntil.Completed);
+            await machineLearningRegistryComponentVersion.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             string registryName = "my-aml-registry";
             string componentName = "string";
             string version = "string";
-            ResourceIdentifier machineLearninRegistryComponentVersionResourceId = MachineLearninRegistryComponentVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, componentName, version);
-            MachineLearninRegistryComponentVersionResource machineLearninRegistryComponentVersion = client.GetMachineLearninRegistryComponentVersionResource(machineLearninRegistryComponentVersionResourceId);
+            ResourceIdentifier machineLearningRegistryComponentVersionResourceId = MachineLearningRegistryComponentVersionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, registryName, componentName, version);
+            MachineLearningRegistryComponentVersionResource machineLearningRegistryComponentVersion = client.GetMachineLearningRegistryComponentVersionResource(machineLearningRegistryComponentVersionResourceId);
 
             // invoke the operation
             MachineLearningComponentVersionData data = new MachineLearningComponentVersionData(new MachineLearningComponentVersionProperties
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 ["string"] = "string"
 },
             });
-            ArmOperation<MachineLearninRegistryComponentVersionResource> lro = await machineLearninRegistryComponentVersion.UpdateAsync(WaitUntil.Completed, data);
-            MachineLearninRegistryComponentVersionResource result = lro.Value;
+            ArmOperation<MachineLearningRegistryComponentVersionResource> lro = await machineLearningRegistryComponentVersion.UpdateAsync(WaitUntil.Completed, data);
+            MachineLearningRegistryComponentVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

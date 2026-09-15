@@ -11,7 +11,10 @@ using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> The service resource properties. </summary>
+    /// <summary>
+    /// The service resource properties.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
+    /// </summary>
     public partial class ManagedServiceProperties : ManagedServiceBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="ManagedServiceProperties"/>. </summary>

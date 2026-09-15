@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum AgentPoolSshAccess
     {
         /// <summary> Can SSH onto the node as a local user using private key. </summary>
-        LocalUser,
+        LocalUser = 0,
         /// <summary> SSH service will be turned off on the node. </summary>
-        Disabled
+        Disabled = 1
     }
 }

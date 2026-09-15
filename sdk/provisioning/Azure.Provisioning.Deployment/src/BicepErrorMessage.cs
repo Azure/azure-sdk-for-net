@@ -35,6 +35,11 @@ public partial class BicepErrorMessage
     /// If this is not provided then defer to the <see cref="RawText"/>.
     /// </summary>
     public int? ColumnNumber { get; private set; }
+    /// <summary>
+    /// Indicates whether this message represents an error (<see langword="true"/>) or a
+    /// warning (<see langword="false"/>). If this is not provided then defer to the
+    /// <see cref="RawText"/>.
+    /// </summary>
     public bool? IsError { get; private set; }
 
     /// <summary>

@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Cdn
     public enum CdnCacheLevel
     {
         /// <summary> All. </summary>
-        All
+        All = 0
     }
 }

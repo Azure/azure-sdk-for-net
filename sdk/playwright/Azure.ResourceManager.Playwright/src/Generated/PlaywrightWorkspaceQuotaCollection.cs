@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Playwright
         {
             TryGetApiVersion(PlaywrightWorkspaceQuotaResource.ResourceType, out string playwrightWorkspaceQuotaApiVersion);
             _playwrightWorkspaceQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Playwright", PlaywrightWorkspaceQuotaResource.ResourceType.Namespace, Diagnostics);
-            _playwrightWorkspaceQuotasRestClient = new PlaywrightWorkspaceQuotas(_playwrightWorkspaceQuotasClientDiagnostics, Pipeline, Endpoint, playwrightWorkspaceQuotaApiVersion ?? "2026-02-01-preview");
+            _playwrightWorkspaceQuotasRestClient = new PlaywrightWorkspaceQuotas(_playwrightWorkspaceQuotasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, playwrightWorkspaceQuotaApiVersion ?? "2026-02-01-preview");
             ValidateResourceId(id);
         }
 

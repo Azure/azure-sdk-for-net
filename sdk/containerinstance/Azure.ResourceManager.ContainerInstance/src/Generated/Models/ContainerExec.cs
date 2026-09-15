@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The commands to execute within the container. </summary>
-        public IList<string> Command { get; }
+        public IList<string> Command { get; } = new ChangeTrackingList<string>();
     }
 }

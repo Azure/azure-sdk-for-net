@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OnlineExperimentation.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -37,7 +36,6 @@ namespace Azure.ResourceManager.OnlineExperimentation
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceSku))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceEncryptionConfiguration))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

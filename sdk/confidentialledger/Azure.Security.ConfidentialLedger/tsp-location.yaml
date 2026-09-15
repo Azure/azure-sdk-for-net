@@ -1,0 +1,6 @@
+directory: specification/confidentialledger/data-plane/ConfidentialLedger
+commit: e41b2ddb02f6c4f8078eb22ee988e6660acece15
+repo: Azure/azure-rest-api-specs
+additionalDirectories:
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

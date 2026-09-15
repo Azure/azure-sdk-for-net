@@ -14,24 +14,24 @@ namespace Azure.Provisioning.Search
     {
         /// <summary> Free tier, with no SLA guarantees and a subset of the features offered on billable tiers. </summary>
         [DataMember(Name = "free")]
-        Free,
+        Free = 0,
         /// <summary> Billable tier for a dedicated service having up to 3 replicas. </summary>
         [DataMember(Name = "basic")]
-        Basic,
+        Basic = 1,
         /// <summary> Billable tier for a dedicated service having up to 12 partitions and 12 replicas. </summary>
         [DataMember(Name = "standard")]
-        Standard,
+        Standard = 2,
         /// <summary> Similar to 'standard', but with more capacity per search unit. </summary>
         [DataMember(Name = "standard2")]
-        Standard2,
+        Standard2 = 3,
         /// <summary> The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). </summary>
         [DataMember(Name = "standard3")]
-        Standard3,
+        Standard3 = 4,
         /// <summary> Billable tier for a dedicated service that supports 1TB per partition, up to 12 partitions. </summary>
         [DataMember(Name = "storage_optimized_l1")]
-        StorageOptimizedL1,
+        StorageOptimizedL1 = 5,
         /// <summary> Billable tier for a dedicated service that supports 2TB per partition, up to 12 partitions. </summary>
         [DataMember(Name = "storage_optimized_l2")]
-        StorageOptimizedL2
+        StorageOptimizedL2 = 6
     }
 }

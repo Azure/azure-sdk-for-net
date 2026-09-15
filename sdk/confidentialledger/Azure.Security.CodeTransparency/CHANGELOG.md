@@ -1,14 +1,63 @@
 # Release History
 
-## 1.0.0 (Unreleased)
-
-### Features Added
+## 1.0.0 (2026-09-11)
 
 ### Breaking Changes
 
+- Replaced the optional `CodeTransparencyClientOptions` constructor parameter with separate endpoint-only and endpoint-plus-options constructors.
+- Removed the obsolete `CreateEntry(WaitUntil, BinaryData, CancellationToken)` overloads and `CreateEntryOperation`; use the `CreateEntry` overloads with the optional `waitForCommit` parameter instead. Leaving it unset omits the query parameter for compatibility with older ledger deployments.
+- Removed the obsolete single-argument `RunTransparentStatementVerification` overload; use the static `VerifyTransparentStatement` method with verification options instead.
+- Removed the obsolete `GetOperation` and `GetOperationAsync` aliases for the operation-status endpoint removed from the latest SCITT draft.
+- Renamed the preview-generated `CreateEntryV09`, `GetEntryV09`, and `GetEntryStatementV09` method families to `CreateEntry`, `GetEntry`, and `GetEntryStatement`, respectively. `GetOperationV09` and `GetOperationV09Async` are no longer public because the operation-status endpoint is deprecated; clients should poll `GetEntry` instead.
+- Replaced `CodeTransparencyClientOptions.CacheTTLSeconds` with the `TimeSpan`-valued `CacheTimeToLive` property and changed `IdentityClientEndpoint` from `string` to `Uri`.
+- Renamed `ServiceIdentityResult.CreatedAt` to `CreatedOn` and changed its type from `DateTime` to `DateTimeOffset`.
+- Made `CodeTransparencyVerificationOptions.AuthorizedDomains` get-only, changed `CcfReceipt` to a static class with get-only properties for its protocol values, and removed the unused `CodeTransparencyOperationStatus` enum and `CodeTransparencyClient.UnknownIssuerPrefix` field.
+- Removed the public `CborUtils` wire-format parsing helper; service-specific CBOR parsing is now handled internally.
+- Replaced the generated JWK/JWKS wire models with normalized, verification-oriented public types `CodeTransparencyVerificationKey` and `CodeTransparencyVerificationKeySet`, which store only public asymmetric key material. The `/jwks` (`GetPublicKeys`), COSE_Key_Set (`GetScittKeys`), and single-key (`GetScittKey`) operations now expose `CancellationToken` convenience overloads returning these normalized types, alongside the exact-wire `RequestContext` protocol overloads.
+- Added `CcfReceiptVerifier.Verify` overloads that accept a `CodeTransparencyVerificationKey`, a `string` key ID plus a caller-owned `ECDsa`, or a `CodeTransparencyVerificationKeySet`.
+- Replaced `CodeTransparencyOfflineKeys` and `OfflineKeysBehavior` with `CodeTransparencyTrustStore` and `CodeTransparencyKeyResolutionMode`, using an SDK-owned, versioned, public-only serialization format. `CodeTransparencyVerificationOptions.OfflineKeys`/`OfflineKeysBehavior` are now `TrustStore`/`KeyResolutionMode`.
+
 ### Bugs Fixed
 
+- Corrected P-521 receipt verification to use the standard JOSE curve name and COSE ES512 algorithm identifier.
+- Fixed public-key retrieval and `ToECDsa` on .NET Framework 4.6.2.
+
 ### Other Changes
+
+- Removed the unnecessary dependency on `Azure.Security.KeyVault.Keys`.
+
+## 1.0.0-beta.12 (2026-07-31)
+
+### Bugs Fixed
+
+- Fixed asynchronous registration and receipt retrieval against a still-pending transaction. When a
+  write is routed to a backup node the service replies with a redirect whose `Location` (for example
+  `/entries/{entryId}`) omits the `api-version`. `CodeTransparencyRedirectPolicy` now carries the
+  originating request's `api-version` onto followed `303`/`307`/`308` redirect targets, so the
+  subsequent read stays on the versioned API instead of falling back to the service's unversioned
+  (legacy) behavior. On the versioned API a read of a not-yet-committed entry is answered with a
+  `302 Found` whose `Location` points back at the same entry URL; the followed read now treats that
+  `302` as retriable, and the client's default retry settings were raised (more, exponentially
+  backed-off retries starting at 200 ms) so the pipeline polls until the committed receipt (`200`).
+  All retry and delay values remain overridable through `CodeTransparencyClientOptions.Retry`.
+
+## 1.0.0-beta.11 (2026-07-15)
+
+### Bugs Fixed
+
+- Hardened receipt verification to reject empty inclusion-proof collections.
+
+## 1.0.0-beta.10 (2026-07-14)
+
+### Features Added
+
+- General availability release targeting REST API version `2026-03-26`
+- Added a utility method `CcfReceipt.GetRegistrationTransactionId(byte[] receiptCoseSign1Bytes)` to extract the entry ID (registration transaction id) from a receipt
+
+### Other Changes
+
+- Removed namespace `Azure.Security.CodeTransparency.Receipt`, all classes have been moved to `Azure.Security.CodeTransparency`.
+- Updated `CodeTransparencyRedirectPolicy` to also allow 303 redirects which is returned in the case of the entry create operation.
 
 ## 1.0.0-beta.9 (2026-05-26)
 

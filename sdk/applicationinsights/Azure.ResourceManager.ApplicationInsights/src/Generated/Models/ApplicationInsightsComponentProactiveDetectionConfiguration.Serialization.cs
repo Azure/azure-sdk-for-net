@@ -8,17 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentProactiveDetectionConfiguration : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentProactiveDetectionConfiguration>
+    /// <summary> Properties that define a ProactiveDetection configuration. </summary>
+    public partial class ApplicationInsightsComponentProactiveDetectionConfiguration : IJsonModel<ApplicationInsightsComponentProactiveDetectionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentProactiveDetectionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationInsightsComponentProactiveDetectionConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationInsightsComponentProactiveDetectionConfiguration IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="applicationInsightsComponentProactiveDetectionConfiguration"> The <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApplicationInsightsComponentProactiveDetectionConfiguration applicationInsightsComponentProactiveDetectionConfiguration)
+        {
+            if (applicationInsightsComponentProactiveDetectionConfiguration == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(applicationInsightsComponentProactiveDetectionConfiguration, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ApplicationInsightsComponentProactiveDetectionConfiguration"/> from. </param>
+        internal static ApplicationInsightsComponentProactiveDetectionConfiguration FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,56 +88,60 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("Name"u8);
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("Enabled"u8);
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(SendEmailsToSubscriptionOwners))
             {
-                writer.WritePropertyName("SendEmailsToSubscriptionOwners"u8);
+                writer.WritePropertyName("sendEmailsToSubscriptionOwners"u8);
                 writer.WriteBooleanValue(SendEmailsToSubscriptionOwners.Value);
             }
             if (Optional.IsCollectionDefined(CustomEmails))
             {
-                writer.WritePropertyName("CustomEmails"u8);
+                writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();
-                foreach (var item in CustomEmails)
+                foreach (string item in CustomEmails)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LastUpdatedOn))
             {
-                writer.WritePropertyName("LastUpdatedTime"u8);
+                writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(RuleDefinitions))
             {
-                writer.WritePropertyName("RuleDefinitions"u8);
+                writer.WritePropertyName("ruleDefinitions"u8);
                 writer.WriteObjectValue(RuleDefinitions, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,275 +150,115 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
         }
 
-        ApplicationInsightsComponentProactiveDetectionConfiguration IJsonModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationInsightsComponentProactiveDetectionConfiguration IJsonModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationInsightsComponentProactiveDetectionConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement, options);
         }
 
-        internal static ApplicationInsightsComponentProactiveDetectionConfiguration DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApplicationInsightsComponentProactiveDetectionConfiguration DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             bool? sendEmailsToSubscriptionOwners = default;
             IList<string> customEmails = default;
-            DateTimeOffset? lastUpdatedTime = default;
+            DateTimeOffset? lastUpdatedOn = default;
             ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions ruleDefinitions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("Name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Enabled"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enabled = property.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("SendEmailsToSubscriptionOwners"u8))
+                if (prop.NameEquals("sendEmailsToSubscriptionOwners"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sendEmailsToSubscriptionOwners = property.Value.GetBoolean();
+                    sendEmailsToSubscriptionOwners = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("CustomEmails"u8))
+                if (prop.NameEquals("customEmails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     customEmails = array;
                     continue;
                 }
-                if (property.NameEquals("LastUpdatedTime"u8))
+                if (prop.NameEquals("lastUpdatedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastUpdatedTime = property.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("RuleDefinitions"u8))
+                if (prop.NameEquals("ruleDefinitions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ruleDefinitions = ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions.DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(property.Value, options);
+                    ruleDefinitions = ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions.DeserializeApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationInsightsComponentProactiveDetectionConfiguration(
                 name,
-                enabled,
+                isEnabled,
                 sendEmailsToSubscriptionOwners,
                 customEmails ?? new ChangeTrackingList<string>(),
-                lastUpdatedTime,
+                lastUpdatedOn,
                 ruleDefinitions,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  Name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Enabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsEnabled))
-                {
-                    builder.Append("  Enabled: ");
-                    var boolValue = IsEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendEmailsToSubscriptionOwners), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  SendEmailsToSubscriptionOwners: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SendEmailsToSubscriptionOwners))
-                {
-                    builder.Append("  SendEmailsToSubscriptionOwners: ");
-                    var boolValue = SendEmailsToSubscriptionOwners.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomEmails), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  CustomEmails: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(CustomEmails))
-                {
-                    if (CustomEmails.Any())
-                    {
-                        builder.Append("  CustomEmails: ");
-                        builder.AppendLine("[");
-                        foreach (var item in CustomEmails)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  LastUpdatedTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastUpdatedOn))
-                {
-                    builder.Append("  LastUpdatedTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleDefinitions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  RuleDefinitions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RuleDefinitions))
-                {
-                    builder.Append("  RuleDefinitions: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RuleDefinitions, options, 2, false, "  RuleDefinitions: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApplicationInsightsComponentProactiveDetectionConfiguration IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentProactiveDetectionConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

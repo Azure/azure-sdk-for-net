@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsResolverPolicyVirtualNetworkLinkResource.ResourceType, out string dnsResolverPolicyVirtualNetworkLinkApiVersion);
             _dnsResolverPolicyVirtualNetworkLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverPolicyVirtualNetworkLinkResource.ResourceType.Namespace, Diagnostics);
-            _dnsResolverPolicyVirtualNetworkLinksRestClient = new DnsResolverPolicyVirtualNetworkLinks(_dnsResolverPolicyVirtualNetworkLinksClientDiagnostics, Pipeline, Endpoint, dnsResolverPolicyVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
+            _dnsResolverPolicyVirtualNetworkLinksRestClient = new DnsResolverPolicyVirtualNetworkLinks(_dnsResolverPolicyVirtualNetworkLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverPolicyVirtualNetworkLinkApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.IotHub.Models
         }
 
         /// <summary> List of Device Streams Endpoints. </summary>
-        public IList<string> StreamingEndpoints { get; }
+        public IList<string> StreamingEndpoints { get; } = new ChangeTrackingList<string>();
     }
 }

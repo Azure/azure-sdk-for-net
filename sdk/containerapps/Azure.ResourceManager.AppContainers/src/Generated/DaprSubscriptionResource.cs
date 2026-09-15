@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string daprSubscriptionApiVersion);
             _daprSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _daprSubscriptionsRestClient = new DaprSubscriptions(_daprSubscriptionsClientDiagnostics, Pipeline, Endpoint, daprSubscriptionApiVersion ?? "2025-10-02-preview");
+            _daprSubscriptionsRestClient = new DaprSubscriptions(_daprSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, daprSubscriptionApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

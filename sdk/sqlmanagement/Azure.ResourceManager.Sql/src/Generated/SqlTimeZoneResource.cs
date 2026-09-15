@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string sqlTimeZoneApiVersion);
             _timeZonesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _timeZonesRestClient = new TimeZones(_timeZonesClientDiagnostics, Pipeline, Endpoint, sqlTimeZoneApiVersion ?? "2025-02-01-preview");
+            _timeZonesRestClient = new TimeZones(_timeZonesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlTimeZoneApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

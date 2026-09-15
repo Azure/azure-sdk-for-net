@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Memory
 {
     /// <summary> Default memory store implementation. </summary>
+    [Experimental("AAIP001")]
     public partial class MemoryStoreDefaultDefinition : MemoryStoreDefinition
     {
         /// <summary> Initializes a new instance of <see cref="MemoryStoreDefaultDefinition"/>. </summary>

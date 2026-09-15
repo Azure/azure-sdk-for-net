@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageSync.Models;
 
@@ -25,9 +24,11 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(CloudEndpointCreateParametersProperties))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointData))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointLastChangeEnumerationStatus))]
+    [ModelReaderWriterBuildable(typeof(CloudEndpointPatch))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointPostBackupResult))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(CloudEndpointResource))]
+    [ModelReaderWriterBuildable(typeof(CloudEndpointUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(CloudTieringCachePerformance))]
     [ModelReaderWriterBuildable(typeof(CloudTieringDatePolicyStatus))]
     [ModelReaderWriterBuildable(typeof(CloudTieringFilesNotTiering))]
@@ -46,7 +47,6 @@ namespace Azure.ResourceManager.StorageSync
     [ModelReaderWriterBuildable(typeof(RegisteredServerCreateParametersProperties))]
     [ModelReaderWriterBuildable(typeof(RegisteredServerProperties))]
     [ModelReaderWriterBuildable(typeof(RegisteredServerUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreFileSpec))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointArray))]
     [ModelReaderWriterBuildable(typeof(ServerEndpointBackgroundDataDownloadActivity))]

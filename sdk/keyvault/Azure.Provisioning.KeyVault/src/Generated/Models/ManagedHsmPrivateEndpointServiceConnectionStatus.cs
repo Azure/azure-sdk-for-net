@@ -11,12 +11,12 @@ namespace Azure.Provisioning.KeyVault
     public enum ManagedHsmPrivateEndpointServiceConnectionStatus
     {
         /// <summary> Pending. </summary>
-        Pending,
+        Pending = 0,
         /// <summary> Approved. </summary>
-        Approved,
+        Approved = 1,
         /// <summary> Rejected. </summary>
-        Rejected,
+        Rejected = 2,
         /// <summary> Disconnected. </summary>
-        Disconnected
+        Disconnected = 3
     }
 }

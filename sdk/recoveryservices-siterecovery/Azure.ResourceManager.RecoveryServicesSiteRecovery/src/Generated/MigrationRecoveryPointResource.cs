@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             TryGetApiVersion(ResourceType, out string migrationRecoveryPointApiVersion);
             _migrationRecoveryPointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            _migrationRecoveryPointsRestClient = new MigrationRecoveryPoints(_migrationRecoveryPointsClientDiagnostics, Pipeline, Endpoint, migrationRecoveryPointApiVersion ?? "2026-02-01");
+            _migrationRecoveryPointsRestClient = new MigrationRecoveryPoints(_migrationRecoveryPointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, migrationRecoveryPointApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 

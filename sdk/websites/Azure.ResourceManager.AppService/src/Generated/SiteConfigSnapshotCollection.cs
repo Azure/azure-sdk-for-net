@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteConfigSnapshotResource.ResourceType, out string siteConfigSnapshotApiVersion);
             _siteConfigResourceOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteConfigSnapshotResource.ResourceType.Namespace, Diagnostics);
-            _siteConfigResourceOperationGroupRestClient = new SiteConfigResourceOperationGroup(_siteConfigResourceOperationGroupClientDiagnostics, Pipeline, Endpoint, siteConfigSnapshotApiVersion ?? "2026-03-15");
+            _siteConfigResourceOperationGroupRestClient = new SiteConfigResourceOperationGroup(_siteConfigResourceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteConfigSnapshotApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

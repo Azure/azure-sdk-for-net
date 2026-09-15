@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,98 +15,157 @@ namespace Azure.ResourceManager.Authorization.Models
     public readonly partial struct RoleManagementScheduleStatus : IEquatable<RoleManagementScheduleStatus>
     {
         private readonly string _value;
+        /// <summary> Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> PendingEvaluation. </summary>
+        private const string PendingEvaluationValue = "PendingEvaluation";
+        /// <summary> Granted. </summary>
+        private const string GrantedValue = "Granted";
+        /// <summary> Denied. </summary>
+        private const string DeniedValue = "Denied";
+        /// <summary> PendingProvisioning. </summary>
+        private const string PendingProvisioningValue = "PendingProvisioning";
+        /// <summary> Provisioned. </summary>
+        private const string ProvisionedValue = "Provisioned";
+        /// <summary> PendingRevocation. </summary>
+        private const string PendingRevocationValue = "PendingRevocation";
+        /// <summary> Revoked. </summary>
+        private const string RevokedValue = "Revoked";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> PendingApprovalProvisioning. </summary>
+        private const string PendingApprovalProvisioningValue = "PendingApprovalProvisioning";
+        /// <summary> PendingApproval. </summary>
+        private const string PendingApprovalValue = "PendingApproval";
+        /// <summary> FailedAsResourceIsLocked. </summary>
+        private const string FailedAsResourceIsLockedValue = "FailedAsResourceIsLocked";
+        /// <summary> PendingAdminDecision. </summary>
+        private const string PendingAdminDecisionValue = "PendingAdminDecision";
+        /// <summary> AdminApproved. </summary>
+        private const string AdminApprovedValue = "AdminApproved";
+        /// <summary> AdminDenied. </summary>
+        private const string AdminDeniedValue = "AdminDenied";
+        /// <summary> TimedOut. </summary>
+        private const string TimedOutValue = "TimedOut";
+        /// <summary> ProvisioningStarted. </summary>
+        private const string ProvisioningStartedValue = "ProvisioningStarted";
+        /// <summary> Invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> PendingScheduleCreation. </summary>
+        private const string PendingScheduleCreationValue = "PendingScheduleCreation";
+        /// <summary> ScheduleCreated. </summary>
+        private const string ScheduleCreatedValue = "ScheduleCreated";
+        /// <summary> PendingExternalProvisioning. </summary>
+        private const string PendingExternalProvisioningValue = "PendingExternalProvisioning";
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementScheduleStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoleManagementScheduleStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AcceptedValue = "Accepted";
-        private const string PendingEvaluationValue = "PendingEvaluation";
-        private const string GrantedValue = "Granted";
-        private const string DeniedValue = "Denied";
-        private const string PendingProvisioningValue = "PendingProvisioning";
-        private const string ProvisionedValue = "Provisioned";
-        private const string PendingRevocationValue = "PendingRevocation";
-        private const string RevokedValue = "Revoked";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string PendingApprovalProvisioningValue = "PendingApprovalProvisioning";
-        private const string PendingApprovalValue = "PendingApproval";
-        private const string FailedAsResourceIsLockedValue = "FailedAsResourceIsLocked";
-        private const string PendingAdminDecisionValue = "PendingAdminDecision";
-        private const string AdminApprovedValue = "AdminApproved";
-        private const string AdminDeniedValue = "AdminDenied";
-        private const string TimedOutValue = "TimedOut";
-        private const string ProvisioningStartedValue = "ProvisioningStarted";
-        private const string InvalidValue = "Invalid";
-        private const string PendingScheduleCreationValue = "PendingScheduleCreation";
-        private const string ScheduleCreatedValue = "ScheduleCreated";
-        private const string PendingExternalProvisioningValue = "PendingExternalProvisioning";
+            _value = value;
+        }
 
         /// <summary> Accepted. </summary>
         public static RoleManagementScheduleStatus Accepted { get; } = new RoleManagementScheduleStatus(AcceptedValue);
+
         /// <summary> PendingEvaluation. </summary>
         public static RoleManagementScheduleStatus PendingEvaluation { get; } = new RoleManagementScheduleStatus(PendingEvaluationValue);
+
         /// <summary> Granted. </summary>
         public static RoleManagementScheduleStatus Granted { get; } = new RoleManagementScheduleStatus(GrantedValue);
+
         /// <summary> Denied. </summary>
         public static RoleManagementScheduleStatus Denied { get; } = new RoleManagementScheduleStatus(DeniedValue);
+
         /// <summary> PendingProvisioning. </summary>
         public static RoleManagementScheduleStatus PendingProvisioning { get; } = new RoleManagementScheduleStatus(PendingProvisioningValue);
+
         /// <summary> Provisioned. </summary>
         public static RoleManagementScheduleStatus Provisioned { get; } = new RoleManagementScheduleStatus(ProvisionedValue);
+
         /// <summary> PendingRevocation. </summary>
         public static RoleManagementScheduleStatus PendingRevocation { get; } = new RoleManagementScheduleStatus(PendingRevocationValue);
+
         /// <summary> Revoked. </summary>
         public static RoleManagementScheduleStatus Revoked { get; } = new RoleManagementScheduleStatus(RevokedValue);
+
         /// <summary> Canceled. </summary>
         public static RoleManagementScheduleStatus Canceled { get; } = new RoleManagementScheduleStatus(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static RoleManagementScheduleStatus Failed { get; } = new RoleManagementScheduleStatus(FailedValue);
+
         /// <summary> PendingApprovalProvisioning. </summary>
         public static RoleManagementScheduleStatus PendingApprovalProvisioning { get; } = new RoleManagementScheduleStatus(PendingApprovalProvisioningValue);
+
         /// <summary> PendingApproval. </summary>
         public static RoleManagementScheduleStatus PendingApproval { get; } = new RoleManagementScheduleStatus(PendingApprovalValue);
+
         /// <summary> FailedAsResourceIsLocked. </summary>
         public static RoleManagementScheduleStatus FailedAsResourceIsLocked { get; } = new RoleManagementScheduleStatus(FailedAsResourceIsLockedValue);
+
         /// <summary> PendingAdminDecision. </summary>
         public static RoleManagementScheduleStatus PendingAdminDecision { get; } = new RoleManagementScheduleStatus(PendingAdminDecisionValue);
+
         /// <summary> AdminApproved. </summary>
         public static RoleManagementScheduleStatus AdminApproved { get; } = new RoleManagementScheduleStatus(AdminApprovedValue);
+
         /// <summary> AdminDenied. </summary>
         public static RoleManagementScheduleStatus AdminDenied { get; } = new RoleManagementScheduleStatus(AdminDeniedValue);
+
         /// <summary> TimedOut. </summary>
         public static RoleManagementScheduleStatus TimedOut { get; } = new RoleManagementScheduleStatus(TimedOutValue);
+
         /// <summary> ProvisioningStarted. </summary>
         public static RoleManagementScheduleStatus ProvisioningStarted { get; } = new RoleManagementScheduleStatus(ProvisioningStartedValue);
+
         /// <summary> Invalid. </summary>
         public static RoleManagementScheduleStatus Invalid { get; } = new RoleManagementScheduleStatus(InvalidValue);
+
         /// <summary> PendingScheduleCreation. </summary>
         public static RoleManagementScheduleStatus PendingScheduleCreation { get; } = new RoleManagementScheduleStatus(PendingScheduleCreationValue);
+
         /// <summary> ScheduleCreated. </summary>
         public static RoleManagementScheduleStatus ScheduleCreated { get; } = new RoleManagementScheduleStatus(ScheduleCreatedValue);
+
         /// <summary> PendingExternalProvisioning. </summary>
         public static RoleManagementScheduleStatus PendingExternalProvisioning { get; } = new RoleManagementScheduleStatus(PendingExternalProvisioningValue);
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoleManagementScheduleStatus left, RoleManagementScheduleStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoleManagementScheduleStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoleManagementScheduleStatus left, RoleManagementScheduleStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementScheduleStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoleManagementScheduleStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoleManagementScheduleStatus(string value) => new RoleManagementScheduleStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoleManagementScheduleStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoleManagementScheduleStatus?(string value) => value == null ? null : new RoleManagementScheduleStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoleManagementScheduleStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoleManagementScheduleStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

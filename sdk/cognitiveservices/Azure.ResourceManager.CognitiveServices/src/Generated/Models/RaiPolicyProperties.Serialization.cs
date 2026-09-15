@@ -119,6 +119,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(EgressPolicy))
+            {
+                writer.WritePropertyName("egressPolicy"u8);
+                writer.WriteObjectValue(EgressPolicy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -167,6 +172,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IList<RaiPolicyContentFilter> contentFilters = default;
             IList<CustomBlocklistConfig> customBlocklists = default;
             IList<RaiSafetyProviderSourceConfig> safetyProviders = default;
+            RaiEgressPolicyConfig egressPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -235,6 +241,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     safetyProviders = array;
                     continue;
                 }
+                if (prop.NameEquals("egressPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    egressPolicy = RaiEgressPolicyConfig.DeserializeRaiEgressPolicyConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -247,6 +262,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 contentFilters ?? new ChangeTrackingList<RaiPolicyContentFilter>(),
                 customBlocklists ?? new ChangeTrackingList<CustomBlocklistConfig>(),
                 safetyProviders ?? new ChangeTrackingList<RaiSafetyProviderSourceConfig>(),
+                egressPolicy,
                 additionalBinaryDataProperties);
         }
     }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Resources.Bicep.Models;
 
 namespace Azure.ResourceManager.Resources.Bicep
@@ -18,7 +17,6 @@ namespace Azure.ResourceManager.Resources.Bicep
     [ModelReaderWriterBuildable(typeof(DecompiledFileDefinition))]
     [ModelReaderWriterBuildable(typeof(DecompileOperationContent))]
     [ModelReaderWriterBuildable(typeof(DecompileOperationSuccessResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class AzureResourceManagerResourcesBicepContext : ModelReaderWriterContext
     {
     }

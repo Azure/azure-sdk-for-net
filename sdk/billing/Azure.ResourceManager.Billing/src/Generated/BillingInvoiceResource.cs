@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(ResourceType, out string billingInvoiceApiVersion);
             _invoicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Endpoint, billingInvoiceApiVersion ?? "2024-04-01");
+            _invoicesRestClient = new Invoices(_invoicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceApiVersion ?? "2024-04-01");
             _transactionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _transactionsRestClient = new Transactions(_transactionsClientDiagnostics, Pipeline, Endpoint, billingInvoiceApiVersion ?? "2024-04-01");
+            _transactionsRestClient = new Transactions(_transactionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingInvoiceApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

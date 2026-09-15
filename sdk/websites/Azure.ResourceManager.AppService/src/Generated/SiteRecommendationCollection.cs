@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteRecommendationResource.ResourceType, out string siteRecommendationApiVersion);
             _recommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteRecommendationResource.ResourceType.Namespace, Diagnostics);
-            _recommendationsRestClient = new Recommendations(_recommendationsClientDiagnostics, Pipeline, Endpoint, siteRecommendationApiVersion ?? "2026-03-15");
+            _recommendationsRestClient = new Recommendations(_recommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteRecommendationApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

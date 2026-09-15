@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
 
         private ClientDiagnostics MonitorsClientDiagnostics => _monitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Dynatrace.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(MonitorsClientDiagnostics, Pipeline, Endpoint, "2024-04-24");
+        private Monitors MonitorsRestClient => _monitorsRestClient ??= new Monitors(MonitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-24");
 
         /// <summary>
         /// List all MonitorResource by subscriptionId

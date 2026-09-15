@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string sqlServerKeyApiVersion);
             _serverKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _serverKeysRestClient = new ServerKeys(_serverKeysClientDiagnostics, Pipeline, Endpoint, sqlServerKeyApiVersion ?? "2025-02-01-preview");
+            _serverKeysRestClient = new ServerKeys(_serverKeysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerKeyApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

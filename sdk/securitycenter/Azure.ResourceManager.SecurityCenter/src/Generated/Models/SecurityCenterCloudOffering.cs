@@ -39,5 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> The type of the security offering. </summary>
         internal OfferingType OfferingType { get; set; }
+
+        /// <summary> The offering description. </summary>
+        public string Description { get; }
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string jobResourceApiVersion);
             _jobResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Endpoint, jobResourceApiVersion ?? "2024-05-01");
+            _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, jobResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

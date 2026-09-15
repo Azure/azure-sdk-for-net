@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string siteNetworkConfigApiVersion);
             _swiftVirtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _swiftVirtualNetworksRestClient = new SwiftVirtualNetworks(_swiftVirtualNetworksClientDiagnostics, Pipeline, Endpoint, siteNetworkConfigApiVersion ?? "2026-03-15");
+            _swiftVirtualNetworksRestClient = new SwiftVirtualNetworks(_swiftVirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteNetworkConfigApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

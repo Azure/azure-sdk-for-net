@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             TryGetApiVersion(ResourceType, out string apiCenterApiVersionApiVersion);
             _apiVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
-            _apiVersionsRestClient = new ApiVersions(_apiVersionsClientDiagnostics, Pipeline, Endpoint, apiCenterApiVersionApiVersion ?? "2024-06-01-preview");
+            _apiVersionsRestClient = new ApiVersions(_apiVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiCenterApiVersionApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 

@@ -76,6 +76,26 @@ internal static class OpenTelemetryExtensions
             if (!string.IsNullOrEmpty(FoundryEnvironment.AppInsightsConnectionString))
             {
                 exporters |= ExportTarget.AzureMonitor;
+
+                // When Entra-based auth is requested, export to Azure Monitor using a
+                // system-assigned managed identity (no client id) rather than relying
+                // on the connection string's instrumentation key alone. If the credential
+                // cannot be created for any reason, warn and fall back to connection-string
+                // authentication rather than failing tracing setup.
+                if (FoundryEnvironment.IsAppInsightsEntraAuth)
+                {
+                    try
+                    {
+                        options.AzureMonitor.Credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Trace.TraceWarning(
+                            "APPLICATIONINSIGHTS_AUTH_MODE=Entra requested but a managed identity " +
+                            "credential could not be created ({0}) — continuing with connection-string authentication.",
+                            ex.Message);
+                    }
+                }
             }
 
             if (!string.IsNullOrEmpty(FoundryEnvironment.OtlpEndpoint))

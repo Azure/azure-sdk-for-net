@@ -9,11 +9,12 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Azure.Core" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.Generator.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.TypeSpec.Generator.Input" />
-	</ItemGroup>
+  </ItemGroup>
 
 </Project>

@@ -14,9 +14,9 @@ namespace Azure.Provisioning.KeyVault
     {
         /// <summary> Standard. </summary>
         [DataMember(Name = "standard")]
-        Standard,
+        Standard = 0,
         /// <summary> Premium. </summary>
         [DataMember(Name = "premium")]
-        Premium
+        Premium = 1
     }
 }

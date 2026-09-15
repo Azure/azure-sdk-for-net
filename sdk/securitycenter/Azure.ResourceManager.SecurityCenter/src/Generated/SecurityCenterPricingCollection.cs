@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SecurityCenterPricingResource.ResourceType, out string securityCenterPricingApiVersion);
             _pricingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SecurityCenterPricingResource.ResourceType.Namespace, Diagnostics);
-            _pricingsRestClient = new Pricings(_pricingsClientDiagnostics, Pipeline, Endpoint, securityCenterPricingApiVersion ?? "2024-01-01");
+            _pricingsRestClient = new Pricings(_pricingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityCenterPricingApiVersion ?? "2024-01-01");
         }
 
         /// <summary>

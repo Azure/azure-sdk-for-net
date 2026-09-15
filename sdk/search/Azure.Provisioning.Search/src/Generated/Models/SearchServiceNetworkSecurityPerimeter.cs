@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Search
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> Id
         {
             get
@@ -32,14 +32,9 @@ namespace Azure.Provisioning.Search
                 Initialize();
                 return _id;
             }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PerimeterGuid. </summary>
+        /// <summary> Gets the PerimeterGuid. </summary>
         public BicepValue<Guid> PerimeterGuid
         {
             get
@@ -47,25 +42,15 @@ namespace Azure.Provisioning.Search
                 Initialize();
                 return _perimeterGuid;
             }
-            set
-            {
-                Initialize();
-                _perimeterGuid.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
             {
                 Initialize();
                 return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
             }
         }
 

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Peering
         {
             TryGetApiVersion(ResourceType, out string peerAsnApiVersion);
             _peerAsnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Peering", ResourceType.Namespace, Diagnostics);
-            _peerAsnsRestClient = new PeerAsns(_peerAsnsClientDiagnostics, Pipeline, Endpoint, peerAsnApiVersion ?? "2025-05-01");
+            _peerAsnsRestClient = new PeerAsns(_peerAsnsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, peerAsnApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppJobDetectorPropertyApiVersion);
             _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Endpoint, containerAppJobDetectorPropertyApiVersion ?? "2025-10-02-preview");
+            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobDetectorPropertyApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App Job.
+        /// Get the properties for a given Container App Job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App Job.
+        /// Get the properties for a given Container App Job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

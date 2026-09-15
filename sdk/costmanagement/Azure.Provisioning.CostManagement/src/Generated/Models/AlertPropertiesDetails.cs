@@ -42,7 +42,7 @@ namespace Azure.Provisioning.CostManagement
         {
         }
 
-        /// <summary> Gets or sets the TimeGrainType. </summary>
+        /// <summary> Gets the TimeGrainType. </summary>
         public BicepValue<AlertTimeGrainType> TimeGrainType
         {
             get
@@ -50,14 +50,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _timeGrainType;
             }
-            set
-            {
-                Initialize();
-                _timeGrainType.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the PeriodStartDate. </summary>
+        /// <summary> Gets the PeriodStartDate. </summary>
         public BicepValue<string> PeriodStartDate
         {
             get
@@ -65,14 +60,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _periodStartDate;
             }
-            set
-            {
-                Initialize();
-                _periodStartDate.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the TriggeredBy. </summary>
+        /// <summary> Gets the TriggeredBy. </summary>
         public BicepValue<string> TriggeredBy
         {
             get
@@ -80,14 +70,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _triggeredBy;
             }
-            set
-            {
-                Initialize();
-                _triggeredBy.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ResourceGroupFilter. </summary>
+        /// <summary> Gets the ResourceGroupFilter. </summary>
         public BicepList<BinaryData> ResourceGroupFilter
         {
             get
@@ -95,14 +80,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _resourceGroupFilter;
             }
-            set
-            {
-                Initialize();
-                _resourceGroupFilter.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ResourceFilter. </summary>
+        /// <summary> Gets the ResourceFilter. </summary>
         public BicepList<BinaryData> ResourceFilter
         {
             get
@@ -110,14 +90,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _resourceFilter;
             }
-            set
-            {
-                Initialize();
-                _resourceFilter.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the MeterFilter. </summary>
+        /// <summary> Gets the MeterFilter. </summary>
         public BicepList<BinaryData> MeterFilter
         {
             get
@@ -125,14 +100,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _meterFilter;
             }
-            set
-            {
-                Initialize();
-                _meterFilter.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the TagFilter. </summary>
+        /// <summary> Gets the TagFilter. </summary>
         public BicepValue<BinaryData> TagFilter
         {
             get
@@ -140,14 +110,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _tagFilter;
             }
-            set
-            {
-                Initialize();
-                _tagFilter.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Threshold. </summary>
+        /// <summary> Gets the Threshold. </summary>
         public BicepValue<decimal> Threshold
         {
             get
@@ -155,14 +120,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _threshold;
             }
-            set
-            {
-                Initialize();
-                _threshold.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Operator. </summary>
+        /// <summary> Gets the Operator. </summary>
         public BicepValue<CostManagementAlertOperator> Operator
         {
             get
@@ -170,14 +130,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _operator;
             }
-            set
-            {
-                Initialize();
-                _operator.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Amount. </summary>
+        /// <summary> Gets the Amount. </summary>
         public BicepValue<decimal> Amount
         {
             get
@@ -185,14 +140,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _amount;
             }
-            set
-            {
-                Initialize();
-                _amount.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Unit. </summary>
+        /// <summary> Gets the Unit. </summary>
         public BicepValue<string> Unit
         {
             get
@@ -200,14 +150,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _unit;
             }
-            set
-            {
-                Initialize();
-                _unit.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CurrentSpend. </summary>
+        /// <summary> Gets the CurrentSpend. </summary>
         public BicepValue<decimal> CurrentSpend
         {
             get
@@ -215,14 +160,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _currentSpend;
             }
-            set
-            {
-                Initialize();
-                _currentSpend.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ContactEmails. </summary>
+        /// <summary> Gets the ContactEmails. </summary>
         public BicepList<string> ContactEmails
         {
             get
@@ -230,14 +170,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _contactEmails;
             }
-            set
-            {
-                Initialize();
-                _contactEmails.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ContactGroups. </summary>
+        /// <summary> Gets the ContactGroups. </summary>
         public BicepList<string> ContactGroups
         {
             get
@@ -245,14 +180,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _contactGroups;
             }
-            set
-            {
-                Initialize();
-                _contactGroups.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the ContactRoles. </summary>
+        /// <summary> Gets the ContactRoles. </summary>
         public BicepList<string> ContactRoles
         {
             get
@@ -260,14 +190,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _contactRoles;
             }
-            set
-            {
-                Initialize();
-                _contactRoles.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the OverridingAlert. </summary>
+        /// <summary> Gets the OverridingAlert. </summary>
         public BicepValue<string> OverridingAlert
         {
             get
@@ -275,14 +200,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _overridingAlert;
             }
-            set
-            {
-                Initialize();
-                _overridingAlert.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the DepartmentName. </summary>
+        /// <summary> Gets the DepartmentName. </summary>
         public BicepValue<string> DepartmentName
         {
             get
@@ -290,14 +210,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _departmentName;
             }
-            set
-            {
-                Initialize();
-                _departmentName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CompanyName. </summary>
+        /// <summary> Gets the CompanyName. </summary>
         public BicepValue<string> CompanyName
         {
             get
@@ -305,14 +220,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _companyName;
             }
-            set
-            {
-                Initialize();
-                _companyName.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the EnrollmentNumber. </summary>
+        /// <summary> Gets the EnrollmentNumber. </summary>
         public BicepValue<string> EnrollmentNumber
         {
             get
@@ -320,14 +230,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _enrollmentNumber;
             }
-            set
-            {
-                Initialize();
-                _enrollmentNumber.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the EnrollmentStartDate. </summary>
+        /// <summary> Gets the EnrollmentStartDate. </summary>
         public BicepValue<string> EnrollmentStartDate
         {
             get
@@ -335,14 +240,9 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _enrollmentStartDate;
             }
-            set
-            {
-                Initialize();
-                _enrollmentStartDate.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the EnrollmentEndDate. </summary>
+        /// <summary> Gets the EnrollmentEndDate. </summary>
         public BicepValue<string> EnrollmentEndDate
         {
             get
@@ -350,25 +250,15 @@ namespace Azure.Provisioning.CostManagement
                 Initialize();
                 return _enrollmentEndDate;
             }
-            set
-            {
-                Initialize();
-                _enrollmentEndDate.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the InvoicingThreshold. </summary>
+        /// <summary> Gets the InvoicingThreshold. </summary>
         public BicepValue<decimal> InvoicingThreshold
         {
             get
             {
                 Initialize();
                 return _invoicingThreshold;
-            }
-            set
-            {
-                Initialize();
-                _invoicingThreshold.Assign(value);
             }
         }
 

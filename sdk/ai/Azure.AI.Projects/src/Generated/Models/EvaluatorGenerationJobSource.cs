@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
@@ -12,6 +13,7 @@ namespace Azure.AI.Projects.Evaluation
     /// The base source model for evaluator generation jobs. Polymorphic over `type`.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptEvaluatorGenerationJobSource"/>, <see cref="AgentEvaluatorGenerationJobSource"/>, <see cref="TracesEvaluatorGenerationJobSource"/>, and <see cref="DatasetEvaluatorGenerationJobSource"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class EvaluatorGenerationJobSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

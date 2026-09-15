@@ -27,31 +27,35 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
         /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
-        /// <param name="operationType"> Type of operation performed on the resources. </param>
+        /// <param name="operationKind"> Type of operation performed on the resources. </param>
         /// <param name="subscriptionId"> Subscription id attached to the request. </param>
         /// <param name="deadlineOn"> Deadline for the operation. </param>
-        /// <param name="deadlineType"> Type of deadline of the operation. </param>
+        /// <param name="deadlineKind"> Type of deadline of the operation. </param>
         /// <param name="state"> Current state of the operation. </param>
         /// <param name="timeZone"> Timezone for the operation. </param>
         /// <param name="error"> Operation level errors if they exist. </param>
         /// <param name="fallbackOperationInfo"> Fallback operation details if a fallback was performed. </param>
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
+        /// <param name="resourceNotificationDetails"> Resource notification details. </param>
+        /// <param name="capacityRecommendation"> The capacity/placement recommendation computed for the operation, if requested. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationType? operationType, Guid? subscriptionId, DateTimeOffset? deadlineOn, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationKind? operationKind, Guid? subscriptionId, DateTimeOffset? deadlineOn, BulkActionDeadlineKind? deadlineKind, BulkActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, ResourceNotificationDetails resourceNotificationDetails, CapacityRecommendation capacityRecommendation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             ResourceId = resourceId;
-            OperationType = operationType;
+            OperationKind = operationKind;
             SubscriptionId = subscriptionId;
             DeadlineOn = deadlineOn;
-            DeadlineType = deadlineType;
+            DeadlineKind = deadlineKind;
             State = state;
             TimeZone = timeZone;
             Error = error;
             FallbackOperationInfo = fallbackOperationInfo;
             CompletedOn = completedOn;
             RetryPolicy = retryPolicy;
+            ResourceNotificationDetails = resourceNotificationDetails;
+            CapacityRecommendation = capacityRecommendation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -62,7 +66,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Type of operation performed on the resources. </summary>
-        public ComputeBulkOperationType? OperationType { get; }
+        public ComputeBulkOperationKind? OperationKind { get; }
 
         /// <summary> Subscription id attached to the request. </summary>
         public Guid? SubscriptionId { get; }
@@ -70,11 +74,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Deadline for the operation. </summary>
         public DateTimeOffset? DeadlineOn { get; }
 
-        /// <summary> Type of deadline of the operation. </summary>
-        public ScheduledActionDeadlineType? DeadlineType { get; }
-
         /// <summary> Current state of the operation. </summary>
-        public ScheduledActionOperationState? State { get; }
+        public BulkActionOperationState? State { get; }
 
         /// <summary> Timezone for the operation. </summary>
         public string TimeZone { get; }
@@ -90,5 +91,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Retry policy the user can pass. </summary>
         public BulkOperationRetryPolicy RetryPolicy { get; }
+
+        /// <summary> Resource notification details. </summary>
+        internal ResourceNotificationDetails ResourceNotificationDetails { get; }
+
+        /// <summary> The capacity/placement recommendation computed for the operation, if requested. </summary>
+        public CapacityRecommendation CapacityRecommendation { get; }
+
+        /// <summary> Resource context for notification tracking. </summary>
+        public string ResourceContext
+        {
+            get
+            {
+                return ResourceNotificationDetails is null ? default : ResourceNotificationDetails.ResourceContext;
+            }
+        }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.Data.SchemaRegistry.Models;
 
 namespace Azure.Data.SchemaRegistry
@@ -15,7 +14,6 @@ namespace Azure.Data.SchemaRegistry
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SchemaGroups))]
     [ModelReaderWriterBuildable(typeof(SchemaVersions))]
     public partial class AzureDataSchemaRegistryContext : ModelReaderWriterContext

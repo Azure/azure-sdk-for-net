@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(LogicAppResource.ResourceType, out string logicAppApiVersion);
             _logicAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", LogicAppResource.ResourceType.Namespace, Diagnostics);
-            _logicAppsRestClient = new LogicApps(_logicAppsClientDiagnostics, Pipeline, Endpoint, logicAppApiVersion ?? "2025-10-02-preview");
+            _logicAppsRestClient = new LogicApps(_logicAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, logicAppApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

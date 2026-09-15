@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         {
             TryGetApiVersion(ActivityLogAlertResource.ResourceType, out string activityLogAlertApiVersion);
             _activityLogAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ActivityLogAlertResource.ResourceType.Namespace, Diagnostics);
-            _activityLogAlertsRestClient = new ActivityLogAlerts(_activityLogAlertsClientDiagnostics, Pipeline, Endpoint, activityLogAlertApiVersion ?? "2023-01-01-preview");
+            _activityLogAlertsRestClient = new ActivityLogAlerts(_activityLogAlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, activityLogAlertApiVersion ?? "2023-01-01-preview");
             ValidateResourceId(id);
         }
 

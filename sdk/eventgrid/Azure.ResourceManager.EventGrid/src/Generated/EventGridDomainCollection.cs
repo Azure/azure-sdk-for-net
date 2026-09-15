@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             TryGetApiVersion(EventGridDomainResource.ResourceType, out string eventGridDomainApiVersion);
             _domainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridDomainResource.ResourceType.Namespace, Diagnostics);
-            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Endpoint, eventGridDomainApiVersion ?? "2025-07-15-preview");
+            _domainsRestClient = new Domains(_domainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridDomainApiVersion ?? "2025-07-15-preview");
             ValidateResourceId(id);
         }
 

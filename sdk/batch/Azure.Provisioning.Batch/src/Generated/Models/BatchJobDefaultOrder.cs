@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchJobDefaultOrder
     {
         /// <summary> Tasks should be scheduled uniformly from all equal-priority jobs for the pool. </summary>
-        None,
+        None = 0,
         /// <summary> If jobs have equal priority, tasks from jobs that were created earlier should be scheduled first. </summary>
-        CreationTime
+        CreationTime = 1
     }
 }

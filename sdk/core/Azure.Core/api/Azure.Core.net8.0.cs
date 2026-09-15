@@ -1254,6 +1254,7 @@ namespace Azure.Identity
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public static partial class AzureAuthorityHosts
     {
+        public static System.Uri AzureBleuCloud { get { throw null; } }
         public static System.Uri AzureChina { get { throw null; } }
         [System.ObsoleteAttribute("Microsoft Cloud Germany was closed on October 29th, 2021.")]
         public static System.Uri AzureGermany { get { throw null; } }
@@ -1283,7 +1284,9 @@ namespace Azure.Identity
     public sealed partial class AzureCredentialResolver : System.ClientModel.Primitives.CredentialResolver
     {
         public AzureCredentialResolver() { }
+        public static Azure.Identity.AzureCredentialResolver Default { get { throw null; } }
         public override bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
+        protected override bool TryResolveCore(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider?> resolveChild, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]

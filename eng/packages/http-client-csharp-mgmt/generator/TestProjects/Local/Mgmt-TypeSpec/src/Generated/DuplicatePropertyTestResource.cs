@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string duplicatePropertyTestApiVersion);
             _duplicatePropertyTestsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _duplicatePropertyTestsRestClient = new DuplicatePropertyTests(_duplicatePropertyTestsClientDiagnostics, Pipeline, Endpoint, duplicatePropertyTestApiVersion ?? "2024-05-01");
+            _duplicatePropertyTestsRestClient = new DuplicatePropertyTests(_duplicatePropertyTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, duplicatePropertyTestApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

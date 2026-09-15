@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ScriptExecutionResource.ResourceType, out string scriptExecutionApiVersion);
             _scriptExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ScriptExecutionResource.ResourceType.Namespace, Diagnostics);
-            _scriptExecutionsRestClient = new ScriptExecutions(_scriptExecutionsClientDiagnostics, Pipeline, Endpoint, scriptExecutionApiVersion ?? "2025-09-01");
+            _scriptExecutionsRestClient = new ScriptExecutions(_scriptExecutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scriptExecutionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

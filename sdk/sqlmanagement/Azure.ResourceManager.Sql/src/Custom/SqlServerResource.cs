@@ -5,9 +5,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -37,42 +37,6 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public virtual Task<Response<SqlServerDevOpsAuditingSettingResource>> GetSqlServerDevOpsAuditingSettingAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
             => GetSqlServerDevOpsAuditingSettingAsync(new DevOpsAuditingSettingsName(devOpsAuditingSettingsName), cancellationToken);
-
-        /// <summary> Backward-compatible no-expand overload of <see cref="GetSqlDatabase(string, string, string, CancellationToken)"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Response<SqlDatabaseResource> GetSqlDatabase(string databaseName, CancellationToken cancellationToken)
-            => GetSqlDatabase(databaseName, expand: null, filter: null, cancellationToken);
-
-        /// <summary> Backward-compatible no-expand overload of <see cref="GetSqlDatabaseAsync(string, string, string, CancellationToken)"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Task<Response<SqlDatabaseResource>> GetSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken)
-            => GetSqlDatabaseAsync(databaseName, expand: null, filter: null, cancellationToken);
-
-        /// <summary> Backward-compatible no-expand overload of <see cref="GetRecoverableDatabase(string, string, string, CancellationToken)"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Response<RecoverableDatabaseResource> GetRecoverableDatabase(string databaseName, CancellationToken cancellationToken)
-            => GetRecoverableDatabase(databaseName, expand: null, filter: null, cancellationToken);
-
-        /// <summary> Backward-compatible no-expand overload of <see cref="GetRecoverableDatabaseAsync(string, string, string, CancellationToken)"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Task<Response<RecoverableDatabaseResource>> GetRecoverableDatabaseAsync(string databaseName, CancellationToken cancellationToken)
-            => GetRecoverableDatabaseAsync(databaseName, expand: null, filter: null, cancellationToken);
-
-        /// <summary> Backward-compatible no-expand overload of <see cref="GetRestorableDroppedDatabase(string, string, string, CancellationToken)"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Response<RestorableDroppedDatabaseResource> GetRestorableDroppedDatabase(string restorableDroppedDatabaseId, CancellationToken cancellationToken)
-            => GetRestorableDroppedDatabase(restorableDroppedDatabaseId, expand: null, filter: null, cancellationToken);
-
-        /// <summary> Backward-compatible no-expand overload of <see cref="GetRestorableDroppedDatabaseAsync(string, string, string, CancellationToken)"/>. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual Task<Response<RestorableDroppedDatabaseResource>> GetRestorableDroppedDatabaseAsync(string restorableDroppedDatabaseId, CancellationToken cancellationToken)
-            => GetRestorableDroppedDatabaseAsync(restorableDroppedDatabaseId, expand: null, filter: null, cancellationToken);
 
         /// <summary> Backward-compatible alias for <see cref="Create(WaitUntil, TdeCertificate, CancellationToken)"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

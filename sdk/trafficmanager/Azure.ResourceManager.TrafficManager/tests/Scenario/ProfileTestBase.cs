@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         protected internal const string EndpointName2 = "endpoint2";
         protected internal const string EndpointTypeName = "ExternalEndpoints";
         protected internal const string EndpointType = "Microsoft.Network/trafficManagerProfiles/" + EndpointTypeName;
-        protected internal const TrafficManagerEndpointType EndpointTypeEnum = TrafficManagerEndpointType.ExternalEndpoints;
 
         protected internal SubscriptionResource _subscription;
         protected internal TrafficManagerProfileCollection _profileCollection;

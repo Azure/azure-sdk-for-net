@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(AutomationVariableResource.ResourceType, out string automationVariableApiVersion);
             _variableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationVariableResource.ResourceType.Namespace, Diagnostics);
-            _variableRestClient = new Variable(_variableClientDiagnostics, Pipeline, Endpoint, automationVariableApiVersion ?? "2024-10-23");
+            _variableRestClient = new Variable(_variableClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationVariableApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

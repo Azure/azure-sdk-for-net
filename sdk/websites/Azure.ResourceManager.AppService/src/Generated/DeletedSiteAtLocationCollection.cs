@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
             TryGetApiVersion(DeletedSiteAtLocationResource.ResourceType, out string deletedSiteAtLocationApiVersion);
             _location = location;
             _deletedSitesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", DeletedSiteAtLocationResource.ResourceType.Namespace, Diagnostics);
-            _deletedSitesRestClient = new DeletedSites(_deletedSitesClientDiagnostics, Pipeline, Endpoint, deletedSiteAtLocationApiVersion ?? "2026-03-15");
+            _deletedSitesRestClient = new DeletedSites(_deletedSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedSiteAtLocationApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

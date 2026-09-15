@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="targetWorkspaceResourceId"> Fully qualified resource ID of the target Sentinel workspace joining the given Sentinel workspace manager. </param>
         /// <param name="targetWorkspaceTenantId"> Tenant id of the target Sentinel workspace joining the given Sentinel workspace manager. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetWorkspaceResourceId"/> or <paramref name="targetWorkspaceTenantId"/> is null. </exception>
-        public WorkspaceManagerMemberProperties(string targetWorkspaceResourceId, string targetWorkspaceTenantId)
+        public WorkspaceManagerMemberProperties(ResourceIdentifier targetWorkspaceResourceId, string targetWorkspaceTenantId)
         {
             Argument.AssertNotNull(targetWorkspaceResourceId, nameof(targetWorkspaceResourceId));
             Argument.AssertNotNull(targetWorkspaceTenantId, nameof(targetWorkspaceTenantId));
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="targetWorkspaceResourceId"> Fully qualified resource ID of the target Sentinel workspace joining the given Sentinel workspace manager. </param>
         /// <param name="targetWorkspaceTenantId"> Tenant id of the target Sentinel workspace joining the given Sentinel workspace manager. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceManagerMemberProperties(string targetWorkspaceResourceId, string targetWorkspaceTenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspaceManagerMemberProperties(ResourceIdentifier targetWorkspaceResourceId, string targetWorkspaceTenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetWorkspaceResourceId = targetWorkspaceResourceId;
             TargetWorkspaceTenantId = targetWorkspaceTenantId;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Fully qualified resource ID of the target Sentinel workspace joining the given Sentinel workspace manager. </summary>
         [WirePath("targetWorkspaceResourceId")]
-        public string TargetWorkspaceResourceId { get; set; }
+        public ResourceIdentifier TargetWorkspaceResourceId { get; set; }
 
         /// <summary> Tenant id of the target Sentinel workspace joining the given Sentinel workspace manager. </summary>
         [WirePath("targetWorkspaceTenantId")]

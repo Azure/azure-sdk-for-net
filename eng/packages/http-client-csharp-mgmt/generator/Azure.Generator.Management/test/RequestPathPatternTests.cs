@@ -163,6 +163,27 @@ namespace Azure.Generator.Management.Tests
         }
 
         [Test]
+        public void ResourceType_ExtractsProviderNamespaceAndTypeSegments()
+        {
+            var path = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}");
+
+            var resourceType = path.ResourceType;
+
+            Assert.That(resourceType.SerializedResourceType, Is.EqualTo("Microsoft.Storage/storageAccounts/blobServices/containers"));
+            Assert.That(resourceType.Select(segment => segment.Value), Is.EqualTo(new[] { "Microsoft.Storage", "storageAccounts", "blobServices", "containers" }));
+            Assert.That(path.ResourceType, Is.SameAs(resourceType));
+        }
+
+        [Test]
+        public void ResourceType_ReturnsNullForNonResourcePath()
+        {
+            var path = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
+
+            Assert.That(path.ResourceType.Count, Is.EqualTo(0));
+            Assert.That(path.ResourceType.SerializedResourceType, Is.Empty);
+        }
+
+        [Test]
         public void GetHashCode_DifferentPatternsCanCoexistInHashSet()
         {
             var resourceGroup = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");

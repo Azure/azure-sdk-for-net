@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Information of the aggregated nodes in the expansion result. </summary>
         [WirePath("aggregations")]
-        public IList<ExpansionResultAggregation> Aggregations { get; }
+        public IList<ExpansionResultAggregation> Aggregations { get; } = new ChangeTrackingList<ExpansionResultAggregation>();
     }
 }

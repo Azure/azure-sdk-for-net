@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeSolutionTemplateResource.ResourceType, out string edgeSolutionTemplateApiVersion);
             _solutionTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSolutionTemplateResource.ResourceType.Namespace, Diagnostics);
-            _solutionTemplatesRestClient = new SolutionTemplates(_solutionTemplatesClientDiagnostics, Pipeline, Endpoint, edgeSolutionTemplateApiVersion ?? "2025-06-01");
+            _solutionTemplatesRestClient = new SolutionTemplates(_solutionTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSolutionTemplateApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

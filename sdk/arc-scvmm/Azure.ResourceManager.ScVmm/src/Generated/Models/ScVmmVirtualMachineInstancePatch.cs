@@ -10,105 +10,99 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> Defines the virtualMachineInstanceUpdate. </summary>
+    /// <summary> The type used for update operations of the VirtualMachineInstance. </summary>
     public partial class ScVmmVirtualMachineInstancePatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineInstancePatch"/>. </summary>
         public ScVmmVirtualMachineInstancePatch()
         {
-            AvailabilitySets = new ChangeTrackingList<ScVmmAvailabilitySetItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmmVirtualMachineInstancePatch"/>. </summary>
-        /// <param name="hardwareProfile"> Defines the resource properties. </param>
-        /// <param name="storageProfile"> Defines the resource properties. </param>
-        /// <param name="networkProfile"> Defines the resource properties. </param>
-        /// <param name="availabilitySets"> Availability Sets in vm. </param>
-        /// <param name="infrastructureProfile"> Gets the infrastructure profile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmVirtualMachineInstancePatch(ScVmmHardwareProfileUpdate hardwareProfile, ScVmmStorageProfileUpdate storageProfile, ScVmmNetworkProfileUpdate networkProfile, IList<ScVmmAvailabilitySetItem> availabilitySets, ScVmmInfrastructureProfileUpdate infrastructureProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The update properties of the VirtualMachineInstance. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmVirtualMachineInstancePatch(VirtualMachineInstanceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            HardwareProfile = hardwareProfile;
-            StorageProfile = storageProfile;
-            NetworkProfile = networkProfile;
-            AvailabilitySets = availabilitySets;
-            InfrastructureProfile = infrastructureProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Defines the resource properties. </summary>
-        public ScVmmHardwareProfileUpdate HardwareProfile { get; set; }
-        /// <summary> Defines the resource properties. </summary>
-        internal ScVmmStorageProfileUpdate StorageProfile { get; set; }
-        /// <summary> Gets or sets the list of virtual disks associated with the virtual machine. </summary>
-        public IList<ScVmmVirtualDiskUpdate> StorageDisks
+        /// <summary> The update properties of the VirtualMachineInstance. </summary>
+        internal VirtualMachineInstanceUpdateProperties Properties { get; set; }
+
+        /// <summary> Availability Sets in vm. </summary>
+        public IList<ScVmmAvailabilitySetItem> AvailabilitySets
         {
             get
             {
-                if (StorageProfile is null)
-                    StorageProfile = new ScVmmStorageProfileUpdate();
-                return StorageProfile.Disks;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineInstanceUpdateProperties();
+                }
+                return Properties.AvailabilitySets;
             }
         }
 
-        /// <summary> Defines the resource properties. </summary>
-        internal ScVmmNetworkProfileUpdate NetworkProfile { get; set; }
+        /// <summary> Hardware properties. </summary>
+        public ScVmmHardwareProfileUpdate HardwareProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HardwareProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineInstanceUpdateProperties();
+                }
+                Properties.HardwareProfile = value;
+            }
+        }
+
         /// <summary> Gets or sets the list of network interfaces associated with the virtual machine. </summary>
         public IList<ScVmmNetworkInterfaceUpdate> NetworkInterfaces
         {
             get
             {
-                if (NetworkProfile is null)
-                    NetworkProfile = new ScVmmNetworkProfileUpdate();
-                return NetworkProfile.NetworkInterfaces;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineInstanceUpdateProperties();
+                }
+                return Properties.NetworkInterfaces;
             }
         }
 
-        /// <summary> Availability Sets in vm. </summary>
-        public IList<ScVmmAvailabilitySetItem> AvailabilitySets { get; }
-        /// <summary> Gets the infrastructure profile. </summary>
-        internal ScVmmInfrastructureProfileUpdate InfrastructureProfile { get; set; }
+        /// <summary> Gets or sets the list of virtual disks associated with the virtual machine. </summary>
+        public IList<ScVmmVirtualDiskUpdate> StorageDisks
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineInstanceUpdateProperties();
+                }
+                return Properties.StorageDisks;
+            }
+        }
+
         /// <summary> Type of checkpoint supported for the vm. </summary>
         public string InfrastructureCheckpointType
         {
-            get => InfrastructureProfile is null ? default : InfrastructureProfile.CheckpointType;
+            get
+            {
+                return Properties is null ? default : Properties.InfrastructureCheckpointType;
+            }
             set
             {
-                if (InfrastructureProfile is null)
-                    InfrastructureProfile = new ScVmmInfrastructureProfileUpdate();
-                InfrastructureProfile.CheckpointType = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineInstanceUpdateProperties();
+                }
+                Properties.InfrastructureCheckpointType = value;
             }
         }
     }

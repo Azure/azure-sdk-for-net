@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.AppService.Mocking
 
         private ClientDiagnostics WebClientClientDiagnostics => _webClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebClient WebClientRestClient => _webClientRestClient ??= new WebClient(WebClientClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private WebClient WebClientRestClient => _webClientRestClient ??= new WebClient(WebClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         private ClientDiagnostics ProviderOperationGroupClientDiagnostics => _providerOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProviderOperationGroup ProviderOperationGroupRestClient => _providerOperationGroupRestClient ??= new ProviderOperationGroup(ProviderOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
+        private ProviderOperationGroup ProviderOperationGroupRestClient => _providerOperationGroupRestClient ??= new ProviderOperationGroup(ProviderOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15");
 
         /// <summary>
         /// Description for Gets publishing user
@@ -401,16 +401,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(ProviderStackOSType? stackOSType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetFunctionAppStacksProvidersAsyncCollectionResultOfT(ProviderOperationGroupRestClient, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders");
+            return new ProviderOperationGroupGetFunctionAppStacksProvidersAsyncCollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders");
         }
 
         /// <summary>
@@ -430,16 +430,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="FunctionAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksProviders(ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksProviders(ProviderStackOSType? stackOSType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetFunctionAppStacksProvidersCollectionResultOfT(ProviderOperationGroupRestClient, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders");
+            return new ProviderOperationGroupGetFunctionAppStacksProvidersCollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders");
         }
 
         /// <summary>
@@ -459,16 +459,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(ProviderStackOSType? stackOSType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetWebAppStacksProvidersAsyncCollectionResultOfT(ProviderOperationGroupRestClient, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksProviders");
+            return new ProviderOperationGroupGetWebAppStacksProvidersAsyncCollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksProviders");
         }
 
         /// <summary>
@@ -488,16 +488,16 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WebAppStack"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppStack> GetWebAppStacksProviders(ProviderStackOSType? stackOsType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppStack> GetWebAppStacksProviders(ProviderStackOSType? stackOSType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ProviderOperationGroupGetWebAppStacksProvidersCollectionResultOfT(ProviderOperationGroupRestClient, stackOsType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksProviders");
+            return new ProviderOperationGroupGetWebAppStacksProvidersCollectionResultOfT(ProviderOperationGroupRestClient, stackOSType?.ToString(), context, "MockableAppServiceTenantResource.GetWebAppStacksProviders");
         }
     }
 }

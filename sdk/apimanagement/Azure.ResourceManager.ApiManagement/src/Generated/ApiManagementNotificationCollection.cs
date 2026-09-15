@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ApiManagementNotificationResource.ResourceType, out string apiManagementNotificationApiVersion);
             _notificationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementNotificationResource.ResourceType.Namespace, Diagnostics);
-            _notificationRestClient = new Notification(_notificationClientDiagnostics, Pipeline, Endpoint, apiManagementNotificationApiVersion ?? "2025-09-01-preview");
+            _notificationRestClient = new Notification(_notificationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementNotificationApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

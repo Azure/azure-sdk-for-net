@@ -489,18 +489,14 @@ namespace Azure.Search.Documents
         /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetDocument(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, RequestContext context = null)
+        internal virtual Response GetDocument(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocument");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
                 using HttpMessage message = CreateGetDocumentRequest(key, querySourceAuthorization, enableElevatedRead, selectedFields, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -524,18 +520,14 @@ namespace Azure.Search.Documents
         /// <param name="enableElevatedRead"> A value that enables elevated read that bypass document level permission checks for the query operation. </param>
         /// <param name="selectedFields"> List of field names to retrieve for the document; Any field not retrieved will be missing from the returned document. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetDocumentAsync(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, RequestContext context = null)
+        internal virtual async Task<Response> GetDocumentAsync(string key, string querySourceAuthorization = default, bool? enableElevatedRead = default, IEnumerable<string> selectedFields = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchClient.GetDocument");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(key, nameof(key));
-
                 using HttpMessage message = CreateGetDocumentRequest(key, querySourceAuthorization, enableElevatedRead, selectedFields, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }

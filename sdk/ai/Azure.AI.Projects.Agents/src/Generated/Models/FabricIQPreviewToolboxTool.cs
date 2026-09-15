@@ -4,10 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A FabricIQ tool stored in a toolbox. </summary>
+    [Experimental("AAIP001")]
     public partial class FabricIQPreviewToolboxTool : ToolboxTool
     {
         /// <summary> Initializes a new instance of <see cref="FabricIQPreviewToolboxTool"/>. </summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(ResourceType, out string deviceRegistrySchemaApiVersion);
             _schemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _schemasRestClient = new Schemas(_schemasClientDiagnostics, Pipeline, Endpoint, deviceRegistrySchemaApiVersion ?? "2026-03-01-preview");
+            _schemasRestClient = new Schemas(_schemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistrySchemaApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

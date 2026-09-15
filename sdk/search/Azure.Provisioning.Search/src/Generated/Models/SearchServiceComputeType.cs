@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Search
     public enum SearchServiceComputeType
     {
         /// <summary> Create the service with the Default Compute. </summary>
-        Default,
+        Default = 0,
         /// <summary> Create the dedicated service with Azure Confidential Compute. </summary>
-        Confidential
+        Confidential = 1
     }
 }

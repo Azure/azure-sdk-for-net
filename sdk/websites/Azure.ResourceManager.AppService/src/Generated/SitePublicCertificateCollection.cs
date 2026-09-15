@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SitePublicCertificateResource.ResourceType, out string sitePublicCertificateApiVersion);
             _publicCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SitePublicCertificateResource.ResourceType.Namespace, Diagnostics);
-            _publicCertificatesRestClient = new PublicCertificates(_publicCertificatesClientDiagnostics, Pipeline, Endpoint, sitePublicCertificateApiVersion ?? "2026-03-15");
+            _publicCertificatesRestClient = new PublicCertificates(_publicCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sitePublicCertificateApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

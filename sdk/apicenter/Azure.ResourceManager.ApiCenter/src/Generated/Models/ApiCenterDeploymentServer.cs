@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
         }
 
         /// <summary> Base runtime URLs for this deployment. </summary>
-        public IList<Uri> RuntimeUri { get; }
+        public IList<Uri> RuntimeUri { get; } = new ChangeTrackingList<Uri>();
     }
 }

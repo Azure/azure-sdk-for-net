@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Replicas in the execution. </summary>
         [WirePath("replicas")]
-        public IList<ReplicaExecutionStatus> Replicas { get; }
+        public IList<ReplicaExecutionStatus> Replicas { get; } = new ChangeTrackingList<ReplicaExecutionStatus>();
     }
 }

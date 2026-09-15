@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Cdn
     public enum GeoFilterAction
     {
         /// <summary> Block. </summary>
-        Block,
+        Block = 0,
         /// <summary> Allow. </summary>
-        Allow
+        Allow = 1
     }
 }

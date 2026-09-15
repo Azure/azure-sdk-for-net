@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.DataMigration.Mocking
 
         private ClientDiagnostics MigrationServicesClientDiagnostics => _migrationServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MigrationServices MigrationServicesRestClient => _migrationServicesRestClient ??= new MigrationServices(MigrationServicesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private MigrationServices MigrationServicesRestClient => _migrationServicesRestClient ??= new MigrationServices(MigrationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics SqlMigrationServicesClientDiagnostics => _sqlMigrationServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SqlMigrationServices SqlMigrationServicesRestClient => _sqlMigrationServicesRestClient ??= new SqlMigrationServices(SqlMigrationServicesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private SqlMigrationServices SqlMigrationServicesRestClient => _sqlMigrationServicesRestClient ??= new SqlMigrationServices(SqlMigrationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics ServicesClientDiagnostics => _servicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private Services ServicesRestClient => _servicesRestClient ??= new Services(ServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics ResourceSkusClientDiagnostics => _resourceSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ResourceSkus ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkus(ResourceSkusClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private ResourceSkus ResourceSkusRestClient => _resourceSkusRestClient ??= new ResourceSkus(ResourceSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataMigration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         /// <summary>
         /// Retrieve all migration services in the subscriptions.

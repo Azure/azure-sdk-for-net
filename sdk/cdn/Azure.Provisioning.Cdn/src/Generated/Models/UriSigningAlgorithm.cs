@@ -14,6 +14,6 @@ namespace Azure.Provisioning.Cdn
     {
         /// <summary> Sha256. </summary>
         [DataMember(Name = "SHA256")]
-        Sha256
+        Sha256 = 0
     }
 }

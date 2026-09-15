@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             TryGetApiVersion(MongoClusterFirewallRuleResource.ResourceType, out string mongoClusterFirewallRuleApiVersion);
             _firewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", MongoClusterFirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Endpoint, mongoClusterFirewallRuleApiVersion ?? "2026-06-01");
+            _firewallRulesRestClient = new FirewallRules(_firewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoClusterFirewallRuleApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string syncAgentApiVersion);
             _syncAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _syncAgentsRestClient = new SyncAgents(_syncAgentsClientDiagnostics, Pipeline, Endpoint, syncAgentApiVersion ?? "2025-02-01-preview");
+            _syncAgentsRestClient = new SyncAgents(_syncAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, syncAgentApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

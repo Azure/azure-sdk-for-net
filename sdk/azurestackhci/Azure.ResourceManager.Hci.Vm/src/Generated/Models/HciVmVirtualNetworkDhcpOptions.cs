@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> An array of DNS server IP addresses that VMs or wokloads in the vnet can inherit. </summary>
-        public IList<string> DnsServers { get; }
+        public IList<string> DnsServers { get; } = new ChangeTrackingList<string>();
     }
 }

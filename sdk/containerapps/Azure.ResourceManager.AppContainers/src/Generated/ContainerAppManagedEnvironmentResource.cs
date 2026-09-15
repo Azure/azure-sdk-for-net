@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppManagedEnvironmentApiVersion);
             _containerAppManagedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppManagedEnvironmentsRestClient = new ContainerAppManagedEnvironments(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _containerAppManagedEnvironmentsRestClient = new ContainerAppManagedEnvironments(_containerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
             _managedEnvironmentPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _managedEnvironmentPrivateLinkResourcesRestClient = new ManagedEnvironmentPrivateLinkResources(_managedEnvironmentPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _managedEnvironmentPrivateLinkResourcesRestClient = new ManagedEnvironmentPrivateLinkResources(_managedEnvironmentPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
             _managedEnvironmentUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _managedEnvironmentUsagesRestClient = new ManagedEnvironmentUsages(_managedEnvironmentUsagesClientDiagnostics, Pipeline, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _managedEnvironmentUsagesRestClient = new ManagedEnvironmentUsages(_managedEnvironmentUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(client => new DotNetComponentCollection(client, Id));
         }
 
-        /// <summary> Get a .NET Component. </summary>
+        /// <summary> Gets the details of a .NET component in a managed environment. </summary>
         /// <param name="name"> Name of the .NET Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -1139,7 +1139,7 @@ namespace Azure.ResourceManager.AppContainers
             return await GetDotNetComponents().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a .NET Component. </summary>
+        /// <summary> Gets the details of a .NET component in a managed environment. </summary>
         /// <param name="name"> Name of the .NET Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

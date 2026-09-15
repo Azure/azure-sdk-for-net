@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string siteDeploymentApiVersion);
             _deploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _deploymentsRestClient = new Deployments(_deploymentsClientDiagnostics, Pipeline, Endpoint, siteDeploymentApiVersion ?? "2026-03-15");
+            _deploymentsRestClient = new Deployments(_deploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteDeploymentApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

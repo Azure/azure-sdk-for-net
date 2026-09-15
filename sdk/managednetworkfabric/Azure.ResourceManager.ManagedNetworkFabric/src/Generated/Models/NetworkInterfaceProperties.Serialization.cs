@@ -16,7 +16,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network Interface Properties defines the properties of the resource. </summary>
-    public partial class NetworkInterfaceProperties : AnnotationResourceProperties, IJsonModel<NetworkInterfaceProperties>
+    internal partial class NetworkInterfaceProperties : AnnotationResourceProperties, IJsonModel<NetworkInterfaceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -169,8 +169,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string physicalIdentifier = default;
             string connectedTo = default;
             NetworkDeviceInterfaceType? interfaceType = default;
-            IPAddress iPv4Address = default;
-            string iPv6Address = default;
+            IPAddress ipv4Address = default;
+            string ipv6Address = default;
             string description = default;
             string additionalDescription = default;
             LastOperationProperties lastOperation = default;
@@ -210,12 +210,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    iPv4Address = IPAddress.Parse(prop.Value.GetString());
+                    ipv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ipv6Address"u8))
                 {
-                    iPv6Address = prop.Value.GetString();
+                    ipv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -284,8 +284,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 physicalIdentifier,
                 connectedTo,
                 interfaceType,
-                iPv4Address,
-                iPv6Address,
+                ipv4Address,
+                ipv6Address,
                 description,
                 additionalDescription,
                 lastOperation,

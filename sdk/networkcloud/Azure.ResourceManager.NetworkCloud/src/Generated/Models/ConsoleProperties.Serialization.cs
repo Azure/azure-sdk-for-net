@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("enabled"u8);
             writer.WriteStringValue(Enabled.ToString());
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiration"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             writer.WritePropertyName("sshPublicKey"u8);
             writer.WriteObjectValue(SshPublicKey, options);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             ConsoleEnabled enabled = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             NetworkCloudSshPublicKey sshPublicKey = default;
             ConsoleDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sshPublicKey"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             return new ConsoleProperties(
                 enabled,
-                expireOn,
+                expiresOn,
                 sshPublicKey,
                 detailedStatus,
                 detailedStatusMessage,

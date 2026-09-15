@@ -11,6 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class QueryFormatTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this QueryFormatType value) => value switch
         {
             QueryFormatType.Delimited => "delimited",
@@ -20,12 +21,25 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryFormatType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static QueryFormatType ToQueryFormatType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "delimited")) return QueryFormatType.Delimited;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "json")) return QueryFormatType.Json;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "arrow")) return QueryFormatType.Arrow;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "parquet")) return QueryFormatType.Parquet;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "delimited"))
+            {
+                return QueryFormatType.Delimited;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "json"))
+            {
+                return QueryFormatType.Json;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "arrow"))
+            {
+                return QueryFormatType.Arrow;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "parquet"))
+            {
+                return QueryFormatType.Parquet;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryFormatType value.");
         }
     }

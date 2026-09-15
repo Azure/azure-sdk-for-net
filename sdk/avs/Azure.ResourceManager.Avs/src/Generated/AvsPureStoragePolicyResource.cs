@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ResourceType, out string avsPureStoragePolicyApiVersion);
             _pureStoragePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _pureStoragePoliciesRestClient = new PureStoragePolicies(_pureStoragePoliciesClientDiagnostics, Pipeline, Endpoint, avsPureStoragePolicyApiVersion ?? "2025-09-01");
+            _pureStoragePoliciesRestClient = new PureStoragePolicies(_pureStoragePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsPureStoragePolicyApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

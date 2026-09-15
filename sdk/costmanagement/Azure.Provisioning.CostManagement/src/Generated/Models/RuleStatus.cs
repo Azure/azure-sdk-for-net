@@ -11,10 +11,10 @@ namespace Azure.Provisioning.CostManagement
     public enum RuleStatus
     {
         /// <summary> Rule is saved but not used to allocate costs. </summary>
-        NotActive,
+        NotActive = 0,
         /// <summary> Rule is saved and impacting cost allocation. </summary>
-        Active,
+        Active = 1,
         /// <summary> Rule is saved and cost allocation is being updated. Readonly value that cannot be submitted in a put request. </summary>
-        Processing
+        Processing = 2
     }
 }

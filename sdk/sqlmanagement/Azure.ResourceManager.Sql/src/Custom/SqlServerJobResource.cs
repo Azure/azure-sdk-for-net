@@ -3,13 +3,13 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.Core.Pipeline;
 using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Sql

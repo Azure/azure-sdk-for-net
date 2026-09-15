@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Common Data Service data type connection. </summary>
-    public partial class Dynamics365DataConnectorDataTypesDynamics365CdsActivities : DataConnectorDataTypeCommon
+    internal partial class Dynamics365DataConnectorDataTypesDynamics365CdsActivities : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="Dynamics365DataConnectorDataTypesDynamics365CdsActivities"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
         {
             TryGetApiVersion(ResourceType, out string pipelineGroupApiVersion);
             _pipelineGroupOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.PipelineGroups", ResourceType.Namespace, Diagnostics);
-            _pipelineGroupOperationsRestClient = new PipelineGroupOperations(_pipelineGroupOperationsClientDiagnostics, Pipeline, Endpoint, pipelineGroupApiVersion ?? "2026-04-01");
+            _pipelineGroupOperationsRestClient = new PipelineGroupOperations(_pipelineGroupOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pipelineGroupApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 

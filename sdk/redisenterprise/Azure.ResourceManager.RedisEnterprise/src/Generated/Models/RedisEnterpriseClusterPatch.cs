@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseClusterPatch"/>. </summary>
         /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>
         /// <param name="properties"> Other properties of the cluster. </param>
-        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RedisEnterpriseClusterPatch(RedisEnterpriseSku sku, ClusterUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [WirePath("properties")]
         internal ClusterUpdateProperties Properties { get; set; }
 
-        /// <summary> The identity of the resource. </summary>
+        /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
 
@@ -152,6 +152,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     Properties = new ClusterUpdateProperties();
                 }
                 return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> The endpoint of the source resource that is currently pointing to this resource as a result of an ACR/ACRE to AMR migration. </summary>
+        [WirePath("properties.migratedEndpoint")]
+        public string MigratedEndpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MigratedEndpoint;
             }
         }
 

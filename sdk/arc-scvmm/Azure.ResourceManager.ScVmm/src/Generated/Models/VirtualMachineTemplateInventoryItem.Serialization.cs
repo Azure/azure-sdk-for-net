@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    public partial class VirtualMachineTemplateInventoryItem : IUtf8JsonSerializable, IJsonModel<VirtualMachineTemplateInventoryItem>
+    /// <summary> The Virtual machine template inventory item. </summary>
+    public partial class VirtualMachineTemplateInventoryItem : ScVmmInventoryItemProperties, IJsonModel<VirtualMachineTemplateInventoryItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineTemplateInventoryItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ScVmmInventoryItemProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineTemplateInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualMachineTemplateInventoryItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineTemplateInventoryItem)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineTemplateInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineTemplateInventoryItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualMachineTemplateInventoryItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineTemplateInventoryItem IPersistableModel<VirtualMachineTemplateInventoryItem>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualMachineTemplateInventoryItem)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualMachineTemplateInventoryItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualMachineTemplateInventoryItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineTemplateInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineTemplateInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineTemplateInventoryItem)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(CpuCount))
             {
@@ -57,148 +97,120 @@ namespace Azure.ResourceManager.ScVmm.Models
             }
         }
 
-        VirtualMachineTemplateInventoryItem IJsonModel<VirtualMachineTemplateInventoryItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineTemplateInventoryItem IJsonModel<VirtualMachineTemplateInventoryItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualMachineTemplateInventoryItem)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ScVmmInventoryItemProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineTemplateInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineTemplateInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineTemplateInventoryItem)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualMachineTemplateInventoryItem(document.RootElement, options);
         }
 
-        internal static VirtualMachineTemplateInventoryItem DeserializeVirtualMachineTemplateInventoryItem(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualMachineTemplateInventoryItem DeserializeVirtualMachineTemplateInventoryItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? cpuCount = default;
-            int? memoryMB = default;
-            ScVmmOSType? osType = default;
-            string osName = default;
             ScVmmInventoryType inventoryType = default;
             string managedResourceId = default;
             string uuid = default;
             string inventoryItemName = default;
             ScVmmProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int? cpuCount = default;
+            int? memoryMB = default;
+            ScVmmOSType? osType = default;
+            string osName = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("cpuCount"u8))
+                if (prop.NameEquals("inventoryType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    inventoryType = new ScVmmInventoryType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("managedResourceId"u8))
+                {
+                    managedResourceId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("uuid"u8))
+                {
+                    uuid = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("inventoryItemName"u8))
+                {
+                    inventoryItemName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cpuCount = property.Value.GetInt32();
+                    provisioningState = new ScVmmProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("memoryMB"u8))
+                if (prop.NameEquals("cpuCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryMB = property.Value.GetInt32();
+                    cpuCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("memoryMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osType = new ScVmmOSType(property.Value.GetString());
+                    memoryMB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osName"u8))
+                if (prop.NameEquals("osType"u8))
                 {
-                    osName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inventoryType"u8))
-                {
-                    inventoryType = new ScVmmInventoryType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("managedResourceId"u8))
-                {
-                    managedResourceId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("uuid"u8))
-                {
-                    uuid = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("inventoryItemName"u8))
-                {
-                    inventoryItemName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new ScVmmProvisioningState(property.Value.GetString());
+                    osType = new ScVmmOSType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("osName"u8))
+                {
+                    osName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineTemplateInventoryItem(
                 inventoryType,
                 managedResourceId,
                 uuid,
                 inventoryItemName,
                 provisioningState,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 cpuCount,
                 memoryMB,
                 osType,
                 osName);
         }
-
-        BinaryData IPersistableModel<VirtualMachineTemplateInventoryItem>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineTemplateInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineTemplateInventoryItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VirtualMachineTemplateInventoryItem IPersistableModel<VirtualMachineTemplateInventoryItem>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineTemplateInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualMachineTemplateInventoryItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineTemplateInventoryItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VirtualMachineTemplateInventoryItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

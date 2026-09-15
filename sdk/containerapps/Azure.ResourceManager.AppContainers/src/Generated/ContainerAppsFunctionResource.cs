@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppsFunctionApiVersion);
             _containerAppsFunctionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppsFunctionsRestClient = new ContainerAppsFunctions(_containerAppsFunctionsClientDiagnostics, Pipeline, Endpoint, containerAppsFunctionApiVersion ?? "2025-10-02-preview");
+            _containerAppsFunctionsRestClient = new ContainerAppsFunctions(_containerAppsFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppsFunctionApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a specific function of a Container App from the latest Revision.
+        /// Gets the details of a specific function from the latest Container App revision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -101,10 +101,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ContainerAppsFunctions_GetAzureFunctionsOnContainerApps. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -140,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a specific function of a Container App from the latest Revision.
+        /// Gets the details of a specific function from the latest Container App revision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -149,10 +145,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ContainerAppsFunctions_GetAzureFunctionsOnContainerApps. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

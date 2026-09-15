@@ -57,7 +57,7 @@ For more control over the host (adding services, configuring middleware, composi
 
 ### InvocationHandler
 
-The abstract base class you subclass for HTTP-only handlers. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`) return 404 by default and can be overridden as needed.
+The abstract base class you subclass for HTTP-only handlers. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`, `GetAsyncApiJsonAsync`, `GetAsyncApiYamlAsync`) return 404 by default and can be overridden as needed.
 
 ### InvocationWebSocketHandler
 
@@ -87,6 +87,28 @@ When you need to add services, configure middleware, or compose multiple protoco
 ### Handler lifetime
 
 Handlers registered via `AddInvocations<THandler>()` or `InvocationsServer.Run<THandler>()` are resolved per request by default (scoped lifetime). Instance fields on your `InvocationHandler` subclass will not persist across requests. Store long-lived state in separate services or storage keyed by `InvocationContext.SessionId` or `InvocationContext.InvocationId`, or register a singleton handler explicitly if you require a single shared instance.
+
+### Serving discovery specs (OpenAPI / AsyncAPI)
+
+The Invocations host exposes three optional discovery endpoints for machine-readable agent contracts. Override the corresponding methods on your `InvocationHandler`; each returns `404` by default.
+
+| Method | Endpoint | Response media type |
+|---|---|---|
+| `GetOpenApiAsync` | `GET /invocations/docs/openapi.json` | `application/json` |
+| `GetAsyncApiJsonAsync` | `GET /invocations/docs/asyncapi.json` | `application/json` |
+| `GetAsyncApiYamlAsync` | `GET /invocations/docs/asyncapi.yaml` | `application/yaml` |
+
+AsyncAPI is the companion to OpenAPI for event-driven / streaming surfaces (e.g. the `invocations_ws` WebSocket protocol) that OpenAPI cannot express. The path extension is authoritative for the returned content type — there is no `Accept` negotiation and no format conversion between the JSON and YAML representations. Override `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync` independently; publishing both is recommended for tooling compatibility.
+
+```C#
+public override async Task GetAsyncApiJsonAsync(
+    HttpRequest request, HttpResponse response, CancellationToken cancellationToken)
+{
+    response.StatusCode = 200;
+    response.ContentType = "application/json";
+    await response.WriteAsync(_asyncApiJson, cancellationToken);
+}
+```
 
 ### WebSocket protocol (`invocations_ws`)
 
@@ -122,10 +144,88 @@ What the SDK does for you when the registered handler derives from `InvocationWe
 - Calls `AcceptWebSocketAsync` before invoking your handler.
 - Sends an RFC 6455 protocol-level Ping frame (opcode `0x9`) every `WS_KEEPALIVE_INTERVAL` seconds when the env var is set — Kestrel does this for us via `WebSocketOptions.KeepAliveInterval`, so the connection stays alive across upstream proxy / load-balancer idle timeouts without any extra application traffic. Disabled by default.
 - Closes the connection cleanly on handler return (close code `1000` — `NormalClosure`) or maps an uncaught handler exception to close code `1011` (`InternalServerError`). Handler-initiated close codes are preserved unchanged.
-- Emits a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`. No framework-level OpenTelemetry span is created for the connection — ASP.NET Core auto-propagates the inbound W3C trace context, so any spans your handler starts are parented correctly without a per-connection wrapper.
+- Emits a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`. Raw WebSocket handlers use the ASP.NET Core request span. The typed Voice relay replaces that generic request telemetry with a semantic `agentserver.connection` span created from the inbound W3C context.
 - When the registered handler is a plain `InvocationHandler` (not an `InvocationWebSocketHandler`), an upgrade attempt receives HTTP `404 Not Found` — the WS endpoint short-circuits with "endpoint not registered" semantics so a missing handler fails fast instead of accepting and immediately closing.
 
 The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.
+
+For typed Voice endpoints, the SDK suppresses the generic ASP.NET Core request span and replaces it with semantic Voice spans to avoid duplicate request telemetry. The application's OpenTelemetry configuration controls whether those semantic spans are recorded and exported. When configuring tracing manually, register the `Azure.AI.AgentServer.Invocations` activity source and configure an appropriate sampler and exporter; the SDK does not override sampling or export decisions for the semantic spans. Register `VoiceHandler` implementations with `AddVoice<THandler>()`, not `AddInvocations()`, because the generic Invocations registration does not install Voice-specific tracing.
+
+### Typed Voice relay
+
+`VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over the existing `/invocations_ws` transport. The application explicitly sends readiness, responses, output, completion, control, and error messages.
+
+The typed Voice relay is experimental and may change or be removed. To use any of its APIs, suppress the `AAAS001` warning:
+
+```C#
+#pragma warning disable AAAS001
+```
+
+```C# Snippet:Invocations_ReadMe_VoiceHandler
+public class VoiceEchoHandler : VoiceHandler
+{
+    protected override Task OnSessionStartAsync(
+        VoiceSession session,
+        VoiceSessionStartEvent start,
+        CancellationToken cancellationToken) => start.ProtocolVersion == "1.0"
+            ? session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken)
+            : session.SendAsync(
+                new VoiceSessionRejectedMessage("protocol_mismatch", retriable: false),
+                cancellationToken);
+
+    protected override async Task OnUserMessageAsync(
+        VoiceSession session,
+        VoiceUserMessageEvent message,
+        CancellationToken cancellationToken)
+    {
+        var responseId = VoiceIds.CreateResponseId();
+        var itemId = VoiceIds.CreateItemId();
+        var text = string.Concat(message.Content.Select(part => part.Text));
+        using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+
+        try
+        {
+            await session.SendAsync(
+                new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
+                cancellationToken);
+            await session.SendAsync(
+                new VoiceResponseOutputTextDoneMessage(responseId, itemId, $"You said: {text}"),
+                cancellationToken);
+            await session.SendAsync(new VoiceResponseDoneMessage(responseId), cancellationToken);
+            turn.Complete(new VoiceTurnResult(
+                VoiceTurnOutcome.Response,
+                outputItemCount: 1,
+                responseId));
+        }
+        catch (OperationCanceledException exception)
+            when (exception.CancellationToken == cancellationToken &&
+                  cancellationToken.IsCancellationRequested)
+        {
+            turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.Cancelled));
+            throw;
+        }
+        catch
+        {
+            turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.Error));
+            throw;
+        }
+    }
+}
+```
+
+```C# Snippet:Invocations_ReadMe_Voice_Startup
+VoiceServer.Run<VoiceEchoHandler>();
+```
+
+The Voice layer is deliberately a typed event relay:
+
+- It decodes one inbound text frame and dispatches one typed callback.
+- `VoiceSession.SendAsync` encodes one outbound message and serializes concurrent writes.
+- It retains no pending inputs, response state, message-ID ledger, timers, callback tasks, history, or reconnect state.
+- Callbacks are awaited in wire order. Start and track long-running model or tool work in application-owned tasks, then return so later barge-in, timeout, and cancellation events can be dispatched.
+- `OnConnectionTerminating` runs once after the session becomes unwritable and before transport close. Use it only to signal cancellation of application-owned work; do not block or send from it.
+
+See [Typed Voice relay](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/SampleVoice1_TypedRelay.md) for a full sample with application-owned response tasks and cancellation.
 
 #### WebSocket configuration
 

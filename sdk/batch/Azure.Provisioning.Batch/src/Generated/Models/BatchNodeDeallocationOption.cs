@@ -11,12 +11,12 @@ namespace Azure.Provisioning.Batch
     public enum BatchNodeDeallocationOption
     {
         /// <summary> Terminate running task processes and requeue the tasks. The tasks will run again when a node is available. Remove nodes as soon as tasks have been terminated. </summary>
-        Requeue,
+        Requeue = 0,
         /// <summary> Terminate running tasks. The tasks will be completed with failureInfo indicating that they were terminated, and will not run again. Remove nodes as soon as tasks have been terminated. </summary>
-        Terminate,
+        Terminate = 1,
         /// <summary> Allow currently running tasks to complete. Schedule no new tasks while waiting. Remove nodes when all tasks have completed. </summary>
-        TaskCompletion,
+        TaskCompletion = 2,
         /// <summary> Allow currently running tasks to complete, then wait for all task data retention periods to expire. Schedule no new tasks while waiting. Remove nodes when all task retention periods have expired. </summary>
-        RetainedData
+        RetainedData = 3
     }
 }

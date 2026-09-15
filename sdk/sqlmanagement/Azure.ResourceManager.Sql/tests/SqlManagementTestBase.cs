@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql.Tests
             SubnetData subnetData = new SubnetData()
             {
                 AddressPrefix = "10.10.5.0/24",
-                PrivateEndpointNetworkPolicy = "Disabled"
+                PrivateEndpointNetworkPolicies = "Disabled"
             };
             var privateEndpointSubnet = await vnet.GetSubnets().CreateOrUpdateAsync(WaitUntil.Completed, $"private-endpoint-subnet", subnetData);
 

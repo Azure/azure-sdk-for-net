@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(ResourceType, out string sshPublicKeyApiVersion);
             _sshPublicKeyResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            _sshPublicKeyResourcesRestClient = new SshPublicKeyResources(_sshPublicKeyResourcesClientDiagnostics, Pipeline, Endpoint, sshPublicKeyApiVersion ?? "2026-03-01");
+            _sshPublicKeyResourcesRestClient = new SshPublicKeyResources(_sshPublicKeyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sshPublicKeyApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 

@@ -123,7 +123,7 @@ namespace Azure.AI.Projects.Tests
             },
             instrument);
 
-        private T GetConfiguredOptions<T>(T options, bool instrument, Dictionary<string, string> headers = null)
+        protected T GetConfiguredOptions<T>(T options, bool instrument, Dictionary<string, string> headers = null)
             where T : ClientPipelineOptions
         {
             options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);

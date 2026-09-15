@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Specifies the gallery applications that should be made available to the VM/VMSS. </summary>
-        public IList<VirtualMachineGalleryApplication> GalleryApplications { get; }
+        public IList<VirtualMachineGalleryApplication> GalleryApplications { get; } = new ChangeTrackingList<VirtualMachineGalleryApplication>();
     }
 }

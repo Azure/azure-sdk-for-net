@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string automationCredentialApiVersion);
             _credentialClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _credentialRestClient = new Credential(_credentialClientDiagnostics, Pipeline, Endpoint, automationCredentialApiVersion ?? "2024-10-23");
+            _credentialRestClient = new Credential(_credentialClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationCredentialApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

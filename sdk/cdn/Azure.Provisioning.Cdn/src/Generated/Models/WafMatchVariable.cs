@@ -11,22 +11,22 @@ namespace Azure.Provisioning.Cdn
     public enum WafMatchVariable
     {
         /// <summary> RemoteAddr. </summary>
-        RemoteAddr,
+        RemoteAddr = 0,
         /// <summary> SocketAddr. </summary>
-        SocketAddr,
+        SocketAddr = 1,
         /// <summary> RequestMethod. </summary>
-        RequestMethod,
+        RequestMethod = 2,
         /// <summary> RequestHeader. </summary>
-        RequestHeader,
+        RequestHeader = 3,
         /// <summary> RequestUri. </summary>
-        RequestUri,
+        RequestUri = 4,
         /// <summary> QueryString. </summary>
-        QueryString,
+        QueryString = 5,
         /// <summary> RequestBody. </summary>
-        RequestBody,
+        RequestBody = 6,
         /// <summary> Cookies. </summary>
-        Cookies,
+        Cookies = 7,
         /// <summary> PostArgs. </summary>
-        PostArgs
+        PostArgs = 8
     }
 }

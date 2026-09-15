@@ -11,14 +11,14 @@ namespace Azure.Provisioning.CostManagement
     public enum ScheduledActionWeeksOfMonth
     {
         /// <summary> First. </summary>
-        First,
+        First = 0,
         /// <summary> Second. </summary>
-        Second,
+        Second = 1,
         /// <summary> Third. </summary>
-        Third,
+        Third = 2,
         /// <summary> Fourth. </summary>
-        Fourth,
+        Fourth = 3,
         /// <summary> Last. </summary>
-        Last
+        Last = 4
     }
 }

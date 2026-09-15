@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents;
 
@@ -18,6 +19,7 @@ public abstract partial class ProjectsAgentDefinition
         => new(model);
     /// <summary> Creates a workflow-based agent definition from a workflow YAML document. </summary>
     /// <param name="workflowYamlDocument">The workflow defined as a YAML document.</param>
+    [Experimental("AAIP001")]
     public static WorkflowAgentDefinition CreateWorkflowAgentDefinitionFromYaml(string workflowYamlDocument)
         => WorkflowAgentDefinition.FromYaml(workflowYamlDocument);
     /// <summary> Creates a hosted agent definition with the specified container configuration. </summary>

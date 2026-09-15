@@ -61,6 +61,17 @@ public static class FoundryEnvironment
     public static string? AppInsightsConnectionString { get; private set; }
 
     /// <summary>
+    /// Indicates whether Microsoft Entra (AAD) authentication is requested for
+    /// Azure Monitor export. Returns <c>true</c> when the
+    /// <c>APPLICATIONINSIGHTS_AUTH_MODE</c> environment variable is set to
+    /// <c>"Entra"</c> (case-insensitive). When enabled, the Azure Monitor
+    /// exporter is configured with a system-assigned
+    /// <see cref="Azure.Identity.ManagedIdentityCredential"/> instead of relying
+    /// on the connection string's instrumentation key alone.
+    /// </summary>
+    public static bool IsAppInsightsEntraAuth { get; private set; }
+
+    /// <summary>
     /// The SSE keep-alive comment frame interval. Sourced from the <c>SSE_KEEPALIVE_INTERVAL</c>
     /// environment variable (value in integer seconds). When absent, zero, or unparseable,
     /// returns <see cref="Timeout.InfiniteTimeSpan"/> (disabled).
@@ -139,6 +150,12 @@ public static class FoundryEnvironment
         SessionId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID");
         OtlpEndpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT");
         AppInsightsConnectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+
+        // Entra (AAD) auth for Azure Monitor export when APPLICATIONINSIGHTS_AUTH_MODE=Entra.
+        IsAppInsightsEntraAuth = string.Equals(
+            Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_AUTH_MODE"),
+            "Entra",
+            StringComparison.OrdinalIgnoreCase);
 
         // Port: default 8088, validate range 1-65535.
         var portEnv = Environment.GetEnvironmentVariable("PORT");

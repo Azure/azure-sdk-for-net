@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Settings of the logger for the java app. </summary>
         [WirePath("loggerSettings")]
-        public IList<ContainerAppJavaLoggerSetting> LoggerSettings { get; }
+        public IList<ContainerAppJavaLoggerSetting> LoggerSettings { get; } = new ChangeTrackingList<ContainerAppJavaLoggerSetting>();
     }
 }

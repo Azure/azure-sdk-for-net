@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(SqlServerConnectionPolicyResource.ResourceType, out string sqlServerConnectionPolicyApiVersion);
             _serverConnectionPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerConnectionPolicyResource.ResourceType.Namespace, Diagnostics);
-            _serverConnectionPoliciesRestClient = new ServerConnectionPolicies(_serverConnectionPoliciesClientDiagnostics, Pipeline, Endpoint, sqlServerConnectionPolicyApiVersion ?? "2025-02-01-preview");
+            _serverConnectionPoliciesRestClient = new ServerConnectionPolicies(_serverConnectionPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerConnectionPolicyApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

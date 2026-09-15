@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The recovery plan groups. </summary>
-        public IList<SiteRecoveryPlanGroup> UpdateRecoveryPlanContentGroups { get; }
+        public IList<SiteRecoveryPlanGroup> UpdateRecoveryPlanContentGroups { get; } = new ChangeTrackingList<SiteRecoveryPlanGroup>();
     }
 }

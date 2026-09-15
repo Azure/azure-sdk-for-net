@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
         {
             TryGetApiVersion(SnapshotResource.ResourceType, out string snapshotApiVersion);
             _snapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SnapshotResource.ResourceType.Namespace, Diagnostics);
-            _snapshotsRestClient = new Snapshots(_snapshotsClientDiagnostics, Pipeline, Endpoint, snapshotApiVersion ?? "2026-03-02");
+            _snapshotsRestClient = new Snapshots(_snapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, snapshotApiVersion ?? "2026-03-02");
             ValidateResourceId(id);
         }
 

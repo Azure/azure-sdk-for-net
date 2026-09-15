@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Cdn
     public enum CustomRuleEnabledState
     {
         /// <summary> Disabled. </summary>
-        Disabled,
+        Disabled = 0,
         /// <summary> Enabled. </summary>
-        Enabled
+        Enabled = 1
     }
 }

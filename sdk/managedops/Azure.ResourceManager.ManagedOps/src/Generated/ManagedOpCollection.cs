@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedOps
         {
             TryGetApiVersion(ManagedOpResource.ResourceType, out string managedOpApiVersion);
             _managedOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedOps", ManagedOpResource.ResourceType.Namespace, Diagnostics);
-            _managedOperationsRestClient = new ManagedOperations(_managedOperationsClientDiagnostics, Pipeline, Endpoint, managedOpApiVersion ?? "2025-07-28-preview");
+            _managedOperationsRestClient = new ManagedOperations(_managedOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedOpApiVersion ?? "2025-07-28-preview");
             ValidateResourceId(id);
         }
 

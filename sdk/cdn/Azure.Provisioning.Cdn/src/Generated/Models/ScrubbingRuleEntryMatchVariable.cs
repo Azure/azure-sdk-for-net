@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Cdn
     public enum ScrubbingRuleEntryMatchVariable
     {
         /// <summary> RequestIPAddress. </summary>
-        RequestIPAddress,
+        RequestIPAddress = 0,
         /// <summary> RequestUri. </summary>
-        RequestUri,
+        RequestUri = 1,
         /// <summary> QueryStringArgNames. </summary>
-        QueryStringArgNames
+        QueryStringArgNames = 2
     }
 }

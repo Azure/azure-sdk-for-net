@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string metricsObjectFirewallApiVersion);
             _metricsObjectFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _metricsObjectFirewallRestClient = new MetricsObjectFirewall(_metricsObjectFirewallClientDiagnostics, Pipeline, Endpoint, metricsObjectFirewallApiVersion ?? "2025-10-08");
+            _metricsObjectFirewallRestClient = new MetricsObjectFirewall(_metricsObjectFirewallClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricsObjectFirewallApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 

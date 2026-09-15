@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The last month charges. </summary>
-    public partial class ProductPropertiesLastCharge : BillingAmount
+    internal partial class ProductPropertiesLastCharge : BillingAmount
     {
         /// <summary> Initializes a new instance of <see cref="ProductPropertiesLastCharge"/>. </summary>
         public ProductPropertiesLastCharge()

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string cdnOriginGroupApiVersion);
             _originGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _originGroupsRestClient = new OriginGroups(_originGroupsClientDiagnostics, Pipeline, Endpoint, cdnOriginGroupApiVersion ?? "2025-09-01-preview");
+            _originGroupsRestClient = new OriginGroups(_originGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnOriginGroupApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The list of the Action Groups. </summary>
-        public IList<ActivityLogAlertActionGroup> ActionGroups { get; }
+        public IList<ActivityLogAlertActionGroup> ActionGroups { get; } = new ChangeTrackingList<ActivityLogAlertActionGroup>();
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string devCenterCatalogTaskApiVersion);
             _customizationTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _customizationTasksRestClient = new CustomizationTasks(_customizationTasksClientDiagnostics, Pipeline, Endpoint, devCenterCatalogTaskApiVersion ?? "2026-01-01-preview");
+            _customizationTasksRestClient = new CustomizationTasks(_customizationTasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterCatalogTaskApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

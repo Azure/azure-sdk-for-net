@@ -37,7 +37,6 @@ namespace Azure.ResourceManager.Sql.Tests
         }
 
         [Test]
-        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task ManagedInstanceKeyApiTests()
         {
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Tests
             Assert.IsTrue(await collection.ExistsAsync(keyName));
 
             // 3.Get
-            var getKey =await collection.GetAsync(keyName);
+            var getKey = await collection.GetAsync(keyName);
             Assert.IsNotNull(getKey.Value.Data);
             Assert.AreEqual(keyName, getKey.Value.Data.Name);
             Assert.AreEqual("servicemanaged", getKey.Value.Data.Kind);
@@ -72,8 +71,8 @@ namespace Azure.ResourceManager.Sql.Tests
             // 4.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Assert.AreEqual(1,list.Count);
-            Assert.AreEqual(keyName,list.FirstOrDefault().Data.Name);
+            Assert.AreEqual(1, list.Count);
+            Assert.AreEqual(keyName, list.FirstOrDefault().Data.Name);
 
             // 5.Delete - Ignore("The operation could not be completed.")
             //var deleteKey =await collection.GetAsync(keyName);

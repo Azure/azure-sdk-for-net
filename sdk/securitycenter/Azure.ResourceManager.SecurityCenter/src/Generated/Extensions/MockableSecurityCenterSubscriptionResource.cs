@@ -74,79 +74,79 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private ClientDiagnostics AutomationsClientDiagnostics => _automationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Automations AutomationsRestClient => _automationsRestClient ??= new Automations(AutomationsClientDiagnostics, Pipeline, Endpoint, "2023-12-01-preview");
+        private Automations AutomationsRestClient => _automationsRestClient ??= new Automations(AutomationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-12-01-preview");
 
         private ClientDiagnostics SecurityConnectorsClientDiagnostics => _securityConnectorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecurityConnectors SecurityConnectorsRestClient => _securityConnectorsRestClient ??= new SecurityConnectors(SecurityConnectorsClientDiagnostics, Pipeline, Endpoint, "2024-08-01-preview");
+        private SecurityConnectors SecurityConnectorsRestClient => _securityConnectorsRestClient ??= new SecurityConnectors(SecurityConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01-preview");
 
         private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DiscoveredSecuritySolutions DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutions(DiscoveredSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private DiscoveredSecuritySolutions DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutions(DiscoveredSecuritySolutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics JitNetworkAccessPoliciesClientDiagnostics => _jitNetworkAccessPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(JitNetworkAccessPoliciesClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(JitNetworkAccessPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics TopologyResourcesClientDiagnostics => _topologyResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TopologyResources TopologyResourcesRestClient => _topologyResourcesRestClient ??= new TopologyResources(TopologyResourcesClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private TopologyResources TopologyResourcesRestClient => _topologyResourcesRestClient ??= new TopologyResources(TopologyResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics StandardsClientDiagnostics => _standardsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Standards StandardsRestClient => _standardsRestClient ??= new Standards(StandardsClientDiagnostics, Pipeline, Endpoint, "2021-08-01-preview");
+        private Standards StandardsRestClient => _standardsRestClient ??= new Standards(StandardsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-08-01-preview");
 
         private ClientDiagnostics AssignmentsClientDiagnostics => _assignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Assignments AssignmentsRestClient => _assignmentsRestClient ??= new Assignments(AssignmentsClientDiagnostics, Pipeline, Endpoint, "2021-08-01-preview");
+        private Assignments AssignmentsRestClient => _assignmentsRestClient ??= new Assignments(AssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-08-01-preview");
 
         private ClientDiagnostics IotSecuritySolutionClientDiagnostics => _iotSecuritySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IotSecuritySolution IotSecuritySolutionRestClient => _iotSecuritySolutionRestClient ??= new IotSecuritySolution(IotSecuritySolutionClientDiagnostics, Pipeline, Endpoint, "2019-08-01");
+        private IotSecuritySolution IotSecuritySolutionRestClient => _iotSecuritySolutionRestClient ??= new IotSecuritySolution(IotSecuritySolutionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2019-08-01");
 
         private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2026-01-01");
+        private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AllowedConnections AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnections(AllowedConnectionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private AllowedConnections AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnections(AllowedConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2022-01-01");
+        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-01-01");
 
         private ClientDiagnostics ExternalSecuritySolutionsClientDiagnostics => _externalSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics SecuritySolutionsClientDiagnostics => _securitySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecuritySolutions SecuritySolutionsRestClient => _securitySolutionsRestClient ??= new SecuritySolutions(SecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private SecuritySolutions SecuritySolutionsRestClient => _securitySolutionsRestClient ??= new SecuritySolutions(SecuritySolutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics SecuritySolutionsReferenceDataOperationGroupClientDiagnostics => _securitySolutionsReferenceDataOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecuritySolutionsReferenceDataOperationGroup SecuritySolutionsReferenceDataOperationGroupRestClient => _securitySolutionsReferenceDataOperationGroupRestClient ??= new SecuritySolutionsReferenceDataOperationGroup(SecuritySolutionsReferenceDataOperationGroupClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private SecuritySolutionsReferenceDataOperationGroup SecuritySolutionsReferenceDataOperationGroupRestClient => _securitySolutionsReferenceDataOperationGroupRestClient ??= new SecuritySolutionsReferenceDataOperationGroup(SecuritySolutionsReferenceDataOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics TasksClientDiagnostics => _tasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Tasks TasksRestClient => _tasksRestClient ??= new Tasks(TasksClientDiagnostics, Pipeline, Endpoint, "2015-06-01-preview");
+        private Tasks TasksRestClient => _tasksRestClient ??= new Tasks(TasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2015-06-01-preview");
 
         private ClientDiagnostics APICollectionsClientDiagnostics => _apiCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private APICollections APICollectionsRestClient => _apiCollectionsRestClient ??= new APICollections(APICollectionsClientDiagnostics, Pipeline, Endpoint, "2023-11-15");
+        private APICollections APICollectionsRestClient => _apiCollectionsRestClient ??= new APICollections(APICollectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-11-15");
 
         private ClientDiagnostics SecureScoreControlsClientDiagnostics => _secureScoreControlsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecureScoreControls SecureScoreControlsRestClient => _secureScoreControlsRestClient ??= new SecureScoreControls(SecureScoreControlsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private SecureScoreControls SecureScoreControlsRestClient => _secureScoreControlsRestClient ??= new SecureScoreControls(SecureScoreControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics SecureScoreControlDefinitionsClientDiagnostics => _secureScoreControlDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecureScoreControlDefinitions SecureScoreControlDefinitionsRestClient => _secureScoreControlDefinitionsRestClient ??= new SecureScoreControlDefinitions(SecureScoreControlDefinitionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private SecureScoreControlDefinitions SecureScoreControlDefinitionsRestClient => _secureScoreControlDefinitionsRestClient ??= new SecureScoreControlDefinitions(SecureScoreControlDefinitionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Topology TopologyRestClient => _topologyRestClient ??= new Topology(TopologyClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private Topology TopologyRestClient => _topologyRestClient ??= new Topology(TopologyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         /// <summary> Gets a collection of SecurityAlertsSuppressionRules in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of SecurityAlertsSuppressionRules and their operations over a SecurityAlertsSuppressionRuleResource. </returns>

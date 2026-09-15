@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
 
         private ClientDiagnostics SavingsPlanOperationGroupClientDiagnostics => _savingsPlanOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SavingsPlanOperationGroup SavingsPlanOperationGroupRestClient => _savingsPlanOperationGroupRestClient ??= new SavingsPlanOperationGroup(SavingsPlanOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private SavingsPlanOperationGroup SavingsPlanOperationGroupRestClient => _savingsPlanOperationGroupRestClient ??= new SavingsPlanOperationGroup(SavingsPlanOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics BenefitClientDiagnostics => _benefitClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Benefit BenefitRestClient => _benefitRestClient ??= new Benefit(BenefitClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private Benefit BenefitRestClient => _benefitRestClient ??= new Benefit(BenefitClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         private ClientDiagnostics SellerResourceClientDiagnostics => _sellerResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BillingBenefits.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SellerResource SellerResourceRestClient => _sellerResourceRestClient ??= new SellerResource(SellerResourceClientDiagnostics, Pipeline, Endpoint, "2025-12-01-preview");
+        private SellerResource SellerResourceRestClient => _sellerResourceRestClient ??= new SellerResource(SellerResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
 
         /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderAliases in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderAliases and their operations over a BillingBenefitsSavingsPlanOrderAliasResource. </returns>

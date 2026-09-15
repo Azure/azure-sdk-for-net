@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> List of transport availability details for given region. </summary>
-        public IReadOnlyList<TransportAvailabilityDetails> TransportAvailabilityDetails { get; }
+        public IReadOnlyList<TransportAvailabilityDetails> TransportAvailabilityDetails { get; } = new ChangeTrackingList<TransportAvailabilityDetails>();
     }
 }

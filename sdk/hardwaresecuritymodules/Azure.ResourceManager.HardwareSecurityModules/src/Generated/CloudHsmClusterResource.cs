@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             TryGetApiVersion(ResourceType, out string cloudHsmClusterApiVersion);
             _cloudHsmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _cloudHsmClustersRestClient = new CloudHsmClusters(_cloudHsmClustersClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
+            _cloudHsmClustersRestClient = new CloudHsmClusters(_cloudHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion ?? "2025-12-01-preview");
             _cloudHsmClusterBackupStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _cloudHsmClusterBackupStatusRestClient = new CloudHsmClusterBackupStatus(_cloudHsmClusterBackupStatusClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
+            _cloudHsmClusterBackupStatusRestClient = new CloudHsmClusterBackupStatus(_cloudHsmClusterBackupStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion ?? "2025-12-01-preview");
             _cloudHsmClusterRestoreStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _cloudHsmClusterRestoreStatusRestClient = new CloudHsmClusterRestoreStatus(_cloudHsmClusterRestoreStatusClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
+            _cloudHsmClusterRestoreStatusRestClient = new CloudHsmClusterRestoreStatus(_cloudHsmClusterRestoreStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion ?? "2025-12-01-preview");
             _cloudHsmClusterPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _cloudHsmClusterPrivateLinkResourcesRestClient = new CloudHsmClusterPrivateLinkResources(_cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, Endpoint, cloudHsmClusterApiVersion ?? "2025-03-31");
+            _cloudHsmClusterPrivateLinkResourcesRestClient = new CloudHsmClusterPrivateLinkResources(_cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudHsmClusterApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -889,7 +889,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

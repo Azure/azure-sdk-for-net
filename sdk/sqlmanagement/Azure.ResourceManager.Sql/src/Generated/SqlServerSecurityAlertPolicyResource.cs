@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string sqlServerSecurityAlertPolicyApiVersion);
             _serverSecurityAlertPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _serverSecurityAlertPoliciesRestClient = new ServerSecurityAlertPolicies(_serverSecurityAlertPoliciesClientDiagnostics, Pipeline, Endpoint, sqlServerSecurityAlertPolicyApiVersion ?? "2025-02-01-preview");
+            _serverSecurityAlertPoliciesRestClient = new ServerSecurityAlertPolicies(_serverSecurityAlertPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerSecurityAlertPolicyApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

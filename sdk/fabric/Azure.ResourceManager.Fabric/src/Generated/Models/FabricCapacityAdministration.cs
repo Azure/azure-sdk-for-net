@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Fabric.Models
         }
 
         /// <summary> An array of administrator user identities. </summary>
-        public IList<string> Members { get; }
+        public IList<string> Members { get; } = new ChangeTrackingList<string>();
     }
 }

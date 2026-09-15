@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Search
     public enum SearchEncryptionComplianceStatus
     {
         /// <summary> Indicates that the search service is compliant, either because the number of non-CMK-encrypted objects is zero or enforcement is disabled. </summary>
-        Compliant,
+        Compliant = 0,
         /// <summary> Indicates that the search service has more than one non-CMK-encrypted objects. </summary>
-        NonCompliant
+        NonCompliant = 1
     }
 }

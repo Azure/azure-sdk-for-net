@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Attestation
         {
             TryGetApiVersion(AttestationPrivateEndpointConnectionResource.ResourceType, out string attestationPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Attestation", AttestationPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, attestationPrivateEndpointConnectionApiVersion ?? "2021-06-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, attestationPrivateEndpointConnectionApiVersion ?? "2021-06-01");
             ValidateResourceId(id);
         }
 

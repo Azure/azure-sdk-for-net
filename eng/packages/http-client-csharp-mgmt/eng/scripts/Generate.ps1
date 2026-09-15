@@ -7,9 +7,10 @@ param(
 )
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
+Import-Module "$PSScriptRoot\Spector-Helper.psm1" -DisableNameChecking -Force;
 
 $mgmtPackageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
-Write-Host "Mgmt Package root: $packageRoot" -ForegroundColor Cyan
+Write-Host "Mgmt Package root: $mgmtPackageRoot" -ForegroundColor Cyan
 $mgmtSolutionDir = Join-Path $mgmtPackageRoot 'generator'
 
 if (-not $LaunchOnly) {
@@ -45,6 +46,43 @@ foreach ($project in $testProjects) {
     }
 }
 
+$spectorRoot = Join-Path $mgmtPackageRoot 'generator' 'TestProjects' 'Spector'
+
+$spectorLaunchProjects = @{}
+
+foreach ($specFile in Get-Sorted-Specs) {
+    $subPath = Get-SubPath $specFile
+    $folders = $subPath -split '[\\/]'
+
+    if (-not (Compare-Paths $subPath $filter)) {
+        continue
+    }
+
+    $generationDir = $spectorRoot
+    foreach ($folder in $folders) {
+        $generationDir = Join-Path $generationDir $folder
+    }
+
+    # create the directory if it doesn't exist
+    if (-not (Test-Path $generationDir)) {
+        New-Item -ItemType Directory -Path $generationDir | Out-Null
+    }
+
+    Write-Host "Generating $subPath" -ForegroundColor Cyan
+
+    $spectorLaunchProjects.Add(($folders -join "-"), "TestProjects/Spector/$subPath")
+    if ($LaunchOnly) {
+        continue
+    }
+
+    Invoke (Get-Mgmt-TspCommand $specFile $generationDir -debug:$Debug)
+
+    # exit if the generation failed
+    if ($LASTEXITCODE -ne 0) {
+        exit $LASTEXITCODE
+    }
+}
+
 # only write new launch settings if no filter was passed in
 if ($null -eq $filter) {
     # Write the launch settings for Mgmt
@@ -53,10 +91,17 @@ if ($null -eq $filter) {
     foreach ($project in $testProjects) {
         $specPath = "TestProjects/Local/$($project.Folder)"
         $mgmtLaunchSettings["profiles"].Add($project.FilterName, @{
-            "commandLineArgs" = "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$specPath -g MgmtClientGenerator"
+            "commandLineArgs" = "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$specPath -g ManagementClientGenerator"
             "commandName" = "Executable"
             "executablePath" = "dotnet"
         })
+    }
+
+    foreach ($kvp in $spectorLaunchProjects.GetEnumerator()) {
+        $mgmtLaunchSettings["profiles"].Add($kvp.Key, @{})
+        $mgmtLaunchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$($kvp.Value) -g ManagementClientGenerator")
+        $mgmtLaunchSettings["profiles"][$kvp.Key].Add("commandName", "Executable")
+        $mgmtLaunchSettings["profiles"][$kvp.Key].Add("executablePath", "dotnet")
     }
 
     $mgmtSortedLaunchSettings = @{}

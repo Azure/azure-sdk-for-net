@@ -13,12 +13,12 @@ namespace Azure.Provisioning.Cdn
     public enum CdnMinimumTlsVersion
     {
         /// <summary> None. </summary>
-        None,
+        None = 0,
         /// <summary> Tls1_0. </summary>
         [DataMember(Name = "TLS10")]
-        Tls1_0,
+        Tls1_0 = 1,
         /// <summary> Tls1_2. </summary>
         [DataMember(Name = "TLS12")]
-        Tls1_2
+        Tls1_2 = 2
     }
 }

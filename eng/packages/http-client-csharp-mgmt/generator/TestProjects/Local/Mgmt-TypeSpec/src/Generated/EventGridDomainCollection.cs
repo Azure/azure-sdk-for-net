@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(EventGridDomainResource.ResourceType, out string eventGridDomainApiVersion);
             _eventGridDomainsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", EventGridDomainResource.ResourceType.Namespace, Diagnostics);
-            _eventGridDomainsRestClient = new EventGridDomains(_eventGridDomainsClientDiagnostics, Pipeline, Endpoint, eventGridDomainApiVersion ?? "2024-05-01");
+            _eventGridDomainsRestClient = new EventGridDomains(_eventGridDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventGridDomainApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.Maintenance.Mocking
 
         private ClientDiagnostics ScheduledEventsClientDiagnostics => _scheduledEventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledEvents ScheduledEventsRestClient => _scheduledEventsRestClient ??= new ScheduledEvents(ScheduledEventsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private ScheduledEvents ScheduledEventsRestClient => _scheduledEventsRestClient ??= new ScheduledEvents(ScheduledEventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics MaintenanceApplyUpdateClientDiagnostics => _maintenanceApplyUpdateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private MaintenanceApplyUpdate MaintenanceApplyUpdateRestClient => _maintenanceApplyUpdateRestClient ??= new MaintenanceApplyUpdate(MaintenanceApplyUpdateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         private ClientDiagnostics UpdatesClientDiagnostics => _updatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maintenance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Updates UpdatesRestClient => _updatesRestClient ??= new Updates(UpdatesClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+        private Updates UpdatesRestClient => _updatesRestClient ??= new Updates(UpdatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
 
         /// <summary> Gets an object representing a <see cref="MaintenancePublicConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

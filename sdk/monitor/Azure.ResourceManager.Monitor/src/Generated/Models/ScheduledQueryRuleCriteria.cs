@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> A list of conditions to evaluate against the specified scopes. </summary>
-        public IList<ScheduledQueryRuleCondition> AllOf { get; }
+        public IList<ScheduledQueryRuleCondition> AllOf { get; } = new ChangeTrackingList<ScheduledQueryRuleCondition>();
     }
 }

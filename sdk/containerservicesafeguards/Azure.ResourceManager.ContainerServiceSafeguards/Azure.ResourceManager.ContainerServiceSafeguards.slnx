@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.ContainerServiceSafeguards.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ContainerServiceSafeguards.Tests.csproj" />
+</Solution>

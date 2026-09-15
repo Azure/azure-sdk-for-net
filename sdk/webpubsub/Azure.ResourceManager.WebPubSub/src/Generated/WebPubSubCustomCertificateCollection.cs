@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             TryGetApiVersion(WebPubSubCustomCertificateResource.ResourceType, out string webPubSubCustomCertificateApiVersion);
             _customCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubCustomCertificateResource.ResourceType.Namespace, Diagnostics);
-            _customCertificatesRestClient = new CustomCertificates(_customCertificatesClientDiagnostics, Pipeline, Endpoint, webPubSubCustomCertificateApiVersion ?? "2025-08-01-preview");
+            _customCertificatesRestClient = new CustomCertificates(_customCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubCustomCertificateApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

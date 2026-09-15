@@ -16,7 +16,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="MessageInputImageUriBlock"/>. </summary>
         /// <param name="imageUrl"> Information about the external image URL, including the URL and optional detail level. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageUrl"/> is null. </exception>
-        public MessageInputImageUriBlock(MessageImageUriParam imageUrl) : base(MessageBlockType.ImageUrl)
+        public MessageInputImageUriBlock(MessageImageUriParam imageUrl) : base(MessageBlockType.ImageUri)
         {
             Argument.AssertNotNull(imageUrl, nameof(imageUrl));
 

@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> List of vector embeddings. </summary>
         [WirePath("vectorEmbeddings")]
-        public IList<CosmosDBVectorEmbedding> VectorEmbeddings { get; }
+        public IList<CosmosDBVectorEmbedding> VectorEmbeddings { get; } = new ChangeTrackingList<CosmosDBVectorEmbedding>();
     }
 }

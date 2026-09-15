@@ -14,10 +14,10 @@ namespace Azure.Provisioning.CostManagement
     public enum Frequency
     {
         /// <summary> After the threshold breaches and an Alert is fired, no further alerts will be sent until the next calendar day. </summary>
-        Daily,
+        Daily = 0,
         /// <summary> After the threshold breaches and an Alert is fired, no further alerts will be sent for 7 calendar days. </summary>
-        Weekly,
+        Weekly = 1,
         /// <summary> After the threshold breaches and an Alert is fired, no further alerts will be sent for 30 calendar days. </summary>
-        Monthly
+        Monthly = 2
     }
 }

@@ -485,6 +485,7 @@
       "$id": "57",
       "kind": "model",
       "name": "DefaultDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.DefaultDurationProperty",
       "usage": "Input,Output,Json",
@@ -500,6 +501,7 @@
           "$id": "58",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "59",
@@ -536,6 +538,7 @@
       "$id": "61",
       "kind": "model",
       "name": "ISO8601DurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.ISO8601DurationProperty",
       "usage": "Input,Output,Json",
@@ -551,6 +554,7 @@
           "$id": "62",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "63",
@@ -587,6 +591,7 @@
       "$id": "65",
       "kind": "model",
       "name": "Int32SecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32SecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -602,6 +607,7 @@
           "$id": "66",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "67",
@@ -638,6 +644,7 @@
       "$id": "69",
       "kind": "model",
       "name": "FloatSecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -653,6 +660,7 @@
           "$id": "70",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "71",
@@ -689,6 +697,7 @@
       "$id": "73",
       "kind": "model",
       "name": "Float64SecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Float64SecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -704,6 +713,7 @@
           "$id": "74",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "75",
@@ -740,6 +750,7 @@
       "$id": "77",
       "kind": "model",
       "name": "Int32MillisecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32MillisecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -755,6 +766,7 @@
           "$id": "78",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "79",
@@ -791,6 +803,7 @@
       "$id": "81",
       "kind": "model",
       "name": "FloatMillisecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -806,6 +819,7 @@
           "$id": "82",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "83",
@@ -842,6 +856,7 @@
       "$id": "85",
       "kind": "model",
       "name": "Float64MillisecondsDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Float64MillisecondsDurationProperty",
       "usage": "Input,Output,Json",
@@ -857,6 +872,7 @@
           "$id": "86",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "87",
@@ -893,6 +909,7 @@
       "$id": "89",
       "kind": "model",
       "name": "FloatSecondsDurationArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsDurationArrayProperty",
       "usage": "Input,Output,Json",
@@ -908,6 +925,7 @@
           "$id": "90",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "91",
@@ -966,6 +984,7 @@
       "$id": "96",
       "kind": "model",
       "name": "FloatMillisecondsDurationArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsDurationArrayProperty",
       "usage": "Input,Output,Json",
@@ -981,6 +1000,7 @@
           "$id": "97",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "98",
@@ -1039,6 +1059,7 @@
       "$id": "103",
       "kind": "model",
       "name": "Int32SecondsLargerUnitDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32SecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
@@ -1054,6 +1075,7 @@
           "$id": "104",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "105",
@@ -1090,6 +1112,7 @@
       "$id": "107",
       "kind": "model",
       "name": "FloatSecondsLargerUnitDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatSecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
@@ -1105,6 +1128,7 @@
           "$id": "108",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "109",
@@ -1141,6 +1165,7 @@
       "$id": "111",
       "kind": "model",
       "name": "Int32MillisecondsLargerUnitDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.Int32MillisecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
@@ -1156,6 +1181,7 @@
           "$id": "112",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "113",
@@ -1192,6 +1218,7 @@
       "$id": "115",
       "kind": "model",
       "name": "FloatMillisecondsLargerUnitDurationProperty",
+      "apiVersions": [],
       "namespace": "Encode.Duration.Property",
       "crossLanguageDefinitionId": "Encode.Duration.Property.FloatMillisecondsLargerUnitDurationProperty",
       "usage": "Input,Output,Json",
@@ -1207,6 +1234,7 @@
           "$id": "116",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "117",
@@ -7133,6 +7161,271 @@
           "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Encode.Duration.Header",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "119"
+          },
+          "isMultiServiceClient": false
+        },
+        {
+          "$id": "475",
+          "kind": "client",
+          "name": "Lossy",
+          "isExactName": false,
+          "namespace": "Encode.Duration",
+          "doc": "Lossy encode scenarios.\n\nThese scenarios cover the case where the source `duration` carries more precision than the\ntarget encoding can represent (e.g. a sub-second value encoded as integer seconds). The client\nmust still serialize the value using the target number type (an integer), discarding the extra\nprecision, rather than emitting a floating point number. This is distinct from arbitrary type\nmismatches, which are already covered by the round-trip scenarios above.",
+          "methods": [
+            {
+              "$id": "476",
+              "kind": "basic",
+              "name": "intSeconds",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "477",
+                "name": "intSeconds",
+                "isExactName": false,
+                "resourceName": "Lossy",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "478",
+                    "kind": "query",
+                    "name": "input",
+                    "serializedName": "input",
+                    "type": {
+                      "$id": "479",
+                      "kind": "duration",
+                      "name": "duration",
+                      "encode": "seconds",
+                      "wireType": {
+                        "$id": "480",
+                        "kind": "int32",
+                        "name": "int32",
+                        "crossLanguageDefinitionId": "TypeSpec.int32",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.duration",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Duration.Lossy.intSeconds.input",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "481",
+                        "kind": "method",
+                        "name": "input",
+                        "serializedName": "input",
+                        "type": {
+                          "$id": "482",
+                          "kind": "duration",
+                          "name": "duration",
+                          "encode": "seconds",
+                          "wireType": {
+                            "$id": "483",
+                            "kind": "int32",
+                            "name": "int32",
+                            "crossLanguageDefinitionId": "TypeSpec.int32",
+                            "decorators": []
+                          },
+                          "crossLanguageDefinitionId": "TypeSpec.duration",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Duration.Lossy.intSeconds.input",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/encode/duration/lossy/int32-seconds",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Duration.Lossy.intSeconds",
+                "decorators": [],
+                "namespace": "Encode.Duration"
+              },
+              "parameters": [
+                {
+                  "$ref": "481"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Duration.Lossy.intSeconds"
+            },
+            {
+              "$id": "484",
+              "kind": "basic",
+              "name": "intMilliseconds",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "485",
+                "name": "intMilliseconds",
+                "isExactName": false,
+                "resourceName": "Lossy",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "486",
+                    "kind": "query",
+                    "name": "input",
+                    "serializedName": "input",
+                    "type": {
+                      "$id": "487",
+                      "kind": "duration",
+                      "name": "duration",
+                      "encode": "milliseconds",
+                      "wireType": {
+                        "$id": "488",
+                        "kind": "int32",
+                        "name": "int32",
+                        "crossLanguageDefinitionId": "TypeSpec.int32",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.duration",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Encode.Duration.Lossy.intMilliseconds.input",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "489",
+                        "kind": "method",
+                        "name": "input",
+                        "serializedName": "input",
+                        "type": {
+                          "$id": "490",
+                          "kind": "duration",
+                          "name": "duration",
+                          "encode": "milliseconds",
+                          "wireType": {
+                            "$id": "491",
+                            "kind": "int32",
+                            "name": "int32",
+                            "crossLanguageDefinitionId": "TypeSpec.int32",
+                            "decorators": []
+                          },
+                          "crossLanguageDefinitionId": "TypeSpec.duration",
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Encode.Duration.Lossy.intMilliseconds.input",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/encode/duration/lossy/int32-milliseconds",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Encode.Duration.Lossy.intMilliseconds",
+                "decorators": [],
+                "namespace": "Encode.Duration"
+              },
+              "parameters": [
+                {
+                  "$ref": "489"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Encode.Duration.Lossy.intMilliseconds"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "492",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "493",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "494",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Encode.Duration.Lossy.endpoint",
+              "isExactName": false
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Encode.Duration.Lossy",
           "apiVersions": [],
           "parent": {
             "$ref": "119"

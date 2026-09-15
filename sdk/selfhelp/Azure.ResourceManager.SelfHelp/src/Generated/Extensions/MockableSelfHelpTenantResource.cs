@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
 
         private ClientDiagnostics DiscoverySolutionNLPOperationGroupClientDiagnostics => _discoverySolutionNLPOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DiscoverySolutionNLPOperationGroup DiscoverySolutionNLPOperationGroupRestClient => _discoverySolutionNLPOperationGroupRestClient ??= new DiscoverySolutionNLPOperationGroup(DiscoverySolutionNLPOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
+        private DiscoverySolutionNLPOperationGroup DiscoverySolutionNLPOperationGroupRestClient => _discoverySolutionNLPOperationGroupRestClient ??= new DiscoverySolutionNLPOperationGroup(DiscoverySolutionNLPOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-03-01-preview");
 
         private ClientDiagnostics DiscoverySolutionClientDiagnostics => _discoverySolutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DiscoverySolution DiscoverySolutionRestClient => _discoverySolutionRestClient ??= new DiscoverySolution(DiscoverySolutionClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
+        private DiscoverySolution DiscoverySolutionRestClient => _discoverySolutionRestClient ??= new DiscoverySolution(DiscoverySolutionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-03-01-preview");
 
         /// <summary> Gets a collection of SelfHelpSolutionResults in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of SelfHelpSolutionResults and their operations over a SelfHelpSolutionResultResource. </returns>

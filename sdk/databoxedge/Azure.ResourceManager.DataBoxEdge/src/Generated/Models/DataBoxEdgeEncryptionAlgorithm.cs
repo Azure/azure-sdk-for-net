@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         private readonly string _value;
         private const string NoneValue = "None";
         private const string Aes256Value = "AES256";
-        private const string RsaesPkcs1V15Value = "RSAES_PKCS1_v_1_5";
+        private const string RsaesPkcs1V1_5Value = "RSAES_PKCS1_v_1_5";
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeEncryptionAlgorithm"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,6 +34,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary> Gets the Aes256. </summary>
         public static DataBoxEdgeEncryptionAlgorithm Aes256 { get; } = new DataBoxEdgeEncryptionAlgorithm(Aes256Value);
+
+        /// <summary> Gets the RsaesPkcs1V1_5. </summary>
+        public static DataBoxEdgeEncryptionAlgorithm RsaesPkcs1V1_5 { get; } = new DataBoxEdgeEncryptionAlgorithm(RsaesPkcs1V1_5Value);
 
         /// <summary> Determines if two <see cref="DataBoxEdgeEncryptionAlgorithm"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

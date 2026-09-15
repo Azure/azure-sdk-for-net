@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             TryGetApiVersion(CustomLocationResource.ResourceType, out string customLocationApiVersion);
             _customLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocations", CustomLocationResource.ResourceType.Namespace, Diagnostics);
-            _customLocationsRestClient = new CustomLocations(_customLocationsClientDiagnostics, Pipeline, Endpoint, customLocationApiVersion ?? "2021-08-31-preview");
+            _customLocationsRestClient = new CustomLocations(_customLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customLocationApiVersion ?? "2021-08-31-preview");
             ValidateResourceId(id);
         }
 

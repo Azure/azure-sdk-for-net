@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 throw new FormatException($"The model {nameof(SupportPackageRequestProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MinimumTimeStamp))
+            if (Optional.IsDefined(MinimumOn))
             {
                 writer.WritePropertyName("minimumTimeStamp"u8);
-                writer.WriteStringValue(MinimumTimeStamp.Value, "O");
+                writer.WriteStringValue(MinimumOn.Value, "O");
             }
-            if (Optional.IsDefined(MaximumTimeStamp))
+            if (Optional.IsDefined(MaximumOn))
             {
                 writer.WritePropertyName("maximumTimeStamp"u8);
-                writer.WriteStringValue(MaximumTimeStamp.Value, "O");
+                writer.WriteStringValue(MaximumOn.Value, "O");
             }
             if (Optional.IsDefined(Include))
             {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            DateTimeOffset? minimumTimeStamp = default;
-            DateTimeOffset? maximumTimeStamp = default;
+            DateTimeOffset? minimumOn = default;
+            DateTimeOffset? maximumOn = default;
             string include = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    minimumTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    minimumOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("maximumTimeStamp"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    maximumTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    maximumOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("include"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SupportPackageRequestProperties(minimumTimeStamp, maximumTimeStamp, include, additionalBinaryDataProperties);
+            return new SupportPackageRequestProperties(minimumOn, maximumOn, include, additionalBinaryDataProperties);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppConnectedEnvironmentApiVersion);
             _connectedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _connectedEnvironmentsRestClient = new ConnectedEnvironments(_connectedEnvironmentsClientDiagnostics, Pipeline, Endpoint, containerAppConnectedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _connectedEnvironmentsRestClient = new ConnectedEnvironments(_connectedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -212,8 +212,11 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<ContainerAppConnectedEnvironmentResource>> UpdateAsync(ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Update");
             scope.Start();
             try
@@ -261,8 +264,11 @@ namespace Azure.ResourceManager.AppContainers
         /// </summary>
         /// <param name="patch"> Configuration details of the connectedEnvironment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<ContainerAppConnectedEnvironmentResource> Update(ContainerAppConnectedEnvironmentPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             using DiagnosticScope scope = _connectedEnvironmentsClientDiagnostics.CreateScope("ContainerAppConnectedEnvironmentResource.Update");
             scope.Start();
             try

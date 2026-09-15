@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
 
         private ClientDiagnostics SchemasClientDiagnostics => _schemasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Schemas SchemasRestClient => _schemasRestClient ??= new Schemas(SchemasClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private Schemas SchemasRestClient => _schemasRestClient ??= new Schemas(SchemasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         private ClientDiagnostics TargetsClientDiagnostics => _targetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Targets TargetsRestClient => _targetsRestClient ??= new Targets(TargetsClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private Targets TargetsRestClient => _targetsRestClient ??= new Targets(TargetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         private ClientDiagnostics SolutionTemplatesClientDiagnostics => _solutionTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SolutionTemplates SolutionTemplatesRestClient => _solutionTemplatesRestClient ??= new SolutionTemplates(SolutionTemplatesClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private SolutionTemplates SolutionTemplatesRestClient => _solutionTemplatesRestClient ??= new SolutionTemplates(SolutionTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         private ClientDiagnostics ConfigTemplatesClientDiagnostics => _configTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConfigTemplates ConfigTemplatesRestClient => _configTemplatesRestClient ??= new ConfigTemplates(ConfigTemplatesClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private ConfigTemplates ConfigTemplatesRestClient => _configTemplatesRestClient ??= new ConfigTemplates(ConfigTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         private ClientDiagnostics DiagnosticsClientDiagnostics => _diagnosticsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Diagnostics DiagnosticsRestClient => _diagnosticsRestClient ??= new Diagnostics(DiagnosticsClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private Diagnostics DiagnosticsRestClient => _diagnosticsRestClient ??= new Diagnostics(DiagnosticsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         private ClientDiagnostics ContextsClientDiagnostics => _contextsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Contexts ContextsRestClient => _contextsRestClient ??= new Contexts(ContextsClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private Contexts ContextsRestClient => _contextsRestClient ??= new Contexts(ContextsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         /// <summary>
         /// List by subscription

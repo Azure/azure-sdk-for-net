@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(NetworkCloudAgentPoolResource.ResourceType, out string networkCloudAgentPoolApiVersion);
             _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudAgentPoolResource.ResourceType.Namespace, Diagnostics);
-            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Endpoint, networkCloudAgentPoolApiVersion ?? "2026-05-01-preview");
+            _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudAgentPoolApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

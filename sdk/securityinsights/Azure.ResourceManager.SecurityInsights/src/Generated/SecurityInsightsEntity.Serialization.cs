@@ -14,7 +14,10 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Specific entity. </summary>
+    /// <summary>
+    /// Specific entity.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SecurityInsightsAlert"/>, <see cref="SecurityInsightsHuntingBookmark"/>, <see cref="SecurityInsightsAccountEntity"/>, <see cref="SecurityInsightsAzureResourceEntity"/>, <see cref="SecurityInsightsCloudApplicationEntity"/>, <see cref="SecurityInsightsDnsEntity"/>, <see cref="SecurityInsightsFileEntity"/>, <see cref="SecurityInsightsFileHashEntity"/>, <see cref="SecurityInsightsHostEntity"/>, <see cref="SecurityInsightsIotDeviceEntity"/>, <see cref="SecurityInsightsIPEntity"/>, <see cref="SecurityInsightsMailboxEntity"/>, <see cref="SecurityInsightsMailClusterEntity"/>, <see cref="SecurityInsightsMailMessageEntity"/>, <see cref="SecurityInsightsMalwareEntity"/>, <see cref="SecurityInsightsProcessEntity"/>, <see cref="SecurityInsightsRegistryKeyEntity"/>, <see cref="SecurityInsightsRegistryValueEntity"/>, <see cref="SecurityInsightsGroupEntity"/>, <see cref="SecurityInsightsSubmissionMailEntity"/>, <see cref="SecurityInsightsUriEntity"/>, and <see cref="NicEntity"/>.
+    /// </summary>
     public partial class SecurityInsightsEntity : ResourceData, IJsonModel<SecurityInsightsEntity>
     {
         /// <param name="data"> The data to parse. </param>

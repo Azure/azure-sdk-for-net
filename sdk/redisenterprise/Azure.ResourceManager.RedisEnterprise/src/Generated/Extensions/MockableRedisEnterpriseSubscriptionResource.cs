@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
 
         private ClientDiagnostics RedisEnterpriseClusterClientDiagnostics => _redisEnterpriseClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RedisEnterpriseCluster RedisEnterpriseClusterRestClient => _redisEnterpriseClusterRestClient ??= new RedisEnterpriseCluster(RedisEnterpriseClusterClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private RedisEnterpriseCluster RedisEnterpriseClusterRestClient => _redisEnterpriseClusterRestClient ??= new RedisEnterpriseCluster(RedisEnterpriseClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics OperationsStatusClientDiagnostics => _operationsStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OperationsStatus OperationsStatusRestClient => _operationsStatusRestClient ??= new OperationsStatus(OperationsStatusClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private OperationsStatus OperationsStatusRestClient => _operationsStatusRestClient ??= new OperationsStatus(OperationsStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         /// <summary>
         /// Lists all Redis Enterprise clusters in the specified subscription.

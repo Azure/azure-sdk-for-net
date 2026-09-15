@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerInstance
     public enum AzureFileShareAccessType
     {
         /// <summary> Shared. </summary>
-        Shared,
+        Shared = 0,
         /// <summary> Exclusive. </summary>
-        Exclusive
+        Exclusive = 1
     }
 }

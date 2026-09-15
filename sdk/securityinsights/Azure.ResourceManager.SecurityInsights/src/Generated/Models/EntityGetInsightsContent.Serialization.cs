@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 throw new FormatException($"The model {nameof(EntityGetInsightsContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endTime"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             if (Optional.IsDefined(IsDefaultExtendedTimeRangeAdded))
             {
                 writer.WritePropertyName("addDefaultExtendedTimeRange"u8);
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            DateTimeOffset startOn = default;
-            DateTimeOffset endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset endsOn = default;
             bool? isDefaultExtendedTimeRangeAdded = default;
             IList<Guid> insightQueryIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,12 +160,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("addDefaultExtendedTimeRange"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntityGetInsightsContent(startOn, endOn, isDefaultExtendedTimeRangeAdded, insightQueryIds ?? new ChangeTrackingList<Guid>(), additionalBinaryDataProperties);
+            return new EntityGetInsightsContent(startsOn, endsOn, isDefaultExtendedTimeRangeAdded, insightQueryIds ?? new ChangeTrackingList<Guid>(), additionalBinaryDataProperties);
         }
     }
 }

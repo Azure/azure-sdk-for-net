@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ElasticPoolResource.ResourceType, out string elasticPoolApiVersion);
             _elasticPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ElasticPoolResource.ResourceType.Namespace, Diagnostics);
-            _elasticPoolsRestClient = new ElasticPools(_elasticPoolsClientDiagnostics, Pipeline, Endpoint, elasticPoolApiVersion ?? "2025-02-01-preview");
+            _elasticPoolsRestClient = new ElasticPools(_elasticPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticPoolApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             TryGetApiVersion(AppServiceCertificateResource.ResourceType, out string appServiceCertificateApiVersion);
             _appServiceCertificateResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CertificateRegistration", AppServiceCertificateResource.ResourceType.Namespace, Diagnostics);
-            _appServiceCertificateResourcesRestClient = new AppServiceCertificateResources(_appServiceCertificateResourcesClientDiagnostics, Pipeline, Endpoint, appServiceCertificateApiVersion ?? "2024-11-01");
+            _appServiceCertificateResourcesRestClient = new AppServiceCertificateResources(_appServiceCertificateResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceCertificateApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 

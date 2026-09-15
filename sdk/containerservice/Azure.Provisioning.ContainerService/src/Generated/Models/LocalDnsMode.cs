@@ -11,10 +11,10 @@ namespace Azure.Provisioning.ContainerService
     public enum LocalDnsMode
     {
         /// <summary> If the current orchestrator version supports this feature, prefer enabling localDNS. </summary>
-        Preferred,
+        Preferred = 0,
         /// <summary> Enable localDNS. </summary>
-        Required,
+        Required = 1,
         /// <summary> Disable localDNS. </summary>
-        Disabled
+        Disabled = 2
     }
 }

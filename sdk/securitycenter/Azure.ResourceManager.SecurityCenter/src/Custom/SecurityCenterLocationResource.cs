@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.SecurityCenter
         private TopologyResources _topologyRestClient;
 
         private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-        private AllowedConnections AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnections(AllowedConnectionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private AllowedConnections AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnections(AllowedConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
         private ClientDiagnostics DiscoveredSecuritySolutionsClientDiagnostics => _discoveredSecuritySolutionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-        private DiscoveredSecuritySolutions DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutions(DiscoveredSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private DiscoveredSecuritySolutions DiscoveredSecuritySolutionsRestClient => _discoveredSecuritySolutionsRestClient ??= new DiscoveredSecuritySolutions(DiscoveredSecuritySolutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
         private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-        private TopologyResources TopologyRestClient => _topologyRestClient ??= new TopologyResources(TopologyClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private TopologyResources TopologyRestClient => _topologyRestClient ??= new TopologyResources(TopologyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         /// <summary>
         /// Provides a compatibility shim for the CreateResourceIdentifier operation preserved from the previous public API surface.

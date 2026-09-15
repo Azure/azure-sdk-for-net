@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private TopologyResources _topologyRestClient;
 
         private ClientDiagnostics AllowedConnectionsClientDiagnostics => _allowedConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AllowedConnections AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnections(AllowedConnectionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private AllowedConnections AllowedConnectionsRestClient => _allowedConnectionsRestClient ??= new AllowedConnections(AllowedConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
         private ClientDiagnostics TopologyClientDiagnostics => _topologyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private TopologyResources TopologyRestClient => _topologyRestClient ??= new TopologyResources(TopologyClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+        private TopologyResources TopologyRestClient => _topologyRestClient ??= new TopologyResources(TopologyClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2020-01-01");
 
         private static ResourceIdentifier CreateExtendedResourceIdentifier(ResourceIdentifier resourceGroupId, string resourceNamespace, string resourceType, string resourceName)
             => new ResourceIdentifier($"{resourceGroupId}/providers/{resourceNamespace}/{resourceType}/{resourceName}");

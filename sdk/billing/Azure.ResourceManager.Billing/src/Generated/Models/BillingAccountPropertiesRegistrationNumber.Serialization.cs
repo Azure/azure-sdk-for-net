@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Describes the registration number of the organization linked with the billing account. </summary>
-    public partial class BillingAccountPropertiesRegistrationNumber : BillingRegistrationNumber, IJsonModel<BillingAccountPropertiesRegistrationNumber>
+    internal partial class BillingAccountPropertiesRegistrationNumber : BillingRegistrationNumber, IJsonModel<BillingAccountPropertiesRegistrationNumber>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

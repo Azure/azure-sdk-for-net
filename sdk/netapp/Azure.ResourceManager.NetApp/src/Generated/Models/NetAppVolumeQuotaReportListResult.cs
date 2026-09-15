@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> List of quota reports. </summary>
-        public IList<NetAppVolumeQuotaReport> QuotaReportRecords { get; }
+        public IList<NetAppVolumeQuotaReport> QuotaReportRecords { get; } = new ChangeTrackingList<NetAppVolumeQuotaReport>();
     }
 }

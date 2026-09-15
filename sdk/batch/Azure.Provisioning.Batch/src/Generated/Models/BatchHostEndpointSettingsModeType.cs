@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchHostEndpointSettingsModeType
     {
         /// <summary> In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. </summary>
-        Audit,
+        Audit = 0,
         /// <summary> Enforce mode is the recommended mode of operation and system will enforce the access control policy. This property cannot be used together with 'inVMAccessControlProfileReferenceId'. </summary>
-        Enforce
+        Enforce = 1
     }
 }

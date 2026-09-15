@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Cdn
     public enum HealthProbeProtocol
     {
         /// <summary> NotSet. </summary>
-        NotSet,
+        NotSet = 0,
         /// <summary> Http. </summary>
-        Http,
+        Http = 1,
         /// <summary> Https. </summary>
-        Https
+        Https = 2
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string recoverableDatabaseApiVersion);
             _recoverableDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _recoverableDatabasesRestClient = new RecoverableDatabases(_recoverableDatabasesClientDiagnostics, Pipeline, Endpoint, recoverableDatabaseApiVersion ?? "2025-02-01-preview");
+            _recoverableDatabasesRestClient = new RecoverableDatabases(_recoverableDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoverableDatabaseApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -190,5 +191,33 @@ namespace Azure.ResourceManager.Sql
                 throw;
             }
         }
+
+        /// <summary>
+        /// Gets a recoverable database, which is a resource representing a database's geo backup
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}Operation IdRecoverableDatabases_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<RecoverableDatabaseResource> Get(CancellationToken cancellationToken)
+        {
+            return Get(expand: default, filter: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Gets a recoverable database, which is a resource representing a database's geo backup
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}Operation IdRecoverableDatabases_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<RecoverableDatabaseResource>> GetAsync(CancellationToken cancellationToken)
+        {
+            return GetAsync(expand: default, filter: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

@@ -14,42 +14,42 @@ namespace Azure.Provisioning.Cdn
     {
         /// <summary> StandardVerizon. </summary>
         [DataMember(Name = "Standard_Verizon")]
-        StandardVerizon,
+        StandardVerizon = 0,
         /// <summary> PremiumVerizon. </summary>
         [DataMember(Name = "Premium_Verizon")]
-        PremiumVerizon,
+        PremiumVerizon = 1,
         /// <summary> CustomVerizon. </summary>
         [DataMember(Name = "Custom_Verizon")]
-        CustomVerizon,
+        CustomVerizon = 2,
         /// <summary> StandardAkamai. </summary>
         [DataMember(Name = "Standard_Akamai")]
-        StandardAkamai,
+        StandardAkamai = 3,
         /// <summary> StandardChinaCdn. </summary>
         [DataMember(Name = "Standard_ChinaCdn")]
-        StandardChinaCdn,
+        StandardChinaCdn = 4,
         /// <summary> StandardMicrosoft. </summary>
         [DataMember(Name = "Standard_Microsoft")]
-        StandardMicrosoft,
+        StandardMicrosoft = 5,
         /// <summary> StandardAzureFrontDoor. </summary>
         [DataMember(Name = "Standard_AzureFrontDoor")]
-        StandardAzureFrontDoor,
+        StandardAzureFrontDoor = 6,
         /// <summary> PremiumAzureFrontDoor. </summary>
         [DataMember(Name = "Premium_AzureFrontDoor")]
-        PremiumAzureFrontDoor,
+        PremiumAzureFrontDoor = 7,
         /// <summary> Standard955BandWidthChinaCdn. </summary>
         [DataMember(Name = "Standard_955BandWidth_ChinaCdn")]
-        Standard955BandWidthChinaCdn,
+        Standard955BandWidthChinaCdn = 8,
         /// <summary> StandardAvgBandWidthChinaCdn. </summary>
         [DataMember(Name = "Standard_AvgBandWidth_ChinaCdn")]
-        StandardAvgBandWidthChinaCdn,
+        StandardAvgBandWidthChinaCdn = 9,
         /// <summary> StandardPlusChinaCdn. </summary>
         [DataMember(Name = "StandardPlus_ChinaCdn")]
-        StandardPlusChinaCdn,
+        StandardPlusChinaCdn = 10,
         /// <summary> StandardPlus955BandWidthChinaCdn. </summary>
         [DataMember(Name = "StandardPlus_955BandWidth_ChinaCdn")]
-        StandardPlus955BandWidthChinaCdn,
+        StandardPlus955BandWidthChinaCdn = 11,
         /// <summary> StandardPlusAvgBandWidthChinaCdn. </summary>
         [DataMember(Name = "StandardPlus_AvgBandWidth_ChinaCdn")]
-        StandardPlusAvgBandWidthChinaCdn
+        StandardPlusAvgBandWidthChinaCdn = 12
     }
 }

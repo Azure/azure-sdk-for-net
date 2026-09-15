@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `MapsGeolocationModelFactory` to support mocking of client output models.
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(FrontDoorRuleSetResource.ResourceType, out string frontDoorRuleSetApiVersion);
             _ruleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorRuleSetResource.ResourceType.Namespace, Diagnostics);
-            _ruleSetsRestClient = new RuleSets(_ruleSetsClientDiagnostics, Pipeline, Endpoint, frontDoorRuleSetApiVersion ?? "2025-09-01-preview");
+            _ruleSetsRestClient = new RuleSets(_ruleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorRuleSetApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

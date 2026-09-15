@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(ResourceType, out string operationalInsightsSavedSearchApiVersion);
             _savedSearchesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", ResourceType.Namespace, Diagnostics);
-            _savedSearchesRestClient = new SavedSearches(_savedSearchesClientDiagnostics, Pipeline, Endpoint, operationalInsightsSavedSearchApiVersion ?? "2025-07-01");
+            _savedSearchesRestClient = new SavedSearches(_savedSearchesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsSavedSearchApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

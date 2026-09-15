@@ -79,20 +79,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("oldestRecoveryPoint"u8);
                 writer.WriteStringValue(OldestRecoverOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoverOnInVault))
+            if (Optional.IsDefined(OldestRecoveryPointInVaultOn))
             {
                 writer.WritePropertyName("oldestRecoveryPointInVault"u8);
-                writer.WriteStringValue(OldestRecoverOnInVault.Value, "O");
+                writer.WriteStringValue(OldestRecoveryPointInVaultOn.Value, "O");
             }
-            if (Optional.IsDefined(OldestRecoverOnInArchive))
+            if (Optional.IsDefined(OldestRecoveryPointInArchiveOn))
             {
                 writer.WritePropertyName("oldestRecoveryPointInArchive"u8);
-                writer.WriteStringValue(OldestRecoverOnInArchive.Value, "O");
+                writer.WriteStringValue(OldestRecoveryPointInArchiveOn.Value, "O");
             }
-            if (Optional.IsDefined(NewestRecoverOnInArchive))
+            if (Optional.IsDefined(NewestRecoveryPointInArchiveOn))
             {
                 writer.WritePropertyName("newestRecoveryPointInArchive"u8);
-                writer.WriteStringValue(NewestRecoverOnInArchive.Value, "O");
+                writer.WriteStringValue(NewestRecoveryPointInArchiveOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryPointCount))
             {
@@ -152,9 +152,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             DateTimeOffset? oldestRecoverOn = default;
-            DateTimeOffset? oldestRecoverOnInVault = default;
-            DateTimeOffset? oldestRecoverOnInArchive = default;
-            DateTimeOffset? newestRecoverOnInArchive = default;
+            DateTimeOffset? oldestRecoveryPointInVaultOn = default;
+            DateTimeOffset? oldestRecoveryPointInArchiveOn = default;
+            DateTimeOffset? newestRecoveryPointInArchiveOn = default;
             int? recoveryPointCount = default;
             string policyState = default;
             string recoveryModel = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    oldestRecoverOnInVault = prop.Value.GetDateTimeOffset("O");
+                    oldestRecoveryPointInVaultOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("oldestRecoveryPointInArchive"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    oldestRecoverOnInArchive = prop.Value.GetDateTimeOffset("O");
+                    oldestRecoveryPointInArchiveOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("newestRecoveryPointInArchive"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    newestRecoverOnInArchive = prop.Value.GetDateTimeOffset("O");
+                    newestRecoveryPointInArchiveOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("recoveryPointCount"u8))
@@ -223,9 +223,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             return new VmWorkloadProtectedItemExtendedInfo(
                 oldestRecoverOn,
-                oldestRecoverOnInVault,
-                oldestRecoverOnInArchive,
-                newestRecoverOnInArchive,
+                oldestRecoveryPointInVaultOn,
+                oldestRecoveryPointInArchiveOn,
+                newestRecoveryPointInArchiveOn,
                 recoveryPointCount,
                 policyState,
                 recoveryModel,

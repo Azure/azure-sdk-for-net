@@ -12,7 +12,7 @@ using Azure.Core.Diagnostics;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
-    /// Represents a policy that can be overriden to customize whether or not a request will be retried and how long to wait before retrying.
+    /// Represents a policy that can be overridden to customize whether or not a request will be retried and how long to wait before retrying.
     /// </summary>
     public class RetryPolicy : HttpPipelinePolicy
     {
@@ -35,7 +35,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// This method can be overriden to take full control over the retry policy. If this is overriden and the base method isn't called,
+        /// This method can be overridden to take full control over the retry policy. If this is overridden and the base method isn't called,
         /// it is the implementer's responsibility to populate the <see cref="HttpMessage.ProcessingContext"/> property.
         /// This method will only be called for async methods.
         /// </summary>
@@ -48,7 +48,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// This method can be overriden to take full control over the retry policy. If this is overriden and the base method isn't called,
+        /// This method can be overridden to take full control over the retry policy. If this is overridden and the base method isn't called,
         /// it is the implementer's responsibility to populate the <see cref="HttpMessage.ProcessingContext"/> property.
         /// This method will only be called for sync methods.
         /// </summary>
@@ -176,7 +176,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// This method can be overriden to control whether a request should be retried. It will be called for any response where
+        /// This method can be overridden to control whether a request should be retried. It will be called for any response where
         /// <see cref="Response.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
         /// This method will only be called for sync methods.
         /// </summary>
@@ -186,7 +186,7 @@ namespace Azure.Core.Pipeline
         protected internal virtual bool ShouldRetry(HttpMessage message, Exception? exception) => ShouldRetryInternal(message, exception);
 
         /// <summary>
-        /// This method can be overriden to control whether a request should be retried.  It will be called for any response where
+        /// This method can be overridden to control whether a request should be retried.  It will be called for any response where
         /// <see cref="Response.IsError"/> is true, or if an exception is thrown from any subsequent pipeline policies or the transport.
         /// This method will only be called for async methods.
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// This method can be overriden to control how long to delay before retrying. This method will only be called for sync methods.
+        /// This method can be overridden to control how long to delay before retrying. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
@@ -221,7 +221,7 @@ namespace Azure.Core.Pipeline
         internal TimeSpan GetNextDelay(HttpMessage message, TimeSpan? retryAfter) => GetNextDelayInternal(message);
 
         /// <summary>
-        /// This method can be overriden to control how long to delay before retrying. This method will only be called for async methods.
+        /// This method can be overridden to control how long to delay before retrying. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
         /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
@@ -238,7 +238,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <summary>
-        /// This method can be overriden to introduce logic that runs before the request is sent. This will run even for the first attempt.
+        /// This method can be overridden to introduce logic that runs before the request is sent. This will run even for the first attempt.
         /// This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>

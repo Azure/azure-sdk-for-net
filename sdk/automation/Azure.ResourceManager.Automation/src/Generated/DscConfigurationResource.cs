@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Automation
         {
             TryGetApiVersion(ResourceType, out string dscConfigurationApiVersion);
             _dscConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _dscConfigurationRestClient = new DscConfiguration(_dscConfigurationClientDiagnostics, Pipeline, Endpoint, dscConfigurationApiVersion ?? "2024-10-23");
+            _dscConfigurationRestClient = new DscConfiguration(_dscConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dscConfigurationApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
         }
 

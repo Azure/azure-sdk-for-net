@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ManagedInstanceEncryptionProtectorResource.ResourceType, out string managedInstanceEncryptionProtectorApiVersion);
             _managedInstanceEncryptionProtectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceEncryptionProtectorResource.ResourceType.Namespace, Diagnostics);
-            _managedInstanceEncryptionProtectorsRestClient = new ManagedInstanceEncryptionProtectors(_managedInstanceEncryptionProtectorsClientDiagnostics, Pipeline, Endpoint, managedInstanceEncryptionProtectorApiVersion ?? "2025-02-01-preview");
+            _managedInstanceEncryptionProtectorsRestClient = new ManagedInstanceEncryptionProtectors(_managedInstanceEncryptionProtectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedInstanceEncryptionProtectorApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

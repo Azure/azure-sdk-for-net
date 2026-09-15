@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(StandardAssignmentResource.ResourceType, out string standardAssignmentApiVersion);
             _standardAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", StandardAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _standardAssignmentsRestClient = new StandardAssignments(_standardAssignmentsClientDiagnostics, Pipeline, Endpoint, standardAssignmentApiVersion ?? "2024-08-01");
+            _standardAssignmentsRestClient = new StandardAssignments(_standardAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, standardAssignmentApiVersion ?? "2024-08-01");
         }
 
         /// <summary>

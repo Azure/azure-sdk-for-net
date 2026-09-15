@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Authorization.Models
     public readonly partial struct RoleAssignmentScheduleAssignmentType : IEquatable<RoleAssignmentScheduleAssignmentType>
     {
         private readonly string _value;
+        /// <summary> Activated. </summary>
+        private const string ActivatedValue = "Activated";
+        /// <summary> Assigned. </summary>
+        private const string AssignedValue = "Assigned";
 
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoleAssignmentScheduleAssignmentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActivatedValue = "Activated";
-        private const string AssignedValue = "Assigned";
+            _value = value;
+        }
 
         /// <summary> Activated. </summary>
         public static RoleAssignmentScheduleAssignmentType Activated { get; } = new RoleAssignmentScheduleAssignmentType(ActivatedValue);
+
         /// <summary> Assigned. </summary>
         public static RoleAssignmentScheduleAssignmentType Assigned { get; } = new RoleAssignmentScheduleAssignmentType(AssignedValue);
+
         /// <summary> Determines if two <see cref="RoleAssignmentScheduleAssignmentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoleAssignmentScheduleAssignmentType left, RoleAssignmentScheduleAssignmentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoleAssignmentScheduleAssignmentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoleAssignmentScheduleAssignmentType left, RoleAssignmentScheduleAssignmentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleAssignmentScheduleAssignmentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoleAssignmentScheduleAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoleAssignmentScheduleAssignmentType(string value) => new RoleAssignmentScheduleAssignmentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoleAssignmentScheduleAssignmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoleAssignmentScheduleAssignmentType?(string value) => value == null ? null : new RoleAssignmentScheduleAssignmentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoleAssignmentScheduleAssignmentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoleAssignmentScheduleAssignmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

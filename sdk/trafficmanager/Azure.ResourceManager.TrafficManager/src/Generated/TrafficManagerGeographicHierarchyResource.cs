@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(ResourceType, out string trafficManagerGeographicHierarchyApiVersion);
             _geographicHierarchiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _geographicHierarchiesRestClient = new GeographicHierarchies(_geographicHierarchiesClientDiagnostics, Pipeline, Endpoint, trafficManagerGeographicHierarchyApiVersion ?? "2024-04-01-preview");
+            _geographicHierarchiesRestClient = new GeographicHierarchies(_geographicHierarchiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerGeographicHierarchyApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 

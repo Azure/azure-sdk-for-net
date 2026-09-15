@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(SubscriptionSecurityAlertResource.ResourceType, out string subscriptionSecurityAlertApiVersion);
             _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", SubscriptionSecurityAlertResource.ResourceType.Namespace, Diagnostics);
-            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, subscriptionSecurityAlertApiVersion ?? "2022-01-01");
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSecurityAlertApiVersion ?? "2022-01-01");
             ValidateResourceId(id);
         }
 

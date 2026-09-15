@@ -104,16 +104,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("softAllowedMaximumThroughput"u8);
                 writer.WriteStringValue(SoftAllowedMaximumThroughput);
             }
-            if (Optional.IsCollectionDefined(ThroughputBuckets))
-            {
-                writer.WritePropertyName("throughputBuckets"u8);
-                writer.WriteStartArray();
-                foreach (CosmosDBThroughputBucket item in ThroughputBuckets)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -162,7 +152,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string offerReplacePending = default;
             string instantMaximumThroughput = default;
             string softAllowedMaximumThroughput = default;
-            IList<CosmosDBThroughputBucket> throughputBuckets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -204,20 +193,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     softAllowedMaximumThroughput = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("throughputBuckets"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<CosmosDBThroughputBucket> array = new List<CosmosDBThroughputBucket>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(CosmosDBThroughputBucket.DeserializeCosmosDBThroughputBucket(item, options));
-                    }
-                    throughputBuckets = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -230,7 +205,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 offerReplacePending,
                 instantMaximumThroughput,
                 softAllowedMaximumThroughput,
-                throughputBuckets ?? new ChangeTrackingList<CosmosDBThroughputBucket>(),
                 additionalBinaryDataProperties);
         }
     }

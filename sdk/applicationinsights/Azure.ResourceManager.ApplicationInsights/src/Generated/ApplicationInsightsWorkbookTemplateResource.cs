@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
-    /// A Class representing an ApplicationInsightsWorkbookTemplate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApplicationInsightsWorkbookTemplateResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetApplicationInsightsWorkbookTemplateResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApplicationInsightsWorkbookTemplate method.
+    /// A class representing a ApplicationInsightsWorkbookTemplate along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApplicationInsightsWorkbookTemplateResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApplicationInsightsWorkbookTemplates method.
     /// </summary>
     public partial class ApplicationInsightsWorkbookTemplateResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ApplicationInsightsWorkbookTemplateResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics;
-        private readonly WorkbookTemplatesRestOperations _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient;
+        private readonly ClientDiagnostics _workbookTemplatesClientDiagnostics;
+        private readonly WorkbookTemplates _workbookTemplatesRestClient;
         private readonly ApplicationInsightsWorkbookTemplateData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/workbooktemplates";
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsWorkbookTemplateResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApplicationInsightsWorkbookTemplateResource for mocking. </summary>
         protected ApplicationInsightsWorkbookTemplateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsWorkbookTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWorkbookTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApplicationInsightsWorkbookTemplateResource(ArmClient client, ApplicationInsightsWorkbookTemplateData data) : this(client, data.Id)
@@ -56,71 +46,92 @@ namespace Azure.ResourceManager.ApplicationInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsWorkbookTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWorkbookTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationInsightsWorkbookTemplateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string applicationInsightsWorkbookTemplateWorkbookTemplatesApiVersion);
-            _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient = new WorkbookTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWorkbookTemplateWorkbookTemplatesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string applicationInsightsWorkbookTemplateApiVersion);
+            _workbookTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
+            _workbookTemplatesRestClient = new WorkbookTemplates(_workbookTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWorkbookTemplateApiVersion ?? "2020-11-20");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ApplicationInsightsWorkbookTemplateData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get a single workbook template by its resourceName.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-11-20. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ApplicationInsightsWorkbookTemplateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Get");
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Get");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbookTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationInsightsWorkbookTemplateData> response = Response.FromValue(ApplicationInsightsWorkbookTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +145,139 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Get a single workbook template by its resourceName.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-11-20. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ApplicationInsightsWorkbookTemplateResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Get");
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Get");
             scope.Start();
             try
             {
-                var response = _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbookTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationInsightsWorkbookTemplateData> response = Response.FromValue(ApplicationInsightsWorkbookTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a workbook template that has already been added.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookTemplates_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-11-20. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookTemplateResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Properties that need to be specified to patch a workbook template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ApplicationInsightsWorkbookTemplateResource>> UpdateAsync(ApplicationInsightsWorkbookTemplatePatch patch, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbookTemplatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApplicationInsightsWorkbookTemplatePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationInsightsWorkbookTemplateData> response = Response.FromValue(ApplicationInsightsWorkbookTemplateData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a workbook template that has already been added.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookTemplates_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-11-20. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookTemplateResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Properties that need to be specified to patch a workbook template. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ApplicationInsightsWorkbookTemplateResource> Update(ApplicationInsightsWorkbookTemplatePatch patch, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbookTemplatesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApplicationInsightsWorkbookTemplatePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationInsightsWorkbookTemplateData> response = Response.FromValue(ApplicationInsightsWorkbookTemplateData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,20 +291,20 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Delete a workbook template.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookTemplates_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-11-20. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,16 +312,23 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Delete");
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Delete");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApplicationInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbookTemplatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApplicationInsightsArmOperation operation = new ApplicationInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -218,20 +342,20 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Delete a workbook template.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookTemplates_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-11-20. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,16 +363,23 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Delete");
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Delete");
             scope.Start();
             try
             {
-                var response = _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var uri = _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApplicationInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbookTemplatesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApplicationInsightsArmOperation operation = new ApplicationInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -258,111 +389,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Updates a workbook template that has already been added.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Properties that need to be specified to patch a workbook template. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ApplicationInsightsWorkbookTemplateResource>> UpdateAsync(ApplicationInsightsWorkbookTemplatePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates a workbook template that has already been added.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Properties that need to be specified to patch a workbook template. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ApplicationInsightsWorkbookTemplateResource> Update(ApplicationInsightsWorkbookTemplatePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -372,29 +399,35 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.AddTag");
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbookTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ApplicationInsightsWorkbookTemplateData> response = Response.FromValue(ApplicationInsightsWorkbookTemplateData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookTemplatePatch();
-                    foreach (var tag in current.Tags)
+                    ApplicationInsightsWorkbookTemplateData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ApplicationInsightsWorkbookTemplatePatch patch = new ApplicationInsightsWorkbookTemplatePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ApplicationInsightsWorkbookTemplateResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -404,27 +437,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -434,29 +447,35 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.AddTag");
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbookTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ApplicationInsightsWorkbookTemplateData> response = Response.FromValue(ApplicationInsightsWorkbookTemplateData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookTemplatePatch();
-                    foreach (var tag in current.Tags)
+                    ApplicationInsightsWorkbookTemplateData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ApplicationInsightsWorkbookTemplatePatch patch = new ApplicationInsightsWorkbookTemplatePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ApplicationInsightsWorkbookTemplateResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -466,54 +485,40 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsWorkbookTemplateResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.SetTags");
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbookTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ApplicationInsightsWorkbookTemplateData> response = Response.FromValue(ApplicationInsightsWorkbookTemplateData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookTemplatePatch();
+                    ApplicationInsightsWorkbookTemplateData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ApplicationInsightsWorkbookTemplatePatch patch = new ApplicationInsightsWorkbookTemplatePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ApplicationInsightsWorkbookTemplateResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -523,54 +528,40 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ApplicationInsightsWorkbookTemplateResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.SetTags");
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbookTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ApplicationInsightsWorkbookTemplateData> response = Response.FromValue(ApplicationInsightsWorkbookTemplateData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookTemplatePatch();
+                    ApplicationInsightsWorkbookTemplateData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ApplicationInsightsWorkbookTemplatePatch patch = new ApplicationInsightsWorkbookTemplatePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ApplicationInsightsWorkbookTemplateResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -580,27 +571,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -608,29 +579,35 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.RemoveTag");
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbookTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ApplicationInsightsWorkbookTemplateData> response = Response.FromValue(ApplicationInsightsWorkbookTemplateData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookTemplatePatch();
-                    foreach (var tag in current.Tags)
+                    ApplicationInsightsWorkbookTemplateData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ApplicationInsightsWorkbookTemplatePatch patch = new ApplicationInsightsWorkbookTemplatePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ApplicationInsightsWorkbookTemplateResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -640,27 +617,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooktemplates/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkbookTemplates_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -668,29 +625,35 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _applicationInsightsWorkbookTemplateWorkbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.RemoveTag");
+            using DiagnosticScope scope = _workbookTemplatesClientDiagnostics.CreateScope("ApplicationInsightsWorkbookTemplateResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _applicationInsightsWorkbookTemplateWorkbookTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbookTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ApplicationInsightsWorkbookTemplateData> response = Response.FromValue(ApplicationInsightsWorkbookTemplateData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookTemplateResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookTemplatePatch();
-                    foreach (var tag in current.Tags)
+                    ApplicationInsightsWorkbookTemplateData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ApplicationInsightsWorkbookTemplatePatch patch = new ApplicationInsightsWorkbookTemplatePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ApplicationInsightsWorkbookTemplateResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

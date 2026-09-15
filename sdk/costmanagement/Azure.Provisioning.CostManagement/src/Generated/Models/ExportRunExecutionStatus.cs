@@ -11,18 +11,18 @@ namespace Azure.Provisioning.CostManagement
     public enum ExportRunExecutionStatus
     {
         /// <summary> Queued. </summary>
-        Queued,
+        Queued = 0,
         /// <summary> InProgress. </summary>
-        InProgress,
+        InProgress = 1,
         /// <summary> Completed. </summary>
-        Completed,
+        Completed = 2,
         /// <summary> Failed. </summary>
-        Failed,
+        Failed = 3,
         /// <summary> Timeout. </summary>
-        Timeout,
+        Timeout = 4,
         /// <summary> NewDataNotAvailable. </summary>
-        NewDataNotAvailable,
+        NewDataNotAvailable = 5,
         /// <summary> DataNotAvailable. </summary>
-        DataNotAvailable
+        DataNotAvailable = 6
     }
 }

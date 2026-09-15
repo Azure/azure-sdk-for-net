@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string siteSlotInstanceExtensionApiVersion);
             _instanceMSDeployStatusOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _instanceMSDeployStatusOperationGroupRestClient = new InstanceMSDeployStatusOperationGroup(_instanceMSDeployStatusOperationGroupClientDiagnostics, Pipeline, Endpoint, siteSlotInstanceExtensionApiVersion ?? "2026-03-15");
+            _instanceMSDeployStatusOperationGroupRestClient = new InstanceMSDeployStatusOperationGroup(_instanceMSDeployStatusOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotInstanceExtensionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The DispatchRoutineAsyncRequest. </summary>
     internal partial class DispatchRoutineAsyncRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

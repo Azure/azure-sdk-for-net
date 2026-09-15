@@ -11,20 +11,20 @@ namespace Azure.Provisioning.CostManagement
     public enum ExportType
     {
         /// <summary> Usage. </summary>
-        Usage,
+        Usage = 0,
         /// <summary> ActualCost. </summary>
-        ActualCost,
+        ActualCost = 1,
         /// <summary> AmortizedCost. </summary>
-        AmortizedCost,
+        AmortizedCost = 2,
         /// <summary> FocusCost. </summary>
-        FocusCost,
+        FocusCost = 3,
         /// <summary> PriceSheet. </summary>
-        PriceSheet,
+        PriceSheet = 4,
         /// <summary> ReservationTransactions. </summary>
-        ReservationTransactions,
+        ReservationTransactions = 5,
         /// <summary> ReservationRecommendations. </summary>
-        ReservationRecommendations,
+        ReservationRecommendations = 6,
         /// <summary> ReservationDetails. </summary>
-        ReservationDetails
+        ReservationDetails = 7
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(DeletedAccountResource.ResourceType, out string deletedAccountApiVersion);
             _deletedAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", DeletedAccountResource.ResourceType.Namespace, Diagnostics);
-            _deletedAccountsRestClient = new DeletedAccounts(_deletedAccountsClientDiagnostics, Pipeline, Endpoint, deletedAccountApiVersion ?? "2025-08-01");
+            _deletedAccountsRestClient = new DeletedAccounts(_deletedAccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deletedAccountApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

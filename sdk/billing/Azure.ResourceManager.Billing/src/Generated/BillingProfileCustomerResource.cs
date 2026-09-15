@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(ResourceType, out string billingProfileCustomerApiVersion);
             _customersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _customersRestClient = new Customers(_customersClientDiagnostics, Pipeline, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
+            _customersRestClient = new Customers(_customersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
             _billingRequestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingRequestsRestClient = new BillingRequests(_billingRequestsClientDiagnostics, Pipeline, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
+            _billingRequestsRestClient = new BillingRequests(_billingRequestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
             _billingSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
+            _billingSubscriptionsRestClient = new BillingSubscriptions(_billingSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
             _billingRoleAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
+            _billingRoleAssignmentsRestClient = new BillingRoleAssignments(_billingRoleAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
             _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
+            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
             _transactionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _transactionsRestClient = new Transactions(_transactionsClientDiagnostics, Pipeline, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
+            _transactionsRestClient = new Transactions(_transactionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingProfileCustomerApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -948,8 +948,8 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
         /// <param name="type"> The type of transaction. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingTransactionData> GetByCustomerAsync(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingTransactionData> GetByCustomerAsync(DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -970,8 +970,8 @@ namespace Azure.ResourceManager.Billing
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                periodStartDate,
-                periodEndDate,
+                periodStartsOn,
+                periodEndsOn,
                 @type.ToString(),
                 filter,
                 orderBy,
@@ -1004,8 +1004,8 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
         /// <param name="type"> The type of transaction. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
@@ -1015,7 +1015,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingTransactionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingTransactionData> GetByCustomer(DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<BillingTransactionData> GetByCustomer(DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, TransactionType @type, string filter = default, string orderBy = default, long? maxCount = default, long? skip = default, bool? count = default, string search = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -1026,8 +1026,8 @@ namespace Azure.ResourceManager.Billing
                 Id.Parent.Parent.Name,
                 Id.Parent.Name,
                 Id.Name,
-                periodStartDate,
-                periodEndDate,
+                periodStartsOn,
+                periodEndsOn,
                 @type.ToString(),
                 filter,
                 orderBy,

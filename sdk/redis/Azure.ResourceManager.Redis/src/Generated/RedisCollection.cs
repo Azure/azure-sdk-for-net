@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(RedisResource.ResourceType, out string redisApiVersion);
             _redisResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisResource.ResourceType.Namespace, Diagnostics);
-            _redisResourcesRestClient = new RedisResources(_redisResourcesClientDiagnostics, Pipeline, Endpoint, redisApiVersion ?? "2025-08-01-preview");
+            _redisResourcesRestClient = new RedisResources(_redisResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

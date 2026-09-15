@@ -17,7 +17,7 @@ namespace Azure.Maps.Weather.Models
         /// <summary> Initializes a new instance of <see cref="AirQuality"/>. </summary>
         internal AirQuality()
         {
-            Pollutants = new ChangeTrackingList<Pollutant>();
+            Pollutants = new ChangeTrackingList<WeatherPollutant>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AirQuality"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.Maps.Weather.Models
         /// <param name="categoryColor"> A unique color corresponding to the category of this air quality result. </param>
         /// <param name="description"> A textual explanation of this air quality result in the requested language. </param>
         /// <param name="pollutants"> Information about individual pollutants. </param>
-        internal AirQuality(DateTimeOffset? timestamp, float? index, float? globalIndex, DominantPollutant? dominantPollutant, string category, string categoryColor, string description, IReadOnlyList<Pollutant> pollutants)
+        internal AirQuality(DateTimeOffset? timestamp, float? index, float? globalIndex, DominantPollutant? dominantPollutant, string category, string categoryColor, string description, IReadOnlyList<WeatherPollutant> pollutants)
         {
             Timestamp = timestamp;
             Index = index;
@@ -56,6 +56,6 @@ namespace Azure.Maps.Weather.Models
         /// <summary> A textual explanation of this air quality result in the requested language. </summary>
         public string Description { get; }
         /// <summary> Information about individual pollutants. </summary>
-        public IReadOnlyList<Pollutant> Pollutants { get; }
+        public IReadOnlyList<WeatherPollutant> Pollutants { get; }
     }
 }

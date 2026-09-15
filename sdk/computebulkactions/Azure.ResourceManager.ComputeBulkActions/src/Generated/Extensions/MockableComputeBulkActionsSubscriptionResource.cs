@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Mocking
 
         private ClientDiagnostics BulkActionsClientDiagnostics => _bulkActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeBulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BulkActions BulkActionsRestClient => _bulkActionsRestClient ??= new BulkActions(BulkActionsClientDiagnostics, Pipeline, Endpoint, "2026-02-01-preview");
+        private BulkActions BulkActionsRestClient => _bulkActionsRestClient ??= new BulkActions(BulkActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01-preview");
 
         /// <summary>
         /// List LaunchBulkInstancesOperation resources by subscriptionId.

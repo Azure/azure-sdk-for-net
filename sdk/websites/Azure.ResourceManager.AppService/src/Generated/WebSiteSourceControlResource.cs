@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSiteSourceControlApiVersion);
             _siteSourceControlOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _siteSourceControlOperationGroupRestClient = new SiteSourceControlOperationGroup(_siteSourceControlOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteSourceControlApiVersion ?? "2026-03-15");
+            _siteSourceControlOperationGroupRestClient = new SiteSourceControlOperationGroup(_siteSourceControlOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSourceControlApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

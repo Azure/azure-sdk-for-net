@@ -244,6 +244,7 @@ public class StaticResourceNamePropertyResolver : ResourceNamePropertyResolver
     private static readonly char[] s_upper = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     private static readonly char[] s_digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
+    /// <inheritdoc />
     public override BicepValue<string>? ResolveName(ProvisioningBuildOptions options, ProvisionableResource resource, ResourceNameRequirements requirements)
     {
         StringBuilder name = new(capacity: requirements.MaxLength);

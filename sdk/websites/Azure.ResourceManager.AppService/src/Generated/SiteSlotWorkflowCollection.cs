@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(SiteSlotWorkflowResource.ResourceType, out string siteSlotWorkflowApiVersion);
             _workflowEnvelopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", SiteSlotWorkflowResource.ResourceType.Namespace, Diagnostics);
-            _workflowEnvelopesRestClient = new WorkflowEnvelopes(_workflowEnvelopesClientDiagnostics, Pipeline, Endpoint, siteSlotWorkflowApiVersion ?? "2026-03-15");
+            _workflowEnvelopesRestClient = new WorkflowEnvelopes(_workflowEnvelopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotWorkflowApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

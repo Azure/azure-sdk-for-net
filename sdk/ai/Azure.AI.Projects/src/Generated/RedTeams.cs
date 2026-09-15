@@ -23,11 +23,13 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary> Initializes a new instance of RedTeams. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal RedTeams(ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal RedTeams(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
@@ -35,6 +37,9 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Retrieves the specified redteam and its configuration.
@@ -52,10 +57,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Get(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateGetRequest(name, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -74,10 +89,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAsync(string name, RequestOptions options)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.Get");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateGetRequest(name, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Retrieves the specified redteam and its configuration. </summary>
@@ -121,7 +146,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual CollectionResult GetAll(RequestOptions options)
         {
-            return new RedTeamsGetAllCollectionResult(this, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.GetAll");
+            scope.Start();
+            try
+            {
+                return new RedTeamsGetAllCollectionResult(this, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -137,7 +172,17 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncCollectionResult GetAllAsync(RequestOptions options)
         {
-            return new RedTeamsGetAllAsyncCollectionResult(this, options);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.GetAll");
+            scope.Start();
+            try
+            {
+                return new RedTeamsGetAllAsyncCollectionResult(this, options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Returns the redteams available in the current project. </summary>
@@ -171,10 +216,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Create(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+                using PipelineMessage message = CreateCreateRequest(content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -192,10 +247,20 @@ namespace Azure.AI.Projects.Evaluation
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> CreateAsync(BinaryContent content, RequestOptions options = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("RedTeams.Create");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateCreateRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                using PipelineMessage message = CreateCreateRequest(content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Submits a new redteam run for execution with the provided configuration. </summary>

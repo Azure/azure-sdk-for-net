@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSiteResourceHealthMetadataApiVersion);
             _resourceHealthMetadataOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _resourceHealthMetadataOperationGroupRestClient = new ResourceHealthMetadataOperationGroup(_resourceHealthMetadataOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteResourceHealthMetadataApiVersion ?? "2026-03-15");
+            _resourceHealthMetadataOperationGroupRestClient = new ResourceHealthMetadataOperationGroup(_resourceHealthMetadataOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteResourceHealthMetadataApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

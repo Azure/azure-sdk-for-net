@@ -11,6 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class ArchiveStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ArchiveStatus value) => value switch
         {
             ArchiveStatus.RehydratePendingToHot => "rehydrate-pending-to-hot",
@@ -20,12 +21,25 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArchiveStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ArchiveStatus ToArchiveStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rehydrate-pending-to-hot")) return ArchiveStatus.RehydratePendingToHot;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rehydrate-pending-to-cool")) return ArchiveStatus.RehydratePendingToCool;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rehydrate-pending-to-cold")) return ArchiveStatus.RehydratePendingToCold;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rehydrate-pending-to-smart")) return ArchiveStatus.RehydratePendingToSmart;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rehydrate-pending-to-hot"))
+            {
+                return ArchiveStatus.RehydratePendingToHot;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rehydrate-pending-to-cool"))
+            {
+                return ArchiveStatus.RehydratePendingToCool;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rehydrate-pending-to-cold"))
+            {
+                return ArchiveStatus.RehydratePendingToCold;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "rehydrate-pending-to-smart"))
+            {
+                return ArchiveStatus.RehydratePendingToSmart;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArchiveStatus value.");
         }
     }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string cdnProfileAgentApiVersion);
             _profileAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _profileAgentsRestClient = new ProfileAgents(_profileAgentsClientDiagnostics, Pipeline, Endpoint, cdnProfileAgentApiVersion ?? "2025-09-01-preview");
+            _profileAgentsRestClient = new ProfileAgents(_profileAgentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnProfileAgentApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string frontendIPConfigurationApiVersion);
             _loadBalancerFrontendIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _loadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurations(_loadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, Endpoint, frontendIPConfigurationApiVersion ?? "2025-07-01");
+            _loadBalancerFrontendIPConfigurationsRestClient = new LoadBalancerFrontendIPConfigurations(_loadBalancerFrontendIPConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontendIPConfigurationApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

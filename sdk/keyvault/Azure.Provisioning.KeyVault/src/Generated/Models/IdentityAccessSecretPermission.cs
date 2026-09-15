@@ -14,30 +14,30 @@ namespace Azure.Provisioning.KeyVault
     {
         /// <summary> All. </summary>
         [DataMember(Name = "all")]
-        All,
+        All = 0,
         /// <summary> Get. </summary>
         [DataMember(Name = "get")]
-        Get,
+        Get = 1,
         /// <summary> List. </summary>
         [DataMember(Name = "list")]
-        List,
+        List = 2,
         /// <summary> Set. </summary>
         [DataMember(Name = "set")]
-        Set,
+        Set = 3,
         /// <summary> Delete. </summary>
         [DataMember(Name = "delete")]
-        Delete,
+        Delete = 4,
         /// <summary> Backup. </summary>
         [DataMember(Name = "backup")]
-        Backup,
+        Backup = 5,
         /// <summary> Restore. </summary>
         [DataMember(Name = "restore")]
-        Restore,
+        Restore = 6,
         /// <summary> Recover. </summary>
         [DataMember(Name = "recover")]
-        Recover,
+        Recover = 7,
         /// <summary> Purge. </summary>
         [DataMember(Name = "purge")]
-        Purge
+        Purge = 8
     }
 }

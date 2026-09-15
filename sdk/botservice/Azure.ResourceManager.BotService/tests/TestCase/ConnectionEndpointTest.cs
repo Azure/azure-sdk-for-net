@@ -16,7 +16,6 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.BotService.Tests
 {
-    [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
     internal class ConnectionEndpointTest : BotServiceManagementTestBase
     {
         public ConnectionEndpointTest(bool isAsync)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.BotService.Tests
             VirtualNetworkData vnetData = new VirtualNetworkData()
             {
                 Location = "eastus",
-                Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicy = "Disabled" } }
+                Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
             };
             vnetData.AddressPrefixes.Add("10.0.0.0/16");
             vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");

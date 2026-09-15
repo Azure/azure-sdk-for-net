@@ -10,7 +10,6 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The CreateOrUpdateRoutineRequest. </summary>
     internal partial class CreateOrUpdateRoutineRequest : IJsonModel<CreateOrUpdateRoutineRequest>
     {
         /// <param name="data"> The data to parse. </param>
@@ -107,6 +106,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action, options);
             }
+            if (Optional.IsDefined(Authorization))
+            {
+                writer.WritePropertyName("authorization"u8);
+                writer.WriteObjectValue(Authorization, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -153,6 +157,7 @@ namespace Azure.AI.Projects
             bool? enabled = default;
             IDictionary<string, RoutineTrigger> triggers = default;
             RoutineAction action = default;
+            RoutineAuthorization authorization = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -193,12 +198,27 @@ namespace Azure.AI.Projects
                     action = RoutineAction.DeserializeRoutineAction(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("authorization"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authorization = RoutineAuthorization.DeserializeRoutineAuthorization(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreateOrUpdateRoutineRequest(description, enabled, triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(), action, additionalBinaryDataProperties);
+            return new CreateOrUpdateRoutineRequest(
+                description,
+                enabled,
+                triggers ?? new ChangeTrackingDictionary<string, RoutineTrigger>(),
+                action,
+                authorization,
+                additionalBinaryDataProperties);
         }
     }
 }

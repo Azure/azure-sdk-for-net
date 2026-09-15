@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Search
     public enum SearchServiceHostingMode
     {
         /// <summary> The maximum limit of indexes is determined by the SKU or pricing tier. </summary>
-        Default,
+        Default = 0,
         /// <summary> Only applies to the Standard3 (S3) SKU, where the search services can have up to 1,000 indexes. </summary>
-        HighDensity
+        HighDensity = 1
     }
 }

@@ -10,7 +10,6 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> The DispatchRoutineAsyncRequest. </summary>
     internal partial class DispatchRoutineAsyncRequest : IJsonModel<DispatchRoutineAsyncRequest>
     {
         /// <param name="data"> The data to parse. </param>

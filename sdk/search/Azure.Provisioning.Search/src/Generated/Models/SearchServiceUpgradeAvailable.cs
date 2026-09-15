@@ -14,9 +14,9 @@ namespace Azure.Provisioning.Search
     {
         /// <summary> An upgrade is currently not available for the dedicated service. </summary>
         [DataMember(Name = "notAvailable")]
-        NotAvailable,
+        NotAvailable = 0,
         /// <summary> There is an upgrade available for the dedicated service. </summary>
         [DataMember(Name = "available")]
-        Available
+        Available = 1
     }
 }

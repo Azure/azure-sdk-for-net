@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(ResourceType, out string dnsResolverInboundEndpointApiVersion);
             _inboundEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
-            _inboundEndpointsRestClient = new InboundEndpoints(_inboundEndpointsClientDiagnostics, Pipeline, Endpoint, dnsResolverInboundEndpointApiVersion ?? "2025-10-01-preview");
+            _inboundEndpointsRestClient = new InboundEndpoints(_inboundEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverInboundEndpointApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 

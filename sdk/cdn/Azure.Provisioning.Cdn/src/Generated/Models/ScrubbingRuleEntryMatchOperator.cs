@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Cdn
     public enum ScrubbingRuleEntryMatchOperator
     {
         /// <summary> EqualsAny. </summary>
-        EqualsAny
+        EqualsAny = 0
     }
 }

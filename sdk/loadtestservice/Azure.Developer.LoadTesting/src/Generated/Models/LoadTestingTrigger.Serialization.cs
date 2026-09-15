@@ -113,20 +113,20 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("stateDetails"u8);
                 writer.WriteObjectValue(StateDetails, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTime"u8);
-                writer.WriteStringValue(CreatedDateTime.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedDateTime))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
-                writer.WriteStringValue(LastModifiedDateTime.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {

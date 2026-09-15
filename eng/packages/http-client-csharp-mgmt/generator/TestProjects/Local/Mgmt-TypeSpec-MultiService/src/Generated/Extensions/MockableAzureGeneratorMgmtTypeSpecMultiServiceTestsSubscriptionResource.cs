@@ -38,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking
 
         private ClientDiagnostics MultiServiceClientClientDiagnostics => _multiServiceClientClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.MultiService.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MultiServiceClient MultiServiceClientRestClient => _multiServiceClientRestClient ??= new MultiServiceClient(MultiServiceClientClientDiagnostics, Pipeline, Endpoint, "2024-01-01");
+        private MultiServiceClient MultiServiceClientRestClient => _multiServiceClientRestClient ??= new MultiServiceClient(MultiServiceClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-01-01");
 
         /// <summary>
         /// A namespace-level operation (not inside an interface).

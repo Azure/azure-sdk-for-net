@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             TryGetApiVersion(ResourceType, out string ispCacheNodeApiVersion);
             _ispCacheNodesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", ResourceType.Namespace, Diagnostics);
-            _ispCacheNodesOperationsRestClient = new IspCacheNodesOperations(_ispCacheNodesOperationsClientDiagnostics, Pipeline, Endpoint, ispCacheNodeApiVersion ?? "2024-11-30-preview");
+            _ispCacheNodesOperationsRestClient = new IspCacheNodesOperations(_ispCacheNodesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, ispCacheNodeApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

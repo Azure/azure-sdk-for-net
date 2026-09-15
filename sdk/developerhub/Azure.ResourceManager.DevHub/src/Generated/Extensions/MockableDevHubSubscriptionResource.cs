@@ -44,15 +44,15 @@ namespace Azure.ResourceManager.DevHub.Mocking
 
         private ClientDiagnostics IacProfilesClientDiagnostics => _iacProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IacProfiles IacProfilesRestClient => _iacProfilesRestClient ??= new IacProfiles(IacProfilesClientDiagnostics, Pipeline, Endpoint, "2025-03-01-preview");
+        private IacProfiles IacProfilesRestClient => _iacProfilesRestClient ??= new IacProfiles(IacProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01-preview");
 
         private ClientDiagnostics WorkflowClientDiagnostics => _workflowClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workflow WorkflowRestClient => _workflowRestClient ??= new Workflow(WorkflowClientDiagnostics, Pipeline, Endpoint, "2025-03-01-preview");
+        private Workflow WorkflowRestClient => _workflowRestClient ??= new Workflow(WorkflowClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01-preview");
 
         private ClientDiagnostics DevHubClientClientDiagnostics => _devHubClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DevHubClient DevHubClientRestClient => _devHubClientRestClient ??= new DevHubClient(DevHubClientClientDiagnostics, Pipeline, Endpoint, "2025-03-01-preview");
+        private DevHubClient DevHubClientRestClient => _devHubClientRestClient ??= new DevHubClient(DevHubClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01-preview");
 
         /// <summary>
         /// Callback URL to hit once authenticated with GitHub App to have the service store the OAuth token.

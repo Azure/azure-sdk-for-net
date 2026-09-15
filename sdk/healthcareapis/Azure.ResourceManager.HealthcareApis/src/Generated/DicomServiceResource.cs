@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(ResourceType, out string dicomServiceApiVersion);
             _dicomServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", ResourceType.Namespace, Diagnostics);
-            _dicomServicesRestClient = new DicomServices(_dicomServicesClientDiagnostics, Pipeline, Endpoint, dicomServiceApiVersion ?? "2025-04-01-preview");
+            _dicomServicesRestClient = new DicomServices(_dicomServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dicomServiceApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 

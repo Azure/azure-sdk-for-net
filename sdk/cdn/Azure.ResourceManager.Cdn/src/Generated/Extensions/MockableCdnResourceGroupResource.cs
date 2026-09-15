@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Cdn.Mocking
 
         private ClientDiagnostics CdnClientClientDiagnostics => _cdnClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private CdnClient CdnClientRestClient => _cdnClientRestClient ??= new CdnClient(CdnClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Cdn.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         /// <summary> Gets a collection of Profiles in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Profiles and their operations over a ProfileResource. </returns>

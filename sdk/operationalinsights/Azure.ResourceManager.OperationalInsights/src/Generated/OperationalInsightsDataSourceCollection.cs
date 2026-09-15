@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights
         {
             TryGetApiVersion(OperationalInsightsDataSourceResource.ResourceType, out string operationalInsightsDataSourceApiVersion);
             _dataSourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OperationalInsights", OperationalInsightsDataSourceResource.ResourceType.Namespace, Diagnostics);
-            _dataSourcesRestClient = new DataSources(_dataSourcesClientDiagnostics, Pipeline, Endpoint, operationalInsightsDataSourceApiVersion ?? "2025-07-01");
+            _dataSourcesRestClient = new DataSources(_dataSourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, operationalInsightsDataSourceApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
         }
 

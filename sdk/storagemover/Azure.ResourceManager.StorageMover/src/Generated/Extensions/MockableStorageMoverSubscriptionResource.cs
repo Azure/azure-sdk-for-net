@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StorageMover.Mocking
 
         private ClientDiagnostics StorageMoversClientDiagnostics => _storageMoversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageMover.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageMovers StorageMoversRestClient => _storageMoversRestClient ??= new StorageMovers(StorageMoversClientDiagnostics, Pipeline, Endpoint, "2025-12-01");
+        private StorageMovers StorageMoversRestClient => _storageMoversRestClient ??= new StorageMovers(StorageMoversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01");
 
         /// <summary>
         /// Lists all Storage Movers in a subscription.

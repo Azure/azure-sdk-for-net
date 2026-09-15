@@ -11,12 +11,12 @@ namespace Azure.Provisioning.ContainerService
     public enum NginxIngressControllerType
     {
         /// <summary> The default NginxIngressController will be created. Users can edit the default NginxIngressController Custom Resource to configure load balancer annotations. </summary>
-        AnnotationControlled,
+        AnnotationControlled = 0,
         /// <summary> The default NginxIngressController will be created and the operator will provision an external loadbalancer with it. Any annotation to make the default loadbalancer internal will be overwritten. </summary>
-        External,
+        External = 1,
         /// <summary> The default NginxIngressController will be created and the operator will provision an internal loadbalancer with it. Any annotation to make the default loadbalancer external will be overwritten. </summary>
-        Internal,
+        Internal = 2,
         /// <summary> The default Ingress Controller will not be created. It will not be deleted by the system if it exists. Users should delete the default NginxIngressController Custom Resource manually if desired. </summary>
-        None
+        None = 3
     }
 }

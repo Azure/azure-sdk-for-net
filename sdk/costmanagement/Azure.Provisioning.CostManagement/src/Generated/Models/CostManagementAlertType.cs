@@ -13,19 +13,19 @@ namespace Azure.Provisioning.CostManagement
     public enum CostManagementAlertType
     {
         /// <summary> Budget. </summary>
-        Budget,
+        Budget = 0,
         /// <summary> Invoice. </summary>
-        Invoice,
+        Invoice = 1,
         /// <summary> Credit. </summary>
-        Credit,
+        Credit = 2,
         /// <summary> Quota. </summary>
-        Quota,
+        Quota = 3,
         /// <summary> General. </summary>
-        General,
+        General = 4,
         /// <summary> XCloud. </summary>
         [DataMember(Name = "xCloud")]
-        XCloud,
+        XCloud = 5,
         /// <summary> BudgetForecast. </summary>
-        BudgetForecast
+        BudgetForecast = 6
     }
 }

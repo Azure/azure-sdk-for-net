@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -20,10 +19,12 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary> Initializes a new instance of Responses. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        internal Responses(ClientPipeline pipeline, Uri endpoint)
+        internal Responses(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint)
         {
+            ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
         }
@@ -31,23 +32,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
-        /// <summary>
-        /// [Protocol Method] Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult CompactResponseConversation(BinaryContent content, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateCompactResponseConversationRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios.
@@ -61,52 +47,48 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> CompactResponseConversationAsync(BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult Compactconversation(BinaryContent content, RequestOptions options = null)
         {
-            using PipelineMessage message = CreateCompactResponseConversationRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Responses.Compactconversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCompactconversationRequest(content, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios. </summary>
-        /// <param name="model"></param>
-        /// <param name="input"></param>
-        /// <param name="previousResponseId"></param>
-        /// <param name="instructions"></param>
-        /// <param name="promptCacheKey"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <summary>
+        /// [Protocol Method] Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<CompactResource> CompactResponseConversation(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> CompactconversationAsync(BinaryContent content, RequestOptions options = null)
         {
-            CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(
-                model,
-                input,
-                previousResponseId,
-                instructions,
-                promptCacheKey,
-                default);
-            ClientResult result = CompactResponseConversation(spreadModel, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((CompactResource)result, result.GetRawResponse());
-        }
-
-        /// <summary> Compacts a conversation into a response object suitable for long-running and zero-data-retention scenarios. </summary>
-        /// <param name="model"></param>
-        /// <param name="input"></param>
-        /// <param name="previousResponseId"></param>
-        /// <param name="instructions"></param>
-        /// <param name="promptCacheKey"></param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<CompactResource>> CompactResponseConversationAsync(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
-        {
-            CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(
-                model,
-                input,
-                previousResponseId,
-                instructions,
-                promptCacheKey,
-                default);
-            ClientResult result = await CompactResponseConversationAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((CompactResource)result, result.GetRawResponse());
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Responses.Compactconversation");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCompactconversationRequest(content, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

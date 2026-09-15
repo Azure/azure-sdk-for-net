@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ResourceType, out string securityAutomationApiVersion);
             _automationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _automationsRestClient = new Automations(_automationsClientDiagnostics, Pipeline, Endpoint, securityAutomationApiVersion ?? "2023-12-01-preview");
+            _automationsRestClient = new Automations(_automationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityAutomationApiVersion ?? "2023-12-01-preview");
             ValidateResourceId(id);
         }
 

@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isRbacEnabled"> Whether to enable Kubernetes Role-Based Access Control. </param>
         /// <param name="supportPlan"> The support plan for the Managed Cluster. If unspecified, the default is 'KubernetesOfficial'. </param>
         /// <param name="isFipsEnabled"> Whether to enable FIPS mode at the cluster level. When enabled, this setting enforces FIPS compliance for all AKS-managed components, such as the node operating system, addons, and [managed containerized components](https://aka.ms/aks/components/docs). See [Enable cluster-wide FIPS](https://aka.ms/aks/fips) for more details. When this property is enabled, all node pools in the cluster must also be FIPS-enabled. </param>
+        /// <param name="enableNodeHardening"> Whether to enable node hardening at the cluster level. When enabled, AKS applies hardened defaults for soft eviction thresholds, kube-reserved, and system-reserved on all Linux node pools in the cluster. Per-node-pool kubeletConfig settings take precedence over hardening defaults. On agent pools running Kubernetes 1.37 or later, node hardening is enabled by default and cannot be disabled; setting this field to false has no effect on those pools. </param>
         /// <param name="isNamespaceResourcesEnabled"> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </param>
         /// <param name="networkProfile"> The network configuration profile. </param>
         /// <param name="aadProfile"> The Azure Active Directory configuration. </param>
@@ -76,14 +77,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodeProvisioningProfile"> Node provisioning settings that apply to the whole cluster. </param>
         /// <param name="bootstrapProfile"> Profile of the cluster bootstrap configuration. </param>
         /// <param name="aiToolchainOperatorProfile"> AI toolchain operator settings that apply to the whole cluster. </param>
-        /// <param name="schedulerProfile"> Profile of the pod scheduler configuration. </param>
+        /// <param name="schedulerProfile"> Profile with scheduler-related settings, like the configuration mode for each scheduler managed by AKS. See https://aka.ms/aks/scheduler-profile. </param>
         /// <param name="hostedSystemProfile"> Settings for hosted system addons. For more information, see https://aka.ms/aks/automatic/systemcomponents. </param>
         /// <param name="healthMonitorProfile"> Health monitor profile for the managed cluster. </param>
         /// <param name="controlPlaneScalingProfile"> Profile for providing scaled and performance guaranteed control plane capacity to deliver consistent performance under high workload. Requires Kubernetes version 1.33.0 or later. </param>
         /// <param name="nodeDisruptionProfile"> Node disruption profile for a managed cluster. </param>
         /// <param name="status"> Contains read-only information about the Managed Cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterProperties(string provisioningState, ContainerServicePowerState powerState, ContainerServiceCreationData creationData, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile, bool? isRbacEnabled, KubernetesSupportPlan? supportPlan, bool? isFipsEnabled, bool? isNamespaceResourcesEnabled, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ClusterUpgradeSettings upgradeSettings, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? isLocalAccountsDisabled, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ManagedClusterIngressProfile ingressProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterAzureMonitorProfile azureMonitorProfile, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId, ManagedClusterMetricsProfile metricsProfile, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile, ManagedClusterBootstrapProfile bootstrapProfile, ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile, SchedulerProfile schedulerProfile, ManagedClusterHostedSystemProfile hostedSystemProfile, ManagedClusterHealthMonitorProfile healthMonitorProfile, ManagedClusterControlPlaneScalingProfile controlPlaneScalingProfile, NodeDisruptionProfile nodeDisruptionProfile, ManagedClusterStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterProperties(string provisioningState, ContainerServicePowerState powerState, ContainerServiceCreationData creationData, int? maxAgentPools, string kubernetesVersion, string currentKubernetesVersion, string dnsPrefix, string fqdnSubdomain, string fqdn, string privateFqdn, string azurePortalFqdn, IList<ManagedClusterAgentPoolProfile> agentPoolProfiles, ContainerServiceLinuxProfile linuxProfile, ManagedClusterWindowsProfile windowsProfile, ManagedClusterServicePrincipalProfile servicePrincipalProfile, IDictionary<string, ManagedClusterAddonProfile> addonProfiles, ManagedClusterPodIdentityProfile podIdentityProfile, ManagedClusterOidcIssuerProfile oidcIssuerProfile, string nodeResourceGroup, ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile, bool? isRbacEnabled, KubernetesSupportPlan? supportPlan, bool? isFipsEnabled, bool? enableNodeHardening, bool? isNamespaceResourcesEnabled, ContainerServiceNetworkProfile networkProfile, ManagedClusterAadProfile aadProfile, ManagedClusterAutoUpgradeProfile autoUpgradeProfile, ClusterUpgradeSettings upgradeSettings, ManagedClusterAutoScalerProfile autoScalerProfile, ManagedClusterApiServerAccessProfile apiServerAccessProfile, ResourceIdentifier diskEncryptionSetId, IDictionary<string, ContainerServiceUserAssignedIdentity> identityProfile, IList<ContainerServicePrivateLinkResourceData> privateLinkResources, bool? isLocalAccountsDisabled, ManagedClusterHttpProxyConfig httpProxyConfig, ManagedClusterSecurityProfile securityProfile, ManagedClusterStorageProfile storageProfile, ManagedClusterIngressProfile ingressProfile, ContainerServicePublicNetworkAccess? publicNetworkAccess, ManagedClusterWorkloadAutoScalerProfile workloadAutoScalerProfile, ManagedClusterAzureMonitorProfile azureMonitorProfile, ServiceMeshProfile serviceMeshProfile, ResourceIdentifier resourceId, ManagedClusterMetricsProfile metricsProfile, ManagedClusterNodeProvisioningProfile nodeProvisioningProfile, ManagedClusterBootstrapProfile bootstrapProfile, ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile, SchedulerProfile schedulerProfile, ManagedClusterHostedSystemProfile hostedSystemProfile, ManagedClusterHealthMonitorProfile healthMonitorProfile, ManagedClusterControlPlaneScalingProfile controlPlaneScalingProfile, NodeDisruptionProfile nodeDisruptionProfile, ManagedClusterStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PowerState = powerState;
@@ -108,6 +109,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IsRbacEnabled = isRbacEnabled;
             SupportPlan = supportPlan;
             IsFipsEnabled = isFipsEnabled;
+            EnableNodeHardening = enableNodeHardening;
             IsNamespaceResourcesEnabled = isNamespaceResourcesEnabled;
             NetworkProfile = networkProfile;
             AadProfile = aadProfile;
@@ -233,6 +235,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("enableFIPS")]
         public bool? IsFipsEnabled { get; set; }
 
+        /// <summary> Whether to enable node hardening at the cluster level. When enabled, AKS applies hardened defaults for soft eviction thresholds, kube-reserved, and system-reserved on all Linux node pools in the cluster. Per-node-pool kubeletConfig settings take precedence over hardening defaults. On agent pools running Kubernetes 1.37 or later, node hardening is enabled by default and cannot be disabled; setting this field to false has no effect on those pools. </summary>
+        [WirePath("enableNodeHardening")]
+        public bool? EnableNodeHardening { get; set; }
+
         /// <summary> Enable namespace as Azure resource. The default value is false. It can be enabled/disabled on creation and updating of the managed cluster. See [https://aka.ms/NamespaceARMResource](https://aka.ms/NamespaceARMResource) for more details on Namespace as a ARM Resource. </summary>
         [WirePath("enableNamespaceResources")]
         public bool? IsNamespaceResourcesEnabled { get; set; }
@@ -329,7 +335,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("aiToolchainOperatorProfile")]
         internal ManagedClusterAIToolchainOperatorProfile AiToolchainOperatorProfile { get; set; }
 
-        /// <summary> Profile of the pod scheduler configuration. </summary>
+        /// <summary> Profile with scheduler-related settings, like the configuration mode for each scheduler managed by AKS. See https://aka.ms/aks/scheduler-profile. </summary>
         [WirePath("schedulerProfile")]
         internal SchedulerProfile SchedulerProfile { get; set; }
 
@@ -453,8 +459,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary> The config customization mode for this scheduler instance. </summary>
-        [WirePath("schedulerProfile.schedulerInstanceProfiles.upstream.schedulerConfigMode")]
+        /// <summary> The configuration mode to be used by the AKS-managed scheduler. </summary>
+        [WirePath("schedulerProfile.upstream.schedulerConfigMode")]
         public SchedulerConfigMode? UpstreamSchedulerConfigMode
         {
             get

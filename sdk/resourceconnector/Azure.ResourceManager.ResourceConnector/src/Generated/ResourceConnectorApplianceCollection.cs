@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceConnector
         {
             TryGetApiVersion(ResourceConnectorApplianceResource.ResourceType, out string resourceConnectorApplianceApiVersion);
             _appliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceConnector", ResourceConnectorApplianceResource.ResourceType.Namespace, Diagnostics);
-            _appliancesRestClient = new Appliances(_appliancesClientDiagnostics, Pipeline, Endpoint, resourceConnectorApplianceApiVersion ?? "2025-03-01-preview");
+            _appliancesRestClient = new Appliances(_appliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceConnectorApplianceApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
