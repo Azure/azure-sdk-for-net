@@ -93,43 +93,6 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ApiKeyOwnerEntity(id, related, resourceName, kind, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="createdOn"> The creation time of the resource. </param>
-        /// <param name="provisioningState"> Provision states for confluent RP. </param>
-        /// <param name="organizationId"> Id of the Confluent organization. </param>
-        /// <param name="ssoUri"> SSO url for the Confluent organization. </param>
-        /// <param name="offerDetail"> Confluent offer detail. </param>
-        /// <param name="userDetail"> Subscriber detail. </param>
-        /// <param name="linkOrganizationToken"> User auth token. </param>
-        /// <returns> A new <see cref="Confluent.ConfluentOrganizationData"/> instance for mocking. </returns>
-        public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? createdOn = default, ConfluentProvisionState? provisioningState = default, Guid? organizationId = default, Uri ssoUri = default, ConfluentOfferDetail offerDetail = default, ConfluentUserDetail userDetail = default, string linkOrganizationToken = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConfluentOrganizationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                createdOn is null && provisioningState is null && organizationId is null && ssoUri is null && offerDetail is null && userDetail is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
-                    createdOn,
-                    provisioningState,
-                    organizationId,
-                    ssoUri,
-                    offerDetail,
-                    userDetail,
-                    linkOrganizationToken is null ? default : new LinkOrganization(linkOrganizationToken, default),
-                    default),
-                default);
-        }
-
         /// <summary> Confluent Offer detail. </summary>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="id"> Offer Id. </param>
@@ -173,6 +136,43 @@ namespace Azure.ResourceManager.Confluent.Models
                 emailAddress,
                 userPrincipalName,
                 aadEmail,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="createdOn"> The creation time of the resource. </param>
+        /// <param name="provisioningState"> Provision states for confluent RP. </param>
+        /// <param name="organizationId"> Id of the Confluent organization. </param>
+        /// <param name="ssoUri"> SSO url for the Confluent organization. </param>
+        /// <param name="offerDetail"> Confluent offer detail. </param>
+        /// <param name="userDetail"> Subscriber detail. </param>
+        /// <param name="linkOrganizationToken"> User auth token. </param>
+        /// <returns> A new <see cref="Confluent.ConfluentOrganizationData"/> instance for mocking. </returns>
+        public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? createdOn = default, ConfluentProvisionState? provisioningState = default, Guid? organizationId = default, Uri ssoUri = default, ConfluentOfferDetail offerDetail = default, ConfluentUserDetail userDetail = default, string linkOrganizationToken = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConfluentOrganizationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                createdOn is null && provisioningState is null && organizationId is null && ssoUri is null && offerDetail is null && userDetail is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
+                    createdOn,
+                    provisioningState,
+                    organizationId,
+                    ssoUri,
+                    offerDetail,
+                    userDetail,
+                    linkOrganizationToken is null ? default : new LinkOrganization(linkOrganizationToken, default),
+                    default),
                 default);
         }
 
@@ -669,27 +669,6 @@ namespace Azure.ResourceManager.Confluent.Models
             return new SchemaRegistryClusterEnvironmentRegionEntity(id, related, resourceName, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="kind"> Type of cluster. </param>
-        /// <param name="metadata"> Metadata of the record. </param>
-        /// <param name="spec"> Specification of the cluster. </param>
-        /// <param name="status"> Specification of the cluster status. </param>
-        /// <returns> A new <see cref="Confluent.SCClusterRecordData"/> instance for mocking. </returns>
-        public static SCClusterRecordData SCClusterRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SCMetadataEntity metadata = default, SCClusterSpecEntity spec = default, ClusterStatusEntity status = default)
-        {
-            return new SCClusterRecordData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind,
-                metadata is null && spec is null && status is null ? default : new ClusterProperties(metadata, spec, status, default),
-                default);
-        }
-
         /// <param name="name"> The name of the cluster. </param>
         /// <param name="availability"> The availability zone configuration of the cluster. </param>
         /// <param name="cloud"> The cloud service provider. </param>
@@ -744,6 +723,27 @@ namespace Azure.ResourceManager.Confluent.Models
             return new SCClusterByokEntity(id, related, resourceName, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Type of cluster. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="spec"> Specification of the cluster. </param>
+        /// <param name="status"> Specification of the cluster status. </param>
+        /// <returns> A new <see cref="Confluent.SCClusterRecordData"/> instance for mocking. </returns>
+        public static SCClusterRecordData SCClusterRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SCMetadataEntity metadata = default, SCClusterSpecEntity spec = default, ClusterStatusEntity status = default)
+        {
+            return new SCClusterRecordData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                metadata is null && spec is null && status is null ? default : new ClusterProperties(metadata, spec, status, default),
+                default);
+        }
+
         /// <summary> Create API Key model. </summary>
         /// <param name="name"> Name of the API Key. </param>
         /// <param name="description"> Description of the API Key. </param>
@@ -751,25 +751,6 @@ namespace Azure.ResourceManager.Confluent.Models
         public static ConfluentApiKeyCreateContent ConfluentApiKeyCreateContent(string name = default, string description = default)
         {
             return new ConfluentApiKeyCreateContent(name, description, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectorBasicInfo"> Connector Info Base. </param>
-        /// <param name="connectorServiceTypeInfo"> Connector Service type info base properties. </param>
-        /// <param name="partnerConnectorInfo"> The connection information consumed by applications. </param>
-        /// <returns> A new <see cref="Confluent.ConfluentConnectorData"/> instance for mocking. </returns>
-        public static ConfluentConnectorData ConfluentConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectorInfoBase connectorBasicInfo = default, ConnectorServiceTypeInfoBase connectorServiceTypeInfo = default, PartnerInfoBase partnerConnectorInfo = default)
-        {
-            return new ConfluentConnectorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                connectorBasicInfo is null && connectorServiceTypeInfo is null && partnerConnectorInfo is null ? default : new ConnectorResourceProperties(connectorBasicInfo, connectorServiceTypeInfo, partnerConnectorInfo, default),
-                default);
         }
 
         /// <summary> Connector Info Base properties. </summary>
@@ -1060,6 +1041,43 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="connectorBasicInfo"> Connector Info Base. </param>
+        /// <param name="connectorServiceTypeInfo"> Connector Service type info base properties. </param>
+        /// <param name="partnerConnectorInfo"> The connection information consumed by applications. </param>
+        /// <returns> A new <see cref="Confluent.ConfluentConnectorData"/> instance for mocking. </returns>
+        public static ConfluentConnectorData ConfluentConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectorInfoBase connectorBasicInfo = default, ConnectorServiceTypeInfoBase connectorServiceTypeInfo = default, PartnerInfoBase partnerConnectorInfo = default)
+        {
+            return new ConfluentConnectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                connectorBasicInfo is null && connectorServiceTypeInfo is null && partnerConnectorInfo is null ? default : new ConnectorResourceProperties(connectorBasicInfo, connectorServiceTypeInfo, partnerConnectorInfo, default),
+                default);
+        }
+
+        /// <summary> Metadata of the data record. </summary>
+        /// <param name="self"> Self lookup url. </param>
+        /// <param name="resourceName"> Resource name of the record. </param>
+        /// <returns> A new <see cref="Models.TopicMetadataEntity"/> instance for mocking. </returns>
+        public static TopicMetadataEntity TopicMetadataEntity(string self = default, string resourceName = default)
+        {
+            return new TopicMetadataEntity(self, resourceName, default);
+        }
+
+        /// <summary> Topics input config. </summary>
+        /// <param name="name"> Name of the topic input config. </param>
+        /// <param name="value"> Value of the topic input config. </param>
+        /// <returns> A new <see cref="Models.TopicsInputConfig"/> instance for mocking. </returns>
+        public static TopicsInputConfig TopicsInputConfig(string name = default, string value = default)
+        {
+            return new TopicsInputConfig(name, value, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="kind"> Type of topic. </param>
         /// <param name="topicId"> Topic Id returned by Confluent. </param>
         /// <param name="metadata"> Metadata of the record. </param>
@@ -1088,42 +1106,6 @@ namespace Azure.ResourceManager.Confluent.Models
                     partitionsCount,
                     replicationFactor,
                     default),
-                default);
-        }
-
-        /// <summary> Metadata of the data record. </summary>
-        /// <param name="self"> Self lookup url. </param>
-        /// <param name="resourceName"> Resource name of the record. </param>
-        /// <returns> A new <see cref="Models.TopicMetadataEntity"/> instance for mocking. </returns>
-        public static TopicMetadataEntity TopicMetadataEntity(string self = default, string resourceName = default)
-        {
-            return new TopicMetadataEntity(self, resourceName, default);
-        }
-
-        /// <summary> Topics input config. </summary>
-        /// <param name="name"> Name of the topic input config. </param>
-        /// <param name="value"> Value of the topic input config. </param>
-        /// <returns> A new <see cref="Models.TopicsInputConfig"/> instance for mocking. </returns>
-        public static TopicsInputConfig TopicsInputConfig(string name = default, string value = default)
-        {
-            return new TopicsInputConfig(name, value, default);
-        }
-
-        /// <summary> Details of network gateway record. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Network Gateway Properties. </param>
-        /// <returns> A new <see cref="Confluent.ConfluentNetworkGatewayData"/> instance for mocking. </returns>
-        public static ConfluentNetworkGatewayData ConfluentNetworkGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfluentNetworkGatewayProperties properties = default)
-        {
-            return new ConfluentNetworkGatewayData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
                 default);
         }
 
@@ -1156,16 +1138,16 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ConfluentKeyValuePair(key, value, default);
         }
 
-        /// <summary> Details of access point record. </summary>
+        /// <summary> Details of network gateway record. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Access Point Properties. </param>
-        /// <returns> A new <see cref="Confluent.ConfluentAccessPointData"/> instance for mocking. </returns>
-        public static ConfluentAccessPointData ConfluentAccessPointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfluentAccessPointProperties properties = default)
+        /// <param name="properties"> Network Gateway Properties. </param>
+        /// <returns> A new <see cref="Confluent.ConfluentNetworkGatewayData"/> instance for mocking. </returns>
+        public static ConfluentNetworkGatewayData ConfluentNetworkGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfluentNetworkGatewayProperties properties = default)
         {
-            return new ConfluentAccessPointData(
+            return new ConfluentNetworkGatewayData(
                 id,
                 name,
                 resourceType,
@@ -1206,6 +1188,24 @@ namespace Azure.ResourceManager.Confluent.Models
         public static VNetInjectionDetails VNetInjectionDetails(ResourceIdentifier virtualNetworkResourceId = default, ResourceIdentifier subnetResourceId = default)
         {
             return new VNetInjectionDetails(virtualNetworkResourceId, subnetResourceId, default);
+        }
+
+        /// <summary> Details of access point record. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Access Point Properties. </param>
+        /// <returns> A new <see cref="Confluent.ConfluentAccessPointData"/> instance for mocking. </returns>
+        public static ConfluentAccessPointData ConfluentAccessPointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfluentAccessPointProperties properties = default)
+        {
+            return new ConfluentAccessPointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

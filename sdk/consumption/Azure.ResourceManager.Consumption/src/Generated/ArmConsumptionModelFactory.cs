@@ -20,31 +20,6 @@ namespace Azure.ResourceManager.Consumption.Models
     public static partial class ArmConsumptionModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="pricesheets"> Price sheet. </param>
-        /// <param name="nextLink"> The link (url) to the next page of results. </param>
-        /// <param name="download"> Pricesheet download details. </param>
-        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Consumption.PriceSheetResultData"/> instance for mocking. </returns>
-        public static PriceSheetResultData PriceSheetResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<PriceSheetProperties> pricesheets = default, string nextLink = default, ConsumptionMeterDetails download = default, ETag? eTag = default, IReadOnlyDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PriceSheetResultData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                pricesheets is null && nextLink is null && download is null ? default : new PriceSheetModel((pricesheets ?? new ChangeTrackingList<PriceSheetProperties>()).ToList(), nextLink, download, default),
-                eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
         /// <summary> The properties of the price sheet. </summary>
         /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
         /// <param name="meterId"> The meter id (GUID). </param>
@@ -109,6 +84,31 @@ namespace Azure.ResourceManager.Consumption.Models
             return new SavingsPlan(term, marketPrice, effectivePrice, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="pricesheets"> Price sheet. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
+        /// <param name="download"> Pricesheet download details. </param>
+        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Consumption.PriceSheetResultData"/> instance for mocking. </returns>
+        public static PriceSheetResultData PriceSheetResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<PriceSheetProperties> pricesheets = default, string nextLink = default, ConsumptionMeterDetails download = default, ETag? eTag = default, IReadOnlyDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PriceSheetResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                pricesheets is null && nextLink is null && download is null ? default : new PriceSheetModel((pricesheets ?? new ChangeTrackingList<PriceSheetProperties>()).ToList(), nextLink, download, default),
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
         /// <param name="status"> The status of the long running operation. </param>
         /// <param name="downloadUri"> The link (url) to download the pricesheet. </param>
         /// <param name="expiresOn"> Download link validity. </param>
@@ -116,41 +116,6 @@ namespace Azure.ResourceManager.Consumption.Models
         public static OperationStatus OperationStatus(OperationStatusType? status = default, string downloadUri = default, DateTimeOffset? expiresOn = default)
         {
             return new OperationStatus(status, downloadUri is null && expiresOn is null ? default : new PricesheetDownloadProperties(downloadUri, expiresOn, default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="category"> The category of the budget, whether the budget tracks cost or usage. </param>
-        /// <param name="amount"> The total amount of cost to track with the budget. </param>
-        /// <param name="timeGrain"> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </param>
-        /// <param name="timePeriod"> Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date. </param>
-        /// <param name="filter"> May be used to filter budgets by user-specified dimensions and/or tags. </param>
-        /// <param name="currentSpend"> The current amount of cost which is being tracked for a budget. </param>
-        /// <param name="notifications"> Dictionary of notifications associated with the budget. Budget can have up to five notifications. </param>
-        /// <param name="forecastSpend"> The forecasted cost which is being tracked for a budget. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <returns> A new <see cref="Consumption.ConsumptionBudgetData"/> instance for mocking. </returns>
-        public static ConsumptionBudgetData ConsumptionBudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BudgetCategory? category = default, decimal? amount = default, BudgetTimeGrainType? timeGrain = default, BudgetTimePeriod timePeriod = default, ConsumptionBudgetFilter filter = default, BudgetCurrentSpend currentSpend = default, IDictionary<string, BudgetAssociatedNotification> notifications = default, BudgetForecastSpend forecastSpend = default, ETag? etag = default)
-        {
-            return new ConsumptionBudgetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                category is null && amount is null && timeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
-                    category,
-                    amount,
-                    timeGrain,
-                    timePeriod,
-                    filter,
-                    currentSpend,
-                    notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(),
-                    forecastSpend,
-                    default),
-                etag,
-                default);
         }
 
         /// <summary> The start and end date for a budget. </summary>
@@ -245,40 +210,34 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="balanceSummary"> Summary of balances associated with this credit summary. </param>
-        /// <param name="pendingCreditAdjustments"> Pending credit adjustments. </param>
-        /// <param name="expiredCredit"> Expired credit. </param>
-        /// <param name="pendingEligibleCharges"> Pending eligible charges. </param>
-        /// <param name="creditCurrency"> The credit currency. </param>
-        /// <param name="billingCurrency"> The billing currency. </param>
-        /// <param name="reseller"> Credit's reseller. </param>
-        /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
-        /// <param name="propertiesETag"> The eTag for the resource. </param>
-        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <param name="tags"> A list of Tag. </param>
-        /// <returns> A new <see cref="Consumption.ConsumptionCreditSummaryData"/> instance for mocking. </returns>
-        public static ConsumptionCreditSummaryData ConsumptionCreditSummaryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CreditBalanceSummary balanceSummary = default, ConsumptionAmount pendingCreditAdjustments = default, ConsumptionAmount expiredCredit = default, ConsumptionAmount pendingEligibleCharges = default, string creditCurrency = default, string billingCurrency = default, ConsumptionReseller reseller = default, bool? isEstimatedBalance = default, string propertiesETag = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        /// <param name="category"> The category of the budget, whether the budget tracks cost or usage. </param>
+        /// <param name="amount"> The total amount of cost to track with the budget. </param>
+        /// <param name="timeGrain"> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </param>
+        /// <param name="timePeriod"> Has start and end date of the budget. The start date must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period. There are no restrictions on the end date. </param>
+        /// <param name="filter"> May be used to filter budgets by user-specified dimensions and/or tags. </param>
+        /// <param name="currentSpend"> The current amount of cost which is being tracked for a budget. </param>
+        /// <param name="notifications"> Dictionary of notifications associated with the budget. Budget can have up to five notifications. </param>
+        /// <param name="forecastSpend"> The forecasted cost which is being tracked for a budget. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="Consumption.ConsumptionBudgetData"/> instance for mocking. </returns>
+        public static ConsumptionBudgetData ConsumptionBudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BudgetCategory? category = default, decimal? amount = default, BudgetTimeGrainType? timeGrain = default, BudgetTimePeriod timePeriod = default, ConsumptionBudgetFilter filter = default, BudgetCurrentSpend currentSpend = default, IDictionary<string, BudgetAssociatedNotification> notifications = default, BudgetForecastSpend forecastSpend = default, ETag? etag = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConsumptionCreditSummaryData(
+            return new ConsumptionBudgetData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                balanceSummary is null && pendingCreditAdjustments is null && expiredCredit is null && pendingEligibleCharges is null && creditCurrency is null && billingCurrency is null && reseller is null && isEstimatedBalance is null && propertiesETag is null ? default : new CreditSummaryProperties(
-                    balanceSummary,
-                    pendingCreditAdjustments,
-                    expiredCredit,
-                    pendingEligibleCharges,
-                    creditCurrency,
-                    billingCurrency,
-                    reseller,
-                    isEstimatedBalance,
-                    propertiesETag,
+                category is null && amount is null && timeGrain is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
+                    category,
+                    amount,
+                    timeGrain,
+                    timePeriod,
+                    filter,
+                    currentSpend,
+                    notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(),
+                    forecastSpend,
                     default),
-                eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                etag,
                 default);
         }
 
@@ -319,6 +278,47 @@ namespace Azure.ResourceManager.Consumption.Models
         public static ConsumptionReseller ConsumptionReseller(ResourceIdentifier resellerId = default, string resellerDescription = default)
         {
             return new ConsumptionReseller(resellerId, resellerDescription, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="balanceSummary"> Summary of balances associated with this credit summary. </param>
+        /// <param name="pendingCreditAdjustments"> Pending credit adjustments. </param>
+        /// <param name="expiredCredit"> Expired credit. </param>
+        /// <param name="pendingEligibleCharges"> Pending eligible charges. </param>
+        /// <param name="creditCurrency"> The credit currency. </param>
+        /// <param name="billingCurrency"> The billing currency. </param>
+        /// <param name="reseller"> Credit's reseller. </param>
+        /// <param name="isEstimatedBalance"> If true, the listed details are based on an estimation and it will be subjected to change. </param>
+        /// <param name="propertiesETag"> The eTag for the resource. </param>
+        /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="tags"> A list of Tag. </param>
+        /// <returns> A new <see cref="Consumption.ConsumptionCreditSummaryData"/> instance for mocking. </returns>
+        public static ConsumptionCreditSummaryData ConsumptionCreditSummaryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CreditBalanceSummary balanceSummary = default, ConsumptionAmount pendingCreditAdjustments = default, ConsumptionAmount expiredCredit = default, ConsumptionAmount pendingEligibleCharges = default, string creditCurrency = default, string billingCurrency = default, ConsumptionReseller reseller = default, bool? isEstimatedBalance = default, string propertiesETag = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConsumptionCreditSummaryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                balanceSummary is null && pendingCreditAdjustments is null && expiredCredit is null && pendingEligibleCharges is null && creditCurrency is null && billingCurrency is null && reseller is null && isEstimatedBalance is null && propertiesETag is null ? default : new CreditSummaryProperties(
+                    balanceSummary,
+                    pendingCreditAdjustments,
+                    expiredCredit,
+                    pendingEligibleCharges,
+                    creditCurrency,
+                    billingCurrency,
+                    reseller,
+                    isEstimatedBalance,
+                    propertiesETag,
+                    default),
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

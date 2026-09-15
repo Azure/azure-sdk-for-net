@@ -20,37 +20,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public static partial class ArmComputeFleetModelFactory
     {
 
-        /// <summary> An Compute Fleet resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="zones"> Zones in which the Compute Fleet is available. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="plan"> Details of the resource plan. </param>
-        /// <returns> A new <see cref="ComputeFleet.ComputeFleetData"/> instance for mocking. </returns>
-        public static ComputeFleetData ComputeFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeFleetProperties properties = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new ComputeFleetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                identity,
-                plan,
-                default);
-        }
-
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="spotPriorityProfile"> Configuration Options for Spot instances in Compute Fleet. </param>
         /// <param name="regularPriorityProfile"> Configuration Options for Regular instances in Compute Fleet. </param>
@@ -1514,6 +1483,37 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static ZonePreference ZonePreference(string zone = default, int? rank = default)
         {
             return new ZonePreference(zone, rank, default);
+        }
+
+        /// <summary> An Compute Fleet resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="zones"> Zones in which the Compute Fleet is available. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
+        /// <returns> A new <see cref="ComputeFleet.ComputeFleetData"/> instance for mocking. </returns>
+        public static ComputeFleetData ComputeFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ComputeFleetProperties properties = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new ComputeFleetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                plan,
+                default);
         }
 
         /// <summary> Fleet Update Model. </summary>

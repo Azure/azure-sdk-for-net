@@ -1258,30 +1258,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 default);
         }
 
-        /// <summary> The scheduled action resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ComputeSchedule.ScheduledActionData"/> instance for mocking. </returns>
-        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ScheduledActionProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ScheduledActionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <summary> Scheduled action properties. </summary>
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
@@ -1343,6 +1319,30 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static NotificationSettings NotificationSettings(string destination = default, NotificationType @type = default, NotificationLanguage language = default, bool? isDisabled = default)
         {
             return new NotificationSettings(destination, @type, language, isDisabled, default);
+        }
+
+        /// <summary> The scheduled action resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ComputeSchedule.ScheduledActionData"/> instance for mocking. </returns>
+        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ScheduledActionProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ScheduledActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
         }
 
         /// <summary> The type used for update operations of the ScheduledAction. </summary>
@@ -1464,24 +1464,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new OccurrenceCancelContent((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ComputeSchedule.ScheduledActionOccurrenceData"/> instance for mocking. </returns>
-        public static ScheduledActionOccurrenceData ScheduledActionOccurrenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScheduledActionOccurrenceProperties properties = default)
-        {
-            return new ScheduledActionOccurrenceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties for an occurrence. </summary>
         /// <param name="scheduledOn"> The time the occurrence is scheduled for. This value can be changed by calling the delay API. </param>
         /// <param name="resultSummary"> The result for occurrences that achieved a terminal state. </param>
@@ -1511,6 +1493,24 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static ResourceResultSummary ResourceResultSummary(string code = default, int count = default, ResponseError errorDetails = default)
         {
             return new ResourceResultSummary(code, count, errorDetails, default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ComputeSchedule.ScheduledActionOccurrenceData"/> instance for mocking. </returns>
+        public static ScheduledActionOccurrenceData ScheduledActionOccurrenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScheduledActionOccurrenceProperties properties = default)
+        {
+            return new ScheduledActionOccurrenceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> The scheduled action extension. </summary>

@@ -569,37 +569,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new AcknowledgeBulkOperationErrorsResponseResult((acknowledged ?? new ChangeTrackingList<string>()).ToList(), (notFound ?? new ChangeTrackingList<string>()).ToList(), (skipped ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Location based LaunchBulkInstancesOperation resource. The location is part of the resource path. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="zones"> Zones in which the LaunchBulkInstancesOperation is available. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="plan"> Details of the resource plan. </param>
-        /// <returns> A new <see cref="BulkActions.LocationBasedLaunchBulkInstancesOperationData"/> instance for mocking. </returns>
-        public static LocationBasedLaunchBulkInstancesOperationData LocationBasedLaunchBulkInstancesOperationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LaunchBulkInstancesOperationProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
-        {
-            zones ??= new ChangeTrackingList<string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new LocationBasedLaunchBulkInstancesOperationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                location,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity,
-                plan,
-                default);
-        }
-
         /// <summary> Details of the LaunchBulkInstancesOperation. </summary>
         /// <param name="createdOn"> The UTC time the LaunchBulkInstancesOperation resource was created. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -1447,6 +1416,37 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 default);
         }
 
+        /// <summary> Location based LaunchBulkInstancesOperation resource. The location is part of the resource path. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="zones"> Zones in which the LaunchBulkInstancesOperation is available. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
+        /// <returns> A new <see cref="BulkActions.LocationBasedLaunchBulkInstancesOperationData"/> instance for mocking. </returns>
+        public static LocationBasedLaunchBulkInstancesOperationData LocationBasedLaunchBulkInstancesOperationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LaunchBulkInstancesOperationProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new LocationBasedLaunchBulkInstancesOperationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                plan,
+                default);
+        }
+
         /// <summary> A virtual machine launched by a LaunchBulkInstancesOperation. </summary>
         /// <param name="name"> The name of the virtual machine. </param>
         /// <param name="id"> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </param>
@@ -1502,37 +1502,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static BulkInstancesInnerError BulkInstancesInnerError(string exceptionType = default, string errorDetail = default)
         {
             return new BulkInstancesInnerError(exceptionType, errorDetail, default);
-        }
-
-        /// <summary> Location based BulkCreateCustom resource. The location is part of the resource path. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="zones"> Zones in which the BulkCreateCustom is available. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="plan"> Details of the resource plan. </param>
-        /// <returns> A new <see cref="BulkActions.LocationBasedBulkCreateCustomData"/> instance for mocking. </returns>
-        public static LocationBasedBulkCreateCustomData LocationBasedBulkCreateCustomData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BulkCreateCustomProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
-        {
-            zones ??= new ChangeTrackingList<string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new LocationBasedBulkCreateCustomData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                location,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity,
-                plan,
-                default);
         }
 
         /// <summary> Details of the BulkCreateCustom. </summary>
@@ -1709,27 +1678,34 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 default);
         }
 
-        /// <summary> The scheduled action resource. </summary>
+        /// <summary> Location based BulkCreateCustom resource. The location is part of the resource path. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="BulkActions.ScheduledActionData"/> instance for mocking. </returns>
-        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ScheduledActionProperties properties = default)
+        /// <param name="location"> The location name. </param>
+        /// <param name="zones"> Zones in which the BulkCreateCustom is available. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
+        /// <returns> A new <see cref="BulkActions.LocationBasedBulkCreateCustomData"/> instance for mocking. </returns>
+        public static LocationBasedBulkCreateCustomData LocationBasedBulkCreateCustomData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BulkCreateCustomProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
         {
+            zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ScheduledActionData(
+            return new LocationBasedBulkCreateCustomData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 properties,
+                location,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                plan,
                 default);
         }
 
@@ -1813,6 +1789,30 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static NotificationProperties NotificationProperties(string destination = default, NotificationType @type = default, ScheduledActionLanguage language = default, bool? disabled = default)
         {
             return new NotificationProperties(destination, @type, language, disabled, default);
+        }
+
+        /// <summary> The scheduled action resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="BulkActions.ScheduledActionData"/> instance for mocking. </returns>
+        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ScheduledActionProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ScheduledActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
         }
 
         /// <summary> The type used for update operations of the ScheduledAction. </summary>
@@ -1974,24 +1974,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new CancelOccurrenceRequestContent((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="BulkActions.ScheduledActionOccurrenceData"/> instance for mocking. </returns>
-        public static ScheduledActionOccurrenceData ScheduledActionOccurrenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceProperties properties = default)
-        {
-            return new ScheduledActionOccurrenceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties for an occurrence. </summary>
         /// <param name="scheduledOn"> The time the occurrence is scheduled for. This value can be changed by calling the delay API. </param>
         /// <param name="resultSummary"> The result for occurrences that achieved a terminal state. </param>
@@ -2021,6 +2003,24 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public static ResourceResultSummary ResourceResultSummary(string code = default, int count = default, ResponseError errorDetails = default)
         {
             return new ResourceResultSummary(code, count, errorDetails, default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="BulkActions.ScheduledActionOccurrenceData"/> instance for mocking. </returns>
+        public static ScheduledActionOccurrenceData ScheduledActionOccurrenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceProperties properties = default)
+        {
+            return new ScheduledActionOccurrenceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> The scheduled action extension. </summary>
