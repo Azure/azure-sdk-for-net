@@ -195,14 +195,14 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="servingPerformanceEstimation"> Estimated relative inference performance of a single model replica on this SKU. Omitted when an estimate is unavailable. </param>
         /// <param name="vmHourlyPrice"> On-demand hourly price for a single VM of this SKU, in `currency`. </param>
         /// <param name="totalHourlyPrice"> Projected hourly cost for one replica (`vmsPerReplica` VMs), in `currency`. </param>
-        /// <param name="priceAsOf"> UTC timestamp of the price snapshot used for this plan. </param>
-        /// <param name="feasible">
+        /// <param name="priceAsOfOn"> UTC timestamp of the price snapshot used for this plan. </param>
+        /// <param name="isFeasible">
         /// Whether the caller can actually deploy this plan today (region availability, GPU quota, model fit, etc.). This field gates the mutually exclusive properties on this model:
         /// <list type="bullet"><item><description>When `feasible` is `true`: `totalHourlyPrice` is set and `infeasibilityReason` is omitted.</description></item><item><description>When `feasible` is `false`: `infeasibilityReason` is set and `totalHourlyPrice` is omitted.</description></item></list>
         /// </param>
         /// <param name="infeasibilityReason"> Reason explaining why the plan is not deployable. This is a per-plan annotation, not an ARM error envelope. </param>
         /// <returns> A new <see cref="Models.CalculateCostPlan"/> instance for mocking. </returns>
-        public static CalculateCostPlan CalculateCostPlan(string vmSize = default, string quantization = default, int vmsPerReplica = default, int maxAvailableReplicas = default, AIModelServingPerformanceEstimation servingPerformanceEstimation = default, double vmHourlyPrice = default, double? totalHourlyPrice = default, DateTimeOffset? priceAsOf = default, bool feasible = default, AIModelInfeasibilityReason infeasibilityReason = default)
+        public static CalculateCostPlan CalculateCostPlan(string vmSize = default, string quantization = default, int vmsPerReplica = default, int maxAvailableReplicas = default, AIModelServingPerformanceEstimation servingPerformanceEstimation = default, double vmHourlyPrice = default, double? totalHourlyPrice = default, DateTimeOffset? priceAsOfOn = default, bool isFeasible = default, AIModelInfeasibilityReason infeasibilityReason = default)
         {
             return new CalculateCostPlan(
                 vmSize,
@@ -212,8 +212,8 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 servingPerformanceEstimation,
                 vmHourlyPrice,
                 totalHourlyPrice,
-                priceAsOf,
-                feasible,
+                priceAsOfOn,
+                isFeasible,
                 infeasibilityReason,
                 default);
         }

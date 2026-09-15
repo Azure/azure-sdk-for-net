@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 writer.WritePropertyName("totalHourlyPrice"u8);
                 writer.WriteNumberValue(TotalHourlyPrice.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PriceAsOf))
+            if (options.Format != "W" && Optional.IsDefined(PriceAsOfOn))
             {
                 writer.WritePropertyName("priceAsOf"u8);
-                writer.WriteStringValue(PriceAsOf.Value, "O");
+                writer.WriteStringValue(PriceAsOfOn.Value, "O");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("feasible"u8);
-                writer.WriteBooleanValue(Feasible);
+                writer.WriteBooleanValue(IsFeasible);
             }
             if (options.Format != "W" && Optional.IsDefined(InfeasibilityReason))
             {
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             AIModelServingPerformanceEstimation servingPerformanceEstimation = default;
             double vmHourlyPrice = default;
             double? totalHourlyPrice = default;
-            DateTimeOffset? priceAsOf = default;
-            bool feasible = default;
+            DateTimeOffset? priceAsOfOn = default;
+            bool isFeasible = default;
             AIModelInfeasibilityReason infeasibilityReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     {
                         continue;
                     }
-                    priceAsOf = prop.Value.GetDateTimeOffset("O");
+                    priceAsOfOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("feasible"u8))
                 {
-                    feasible = prop.Value.GetBoolean();
+                    isFeasible = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("infeasibilityReason"u8))
@@ -258,8 +258,8 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 servingPerformanceEstimation,
                 vmHourlyPrice,
                 totalHourlyPrice,
-                priceAsOf,
-                feasible,
+                priceAsOfOn,
+                isFeasible,
                 infeasibilityReason,
                 additionalBinaryDataProperties);
         }

@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="servingPerformanceEstimation"> Estimated relative inference performance of a single model replica on this SKU. Omitted when an estimate is unavailable. </param>
         /// <param name="vmHourlyPrice"> On-demand hourly price for a single VM of this SKU, in `currency`. </param>
         /// <param name="totalHourlyPrice"> Projected hourly cost for one replica (`vmsPerReplica` VMs), in `currency`. </param>
-        /// <param name="priceAsOf"> UTC timestamp of the price snapshot used for this plan. </param>
-        /// <param name="feasible">
+        /// <param name="priceAsOfOn"> UTC timestamp of the price snapshot used for this plan. </param>
+        /// <param name="isFeasible">
         /// Whether the caller can actually deploy this plan today (region availability, GPU quota, model fit, etc.). This field gates the mutually exclusive properties on this model:
         /// <list type="bullet"><item><description>When `feasible` is `true`: `totalHourlyPrice` is set and `infeasibilityReason` is omitted.</description></item><item><description>When `feasible` is `false`: `infeasibilityReason` is set and `totalHourlyPrice` is omitted.</description></item></list>
         /// </param>
         /// <param name="infeasibilityReason"> Reason explaining why the plan is not deployable. This is a per-plan annotation, not an ARM error envelope. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CalculateCostPlan(string vmSize, string quantization, int vmsPerReplica, int maxAvailableReplicas, AIModelServingPerformanceEstimation servingPerformanceEstimation, double vmHourlyPrice, double? totalHourlyPrice, DateTimeOffset? priceAsOf, bool feasible, AIModelInfeasibilityReason infeasibilityReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CalculateCostPlan(string vmSize, string quantization, int vmsPerReplica, int maxAvailableReplicas, AIModelServingPerformanceEstimation servingPerformanceEstimation, double vmHourlyPrice, double? totalHourlyPrice, DateTimeOffset? priceAsOfOn, bool isFeasible, AIModelInfeasibilityReason infeasibilityReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             Quantization = quantization;
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             ServingPerformanceEstimation = servingPerformanceEstimation;
             VmHourlyPrice = vmHourlyPrice;
             TotalHourlyPrice = totalHourlyPrice;
-            PriceAsOf = priceAsOf;
-            Feasible = feasible;
+            PriceAsOfOn = priceAsOfOn;
+            IsFeasible = isFeasible;
             InfeasibilityReason = infeasibilityReason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         public double? TotalHourlyPrice { get; }
 
         /// <summary> UTC timestamp of the price snapshot used for this plan. </summary>
-        public DateTimeOffset? PriceAsOf { get; }
+        public DateTimeOffset? PriceAsOfOn { get; }
 
         /// <summary>
         /// Whether the caller can actually deploy this plan today (region availability, GPU quota, model fit, etc.). This field gates the mutually exclusive properties on this model:
         /// <list type="bullet"><item><description>When `feasible` is `true`: `totalHourlyPrice` is set and `infeasibilityReason` is omitted.</description></item><item><description>When `feasible` is `false`: `infeasibilityReason` is set and `totalHourlyPrice` is omitted.</description></item></list>
         /// </summary>
-        public bool Feasible { get; }
+        public bool IsFeasible { get; }
 
         /// <summary> Reason explaining why the plan is not deployable. This is a per-plan annotation, not an ARM error envelope. </summary>
         public AIModelInfeasibilityReason InfeasibilityReason { get; }

@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelServingPerformanceEstimation AIModelServingPerformanceEstimation(float relativeLatencyScore = 0f, float relativeThroughputScore = 0f) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelSpec AIModelSpec(string license = null, bool isRestricted = false, int maxContextLength = 0) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent CalculateCostContent() { throw null; }
-        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostPlan CalculateCostPlan(string vmSize = null, string quantization = null, int vmsPerReplica = 0, int maxAvailableReplicas = 0, Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelServingPerformanceEstimation servingPerformanceEstimation = null, double vmHourlyPrice = 0, double? totalHourlyPrice = default(double?), System.DateTimeOffset? priceAsOf = default(System.DateTimeOffset?), bool feasible = false, Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelInfeasibilityReason infeasibilityReason = null) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostPlan CalculateCostPlan(string vmSize = null, string quantization = null, int vmsPerReplica = 0, int maxAvailableReplicas = 0, Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelServingPerformanceEstimation servingPerformanceEstimation = null, double vmHourlyPrice = 0, double? totalHourlyPrice = default(double?), System.DateTimeOffset? priceAsOfOn = default(System.DateTimeOffset?), bool isFeasible = false, Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelInfeasibilityReason infeasibilityReason = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostResult CalculateCostResult(string currency = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostPlan> plans = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentAutoscaleProfile ModelDeploymentAutoscaleProfile(int minReplicas = 0, int? maxReplicas = default(int?)) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.ModelDeploymentData ModelDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
@@ -601,10 +601,10 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
     public partial class CalculateCostPlan : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostPlan>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostPlan>
     {
         internal CalculateCostPlan() { }
-        public bool Feasible { get { throw null; } }
         public Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelInfeasibilityReason InfeasibilityReason { get { throw null; } }
+        public bool IsFeasible { get { throw null; } }
         public int MaxAvailableReplicas { get { throw null; } }
-        public System.DateTimeOffset? PriceAsOf { get { throw null; } }
+        public System.DateTimeOffset? PriceAsOfOn { get { throw null; } }
         public string Quantization { get { throw null; } }
         public Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelServingPerformanceEstimation ServingPerformanceEstimation { get { throw null; } }
         public double? TotalHourlyPrice { get { throw null; } }
