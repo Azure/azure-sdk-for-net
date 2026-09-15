@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
@@ -35,7 +36,7 @@ public class VoiceAgentWebSocketTests
             {
                 Input = new VoiceAgentAudioInputConfig
                 {
-                    Format = CreatePcmAudioFormat(24000),
+                    Format = new RealtimePcmAudioFormat { Rate = 24000 },
                     NoiseReduction = new VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType.NearField),
                     TurnDetection = new VoiceAgentServerVadTurnDetection
                     {
@@ -127,7 +128,7 @@ public class VoiceAgentWebSocketTests
     {
         VoiceAgentWebSocket client = new(
             clientDiagnostics: new ClientDiagnostics(new AgentAdministrationClientOptions(), true),
-            pipeline: null,
+            pipeline: ClientPipeline.Create(new AgentAdministrationClientOptions()),
             endpoint: new Uri("https://example.services.ai.azure.com/api/projects/my-project/"),
             apiVersion: "v1",
             tokenProvider: null);
@@ -135,7 +136,9 @@ public class VoiceAgentWebSocketTests
         {
             SessionId = "session 1",
             AgentVersion = "4",
-            Store = true
+            Store = true,
+            StructuredInputs = BinaryData.FromObjectAsJson(new { topic = "space" }),
+            Transport = "webrtc"
         };
 
         Uri uri = client.CreateWebSocketUri("agent/name", options);
@@ -149,6 +152,8 @@ public class VoiceAgentWebSocketTests
             Assert.That(uri.Query, Does.Contain("x-agent-version-override=4"));
             Assert.That(uri.Query, Does.Contain("store=true"));
             Assert.That(uri.Query, Does.Contain("x-ms-client-sdk=Azure-VoiceAgents-SDK%2F.NET"));
+            Assert.That(uri.Query, Does.Contain("transport=webrtc"));
+            Assert.That(uri.Query, Does.Contain($"structured_input={Uri.EscapeDataString("{\"topic\":\"space\"}")}"));
         });
     }
 
@@ -270,37 +275,35 @@ public class VoiceAgentWebSocketTests
     }
 
     [Test]
-    public async Task SampleStreamsInputAndOutputAudioConcurrently()
+    public async Task SendAudioInputStreamsAudioConcurrentlyWithReceiving()
     {
         byte[] inputAudio = new byte[20 * 1024];
         for (int i = 0; i < inputAudio.Length; i++)
         {
             inputAudio[i] = (byte)(i % 251);
         }
-        byte[] firstOutputChunk = new byte[] { 1, 2, 3 };
-        byte[] secondOutputChunk = new byte[] { 4, 5 };
         TestWebSocket webSocket = new(
-            new TestWebSocket.Frame(
-                "{\"type\":\"response.done\",\"response\":{\"status\":\"cancelled\",\"conversation_id\":\"conv_cancelled\"}}",
-                WebSocketMessageType.Text,
-                endOfMessage: true),
-            new TestWebSocket.Frame(
-                $"{{\"type\":\"response.output_audio.delta\",\"delta\":\"{Convert.ToBase64String(firstOutputChunk)}\"}}",
-                WebSocketMessageType.Text,
-                endOfMessage: true),
-            new TestWebSocket.Frame(
-                $"{{\"type\":\"response.output_audio.delta\",\"delta\":\"{Convert.ToBase64String(secondOutputChunk)}\"}}",
-                WebSocketMessageType.Text,
-                endOfMessage: true),
             new TestWebSocket.Frame(
                 "{\"type\":\"response.done\",\"response\":{\"status\":\"completed\",\"conversation_id\":\"conv_123\"}}",
                 WebSocketMessageType.Text,
                 endOfMessage: true));
         await using VoiceAgentSession session = new(webSocket);
         using MemoryStream input = new(inputAudio);
-        using MemoryStream output = new();
 
-        string conversationId = await Sample_VoiceAgent.StreamAudioTurnAsync(session, input, output);
+        // Mirrors the sample's usage: SendAudioInputAsync only sends; the caller owns a single
+        // receive loop that runs concurrently since VoiceAgentSession.ReceiveUpdatesAsync is a
+        // one-shot stream that must only be enumerated once per session.
+        Task sendTask = Sample_VoiceAgent.SendAudioInputAsync(session, input);
+        List<VoiceAgentSessionMessage> received = new();
+        await foreach (VoiceAgentSessionMessage message in session.ReceiveUpdatesAsync())
+        {
+            received.Add(message);
+            if (message.EventType == RealtimeServerEventType.ResponseDone)
+            {
+                break;
+            }
+        }
+        await sendTask;
 
         List<JsonElement> sentEvents = webSocket.SentFrames
             .Select(frame => JsonDocument.Parse(frame.Data).RootElement.Clone())
@@ -314,8 +317,7 @@ public class VoiceAgentWebSocketTests
             Assert.That(streamedInput, Is.EqualTo(inputAudio));
             Assert.That(sentEvents.Select(item => item.GetProperty("type").GetString()),
                 Has.All.EqualTo("input_audio_buffer.append"));
-            Assert.That(output.ToArray(), Is.EqualTo(firstOutputChunk.Concat(secondOutputChunk).ToArray()));
-            Assert.That(conversationId, Is.EqualTo("conv_123"));
+            Assert.That(received, Has.Count.EqualTo(1));
         });
     }
 
@@ -361,11 +363,153 @@ public class VoiceAgentWebSocketTests
     }
 
     [Test]
+    public async Task SendsAvatarAndRtcCallEvents()
+    {
+        TestWebSocket webSocket = new();
+        await using VoiceAgentSession session = new(webSocket);
+
+        await session.ConnectAvatarAsync("client-sdp-offer");
+        await session.CreateRtcCallSdpAsync("rtc-sdp-offer", BinaryData.FromObjectAsJson(new { model = "voice-model" }));
+
+        List<JsonElement> events = webSocket.SentFrames
+            .Select(frame => JsonDocument.Parse(frame.Data).RootElement.Clone())
+            .ToList();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(events.Select(item => item.GetProperty("type").GetString()), Is.EqualTo(new[]
+            {
+                "session.avatar.connect",
+                "rtc.call.sdp.create"
+            }));
+            Assert.That(events[0].GetProperty("client_sdp").GetString(), Is.EqualTo("client-sdp-offer"));
+            Assert.That(events[1].GetProperty("sdp_offer").GetString(), Is.EqualTo("rtc-sdp-offer"));
+            Assert.That(events[1].GetProperty("session").GetProperty("model").GetString(), Is.EqualTo("voice-model"));
+        });
+    }
+
+    [Test]
+    public void ClientCommandsRejectMissingRequiredArguments()
+    {
+        Assert.Multiple(() =>
+        {
+            Assert.That(() => new VoiceAgentClientCommandSessionAvatarConnect(null), Throws.TypeOf<ArgumentNullException>());
+            Assert.That(() => new VoiceAgentClientCommandRtcCallSdpCreate(null), Throws.TypeOf<ArgumentNullException>());
+        });
+    }
+
+    [Test]
+    public void ClientCommandsExposeTypedProperties()
+    {
+        VoiceAgentClientCommandSessionAvatarConnect avatarCommand = new("client-sdp-offer");
+        VoiceAgentClientCommandRtcCallSdpCreate rtcCommand = new("rtc-sdp-offer", BinaryData.FromObjectAsJson(new { model = "voice-model" }));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(avatarCommand.ClientSdp, Is.EqualTo("client-sdp-offer"));
+            Assert.That(avatarCommand.Kind.ToString(), Is.EqualTo("session.avatar.connect"));
+            Assert.That(rtcCommand.SdpOffer, Is.EqualTo("rtc-sdp-offer"));
+            Assert.That(rtcCommand.Kind.ToString(), Is.EqualTo("rtc.call.sdp.create"));
+        });
+    }
+
+    // Verifies gap #4's fix: a custom RealtimeServerUpdate subclass built on VoiceAgentServerUpdateBase<TSelf>
+    // deserializes correctly via ModelReaderWriter.Read<T>, both for a type with typed properties
+    // (VoiceAgentServerUpdateSessionAvatarConnecting) and one exposing only the universal EventId
+    // (VoiceAgentServerUpdateSessionSubagentStarted), proving the base class works for any subclass.
+    [Test]
+    public void ServerUpdatesRoundTripTypedPropertiesFromRawJson()
+    {
+        BinaryData avatarJson = BinaryData.FromString(
+            """{"type":"session.avatar.connecting","event_id":"evt-1","server_sdp":"server-sdp-answer"}""");
+        BinaryData rtcJson = BinaryData.FromString(
+            """{"type":"rtc.call.sdp.created","event_id":"evt-2","rtc_call_id":"call-1","sdp_answer":"rtc-sdp-answer"}""");
+        BinaryData subagentJson = BinaryData.FromString(
+            """{"type":"session.subagent.started","event_id":"evt-3"}""");
+
+        VoiceAgentServerUpdateSessionAvatarConnecting avatarUpdate =
+            ModelReaderWriter.Read<VoiceAgentServerUpdateSessionAvatarConnecting>(avatarJson, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
+        VoiceAgentServerUpdateRtcCallSdpCreated rtcUpdate =
+            ModelReaderWriter.Read<VoiceAgentServerUpdateRtcCallSdpCreated>(rtcJson, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
+        VoiceAgentServerUpdateSessionSubagentStarted subagentUpdate =
+            ModelReaderWriter.Read<VoiceAgentServerUpdateSessionSubagentStarted>(subagentJson, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(avatarUpdate.Kind.ToString(), Is.EqualTo("session.avatar.connecting"));
+            Assert.That(avatarUpdate.EventId, Is.EqualTo("evt-1"));
+            Assert.That(avatarUpdate.ServerSdp, Is.EqualTo("server-sdp-answer"));
+            Assert.That(rtcUpdate.EventId, Is.EqualTo("evt-2"));
+            Assert.That(rtcUpdate.RtcCallId, Is.EqualTo("call-1"));
+            Assert.That(rtcUpdate.SdpAnswer, Is.EqualTo("rtc-sdp-answer"));
+            Assert.That(subagentUpdate.EventId, Is.EqualTo("evt-3"));
+        });
+    }
+
+    // Verifies AsFoundryServerUpdate<T>(): the extension method a caller uses when they receive an
+    // opaque, generic RealtimeServerUpdate (what OpenAI's own base client returns for an
+    // unrecognized event kind, simulated here) and want to convert it to our typed subclass.
+    [Test]
+    public void AsFoundryServerUpdateConvertsGenericUpdateToTypedSubclass()
+    {
+        BinaryData json = BinaryData.FromString(
+            """{"type":"session.avatar.connecting","event_id":"evt-9","server_sdp":"server-sdp-answer"}""");
+        RealtimeServerUpdate genericUpdate = ModelReaderWriter.Read<RealtimeServerUpdate>(json, ModelReaderWriterOptions.Json, OpenAIContext.Default);
+
+        VoiceAgentServerUpdateSessionAvatarConnecting typedUpdate = genericUpdate.AsFoundryServerUpdate<VoiceAgentServerUpdateSessionAvatarConnecting>();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(typedUpdate.EventId, Is.EqualTo("evt-9"));
+            Assert.That(typedUpdate.ServerSdp, Is.EqualTo("server-sdp-answer"));
+        });
+    }
+
+    [Test]
+    public void VoiceAgentSessionMessageAsConvertsToTypedServerUpdate()
+    {
+        VoiceAgentSessionMessage message = new(
+            WebSocketMessageType.Text,
+            BinaryData.FromString("""{"type":"rtc.call.sdp.created","event_id":"evt-7","rtc_call_id":"call-2","sdp_answer":"rtc-sdp-answer-2"}"""));
+
+        VoiceAgentServerUpdateRtcCallSdpCreated typedUpdate = message.As<VoiceAgentServerUpdateRtcCallSdpCreated>();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(message.EventType.ToString(), Is.EqualTo("rtc.call.sdp.created"));
+            Assert.That(typedUpdate.EventId, Is.EqualTo("evt-7"));
+            Assert.That(typedUpdate.RtcCallId, Is.EqualTo("call-2"));
+            Assert.That(typedUpdate.SdpAnswer, Is.EqualTo("rtc-sdp-answer-2"));
+        });
+    }
+
+    [Test]
+    public void OpenAIStyleSessionAndSecretMembersAreNotSupported()
+    {
+        VoiceAgentWebSocket client = new(
+            clientDiagnostics: new ClientDiagnostics(new AgentAdministrationClientOptions(), true),
+            pipeline: ClientPipeline.Create(new AgentAdministrationClientOptions()),
+            endpoint: new Uri("https://example.services.ai.azure.com/api/projects/my-project"),
+            apiVersion: "v1",
+            tokenProvider: null);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(() => client.StartSession("model", "intent"), Throws.TypeOf<NotSupportedException>());
+            Assert.That(() => client.StartSessionAsync("model", "intent"), Throws.TypeOf<NotSupportedException>());
+            Assert.That(() => client.CreateRealtimeClientSecret(BinaryContent.Create(BinaryData.FromString("{}")), null), Throws.TypeOf<NotSupportedException>());
+            Assert.That(() => client.CreateRealtimeClientSecretAsync(BinaryContent.Create(BinaryData.FromString("{}")), null), Throws.TypeOf<NotSupportedException>());
+            Assert.That(() => client.CreateRealtimeClientSecret(new CreateClientSecretOptions()), Throws.TypeOf<NotSupportedException>());
+            Assert.That(() => client.CreateRealtimeClientSecretAsync(new CreateClientSecretOptions()), Throws.TypeOf<NotSupportedException>());
+        });
+    }
+
+    [Test]
     public async Task RaisesCommandHooksAndParsesEventTypes()
     {
         VoiceAgentWebSocket client = new(
             clientDiagnostics: new ClientDiagnostics(new AgentAdministrationClientOptions(), true),
-            pipeline: null,
+            pipeline: ClientPipeline.Create(new AgentAdministrationClientOptions()),
             endpoint: new Uri("https://example.services.ai.azure.com/api/projects/my-project"),
             apiVersion: "v1",
             tokenProvider: null);
@@ -404,18 +548,6 @@ public class VoiceAgentWebSocketTests
             Assert.That(invalidJson.EventType, Is.Null);
             Assert.That(binary.EventType, Is.Null);
         });
-    }
-
-    /// <summary>
-    /// Builds a PCM audio format at the given sample rate. <see cref="RealtimePcmAudioFormat.Rate"/> is
-    /// read-only in the current OpenAI SDK "patch model" shape, so the rate must be set through the
-    /// underlying <see cref="System.ClientModel.Primitives.JsonPatch"/> instead of an object initializer.
-    /// </summary>
-    private static RealtimePcmAudioFormat CreatePcmAudioFormat(int rate)
-    {
-        RealtimePcmAudioFormat format = new();
-        format.Patch.Set("$.rate"u8, rate);
-        return format;
     }
 
     private sealed class TestWebSocket : WebSocket
@@ -458,7 +590,9 @@ public class VoiceAgentWebSocketTests
             if (frame.MessageType == WebSocketMessageType.Close)
             {
                 _state = WebSocketState.CloseReceived;
-                return Task.FromResult(new WebSocketReceiveResult(0, WebSocketMessageType.Close, true));
+                // OpenAI.Realtime's receive loop (which VoiceAgentSession now delegates to) detects the end of
+                // the stream via CloseStatus.HasValue, not MessageType, so a real close status is required here.
+                return Task.FromResult(new WebSocketReceiveResult(0, WebSocketMessageType.Close, true, WebSocketCloseStatus.NormalClosure, null));
             }
 
             Array.Copy(frame.Data, 0, buffer.Array, buffer.Offset, frame.Data.Length);

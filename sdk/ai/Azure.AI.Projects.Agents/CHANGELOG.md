@@ -17,13 +17,16 @@
 - Added `AgentEndpointConversations.GetAgentConversationItem(Async)` for retrieving a single persisted conversation item by id, including its transcript.
 - Added `AgentEndpointConversations.GetAgentConversationItemGeneratedAudio(Async)` and `GetAgentConversationItemGeneratedAudioContent(Async)` for retrieving generated-audio metadata and content for a persisted conversation item.
 - Added `ContentFilterConfiguration.InvocationsModeration` (typed `RaiInvocationModeration`) for declaring where user/agent text lives in agent-defined invocations request/response bodies, so content-safety guardrails can extract and moderate it.
+- Added `VoiceAgentSession.ConnectAvatarAsync` and `VoiceAgentSession.CreateRtcCallSdpAsync` for the `session.avatar.connect` and `rtc.call.sdp.create` realtime events (avatar media and WebRTC call signaling), rounding out the Voice-Agents-specific realtime commands that have no equivalent in OpenAI's realtime command set.
+- Added strongly-typed realtime server updates (e.g. `VoiceAgentServerUpdateSessionAvatarConnecting`, `VoiceAgentServerUpdateRtcCallSdpCreated`) for Voice-Agents-specific events, plus `VoiceAgentSessionMessage.As<T>()` and `RealtimeServerUpdateExtensions.AsFoundryServerUpdate<T>()` for converting a generic `OpenAI.Realtime.RealtimeServerUpdate` to its typed Voice Agents subclass. The public `VoiceAgentServerUpdateBase<TSelf>` base class is also available for defining additional custom event types.
+- Added `VoiceAgentConnectionOptions.Transport` for selecting the `websocket` (default) or `webrtc` connection transport; `webrtc` is required for the WebSocket to carry only SDP signaling via `CreateRtcCallSdpAsync`.
 
 ### Breaking Changes
 
 - Removed the `model` parameter from the public `VoiceAgentDefinition(VoiceModelType, string)` constructor; use the new parameterless `VoiceAgentDefinition()` constructor and set the now-optional `ModelType`/`Model` properties instead (required together for a model-backed voice agent; omit both when using the new `ConversationEngine` property).
 - Renamed voice-agent configuration models to the `VoiceAgent*` family (e.g. `VoiceAudioConfig` → `VoiceAgentAudioConfig`, `VoiceSystemTool` → `VoiceAgentSystemTool`, `VoiceTurnDetection` → `VoiceAgentTurnDetectionConfig`) and renamed `VoiceResponse`'s base contract members (e.g. `VoiceResponseOutputModality` → `VoiceResponseBaseOutputModality`).
 - Removed the dedicated "message" conversation item models (`VoiceAssistantMessageItem`, `VoiceUserMessageItem`, `VoiceSystemMessageItem`, and the underlying `RealtimeConversationItemMessage*` types); persisted "message" items now round-trip through the `OpenAI.Realtime.RealtimeItem` base type instead of a dedicated typed model.
-- Changed voice-agent audio format configuration to use the real `OpenAI.Realtime.RealtimeAudioFormat` family (`RealtimePcmAudioFormat`/`RealtimePcmaAudioFormat`/`RealtimePcmuAudioFormat`) instead of the locally-defined `VoiceAudioFormat`/`RealtimeAudioFormatsAudioPcm*` models. Because `RealtimePcmAudioFormat.Rate` is read-only, set it through `RealtimePcmAudioFormat.Patch` (e.g. `format.Patch.Set("$.rate"u8, 24000)`) instead of an object initializer.
+- Changed voice-agent audio format configuration to use the real `OpenAI.Realtime.RealtimeAudioFormat` family (`RealtimePcmAudioFormat`/`RealtimePcmaAudioFormat`/`RealtimePcmuAudioFormat`) instead of the locally-defined `VoiceAudioFormat`/`RealtimeAudioFormatsAudioPcm*` models.
 - Persisted voice conversation item list operations and `VoiceResponse.Output` now return `BinaryData`.
 - Concrete voice item models now inherit the corresponding OpenAI realtime models instead of `VoiceConversationItem`.
 - Changed voice implementation values from strings to `VoiceType` and changed voice duration fields expressed in milliseconds to `TimeSpan`.
@@ -35,10 +38,14 @@
 
 - `VoiceAgentWebSocket` now also sends its SDK identifier as an `x-ms-client-sdk` connection-URL query parameter, so identification survives on platforms that disallow setting `User-Agent` on a WebSocket (e.g. .NET Framework) and through intermediaries that strip non-standard headers.
 - Fixed `VoiceResponse.Id`, `VoiceResponse.ConversationId`, and `VoiceResponse.OutputModalities` to correctly reflect the deserialized values instead of always returning `null` or an empty collection.
+- Fixed `VoiceAgentSession`'s WebSocket handshake sending a literal `"******"` `Authorization` header instead of the actual Microsoft Entra ID bearer token.
+- Fixed `VoiceAgentConnectionOptions.StructuredInputs` being sent as a non-spec `x-ms-voice-structured-inputs` WebSocket header instead of the documented `structured_input` connection-URL query parameter, which meant per-session structured-input overrides were silently ignored by the service.
 
 ### Other Changes
 
 - Regenerated the SDK from the unified Foundry v1 Agents and voice data-plane contract, including the "batch 2" voice-agent additions from [azure-rest-api-specs#45852](https://github.com/Azure/azure-rest-api-specs/pull/45852).
+- `VoiceAgentWebSocket` and `VoiceAgentSession` now extend OpenAI's `OpenAI.Realtime.RealtimeClient` and `OpenAI.Realtime.RealtimeSessionClient`, respectively, reusing their command/event model and higher-level convenience methods (for example `SendInputAudioAsync`, `RequestItemRetrievalAsync`, `DeleteItemAsync`, and typed overloads like `AddItemAsync(RealtimeItem, ...)`) instead of maintaining a fully independent WebSocket transport. Only the Foundry-specific connection handshake (endpoint shape, headers, and Microsoft Entra ID authentication) remains custom. The OpenAI-style `StartSession(Async)(model, intent, ...)` and `CreateRealtimeClientSecret(Async)` members inherited from `RealtimeClient` are not applicable to Foundry voice agents and now throw `NotSupportedException`.
+- Documented that `VoiceAgentConnectionOptions.SessionId` (sent as the `agent_session_id` connection-URL query parameter) is not part of the currently-documented Voice Agents contract; live verification confirms the service does not echo it back anywhere in `session.created`/`session.updated`, so its effect, if any, is unconfirmed. The property is left in place pending confirmation from the service team.
 
 ### Sample Updates
 
