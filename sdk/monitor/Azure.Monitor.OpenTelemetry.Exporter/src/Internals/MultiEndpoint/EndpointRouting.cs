@@ -207,6 +207,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
             var port = uri.IsDefaultPort ? string.Empty : ":" + uri.Port.ToString(CultureInfo.InvariantCulture);
 
+            // The grouping key keeps an IPv6 literal bracketed so it parses back into a Uri, but the
+            // trust policy compares the bracketless form, so the two must not share one spelling.
+            if (!RedirectPolicyHelper.TryGetCanonicalHost(uri, out var comparisonHost))
+            {
+                reason = RoutingRejectionReason.IngestionEndpointHostInvalid;
+                return null;
+            }
+
             // Rebuilt rather than taken from AbsoluteUri, which keeps trailing dots and non-ASCII
             // host spellings and would split one region into several POSTs.
             var normalized = string.Concat(uri.Scheme, "://", canonicalHost, port, uri.AbsolutePath.TrimEnd('/'), "/");
@@ -219,7 +227,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return null;
             }
 
-            var entry = new NormalizedEndpoint(normalized, canonicalHost, uri.IsDefaultPort, uri.Port);
+            var entry = new NormalizedEndpoint(normalized, comparisonHost, uri.IsDefaultPort, uri.Port);
 
             var authorized = Authorize(entry, trustPolicy, useAadAuth, out reason);
 
@@ -245,7 +253,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// </remarks>
         private static string? Authorize(NormalizedEndpoint endpoint, EndpointTrustPolicy trustPolicy, bool useAadAuth, out RoutingRejectionReason reason)
         {
-            if (!useAadAuth || trustPolicy.IsTrusted(endpoint.CanonicalHost, endpoint.IsDefaultPort, endpoint.Port))
+            if (!useAadAuth || trustPolicy.IsTrusted(endpoint.ComparisonHost, endpoint.IsDefaultPort, endpoint.Port))
             {
                 reason = RoutingRejectionReason.None;
                 return endpoint.Value;
@@ -284,17 +292,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// </summary>
         private sealed class NormalizedEndpoint
         {
-            internal NormalizedEndpoint(string value, string canonicalHost, bool isDefaultPort, int port)
+            internal NormalizedEndpoint(string value, string comparisonHost, bool isDefaultPort, int port)
             {
                 Value = value;
-                CanonicalHost = canonicalHost;
+                ComparisonHost = comparisonHost;
                 IsDefaultPort = isDefaultPort;
                 Port = port;
             }
 
             internal string Value { get; }
 
-            internal string CanonicalHost { get; }
+            /// <summary>Bracketless, matching what <see cref="EndpointTrustPolicy"/> compares against.</summary>
+            internal string ComparisonHost { get; }
 
             internal bool IsDefaultPort { get; }
 

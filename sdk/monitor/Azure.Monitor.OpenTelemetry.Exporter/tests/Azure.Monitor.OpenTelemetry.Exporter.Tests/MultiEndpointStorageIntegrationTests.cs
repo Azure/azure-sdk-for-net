@@ -278,6 +278,43 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
         }
 
+        /// <summary>
+        /// A partition that was failing when the process stopped leaves its blobs leased, renamed to
+        /// .lock. Only that partition's own handler reclaims them, so a probe that counted only
+        /// .blob files would strand them for good.
+        /// </summary>
+        [Fact]
+        public void ASiblingHoldingOnlyLeasedBlobsIsStillReopened()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetStatus(EastUs, 500);
+
+            string strandedDirectory;
+
+            using (var exporter = CreateExporter(ingestion, out var transmitter))
+            {
+                exporter.Export(CreateBatch(CreateActivity("ikey-key-only", EastUs)));
+                strandedDirectory = transmitter._multiEndpointStorage!.TryGet(EastUs)!.Directory;
+            }
+
+            // Stand in for the rename a drain performs when it leases a blob and the send fails.
+            foreach (var blob in Directory.GetFiles(strandedDirectory, "*.blob"))
+            {
+                File.Move(blob, Path.ChangeExtension(blob, ".lock"));
+            }
+
+            Assert.Empty(Directory.GetFiles(strandedDirectory, "*.blob"));
+
+            using (var exporter = CreateExporter(ingestion, new StorageStubCredential(), out var transmitter))
+            {
+                exporter.Export(CreateBatch(CreateActivity("ikey-auth", EastUs, useAadAuth: true)));
+
+                Assert.Contains(
+                    transmitter._multiEndpointStorage!.Partitions,
+                    partition => partition.Directory == strandedDirectory);
+            }
+        }
+
         private static string ReadBlobs(MultiEndpointStorage.EndpointStorage partition)
         {
             var contents = new StringBuilder();

@@ -506,7 +506,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // Null when the destination could not even be constructed. Building a Uri here would
                 // throw a second time, out of the catch, abandoning the remaining endpoint groups.
                 networkSdkStats?.TrackException(trackUri?.Host, exceptionType: ex.GetType().FullName);
-                AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
+                AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled && group.UseAadAuth, _connectionVars.InstrumentationKey, ex);
 
                 // An unreachable endpoint arrives here, so this is the outcome most worth reporting.
                 var thrown = storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);

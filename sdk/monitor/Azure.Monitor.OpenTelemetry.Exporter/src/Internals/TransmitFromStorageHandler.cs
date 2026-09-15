@@ -66,7 +66,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal PersistentBlobProvider _blobProvider;
         private readonly TransmissionStateManager _transmissionStateManager;
         private readonly System.Timers.Timer _transmitFromStorageTimer;
-        private readonly bool _isAadEnabled;
         private readonly NetworkSdkStatsManager? _networkSdkStatsManager;
 
         /// <summary>
@@ -95,7 +94,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _trackUri = trackUri;
             _useAadAuth = useAadAuth;
             _reportsAadAuth = isAadEnabled && (trackUri == null || useAadAuth);
-            _isAadEnabled = isAadEnabled;
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
             _networkSdkStatsManager = networkSdkStatsManager;

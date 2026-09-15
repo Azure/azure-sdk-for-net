@@ -510,7 +510,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// </remarks>
         private void ReopenSiblingWithBacklog(string ingestionEndpoint, bool useAadAuth)
         {
-            if (!_isAadEnabled || _disposed || _siblingProbed.ContainsKey(ingestionEndpoint))
+            if (!_isAadEnabled || _disposed || _partitions.Count >= MaxEndpointPartitions || _siblingProbed.ContainsKey(ingestionEndpoint))
             {
                 return;
             }
@@ -521,9 +521,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             {
                 var directory = GetPartitionDirectory(ingestionEndpoint, !useAadAuth);
 
-                // Existence is not enough: an empty directory would hold a partition slot for the
-                // life of the process with nothing to deliver.
-                hasBacklog = Directory.Exists(directory) && Directory.EnumerateFiles(directory, "*.blob").Any();
+                // Leases count. A partition failing at shutdown leaves its blobs renamed to .lock,
+                // and only its own drain handler reclaims them, so skipping a lease-only directory
+                // would strand it for good. Enumerated rather than probed with Directory.Exists,
+                // which reports an unreadable directory as an absent one.
+                hasBacklog = Directory.EnumerateFiles(directory).Any(
+                    file => file.EndsWith(".blob", StringComparison.Ordinal) || file.EndsWith(".lock", StringComparison.Ordinal));
+            }
+            catch (DirectoryNotFoundException)
+            {
+                // Nothing was ever written under the other mode.
+                _siblingProbed.TryAdd(ingestionEndpoint, 0);
+                return;
             }
             catch (Exception)
             {
@@ -531,7 +540,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return;
             }
 
-            // Recorded only once there is nothing left to do, so a failed open is retried.
+            // Recorded only once there is nothing left to do, so a failed open is retried. Past the
+            // partition cap nothing is recorded either, so this cannot outgrow the cap it respects.
             if (!hasBacklog || OpenPartition(ingestionEndpoint, !useAadAuth) != null)
             {
                 _siblingProbed.TryAdd(ingestionEndpoint, 0);
@@ -568,7 +578,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 {
                     if (!_disposed)
                     {
-                        AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCapReached(ingestionEndpoint, MaxEndpointPartitions);
+                        AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCapReached(partitionKey, MaxEndpointPartitions);
                     }
 
                     return null;
@@ -583,7 +593,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                     var innerProvider = new FileBlobProvider(directory, maxSizeInBytes: _maxSizeBytes);
                     var blobProvider = new BudgetedBlobProvider(this, innerProvider, partitionKey);
                     var trackUri = ApplicationInsightsRestClient.CreateTrackUri(ingestionEndpoint);
-                    var transmissionStateManager = new TransmissionStateManager(ingestionEndpoint);
+                    var transmissionStateManager = new TransmissionStateManager(partitionKey);
 
                     var created = new EndpointStorage(
                         directory,
