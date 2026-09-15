@@ -14,7 +14,7 @@ namespace Azure.Provisioning.HealthcareApis
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.HealthcareApis.HealthcareApisWorkspace Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.HealthcareApis.HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.HealthcareApis.HealthcareApisPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.HealthcareApisProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.HealthcareApisPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> ServiceUri { get { throw null; } }
@@ -73,7 +73,7 @@ namespace Azure.Provisioning.HealthcareApis
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.HealthcareApis.HealthcareApisWorkspace Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.HealthcareApis.HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.HealthcareApis.HealthcareApisPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.HealthcareApisProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.HealthcareApisPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.HealthcareApis.FhirServiceResourceVersionPolicyConfiguration ResourceVersionPolicyConfiguration { get { throw null; } set { } }
@@ -211,6 +211,16 @@ namespace Azure.Provisioning.HealthcareApis
         FhirStu3 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="fhir-R4")]
         FhirR4 = 2,
+    }
+    public partial class HealthcareApisPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public HealthcareApisPrivateEndpointConnection() { }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.HealthcareApis.PrivateEndpointConnectionProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> Type { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum HealthcareApisPrivateEndpointConnectionProvisioningState
     {
@@ -441,9 +451,17 @@ namespace Azure.Provisioning.HealthcareApis
     public partial class HealthcareApisWorkspaceProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public HealthcareApisWorkspaceProperties() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.HealthcareApis.HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.HealthcareApis.HealthcareApisPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.HealthcareApisProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.HealthcareApisPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class PrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public PrivateEndpointConnectionProperties() { }
+        public Azure.Provisioning.HealthcareApis.HealthcareApisPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.HealthcareApis.HealthcareApisPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum SmartDataAction

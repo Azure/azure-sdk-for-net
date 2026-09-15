@@ -14,7 +14,7 @@ namespace Azure.Provisioning.HealthcareApis
     public partial class HealthcareApisWorkspaceProperties : ProvisionableConstruct
     {
         private BicepValue<HealthcareApisProvisioningState> _provisioningState;
-        private BicepList<HealthcareApisServicePrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<HealthcareApisPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<HealthcareApisPublicNetworkAccess> _publicNetworkAccess;
 
         /// <summary> Creates a new HealthcareApisWorkspaceProperties. </summary>
@@ -33,7 +33,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<HealthcareApisPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -62,7 +62,7 @@ namespace Azure.Provisioning.HealthcareApis
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<HealthcareApisProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _privateEndpointConnections = DefineListProperty<HealthcareApisServicePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<HealthcareApisPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<HealthcareApisPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             DefineAdditionalProperties();
         }
