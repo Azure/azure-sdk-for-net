@@ -237,6 +237,15 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// URI query parameter names used by the Storage REST protocol.
+        /// </summary>
+        internal static class UriQueryParameters
+        {
+            public const string Comp = "comp";
+            public const string ResType = "restype";
+        }
+
+        /// <summary>
         /// Blob constant values.
         /// </summary>
         internal static class Blob
