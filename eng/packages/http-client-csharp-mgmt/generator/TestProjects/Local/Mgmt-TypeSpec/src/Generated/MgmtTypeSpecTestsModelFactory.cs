@@ -160,7 +160,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default,
                 eTag,
                 writableSubResourceProp,
-                computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
+                computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(computeFleetVmCapacityReservationGroupId is null ? default : new CapacityReservationProfile(computeFleetVmCapacityReservationGroupId is null ? default : new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
                 default);
         }
 
@@ -216,42 +216,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 extendedLocation,
                 identity,
                 plan,
-                default);
-        }
-
-        /// <param name="serviceUri"> the service url. </param>
-        /// <param name="something"> something. </param>
-        /// <param name="boolValue"> boolean value. </param>
-        /// <param name="floatValue"> float value. </param>
-        /// <param name="doubleValue"> double value. </param>
-        /// <param name="prop1"></param>
-        /// <param name="prop2"></param>
-        /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
-        /// <param name="flattenedProperty"> Gets the FlattenedProperty. </param>
-        /// <param name="vmGalleryApplications"> Specifies the gallery applications that should be made available. </param>
-        /// <param name="eTag"> ETag property for testing etag parameter name generation. </param>
-        /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
-        /// <param name="computeFleetVmCapacityReservationGroupId"> Gets or sets the Id. </param>
-        /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, IEnumerable<string> flattenedProperty = default, IEnumerable<string> vmGalleryApplications = default, ETag? eTag = default, WritableSubResource writableSubResourceProp = default, ResourceIdentifier computeFleetVmCapacityReservationGroupId = default)
-        {
-            prop1 ??= new ChangeTrackingList<string>();
-            prop2 ??= new ChangeTrackingList<int>();
-
-            return new FooProperties(
-                serviceUri,
-                something,
-                boolValue,
-                floatValue,
-                doubleValue,
-                (prop1 ?? new ChangeTrackingList<string>()).ToList(),
-                (prop2 ?? new ChangeTrackingList<int>()).ToList(),
-                nestedPropertyProperties is null ? default : new NestedFooModel(nestedPropertyProperties, default),
-                flattenedProperty is null ? default : new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), default),
-                default,
-                eTag,
-                writableSubResourceProp,
-                computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(computeFleetVmCapacityReservationGroupId is null ? default : new CapacityReservationProfile(computeFleetVmCapacityReservationGroupId is null ? default : new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
                 default);
         }
 
@@ -1282,51 +1246,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="highAvailability"> Enabled by default. If highAvailability is disabled, the data set is not replicated. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
-        /// <param name="hostName"> DNS name of the cluster endpoint. </param>
-        /// <param name="provisioningState"> Current provisioning status of the cluster. </param>
-        /// <param name="redundancyMode"> Explains the current redundancy strategy of the cluster. </param>
-        /// <param name="resourceState"> Current resource status of the cluster. </param>
-        /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="customerManagedKeyEncryption"> Gets or sets the CustomerManagedKeyEncryption. </param>
-        /// <param name="maintenanceWindows"> Gets the MaintenanceWindows. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. </param>
-        /// <returns> A new <see cref="Tests.ClusterData"/> instance for mocking. </returns>
-        public static ClusterData ClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HighAvailability? highAvailability = default, TlsVersion? minimumTlsVersion = default, string hostName = default, ProvisioningState? provisioningState = default, RedundancyMode? redundancyMode = default, ResourceState? resourceState = default, string redisVersion = default, IEnumerable<RedisPrivateEndpointConnection> privateEndpointConnections = default, CustomerManagedKeyEncryption customerManagedKeyEncryption = default, IEnumerable<MaintenanceWindow> maintenanceWindows = default, PublicNetworkAccess? publicNetworkAccess = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && maintenanceWindows is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new ClusterCreateProperties(
-                    highAvailability,
-                    minimumTlsVersion,
-                    customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                    maintenanceWindows is null ? default : new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindow>()).ToList(), default),
-                    hostName,
-                    provisioningState,
-                    redundancyMode,
-                    resourceState,
-                    redisVersion,
-                    (privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnection>()).ToList(),
-                    default,
-                    publicNetworkAccess),
-                default);
-        }
-
         /// <summary> The CustomerManagedKeyEncryption. </summary>
         /// <param name="keyEncryptionKeyIdentity"></param>
         /// <param name="keyEncryptionKeyUri"></param>
@@ -1424,8 +1343,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && maintenanceWindows is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new ClusterCreateProperties(
                     highAvailability,
                     minimumTlsVersion,
-                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                    new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindow>()).ToList(), default),
+                    customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
+                    maintenanceWindows is null ? default : new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindow>()).ToList(), default),
                     hostName,
                     provisioningState,
                     redundancyMode,
