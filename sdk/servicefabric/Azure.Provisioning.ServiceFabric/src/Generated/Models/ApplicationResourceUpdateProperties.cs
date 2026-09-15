@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The application resource properties for patch operations. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ApplicationResourceUpdateProperties : ProvisionableConstruct
     {
         private BicepValue<string> _typeVersion;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the TypeVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TypeVersion
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Parameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Parameters
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradePolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public ApplicationUpgradePolicy UpgradePolicy
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MinimumNodes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MinimumNodes
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaximumNodes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaximumNodes
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the RemoveApplicationCapacity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> RemoveApplicationCapacity
         {
             get
@@ -118,6 +126,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Metrics. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ApplicationMetricDescription> Metrics
         {
             get
@@ -133,6 +142,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ManagedIdentities. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ApplicationUserAssignedIdentity> ManagedIdentities
         {
             get

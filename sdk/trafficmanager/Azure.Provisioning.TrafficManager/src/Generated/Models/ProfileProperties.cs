@@ -17,7 +17,7 @@ namespace Azure.Provisioning.TrafficManager
         private BicepValue<TrafficRoutingMethod> _trafficRoutingMethod;
         private TrafficManagerDnsConfig _dnsConfig;
         private TrafficManagerMonitorConfig _monitorConfig;
-        private BicepList<AzureEndpointTrafficManagerEndpoint> _endpoints;
+        private BicepList<AzureEndpointTrafficManagerEndpoint1> _endpoints;
         private BicepValue<TrafficViewEnrollmentStatus> _trafficViewEnrollmentStatus;
         private BicepList<AllowedEndpointRecordType> _allowedEndpointRecordTypes;
         private BicepValue<long> _maxReturn;
@@ -88,7 +88,7 @@ namespace Azure.Provisioning.TrafficManager
         }
 
         /// <summary> Gets or sets the Endpoints. </summary>
-        public BicepList<AzureEndpointTrafficManagerEndpoint> Endpoints
+        public BicepList<AzureEndpointTrafficManagerEndpoint1> Endpoints
         {
             get
             {
@@ -155,7 +155,7 @@ namespace Azure.Provisioning.TrafficManager
             _trafficRoutingMethod = DefineProperty<TrafficRoutingMethod>(nameof(TrafficRoutingMethod), new string[] { "trafficRoutingMethod" });
             _dnsConfig = DefineModelProperty<TrafficManagerDnsConfig>(nameof(DnsConfig), new string[] { "dnsConfig" });
             _monitorConfig = DefineModelProperty<TrafficManagerMonitorConfig>(nameof(MonitorConfig), new string[] { "monitorConfig" });
-            _endpoints = DefineListProperty<AzureEndpointTrafficManagerEndpoint>(nameof(Endpoints), new string[] { "endpoints" });
+            _endpoints = DefineListProperty<AzureEndpointTrafficManagerEndpoint1>(nameof(Endpoints), new string[] { "endpoints" });
             _trafficViewEnrollmentStatus = DefineProperty<TrafficViewEnrollmentStatus>(nameof(TrafficViewEnrollmentStatus), new string[] { "trafficViewEnrollmentStatus" });
             _allowedEndpointRecordTypes = DefineListProperty<AllowedEndpointRecordType>(nameof(AllowedEndpointRecordTypes), new string[] { "allowedEndpointRecordTypes" });
             _maxReturn = DefineProperty<long>(nameof(MaxReturn), new string[] { "maxReturn" });

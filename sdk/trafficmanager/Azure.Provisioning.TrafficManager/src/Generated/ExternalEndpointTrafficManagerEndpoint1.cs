@@ -12,17 +12,17 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.TrafficManager
 {
     /// <summary> Class representing a Traffic Manager endpoint. </summary>
-    public partial class NestedEndpointTrafficManagerEndpoint : ProvisionableResource
+    public partial class ExternalEndpointTrafficManagerEndpoint1 : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private EndpointProperties _properties;
         private ResourceReference<TrafficManagerProfile> _parent;
 
-        /// <summary> Creates a new NestedEndpointTrafficManagerEndpoint. </summary>
+        /// <summary> Creates a new ExternalEndpointTrafficManagerEndpoint1. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public NestedEndpointTrafficManagerEndpoint(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/trafficmanagerprofiles/NestedEndpoints", resourceVersion ?? "2022-04-01")
+        public ExternalEndpointTrafficManagerEndpoint1(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/trafficmanagerprofiles/ExternalEndpoints", resourceVersion ?? "2022-04-01")
         {
         }
 
@@ -319,7 +319,7 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Define all the provisionable properties for NestedEndpointTrafficManagerEndpoint. </summary>
+        /// <summary> Define all the provisionable properties for ExternalEndpointTrafficManagerEndpoint1. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -330,17 +330,17 @@ namespace Azure.Provisioning.TrafficManager
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing NestedEndpointTrafficManagerEndpoint. </summary>
+        /// <summary> Creates a reference to an existing ExternalEndpointTrafficManagerEndpoint1. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static NestedEndpointTrafficManagerEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static ExternalEndpointTrafficManagerEndpoint1 FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            NestedEndpointTrafficManagerEndpoint result = new NestedEndpointTrafficManagerEndpoint(bicepIdentifier, resourceVersion);
+            ExternalEndpointTrafficManagerEndpoint1 result = new ExternalEndpointTrafficManagerEndpoint1(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for NestedEndpointTrafficManagerEndpoint that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ExternalEndpointTrafficManagerEndpoint1 that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

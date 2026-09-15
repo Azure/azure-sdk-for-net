@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The detail of the Service Fabric runtime version result. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterVersionDetails : ProvisionableConstruct
     {
         private BicepValue<string> _codeVersion;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the CodeVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CodeVersion
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the SupportExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> SupportExpiresOn
         {
             get
@@ -44,6 +48,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets the Environment. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClusterEnvironment> Environment
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Defines a health policy used to evaluate the health of the cluster or of a cluster node. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterHealthPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _maxPercentUnhealthyNodes;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxPercentUnhealthyNodes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxPercentUnhealthyNodes
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxPercentUnhealthyApplications. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxPercentUnhealthyApplications
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ApplicationHealthPolicies. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<ApplicationHealthPolicy> ApplicationHealthPolicies
         {
             get

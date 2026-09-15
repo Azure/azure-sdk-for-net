@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes a node type in the cluster, each node type represents sub set of nodes in the cluster. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ClusterNodeTypeDescription : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -34,6 +36,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -49,6 +52,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the PlacementProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> PlacementProperties
         {
             get
@@ -64,6 +68,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Capacities. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Capacities
         {
             get
@@ -79,6 +84,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ClientConnectionEndpointPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ClientConnectionEndpointPort
         {
             get
@@ -94,6 +100,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the HttpGatewayEndpointPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> HttpGatewayEndpointPort
         {
             get
@@ -109,6 +116,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the DurabilityLevel. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ClusterDurabilityLevel> DurabilityLevel
         {
             get
@@ -124,6 +132,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ApplicationPorts. </summary>
+        [Experimental("AZPROVISION001")]
         public ClusterEndpointRangeDescription ApplicationPorts
         {
             get
@@ -139,6 +148,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the EphemeralPorts. </summary>
+        [Experimental("AZPROVISION001")]
         public ClusterEndpointRangeDescription EphemeralPorts
         {
             get
@@ -154,6 +164,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the IsPrimary. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsPrimary
         {
             get
@@ -169,6 +180,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the VmInstanceCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> VmInstanceCount
         {
             get
@@ -184,6 +196,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the ReverseProxyEndpointPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ReverseProxyEndpointPort
         {
             get
@@ -199,6 +212,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the IsStateless. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsStateless
         {
             get
@@ -214,6 +228,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the IsMultipleAvailabilityZonesSupported. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsMultipleAvailabilityZonesSupported
         {
             get
@@ -229,6 +244,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the HttpGatewayTokenAuthEndpointPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> HttpGatewayTokenAuthEndpointPort
         {
             get

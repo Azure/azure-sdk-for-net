@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Represents the delta health policy used to evaluate the health of services belonging to a service type when upgrading the cluster. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceTypeDeltaHealthPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _maxPercentDeltaUnhealthyServices;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the MaxPercentDeltaUnhealthyServices. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxPercentDeltaUnhealthyServices
         {
             get

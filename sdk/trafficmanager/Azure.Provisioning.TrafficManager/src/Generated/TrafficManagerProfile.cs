@@ -166,7 +166,7 @@ namespace Azure.Provisioning.TrafficManager
         }
 
         /// <summary> Gets or sets the Endpoints. </summary>
-        public BicepList<AzureEndpointTrafficManagerEndpoint> Endpoints
+        public BicepList<AzureEndpointTrafficManagerEndpoint1> Endpoints
         {
             get
             {
