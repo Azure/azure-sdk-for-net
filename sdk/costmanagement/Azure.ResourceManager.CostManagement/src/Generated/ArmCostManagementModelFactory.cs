@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmCostManagementModelFactory
     {
+        /// <summary> The URL to download the generated report. </summary>
+        /// <param name="expiryOn"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
+        /// <param name="validTill"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
+        /// <param name="downloadUri"> The URL to download the generated report. </param>
+        /// <returns> A new <see cref="Models.DownloadURL"/> instance for mocking. </returns>
+        public static DownloadURL DownloadURL(DateTimeOffset? expiryOn = default, DateTimeOffset? validTill = default, Uri downloadUri = default)
+        {
+            return new DownloadURL(expiryOn, validTill, downloadUri, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -46,16 +56,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                 default);
         }
 
-        /// <summary> The URL to download the generated report. </summary>
-        /// <param name="expiryOn"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
-        /// <param name="validTill"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
-        /// <param name="downloadUri"> The URL to download the generated report. </param>
-        /// <returns> A new <see cref="Models.DownloadURL"/> instance for mocking. </returns>
-        public static DownloadURL DownloadURL(DateTimeOffset? expiryOn = default, DateTimeOffset? validTill = default, Uri downloadUri = default)
-        {
-            return new DownloadURL(expiryOn, validTill, downloadUri, default);
-        }
-
         /// <summary> The details of the error. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
@@ -63,74 +63,6 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static ExportRunErrorDetails ExportRunErrorDetails(string code = default, string message = default)
         {
             return new ExportRunErrorDetails(code, message, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="category">
-        /// The category of the budget.
-        /// <list type="bullet"><item><description>'Cost' defines a Budget.</description></item><item><description>'ReservationUtilization' defines a Reservation Utilization Alert Rule.</description></item></list>
-        /// </param>
-        /// <param name="amount">
-        /// The total amount of cost to track with the budget.
-        /// Supported for CategoryType(s): Cost.
-        /// Required for CategoryType(s): Cost.
-        /// </param>
-        /// <param name="timeGrain">
-        /// The time covered by a budget. Tracking of the amount will be reset based on the time grain.
-        /// Supported for CategoryType(s): Cost, ReservationUtilization.
-        /// Supported timeGrainTypes for <b>CategoryType: Cost</b>
-        /// <list type="bullet"><item><description>Monthly</description></item><item><description>Quarterly</description></item><item><description>Annually</description></item><item><description>BillingMonth*</description></item><item><description>BillingQuarter*</description></item><item><description>BillingAnnual*</description></item></list>
-        /// *only supported for Web Direct customers.
-        /// Supported timeGrainTypes for <b>CategoryType: ReservationUtilization</b>
-        /// <list type="bullet"><item><description>Last7Days</description></item><item><description>Last30Days</description></item></list>
-        /// Required for CategoryType(s): Cost, ReservationUtilization.
-        /// </param>
-        /// <param name="timePeriod">
-        /// The time period that defines the active period of the budget. The budget will evaluate data on or after the startDate and will expire on the endDate.
-        /// Supported for CategoryType(s): Cost, ReservationUtilization.
-        /// Required for CategoryType(s): Cost, ReservationUtilization.
-        /// </param>
-        /// <param name="filter">
-        /// May be used to filter budgets by user-specified dimensions and/or tags.
-        /// Supported for CategoryType(s): Cost, ReservationUtilization.
-        /// </param>
-        /// <param name="currentSpend">
-        /// The current amount of cost which is being tracked for a budget.
-        /// Supported for CategoryType(s): Cost.
-        /// </param>
-        /// <param name="notifications">
-        /// Dictionary of notifications associated with the budget.
-        /// Supported for CategoryType(s): Cost, ReservationUtilization.
-        /// <list type="bullet"><item><description>Constraints for <b>CategoryType: Cost</b> - Budget can have up to 5 notifications with thresholdType: Actual and 5 notifications with thresholdType: Forecasted.</description></item><item><description>Constraints for <b>CategoryType: ReservationUtilization</b> - Only one notification allowed. thresholdType is not applicable.</description></item></list>
-        /// </param>
-        /// <param name="forecastSpend">
-        /// The forecasted cost which is being tracked for a budget.
-        /// Supported for CategoryType(s): Cost.
-        /// </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <returns> A new <see cref="CostManagement.BudgetData"/> instance for mocking. </returns>
-        public static BudgetData BudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? category = default, float? amount = default, TimeGrainType? timeGrain = default, BudgetTimePeriod timePeriod = default, BudgetFilter filter = default, CurrentSpend currentSpend = default, IDictionary<string, BudgetNotification> notifications = default, ForecastSpend forecastSpend = default, ETag? etag = default)
-        {
-            return new BudgetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                amount is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
-                    default,
-                    amount,
-                    default,
-                    timePeriod,
-                    filter,
-                    currentSpend,
-                    notifications ?? new ChangeTrackingDictionary<string, BudgetNotification>(),
-                    forecastSpend,
-                    default),
-                etag,
-                default);
         }
 
         /// <summary>
@@ -306,43 +238,66 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="format"> The format of the export being delivered. </param>
-        /// <param name="definition"> Has the definition for the export. </param>
-        /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. </param>
-        /// <param name="dataOverwriteBehavior"> Allow customers to select overwrite data(OverwritePreviousReport) for exports. This setting will enable overwrite data for the same month in customer storage account. By default set to CreateNewReport. </param>
-        /// <param name="compressionMode"> Allow customers to select compress data for exports. This setting will enable destination file compression scheme at runtime. By default set to None. Gzip is for csv and snappy for parquet. </param>
-        /// <param name="exportDescription"> The export description set by customer at time of export creation/update. </param>
-        /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
-        /// <param name="systemSuspensionContext"> The export suspension reason if export is in SystemSuspended state. This is not populated currently. </param>
-        /// <param name="deliveryInfoDestination"> Has destination for the export being delivered. </param>
-        /// <param name="runHistoryValue"> A list of export runs. </param>
-        /// <param name="schedule"> Has schedule information for the export. </param>
-        /// <param name="identity"> The managed identity associated with Export. </param>
-        /// <param name="location"> The location of the Export's managed identity. Only required when utilizing managed identity. </param>
+        /// <param name="category">
+        /// The category of the budget.
+        /// <list type="bullet"><item><description>'Cost' defines a Budget.</description></item><item><description>'ReservationUtilization' defines a Reservation Utilization Alert Rule.</description></item></list>
+        /// </param>
+        /// <param name="amount">
+        /// The total amount of cost to track with the budget.
+        /// Supported for CategoryType(s): Cost.
+        /// Required for CategoryType(s): Cost.
+        /// </param>
+        /// <param name="timeGrain">
+        /// The time covered by a budget. Tracking of the amount will be reset based on the time grain.
+        /// Supported for CategoryType(s): Cost, ReservationUtilization.
+        /// Supported timeGrainTypes for <b>CategoryType: Cost</b>
+        /// <list type="bullet"><item><description>Monthly</description></item><item><description>Quarterly</description></item><item><description>Annually</description></item><item><description>BillingMonth*</description></item><item><description>BillingQuarter*</description></item><item><description>BillingAnnual*</description></item></list>
+        /// *only supported for Web Direct customers.
+        /// Supported timeGrainTypes for <b>CategoryType: ReservationUtilization</b>
+        /// <list type="bullet"><item><description>Last7Days</description></item><item><description>Last30Days</description></item></list>
+        /// Required for CategoryType(s): Cost, ReservationUtilization.
+        /// </param>
+        /// <param name="timePeriod">
+        /// The time period that defines the active period of the budget. The budget will evaluate data on or after the startDate and will expire on the endDate.
+        /// Supported for CategoryType(s): Cost, ReservationUtilization.
+        /// Required for CategoryType(s): Cost, ReservationUtilization.
+        /// </param>
+        /// <param name="filter">
+        /// May be used to filter budgets by user-specified dimensions and/or tags.
+        /// Supported for CategoryType(s): Cost, ReservationUtilization.
+        /// </param>
+        /// <param name="currentSpend">
+        /// The current amount of cost which is being tracked for a budget.
+        /// Supported for CategoryType(s): Cost.
+        /// </param>
+        /// <param name="notifications">
+        /// Dictionary of notifications associated with the budget.
+        /// Supported for CategoryType(s): Cost, ReservationUtilization.
+        /// <list type="bullet"><item><description>Constraints for <b>CategoryType: Cost</b> - Budget can have up to 5 notifications with thresholdType: Actual and 5 notifications with thresholdType: Forecasted.</description></item><item><description>Constraints for <b>CategoryType: ReservationUtilization</b> - Only one notification allowed. thresholdType is not applicable.</description></item></list>
+        /// </param>
+        /// <param name="forecastSpend">
+        /// The forecasted cost which is being tracked for a budget.
+        /// Supported for CategoryType(s): Cost.
+        /// </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <returns> A new <see cref="CostManagement.CostManagementExportData"/> instance for mocking. </returns>
-        public static CostManagementExportData CostManagementExportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExportFormatType? format = default, ExportDefinition definition = default, bool? partitionData = default, DataOverwriteBehaviorType? dataOverwriteBehavior = default, CompressionModeType? compressionMode = default, string exportDescription = default, DateTimeOffset? nextRunTimeEstimate = default, ExportSuspensionContext systemSuspensionContext = default, ExportDeliveryDestination deliveryInfoDestination = default, IEnumerable<ExportRun> runHistoryValue = default, ExportSchedule schedule = default, ManagedServiceIdentity identity = default, string location = default, ETag? etag = default)
+        /// <returns> A new <see cref="CostManagement.BudgetData"/> instance for mocking. </returns>
+        public static BudgetData BudgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CategoryType? category = default, float? amount = default, TimeGrainType? timeGrain = default, BudgetTimePeriod timePeriod = default, BudgetFilter filter = default, CurrentSpend currentSpend = default, IDictionary<string, BudgetNotification> notifications = default, ForecastSpend forecastSpend = default, ETag? etag = default)
         {
-            return new CostManagementExportData(
+            return new BudgetData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                format is null && deliveryInfoDestination is null && definition is null && runHistoryValue is null && partitionData is null && dataOverwriteBehavior is null && compressionMode is null && exportDescription is null && nextRunTimeEstimate is null && systemSuspensionContext is null && schedule is null ? default : new ExportProperties(
-                    format,
-                    new ExportDeliveryInfo(deliveryInfoDestination, default),
-                    definition,
-                    new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
-                    partitionData,
-                    dataOverwriteBehavior,
-                    compressionMode,
-                    exportDescription,
-                    nextRunTimeEstimate,
-                    systemSuspensionContext,
+                amount is null && timePeriod is null && filter is null && currentSpend is null && notifications is null && forecastSpend is null ? default : new BudgetProperties(
                     default,
-                    schedule),
-                identity,
-                location,
+                    amount,
+                    default,
+                    timePeriod,
+                    filter,
+                    currentSpend,
+                    notifications ?? new ChangeTrackingDictionary<string, BudgetNotification>(),
+                    forecastSpend,
+                    default),
                 etag,
                 default);
         }
@@ -542,6 +497,51 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ExportSuspensionContext(suspensionCode, suspensionReason, suspensionOn, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="format"> The format of the export being delivered. </param>
+        /// <param name="definition"> Has the definition for the export. </param>
+        /// <param name="partitionData"> If set to true, exported data will be partitioned by size and placed in a blob directory together with a manifest file. </param>
+        /// <param name="dataOverwriteBehavior"> Allow customers to select overwrite data(OverwritePreviousReport) for exports. This setting will enable overwrite data for the same month in customer storage account. By default set to CreateNewReport. </param>
+        /// <param name="compressionMode"> Allow customers to select compress data for exports. This setting will enable destination file compression scheme at runtime. By default set to None. Gzip is for csv and snappy for parquet. </param>
+        /// <param name="exportDescription"> The export description set by customer at time of export creation/update. </param>
+        /// <param name="nextRunTimeEstimate"> If the export has an active schedule, provides an estimate of the next run time. </param>
+        /// <param name="systemSuspensionContext"> The export suspension reason if export is in SystemSuspended state. This is not populated currently. </param>
+        /// <param name="deliveryInfoDestination"> Has destination for the export being delivered. </param>
+        /// <param name="runHistoryValue"> A list of export runs. </param>
+        /// <param name="schedule"> Has schedule information for the export. </param>
+        /// <param name="identity"> The managed identity associated with Export. </param>
+        /// <param name="location"> The location of the Export's managed identity. Only required when utilizing managed identity. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="CostManagement.CostManagementExportData"/> instance for mocking. </returns>
+        public static CostManagementExportData CostManagementExportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExportFormatType? format = default, ExportDefinition definition = default, bool? partitionData = default, DataOverwriteBehaviorType? dataOverwriteBehavior = default, CompressionModeType? compressionMode = default, string exportDescription = default, DateTimeOffset? nextRunTimeEstimate = default, ExportSuspensionContext systemSuspensionContext = default, ExportDeliveryDestination deliveryInfoDestination = default, IEnumerable<ExportRun> runHistoryValue = default, ExportSchedule schedule = default, ManagedServiceIdentity identity = default, string location = default, ETag? etag = default)
+        {
+            return new CostManagementExportData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                format is null && deliveryInfoDestination is null && definition is null && runHistoryValue is null && partitionData is null && dataOverwriteBehavior is null && compressionMode is null && exportDescription is null && nextRunTimeEstimate is null && systemSuspensionContext is null && schedule is null ? default : new ExportProperties(
+                    format,
+                    new ExportDeliveryInfo(deliveryInfoDestination, default),
+                    definition,
+                    new ExportExecutionListResult((runHistoryValue ?? new ChangeTrackingList<ExportRun>()).ToList(), default),
+                    partitionData,
+                    dataOverwriteBehavior,
+                    compressionMode,
+                    exportDescription,
+                    nextRunTimeEstimate,
+                    systemSuspensionContext,
+                    default,
+                    schedule),
+                identity,
+                location,
+                etag,
+                default);
+        }
+
         /// <summary> The export run request. </summary>
         /// <param name="timePeriod"> Has time period for pulling data for the export. </param>
         /// <returns> A new <see cref="Models.ExportRunContent"/> instance for mocking. </returns>
@@ -566,59 +566,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                 resourceType,
                 systemData,
                 expiryOn is null && validTill is null && downloadUri is null ? default : new DownloadURL(expiryOn, validTill, downloadUri, default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> User input name of the view. Required. </param>
-        /// <param name="scope"> Cost Management scope to save the view on. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </param>
-        /// <param name="createdOn"> Date the user created this view. </param>
-        /// <param name="modifiedOn"> Date when the user last modified this view. </param>
-        /// <param name="dateRange"> Date range of the current view. </param>
-        /// <param name="currency"> Currency of the current view. </param>
-        /// <param name="chart"> Chart type of the main view in Cost Analysis. Required. </param>
-        /// <param name="accumulated"> Show costs accumulated over time. </param>
-        /// <param name="metric"> Metric to use when displaying costs. </param>
-        /// <param name="kpis"> List of KPIs to show in Cost Analysis UI. </param>
-        /// <param name="pivots"> Configuration of 3 sub-views in the Cost Analysis UI. </param>
-        /// <param name="typePropertiesQueryType"> The type of the report. Usage represents actual usage, forecast represents forecasted data and UsageAndForecast represents both usage and forecasted data. Actual usage and forecasted data can be differentiated based on dates. </param>
-        /// <param name="timeframe"> The time frame for pulling data for the report. If custom, then a specific time period must be provided. </param>
-        /// <param name="timePeriod"> Has time period for pulling data for the report. </param>
-        /// <param name="dataSet"> Has definition for data in this report config. </param>
-        /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
-        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <returns> A new <see cref="CostManagement.CostManagementViewData"/> instance for mocking. </returns>
-        public static CostManagementViewData CostManagementViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier scope = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string dateRange = default, string currency = default, ViewChartType? chart = default, AccumulatedType? accumulated = default, ViewMetricType? metric = default, IEnumerable<ViewKpiProperties> kpis = default, IEnumerable<ViewPivotProperties> pivots = default, ViewReportType? typePropertiesQueryType = default, ReportTimeframeType? timeframe = default, ReportConfigTimePeriod timePeriod = default, ReportConfigDataset dataSet = default, bool? includeMonetaryCommitment = default, ETag? etag = default)
-        {
-            return new CostManagementViewData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && scope is null && createdOn is null && modifiedOn is null && dateRange is null && currency is null && typePropertiesQueryType is null && timeframe is null && timePeriod is null && dataSet is null && includeMonetaryCommitment is null && chart is null && accumulated is null && metric is null && kpis is null && pivots is null ? default : new ViewProperties(
-                    displayName,
-                    scope,
-                    createdOn,
-                    modifiedOn,
-                    dateRange,
-                    currency,
-                    new ReportConfigDefinition(
-                        typePropertiesQueryType,
-                        timeframe,
-                        timePeriod,
-                        dataSet,
-                        includeMonetaryCommitment,
-                        default),
-                    chart,
-                    accumulated,
-                    metric,
-                    (kpis ?? new ChangeTrackingList<ViewKpiProperties>()).ToList(),
-                    (pivots ?? new ChangeTrackingList<ViewPivotProperties>()).ToList(),
-                    default),
-                etag,
                 default);
         }
 
@@ -730,38 +677,50 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="definition"> defines the type of alert. </param>
-        /// <param name="description"> Alert description. </param>
-        /// <param name="source"> Source of alert. </param>
-        /// <param name="details"> Alert details. </param>
-        /// <param name="costEntityId"> related budget. </param>
-        /// <param name="status"> alert status. </param>
-        /// <param name="createdOn"> dateTime in which alert was created. </param>
-        /// <param name="closeOn"> dateTime in which alert was closed. </param>
-        /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
-        /// <param name="statusModificationUserName"> User who last modified the alert. </param>
-        /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
+        /// <param name="displayName"> User input name of the view. Required. </param>
+        /// <param name="scope"> Cost Management scope to save the view on. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </param>
+        /// <param name="createdOn"> Date the user created this view. </param>
+        /// <param name="modifiedOn"> Date when the user last modified this view. </param>
+        /// <param name="dateRange"> Date range of the current view. </param>
+        /// <param name="currency"> Currency of the current view. </param>
+        /// <param name="chart"> Chart type of the main view in Cost Analysis. Required. </param>
+        /// <param name="accumulated"> Show costs accumulated over time. </param>
+        /// <param name="metric"> Metric to use when displaying costs. </param>
+        /// <param name="kpis"> List of KPIs to show in Cost Analysis UI. </param>
+        /// <param name="pivots"> Configuration of 3 sub-views in the Cost Analysis UI. </param>
+        /// <param name="typePropertiesQueryType"> The type of the report. Usage represents actual usage, forecast represents forecasted data and UsageAndForecast represents both usage and forecasted data. Actual usage and forecasted data can be differentiated based on dates. </param>
+        /// <param name="timeframe"> The time frame for pulling data for the report. If custom, then a specific time period must be provided. </param>
+        /// <param name="timePeriod"> Has time period for pulling data for the report. </param>
+        /// <param name="dataSet"> Has definition for data in this report config. </param>
+        /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        /// <returns> A new <see cref="CostManagement.CostManagementAlertData"/> instance for mocking. </returns>
-        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertPropertiesDefinition definition = default, string description = default, CostManagementAlertSource? source = default, AlertPropertiesDetails details = default, string costEntityId = default, CostManagementAlertStatus? status = default, DateTimeOffset? createdOn = default, DateTimeOffset? closeOn = default, DateTimeOffset? modifiedOn = default, string statusModificationUserName = default, DateTimeOffset? statusModifiedOn = default, ETag? etag = default)
+        /// <returns> A new <see cref="CostManagement.CostManagementViewData"/> instance for mocking. </returns>
+        public static CostManagementViewData CostManagementViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier scope = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string dateRange = default, string currency = default, ViewChartType? chart = default, AccumulatedType? accumulated = default, ViewMetricType? metric = default, IEnumerable<ViewKpiProperties> kpis = default, IEnumerable<ViewPivotProperties> pivots = default, ViewReportType? typePropertiesQueryType = default, ReportTimeframeType? timeframe = default, ReportConfigTimePeriod timePeriod = default, ReportConfigDataset dataSet = default, bool? includeMonetaryCommitment = default, ETag? etag = default)
         {
-            return new CostManagementAlertData(
+            return new CostManagementViewData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                definition is null && description is null && source is null && details is null && costEntityId is null && status is null && createdOn is null && closeOn is null && modifiedOn is null && statusModificationUserName is null && statusModifiedOn is null ? default : new AlertProperties(
-                    definition,
-                    description,
-                    source,
-                    details,
-                    costEntityId,
-                    status,
+                displayName is null && scope is null && createdOn is null && modifiedOn is null && dateRange is null && currency is null && typePropertiesQueryType is null && timeframe is null && timePeriod is null && dataSet is null && includeMonetaryCommitment is null && chart is null && accumulated is null && metric is null && kpis is null && pivots is null ? default : new ViewProperties(
+                    displayName,
+                    scope,
                     createdOn,
-                    closeOn,
                     modifiedOn,
-                    statusModificationUserName,
-                    statusModifiedOn,
+                    dateRange,
+                    currency,
+                    new ReportConfigDefinition(
+                        typePropertiesQueryType,
+                        timeframe,
+                        timePeriod,
+                        dataSet,
+                        includeMonetaryCommitment,
+                        default),
+                    chart,
+                    accumulated,
+                    metric,
+                    (kpis ?? new ChangeTrackingList<ViewKpiProperties>()).ToList(),
+                    (pivots ?? new ChangeTrackingList<ViewPivotProperties>()).ToList(),
                     default),
                 etag,
                 default);
@@ -836,6 +795,47 @@ namespace Azure.ResourceManager.CostManagement.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="definition"> defines the type of alert. </param>
+        /// <param name="description"> Alert description. </param>
+        /// <param name="source"> Source of alert. </param>
+        /// <param name="details"> Alert details. </param>
+        /// <param name="costEntityId"> related budget. </param>
+        /// <param name="status"> alert status. </param>
+        /// <param name="createdOn"> dateTime in which alert was created. </param>
+        /// <param name="closeOn"> dateTime in which alert was closed. </param>
+        /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
+        /// <param name="statusModificationUserName"> User who last modified the alert. </param>
+        /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <returns> A new <see cref="CostManagement.CostManagementAlertData"/> instance for mocking. </returns>
+        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertPropertiesDefinition definition = default, string description = default, CostManagementAlertSource? source = default, AlertPropertiesDetails details = default, string costEntityId = default, CostManagementAlertStatus? status = default, DateTimeOffset? createdOn = default, DateTimeOffset? closeOn = default, DateTimeOffset? modifiedOn = default, string statusModificationUserName = default, DateTimeOffset? statusModifiedOn = default, ETag? etag = default)
+        {
+            return new CostManagementAlertData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                definition is null && description is null && source is null && details is null && costEntityId is null && status is null && createdOn is null && closeOn is null && modifiedOn is null && statusModificationUserName is null && statusModifiedOn is null ? default : new AlertProperties(
+                    definition,
+                    description,
+                    source,
+                    details,
+                    costEntityId,
+                    status,
+                    createdOn,
+                    closeOn,
+                    modifiedOn,
+                    statusModificationUserName,
+                    statusModifiedOn,
+                    default),
+                etag,
+                default);
+        }
+
         /// <param name="definition"> defines the type of alert. </param>
         /// <param name="description"> Alert description. </param>
         /// <param name="source"> Source of alert. </param>
@@ -863,43 +863,6 @@ namespace Azure.ResourceManager.CostManagement.Models
                 statusModificationUserName,
                 statusModifiedOn,
                 default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> Scheduled action name. </param>
-        /// <param name="notification"> Notification properties based on scheduled action kind. </param>
-        /// <param name="notificationEmail"> Email address of the point of contact that should get the unsubscribe requests and notification emails. </param>
-        /// <param name="schedule"> Schedule of the scheduled action. </param>
-        /// <param name="scope"> For private scheduled action(Create or Update), scope will be empty.&lt;br /&gt; For shared scheduled action(Create or Update By Scope), Cost Management scope can be 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </param>
-        /// <param name="status"> Status of the scheduled action. </param>
-        /// <param name="viewId"> Cost analysis viewId used for scheduled action. For example, '/providers/Microsoft.CostManagement/views/swaggerExample'. </param>
-        /// <param name="fileFormats"> Destination of the view data. Currently only CSV format is supported. </param>
-        /// <param name="etag"> Resource Etag. For update calls, eTag is optional and can be specified to achieve optimistic concurrency. Fetch the resource's eTag by doing a 'GET' call first and then including the latest eTag as part of the request body or 'If-Match' header while performing the update. For create calls, eTag is not required. </param>
-        /// <param name="kind"> Kind of the scheduled action. </param>
-        /// <returns> A new <see cref="CostManagement.ScheduledActionData"/> instance for mocking. </returns>
-        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, NotificationProperties notification = default, string notificationEmail = default, ScheduleProperties schedule = default, ResourceIdentifier scope = default, ScheduledActionStatus? status = default, ResourceIdentifier viewId = default, IEnumerable<ScheduledActionFileFormat> fileFormats = default, ETag? etag = default, ScheduledActionKind? kind = default)
-        {
-            return new ScheduledActionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && fileFormats is null && notification is null && notificationEmail is null && schedule is null && scope is null && status is null && viewId is null ? default : new ScheduledActionProperties(
-                    displayName,
-                    new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), default),
-                    notification,
-                    notificationEmail,
-                    schedule,
-                    scope,
-                    status,
-                    viewId,
-                    default),
-                etag,
-                kind,
-                default);
         }
 
         /// <summary> The properties of the scheduled action notification. </summary>
@@ -944,6 +907,43 @@ namespace Azure.ResourceManager.CostManagement.Models
                 dayOfMonth,
                 startOn,
                 endOn,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="displayName"> Scheduled action name. </param>
+        /// <param name="notification"> Notification properties based on scheduled action kind. </param>
+        /// <param name="notificationEmail"> Email address of the point of contact that should get the unsubscribe requests and notification emails. </param>
+        /// <param name="schedule"> Schedule of the scheduled action. </param>
+        /// <param name="scope"> For private scheduled action(Create or Update), scope will be empty.&lt;br /&gt; For shared scheduled action(Create or Update By Scope), Cost Management scope can be 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </param>
+        /// <param name="status"> Status of the scheduled action. </param>
+        /// <param name="viewId"> Cost analysis viewId used for scheduled action. For example, '/providers/Microsoft.CostManagement/views/swaggerExample'. </param>
+        /// <param name="fileFormats"> Destination of the view data. Currently only CSV format is supported. </param>
+        /// <param name="etag"> Resource Etag. For update calls, eTag is optional and can be specified to achieve optimistic concurrency. Fetch the resource's eTag by doing a 'GET' call first and then including the latest eTag as part of the request body or 'If-Match' header while performing the update. For create calls, eTag is not required. </param>
+        /// <param name="kind"> Kind of the scheduled action. </param>
+        /// <returns> A new <see cref="CostManagement.ScheduledActionData"/> instance for mocking. </returns>
+        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, NotificationProperties notification = default, string notificationEmail = default, ScheduleProperties schedule = default, ResourceIdentifier scope = default, ScheduledActionStatus? status = default, ResourceIdentifier viewId = default, IEnumerable<ScheduledActionFileFormat> fileFormats = default, ETag? etag = default, ScheduledActionKind? kind = default)
+        {
+            return new ScheduledActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && fileFormats is null && notification is null && notificationEmail is null && schedule is null && scope is null && status is null && viewId is null ? default : new ScheduledActionProperties(
+                    displayName,
+                    new FileDestination((fileFormats ?? new ChangeTrackingList<ScheduledActionFileFormat>()).ToList(), default),
+                    notification,
+                    notificationEmail,
+                    schedule,
+                    scope,
+                    status,
+                    viewId,
+                    default),
+                etag,
+                kind,
                 default);
         }
 
@@ -1079,24 +1079,6 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ExportBlobInfo(blobLink, byteCount, default);
         }
 
-        /// <summary> The cost allocation rule model definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Cost allocation rule properties. </param>
-        /// <returns> A new <see cref="CostManagement.CostAllocationRuleData"/> instance for mocking. </returns>
-        public static CostAllocationRuleData CostAllocationRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CostAllocationRuleProperties properties = default)
-        {
-            return new CostAllocationRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> The properties of a cost allocation rule. </summary>
         /// <param name="description"> Description of a cost allocation rule. </param>
         /// <param name="details"> Resource information for the cost allocation rule. </param>
@@ -1168,6 +1150,24 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static CostAllocationProportion CostAllocationProportion(string name = default, float percentage = default)
         {
             return new CostAllocationProportion(name, percentage, default);
+        }
+
+        /// <summary> The cost allocation rule model definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Cost allocation rule properties. </param>
+        /// <returns> A new <see cref="CostManagement.CostAllocationRuleData"/> instance for mocking. </returns>
+        public static CostAllocationRuleData CostAllocationRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CostAllocationRuleProperties properties = default)
+        {
+            return new CostAllocationRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> The cost allocation rule check name availability request. </summary>

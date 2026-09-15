@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmContainerRegistryTasksModelFactory
     {
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -66,67 +67,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public static ContainerRegistryAgentPoolQueueStatus ContainerRegistryAgentPoolQueueStatus(int? count = default)
         {
             return new ContainerRegistryAgentPoolQueueStatus(count, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="runId"> The unique identifier for the run. </param>
-        /// <param name="status"> The current status of the run. </param>
-        /// <param name="lastUpdatedOn"> The last updated time for the run. </param>
-        /// <param name="runType"> The type of run. </param>
-        /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
-        /// <param name="createdOn"> The time the run was scheduled. </param>
-        /// <param name="startsOn"> The time the run started. </param>
-        /// <param name="finishOn"> The time the run finished. </param>
-        /// <param name="outputImages"> The list of all images that were generated from the run. This is applicable if the run generates base image dependencies. </param>
-        /// <param name="task"> The task against which run was scheduled. </param>
-        /// <param name="imageUpdateTrigger"> The image update trigger that caused the run. This is applicable if the task has base image trigger configured. </param>
-        /// <param name="sourceTrigger"> The source trigger that caused the run. </param>
-        /// <param name="timerTrigger"> The timer trigger that caused the run. </param>
-        /// <param name="platform"> The platform properties against which the run will happen. </param>
-        /// <param name="sourceRegistryAuth"> The scope of the credentials that were used to login to the source registry during this run. </param>
-        /// <param name="customRegistries"> The list of custom registries that were logged in during this run. </param>
-        /// <param name="runErrorMessage"> The error message received from backend systems after the run is scheduled. </param>
-        /// <param name="updateTriggerToken"> The update trigger token passed for the Run. </param>
-        /// <param name="logArtifact"> The image description for the log artifact. </param>
-        /// <param name="provisioningState"> The provisioning state of a run. </param>
-        /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
-        /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
-        /// <returns> A new <see cref="Tasks.ContainerRegistryRunData"/> instance for mocking. </returns>
-        public static ContainerRegistryRunData ContainerRegistryRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runId = default, ContainerRegistryTaskRunStatus? status = default, DateTimeOffset? lastUpdatedOn = default, ContainerRegistryTaskRunType? runType = default, string agentPoolName = default, DateTimeOffset? createdOn = default, DateTimeOffset? startsOn = default, DateTimeOffset? finishOn = default, IEnumerable<ContainerRegistryTaskImageDescriptor> outputImages = default, string task = default, ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger = default, ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger = default, ContainerRegistryTaskTimerTriggerDescriptor timerTrigger = default, ContainerRegistryTaskPlatformProperties platform = default, string sourceRegistryAuth = default, IEnumerable<string> customRegistries = default, string runErrorMessage = default, string updateTriggerToken = default, ContainerRegistryTaskImageDescriptor logArtifact = default, ContainerRegistryTaskProvisioningState? provisioningState = default, bool? isArchiveEnabled = default, int? agentCpu = default)
-        {
-            return new ContainerRegistryRunData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                runId is null && status is null && lastUpdatedOn is null && runType is null && agentPoolName is null && createdOn is null && startsOn is null && finishOn is null && outputImages is null && task is null && imageUpdateTrigger is null && sourceTrigger is null && timerTrigger is null && platform is null && agentCpu is null && sourceRegistryAuth is null && customRegistries is null && runErrorMessage is null && updateTriggerToken is null && logArtifact is null && provisioningState is null && isArchiveEnabled is null ? default : new RunProperties(
-                    runId,
-                    status,
-                    lastUpdatedOn,
-                    runType,
-                    agentPoolName,
-                    createdOn,
-                    startsOn,
-                    finishOn,
-                    (outputImages ?? new ChangeTrackingList<ContainerRegistryTaskImageDescriptor>()).ToList(),
-                    task,
-                    imageUpdateTrigger,
-                    sourceTrigger,
-                    timerTrigger,
-                    platform,
-                    new AgentProperties(agentCpu, default),
-                    sourceRegistryAuth,
-                    (customRegistries ?? new ChangeTrackingList<string>()).ToList(),
-                    runErrorMessage,
-                    updateTriggerToken,
-                    logArtifact,
-                    provisioningState,
-                    isArchiveEnabled,
-                    default),
-                default);
         }
 
         /// <summary> Properties for a registry image. </summary>
@@ -193,6 +133,67 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskPlatformProperties(os, architecture, variant, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="runId"> The unique identifier for the run. </param>
+        /// <param name="status"> The current status of the run. </param>
+        /// <param name="lastUpdatedOn"> The last updated time for the run. </param>
+        /// <param name="runType"> The type of run. </param>
+        /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
+        /// <param name="createdOn"> The time the run was scheduled. </param>
+        /// <param name="startsOn"> The time the run started. </param>
+        /// <param name="finishOn"> The time the run finished. </param>
+        /// <param name="outputImages"> The list of all images that were generated from the run. This is applicable if the run generates base image dependencies. </param>
+        /// <param name="task"> The task against which run was scheduled. </param>
+        /// <param name="imageUpdateTrigger"> The image update trigger that caused the run. This is applicable if the task has base image trigger configured. </param>
+        /// <param name="sourceTrigger"> The source trigger that caused the run. </param>
+        /// <param name="timerTrigger"> The timer trigger that caused the run. </param>
+        /// <param name="platform"> The platform properties against which the run will happen. </param>
+        /// <param name="sourceRegistryAuth"> The scope of the credentials that were used to login to the source registry during this run. </param>
+        /// <param name="customRegistries"> The list of custom registries that were logged in during this run. </param>
+        /// <param name="runErrorMessage"> The error message received from backend systems after the run is scheduled. </param>
+        /// <param name="updateTriggerToken"> The update trigger token passed for the Run. </param>
+        /// <param name="logArtifact"> The image description for the log artifact. </param>
+        /// <param name="provisioningState"> The provisioning state of a run. </param>
+        /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
+        /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
+        /// <returns> A new <see cref="Tasks.ContainerRegistryRunData"/> instance for mocking. </returns>
+        public static ContainerRegistryRunData ContainerRegistryRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runId = default, ContainerRegistryTaskRunStatus? status = default, DateTimeOffset? lastUpdatedOn = default, ContainerRegistryTaskRunType? runType = default, string agentPoolName = default, DateTimeOffset? createdOn = default, DateTimeOffset? startsOn = default, DateTimeOffset? finishOn = default, IEnumerable<ContainerRegistryTaskImageDescriptor> outputImages = default, string task = default, ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger = default, ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger = default, ContainerRegistryTaskTimerTriggerDescriptor timerTrigger = default, ContainerRegistryTaskPlatformProperties platform = default, string sourceRegistryAuth = default, IEnumerable<string> customRegistries = default, string runErrorMessage = default, string updateTriggerToken = default, ContainerRegistryTaskImageDescriptor logArtifact = default, ContainerRegistryTaskProvisioningState? provisioningState = default, bool? isArchiveEnabled = default, int? agentCpu = default)
+        {
+            return new ContainerRegistryRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                runId is null && status is null && lastUpdatedOn is null && runType is null && agentPoolName is null && createdOn is null && startsOn is null && finishOn is null && outputImages is null && task is null && imageUpdateTrigger is null && sourceTrigger is null && timerTrigger is null && platform is null && agentCpu is null && sourceRegistryAuth is null && customRegistries is null && runErrorMessage is null && updateTriggerToken is null && logArtifact is null && provisioningState is null && isArchiveEnabled is null ? default : new RunProperties(
+                    runId,
+                    status,
+                    lastUpdatedOn,
+                    runType,
+                    agentPoolName,
+                    createdOn,
+                    startsOn,
+                    finishOn,
+                    (outputImages ?? new ChangeTrackingList<ContainerRegistryTaskImageDescriptor>()).ToList(),
+                    task,
+                    imageUpdateTrigger,
+                    sourceTrigger,
+                    timerTrigger,
+                    platform,
+                    new AgentProperties(agentCpu, default),
+                    sourceRegistryAuth,
+                    (customRegistries ?? new ChangeTrackingList<string>()).ToList(),
+                    runErrorMessage,
+                    updateTriggerToken,
+                    logArtifact,
+                    provisioningState,
+                    isArchiveEnabled,
+                    default),
+                default);
+        }
+
         /// <summary> The set of run properties that can be updated. </summary>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryRunPatch"/> instance for mocking. </returns>
@@ -208,30 +209,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public static ContainerRegistryTaskRunLogResult ContainerRegistryTaskRunLogResult(string logLink = default, string logArtifactLink = default)
         {
             return new ContainerRegistryTaskRunLogResult(logLink, logArtifactLink, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of this task run. </param>
-        /// <param name="runRequest"> The request (parameters) for the run. </param>
-        /// <param name="runResult"> The result of this task run. </param>
-        /// <param name="forceUpdateTag"> How the run should be forced to rerun even if the run request configuration has not changed. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="location"> The location of the resource. </param>
-        /// <returns> A new <see cref="Tasks.ContainerRegistryTaskRunData"/> instance for mocking. </returns>
-        public static ContainerRegistryTaskRunData ContainerRegistryTaskRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerRegistryTaskProvisioningState? provisioningState = default, ContainerRegistryRunContent runRequest = default, ContainerRegistryRunData runResult = default, string forceUpdateTag = default, ContainerRegistryTaskIdentityProperties identity = default, AzureLocation? location = default)
-        {
-            return new ContainerRegistryTaskRunData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && runRequest is null && runResult is null && forceUpdateTag is null ? default : new TaskRunProperties(provisioningState, runRequest, runResult, forceUpdateTag, default),
-                identity,
-                location,
-                default);
         }
 
         /// <summary>
@@ -492,6 +469,30 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 credentials);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning state of this task run. </param>
+        /// <param name="runRequest"> The request (parameters) for the run. </param>
+        /// <param name="runResult"> The result of this task run. </param>
+        /// <param name="forceUpdateTag"> How the run should be forced to rerun even if the run request configuration has not changed. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <returns> A new <see cref="Tasks.ContainerRegistryTaskRunData"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskRunData ContainerRegistryTaskRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerRegistryTaskProvisioningState? provisioningState = default, ContainerRegistryRunContent runRequest = default, ContainerRegistryRunData runResult = default, string forceUpdateTag = default, ContainerRegistryTaskIdentityProperties identity = default, AzureLocation? location = default)
+        {
+            return new ContainerRegistryTaskRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && runRequest is null && runResult is null && forceUpdateTag is null ? default : new TaskRunProperties(provisioningState, runRequest, runResult, forceUpdateTag, default),
+                identity,
+                location,
+                default);
+        }
+
         /// <summary> Managed identity for the resource. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
@@ -530,55 +531,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ContainerRegistryTaskRunPatch(identity, runRequest is null && forceUpdateTag is null ? default : new TaskRunPropertiesUpdateParameters(runRequest, forceUpdateTag, default), location, tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The provisioning state of the task. </param>
-        /// <param name="createdOn"> The creation date of task. </param>
-        /// <param name="status"> The current status of task. </param>
-        /// <param name="platform"> The platform properties against which the run has to happen. </param>
-        /// <param name="agentPoolName"> The dedicated agent pool for the task. </param>
-        /// <param name="timeoutInSeconds"> Run timeout in seconds. </param>
-        /// <param name="step"> The properties of a task step. </param>
-        /// <param name="trigger"> The properties that describe all triggers for the task. </param>
-        /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
-        /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
-        /// <param name="isSystemTask"> The value of this property indicates whether the task resource is system task or not. </param>
-        /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <returns> A new <see cref="Tasks.ContainerRegistryTaskData"/> instance for mocking. </returns>
-        public static ContainerRegistryTaskData ContainerRegistryTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerRegistryTaskProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, ContainerRegistryTaskStatus? status = default, ContainerRegistryTaskPlatformProperties platform = default, string agentPoolName = default, int? timeoutInSeconds = default, ContainerRegistryTaskStepProperties step = default, ContainerRegistryTaskTriggerProperties trigger = default, ContainerRegistryTaskCredentials credentials = default, string logTemplate = default, bool? isSystemTask = default, int? agentCpu = default, ContainerRegistryTaskIdentityProperties identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ContainerRegistryTaskData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && createdOn is null && status is null && platform is null && agentCpu is null && agentPoolName is null && timeoutInSeconds is null && step is null && trigger is null && credentials is null && logTemplate is null && isSystemTask is null ? default : new TaskProperties(
-                    provisioningState,
-                    createdOn,
-                    status,
-                    platform,
-                    new AgentProperties(agentCpu, default),
-                    agentPoolName,
-                    timeoutInSeconds,
-                    step,
-                    trigger,
-                    credentials,
-                    logTemplate,
-                    isSystemTask,
-                    default),
-                identity,
-                default);
         }
 
         /// <summary>
@@ -777,6 +729,55 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 updateTriggerPayloadType,
                 status,
                 name,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> The provisioning state of the task. </param>
+        /// <param name="createdOn"> The creation date of task. </param>
+        /// <param name="status"> The current status of task. </param>
+        /// <param name="platform"> The platform properties against which the run has to happen. </param>
+        /// <param name="agentPoolName"> The dedicated agent pool for the task. </param>
+        /// <param name="timeoutInSeconds"> Run timeout in seconds. </param>
+        /// <param name="step"> The properties of a task step. </param>
+        /// <param name="trigger"> The properties that describe all triggers for the task. </param>
+        /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
+        /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
+        /// <param name="isSystemTask"> The value of this property indicates whether the task resource is system task or not. </param>
+        /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="Tasks.ContainerRegistryTaskData"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskData ContainerRegistryTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerRegistryTaskProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, ContainerRegistryTaskStatus? status = default, ContainerRegistryTaskPlatformProperties platform = default, string agentPoolName = default, int? timeoutInSeconds = default, ContainerRegistryTaskStepProperties step = default, ContainerRegistryTaskTriggerProperties trigger = default, ContainerRegistryTaskCredentials credentials = default, string logTemplate = default, bool? isSystemTask = default, int? agentCpu = default, ContainerRegistryTaskIdentityProperties identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ContainerRegistryTaskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && createdOn is null && status is null && platform is null && agentCpu is null && agentPoolName is null && timeoutInSeconds is null && step is null && trigger is null && credentials is null && logTemplate is null && isSystemTask is null ? default : new TaskProperties(
+                    provisioningState,
+                    createdOn,
+                    status,
+                    platform,
+                    new AgentProperties(agentCpu, default),
+                    agentPoolName,
+                    timeoutInSeconds,
+                    step,
+                    trigger,
+                    credentials,
+                    logTemplate,
+                    isSystemTask,
+                    default),
+                identity,
                 default);
         }
 

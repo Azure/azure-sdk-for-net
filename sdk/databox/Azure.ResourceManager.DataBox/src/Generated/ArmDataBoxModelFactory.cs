@@ -20,67 +20,6 @@ namespace Azure.ResourceManager.DataBox.Models
     public static partial class ArmDataBoxModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="transferType"> Type of the data transfer. </param>
-        /// <param name="isCancellable"> Describes whether the job is cancellable or not. </param>
-        /// <param name="isDeletable"> Describes whether the job is deletable or not. </param>
-        /// <param name="isShippingAddressEditable"> Describes whether the shipping address is editable or not. </param>
-        /// <param name="reverseShippingDetailsUpdate"> The Editable status for Reverse Shipping Address and Contact Info. </param>
-        /// <param name="reverseTransportPreferenceUpdate"> The Editable status for Reverse Transport preferences. </param>
-        /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
-        /// <param name="status"> Name of the stage which is in progress. </param>
-        /// <param name="delayedStage"> Name of the stage where delay might be present. </param>
-        /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
-        /// <param name="error"> Top level error for the job. </param>
-        /// <param name="details"> Details of a job run. This field will only be sent for expand details filter. </param>
-        /// <param name="cancellationReason"> Reason for cancellation. </param>
-        /// <param name="deliveryType"> Delivery type of Job. </param>
-        /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
-        /// <param name="areAllDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
-        /// <param name="deliveryInfoScheduledOn"> Scheduled date time. </param>
-        /// <param name="sku"> The sku type. </param>
-        /// <param name="identity"> Msi identity of the resource. </param>
-        /// <returns> A new <see cref="DataBox.DataBoxJobData"/> instance for mocking. </returns>
-        public static DataBoxJobData DataBoxJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataBoxJobTransferType transferType = default, bool? isCancellable = default, bool? isDeletable = default, bool? isShippingAddressEditable = default, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate = default, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate = default, bool? isPrepareToShipEnabled = default, DataBoxStageName? status = default, DataBoxStageName? delayedStage = default, DateTimeOffset? startOn = default, ResponseError error = default, DataBoxBasicJobDetails details = default, string cancellationReason = default, JobDeliveryType? deliveryType = default, bool? isCancellableWithoutFee = default, bool? areAllDevicesLost = default, DateTimeOffset? deliveryInfoScheduledOn = default, DataBoxSku sku = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DataBoxJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                new JobProperties(
-                    transferType,
-                    isCancellable,
-                    isDeletable,
-                    isShippingAddressEditable,
-                    reverseShippingDetailsUpdate,
-                    reverseTransportPreferenceUpdate,
-                    isPrepareToShipEnabled,
-                    status,
-                    delayedStage,
-                    startOn,
-                    error,
-                    details,
-                    cancellationReason,
-                    deliveryType,
-                    new JobDeliveryInfo(deliveryInfoScheduledOn, default),
-                    isCancellableWithoutFee,
-                    areAllDevicesLost,
-                    default),
-                sku,
-                identity,
-                default);
-        }
-
         /// <summary>
         /// Job details.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxCustomerDiskJobDetails"/>, <see cref="Models.DataBoxDiskJobDetails"/>, <see cref="Models.DataBoxHeavyJobDetails"/>, and <see cref="Models.DataBoxJobDetails"/>.
@@ -1136,6 +1075,67 @@ namespace Azure.ResourceManager.DataBox.Models
                 default,
                 (copyProgress ?? new ChangeTrackingList<DataBoxCopyProgress>()).ToList(),
                 devicePassword);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="transferType"> Type of the data transfer. </param>
+        /// <param name="isCancellable"> Describes whether the job is cancellable or not. </param>
+        /// <param name="isDeletable"> Describes whether the job is deletable or not. </param>
+        /// <param name="isShippingAddressEditable"> Describes whether the shipping address is editable or not. </param>
+        /// <param name="reverseShippingDetailsUpdate"> The Editable status for Reverse Shipping Address and Contact Info. </param>
+        /// <param name="reverseTransportPreferenceUpdate"> The Editable status for Reverse Transport preferences. </param>
+        /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
+        /// <param name="status"> Name of the stage which is in progress. </param>
+        /// <param name="delayedStage"> Name of the stage where delay might be present. </param>
+        /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
+        /// <param name="error"> Top level error for the job. </param>
+        /// <param name="details"> Details of a job run. This field will only be sent for expand details filter. </param>
+        /// <param name="cancellationReason"> Reason for cancellation. </param>
+        /// <param name="deliveryType"> Delivery type of Job. </param>
+        /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
+        /// <param name="areAllDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
+        /// <param name="deliveryInfoScheduledOn"> Scheduled date time. </param>
+        /// <param name="sku"> The sku type. </param>
+        /// <param name="identity"> Msi identity of the resource. </param>
+        /// <returns> A new <see cref="DataBox.DataBoxJobData"/> instance for mocking. </returns>
+        public static DataBoxJobData DataBoxJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataBoxJobTransferType transferType = default, bool? isCancellable = default, bool? isDeletable = default, bool? isShippingAddressEditable = default, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate = default, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate = default, bool? isPrepareToShipEnabled = default, DataBoxStageName? status = default, DataBoxStageName? delayedStage = default, DateTimeOffset? startOn = default, ResponseError error = default, DataBoxBasicJobDetails details = default, string cancellationReason = default, JobDeliveryType? deliveryType = default, bool? isCancellableWithoutFee = default, bool? areAllDevicesLost = default, DateTimeOffset? deliveryInfoScheduledOn = default, DataBoxSku sku = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataBoxJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new JobProperties(
+                    transferType,
+                    isCancellable,
+                    isDeletable,
+                    isShippingAddressEditable,
+                    reverseShippingDetailsUpdate,
+                    reverseTransportPreferenceUpdate,
+                    isPrepareToShipEnabled,
+                    status,
+                    delayedStage,
+                    startOn,
+                    error,
+                    details,
+                    cancellationReason,
+                    deliveryType,
+                    new JobDeliveryInfo(deliveryInfoScheduledOn, default),
+                    isCancellableWithoutFee,
+                    areAllDevicesLost,
+                    default),
+                sku,
+                identity,
+                default);
         }
 
         /// <summary> The Sku. </summary>
