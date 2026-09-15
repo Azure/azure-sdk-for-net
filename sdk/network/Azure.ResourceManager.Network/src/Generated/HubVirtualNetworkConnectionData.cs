@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Enable Only IPv6 Peering for this connection. </summary>
-        [WirePath("properties.enableOnlyIpv6Peering")]
-        public EnableOnlyIPv6PeeringState? EnableOnlyIPv6Peering
+        [WirePath("properties.enableOnlyIPv6Peering")]
+        public bool? EnableOnlyIPv6Peering
         {
             get
             {

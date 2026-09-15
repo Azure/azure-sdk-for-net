@@ -45,14 +45,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="listeners"> Listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="sslProfiles"> SSL profiles of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="urlPathMaps"> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="advancedRoutingMaps"> Advanced routing maps of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="requestRoutingRules"> Request routing rules of the application gateway resource. </param>
         /// <param name="routingRules"> Routing rules of the application gateway resource. </param>
         /// <param name="rewriteRuleSets"> Rewrite rules for the application gateway resource. </param>
+        /// <param name="advancedRoutingConditionSets"> Advanced routing condition sets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="redirectConfigurations"> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="webApplicationFirewallConfiguration"> Web application firewall configuration. </param>
         /// <param name="enableHttp2"> Whether HTTP2 is enabled on the application gateway resource. </param>
         /// <param name="enableFips"> Whether FIPS is enabled on the application gateway resource. </param>
         /// <param name="autoscaleConfiguration"> Autoscale Configuration. </param>
+        /// <param name="reservedCapacity"> The reserved capacity of the application gateway resource. Applicable to the Basic_v2 and Basic_WAF_v2 SKU tiers. </param>
         /// <param name="privateLinkConfigurations"> PrivateLink configurations on application gateway. </param>
         /// <param name="privateEndpointConnections"> Private Endpoint connections on application gateway. </param>
         /// <param name="resourceGuid"> The resource GUID property of the application gateway resource. </param>
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="customErrorConfigurations"> Custom error configurations of the application gateway resource. </param>
         /// <param name="forceFirewallPolicyAssociation"> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </param>
         /// <param name="loadDistributionPolicies"> Load distribution policies of the application gateway resource. </param>
-        /// <param name="entraJWTValidationConfigs"> Entra JWT validation configurations for the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="entraJwtValidationConfigs"> Entra JWT validation configurations for the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
         /// <param name="globalConfiguration"> Global Configuration. </param>
         /// <param name="defaultPredefinedSslPolicy"> The default predefined SSL Policy applied on the application gateway resource. </param>
         /// <param name="firewallPolicyId"> Resource ID. </param>
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="identity"> The identity of the application gateway, if configured. </param>
         /// <returns> A new <see cref="Network.ApplicationGatewayData"/> instance for mocking. </returns>
-        public static ApplicationGatewayData ApplicationGatewayData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ApplicationGatewaySku sku = default, ApplicationGatewaySslPolicy sslPolicy = default, ApplicationGatewayOperationalState? operationalState = default, IEnumerable<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default, IEnumerable<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = default, IEnumerable<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = default, IEnumerable<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates = default, IEnumerable<ApplicationGatewaySslCertificate> sslCertificates = default, IEnumerable<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default, IEnumerable<ApplicationGatewayFrontendPort> frontendPorts = default, IEnumerable<ApplicationGatewayProbe> probes = default, IEnumerable<ApplicationGatewayBackendAddressPool> backendAddressPools = default, IEnumerable<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default, IEnumerable<ApplicationGatewayBackendSettings> backendSettingsCollection = default, IEnumerable<ApplicationGatewayHttpListener> httpListeners = default, IEnumerable<ApplicationGatewayListener> listeners = default, IEnumerable<ApplicationGatewaySslProfile> sslProfiles = default, IEnumerable<ApplicationGatewayUrlPathMap> urlPathMaps = default, IEnumerable<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default, IEnumerable<ApplicationGatewayRoutingRule> routingRules = default, IEnumerable<ApplicationGatewayRewriteRuleSet> rewriteRuleSets = default, IEnumerable<ApplicationGatewayRedirectConfiguration> redirectConfigurations = default, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = default, bool? enableHttp2 = default, bool? enableFips = default, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = default, IEnumerable<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = default, IEnumerable<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations = default, bool? forceFirewallPolicyAssociation = default, IEnumerable<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = default, IEnumerable<ApplicationGatewayEntraJwtValidationConfig> entraJWTValidationConfigs = default, ApplicationGatewayGlobalConfiguration globalConfiguration = default, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = default, ResourceIdentifier firewallPolicyId = default, ETag? eTag = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
+        public static ApplicationGatewayData ApplicationGatewayData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, ApplicationGatewaySku sku, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayOperationalState? operationalState, IEnumerable<ApplicationGatewayIPConfiguration> gatewayIPConfigurations, IEnumerable<ApplicationGatewayAuthenticationCertificate> authenticationCertificates, IEnumerable<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates, IEnumerable<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates, IEnumerable<ApplicationGatewaySslCertificate> sslCertificates, IEnumerable<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations, IEnumerable<ApplicationGatewayFrontendPort> frontendPorts, IEnumerable<ApplicationGatewayProbe> probes, IEnumerable<ApplicationGatewayBackendAddressPool> backendAddressPools, IEnumerable<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection, IEnumerable<ApplicationGatewayBackendSettings> backendSettingsCollection, IEnumerable<ApplicationGatewayHttpListener> httpListeners, IEnumerable<ApplicationGatewayListener> listeners, IEnumerable<ApplicationGatewaySslProfile> sslProfiles, IEnumerable<ApplicationGatewayUrlPathMap> urlPathMaps, IEnumerable<ApplicationGatewayAdvancedRoutingMap> advancedRoutingMaps, IEnumerable<ApplicationGatewayRequestRoutingRule> requestRoutingRules, IEnumerable<ApplicationGatewayRoutingRule> routingRules, IEnumerable<ApplicationGatewayRewriteRuleSet> rewriteRuleSets, IEnumerable<ApplicationGatewayAdvancedRoutingConditionSet> advancedRoutingConditionSets, IEnumerable<ApplicationGatewayRedirectConfiguration> redirectConfigurations, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration, bool? enableHttp2, bool? enableFips, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration, int? reservedCapacity, IEnumerable<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations, IEnumerable<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations, bool? forceFirewallPolicyAssociation, IEnumerable<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies, IEnumerable<ApplicationGatewayEntraJwtValidationConfig> entraJwtValidationConfigs, ApplicationGatewayGlobalConfiguration globalConfiguration, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy, ResourceIdentifier firewallPolicyId, ETag? eTag, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                sku is null && sslPolicy is null && operationalState is null && gatewayIPConfigurations is null && authenticationCertificates is null && trustedRootCertificates is null && trustedClientCertificates is null && sslCertificates is null && frontendIPConfigurations is null && frontendPorts is null && probes is null && backendAddressPools is null && backendHttpSettingsCollection is null && backendSettingsCollection is null && httpListeners is null && listeners is null && sslProfiles is null && urlPathMaps is null && requestRoutingRules is null && routingRules is null && rewriteRuleSets is null && redirectConfigurations is null && webApplicationFirewallConfiguration is null && firewallPolicyId is null && enableHttp2 is null && enableFips is null && autoscaleConfiguration is null && privateLinkConfigurations is null && privateEndpointConnections is null && resourceGuid is null && provisioningState is null && customErrorConfigurations is null && forceFirewallPolicyAssociation is null && loadDistributionPolicies is null && entraJWTValidationConfigs is null && globalConfiguration is null && defaultPredefinedSslPolicy is null ? default : new ApplicationGatewayPropertiesFormat(
+                sku is null && sslPolicy is null && operationalState is null && gatewayIPConfigurations is null && authenticationCertificates is null && trustedRootCertificates is null && trustedClientCertificates is null && sslCertificates is null && frontendIPConfigurations is null && frontendPorts is null && probes is null && backendAddressPools is null && backendHttpSettingsCollection is null && backendSettingsCollection is null && httpListeners is null && listeners is null && sslProfiles is null && urlPathMaps is null && advancedRoutingMaps is null && requestRoutingRules is null && routingRules is null && rewriteRuleSets is null && advancedRoutingConditionSets is null && redirectConfigurations is null && webApplicationFirewallConfiguration is null && firewallPolicyId is null && enableHttp2 is null && enableFips is null && autoscaleConfiguration is null && reservedCapacity is null && privateLinkConfigurations is null && privateEndpointConnections is null && resourceGuid is null && provisioningState is null && customErrorConfigurations is null && forceFirewallPolicyAssociation is null && loadDistributionPolicies is null && entraJwtValidationConfigs is null && globalConfiguration is null && defaultPredefinedSslPolicy is null ? default : new ApplicationGatewayPropertiesFormat(
                     sku,
                     sslPolicy,
                     operationalState,
@@ -99,15 +102,18 @@ namespace Azure.ResourceManager.Network.Models
                     (listeners ?? new ChangeTrackingList<ApplicationGatewayListener>()).ToList(),
                     (sslProfiles ?? new ChangeTrackingList<ApplicationGatewaySslProfile>()).ToList(),
                     (urlPathMaps ?? new ChangeTrackingList<ApplicationGatewayUrlPathMap>()).ToList(),
+                    (advancedRoutingMaps ?? new ChangeTrackingList<ApplicationGatewayAdvancedRoutingMap>()).ToList(),
                     (requestRoutingRules ?? new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>()).ToList(),
                     (routingRules ?? new ChangeTrackingList<ApplicationGatewayRoutingRule>()).ToList(),
                     (rewriteRuleSets ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>()).ToList(),
+                    (advancedRoutingConditionSets ?? new ChangeTrackingList<ApplicationGatewayAdvancedRoutingConditionSet>()).ToList(),
                     (redirectConfigurations ?? new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>()).ToList(),
                     webApplicationFirewallConfiguration,
                     firewallPolicyId is null ? default : new NetworkSubResource(firewallPolicyId, default),
                     enableHttp2,
                     enableFips,
                     autoscaleConfiguration,
+                    reservedCapacity,
                     (privateLinkConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>()).ToList(),
                     (privateEndpointConnections ?? new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>()).ToList(),
                     resourceGuid,
@@ -115,7 +121,7 @@ namespace Azure.ResourceManager.Network.Models
                     (customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>()).ToList(),
                     forceFirewallPolicyAssociation,
                     (loadDistributionPolicies ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>()).ToList(),
-                    (entraJWTValidationConfigs ?? new ChangeTrackingList<ApplicationGatewayEntraJwtValidationConfig>()).ToList(),
+                    (entraJwtValidationConfigs ?? new ChangeTrackingList<ApplicationGatewayEntraJwtValidationConfig>()).ToList(),
                     globalConfiguration,
                     defaultPredefinedSslPolicy,
                     default),
@@ -880,21 +886,23 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
+        /// <param name="approvalReferencePrivateEndpointId"> The ARM resource id of an existing approved private endpoint whose approval state is inherited by this connection. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.NetworkPrivateLinkServiceConnection"/> instance for mocking. </returns>
-        public static NetworkPrivateLinkServiceConnection NetworkPrivateLinkServiceConnection(ResourceIdentifier id = default, string name = default, string @type = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier privateLinkServiceId = default, IEnumerable<string> groupIds = default, string requestMessage = default, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ETag? eTag = default)
+        public static NetworkPrivateLinkServiceConnection NetworkPrivateLinkServiceConnection(ResourceIdentifier id, string name, string @type, NetworkProvisioningState? provisioningState, ResourceIdentifier privateLinkServiceId, IEnumerable<string> groupIds, string requestMessage, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ResourceIdentifier approvalReferencePrivateEndpointId, ETag? eTag)
         {
             return new NetworkPrivateLinkServiceConnection(
                 id,
                 default,
                 name,
                 @type,
-                provisioningState is null && privateLinkServiceId is null && groupIds is null && requestMessage is null && privateLinkServiceConnectionState is null ? default : new PrivateLinkServiceConnectionProperties(
+                provisioningState is null && privateLinkServiceId is null && groupIds is null && requestMessage is null && privateLinkServiceConnectionState is null && approvalReferencePrivateEndpointId is null ? default : new PrivateLinkServiceConnectionProperties(
                     provisioningState,
                     privateLinkServiceId,
                     (groupIds ?? new ChangeTrackingList<string>()).ToList(),
                     requestMessage,
                     privateLinkServiceConnectionState,
+                    approvalReferencePrivateEndpointId is null ? default : new ApprovalReference(approvalReferencePrivateEndpointId, default),
                     default),
                 eTag);
         }
@@ -1164,6 +1172,28 @@ namespace Azure.ResourceManager.Network.Models
                 workspaceResourceId,
                 trafficAnalyticsIntervalInMinutes,
                 default);
+        }
+
+        /// <summary> Identity for the resource. </summary>
+        /// <param name="principalId"> The principal id of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant id of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="type"> The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </param>
+        /// <param name="userAssignedIdentities"> The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
+        /// <returns> A new <see cref="Models.NetworkManagedServiceIdentity"/> instance for mocking. </returns>
+        public static NetworkManagedServiceIdentity NetworkManagedServiceIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, ManagedServiceIdentityUserAssignedIdentities> userAssignedIdentities = default)
+        {
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, ManagedServiceIdentityUserAssignedIdentities>();
+
+            return new NetworkManagedServiceIdentity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, ManagedServiceIdentityUserAssignedIdentities>(), default);
+        }
+
+        /// <summary> The ManagedServiceIdentityUserAssignedIdentities. </summary>
+        /// <param name="principalId"> The principal id of user assigned identity. </param>
+        /// <param name="clientId"> The client id of user assigned identity. </param>
+        /// <returns> A new <see cref="Models.ManagedServiceIdentityUserAssignedIdentities"/> instance for mocking. </returns>
+        public static ManagedServiceIdentityUserAssignedIdentities ManagedServiceIdentityUserAssignedIdentities(string principalId = default, string clientId = default)
+        {
+            return new ManagedServiceIdentityUserAssignedIdentities(principalId, clientId, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -1982,40 +2012,137 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
+        /// <summary> Advanced routing map of an application gateway. Holds the advanced routing rules evaluated for requests handled by an AdvancedRouting request routing rule, along with the configuration applied when no rule matches. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="properties"> Properties of the application gateway advanced routing map. </param>
+        /// <param name="name"> Name of the advanced routing map that is unique within an Application Gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Type of the resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayAdvancedRoutingMap"/> instance for mocking. </returns>
+        public static ApplicationGatewayAdvancedRoutingMap ApplicationGatewayAdvancedRoutingMap(ResourceIdentifier id = default, ApplicationGatewayAdvancedRoutingMapPropertiesFormat properties = default, string name = default, string eTag = default, string @type = default)
+        {
+            return new ApplicationGatewayAdvancedRoutingMap(
+                id,
+                default,
+                properties,
+                name,
+                eTag,
+                @type);
+        }
+
+        /// <param name="defaultBackendAddressPoolId"> Resource ID. </param>
+        /// <param name="defaultBackendHttpSettingsId"> Resource ID. </param>
+        /// <param name="defaultRedirectConfigurationId"> Resource ID. </param>
+        /// <param name="defaultRewriteRuleSetId"> Resource ID. </param>
+        /// <param name="defaultAuthConfigs"> Default authentication configuration bindings of the advanced routing map. Only one authentication configuration is supported. Authentication configuration names must be unique across the Application Gateway, and an Application Gateway can reference at most 100 distinct authentication policies. Authentication policies can only be bound to Application Gateways using the Standard_v2 or WAF_v2 SKU. </param>
+        /// <param name="advancedRoutingRules"> Advanced routing rules of the advanced routing map. Each rule must specify a priority that is unique within the map. </param>
+        /// <param name="provisioningState"> The provisioning state of the advanced routing map resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayAdvancedRoutingMapPropertiesFormat"/> instance for mocking. </returns>
+        public static ApplicationGatewayAdvancedRoutingMapPropertiesFormat ApplicationGatewayAdvancedRoutingMapPropertiesFormat(ResourceIdentifier defaultBackendAddressPoolId = default, ResourceIdentifier defaultBackendHttpSettingsId = default, ResourceIdentifier defaultRedirectConfigurationId = default, ResourceIdentifier defaultRewriteRuleSetId = default, IEnumerable<ApplicationGatewayAuthConfig> defaultAuthConfigs = default, IEnumerable<ApplicationGatewayAdvancedRoutingRule> advancedRoutingRules = default, NetworkProvisioningState? provisioningState = default)
+        {
+            defaultAuthConfigs ??= new ChangeTrackingList<ApplicationGatewayAuthConfig>();
+            advancedRoutingRules ??= new ChangeTrackingList<ApplicationGatewayAdvancedRoutingRule>();
+
+            return new ApplicationGatewayAdvancedRoutingMapPropertiesFormat(
+                defaultBackendAddressPoolId is null ? default : new NetworkSubResource(defaultBackendAddressPoolId, default),
+                defaultBackendHttpSettingsId is null ? default : new NetworkSubResource(defaultBackendHttpSettingsId, default),
+                defaultRedirectConfigurationId is null ? default : new NetworkSubResource(defaultRedirectConfigurationId, default),
+                defaultRewriteRuleSetId is null ? default : new NetworkSubResource(defaultRewriteRuleSetId, default),
+                (defaultAuthConfigs ?? new ChangeTrackingList<ApplicationGatewayAuthConfig>()).ToList(),
+                (advancedRoutingRules ?? new ChangeTrackingList<ApplicationGatewayAdvancedRoutingRule>()).ToList(),
+                provisioningState,
+                default);
+        }
+
+        /// <param name="name"> The name of the auth configuration. </param>
+        /// <param name="authenticationPolicyId"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayAuthConfig"/> instance for mocking. </returns>
+        public static ApplicationGatewayAuthConfig ApplicationGatewayAuthConfig(string name = default, ResourceIdentifier authenticationPolicyId = default)
+        {
+            return new ApplicationGatewayAuthConfig(name, authenticationPolicyId is null ? default : new NetworkSubResource(authenticationPolicyId, default), default);
+        }
+
+        /// <summary> Advanced routing rule of an application gateway. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="properties"> Properties of the application gateway advanced routing rule. </param>
+        /// <param name="name"> Name of the advanced routing rule that is unique within an advanced routing map. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Type of the resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayAdvancedRoutingRule"/> instance for mocking. </returns>
+        public static ApplicationGatewayAdvancedRoutingRule ApplicationGatewayAdvancedRoutingRule(ResourceIdentifier id = default, ApplicationGatewayAdvancedRoutingRulePropertiesFormat properties = default, string name = default, string eTag = default, string @type = default)
+        {
+            return new ApplicationGatewayAdvancedRoutingRule(
+                id,
+                default,
+                properties,
+                name,
+                eTag,
+                @type);
+        }
+
+        /// <param name="priority"> Priority of the advanced routing rule. Must be unique within the containing advanced routing map. Rules are evaluated in ascending priority order. </param>
+        /// <param name="advancedRoutingConditionSetId"> Resource ID. </param>
+        /// <param name="backendAddressPoolId"> Resource ID. </param>
+        /// <param name="backendHttpSettingsId"> Resource ID. </param>
+        /// <param name="redirectConfigurationId"> Resource ID. </param>
+        /// <param name="rewriteRuleSetId"> Resource ID. </param>
+        /// <param name="authConfigs"> Authentication configuration bindings of the advanced routing rule. Only one authentication configuration is supported. Authentication configuration names must be unique across the Application Gateway, and an Application Gateway can reference at most 100 distinct authentication policies. Authentication policies can only be bound to Application Gateways using the Standard_v2 or WAF_v2 SKU. </param>
+        /// <param name="provisioningState"> The provisioning state of the advanced routing rule resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayAdvancedRoutingRulePropertiesFormat"/> instance for mocking. </returns>
+        public static ApplicationGatewayAdvancedRoutingRulePropertiesFormat ApplicationGatewayAdvancedRoutingRulePropertiesFormat(int priority = default, ResourceIdentifier advancedRoutingConditionSetId = default, ResourceIdentifier backendAddressPoolId = default, ResourceIdentifier backendHttpSettingsId = default, ResourceIdentifier redirectConfigurationId = default, ResourceIdentifier rewriteRuleSetId = default, IEnumerable<ApplicationGatewayAuthConfig> authConfigs = default, NetworkProvisioningState? provisioningState = default)
+        {
+            authConfigs ??= new ChangeTrackingList<ApplicationGatewayAuthConfig>();
+
+            return new ApplicationGatewayAdvancedRoutingRulePropertiesFormat(
+                priority,
+                advancedRoutingConditionSetId is null ? default : new NetworkSubResource(advancedRoutingConditionSetId, default),
+                backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
+                backendHttpSettingsId is null ? default : new NetworkSubResource(backendHttpSettingsId, default),
+                redirectConfigurationId is null ? default : new NetworkSubResource(redirectConfigurationId, default),
+                rewriteRuleSetId is null ? default : new NetworkSubResource(rewriteRuleSetId, default),
+                (authConfigs ?? new ChangeTrackingList<ApplicationGatewayAuthConfig>()).ToList(),
+                provisioningState,
+                default);
+        }
+
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="ruleType"> Rule type. </param>
         /// <param name="priority"> Priority of the request routing rule. </param>
         /// <param name="entraJWTValidationConfig"> Entra JWT validation configuration resource of the application gateway. </param>
+        /// <param name="authConfigs"> Authentication configuration bindings of the request routing rule. Only one authentication configuration is supported. Authentication configuration names must be unique across the Application Gateway, and an Application Gateway can reference at most 100 distinct authentication policies. Authentication policies can only be bound to Application Gateways using the Standard_v2 or WAF_v2 SKU. </param>
         /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
         /// <param name="backendAddressPoolId"> Resource ID. </param>
         /// <param name="backendHttpSettingsId"> Resource ID. </param>
         /// <param name="httpListenerId"> Resource ID. </param>
         /// <param name="urlPathMapId"> Resource ID. </param>
+        /// <param name="advancedRoutingMapId"> Resource ID. </param>
         /// <param name="rewriteRuleSetId"> Resource ID. </param>
         /// <param name="redirectConfigurationId"> Resource ID. </param>
         /// <param name="loadDistributionPolicyId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayRequestRoutingRule"/> instance for mocking. </returns>
-        public static ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(ResourceIdentifier id = default, string name = default, string @type = default, ApplicationGatewayRequestRoutingRuleType? ruleType = default, int? priority = default, ResourceIdentifier entraJWTValidationConfig = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier backendAddressPoolId = default, ResourceIdentifier backendHttpSettingsId = default, ResourceIdentifier httpListenerId = default, ResourceIdentifier urlPathMapId = default, ResourceIdentifier rewriteRuleSetId = default, ResourceIdentifier redirectConfigurationId = default, ResourceIdentifier loadDistributionPolicyId = default, ETag? eTag = default)
+        public static ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(ResourceIdentifier id, string name, string @type, ApplicationGatewayRequestRoutingRuleType? ruleType, int? priority, ResourceIdentifier entraJWTValidationConfig, IEnumerable<ApplicationGatewayAuthConfig> authConfigs, NetworkProvisioningState? provisioningState, ResourceIdentifier backendAddressPoolId, ResourceIdentifier backendHttpSettingsId, ResourceIdentifier httpListenerId, ResourceIdentifier urlPathMapId, ResourceIdentifier advancedRoutingMapId, ResourceIdentifier rewriteRuleSetId, ResourceIdentifier redirectConfigurationId, ResourceIdentifier loadDistributionPolicyId, ETag? eTag = default)
         {
             return new ApplicationGatewayRequestRoutingRule(
                 id,
                 default,
                 name,
                 @type,
-                ruleType is null && priority is null && backendAddressPoolId is null && backendHttpSettingsId is null && httpListenerId is null && urlPathMapId is null && rewriteRuleSetId is null && redirectConfigurationId is null && loadDistributionPolicyId is null && entraJWTValidationConfig is null && provisioningState is null ? default : new ApplicationGatewayRequestRoutingRulePropertiesFormat(
+                ruleType is null && priority is null && backendAddressPoolId is null && backendHttpSettingsId is null && httpListenerId is null && urlPathMapId is null && advancedRoutingMapId is null && rewriteRuleSetId is null && redirectConfigurationId is null && loadDistributionPolicyId is null && entraJWTValidationConfig is null && authConfigs is null && provisioningState is null ? default : new ApplicationGatewayRequestRoutingRulePropertiesFormat(
                     ruleType,
                     priority,
                     backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
                     backendHttpSettingsId is null ? default : new NetworkSubResource(backendHttpSettingsId, default),
                     httpListenerId is null ? default : new NetworkSubResource(httpListenerId, default),
                     urlPathMapId is null ? default : new NetworkSubResource(urlPathMapId, default),
+                    advancedRoutingMapId is null ? default : new NetworkSubResource(advancedRoutingMapId, default),
                     rewriteRuleSetId is null ? default : new NetworkSubResource(rewriteRuleSetId, default),
                     redirectConfigurationId is null ? default : new NetworkSubResource(redirectConfigurationId, default),
                     loadDistributionPolicyId is null ? default : new NetworkSubResource(loadDistributionPolicyId, default),
                     entraJWTValidationConfig,
+                    (authConfigs ?? new ChangeTrackingList<ApplicationGatewayAuthConfig>()).ToList(),
                     provisioningState,
                     default),
                 eTag);
@@ -2133,6 +2260,58 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayUrlConfiguration ApplicationGatewayUrlConfiguration(string modifiedPath = default, string modifiedQueryString = default, bool? reroute = default)
         {
             return new ApplicationGatewayUrlConfiguration(modifiedPath, modifiedQueryString, reroute, default);
+        }
+
+        /// <summary> Advanced routing condition set of an application gateway. Referenced by advanced routing rules to determine whether a request matches. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="properties"> Properties of the application gateway advanced routing condition set. </param>
+        /// <param name="name"> Name of the advanced routing condition set that is unique within an Application Gateway. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="type"> Type of the resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayAdvancedRoutingConditionSet"/> instance for mocking. </returns>
+        public static ApplicationGatewayAdvancedRoutingConditionSet ApplicationGatewayAdvancedRoutingConditionSet(ResourceIdentifier id = default, ApplicationGatewayAdvancedRoutingConditionSetPropertiesFormat properties = default, string name = default, string eTag = default, string @type = default)
+        {
+            return new ApplicationGatewayAdvancedRoutingConditionSet(
+                id,
+                default,
+                properties,
+                name,
+                eTag,
+                @type);
+        }
+
+        /// <summary> Properties of advanced routing condition set of the application gateway. </summary>
+        /// <param name="routingConditions"> Routing conditions of the condition set. All conditions must be satisfied for the referencing advanced routing rule to match. </param>
+        /// <param name="provisioningState"> The provisioning state of the advanced routing condition set resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayAdvancedRoutingConditionSetPropertiesFormat"/> instance for mocking. </returns>
+        public static ApplicationGatewayAdvancedRoutingConditionSetPropertiesFormat ApplicationGatewayAdvancedRoutingConditionSetPropertiesFormat(IEnumerable<ApplicationGatewayAdvancedRoutingCondition> routingConditions = default, NetworkProvisioningState? provisioningState = default)
+        {
+            routingConditions ??= new ChangeTrackingList<ApplicationGatewayAdvancedRoutingCondition>();
+
+            return new ApplicationGatewayAdvancedRoutingConditionSetPropertiesFormat((routingConditions ?? new ChangeTrackingList<ApplicationGatewayAdvancedRoutingCondition>()).ToList(), provisioningState, default);
+        }
+
+        /// <summary> A condition evaluated as part of an advanced routing condition set. </summary>
+        /// <param name="conditionType"> The type of request property the condition is evaluated against. </param>
+        /// <param name="propertyName"> Name of the request property the condition is evaluated against. Required when conditionType is Header or QueryString, and not applicable when conditionType is Path, ClientIP or Method. </param>
+        /// <param name="propertyValues"> Values the request property is matched against. Exactly one of propertyValues or propertyValueMatcher must be specified. </param>
+        /// <param name="propertyValueMatcher"> Pattern the request property is matched against. Exactly one of propertyValues or propertyValueMatcher must be specified. Not applicable when conditionType is ClientIP or Method. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayAdvancedRoutingCondition"/> instance for mocking. </returns>
+        public static ApplicationGatewayAdvancedRoutingCondition ApplicationGatewayAdvancedRoutingCondition(ApplicationGatewayAdvancedRoutingConditionType conditionType = default, string propertyName = default, IEnumerable<string> propertyValues = default, ApplicationGatewayAdvancedRoutingPropertyValueMatcher propertyValueMatcher = default)
+        {
+            propertyValues ??= new ChangeTrackingList<string>();
+
+            return new ApplicationGatewayAdvancedRoutingCondition(conditionType, propertyName, (propertyValues ?? new ChangeTrackingList<string>()).ToList(), propertyValueMatcher, default);
+        }
+
+        /// <summary> Matches the value of a request property against a fixed string or regular expression. </summary>
+        /// <param name="pattern"> The pattern, either fixed string or regular expression, that the request property value is evaluated against. </param>
+        /// <param name="ignoreCase"> Setting this parameter to truth value with force the pattern to do a case in-sensitive comparison. </param>
+        /// <param name="negate"> Setting this value as truth will force to check the negation of the condition given by the user in the pattern field. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayAdvancedRoutingPropertyValueMatcher"/> instance for mocking. </returns>
+        public static ApplicationGatewayAdvancedRoutingPropertyValueMatcher ApplicationGatewayAdvancedRoutingPropertyValueMatcher(string pattern = default, bool? ignoreCase = default, bool? negate = default)
+        {
+            return new ApplicationGatewayAdvancedRoutingPropertyValueMatcher(pattern, ignoreCase, negate, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -2508,10 +2687,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the web application firewall rule set. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
+        /// <param name="displayName"> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
         /// <param name="tiers"> Tier of an application gateway that support the rule set. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayFirewallRuleSet"/> instance for mocking. </returns>
-        public static ApplicationGatewayFirewallRuleSet ApplicationGatewayFirewallRuleSet(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkProvisioningState? provisioningState = default, string ruleSetType = default, string ruleSetVersion = default, IEnumerable<ApplicationGatewayFirewallRuleGroup> ruleGroups = default, IEnumerable<ApplicationGatewayTierType> tiers = default)
+        public static ApplicationGatewayFirewallRuleSet ApplicationGatewayFirewallRuleSet(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, NetworkProvisioningState? provisioningState, string ruleSetType, string ruleSetVersion, string displayName, IEnumerable<ApplicationGatewayFirewallRuleGroup> ruleGroups, IEnumerable<ApplicationGatewayTierType> tiers)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2522,10 +2702,11 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                provisioningState is null && ruleSetType is null && ruleSetVersion is null && ruleGroups is null && tiers is null ? default : new ApplicationGatewayFirewallRuleSetPropertiesFormat(
+                provisioningState is null && ruleSetType is null && ruleSetVersion is null && displayName is null && ruleGroups is null && tiers is null ? default : new ApplicationGatewayFirewallRuleSetPropertiesFormat(
                     provisioningState,
                     ruleSetType,
                     ruleSetVersion,
+                    displayName,
                     (ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>()).ToList(),
                     (tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>()).ToList(),
                     default));
@@ -2549,9 +2730,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="state"> The string representation of the web application firewall rule state. </param>
         /// <param name="action"> The string representation of the web application firewall rule action. </param>
         /// <param name="sensitivity"> The string representation of the web application firewall rule sensitivity. </param>
+        /// <param name="paranoiaLevel"> OWASP CRS paranoia level of a managed rule. Applicable only for DRS and OWASP rules. </param>
         /// <param name="description"> The description of the web application firewall rule. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayFirewallRule"/> instance for mocking. </returns>
-        public static ApplicationGatewayFirewallRule ApplicationGatewayFirewallRule(int ruleId = default, string ruleIdString = default, ApplicationGatewayWafRuleStateType? state = default, ApplicationGatewayWafRuleActionType? action = default, ApplicationGatewayWafRuleSensitivityType? sensitivity = default, string description = default)
+        public static ApplicationGatewayFirewallRule ApplicationGatewayFirewallRule(int ruleId, string ruleIdString, ApplicationGatewayWafRuleStateType? state, ApplicationGatewayWafRuleActionType? action, ApplicationGatewayWafRuleSensitivityType? sensitivity, ApplicationGatewayWafRuleParanoiaLevel? paranoiaLevel, string description)
         {
             return new ApplicationGatewayFirewallRule(
                 ruleId,
@@ -2559,8 +2741,96 @@ namespace Azure.ResourceManager.Network.Models
                 state,
                 action,
                 sensitivity,
+                paranoiaLevel,
                 description,
                 default);
+        }
+
+        /// <summary> Authentication policy resource for identity integration. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> Properties of the authentication policy. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="identity"> The user-assigned identity used by a user sign-in policy to access its Key Vault client secret. </param>
+        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <returns> A new <see cref="Network.AuthenticationPolicyData"/> instance for mocking. </returns>
+        public static AuthenticationPolicyData AuthenticationPolicyData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, AuthenticationPolicyPropertiesFormat properties = default, string eTag = default, NetworkManagedServiceIdentity identity = default, SystemData systemData = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AuthenticationPolicyData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                properties,
+                eTag,
+                identity,
+                systemData);
+        }
+
+        /// <summary> Properties of the authentication policy. </summary>
+        /// <param name="userTrustProviderType"> The type of the user trust provider. Only Microsoft Entra is supported, using the serialized value `entra`. </param>
+        /// <param name="onUnauthenticatedRequest"> The action to take when a request is unauthenticated. When omitted, user sign-in policies default to `authenticate` and JWT validation policies default to `deny`. </param>
+        /// <param name="authenticationProperties"> The authentication provider configuration for the policy. </param>
+        /// <param name="associatedResources"> A collection of resource IDs that reference this authentication policy. </param>
+        /// <param name="provisioningState"> The provisioning state of the authentication policy resource. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the authentication policy resource. </param>
+        /// <returns> A new <see cref="Models.AuthenticationPolicyPropertiesFormat"/> instance for mocking. </returns>
+        public static AuthenticationPolicyPropertiesFormat AuthenticationPolicyPropertiesFormat(UserTrustProviderType userTrustProviderType = default, OnUnauthenticatedRequest? onUnauthenticatedRequest = default, AuthenticationProviderProperties authenticationProperties = default, IEnumerable<string> associatedResources = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default)
+        {
+            associatedResources ??= new ChangeTrackingList<string>();
+
+            return new AuthenticationPolicyPropertiesFormat(
+                userTrustProviderType,
+                onUnauthenticatedRequest,
+                authenticationProperties,
+                (associatedResources ?? new ChangeTrackingList<string>()).ToList(),
+                provisioningState,
+                resourceGuid,
+                default);
+        }
+
+        /// <summary> Properties for authentication provider configuration. A policy must configure either JWT validation fields or user sign-in fields; the two configurations are mutually exclusive and cannot be combined. </summary>
+        /// <param name="issuer"> The absolute HTTPS URL of the Secure Token Service. Include a trailing slash at the end of the value. Example: https://login.microsoftonline.com/{Microsoft Entra Tenant ID}/. </param>
+        /// <param name="jwksUri"> The JSON Web Key Set (JWKS) URI used to retrieve the public keys for JWT validation. Example: https://login.microsoftonline.com/{Microsoft Entra Tenant ID}/discovery/v2.0/keys. </param>
+        /// <param name="audience"> The intended audience for the JWT. Only a single audience value is supported in this API version. Example: https://audience.com/{application-id}. </param>
+        /// <param name="clientId"> The Application (client) ID for the related application registered in Microsoft Entra ID, formatted as a GUID. </param>
+        /// <param name="clientSecret"> The absolute HTTPS Key Vault secret URL identifying the client secret used for authentication. This property is required for user sign-in policies. It holds only the Key Vault reference; the secret value itself is never accepted or returned by this API and is read from Key Vault at runtime using the resource's user-assigned identity. The secret value stored in Key Vault can contain up to 4096 characters. Example: https://myvault.vault.azure.net/secrets/mysecret. </param>
+        /// <param name="scope"> The scopes used by an application during authentication to authorize access to a user's details. A maximum of 10 scopes is supported, each scope can contain up to 128 characters, and all scopes can contain up to 256 characters combined. </param>
+        /// <param name="sessionTimeout"> The timeout of the session cookie used for user authentication. The service accepts and returns this value as a string containing a base-10 unsigned integer number of seconds with no sign, decimal point, unit suffix, or whitespace (for example `86400`). The supported range is 1 to 604800 seconds, and the default is 86400 seconds. Applicable to the Application Gateway post-OIDC workflow. </param>
+        /// <param name="sessionCookieName"> The name of the session cookie used for user authentication. Applicable to the Application Gateway post-OIDC workflow. </param>
+        /// <returns> A new <see cref="Models.AuthenticationProviderProperties"/> instance for mocking. </returns>
+        public static AuthenticationProviderProperties AuthenticationProviderProperties(Uri issuer = default, Uri jwksUri = default, string audience = default, string clientId = default, Uri clientSecret = default, IEnumerable<string> scope = default, string sessionTimeout = default, string sessionCookieName = default)
+        {
+            scope ??= new ChangeTrackingList<string>();
+
+            return new AuthenticationProviderProperties(
+                issuer,
+                jwksUri,
+                audience,
+                clientId,
+                clientSecret,
+                (scope ?? new ChangeTrackingList<string>()).ToList(),
+                sessionTimeout,
+                sessionCookieName,
+                default);
+        }
+
+        /// <summary> Parameters supplied to update an authentication policy. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The user-assigned identity used by a user sign-in policy to access its Key Vault client secret. </param>
+        /// <returns> A new <see cref="Models.AuthenticationPolicyPatch"/> instance for mocking. </returns>
+        public static AuthenticationPolicyPatch AuthenticationPolicyPatch(IDictionary<string, string> tags = default, NetworkManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AuthenticationPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -2572,7 +2842,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="natRuleCollections"> Collection of NAT rule collections used by Azure Firewall. </param>
         /// <param name="networkRuleCollections"> Collection of network rule collections used by Azure Firewall. </param>
         /// <param name="ipConfigurations"> IP configuration of the Azure Firewall resource. </param>
-        /// <param name="managementIpConfiguration"> IP configuration of the Azure Firewall used for management traffic. </param>
+        /// <param name="managementIPConfiguration"> IP configuration of the Azure Firewall used for management traffic. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure firewall resource. </param>
         /// <param name="threatIntelMode"> The operation mode for Threat Intelligence. </param>
         /// <param name="hubIPAddresses"> IP addresses associated with AzureFirewall. </param>
@@ -2580,6 +2850,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sku"> The Azure Firewall Resource SKU. </param>
         /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
         /// <param name="autoscaleConfiguration"> Properties to provide a custom autoscale configuration to this azure firewall. </param>
+        /// <param name="aiSecurityAddOn"> Indicates whether the AI security add-on is enabled for the Azure Firewall. </param>
         /// <param name="virtualHubId"> Resource ID. </param>
         /// <param name="firewallPolicyId"> Resource ID. </param>
         /// <param name="afcServiceEndpoint"> The endpoint URL of the AFC control plane associated with this Azure Firewall. </param>
@@ -2587,7 +2858,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.AzureFirewallData"/> instance for mocking. </returns>
-        public static AzureFirewallData AzureFirewallData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections = default, IEnumerable<AzureFirewallNatRuleCollectionData> natRuleCollections = default, IEnumerable<AzureFirewallNetworkRuleCollectionData> networkRuleCollections = default, IEnumerable<AzureFirewallIPConfiguration> ipConfigurations = default, AzureFirewallIPConfiguration managementIpConfiguration = default, NetworkProvisioningState? provisioningState = default, AzureFirewallThreatIntelMode? threatIntelMode = default, HubIPAddresses hubIPAddresses = default, IEnumerable<AzureFirewallIPGroups> ipGroups = default, AzureFirewallSku sku = default, IDictionary<string, string> additionalProperties = default, AzureFirewallAutoscaleConfiguration autoscaleConfiguration = default, ResourceIdentifier virtualHubId = default, ResourceIdentifier firewallPolicyId = default, string afcServiceEndpoint = default, ExtendedLocation extendedLocation = default, IEnumerable<string> zones = default, ETag? eTag = default)
+        public static AzureFirewallData AzureFirewallData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IEnumerable<AzureFirewallNatRuleCollectionData> natRuleCollections, IEnumerable<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IEnumerable<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, HubIPAddresses hubIPAddresses, IEnumerable<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration, bool? aiSecurityAddOn, ResourceIdentifier virtualHubId, ResourceIdentifier firewallPolicyId, string afcServiceEndpoint, ExtendedLocation extendedLocation, IEnumerable<string> zones, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -2599,12 +2870,12 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                applicationRuleCollections is null && natRuleCollections is null && networkRuleCollections is null && ipConfigurations is null && managementIpConfiguration is null && provisioningState is null && threatIntelMode is null && virtualHubId is null && firewallPolicyId is null && hubIPAddresses is null && ipGroups is null && sku is null && additionalProperties is null && autoscaleConfiguration is null && afcServiceEndpoint is null ? default : new AzureFirewallPropertiesFormat(
+                applicationRuleCollections is null && natRuleCollections is null && networkRuleCollections is null && ipConfigurations is null && managementIPConfiguration is null && provisioningState is null && threatIntelMode is null && virtualHubId is null && firewallPolicyId is null && hubIPAddresses is null && ipGroups is null && sku is null && additionalProperties is null && autoscaleConfiguration is null && afcServiceEndpoint is null && aiSecurityAddOn is null ? default : new AzureFirewallPropertiesFormat(
                     (applicationRuleCollections ?? new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>()).ToList(),
                     (natRuleCollections ?? new ChangeTrackingList<AzureFirewallNatRuleCollectionData>()).ToList(),
                     (networkRuleCollections ?? new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>()).ToList(),
                     (ipConfigurations ?? new ChangeTrackingList<AzureFirewallIPConfiguration>()).ToList(),
-                    managementIpConfiguration,
+                    managementIPConfiguration,
                     provisioningState,
                     threatIntelMode,
                     virtualHubId is null ? default : new NetworkSubResource(virtualHubId, default),
@@ -2615,6 +2886,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
                     autoscaleConfiguration,
                     afcServiceEndpoint is null ? default : new AfcConfiguration(afcServiceEndpoint, default),
+                    aiSecurityAddOn,
                     default),
                 extendedLocation,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
@@ -2939,19 +3211,21 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="scaleUnits"> The scale units for the Bastion Host resource. </param>
         /// <param name="disableCopyPaste"> Enable/Disable Copy/Paste feature of the Bastion Host resource. </param>
         /// <param name="enableFileCopy"> Enable/Disable File Copy feature of the Bastion Host resource. </param>
-        /// <param name="enableIpConnect"> Enable/Disable IP Connect feature of the Bastion Host resource. </param>
+        /// <param name="enableIPConnect"> Enable/Disable IP Connect feature of the Bastion Host resource. </param>
         /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
         /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
         /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
         /// <param name="enableSessionRecording"> Enable/Disable Session Recording feature of the Bastion Host resource. </param>
         /// <param name="enablePrivateOnlyBastion"> Enable/Disable Private Only feature of the Bastion Host resource. </param>
+        /// <param name="sessionRecordingConfiguration"> The storage account and identity to use for session recording. </param>
         /// <param name="virtualNetworkId"> Resource ID. </param>
-        /// <param name="networkAclsIpRules"> Sets the IP ACL rules for Developer Bastion Host. </param>
+        /// <param name="networkAclsIPRules"> Sets the IP ACL rules for Developer Bastion Host. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="skuName"> The name of the sku of this Bastion Host. </param>
+        /// <param name="identity"> The identity assigned to the Bastion Host resource. </param>
         /// <returns> A new <see cref="Network.BastionHostData"/> instance for mocking. </returns>
-        public static BastionHostData BastionHostData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<BastionHostIPConfiguration> ipConfigurations = default, string dnsName = default, NetworkProvisioningState? provisioningState = default, int? scaleUnits = default, bool? disableCopyPaste = default, bool? enableFileCopy = default, bool? enableIpConnect = default, bool? enableShareableLink = default, bool? enableTunneling = default, bool? enableKerberos = default, bool? enableSessionRecording = default, bool? enablePrivateOnlyBastion = default, ResourceIdentifier virtualNetworkId = default, IEnumerable<BastionHostIPRule> networkAclsIpRules = default, IEnumerable<string> zones = default, ETag? eTag = default, BastionHostSkuName? skuName = default)
+        public static BastionHostData BastionHostData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion, BastionSessionRecordingConfiguration sessionRecordingConfiguration, ResourceIdentifier virtualNetworkId, IEnumerable<BastionHostIPRule> networkAclsIPRules, IEnumerable<string> zones, ETag? eTag, BastionHostSkuName? skuName, NetworkManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -2963,25 +3237,27 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                ipConfigurations is null && dnsName is null && virtualNetworkId is null && networkAclsIpRules is null && provisioningState is null && scaleUnits is null && disableCopyPaste is null && enableFileCopy is null && enableIpConnect is null && enableShareableLink is null && enableTunneling is null && enableKerberos is null && enableSessionRecording is null && enablePrivateOnlyBastion is null ? default : new BastionHostPropertiesFormat(
+                ipConfigurations is null && dnsName is null && virtualNetworkId is null && networkAclsIPRules is null && provisioningState is null && scaleUnits is null && disableCopyPaste is null && enableFileCopy is null && enableIPConnect is null && enableShareableLink is null && enableTunneling is null && enableKerberos is null && enableSessionRecording is null && enablePrivateOnlyBastion is null && sessionRecordingConfiguration is null ? default : new BastionHostPropertiesFormat(
                     (ipConfigurations ?? new ChangeTrackingList<BastionHostIPConfiguration>()).ToList(),
                     dnsName,
                     virtualNetworkId is null ? default : new NetworkSubResource(virtualNetworkId, default),
-                    networkAclsIpRules is null ? default : new BastionHostPropertiesFormatNetworkAcls((networkAclsIpRules ?? new ChangeTrackingList<BastionHostIPRule>()).ToList(), default),
+                    networkAclsIPRules is null ? default : new BastionHostPropertiesFormatNetworkAcls((networkAclsIPRules ?? new ChangeTrackingList<BastionHostIPRule>()).ToList(), default),
                     provisioningState,
                     scaleUnits,
                     disableCopyPaste,
                     enableFileCopy,
-                    enableIpConnect,
+                    enableIPConnect,
                     enableShareableLink,
                     enableTunneling,
                     enableKerberos,
                     enableSessionRecording,
                     enablePrivateOnlyBastion,
+                    sessionRecordingConfiguration,
                     default),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 eTag,
-                skuName is null ? default : new NetworkSku(skuName, default));
+                skuName is null ? default : new NetworkSku(skuName, default),
+                identity);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -3010,6 +3286,35 @@ namespace Azure.ResourceManager.Network.Models
         public static BastionHostIPRule BastionHostIPRule(string addressPrefix = default)
         {
             return new BastionHostIPRule(addressPrefix, default);
+        }
+
+        /// <summary> Bastion Session Recording Configuration. </summary>
+        /// <param name="identity"> The identity to use for accessing the blob container where recordings will be stored. </param>
+        /// <param name="blobContainerUri"> The blob container to store the recordings. Ex: https://contosostorage.blob.core.windows.net/contosorecordings. </param>
+        /// <returns> A new <see cref="Models.BastionSessionRecordingConfiguration"/> instance for mocking. </returns>
+        public static BastionSessionRecordingConfiguration BastionSessionRecordingConfiguration(SessionRecordingIdentity identity = default, Uri blobContainerUri = default)
+        {
+            return new BastionSessionRecordingConfiguration(identity, blobContainerUri, default);
+        }
+
+        /// <summary> The identity to use for accessing the blob container where recordings will be stored. </summary>
+        /// <param name="type"> The type of identity to use. </param>
+        /// <param name="userAssignedIdentityId"> User assigned identity to use for accessing blob container Uri. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identity type systemAssigned. </param>
+        /// <returns> A new <see cref="Models.SessionRecordingIdentity"/> instance for mocking. </returns>
+        public static SessionRecordingIdentity SessionRecordingIdentity(SessionRecordingIdentityType @type = default, ResourceIdentifier userAssignedIdentityId = default)
+        {
+            return new SessionRecordingIdentity(@type, userAssignedIdentityId, default);
+        }
+
+        /// <summary> Parameters supplied to update the Bastion Host identity or tags. </summary>
+        /// <param name="identity"> The identity of the BastionHost, if configured. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.BastionHostPatch"/> instance for mocking. </returns>
+        public static BastionHostPatch BastionHostPatch(NetworkManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BastionHostPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Post request for Create/Delete/Get Bastion Shareable Link endpoints. </summary>
@@ -3328,6 +3633,14 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
+        /// <summary> The authorization key. </summary>
+        /// <param name="authorizationKey"> The authorization key used to establish connection between resources in different subscriptions. </param>
+        /// <returns> A new <see cref="Models.ExpressRouteAuthorizationKey"/> instance for mocking. </returns>
+        public static ExpressRouteAuthorizationKey ExpressRouteAuthorizationKey(string authorizationKey = default)
+        {
+            return new ExpressRouteAuthorizationKey(authorizationKey, default);
+        }
+
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -3353,10 +3666,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
         /// <param name="enableDirectPortRateLimit"> Flag denoting rate-limiting status of the ExpressRoute direct-port circuit. </param>
         /// <param name="expressRoutePortId"> Resource ID. </param>
+        /// <param name="expressRouteLagId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The SKU. </param>
         /// <returns> A new <see cref="Network.ExpressRouteCircuitData"/> instance for mocking. </returns>
-        public static ExpressRouteCircuitData ExpressRouteCircuitData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, bool? allowClassicOperations = default, string circuitProvisioningState = default, ServiceProviderProvisioningState? serviceProviderProvisioningState = default, IEnumerable<ExpressRouteCircuitAuthorizationData> authorizations = default, IEnumerable<ExpressRouteCircuitPeeringData> peerings = default, string serviceKey = default, string serviceProviderNotes = default, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default, float? bandwidthInGbps = default, int? sTag = default, ExpressRouteCircuitResiliencyLevel? resiliencyLevel = default, string partnerAccountId = default, string activationKey = default, NetworkProvisioningState? provisioningState = default, string gatewayManagerETag = default, bool? globalReachEnabled = default, string authorizationKey = default, string authorizationStatus = default, bool? enableDirectPortRateLimit = default, ResourceIdentifier expressRoutePortId = default, ETag? eTag = default, ExpressRouteCircuitSku sku = default)
+        public static ExpressRouteCircuitData ExpressRouteCircuitData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IEnumerable<ExpressRouteCircuitAuthorizationData> authorizations, IEnumerable<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, float? bandwidthInGbps, int? sTag, ExpressRouteCircuitResiliencyLevel? resiliencyLevel, string partnerAccountId, string activationKey, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus, bool? enableDirectPortRateLimit, ResourceIdentifier expressRoutePortId, ResourceIdentifier expressRouteLagId, ETag? eTag, ExpressRouteCircuitSku sku)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3367,7 +3681,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                allowClassicOperations is null && circuitProvisioningState is null && serviceProviderProvisioningState is null && authorizations is null && peerings is null && serviceKey is null && serviceProviderNotes is null && serviceProviderProperties is null && expressRoutePortId is null && bandwidthInGbps is null && sTag is null && resiliencyLevel is null && partnerAccountId is null && activationKey is null && provisioningState is null && gatewayManagerETag is null && globalReachEnabled is null && authorizationKey is null && authorizationStatus is null && enableDirectPortRateLimit is null ? default : new ExpressRouteCircuitPropertiesFormat(
+                allowClassicOperations is null && circuitProvisioningState is null && serviceProviderProvisioningState is null && authorizations is null && peerings is null && serviceKey is null && serviceProviderNotes is null && serviceProviderProperties is null && expressRoutePortId is null && expressRouteLagId is null && bandwidthInGbps is null && sTag is null && resiliencyLevel is null && partnerAccountId is null && activationKey is null && provisioningState is null && gatewayManagerETag is null && globalReachEnabled is null && authorizationKey is null && authorizationStatus is null && enableDirectPortRateLimit is null ? default : new ExpressRouteCircuitPropertiesFormat(
                     allowClassicOperations,
                     circuitProvisioningState,
                     serviceProviderProvisioningState,
@@ -3377,6 +3691,7 @@ namespace Azure.ResourceManager.Network.Models
                     serviceProviderNotes,
                     serviceProviderProperties,
                     expressRoutePortId is null ? default : new NetworkSubResource(expressRoutePortId, default),
+                    expressRouteLagId is null ? default : new NetworkSubResource(expressRouteLagId, default),
                     bandwidthInGbps,
                     sTag,
                     resiliencyLevel,
@@ -3912,6 +4227,125 @@ namespace Azure.ResourceManager.Network.Models
             return new ExpressRouteCrossConnectionRoutesTableSummary(neighbor, asn, upDown, stateOrPrefixesReceived, default);
         }
 
+        /// <summary> Request model used by validate and health check circuit migration operations. </summary>
+        /// <param name="targetPeeringLocation"> The target peering location for circuit migration. </param>
+        /// <param name="targetPortMapping"> The source-to-target port mappings for circuit migration. </param>
+        /// <returns> A new <see cref="Models.MigrateExpressRouteCircuitValidateAndHealthCheckContent"/> instance for mocking. </returns>
+        public static MigrateExpressRouteCircuitValidateAndHealthCheckContent MigrateExpressRouteCircuitValidateAndHealthCheckContent(string targetPeeringLocation = default, IEnumerable<PortMapping> targetPortMapping = default)
+        {
+            targetPortMapping ??= new ChangeTrackingList<PortMapping>();
+
+            return new MigrateExpressRouteCircuitValidateAndHealthCheckContent(targetPeeringLocation, (targetPortMapping ?? new ChangeTrackingList<PortMapping>()).ToList(), default);
+        }
+
+        /// <summary> A mapping between source and target ports for migration. </summary>
+        /// <param name="sourcePortId"> The source port identifier. </param>
+        /// <param name="targetPortId"> The target port identifier. </param>
+        /// <returns> A new <see cref="Models.PortMapping"/> instance for mocking. </returns>
+        public static PortMapping PortMapping(string sourcePortId = default, string targetPortId = default)
+        {
+            return new PortMapping(sourcePortId, targetPortId, default);
+        }
+
+        /// <summary> Response for express route circuit migration validation operation. </summary>
+        /// <param name="status"> The validation status. </param>
+        /// <returns> A new <see cref="Models.MigrateExpressRouteCircuitValidateResult"/> instance for mocking. </returns>
+        public static MigrateExpressRouteCircuitValidateResult MigrateExpressRouteCircuitValidateResult(string status = default)
+        {
+            return new MigrateExpressRouteCircuitValidateResult(status, default);
+        }
+
+        /// <param name="status"> The overall status of the migration operation. </param>
+        /// <param name="phase"> The current phase of the migration operation. </param>
+        /// <param name="failureReason"> The failure reason if the migration operation failed. </param>
+        /// <param name="newSTag"> The new service tag assigned after migration. </param>
+        /// <param name="preparedOn"> The timestamp when the migration was prepared. </param>
+        /// <param name="prepareExpiryOn"> The expiry time for the prepare phase. </param>
+        /// <param name="newCrossConnectionUri"> The URL of the new cross connection after migration. </param>
+        /// <param name="shouldRollback"> Indicates whether rollback should be performed. </param>
+        /// <param name="detailsPortMigrationInfos"> Per-port migration details. </param>
+        /// <returns> A new <see cref="Models.MigrateExpressRouteCircuitHealthCheckResult"/> instance for mocking. </returns>
+        public static MigrateExpressRouteCircuitHealthCheckResult MigrateExpressRouteCircuitHealthCheckResult(string status = default, string phase = default, string failureReason = default, string newSTag = default, DateTimeOffset? preparedOn = default, DateTimeOffset? prepareExpiryOn = default, Uri newCrossConnectionUri = default, bool? shouldRollback = default, IEnumerable<PortMigrationInfo> detailsPortMigrationInfos = default)
+        {
+            return new MigrateExpressRouteCircuitHealthCheckResult(
+                status,
+                phase,
+                failureReason,
+                newSTag,
+                preparedOn,
+                prepareExpiryOn,
+                newCrossConnectionUri,
+                shouldRollback,
+                detailsPortMigrationInfos is null ? default : new MigrateExpressRouteCircuitHealthCheckDetails((detailsPortMigrationInfos ?? new ChangeTrackingList<PortMigrationInfo>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="portId"> The identifier of the port being migrated. </param>
+        /// <param name="status"> The migration status for the port. </param>
+        /// <param name="phase"> The current migration phase for the port. </param>
+        /// <param name="failureReason"> The reason for failure if migration failed for the port. </param>
+        /// <param name="peerings"> The peering health details for the port. </param>
+        /// <param name="sourcePortId"> The source port identifier before migration. </param>
+        /// <param name="sourcePortStatsPeerings"> The peering health information from the source port. </param>
+        /// <returns> A new <see cref="Models.PortMigrationInfo"/> instance for mocking. </returns>
+        public static PortMigrationInfo PortMigrationInfo(string portId = default, string status = default, string phase = default, string failureReason = default, IEnumerable<PeeringHealth> peerings = default, string sourcePortId = default, IEnumerable<PeeringHealth> sourcePortStatsPeerings = default)
+        {
+            peerings ??= new ChangeTrackingList<PeeringHealth>();
+
+            return new PortMigrationInfo(
+                portId,
+                status,
+                phase,
+                failureReason,
+                (peerings ?? new ChangeTrackingList<PeeringHealth>()).ToList(),
+                sourcePortId,
+                sourcePortStatsPeerings is null ? default : new SourcePortStats((sourcePortStatsPeerings ?? new ChangeTrackingList<PeeringHealth>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> Health information for a peering connection. </summary>
+        /// <param name="type"> The type of peering (for example, Private, Microsoft, Public). </param>
+        /// <param name="statsCurrent"> The current peering statistics. </param>
+        /// <param name="statsAtPrepare"> The peering statistics captured at prepare phase. </param>
+        /// <returns> A new <see cref="Models.PeeringHealth"/> instance for mocking. </returns>
+        public static PeeringHealth PeeringHealth(string @type = default, PeeringStats statsCurrent = default, PeeringStats statsAtPrepare = default)
+        {
+            return new PeeringHealth(@type, statsCurrent, statsAtPrepare, default);
+        }
+
+        /// <summary> Statistical information for a peering connection. </summary>
+        /// <param name="timestamp"> The timestamp when these statistics were captured. </param>
+        /// <param name="metrics"> The collection of peering metrics. </param>
+        /// <returns> A new <see cref="Models.PeeringStats"/> instance for mocking. </returns>
+        public static PeeringStats PeeringStats(DateTimeOffset? timestamp = default, IEnumerable<Metric> metrics = default)
+        {
+            metrics ??= new ChangeTrackingList<Metric>();
+
+            return new PeeringStats(timestamp, (metrics ?? new ChangeTrackingList<Metric>()).ToList(), default);
+        }
+
+        /// <summary> Metric entry for migration peering statistics. </summary>
+        /// <param name="name"> The metric name. </param>
+        /// <param name="value"> The metric value. </param>
+        /// <param name="unit"> The metric unit. </param>
+        /// <returns> A new <see cref="Models.Metric"/> instance for mocking. </returns>
+        public static Metric Metric(string name = default, double? value = default, string unit = default)
+        {
+            return new Metric(name, value, unit, default);
+        }
+
+        /// <summary> Request model for express route circuit migration operations. </summary>
+        /// <param name="targetPeeringLocation"> The target peering location for circuit migration. </param>
+        /// <param name="targetPortMapping"> The source-to-target port mappings for circuit migration. </param>
+        /// <param name="portId"> The port identifier used for shutDownBgp, migrate, restoreBgp, and rollback operations. </param>
+        /// <returns> A new <see cref="Models.MigrateExpressRouteCircuitContent"/> instance for mocking. </returns>
+        public static MigrateExpressRouteCircuitContent MigrateExpressRouteCircuitContent(string targetPeeringLocation = default, IEnumerable<PortMapping> targetPortMapping = default, string portId = default)
+        {
+            targetPortMapping ??= new ChangeTrackingList<PortMapping>();
+
+            return new MigrateExpressRouteCircuitContent(targetPeeringLocation, (targetPortMapping ?? new ChangeTrackingList<PortMapping>()).ToList(), portId, default);
+        }
+
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -4103,6 +4537,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="encapsulation"> Encapsulation method on LAG. </param>
         /// <param name="etherType"> Ether type of the LAG. </param>
         /// <param name="links"> The set of links of the ExpressRouteLag resource. </param>
+        /// <param name="circuits"> Reference the ExpressRoute circuit(s) that are provisioned on this ExpressRouteLag resource. </param>
         /// <param name="allocationDate"> The date and time when the ExpressRouteLag was allocated. </param>
         /// <param name="provisioningState"> The provisioning state of the express route LAG resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the express route LAG resource. </param>
@@ -4111,9 +4546,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="minimumActivePortsRequired"> Minimum number of active ports required for LAG. </param>
         /// <param name="lacpTimer"> LACP timer configuration. </param>
         /// <returns> A new <see cref="Models.ExpressRouteLagPropertiesFormat"/> instance for mocking. </returns>
-        public static ExpressRouteLagPropertiesFormat ExpressRouteLagPropertiesFormat(string peeringLocation = default, int? bandwidthInGbps = default, double? provisionedBandwidthInGbps = default, string mtu = default, ExpressRouteLagEncapsulation? encapsulation = default, string etherType = default, IEnumerable<ExpressRouteLagLink> links = default, string allocationDate = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default, ExpressRouteLagBillingType? billingType = default, int? numberOfPorts = default, int? minimumActivePortsRequired = default, ExpressRouteLagLacpTimer? lacpTimer = default)
+        public static ExpressRouteLagPropertiesFormat ExpressRouteLagPropertiesFormat(string peeringLocation, int? bandwidthInGbps, double? provisionedBandwidthInGbps, string mtu, ExpressRouteLagEncapsulation? encapsulation, string etherType, IEnumerable<ExpressRouteLagLink> links, IEnumerable<NetworkSubResource> circuits, string allocationDate, NetworkProvisioningState? provisioningState, string resourceGuid, ExpressRouteLagBillingType? billingType, int? numberOfPorts, int? minimumActivePortsRequired, ExpressRouteLagLacpTimer? lacpTimer)
         {
             links ??= new ChangeTrackingList<ExpressRouteLagLink>();
+            circuits ??= new ChangeTrackingList<NetworkSubResource>();
 
             return new ExpressRouteLagPropertiesFormat(
                 peeringLocation,
@@ -4123,6 +4559,7 @@ namespace Azure.ResourceManager.Network.Models
                 encapsulation,
                 etherType,
                 (links ?? new ChangeTrackingList<ExpressRouteLagLink>()).ToList(),
+                (circuits ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
                 allocationDate,
                 provisioningState,
                 resourceGuid,
@@ -4624,8 +5061,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
         /// <param name="destinationFqdns"> List of destination FQDNs. </param>
         /// <param name="sourceKubeSelectorGroups"> List of source Kubernetes Selector Groups for this rule. </param>
+        /// <param name="sourceGeoLocations"> List of source geographic location filters (ISO 3166-1 alpha-2 country codes, e.g. "US", "CA") for this rule. </param>
+        /// <param name="destinationGeoLocations"> List of destination geographic location filters (ISO 3166-1 alpha-2 country codes, e.g. "US", "CA") for this rule. </param>
         /// <returns> A new <see cref="Models.NetworkRule"/> instance for mocking. </returns>
-        public static NetworkRule NetworkRule(string name = default, string description = default, IEnumerable<FirewallPolicyRuleNetworkProtocol> ipProtocols = default, IEnumerable<string> sourceAddresses = default, IEnumerable<string> destinationAddresses = default, IEnumerable<string> destinationPorts = default, IEnumerable<string> sourceIPGroups = default, IEnumerable<string> destinationIPGroups = default, IEnumerable<string> destinationFqdns = default, IEnumerable<string> sourceKubeSelectorGroups = default)
+        public static NetworkRule NetworkRule(string name, string description, IEnumerable<FirewallPolicyRuleNetworkProtocol> ipProtocols, IEnumerable<string> sourceAddresses, IEnumerable<string> destinationAddresses, IEnumerable<string> destinationPorts, IEnumerable<string> sourceIPGroups, IEnumerable<string> destinationIPGroups, IEnumerable<string> destinationFqdns, IEnumerable<string> sourceKubeSelectorGroups, IEnumerable<string> sourceGeoLocations, IEnumerable<string> destinationGeoLocations = default)
         {
             ipProtocols ??= new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>();
             sourceAddresses ??= new ChangeTrackingList<string>();
@@ -4635,6 +5074,8 @@ namespace Azure.ResourceManager.Network.Models
             destinationIPGroups ??= new ChangeTrackingList<string>();
             destinationFqdns ??= new ChangeTrackingList<string>();
             sourceKubeSelectorGroups ??= new ChangeTrackingList<string>();
+            sourceGeoLocations ??= new ChangeTrackingList<string>();
+            destinationGeoLocations ??= new ChangeTrackingList<string>();
 
             return new NetworkRule(
                 name,
@@ -4648,7 +5089,9 @@ namespace Azure.ResourceManager.Network.Models
                 (sourceIPGroups ?? new ChangeTrackingList<string>()).ToList(),
                 (destinationIPGroups ?? new ChangeTrackingList<string>()).ToList(),
                 (destinationFqdns ?? new ChangeTrackingList<string>()).ToList(),
-                (sourceKubeSelectorGroups ?? new ChangeTrackingList<string>()).ToList());
+                (sourceKubeSelectorGroups ?? new ChangeTrackingList<string>()).ToList(),
+                (sourceGeoLocations ?? new ChangeTrackingList<string>()).ToList(),
+                (destinationGeoLocations ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <param name="name"> The name of the rule collection. </param>
@@ -4836,8 +5279,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="parentPoolName"> String representing parent IpamPool resource name. If empty the IpamPool will be a root pool. </param>
         /// <param name="addressPrefixes"> List of IP address prefixes of the resource. </param>
         /// <param name="provisioningState"> Provisioning states of a resource. </param>
+        /// <param name="minAllocationSize"> Minimum number of IP addresses required for allocations from this IpamPool to be compliant. Must be less than or equal to the maximum allocation size. If not specified or empty, no minimum is enforced. </param>
+        /// <param name="maxAllocationSize"> Maximum number of IP addresses allowed for allocations from this IpamPool to be compliant. Must be greater than or equal to the minimum allocation size. If not specified or empty, no maximum is enforced. </param>
         /// <returns> A new <see cref="Models.IpamPoolProperties"/> instance for mocking. </returns>
-        public static IpamPoolProperties IpamPoolProperties(string description = default, string displayName = default, IEnumerable<IpamIPType> ipAddressType = default, string parentPoolName = default, IEnumerable<string> addressPrefixes = default, NetworkProvisioningState? provisioningState = default)
+        public static IpamPoolProperties IpamPoolProperties(string description, string displayName, IEnumerable<IpamIPType> ipAddressType, string parentPoolName, IEnumerable<string> addressPrefixes, NetworkProvisioningState? provisioningState, string minAllocationSize, string maxAllocationSize = default)
         {
             ipAddressType ??= new ChangeTrackingList<IpamIPType>();
             addressPrefixes ??= new ChangeTrackingList<string>();
@@ -4849,6 +5294,8 @@ namespace Azure.ResourceManager.Network.Models
                 parentPoolName,
                 (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
                 provisioningState,
+                minAllocationSize,
+                maxAllocationSize,
                 default);
         }
 
@@ -4866,10 +5313,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Represents the IpamPool update properties. </summary>
         /// <param name="description"></param>
         /// <param name="displayName"> String representing a friendly name for the resource. </param>
+        /// <param name="minAllocationSize"> Minimum number of IP addresses required for allocations from this IpamPool to be compliant. Must be less than or equal to the maximum allocation size. Omit to leave the current value unchanged; set to an empty string to clear it. </param>
+        /// <param name="maxAllocationSize"> Maximum number of IP addresses allowed for allocations from this IpamPool to be compliant. Must be greater than or equal to the minimum allocation size. Omit to leave the current value unchanged; set to an empty string to clear it. </param>
         /// <returns> A new <see cref="Models.IpamPoolUpdateProperties"/> instance for mocking. </returns>
-        public static IpamPoolUpdateProperties IpamPoolUpdateProperties(string description = default, string displayName = default)
+        public static IpamPoolUpdateProperties IpamPoolUpdateProperties(string description, string displayName, string minAllocationSize, string maxAllocationSize = default)
         {
-            return new IpamPoolUpdateProperties(description, displayName, default);
+            return new IpamPoolUpdateProperties(description, displayName, minAllocationSize, maxAllocationSize, default);
         }
 
         /// <summary> IpamPool usage information. </summary>
@@ -10128,6 +10577,49 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkProxyResource(id, name, @type, eTag, default);
         }
 
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="policySettings"> The PolicySettings for policy. </param>
+        /// <param name="customRules"> The custom rules inside the policy. </param>
+        /// <param name="applicationGateways"> A collection of references to application gateways. </param>
+        /// <param name="provisioningState"> The provisioning state of the web application firewall policy resource. </param>
+        /// <param name="resourceState"> Resource status of the policy. </param>
+        /// <param name="managedRules"> Describes the managedRules structure. </param>
+        /// <param name="httpListeners"> A collection of references to application gateway http listeners. </param>
+        /// <param name="pathBasedRules"> A collection of references to application gateway path rules. </param>
+        /// <param name="applicationGatewayForContainers"> A collection of references to application gateway for containers. </param>
+        /// <param name="tier"> Tier of a web application firewall policy. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.WebApplicationFirewallPolicyData"/> instance for mocking. </returns>
+        public static WebApplicationFirewallPolicyData WebApplicationFirewallPolicyData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, PolicySettings policySettings, IEnumerable<WebApplicationFirewallCustomRule> customRules, IEnumerable<ApplicationGatewayData> applicationGateways, NetworkProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IEnumerable<WritableSubResource> httpListeners, IEnumerable<WritableSubResource> pathBasedRules, IEnumerable<ApplicationGatewayForContainersReferenceDefinition> applicationGatewayForContainers, WebApplicationFirewallPolicyTier? tier, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new WebApplicationFirewallPolicyData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                policySettings is null && customRules is null && applicationGateways is null && provisioningState is null && resourceState is null && managedRules is null && httpListeners is null && pathBasedRules is null && applicationGatewayForContainers is null && tier is null ? default : new WebApplicationFirewallPolicyPropertiesFormat(
+                    policySettings,
+                    (customRules ?? new ChangeTrackingList<WebApplicationFirewallCustomRule>()).ToList(),
+                    (applicationGateways ?? new ChangeTrackingList<ApplicationGatewayData>()).ToList(),
+                    provisioningState,
+                    resourceState,
+                    managedRules,
+                    (httpListeners ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (pathBasedRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (applicationGatewayForContainers ?? new ChangeTrackingList<ApplicationGatewayForContainersReferenceDefinition>()).ToList(),
+                    tier,
+                    default),
+                eTag);
+        }
+
         /// <summary> Defines contents of a web application firewall global configuration. </summary>
         /// <param name="state"> The state of the policy. </param>
         /// <param name="mode"> The mode of the policy. </param>
@@ -10796,20 +11288,22 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="availableRuleSets"> The available rulesets. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
+        /// <param name="displayName"> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </param>
         /// <returns> A new <see cref="Network.ApplicationGatewayWafDynamicManifestData"/> instance for mocking. </returns>
-        public static ApplicationGatewayWafDynamicManifestData ApplicationGatewayWafDynamicManifestData(IEnumerable<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets = default, string ruleSetType = default, string ruleSetVersion = default)
+        public static ApplicationGatewayWafDynamicManifestData ApplicationGatewayWafDynamicManifestData(IEnumerable<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets, string ruleSetType, string ruleSetVersion, string displayName)
         {
-            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(ruleSetType is null && ruleSetVersion is null ? default : new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), default);
+            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && displayName is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(ruleSetType is null && ruleSetVersion is null && displayName is null ? default : new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, displayName, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), default);
         }
 
         /// <summary> Properties of the web application firewall rule set. </summary>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="status"> The rule set status. </param>
+        /// <param name="displayName"> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </param>
         /// <param name="tiers"> Tier of an application gateway that support the rule set. </param>
         /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayFirewallManifestRuleSet"/> instance for mocking. </returns>
-        public static ApplicationGatewayFirewallManifestRuleSet ApplicationGatewayFirewallManifestRuleSet(string ruleSetType = default, string ruleSetVersion = default, ApplicationGatewayRuleSetStatusOption? status = default, IEnumerable<ApplicationGatewayTierType> tiers = default, IEnumerable<ApplicationGatewayFirewallRuleGroup> ruleGroups = default)
+        public static ApplicationGatewayFirewallManifestRuleSet ApplicationGatewayFirewallManifestRuleSet(string ruleSetType, string ruleSetVersion, ApplicationGatewayRuleSetStatusOption? status, string displayName, IEnumerable<ApplicationGatewayTierType> tiers, IEnumerable<ApplicationGatewayFirewallRuleGroup> ruleGroups)
         {
             tiers ??= new ChangeTrackingList<ApplicationGatewayTierType>();
             ruleGroups ??= new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>();
@@ -10818,6 +11312,7 @@ namespace Azure.ResourceManager.Network.Models
                 ruleSetType,
                 ruleSetVersion,
                 status,
+                displayName,
                 (tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>()).ToList(),
                 (ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>()).ToList(),
                 default);
@@ -12039,7 +12534,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionPolicyId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.HubVirtualNetworkConnectionData"/> instance for mocking. </returns>
-        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
+        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, string @type, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration, bool? enableOnlyIPv6Peering, NetworkProvisioningState? provisioningState, ResourceIdentifier remoteVirtualNetworkId, ResourceIdentifier connectionPolicyId, ETag? eTag)
         {
             return new HubVirtualNetworkConnectionData(
                 id,
@@ -12486,6 +12981,521 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkUsageName(value, localizedValue, default);
         }
 
+        /// <summary> Application gateway resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="sku"> SKU of the application gateway resource. </param>
+        /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
+        /// <param name="operationalState"> Operational state of the application gateway resource. </param>
+        /// <param name="gatewayIPConfigurations"> Subnets of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="authenticationCertificates"> Authentication certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="trustedRootCertificates"> Trusted Root certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="trustedClientCertificates"> Trusted client certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="sslCertificates"> SSL certificates of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="frontendIPConfigurations"> Frontend IP addresses of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="frontendPorts"> Frontend ports of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="probes"> Probes of the application gateway resource. </param>
+        /// <param name="backendAddressPools"> Backend address pool of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="backendHttpSettingsCollection"> Backend http settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="backendSettingsCollection"> Backend settings of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="httpListeners"> Http listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="listeners"> Listeners of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="sslProfiles"> SSL profiles of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="urlPathMaps"> URL path map of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="requestRoutingRules"> Request routing rules of the application gateway resource. </param>
+        /// <param name="routingRules"> Routing rules of the application gateway resource. </param>
+        /// <param name="rewriteRuleSets"> Rewrite rules for the application gateway resource. </param>
+        /// <param name="redirectConfigurations"> Redirect configurations of the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="webApplicationFirewallConfiguration"> Web application firewall configuration. </param>
+        /// <param name="enableHttp2"> Whether HTTP2 is enabled on the application gateway resource. </param>
+        /// <param name="enableFips"> Whether FIPS is enabled on the application gateway resource. </param>
+        /// <param name="autoscaleConfiguration"> Autoscale Configuration. </param>
+        /// <param name="privateLinkConfigurations"> PrivateLink configurations on application gateway. </param>
+        /// <param name="privateEndpointConnections"> Private Endpoint connections on application gateway. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the application gateway resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the application gateway resource. </param>
+        /// <param name="customErrorConfigurations"> Custom error configurations of the application gateway resource. </param>
+        /// <param name="forceFirewallPolicyAssociation"> If true, associates a firewall policy with an application gateway regardless whether the policy differs from the WAF Config. </param>
+        /// <param name="loadDistributionPolicies"> Load distribution policies of the application gateway resource. </param>
+        /// <param name="entraJWTValidationConfigs"> Entra JWT validation configurations for the application gateway resource. For default limits, see [Application Gateway limits](https://docs.microsoft.com/azure/azure-subscription-service-limits#application-gateway-limits). </param>
+        /// <param name="globalConfiguration"> Global Configuration. </param>
+        /// <param name="defaultPredefinedSslPolicy"> The default predefined SSL Policy applied on the application gateway resource. </param>
+        /// <param name="firewallPolicyId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="identity"> The identity of the application gateway, if configured. </param>
+        /// <returns> A new <see cref="Network.ApplicationGatewayData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationGatewayData ApplicationGatewayData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ApplicationGatewaySku sku = default, ApplicationGatewaySslPolicy sslPolicy = default, ApplicationGatewayOperationalState? operationalState = default, IEnumerable<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default, IEnumerable<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = default, IEnumerable<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = default, IEnumerable<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates = default, IEnumerable<ApplicationGatewaySslCertificate> sslCertificates = default, IEnumerable<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default, IEnumerable<ApplicationGatewayFrontendPort> frontendPorts = default, IEnumerable<ApplicationGatewayProbe> probes = default, IEnumerable<ApplicationGatewayBackendAddressPool> backendAddressPools = default, IEnumerable<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default, IEnumerable<ApplicationGatewayBackendSettings> backendSettingsCollection = default, IEnumerable<ApplicationGatewayHttpListener> httpListeners = default, IEnumerable<ApplicationGatewayListener> listeners = default, IEnumerable<ApplicationGatewaySslProfile> sslProfiles = default, IEnumerable<ApplicationGatewayUrlPathMap> urlPathMaps = default, IEnumerable<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default, IEnumerable<ApplicationGatewayRoutingRule> routingRules = default, IEnumerable<ApplicationGatewayRewriteRuleSet> rewriteRuleSets = default, IEnumerable<ApplicationGatewayRedirectConfiguration> redirectConfigurations = default, ApplicationGatewayWebApplicationFirewallConfiguration webApplicationFirewallConfiguration = default, bool? enableHttp2 = default, bool? enableFips = default, ApplicationGatewayAutoscaleConfiguration autoscaleConfiguration = default, IEnumerable<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = default, IEnumerable<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, IEnumerable<ApplicationGatewayCustomError> customErrorConfigurations = default, bool? forceFirewallPolicyAssociation = default, IEnumerable<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = default, IEnumerable<ApplicationGatewayEntraJwtValidationConfig> entraJWTValidationConfigs = default, ApplicationGatewayGlobalConfiguration globalConfiguration = default, ApplicationGatewaySslPolicyName? defaultPredefinedSslPolicy = default, ResourceIdentifier firewallPolicyId = default, ETag? eTag = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
+        {
+            return new ApplicationGatewayData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                sku is null && sslPolicy is null && operationalState is null && gatewayIPConfigurations is null && authenticationCertificates is null && trustedRootCertificates is null && trustedClientCertificates is null && sslCertificates is null && frontendIPConfigurations is null && frontendPorts is null && probes is null && backendAddressPools is null && backendHttpSettingsCollection is null && backendSettingsCollection is null && httpListeners is null && listeners is null && sslProfiles is null && urlPathMaps is null && requestRoutingRules is null && routingRules is null && rewriteRuleSets is null && redirectConfigurations is null && webApplicationFirewallConfiguration is null && firewallPolicyId is null && enableHttp2 is null && enableFips is null && autoscaleConfiguration is null && privateLinkConfigurations is null && privateEndpointConnections is null && resourceGuid is null && provisioningState is null && customErrorConfigurations is null && forceFirewallPolicyAssociation is null && loadDistributionPolicies is null && entraJWTValidationConfigs is null && globalConfiguration is null && defaultPredefinedSslPolicy is null ? default : new ApplicationGatewayPropertiesFormat(
+                    sku,
+                    sslPolicy,
+                    operationalState,
+                    (gatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>()).ToList(),
+                    (authenticationCertificates ?? new ChangeTrackingList<ApplicationGatewayAuthenticationCertificate>()).ToList(),
+                    (trustedRootCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedRootCertificate>()).ToList(),
+                    (trustedClientCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedClientCertificate>()).ToList(),
+                    (sslCertificates ?? new ChangeTrackingList<ApplicationGatewaySslCertificate>()).ToList(),
+                    (frontendIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayFrontendIPConfiguration>()).ToList(),
+                    (frontendPorts ?? new ChangeTrackingList<ApplicationGatewayFrontendPort>()).ToList(),
+                    (probes ?? new ChangeTrackingList<ApplicationGatewayProbe>()).ToList(),
+                    (backendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>()).ToList(),
+                    (backendHttpSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendHttpSettings>()).ToList(),
+                    (backendSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendSettings>()).ToList(),
+                    (httpListeners ?? new ChangeTrackingList<ApplicationGatewayHttpListener>()).ToList(),
+                    (listeners ?? new ChangeTrackingList<ApplicationGatewayListener>()).ToList(),
+                    (sslProfiles ?? new ChangeTrackingList<ApplicationGatewaySslProfile>()).ToList(),
+                    (urlPathMaps ?? new ChangeTrackingList<ApplicationGatewayUrlPathMap>()).ToList(),
+                    default,
+                    (requestRoutingRules ?? new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>()).ToList(),
+                    (routingRules ?? new ChangeTrackingList<ApplicationGatewayRoutingRule>()).ToList(),
+                    (rewriteRuleSets ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>()).ToList(),
+                    default,
+                    (redirectConfigurations ?? new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>()).ToList(),
+                    webApplicationFirewallConfiguration,
+                    firewallPolicyId is null ? default : new NetworkSubResource(firewallPolicyId, default),
+                    enableHttp2,
+                    enableFips,
+                    autoscaleConfiguration,
+                    default,
+                    (privateLinkConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>()).ToList(),
+                    (privateEndpointConnections ?? new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>()).ToList(),
+                    resourceGuid,
+                    provisioningState,
+                    (customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>()).ToList(),
+                    forceFirewallPolicyAssociation,
+                    (loadDistributionPolicies ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>()).ToList(),
+                    (entraJWTValidationConfigs ?? new ChangeTrackingList<ApplicationGatewayEntraJwtValidationConfig>()).ToList(),
+                    globalConfiguration,
+                    defaultPredefinedSslPolicy,
+                    default),
+                eTag,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity);
+        }
+
+        /// <summary> PrivateLinkServiceConnection resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="provisioningState"> The provisioning state of the private link service connection resource. </param>
+        /// <param name="privateLinkServiceId"> The resource id of private link service. </param>
+        /// <param name="groupIds"> The ID(s) of the group(s) obtained from the remote resource that this private endpoint should connect to. </param>
+        /// <param name="requestMessage"> A message passed to the owner of the remote resource with this connection request. Restricted to 140 chars. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of read-only information about the state of the connection to the remote resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Models.NetworkPrivateLinkServiceConnection"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkPrivateLinkServiceConnection NetworkPrivateLinkServiceConnection(ResourceIdentifier id = default, string name = default, string @type = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier privateLinkServiceId = default, IEnumerable<string> groupIds = default, string requestMessage = default, NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ETag? eTag = default)
+        {
+            return new NetworkPrivateLinkServiceConnection(
+                id,
+                default,
+                name,
+                @type,
+                provisioningState is null && privateLinkServiceId is null && groupIds is null && requestMessage is null && privateLinkServiceConnectionState is null ? default : new PrivateLinkServiceConnectionProperties(
+                    provisioningState,
+                    privateLinkServiceId,
+                    (groupIds ?? new ChangeTrackingList<string>()).ToList(),
+                    requestMessage,
+                    privateLinkServiceConnectionState,
+                    default,
+                    default),
+                eTag);
+        }
+
+        /// <summary> Request routing rule of an application gateway. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="ruleType"> Rule type. </param>
+        /// <param name="priority"> Priority of the request routing rule. </param>
+        /// <param name="entraJWTValidationConfig"> Entra JWT validation configuration resource of the application gateway. </param>
+        /// <param name="provisioningState"> The provisioning state of the request routing rule resource. </param>
+        /// <param name="backendAddressPoolId"> Resource ID. </param>
+        /// <param name="backendHttpSettingsId"> Resource ID. </param>
+        /// <param name="httpListenerId"> Resource ID. </param>
+        /// <param name="urlPathMapId"> Resource ID. </param>
+        /// <param name="rewriteRuleSetId"> Resource ID. </param>
+        /// <param name="redirectConfigurationId"> Resource ID. </param>
+        /// <param name="loadDistributionPolicyId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayRequestRoutingRule"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationGatewayRequestRoutingRule ApplicationGatewayRequestRoutingRule(ResourceIdentifier id = default, string name = default, string @type = default, ApplicationGatewayRequestRoutingRuleType? ruleType = default, int? priority = default, ResourceIdentifier entraJWTValidationConfig = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier backendAddressPoolId = default, ResourceIdentifier backendHttpSettingsId = default, ResourceIdentifier httpListenerId = default, ResourceIdentifier urlPathMapId = default, ResourceIdentifier rewriteRuleSetId = default, ResourceIdentifier redirectConfigurationId = default, ResourceIdentifier loadDistributionPolicyId = default, ETag? eTag = default)
+        {
+            return new ApplicationGatewayRequestRoutingRule(
+                id,
+                default,
+                name,
+                @type,
+                ruleType is null && priority is null && backendAddressPoolId is null && backendHttpSettingsId is null && httpListenerId is null && urlPathMapId is null && rewriteRuleSetId is null && redirectConfigurationId is null && loadDistributionPolicyId is null && entraJWTValidationConfig is null && provisioningState is null ? default : new ApplicationGatewayRequestRoutingRulePropertiesFormat(
+                    ruleType,
+                    priority,
+                    backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
+                    backendHttpSettingsId is null ? default : new NetworkSubResource(backendHttpSettingsId, default),
+                    httpListenerId is null ? default : new NetworkSubResource(httpListenerId, default),
+                    urlPathMapId is null ? default : new NetworkSubResource(urlPathMapId, default),
+                    default,
+                    rewriteRuleSetId is null ? default : new NetworkSubResource(rewriteRuleSetId, default),
+                    redirectConfigurationId is null ? default : new NetworkSubResource(redirectConfigurationId, default),
+                    loadDistributionPolicyId is null ? default : new NetworkSubResource(loadDistributionPolicyId, default),
+                    entraJWTValidationConfig,
+                    default,
+                    provisioningState,
+                    default),
+                eTag);
+        }
+
+        /// <summary> A web application firewall rule set. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="provisioningState"> The provisioning state of the web application firewall rule set. </param>
+        /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
+        /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
+        /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
+        /// <param name="tiers"> Tier of an application gateway that support the rule set. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayFirewallRuleSet"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationGatewayFirewallRuleSet ApplicationGatewayFirewallRuleSet(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkProvisioningState? provisioningState = default, string ruleSetType = default, string ruleSetVersion = default, IEnumerable<ApplicationGatewayFirewallRuleGroup> ruleGroups = default, IEnumerable<ApplicationGatewayTierType> tiers = default)
+        {
+            return new ApplicationGatewayFirewallRuleSet(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                provisioningState is null && ruleSetType is null && ruleSetVersion is null && ruleGroups is null && tiers is null ? default : new ApplicationGatewayFirewallRuleSetPropertiesFormat(
+                    provisioningState,
+                    ruleSetType,
+                    ruleSetVersion,
+                    default,
+                    (ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>()).ToList(),
+                    (tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>()).ToList(),
+                    default));
+        }
+
+        /// <summary> A web application firewall rule. </summary>
+        /// <param name="ruleId"> The identifier of the web application firewall rule. </param>
+        /// <param name="ruleIdString"> The string representation of the web application firewall rule identifier. </param>
+        /// <param name="state"> The string representation of the web application firewall rule state. </param>
+        /// <param name="action"> The string representation of the web application firewall rule action. </param>
+        /// <param name="sensitivity"> The string representation of the web application firewall rule sensitivity. </param>
+        /// <param name="description"> The description of the web application firewall rule. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayFirewallRule"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationGatewayFirewallRule ApplicationGatewayFirewallRule(int ruleId = 0, string ruleIdString = default, ApplicationGatewayWafRuleStateType? state = default, ApplicationGatewayWafRuleActionType? action = default, ApplicationGatewayWafRuleSensitivityType? sensitivity = default, string description = default)
+        {
+            return new ApplicationGatewayFirewallRule(
+                ruleId,
+                ruleIdString,
+                state,
+                action,
+                sensitivity,
+                default,
+                description,
+                default);
+        }
+
+        /// <summary> Azure Firewall resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="applicationRuleCollections"> Collection of application rule collections used by Azure Firewall. </param>
+        /// <param name="natRuleCollections"> Collection of NAT rule collections used by Azure Firewall. </param>
+        /// <param name="networkRuleCollections"> Collection of network rule collections used by Azure Firewall. </param>
+        /// <param name="ipConfigurations"> IP configuration of the Azure Firewall resource. </param>
+        /// <param name="managementIpConfiguration"> IP configuration of the Azure Firewall used for management traffic. </param>
+        /// <param name="provisioningState"> The provisioning state of the Azure firewall resource. </param>
+        /// <param name="threatIntelMode"> The operation mode for Threat Intelligence. </param>
+        /// <param name="hubIPAddresses"> IP addresses associated with AzureFirewall. </param>
+        /// <param name="ipGroups"> IpGroups associated with AzureFirewall. </param>
+        /// <param name="sku"> The Azure Firewall Resource SKU. </param>
+        /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
+        /// <param name="autoscaleConfiguration"> Properties to provide a custom autoscale configuration to this azure firewall. </param>
+        /// <param name="virtualHubId"> Resource ID. </param>
+        /// <param name="firewallPolicyId"> Resource ID. </param>
+        /// <param name="afcServiceEndpoint"> The endpoint URL of the AFC control plane associated with this Azure Firewall. </param>
+        /// <param name="extendedLocation"> The extended location of type local virtual network gateway. </param>
+        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.AzureFirewallData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureFirewallData AzureFirewallData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections = default, IEnumerable<AzureFirewallNatRuleCollectionData> natRuleCollections = default, IEnumerable<AzureFirewallNetworkRuleCollectionData> networkRuleCollections = default, IEnumerable<AzureFirewallIPConfiguration> ipConfigurations = default, AzureFirewallIPConfiguration managementIpConfiguration = default, NetworkProvisioningState? provisioningState = default, AzureFirewallThreatIntelMode? threatIntelMode = default, HubIPAddresses hubIPAddresses = default, IEnumerable<AzureFirewallIPGroups> ipGroups = default, AzureFirewallSku sku = default, IDictionary<string, string> additionalProperties = default, AzureFirewallAutoscaleConfiguration autoscaleConfiguration = default, ResourceIdentifier virtualHubId = default, ResourceIdentifier firewallPolicyId = default, string afcServiceEndpoint = default, ExtendedLocation extendedLocation = default, IEnumerable<string> zones = default, ETag? eTag = default)
+        {
+            return new AzureFirewallData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                applicationRuleCollections is null && natRuleCollections is null && networkRuleCollections is null && ipConfigurations is null && managementIpConfiguration is null && provisioningState is null && threatIntelMode is null && virtualHubId is null && firewallPolicyId is null && hubIPAddresses is null && ipGroups is null && sku is null && additionalProperties is null && autoscaleConfiguration is null && afcServiceEndpoint is null ? default : new AzureFirewallPropertiesFormat(
+                    (applicationRuleCollections ?? new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>()).ToList(),
+                    (natRuleCollections ?? new ChangeTrackingList<AzureFirewallNatRuleCollectionData>()).ToList(),
+                    (networkRuleCollections ?? new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>()).ToList(),
+                    (ipConfigurations ?? new ChangeTrackingList<AzureFirewallIPConfiguration>()).ToList(),
+                    managementIpConfiguration,
+                    provisioningState,
+                    threatIntelMode,
+                    virtualHubId is null ? default : new NetworkSubResource(virtualHubId, default),
+                    firewallPolicyId is null ? default : new NetworkSubResource(firewallPolicyId, default),
+                    hubIPAddresses,
+                    (ipGroups ?? new ChangeTrackingList<AzureFirewallIPGroups>()).ToList(),
+                    sku,
+                    additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
+                    autoscaleConfiguration,
+                    afcServiceEndpoint is null ? default : new AfcConfiguration(afcServiceEndpoint, default),
+                    default,
+                    default),
+                extendedLocation,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                eTag);
+        }
+
+        /// <summary> Bastion Host resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
+        /// <param name="dnsName"> FQDN for the endpoint on which bastion host is accessible. </param>
+        /// <param name="provisioningState"> The provisioning state of the bastion host resource. </param>
+        /// <param name="scaleUnits"> The scale units for the Bastion Host resource. </param>
+        /// <param name="disableCopyPaste"> Enable/Disable Copy/Paste feature of the Bastion Host resource. </param>
+        /// <param name="enableFileCopy"> Enable/Disable File Copy feature of the Bastion Host resource. </param>
+        /// <param name="enableIpConnect"> Enable/Disable IP Connect feature of the Bastion Host resource. </param>
+        /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
+        /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
+        /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
+        /// <param name="enableSessionRecording"> Enable/Disable Session Recording feature of the Bastion Host resource. </param>
+        /// <param name="enablePrivateOnlyBastion"> Enable/Disable Private Only feature of the Bastion Host resource. </param>
+        /// <param name="virtualNetworkId"> Resource ID. </param>
+        /// <param name="networkAclsIpRules"> Sets the IP ACL rules for Developer Bastion Host. </param>
+        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="skuName"> The name of the sku of this Bastion Host. </param>
+        /// <returns> A new <see cref="Network.BastionHostData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BastionHostData BastionHostData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<BastionHostIPConfiguration> ipConfigurations = default, string dnsName = default, NetworkProvisioningState? provisioningState = default, int? scaleUnits = default, bool? disableCopyPaste = default, bool? enableFileCopy = default, bool? enableIpConnect = default, bool? enableShareableLink = default, bool? enableTunneling = default, bool? enableKerberos = default, bool? enableSessionRecording = default, bool? enablePrivateOnlyBastion = default, ResourceIdentifier virtualNetworkId = default, IEnumerable<BastionHostIPRule> networkAclsIpRules = default, IEnumerable<string> zones = default, ETag? eTag = default, BastionHostSkuName? skuName = default)
+        {
+            return new BastionHostData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                ipConfigurations is null && dnsName is null && virtualNetworkId is null && networkAclsIpRules is null && provisioningState is null && scaleUnits is null && disableCopyPaste is null && enableFileCopy is null && enableIpConnect is null && enableShareableLink is null && enableTunneling is null && enableKerberos is null && enableSessionRecording is null && enablePrivateOnlyBastion is null ? default : new BastionHostPropertiesFormat(
+                    (ipConfigurations ?? new ChangeTrackingList<BastionHostIPConfiguration>()).ToList(),
+                    dnsName,
+                    virtualNetworkId is null ? default : new NetworkSubResource(virtualNetworkId, default),
+                    networkAclsIpRules is null ? default : new BastionHostPropertiesFormatNetworkAcls((networkAclsIpRules ?? new ChangeTrackingList<BastionHostIPRule>()).ToList(), default),
+                    provisioningState,
+                    scaleUnits,
+                    disableCopyPaste,
+                    enableFileCopy,
+                    enableIpConnect,
+                    enableShareableLink,
+                    enableTunneling,
+                    enableKerberos,
+                    enableSessionRecording,
+                    enablePrivateOnlyBastion,
+                    default,
+                    default),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                eTag,
+                skuName is null ? default : new NetworkSku(skuName, default),
+                default);
+        }
+
+        /// <summary> ExpressRouteCircuit resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="allowClassicOperations"> Allow classic operations. </param>
+        /// <param name="circuitProvisioningState"> The CircuitProvisioningState state of the resource. </param>
+        /// <param name="serviceProviderProvisioningState"> The ServiceProviderProvisioningState state of the resource. </param>
+        /// <param name="authorizations"> The list of authorizations. </param>
+        /// <param name="peerings"> The list of peerings. </param>
+        /// <param name="serviceKey"> The ServiceKey. </param>
+        /// <param name="serviceProviderNotes"> The ServiceProviderNotes. </param>
+        /// <param name="serviceProviderProperties"> The ServiceProviderProperties. </param>
+        /// <param name="bandwidthInGbps"> The bandwidth of the circuit when the circuit is provisioned on an ExpressRoutePort resource. </param>
+        /// <param name="sTag"> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </param>
+        /// <param name="resiliencyLevel"> The resiliency level of the ExpressRoute circuit. </param>
+        /// <param name="partnerAccountId"> Account ID of customer account on partner cloud provider. </param>
+        /// <param name="activationKey"> Activation Key from partner cloud provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the express route circuit resource. </param>
+        /// <param name="gatewayManagerETag"> The GatewayManager Etag. </param>
+        /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
+        /// <param name="authorizationKey"> The authorizationKey. </param>
+        /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
+        /// <param name="enableDirectPortRateLimit"> Flag denoting rate-limiting status of the ExpressRoute direct-port circuit. </param>
+        /// <param name="expressRoutePortId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="sku"> The SKU. </param>
+        /// <returns> A new <see cref="Network.ExpressRouteCircuitData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExpressRouteCircuitData ExpressRouteCircuitData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, bool? allowClassicOperations = default, string circuitProvisioningState = default, ServiceProviderProvisioningState? serviceProviderProvisioningState = default, IEnumerable<ExpressRouteCircuitAuthorizationData> authorizations = default, IEnumerable<ExpressRouteCircuitPeeringData> peerings = default, string serviceKey = default, string serviceProviderNotes = default, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default, float? bandwidthInGbps = default, int? sTag = default, ExpressRouteCircuitResiliencyLevel? resiliencyLevel = default, string partnerAccountId = default, string activationKey = default, NetworkProvisioningState? provisioningState = default, string gatewayManagerETag = default, bool? globalReachEnabled = default, string authorizationKey = default, string authorizationStatus = default, bool? enableDirectPortRateLimit = default, ResourceIdentifier expressRoutePortId = default, ETag? eTag = default, ExpressRouteCircuitSku sku = default)
+        {
+            return new ExpressRouteCircuitData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                allowClassicOperations is null && circuitProvisioningState is null && serviceProviderProvisioningState is null && authorizations is null && peerings is null && serviceKey is null && serviceProviderNotes is null && serviceProviderProperties is null && expressRoutePortId is null && bandwidthInGbps is null && sTag is null && resiliencyLevel is null && partnerAccountId is null && activationKey is null && provisioningState is null && gatewayManagerETag is null && globalReachEnabled is null && authorizationKey is null && authorizationStatus is null && enableDirectPortRateLimit is null ? default : new ExpressRouteCircuitPropertiesFormat(
+                    allowClassicOperations,
+                    circuitProvisioningState,
+                    serviceProviderProvisioningState,
+                    (authorizations ?? new ChangeTrackingList<ExpressRouteCircuitAuthorizationData>()).ToList(),
+                    (peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringData>()).ToList(),
+                    serviceKey,
+                    serviceProviderNotes,
+                    serviceProviderProperties,
+                    expressRoutePortId is null ? default : new NetworkSubResource(expressRoutePortId, default),
+                    default,
+                    bandwidthInGbps,
+                    sTag,
+                    resiliencyLevel,
+                    partnerAccountId,
+                    activationKey,
+                    provisioningState,
+                    gatewayManagerETag,
+                    globalReachEnabled,
+                    authorizationKey,
+                    authorizationStatus,
+                    enableDirectPortRateLimit,
+                    default),
+                eTag,
+                sku);
+        }
+
+        /// <summary> ExpressRouteLag Resource Properties. </summary>
+        /// <param name="peeringLocation"> The name of the peering location that the ExpressRouteLag is mapped to physically. </param>
+        /// <param name="bandwidthInGbps"> Bandwidth of procured LAG in Gbps. </param>
+        /// <param name="provisionedBandwidthInGbps"> Aggregate Gbps of associated circuit bandwidths. </param>
+        /// <param name="mtu"> Maximum transmission unit of the LAG. </param>
+        /// <param name="encapsulation"> Encapsulation method on LAG. </param>
+        /// <param name="etherType"> Ether type of the LAG. </param>
+        /// <param name="links"> The set of links of the ExpressRouteLag resource. </param>
+        /// <param name="allocationDate"> The date and time when the ExpressRouteLag was allocated. </param>
+        /// <param name="provisioningState"> The provisioning state of the express route LAG resource. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the express route LAG resource. </param>
+        /// <param name="billingType"> The billing type of the ExpressRouteLag resource. </param>
+        /// <param name="numberOfPorts"> Number of ports in the LAG. </param>
+        /// <param name="minimumActivePortsRequired"> Minimum number of active ports required for LAG. </param>
+        /// <param name="lacpTimer"> LACP timer configuration. </param>
+        /// <returns> A new <see cref="Models.ExpressRouteLagPropertiesFormat"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ExpressRouteLagPropertiesFormat ExpressRouteLagPropertiesFormat(string peeringLocation = default, int? bandwidthInGbps = default, double? provisionedBandwidthInGbps = default, string mtu = default, ExpressRouteLagEncapsulation? encapsulation = default, string etherType = default, IEnumerable<ExpressRouteLagLink> links = default, string allocationDate = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default, ExpressRouteLagBillingType? billingType = default, int? numberOfPorts = default, int? minimumActivePortsRequired = default, ExpressRouteLagLacpTimer? lacpTimer = default)
+        {
+            return new ExpressRouteLagPropertiesFormat(
+                peeringLocation,
+                bandwidthInGbps,
+                provisionedBandwidthInGbps,
+                mtu,
+                encapsulation,
+                etherType,
+                (links ?? new ChangeTrackingList<ExpressRouteLagLink>()).ToList(),
+                default,
+                allocationDate,
+                provisioningState,
+                resourceGuid,
+                billingType,
+                numberOfPorts,
+                minimumActivePortsRequired,
+                lacpTimer,
+                default);
+        }
+
+        /// <summary> Rule of type network. </summary>
+        /// <param name="name"> Name of the rule. </param>
+        /// <param name="description"> Description of the rule. </param>
+        /// <param name="ipProtocols"> Array of FirewallPolicyRuleNetworkProtocols. </param>
+        /// <param name="sourceAddresses"> List of source IP addresses for this rule. </param>
+        /// <param name="destinationAddresses"> List of destination IP addresses or Service Tags. </param>
+        /// <param name="destinationPorts"> List of destination ports. </param>
+        /// <param name="sourceIPGroups"> List of source IpGroups for this rule. </param>
+        /// <param name="destinationIPGroups"> List of destination IpGroups for this rule. </param>
+        /// <param name="destinationFqdns"> List of destination FQDNs. </param>
+        /// <param name="sourceKubeSelectorGroups"> List of source Kubernetes Selector Groups for this rule. </param>
+        /// <returns> A new <see cref="Models.NetworkRule"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkRule NetworkRule(string name = default, string description = default, IEnumerable<FirewallPolicyRuleNetworkProtocol> ipProtocols = default, IEnumerable<string> sourceAddresses = default, IEnumerable<string> destinationAddresses = default, IEnumerable<string> destinationPorts = default, IEnumerable<string> sourceIPGroups = default, IEnumerable<string> destinationIPGroups = default, IEnumerable<string> destinationFqdns = default, IEnumerable<string> sourceKubeSelectorGroups = default)
+        {
+            return new NetworkRule(
+                name,
+                description,
+                default,
+                default,
+                (ipProtocols ?? new ChangeTrackingList<FirewallPolicyRuleNetworkProtocol>()).ToList(),
+                (sourceAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                (destinationAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                (destinationPorts ?? new ChangeTrackingList<string>()).ToList(),
+                (sourceIPGroups ?? new ChangeTrackingList<string>()).ToList(),
+                (destinationIPGroups ?? new ChangeTrackingList<string>()).ToList(),
+                (destinationFqdns ?? new ChangeTrackingList<string>()).ToList(),
+                (sourceKubeSelectorGroups ?? new ChangeTrackingList<string>()).ToList(),
+                default,
+                default);
+        }
+
+        /// <summary> Properties of IpamPool resource properties which are specific to the Pool resource. </summary>
+        /// <param name="description"></param>
+        /// <param name="displayName"> String representing a friendly name for the resource. </param>
+        /// <param name="ipAddressType"> List of IP address type for the IpamPool. </param>
+        /// <param name="parentPoolName"> String representing parent IpamPool resource name. If empty the IpamPool will be a root pool. </param>
+        /// <param name="addressPrefixes"> List of IP address prefixes of the resource. </param>
+        /// <param name="provisioningState"> Provisioning states of a resource. </param>
+        /// <returns> A new <see cref="Models.IpamPoolProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IpamPoolProperties IpamPoolProperties(string description = default, string displayName = default, IEnumerable<IpamIPType> ipAddressType = default, string parentPoolName = default, IEnumerable<string> addressPrefixes = default, NetworkProvisioningState? provisioningState = default)
+        {
+            return new IpamPoolProperties(
+                description,
+                displayName,
+                (ipAddressType ?? new ChangeTrackingList<IpamIPType>()).ToList(),
+                parentPoolName,
+                (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                provisioningState,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> Represents the IpamPool update properties. </summary>
+        /// <param name="description"></param>
+        /// <param name="displayName"> String representing a friendly name for the resource. </param>
+        /// <returns> A new <see cref="Models.IpamPoolUpdateProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IpamPoolUpdateProperties IpamPoolUpdateProperties(string description = default, string displayName = default)
+        {
+            return new IpamPoolUpdateProperties(description, displayName, default, default, default);
+        }
+
         /// <summary> A load balancing rule for a load balancer. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -12596,6 +13606,37 @@ namespace Azure.ResourceManager.Network.Models
                 retentionPolicy,
                 format,
                 default), networkWatcherFlowAnalyticsConfiguration is null ? default : new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration, default), identity, default);
+        }
+
+        /// <summary> Response for ApplicationGatewayWafDynamicManifest API service call. </summary>
+        /// <param name="availableRuleSets"> The available rulesets. </param>
+        /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
+        /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
+        /// <returns> A new <see cref="Network.ApplicationGatewayWafDynamicManifestData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationGatewayWafDynamicManifestData ApplicationGatewayWafDynamicManifestData(IEnumerable<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets = default, string ruleSetType = default, string ruleSetVersion = default)
+        {
+            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(ruleSetType is null && ruleSetVersion is null ? default : new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), default);
+        }
+
+        /// <summary> Properties of the web application firewall rule set. </summary>
+        /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
+        /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
+        /// <param name="status"> The rule set status. </param>
+        /// <param name="tiers"> Tier of an application gateway that support the rule set. </param>
+        /// <param name="ruleGroups"> The rule groups of the web application firewall rule set. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayFirewallManifestRuleSet"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationGatewayFirewallManifestRuleSet ApplicationGatewayFirewallManifestRuleSet(string ruleSetType = default, string ruleSetVersion = default, ApplicationGatewayRuleSetStatusOption? status = default, IEnumerable<ApplicationGatewayTierType> tiers = default, IEnumerable<ApplicationGatewayFirewallRuleGroup> ruleGroups = default)
+        {
+            return new ApplicationGatewayFirewallManifestRuleSet(
+                ruleSetType,
+                ruleSetVersion,
+                status,
+                default,
+                (tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>()).ToList(),
+                (ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>()).ToList(),
+                default);
         }
 
         /// <summary> Parameters that define the create packet capture operation. </summary>
@@ -12726,6 +13767,41 @@ namespace Azure.ResourceManager.Network.Models
                 (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
                 notes,
                 default), default);
+        }
+
+        /// <summary> HubVirtualNetworkConnection Resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="allowHubToRemoteVnetTransit"> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </param>
+        /// <param name="allowRemoteVnetToUseHubVnetGateways"> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </param>
+        /// <param name="enableInternetSecurity"> Enable internet security. </param>
+        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
+        /// <param name="enableOnlyIPv6Peering"></param>
+        /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
+        /// <param name="remoteVirtualNetworkId"> Resource ID. </param>
+        /// <param name="connectionPolicyId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.HubVirtualNetworkConnectionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, Models.EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
+        {
+            return new HubVirtualNetworkConnectionData(
+                id,
+                default,
+                name,
+                @type,
+                remoteVirtualNetworkId is null && allowHubToRemoteVnetTransit is null && allowRemoteVnetToUseHubVnetGateways is null && connectionPolicyId is null && enableInternetSecurity is null && routingConfiguration is null && provisioningState is null ? default : new HubVirtualNetworkConnectionProperties(
+                    remoteVirtualNetworkId is null ? default : new NetworkSubResource(remoteVirtualNetworkId, default),
+                    allowHubToRemoteVnetTransit,
+                    allowRemoteVnetToUseHubVnetGateways,
+                    connectionPolicyId is null ? default : new NetworkSubResource(connectionPolicyId, default),
+                    enableInternetSecurity,
+                    routingConfiguration,
+                    default,
+                    provisioningState,
+                    default),
+                eTag);
         }
 
         /// <summary> Frontend IP address of the load balancer. </summary>
@@ -12904,6 +13980,7 @@ namespace Azure.ResourceManager.Network.Models
                     serviceProviderNotes,
                     serviceProviderProperties,
                     expressRoutePortId is null ? default : new NetworkSubResource(expressRoutePortId, default),
+                    default,
                     bandwidthInGbps,
                     stag,
                     default,
@@ -13040,6 +14117,8 @@ namespace Azure.ResourceManager.Network.Models
                 (sourceIpGroups ?? new ChangeTrackingList<string>()).ToList(),
                 (destinationIpGroups ?? new ChangeTrackingList<string>()).ToList(),
                 (destinationFqdns ?? new ChangeTrackingList<string>()).ToList(),
+                default,
+                default,
                 default);
         }
 
@@ -14159,15 +15238,18 @@ namespace Azure.ResourceManager.Network.Models
                     (listeners ?? new ChangeTrackingList<ApplicationGatewayListener>()).ToList(),
                     (sslProfiles ?? new ChangeTrackingList<ApplicationGatewaySslProfile>()).ToList(),
                     (urlPathMaps ?? new ChangeTrackingList<ApplicationGatewayUrlPathMap>()).ToList(),
+                    default,
                     (requestRoutingRules ?? new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>()).ToList(),
                     (routingRules ?? new ChangeTrackingList<ApplicationGatewayRoutingRule>()).ToList(),
                     (rewriteRuleSets ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>()).ToList(),
+                    default,
                     (redirectConfigurations ?? new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>()).ToList(),
                     webApplicationFirewallConfiguration,
                     firewallPolicyId is null ? default : new NetworkSubResource(firewallPolicyId, default),
                     enableHttp2,
                     enableFips,
                     autoscaleConfiguration,
+                    default,
                     (privateLinkConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>()).ToList(),
                     (privateEndpointConnections ?? new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>()).ToList(),
                     resourceGuid,
@@ -14878,6 +15960,7 @@ namespace Azure.ResourceManager.Network.Models
                     privateLinkServiceId,
                     (groupIds ?? new ChangeTrackingList<string>()).ToList(),
                     requestMessage,
+                    default,
                     default,
                     default),
                 etag);
@@ -15813,9 +16896,11 @@ namespace Azure.ResourceManager.Network.Models
                     backendHttpSettingsId is null ? default : new NetworkSubResource(backendHttpSettingsId, default),
                     httpListenerId is null ? default : new NetworkSubResource(httpListenerId, default),
                     urlPathMapId is null ? default : new NetworkSubResource(urlPathMapId, default),
+                    default,
                     rewriteRuleSetId is null ? default : new NetworkSubResource(rewriteRuleSetId, default),
                     redirectConfigurationId is null ? default : new NetworkSubResource(redirectConfigurationId, default),
                     loadDistributionPolicyId is null ? default : new NetworkSubResource(loadDistributionPolicyId, default),
+                    default,
                     default,
                     provisioningState,
                     default),
@@ -16096,6 +17181,7 @@ namespace Azure.ResourceManager.Network.Models
                     provisioningState,
                     ruleSetType,
                     ruleSetVersion,
+                    default,
                     (ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>()).ToList(),
                     (tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>()).ToList(),
                     default));
@@ -16126,7 +17212,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApplicationGatewayWafDynamicManifestData ApplicationGatewayWafDynamicManifestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets = default, string ruleSetType = default, string ruleSetVersion = default)
         {
-            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(ruleSetType is null && ruleSetVersion is null ? default : new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), default);
+            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(ruleSetType is null && ruleSetVersion is null ? default : new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), default);
         }
 
         /// <summary> The serviceName of an AvailableDelegation indicates a possible delegation for a subnet. </summary>
@@ -16211,6 +17297,7 @@ namespace Azure.ResourceManager.Network.Models
                     sku,
                     additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
                     autoscaleConfiguration,
+                    default,
                     default,
                     default),
                 extendedLocation,
@@ -16393,10 +17480,12 @@ namespace Azure.ResourceManager.Network.Models
                     enableKerberos,
                     enableSessionRecording,
                     enablePrivateOnlyBastion,
+                    default,
                     default),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 etag,
-                skuName is null ? default : new NetworkSku(skuName, default));
+                skuName is null ? default : new NetworkSku(skuName, default),
+                default);
         }
 
         /// <summary> IP configuration of an Bastion Host. </summary>
@@ -16812,6 +17901,7 @@ namespace Azure.ResourceManager.Network.Models
                     serviceProviderNotes,
                     serviceProviderProperties,
                     expressRoutePortId is null ? default : new NetworkSubResource(expressRoutePortId, default),
+                    default,
                     bandwidthInGbps,
                     stag,
                     default,
@@ -20329,6 +21419,7 @@ namespace Azure.ResourceManager.Network.Models
                     (httpListeners ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (pathBasedRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     default,
+                    default,
                     default),
                 etag);
         }
@@ -20593,15 +21684,18 @@ namespace Azure.ResourceManager.Network.Models
                     (listeners ?? new ChangeTrackingList<ApplicationGatewayListener>()).ToList(),
                     (sslProfiles ?? new ChangeTrackingList<ApplicationGatewaySslProfile>()).ToList(),
                     (urlPathMaps ?? new ChangeTrackingList<ApplicationGatewayUrlPathMap>()).ToList(),
+                    default,
                     (requestRoutingRules ?? new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>()).ToList(),
                     (routingRules ?? new ChangeTrackingList<ApplicationGatewayRoutingRule>()).ToList(),
                     (rewriteRuleSets ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>()).ToList(),
+                    default,
                     (redirectConfigurations ?? new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>()).ToList(),
                     webApplicationFirewallConfiguration,
                     firewallPolicyId is null ? default : new NetworkSubResource(firewallPolicyId, default),
                     enableHttp2,
                     enableFips,
                     autoscaleConfiguration,
+                    default,
                     (privateLinkConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>()).ToList(),
                     (privateEndpointConnections ?? new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>()).ToList(),
                     resourceGuid,
@@ -20744,9 +21838,11 @@ namespace Azure.ResourceManager.Network.Models
                     backendHttpSettingsId is null ? default : new NetworkSubResource(backendHttpSettingsId, default),
                     httpListenerId is null ? default : new NetworkSubResource(httpListenerId, default),
                     urlPathMapId is null ? default : new NetworkSubResource(urlPathMapId, default),
+                    default,
                     rewriteRuleSetId is null ? default : new NetworkSubResource(rewriteRuleSetId, default),
                     redirectConfigurationId is null ? default : new NetworkSubResource(redirectConfigurationId, default),
                     loadDistributionPolicyId is null ? default : new NetworkSubResource(loadDistributionPolicyId, default),
+                    default,
                     default,
                     provisioningState,
                     default),
@@ -21156,6 +22252,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
                     autoscaleConfiguration,
                     default,
+                    default,
                     default),
                 default,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
@@ -21317,10 +22414,12 @@ namespace Azure.ResourceManager.Network.Models
                     enableKerberos,
                     default,
                     default,
+                    default,
                     default),
                 default,
                 etag,
-                skuName is null ? default : new NetworkSku(skuName, default));
+                skuName is null ? default : new NetworkSku(skuName, default),
+                default);
         }
 
         /// <summary> Bastion Host resource. </summary>
@@ -21369,10 +22468,12 @@ namespace Azure.ResourceManager.Network.Models
                     enableKerberos,
                     default,
                     default,
+                    default,
                     default),
                 default,
                 etag,
-                skuName is null ? default : new NetworkSku(skuName, default));
+                skuName is null ? default : new NetworkSku(skuName, default),
+                default);
         }
 
         /// <summary> FirewallPolicy Resource. </summary>
@@ -22236,10 +23337,12 @@ namespace Azure.ResourceManager.Network.Models
                     enableKerberos,
                     enableSessionRecording,
                     default,
+                    default,
                     default),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 etag,
-                skuName is null ? default : new NetworkSku(skuName, default));
+                skuName is null ? default : new NetworkSku(skuName, default),
+                default);
         }
 
         /// <summary> Defines the security admin configuration. </summary>
@@ -22419,6 +23522,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
                     default,
                     default,
+                    default,
                     default),
                 default,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
@@ -22472,10 +23576,12 @@ namespace Azure.ResourceManager.Network.Models
                     enableKerberos,
                     default,
                     default,
+                    default,
                     default),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 etag,
-                skuName is null ? default : new NetworkSku(skuName, default));
+                skuName is null ? default : new NetworkSku(skuName, default),
+                default);
         }
 
         /// <summary> Authorization in an ExpressRouteCircuit resource. </summary>
@@ -22598,6 +23704,7 @@ namespace Azure.ResourceManager.Network.Models
                     managedRules,
                     (httpListeners ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (pathBasedRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    default,
                     default,
                     default),
                 etag);
@@ -22758,6 +23865,7 @@ namespace Azure.ResourceManager.Network.Models
                     serviceProviderNotes,
                     serviceProviderProperties,
                     expressRoutePortId is null ? default : new NetworkSubResource(expressRoutePortId, default),
+                    default,
                     bandwidthInGbps,
                     stag,
                     default,

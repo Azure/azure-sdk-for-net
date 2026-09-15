@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(EnableOnlyIPv6Peering))
             {
-                writer.WritePropertyName("enableOnlyIpv6Peering"u8);
-                writer.WriteStringValue(EnableOnlyIPv6Peering.Value.ToString());
+                writer.WritePropertyName("enableOnlyIPv6Peering"u8);
+                writer.WriteBooleanValue(EnableOnlyIPv6Peering.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource connectionPolicy = default;
             bool? enableInternetSecurity = default;
             RoutingConfigurationNfv routingConfiguration = default;
-            EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default;
+            bool? enableOnlyIPv6Peering = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -221,13 +221,13 @@ namespace Azure.ResourceManager.Network.Models
                     routingConfiguration = RoutingConfigurationNfv.DeserializeRoutingConfigurationNfv(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("enableOnlyIpv6Peering"u8))
+                if (prop.NameEquals("enableOnlyIPv6Peering"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableOnlyIPv6Peering = new EnableOnlyIPv6PeeringState(prop.Value.GetString());
+                    enableOnlyIPv6Peering = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
