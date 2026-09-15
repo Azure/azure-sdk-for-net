@@ -79,8 +79,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 throw new FormatException($"The model {nameof(EdgeSolutionTemplateVersionProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("configurations"u8);
-            writer.WriteStringValue(Configurations);
+            if (Optional.IsDefined(Configurations))
+            {
+                writer.WritePropertyName("configurations"u8);
+                writer.WriteStringValue(Configurations);
+            }
             writer.WritePropertyName("specification"u8);
             writer.WriteStartObject();
             foreach (var item in Specification)
@@ -105,6 +108,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 writer.WritePropertyName("orchestratorType"u8);
                 writer.WriteStringValue(OrchestratorType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(InternalState))
+            {
+                writer.WritePropertyName("internalState"u8);
+                writer.WriteStringValue(InternalState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -156,6 +164,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             string configurations = default;
             IDictionary<string, BinaryData> specification = default;
             SolutionVersionOrchestratorType? orchestratorType = default;
+            InternalState? internalState = default;
             WorkloadOrchestrationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -191,6 +200,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     orchestratorType = new SolutionVersionOrchestratorType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("internalState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    internalState = new InternalState(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -205,7 +223,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EdgeSolutionTemplateVersionProperties(configurations, specification, orchestratorType, provisioningState, additionalBinaryDataProperties);
+            return new EdgeSolutionTemplateVersionProperties(
+                configurations,
+                specification,
+                orchestratorType,
+                internalState,
+                provisioningState,
+                additionalBinaryDataProperties);
         }
     }
 }

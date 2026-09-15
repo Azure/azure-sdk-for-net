@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 throw new FormatException($"The model {nameof(EdgeDynamicSchemaProperties)} does not support writing '{format}' format.");
             }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationType))
             {
                 writer.WritePropertyName("configurationType"u8);
@@ -131,12 +136,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
+            string displayName = default;
             EdgeSchemaConfigurationType? configurationType = default;
             EdgeSchemaConfigurationModelType? configurationModel = default;
             WorkloadOrchestrationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("displayName"u8))
+                {
+                    displayName = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("configurationType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -169,7 +180,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EdgeDynamicSchemaProperties(configurationType, configurationModel, provisioningState, additionalBinaryDataProperties);
+            return new EdgeDynamicSchemaProperties(displayName, configurationType, configurationModel, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

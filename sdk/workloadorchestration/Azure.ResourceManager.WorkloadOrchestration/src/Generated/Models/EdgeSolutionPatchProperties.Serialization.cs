@@ -74,6 +74,31 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 throw new FormatException($"The model {nameof(EdgeSolutionPatchProperties)} does not support writing '{format}' format.");
             }
+            if (options.Format != "W" && Optional.IsDefined(SolutionTemplateId))
+            {
+                writer.WritePropertyName("solutionTemplateId"u8);
+                writer.WriteStringValue(SolutionTemplateId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableSolutionTemplateVersions))
+            {
+                writer.WritePropertyName("availableSolutionTemplateVersions"u8);
+                writer.WriteStartArray();
+                foreach (AvailableSolutionTemplateVersion item in AvailableSolutionTemplateVersions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -116,15 +141,52 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
+            string solutionTemplateId = default;
+            string displayName = default;
+            IReadOnlyList<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = default;
+            WorkloadOrchestrationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("solutionTemplateId"u8))
+                {
+                    solutionTemplateId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("displayName"u8))
+                {
+                    displayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("availableSolutionTemplateVersions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AvailableSolutionTemplateVersion> array = new List<AvailableSolutionTemplateVersion>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AvailableSolutionTemplateVersion.DeserializeAvailableSolutionTemplateVersion(item, options));
+                    }
+                    availableSolutionTemplateVersions = array;
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new WorkloadOrchestrationProvisioningState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EdgeSolutionPatchProperties(additionalBinaryDataProperties);
+            return new EdgeSolutionPatchProperties(solutionTemplateId, displayName, availableSolutionTemplateVersions ?? new ChangeTrackingList<AvailableSolutionTemplateVersion>(), provisioningState, additionalBinaryDataProperties);
         }
     }
 }
