@@ -7,6 +7,8 @@ extends:
     ServiceDirectory: containerservice
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.ResourceManager.ContainerServiceNodeCustomization
+      safeName: AzureResourceManagerContainerServiceNodeCustomization
     - name: Azure.ResourceManager.ContainerService
       safeName: AzureResourceManagerContainerService
     - name: Azure.Provisioning.ContainerService
