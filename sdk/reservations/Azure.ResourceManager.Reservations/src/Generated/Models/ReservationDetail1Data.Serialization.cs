@@ -10,58 +10,66 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Reservations.Models;
+using Azure.ResourceManager.Reservations;
 
-namespace Azure.ResourceManager.Reservations
+namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> The definition of the reservation. </summary>
-    public partial class ReservationDetailData : ResourceData, IJsonModel<ReservationDetailData>
+    public partial class ReservationDetail1Data : ResourceData, IJsonModel<ReservationDetail1Data>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReservationDetailData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationDetail1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeReservationDetailData(document.RootElement, options);
+                        return DeserializeReservationDetail1Data(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationDetailData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationDetail1Data)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReservationDetailData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationDetail1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationDetailData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationDetail1Data)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReservationDetailData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ReservationDetail1Data>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReservationDetailData IPersistableModel<ReservationDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ReservationDetailData)PersistableModelCreateCore(data, options);
+        ReservationDetail1Data IPersistableModel<ReservationDetail1Data>.Create(BinaryData data, ModelReaderWriterOptions options) => (ReservationDetail1Data)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ReservationDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReservationDetail1Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ReservationDetail1Data"/> from. </param>
+        internal static ReservationDetail1Data FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeReservationDetail1Data(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ReservationDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReservationDetail1Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +80,10 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReservationDetailData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationDetail1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationDetailData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationDetail1Data)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -122,24 +130,24 @@ namespace Azure.ResourceManager.Reservations
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReservationDetailData IJsonModel<ReservationDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ReservationDetailData)JsonModelCreateCore(ref reader, options);
+        ReservationDetail1Data IJsonModel<ReservationDetail1Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ReservationDetail1Data)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReservationDetailData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationDetail1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationDetailData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationDetail1Data)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReservationDetailData(document.RootElement, options);
+            return DeserializeReservationDetail1Data(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ReservationDetailData DeserializeReservationDetailData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ReservationDetail1Data DeserializeReservationDetail1Data(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -239,7 +247,7 @@ namespace Azure.ResourceManager.Reservations
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReservationDetailData(
+            return new ReservationDetail1Data(
                 id,
                 name,
                 resourceType,

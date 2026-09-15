@@ -20,47 +20,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public static partial class ArmRedisEnterpriseModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="clientProtocol"> Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols. Default is TLS-encrypted. </param>
-        /// <param name="port"> TCP port of the database endpoint. Specified at create time. Defaults to an available port. </param>
-        /// <param name="provisioningState"> Current provisioning status of the database. </param>
-        /// <param name="resourceState"> Current resource status of the database. </param>
-        /// <param name="clusteringPolicy"> Clustering policy - default is OSSCluster. This property can be updated only if the current value is NoCluster. If the value is OSSCluster or EnterpriseCluster, it cannot be updated without deleting the database. </param>
-        /// <param name="evictionPolicy"> Redis eviction policy - default is VolatileLRU. </param>
-        /// <param name="persistence"> Persistence settings. </param>
-        /// <param name="modules"> Optional set of redis modules to enable in this database - modules can only be added at creation time. </param>
-        /// <param name="geoReplication"> Optional set of properties to configure geo replication for this database. </param>
-        /// <param name="redisVersion"> Version of Redis the database is running on, e.g. '6.0'. </param>
-        /// <param name="deferUpgrade"> Option to defer upgrade when newest version is released - default is NotDeferred. Learn more: https://aka.ms/redisversionupgrade. </param>
-        /// <param name="accessKeysAuthentication"> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </param>
-        /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseDatabaseData"/> instance for mocking. </returns>
-        public static RedisEnterpriseDatabaseData RedisEnterpriseDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterpriseClientProtocol? clientProtocol = default, int? port = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseClusterResourceState? resourceState = default, RedisEnterpriseClusteringPolicy? clusteringPolicy = default, RedisEnterpriseEvictionPolicy? evictionPolicy = default, RedisPersistenceSettings persistence = default, IEnumerable<RedisEnterpriseModule> modules = default, RedisEnterpriseDatabaseGeoReplication geoReplication = default, string redisVersion = default, DeferUpgradeSetting? deferUpgrade = default, AccessKeysAuthentication? accessKeysAuthentication = default)
-        {
-            return new RedisEnterpriseDatabaseData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                clientProtocol is null && port is null && provisioningState is null && resourceState is null && clusteringPolicy is null && evictionPolicy is null && persistence is null && modules is null && geoReplication is null && redisVersion is null && deferUpgrade is null && accessKeysAuthentication is null ? default : new DatabaseCreateProperties(
-                    clientProtocol,
-                    port,
-                    provisioningState,
-                    resourceState,
-                    clusteringPolicy,
-                    evictionPolicy,
-                    persistence,
-                    (modules ?? new ChangeTrackingList<RedisEnterpriseModule>()).ToList(),
-                    geoReplication,
-                    redisVersion,
-                    deferUpgrade,
-                    accessKeysAuthentication,
-                    default),
-                default);
-        }
-
         /// <summary> Persistence-related configuration for the Redis Enterprise database. </summary>
         /// <param name="isAofEnabled"> Sets whether AOF is enabled. Note that at most one of AOF or RDB persistence may be enabled. </param>
         /// <param name="isRdbEnabled"> Sets whether RDB is enabled. Note that at most one of AOF or RDB persistence may be enabled. </param>
@@ -100,6 +59,170 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static RedisEnterpriseLinkedDatabase RedisEnterpriseLinkedDatabase(ResourceIdentifier id = default, RedisEnterpriseDatabaseLinkState? state = default)
         {
             return new RedisEnterpriseLinkedDatabase(id, state, default);
+        }
+
+        /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
+        /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
+        /// <param name="keyEncryptionKeyUri"> Key encryption key Url, versioned only. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78. </param>
+        /// <returns> A new <see cref="Models.RedisEnterpriseCustomerManagedKeyEncryption"/> instance for mocking. </returns>
+        public static RedisEnterpriseCustomerManagedKeyEncryption RedisEnterpriseCustomerManagedKeyEncryption(RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, Uri keyEncryptionKeyUri = default)
+        {
+            return new RedisEnterpriseCustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
+        }
+
+        /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
+        /// <param name="userAssignedIdentityResourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/&lt;sub uuid&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. </param>
+        /// <param name="identityType"> Only userAssignedIdentity is supported in this API version; other types may be supported in the future. </param>
+        /// <returns> A new <see cref="Models.RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity"/> instance for mocking. </returns>
+        public static RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(ResourceIdentifier userAssignedIdentityResourceId = default, RedisEnterpriseCustomerManagedKeyIdentityType? identityType = default)
+        {
+            return new RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(userAssignedIdentityResourceId, identityType, default);
+        }
+
+        /// <param name="type"> Maintenance window type. </param>
+        /// <param name="duration"> Duration in ISO-8601 format, for example 'PT5H'. </param>
+        /// <param name="startHourUtc"> Start hour (0-23) in UTC when the maintenance window begins. </param>
+        /// <param name="scheduleDayOfWeek"> Day of week. Required when the maintenance window type is 'Weekly'. </param>
+        /// <returns> A new <see cref="Models.RedisEnterpriseMaintenanceWindow"/> instance for mocking. </returns>
+        public static RedisEnterpriseMaintenanceWindow RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType @type = default, TimeSpan duration = default, int startHourUtc = default, RedisEnterpriseMaintenanceDayOfWeek? scheduleDayOfWeek = default)
+        {
+            return new RedisEnterpriseMaintenanceWindow(@type, duration, startHourUtc, scheduleDayOfWeek is null ? default : new MaintenanceWindowSchedule(scheduleDayOfWeek, default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
+        /// <returns> A new <see cref="RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> groupIds, RedisEnterprisePrivateLinkServiceConnectionState connectionState, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId)
+        {
+            return new RedisEnterprisePrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                default);
+        }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.RedisEnterprisePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static RedisEnterprisePrivateLinkServiceConnectionState RedisEnterprisePrivateLinkServiceConnectionState(RedisEnterprisePrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new RedisEnterprisePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="highAvailability"> Enabled by default. If highAvailability is disabled, the data set is not replicated. This affects the availability SLA, and increases the risk of data loss. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. Newer versions can be added in the future. Note that TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use them. They are mentioned only for the sake of consistency with old API versions. </param>
+        /// <param name="hostName"> DNS name of the cluster endpoint. </param>
+        /// <param name="provisioningState"> Current provisioning status of the cluster. </param>
+        /// <param name="redundancyMode"> Explains the current redundancy strategy of the cluster, which affects the expected SLA. </param>
+        /// <param name="resourceState"> Current resource status of the cluster. </param>
+        /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified Redis Enterprise cluster. </param>
+        /// <param name="migratedEndpoint"> The endpoint of the source resource that is currently pointing to this resource as a result of an ACR/ACRE to AMR migration. </param>
+        /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </param>
+        /// <param name="maintenanceWindows"> Custom maintenance windows that apply to the cluster. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
+        /// <param name="kind"> Distinguishes the kind of cluster. Read-only. </param>
+        /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseClusterData"/> instance for mocking. </returns>
+        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, string migratedEndpoint, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, IEnumerable<RedisEnterpriseMaintenanceWindow> maintenanceWindows, RedisEnterprisePublicNetworkAccess? publicNetworkAccess, RedisEnterpriseKind? kind, RedisEnterpriseSku sku, IEnumerable<string> zones, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new RedisEnterpriseClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && maintenanceWindows is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && migratedEndpoint is null && publicNetworkAccess is null ? default : new ClusterCreateProperties(
+                    highAvailability,
+                    minimumTlsVersion,
+                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
+                    new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<RedisEnterpriseMaintenanceWindow>()).ToList(), default),
+                    hostName,
+                    provisioningState,
+                    redundancyMode,
+                    resourceState,
+                    redisVersion,
+                    (privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>()).ToList(),
+                    migratedEndpoint,
+                    default,
+                    publicNetworkAccess),
+                kind,
+                sku,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                default);
+        }
+
+        /// <summary> SKU parameters supplied to the create Redis Enterprise cluster operation. </summary>
+        /// <param name="name"> The level of Redis Enterprise cluster to deploy. Possible values: ('Balanced_B5', 'MemoryOptimized_M10', 'ComputeOptimized_X5', etc.). For more information on SKUs see the latest pricing documentation. Note that additional SKUs may become supported in the future. </param>
+        /// <param name="capacity"> This property is only used with Enterprise and EnterpriseFlash SKUs. Determines the size of the cluster. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for EnterpriseFlash SKUs. </param>
+        /// <returns> A new <see cref="Models.RedisEnterpriseSku"/> instance for mocking. </returns>
+        public static RedisEnterpriseSku RedisEnterpriseSku(RedisEnterpriseSkuName name = default, int? capacity = default)
+        {
+            return new RedisEnterpriseSku(name, capacity, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="clientProtocol"> Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols. Default is TLS-encrypted. </param>
+        /// <param name="port"> TCP port of the database endpoint. Specified at create time. Defaults to an available port. </param>
+        /// <param name="provisioningState"> Current provisioning status of the database. </param>
+        /// <param name="resourceState"> Current resource status of the database. </param>
+        /// <param name="clusteringPolicy"> Clustering policy - default is OSSCluster. This property can be updated only if the current value is NoCluster. If the value is OSSCluster or EnterpriseCluster, it cannot be updated without deleting the database. </param>
+        /// <param name="evictionPolicy"> Redis eviction policy - default is VolatileLRU. </param>
+        /// <param name="persistence"> Persistence settings. </param>
+        /// <param name="modules"> Optional set of redis modules to enable in this database - modules can only be added at creation time. </param>
+        /// <param name="geoReplication"> Optional set of properties to configure geo replication for this database. </param>
+        /// <param name="redisVersion"> Version of Redis the database is running on, e.g. '6.0'. </param>
+        /// <param name="deferUpgrade"> Option to defer upgrade when newest version is released - default is NotDeferred. Learn more: https://aka.ms/redisversionupgrade. </param>
+        /// <param name="accessKeysAuthentication"> This property can be Enabled/Disabled to allow or deny access with the current access keys. Can be updated even after database is created. </param>
+        /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseDatabaseData"/> instance for mocking. </returns>
+        public static RedisEnterpriseDatabaseData RedisEnterpriseDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterpriseClientProtocol? clientProtocol = default, int? port = default, RedisEnterpriseProvisioningStatus? provisioningState = default, RedisEnterpriseClusterResourceState? resourceState = default, RedisEnterpriseClusteringPolicy? clusteringPolicy = default, RedisEnterpriseEvictionPolicy? evictionPolicy = default, RedisPersistenceSettings persistence = default, IEnumerable<RedisEnterpriseModule> modules = default, RedisEnterpriseDatabaseGeoReplication geoReplication = default, string redisVersion = default, DeferUpgradeSetting? deferUpgrade = default, AccessKeysAuthentication? accessKeysAuthentication = default)
+        {
+            return new RedisEnterpriseDatabaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                clientProtocol is null && port is null && provisioningState is null && resourceState is null && clusteringPolicy is null && evictionPolicy is null && persistence is null && modules is null && geoReplication is null && redisVersion is null && deferUpgrade is null && accessKeysAuthentication is null ? default : new DatabaseCreateProperties(
+                    clientProtocol,
+                    port,
+                    provisioningState,
+                    resourceState,
+                    clusteringPolicy,
+                    evictionPolicy,
+                    persistence,
+                    (modules ?? new ChangeTrackingList<RedisEnterpriseModule>()).ToList(),
+                    geoReplication,
+                    redisVersion,
+                    deferUpgrade,
+                    accessKeysAuthentication,
+                    default),
+                default);
         }
 
         /// <param name="clientProtocol"> Specifies whether redis clients can connect using TLS-encrypted or plaintext redis protocols. Default is TLS-encrypted. </param>
@@ -207,54 +330,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new FlushRedisEnterpriseDatabaseContent((ids ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
-        /// <returns> A new <see cref="RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static RedisEnterprisePrivateEndpointConnectionData RedisEnterprisePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> groupIds, RedisEnterprisePrivateLinkServiceConnectionState connectionState, RedisEnterprisePrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId)
-        {
-            return new RedisEnterprisePrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
-        }
-
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.RedisEnterprisePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static RedisEnterprisePrivateLinkServiceConnectionState RedisEnterprisePrivateLinkServiceConnectionState(RedisEnterprisePrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
-        {
-            return new RedisEnterprisePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
-        }
-
-        /// <summary> Describes the current migration operation on a Redis Enterprise cluster. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the migration operation. </param>
-        /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseMigrationData"/> instance for mocking. </returns>
-        public static RedisEnterpriseMigrationData RedisEnterpriseMigrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterpriseMigrationProperties properties = default)
-        {
-            return new RedisEnterpriseMigrationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary>
         /// Properties for Redis Enterprise migration operation.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureCacheForRedisMigrationProperties"/>.
@@ -303,6 +378,24 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 isSwitchDns,
                 isSkipDataMigration,
                 isForceMigrate);
+        }
+
+        /// <summary> Describes the current migration operation on a Redis Enterprise cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the migration operation. </param>
+        /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseMigrationData"/> instance for mocking. </returns>
+        public static RedisEnterpriseMigrationData RedisEnterpriseMigrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RedisEnterpriseMigrationProperties properties = default)
+        {
+            return new RedisEnterpriseMigrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Properties for validating migration from Azure Cache for Redis to Redis Enterprise. </summary>
@@ -355,99 +448,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             disparities ??= new ChangeTrackingList<RedisEnterpriseMigrationValidationDisparity>();
 
             return new RedisEnterpriseMigrationValidationWarning((disparities ?? new ChangeTrackingList<RedisEnterpriseMigrationValidationDisparity>()).ToList(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="highAvailability"> Enabled by default. If highAvailability is disabled, the data set is not replicated. This affects the availability SLA, and increases the risk of data loss. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. Newer versions can be added in the future. Note that TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use them. They are mentioned only for the sake of consistency with old API versions. </param>
-        /// <param name="hostName"> DNS name of the cluster endpoint. </param>
-        /// <param name="provisioningState"> Current provisioning status of the cluster. </param>
-        /// <param name="redundancyMode"> Explains the current redundancy strategy of the cluster, which affects the expected SLA. </param>
-        /// <param name="resourceState"> Current resource status of the cluster. </param>
-        /// <param name="redisVersion"> Version of redis the cluster supports, e.g. '6'. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified Redis Enterprise cluster. </param>
-        /// <param name="migratedEndpoint"> The endpoint of the source resource that is currently pointing to this resource as a result of an ACR/ACRE to AMR migration. </param>
-        /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </param>
-        /// <param name="maintenanceWindows"> Custom maintenance windows that apply to the cluster. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
-        /// <param name="kind"> Distinguishes the kind of cluster. Read-only. </param>
-        /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseClusterData"/> instance for mocking. </returns>
-        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, string migratedEndpoint, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, IEnumerable<RedisEnterpriseMaintenanceWindow> maintenanceWindows, RedisEnterprisePublicNetworkAccess? publicNetworkAccess, RedisEnterpriseKind? kind, RedisEnterpriseSku sku, IEnumerable<string> zones, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new RedisEnterpriseClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && maintenanceWindows is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && migratedEndpoint is null && publicNetworkAccess is null ? default : new ClusterCreateProperties(
-                    highAvailability,
-                    minimumTlsVersion,
-                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                    new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<RedisEnterpriseMaintenanceWindow>()).ToList(), default),
-                    hostName,
-                    provisioningState,
-                    redundancyMode,
-                    resourceState,
-                    redisVersion,
-                    (privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>()).ToList(),
-                    migratedEndpoint,
-                    default,
-                    publicNetworkAccess),
-                kind,
-                sku,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                identity,
-                default);
-        }
-
-        /// <summary> All Customer-managed key encryption properties for the resource. Set this to an empty object to use Microsoft-managed key encryption. </summary>
-        /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
-        /// <param name="keyEncryptionKeyUri"> Key encryption key Url, versioned only. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78. </param>
-        /// <returns> A new <see cref="Models.RedisEnterpriseCustomerManagedKeyEncryption"/> instance for mocking. </returns>
-        public static RedisEnterpriseCustomerManagedKeyEncryption RedisEnterpriseCustomerManagedKeyEncryption(RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, Uri keyEncryptionKeyUri = default)
-        {
-            return new RedisEnterpriseCustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
-        }
-
-        /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
-        /// <param name="userAssignedIdentityResourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/&lt;sub uuid&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. </param>
-        /// <param name="identityType"> Only userAssignedIdentity is supported in this API version; other types may be supported in the future. </param>
-        /// <returns> A new <see cref="Models.RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity"/> instance for mocking. </returns>
-        public static RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(ResourceIdentifier userAssignedIdentityResourceId = default, RedisEnterpriseCustomerManagedKeyIdentityType? identityType = default)
-        {
-            return new RedisEnterpriseCustomerManagedKeyEncryptionKeyIdentity(userAssignedIdentityResourceId, identityType, default);
-        }
-
-        /// <param name="type"> Maintenance window type. </param>
-        /// <param name="duration"> Duration in ISO-8601 format, for example 'PT5H'. </param>
-        /// <param name="startHourUtc"> Start hour (0-23) in UTC when the maintenance window begins. </param>
-        /// <param name="scheduleDayOfWeek"> Day of week. Required when the maintenance window type is 'Weekly'. </param>
-        /// <returns> A new <see cref="Models.RedisEnterpriseMaintenanceWindow"/> instance for mocking. </returns>
-        public static RedisEnterpriseMaintenanceWindow RedisEnterpriseMaintenanceWindow(RedisEnterpriseMaintenanceWindowType @type = default, TimeSpan duration = default, int startHourUtc = default, RedisEnterpriseMaintenanceDayOfWeek? scheduleDayOfWeek = default)
-        {
-            return new RedisEnterpriseMaintenanceWindow(@type, duration, startHourUtc, scheduleDayOfWeek is null ? default : new MaintenanceWindowSchedule(scheduleDayOfWeek, default), default);
-        }
-
-        /// <summary> SKU parameters supplied to the create Redis Enterprise cluster operation. </summary>
-        /// <param name="name"> The level of Redis Enterprise cluster to deploy. Possible values: ('Balanced_B5', 'MemoryOptimized_M10', 'ComputeOptimized_X5', etc.). For more information on SKUs see the latest pricing documentation. Note that additional SKUs may become supported in the future. </param>
-        /// <param name="capacity"> This property is only used with Enterprise and EnterpriseFlash SKUs. Determines the size of the cluster. Valid values are (2, 4, 6, ...) for Enterprise SKUs and (3, 9, 15, ...) for EnterpriseFlash SKUs. </param>
-        /// <returns> A new <see cref="Models.RedisEnterpriseSku"/> instance for mocking. </returns>
-        public static RedisEnterpriseSku RedisEnterpriseSku(RedisEnterpriseSkuName name = default, int? capacity = default)
-        {
-            return new RedisEnterpriseSku(name, capacity, default);
         }
 
         /// <param name="sku"> The SKU to create, which affects price, performance, and features. </param>

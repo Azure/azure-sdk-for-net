@@ -23,6 +23,86 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="connectionState"> Details about the state of the connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
+        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="Relay.RelayPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayPrivateLinkServiceConnectionState connectionState, RelayPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, AzureLocation? location)
+        {
+            return new RelayPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                location,
+                default);
+        }
+
+        /// <summary> ConnectionState information. </summary>
+        /// <param name="status"> Status of the connection. </param>
+        /// <param name="description"> Description of the connection state. </param>
+        /// <returns> A new <see cref="Models.RelayPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static RelayPrivateLinkServiceConnectionState RelayPrivateLinkServiceConnectionState(RelayPrivateLinkConnectionStatus? status = default, string description = default)
+        {
+            return new RelayPrivateLinkServiceConnectionState(status, description, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
+        /// <param name="status"> Status of the Namespace. </param>
+        /// <param name="createdOn"> The time the namespace was created. </param>
+        /// <param name="updatedOn"> The time the namespace was updated. </param>
+        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
+        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="sku"> SKU of the namespace. </param>
+        /// <returns> A new <see cref="Relay.RelayNamespaceData"/> instance for mocking. </returns>
+        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelaySku sku)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RelayNamespaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new RelayNamespaceProperties(
+                    provisioningState,
+                    status,
+                    createdOn,
+                    updatedOn,
+                    serviceBusEndpoint,
+                    metricId,
+                    (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
+                    publicNetworkAccess,
+                    default),
+                sku,
+                default);
+        }
+
+        /// <summary> SKU of the namespace. </summary>
+        /// <param name="name"> Name of this SKU. </param>
+        /// <param name="tier"> The tier of this SKU. </param>
+        /// <returns> A new <see cref="Models.RelaySku"/> instance for mocking. </returns>
+        public static RelaySku RelaySku(RelaySkuName name = default, RelaySkuTier? tier = default)
+        {
+            return new RelaySku(name, tier, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Relay.RelayAuthorizationRuleData"/> instance for mocking. </returns>
@@ -133,36 +213,6 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> Details about the state of the connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Relay.RelayPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RelayPrivateLinkServiceConnectionState connectionState, RelayPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, AzureLocation? location)
-        {
-            return new RelayPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                location,
-                default);
-        }
-
-        /// <summary> ConnectionState information. </summary>
-        /// <param name="status"> Status of the connection. </param>
-        /// <param name="description"> Description of the connection state. </param>
-        /// <returns> A new <see cref="Models.RelayPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static RelayPrivateLinkServiceConnectionState RelayPrivateLinkServiceConnectionState(RelayPrivateLinkConnectionStatus? status = default, string description = default)
-        {
-            return new RelayPrivateLinkServiceConnectionState(status, description, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
@@ -176,56 +226,6 @@ namespace Azure.ResourceManager.Relay.Models
                 systemData,
                 groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new RelayPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
-        /// <param name="status"> Status of the Namespace. </param>
-        /// <param name="createdOn"> The time the namespace was created. </param>
-        /// <param name="updatedOn"> The time the namespace was updated. </param>
-        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
-        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        /// <param name="sku"> SKU of the namespace. </param>
-        /// <returns> A new <see cref="Relay.RelayNamespaceData"/> instance for mocking. </returns>
-        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelaySku sku)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new RelayNamespaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new RelayNamespaceProperties(
-                    provisioningState,
-                    status,
-                    createdOn,
-                    updatedOn,
-                    serviceBusEndpoint,
-                    metricId,
-                    (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
-                    publicNetworkAccess,
-                    default),
-                sku,
-                default);
-        }
-
-        /// <summary> SKU of the namespace. </summary>
-        /// <param name="name"> Name of this SKU. </param>
-        /// <param name="tier"> The tier of this SKU. </param>
-        /// <returns> A new <see cref="Models.RelaySku"/> instance for mocking. </returns>
-        public static RelaySku RelaySku(RelaySkuName name = default, RelaySkuTier? tier = default)
-        {
-            return new RelaySku(name, tier, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -267,6 +267,15 @@ namespace Azure.ResourceManager.Relay.Models
                 default);
         }
 
+        /// <summary> The response from the List namespace operation. </summary>
+        /// <param name="ipMask"> IP Mask. </param>
+        /// <param name="action"> The IP Filter Action. </param>
+        /// <returns> A new <see cref="Models.RelayNetworkRuleSetIPRule"/> instance for mocking. </returns>
+        public static RelayNetworkRuleSetIPRule RelayNetworkRuleSetIPRule(string ipMask = default, RelayNetworkRuleIPAction? action = default)
+        {
+            return new RelayNetworkRuleSetIPRule(ipMask, action, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -285,15 +294,6 @@ namespace Azure.ResourceManager.Relay.Models
                 systemData,
                 trustedServiceAccessEnabled is null && defaultAction is null && publicNetworkAccess is null && ipRules is null ? default : new NetworkRuleSetProperties(trustedServiceAccessEnabled, defaultAction, publicNetworkAccess, (ipRules ?? new ChangeTrackingList<RelayNetworkRuleSetIPRule>()).ToList(), default),
                 default);
-        }
-
-        /// <summary> The response from the List namespace operation. </summary>
-        /// <param name="ipMask"> IP Mask. </param>
-        /// <param name="action"> The IP Filter Action. </param>
-        /// <returns> A new <see cref="Models.RelayNetworkRuleSetIPRule"/> instance for mocking. </returns>
-        public static RelayNetworkRuleSetIPRule RelayNetworkRuleSetIPRule(string ipMask = default, RelayNetworkRuleIPAction? action = default)
-        {
-            return new RelayNetworkRuleSetIPRule(ipMask, action, default);
         }
 
         /// <summary> Description of the check name availability request properties. </summary>

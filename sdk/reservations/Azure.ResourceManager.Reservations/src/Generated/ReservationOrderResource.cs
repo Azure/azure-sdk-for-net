@@ -881,11 +881,11 @@ namespace Azure.ResourceManager.Reservations
             }
         }
 
-        /// <summary> Gets a collection of ReservationDetails in the <see cref="ReservationOrderResource"/>. </summary>
-        /// <returns> An object representing collection of ReservationDetails and their operations over a ReservationDetailResource. </returns>
-        public virtual ReservationDetailCollection GetReservationDetails()
+        /// <summary> Gets a collection of ReservationDetail1s in the <see cref="ReservationOrderResource"/>. </summary>
+        /// <returns> An object representing collection of ReservationDetail1s and their operations over a ReservationDetail1Resource. </returns>
+        public virtual ReservationDetail1Collection GetReservationDetail1s()
         {
-            return GetCachedClient(client => new ReservationDetailCollection(client, Id));
+            return GetCachedClient(client => new ReservationDetail1Collection(client, Id));
         }
 
         /// <summary> Get specific `Reservation` details. </summary>
@@ -893,9 +893,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ReservationDetailResource>> GetReservationDetailAsync(Guid reservationId, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReservationDetail1Data>> GetReservationDetail1Async(Guid reservationId, string expand = default, CancellationToken cancellationToken = default)
         {
-            return await GetReservationDetails().GetAsync(reservationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetReservationDetail1s().GetAsync(reservationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get specific `Reservation` details. </summary>
@@ -903,9 +903,9 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ReservationDetailResource> GetReservationDetail(Guid reservationId, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<ReservationDetail1Data> GetReservationDetail1(Guid reservationId, string expand = default, CancellationToken cancellationToken = default)
         {
-            return GetReservationDetails().Get(reservationId, expand, cancellationToken);
+            return GetReservationDetail1s().Get(reservationId, expand, cancellationToken);
         }
     }
 }

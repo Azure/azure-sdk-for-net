@@ -19,78 +19,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmResourcesDeploymentStacksModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="error"> The error detail. </param>
-        /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
-        /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
-        /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. Use this element when providing the parameter values directly in the request, rather than linking to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. </param>
-        /// <param name="parametersLink"> The URI of parameters file. Use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
-        /// <param name="extensionConfigs"> The deployment extension configs. Keys of this object are extension aliases as defined in the deployment template. </param>
-        /// <param name="externalInputs"> External input values, used by external tooling for parameter evaluation. </param>
-        /// <param name="externalInputDefinitions"> External input definitions, used by external tooling to define expected external input values. </param>
-        /// <param name="actionOnUnmanage"> Defines the behavior of resources that are no longer managed after the Deployment stack is updated or deleted. </param>
-        /// <param name="deploymentScope"> The scope at which the initial deployment should be created. If a scope is not specified, it will default to the scope of the deployment stack. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroupId}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'). </param>
-        /// <param name="description"> Deployment stack description. Max length of 4096 characters. </param>
-        /// <param name="denySettings"> Defines how resources deployed by the stack are locked. </param>
-        /// <param name="provisioningState"> State of the deployment stack. </param>
-        /// <param name="correlationId"> The correlation id of the last Deployment stack upsert or delete operation. It is in GUID format and is used for tracing. </param>
-        /// <param name="validationLevel"> The validation level of the deployment stack. </param>
-        /// <param name="bypassStackOutOfSyncError"> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </param>
-        /// <param name="detachedResources"> An array of resources that were detached during the most recent Deployment stack update. Detached means that the resource was removed from the template, but no relevant deletion operations were specified. So, the resource still exists while no longer being associated with the stack. </param>
-        /// <param name="deletedResources"> An array of resources that were deleted during the most recent Deployment stack update. Deleted means that the resource was removed from the template and relevant deletion operations were specified. </param>
-        /// <param name="failedResources"> An array of resources that failed to reach goal state during the most recent update. Each resourceId is accompanied by an error message. </param>
-        /// <param name="resources"> An array of resources currently managed by the deployment stack. </param>
-        /// <param name="deploymentExtensions"> The extensions used during deployment. Contains extension data for all extensible resources managed by the stack. </param>
-        /// <param name="deploymentId"> The resourceId of the deployment resource created by the deployment stack. </param>
-        /// <param name="outputs"> The outputs of the deployment resource created by the deployment stack. </param>
-        /// <param name="duration"> The duration of the last successful Deployment stack update. </param>
-        /// <param name="debugSettingDetailLevel"> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information that is being passed in during deployment. By logging information about the request or response, sensitive data that is retrieved through the deployment operations could potentially be exposed. </param>
-        /// <param name="location"> The geo-location where the resource lives. Required for subscription and management group scoped stacks. The location is inherited from the resource group for resource group scoped stacks. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="DeploymentStacks.DeploymentStackData"/> instance for mocking. </returns>
-        public static DeploymentStackData DeploymentStackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResponseError error = default, BinaryData template = default, DeploymentStacksTemplateLink templateLink = default, IDictionary<string, DeploymentParameterItem> parameters = default, DeploymentStacksParametersLink parametersLink = default, IDictionary<string, DeploymentExtensionConfig> extensionConfigs = default, IDictionary<string, DeploymentExternalInput> externalInputs = default, IDictionary<string, DeploymentExternalInputDefinition> externalInputDefinitions = default, ActionOnUnmanage actionOnUnmanage = default, string deploymentScope = default, string description = default, DeploymentStackDenySettings denySettings = default, DeploymentStackProvisioningState? provisioningState = default, string correlationId = default, DeploymentStackValidationLevel? validationLevel = default, bool? bypassStackOutOfSyncError = default, IEnumerable<DeploymentStackResourceReference> detachedResources = default, IEnumerable<DeploymentStackResourceReference> deletedResources = default, IEnumerable<DeploymentStackResourceReferenceExtended> failedResources = default, IEnumerable<DeploymentStackManagedResourceReference> resources = default, IEnumerable<DeploymentExtension> deploymentExtensions = default, string deploymentId = default, BinaryData outputs = default, TimeSpan? duration = default, string debugSettingDetailLevel = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DeploymentStackData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                error is null && template is null && templateLink is null && parameters is null && parametersLink is null && extensionConfigs is null && externalInputs is null && externalInputDefinitions is null && actionOnUnmanage is null && debugSettingDetailLevel is null && deploymentScope is null && description is null && denySettings is null && provisioningState is null && correlationId is null && validationLevel is null && bypassStackOutOfSyncError is null && detachedResources is null && deletedResources is null && failedResources is null && resources is null && deploymentExtensions is null && deploymentId is null && outputs is null && duration is null ? default : new DeploymentStackProperties(
-                    error,
-                    template,
-                    templateLink,
-                    parameters ?? new ChangeTrackingDictionary<string, DeploymentParameterItem>(),
-                    parametersLink,
-                    extensionConfigs ?? new ChangeTrackingDictionary<string, DeploymentExtensionConfig>(),
-                    externalInputs ?? new ChangeTrackingDictionary<string, DeploymentExternalInput>(),
-                    externalInputDefinitions ?? new ChangeTrackingDictionary<string, DeploymentExternalInputDefinition>(),
-                    actionOnUnmanage,
-                    new DeploymentStacksDebugSetting(debugSettingDetailLevel, default),
-                    deploymentScope,
-                    description,
-                    denySettings,
-                    provisioningState,
-                    correlationId,
-                    validationLevel,
-                    bypassStackOutOfSyncError,
-                    (detachedResources ?? new ChangeTrackingList<DeploymentStackResourceReference>()).ToList(),
-                    (deletedResources ?? new ChangeTrackingList<DeploymentStackResourceReference>()).ToList(),
-                    (failedResources ?? new ChangeTrackingList<DeploymentStackResourceReferenceExtended>()).ToList(),
-                    (resources ?? new ChangeTrackingList<DeploymentStackManagedResourceReference>()).ToList(),
-                    (deploymentExtensions ?? new ChangeTrackingList<DeploymentExtension>()).ToList(),
-                    deploymentId,
-                    outputs,
-                    duration,
-                    default),
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
 
         /// <summary> The resource management error additional info. </summary>
         /// <param name="type"> The additional info type. </param>
@@ -272,6 +200,79 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 denyStatus);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="error"> The error detail. </param>
+        /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="parameters"> Name and value pairs that define the deployment parameters for the template. Use this element when providing the parameter values directly in the request, rather than linking to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. </param>
+        /// <param name="parametersLink"> The URI of parameters file. Use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
+        /// <param name="extensionConfigs"> The deployment extension configs. Keys of this object are extension aliases as defined in the deployment template. </param>
+        /// <param name="externalInputs"> External input values, used by external tooling for parameter evaluation. </param>
+        /// <param name="externalInputDefinitions"> External input definitions, used by external tooling to define expected external input values. </param>
+        /// <param name="actionOnUnmanage"> Defines the behavior of resources that are no longer managed after the Deployment stack is updated or deleted. </param>
+        /// <param name="deploymentScope"> The scope at which the initial deployment should be created. If a scope is not specified, it will default to the scope of the deployment stack. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroupId}'), subscription (format: '/subscriptions/{subscriptionId}'), resource group (format: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}'). </param>
+        /// <param name="description"> Deployment stack description. Max length of 4096 characters. </param>
+        /// <param name="denySettings"> Defines how resources deployed by the stack are locked. </param>
+        /// <param name="provisioningState"> State of the deployment stack. </param>
+        /// <param name="correlationId"> The correlation id of the last Deployment stack upsert or delete operation. It is in GUID format and is used for tracing. </param>
+        /// <param name="validationLevel"> The validation level of the deployment stack. </param>
+        /// <param name="bypassStackOutOfSyncError"> Flag to bypass service errors that indicate the stack resource list is not correctly synchronized. </param>
+        /// <param name="detachedResources"> An array of resources that were detached during the most recent Deployment stack update. Detached means that the resource was removed from the template, but no relevant deletion operations were specified. So, the resource still exists while no longer being associated with the stack. </param>
+        /// <param name="deletedResources"> An array of resources that were deleted during the most recent Deployment stack update. Deleted means that the resource was removed from the template and relevant deletion operations were specified. </param>
+        /// <param name="failedResources"> An array of resources that failed to reach goal state during the most recent update. Each resourceId is accompanied by an error message. </param>
+        /// <param name="resources"> An array of resources currently managed by the deployment stack. </param>
+        /// <param name="deploymentExtensions"> The extensions used during deployment. Contains extension data for all extensible resources managed by the stack. </param>
+        /// <param name="deploymentId"> The resourceId of the deployment resource created by the deployment stack. </param>
+        /// <param name="outputs"> The outputs of the deployment resource created by the deployment stack. </param>
+        /// <param name="duration"> The duration of the last successful Deployment stack update. </param>
+        /// <param name="debugSettingDetailLevel"> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information that is being passed in during deployment. By logging information about the request or response, sensitive data that is retrieved through the deployment operations could potentially be exposed. </param>
+        /// <param name="location"> The geo-location where the resource lives. Required for subscription and management group scoped stacks. The location is inherited from the resource group for resource group scoped stacks. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="DeploymentStacks.DeploymentStackData"/> instance for mocking. </returns>
+        public static DeploymentStackData DeploymentStackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResponseError error = default, BinaryData template = default, DeploymentStacksTemplateLink templateLink = default, IDictionary<string, DeploymentParameterItem> parameters = default, DeploymentStacksParametersLink parametersLink = default, IDictionary<string, DeploymentExtensionConfig> extensionConfigs = default, IDictionary<string, DeploymentExternalInput> externalInputs = default, IDictionary<string, DeploymentExternalInputDefinition> externalInputDefinitions = default, ActionOnUnmanage actionOnUnmanage = default, string deploymentScope = default, string description = default, DeploymentStackDenySettings denySettings = default, DeploymentStackProvisioningState? provisioningState = default, string correlationId = default, DeploymentStackValidationLevel? validationLevel = default, bool? bypassStackOutOfSyncError = default, IEnumerable<DeploymentStackResourceReference> detachedResources = default, IEnumerable<DeploymentStackResourceReference> deletedResources = default, IEnumerable<DeploymentStackResourceReferenceExtended> failedResources = default, IEnumerable<DeploymentStackManagedResourceReference> resources = default, IEnumerable<DeploymentExtension> deploymentExtensions = default, string deploymentId = default, BinaryData outputs = default, TimeSpan? duration = default, string debugSettingDetailLevel = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DeploymentStackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                error is null && template is null && templateLink is null && parameters is null && parametersLink is null && extensionConfigs is null && externalInputs is null && externalInputDefinitions is null && actionOnUnmanage is null && debugSettingDetailLevel is null && deploymentScope is null && description is null && denySettings is null && provisioningState is null && correlationId is null && validationLevel is null && bypassStackOutOfSyncError is null && detachedResources is null && deletedResources is null && failedResources is null && resources is null && deploymentExtensions is null && deploymentId is null && outputs is null && duration is null ? default : new DeploymentStackProperties(
+                    error,
+                    template,
+                    templateLink,
+                    parameters ?? new ChangeTrackingDictionary<string, DeploymentParameterItem>(),
+                    parametersLink,
+                    extensionConfigs ?? new ChangeTrackingDictionary<string, DeploymentExtensionConfig>(),
+                    externalInputs ?? new ChangeTrackingDictionary<string, DeploymentExternalInput>(),
+                    externalInputDefinitions ?? new ChangeTrackingDictionary<string, DeploymentExternalInputDefinition>(),
+                    actionOnUnmanage,
+                    new DeploymentStacksDebugSetting(debugSettingDetailLevel, default),
+                    deploymentScope,
+                    description,
+                    denySettings,
+                    provisioningState,
+                    correlationId,
+                    validationLevel,
+                    bypassStackOutOfSyncError,
+                    (detachedResources ?? new ChangeTrackingList<DeploymentStackResourceReference>()).ToList(),
+                    (deletedResources ?? new ChangeTrackingList<DeploymentStackResourceReference>()).ToList(),
+                    (failedResources ?? new ChangeTrackingList<DeploymentStackResourceReferenceExtended>()).ToList(),
+                    (resources ?? new ChangeTrackingList<DeploymentStackManagedResourceReference>()).ToList(),
+                    (deploymentExtensions ?? new ChangeTrackingList<DeploymentExtension>()).ToList(),
+                    deploymentId,
+                    outputs,
+                    duration,
+                    default),
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
         /// <summary> The Deployment stack validation result. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -331,30 +332,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         public static DeploymentStackTemplateExportResult DeploymentStackTemplateExportResult(BinaryData template = default, DeploymentStacksTemplateLink templateLink = default)
         {
             return new DeploymentStackTemplateExportResult(template, templateLink, default);
-        }
-
-        /// <summary> Deployment stack object. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="location"> The geo-location where the resource lives. Required for subscription and management group scoped stacks. The location is inherited from the resource group for resource group scoped stacks. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="DeploymentStacks.DeploymentStackWhatIfResultData"/> instance for mocking. </returns>
-        public static DeploymentStackWhatIfResultData DeploymentStackWhatIfResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeploymentStackWhatIfResultProperties properties = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DeploymentStackWhatIfResultData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
         }
 
         /// <param name="error"> The error detail. </param>
@@ -546,6 +523,30 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                 message,
                 target,
                 (additionalInfo ?? new ChangeTrackingList<DeploymentStackAdditionalErrorInfo>()).ToList(),
+                default);
+        }
+
+        /// <summary> Deployment stack object. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. Required for subscription and management group scoped stacks. The location is inherited from the resource group for resource group scoped stacks. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="DeploymentStacks.DeploymentStackWhatIfResultData"/> instance for mocking. </returns>
+        public static DeploymentStackWhatIfResultData DeploymentStackWhatIfResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeploymentStackWhatIfResultProperties properties = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DeploymentStackWhatIfResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 

@@ -67,6 +67,8 @@ namespace Azure.ResourceManager.Reservations
     [ModelReaderWriterBuildable(typeof(ReservationCalculateRefundResult))]
     [ModelReaderWriterBuildable(typeof(ReservationCatalog))]
     [ModelReaderWriterBuildable(typeof(ReservationCatalogMsrp))]
+    [ModelReaderWriterBuildable(typeof(ReservationDetail1Data))]
+    [ModelReaderWriterBuildable(typeof(ReservationDetail1Resource))]
     [ModelReaderWriterBuildable(typeof(ReservationDetailData))]
     [ModelReaderWriterBuildable(typeof(ReservationDetailPatch))]
     [ModelReaderWriterBuildable(typeof(ReservationDetailResource))]

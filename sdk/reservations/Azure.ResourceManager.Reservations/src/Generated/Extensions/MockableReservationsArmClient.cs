@@ -44,13 +44,13 @@ namespace Azure.ResourceManager.Reservations.Mocking
             return new ReservationQuotaResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ReservationDetailResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ReservationDetail1Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReservationDetailResource"/> object. </returns>
-        public virtual ReservationDetailResource GetReservationDetailResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReservationDetail1Resource"/> object. </returns>
+        public virtual ReservationDetail1Resource GetReservationDetail1Resource(ResourceIdentifier id)
         {
-            ReservationDetailResource.ValidateResourceId(id);
-            return new ReservationDetailResource(Client, id);
+            ReservationDetail1Resource.ValidateResourceId(id);
+            return new ReservationDetail1Resource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ReservationOrderResource"/> along with the instance operations that can be performed on it but with no data. </summary>
