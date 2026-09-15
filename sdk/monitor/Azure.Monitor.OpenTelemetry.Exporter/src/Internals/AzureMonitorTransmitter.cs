@@ -66,8 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             options.Retry.MaxRetries = 0;
 
-            _connectionVars = InitializeConnectionVars(options, platform);
-
+            _connectionVars = InitializeConnectionVars(options, platform, multiEndpointEnabled);
             _transmissionStateManager = new TransmissionStateManager(_connectionVars.IngestionEndpoint);
 
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
@@ -87,9 +86,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _storageDirectory = storageDirectory;
 
-            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
+            // Statsbeat picks its region from the configured ingestion endpoint and attributes every
+            // measurement to the configured key. With no connection string there is neither, and a
+            // routed destination cannot supply them: it is chosen per item, long after this runs.
+            _statsbeat = _connectionVars.IsUnconfigured ? null : InitializeStatsbeat(options, _connectionVars, platform);
 
-            if (_fileBlobProvider != null)
+            // Nothing can be addressed to a component the process does not have, so the handler would
+            // drain an empty directory to an endpoint that names nobody. Not creating it keeps that
+            // impossible rather than merely unused.
+            if (_fileBlobProvider != null && !_connectionVars.IsUnconfigured)
             {
                 _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled, _statsbeat?.NetworkSdkStatsManager, storageDirectory);
             }
@@ -104,6 +109,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
+            => InitializeConnectionVars(options, platform, multiEndpointEnabled: false);
+
+        internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform, bool multiEndpointEnabled)
         {
             if (options.ConnectionString == null)
             {
@@ -117,6 +125,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             else
             {
                 return ConnectionStringParser.GetValues(options.ConnectionString);
+            }
+
+            // Routing takes every destination from the telemetry, so a process that only routes has
+            // no component of its own to name. Without routing there is nowhere to send anything.
+            if (multiEndpointEnabled)
+            {
+                AzureMonitorExporterEventSource.Log.RoutingWithoutConnectionString();
+
+                return ConnectionVars.CreateUnconfigured();
             }
 
             throw new InvalidOperationException("A connection string was not found. Please set your connection string.");
@@ -157,10 +174,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
+                    // Dropping a connection string moves this directory, stranding whatever the prior
+                    // configuration persisted, exactly as changing an instrumentation key does today.
                     storageDirectory = StorageHelper.GetStorageDirectory(
                         platform: platform,
                         configuredStorageDirectory: configuredStorageDirectory,
-                        instrumentationKey: connectionVars.InstrumentationKey);
+                        instrumentationKey: connectionVars.InstrumentationKey,
+                        omitInstrumentationKey: connectionVars.IsUnconfigured);
+
+                    // The directory is still needed: it roots the per-destination storage that routed
+                    // telemetry persists into. A provider here would not be, though. Nothing writes to
+                    // it, because every send is routed, and nothing drains it, because there is no
+                    // component to drain it to. Building one would only create an empty directory and
+                    // a maintenance timer that outlive the process's usefulness.
+                    //
+                    // Returning before the event matters as much as returning at all: announcing
+                    // persistent storage here is where an operator would start when asking why a
+                    // backlog is not moving, and there is no backlog to move. Event 77 has already
+                    // explained the configuration.
+                    if (connectionVars.IsUnconfigured)
+                    {
+                        return null;
+                    }
 
                     AzureMonitorExporterEventSource.Log.InitializedPersistentStorage(connectionVars.InstrumentationKey, storageDirectory);
 
@@ -541,6 +576,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             ExportResult result = ExportResult.Failure;
             if (cancellationToken.IsCancellationRequested)
             {
+                return result;
+            }
+
+            // This is the unrouted path: it sends to the configured endpoint under the configured
+            // key. With no connection string, both are placeholders that seed the REST client, so a
+            // send here would deliver a customer's telemetry to a host that names nobody, stamped
+            // with an empty key. Callers are all gated already; refusing here is what keeps that
+            // true when a new one is added.
+            if (_connectionVars.IsUnconfigured)
+            {
+                AzureMonitorExporterEventSource.Log.DroppedUnroutedTelemetryWithoutConnectionString();
                 return result;
             }
 
