@@ -17,24 +17,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmContainerOrchestratorRuntimeModelFactory
     {
-        /// <summary> A StorageClass resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ContainerOrchestratorRuntime.ConnectedClusterStorageClassData"/> instance for mocking. </returns>
-        public static ConnectedClusterStorageClassData ConnectedClusterStorageClassData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectedClusterStorageClassProperties properties = default)
-        {
-            return new ConnectedClusterStorageClassData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Details of the StorageClass StorageClass. </summary>
         /// <param name="allowVolumeExpansion"> Volume can be expanded or not. </param>
         /// <param name="mountOptions"> Additional mount options. </param>
@@ -144,6 +126,24 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 domain);
         }
 
+        /// <summary> A StorageClass resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ContainerOrchestratorRuntime.ConnectedClusterStorageClassData"/> instance for mocking. </returns>
+        public static ConnectedClusterStorageClassData ConnectedClusterStorageClassData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectedClusterStorageClassProperties properties = default)
+        {
+            return new ConnectedClusterStorageClassData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> The model for updating a storageClass. </summary>
         /// <param name="properties"> The properties of StorageClass. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterStorageClassPatch"/> instance for mocking. </returns>
@@ -214,24 +214,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 default);
         }
 
-        /// <summary> A LoadBalancer resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ContainerOrchestratorRuntime.ConnectedClusterLoadBalancerData"/> instance for mocking. </returns>
-        public static ConnectedClusterLoadBalancerData ConnectedClusterLoadBalancerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectedClusterLoadBalancerProperties properties = default)
-        {
-            return new ConnectedClusterLoadBalancerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Details of the LoadBalancer. </summary>
         /// <param name="addresses"> IP Range. </param>
         /// <param name="serviceSelector"> A dynamic label mapping to select related services. For instance, if you want to create a load balancer only for services with label "a=b", then please specify {"a": "b"} in the field. </param>
@@ -254,16 +236,16 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 default);
         }
 
-        /// <summary> A BgpPeer resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
+        /// <summary> A LoadBalancer resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ContainerOrchestratorRuntime.ConnectedClusterBgpPeerData"/> instance for mocking. </returns>
-        public static ConnectedClusterBgpPeerData ConnectedClusterBgpPeerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectedClusterBgpPeerProperties properties = default)
+        /// <returns> A new <see cref="ContainerOrchestratorRuntime.ConnectedClusterLoadBalancerData"/> instance for mocking. </returns>
+        public static ConnectedClusterLoadBalancerData ConnectedClusterLoadBalancerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectedClusterLoadBalancerProperties properties = default)
         {
-            return new ConnectedClusterBgpPeerData(
+            return new ConnectedClusterLoadBalancerData(
                 id,
                 name,
                 resourceType,
@@ -283,6 +265,33 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             return new ConnectedClusterBgpPeerProperties(myAsn, peerAsn, peerAddress, provisioningState, default);
         }
 
+        /// <summary> A BgpPeer resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ContainerOrchestratorRuntime.ConnectedClusterBgpPeerData"/> instance for mocking. </returns>
+        public static ConnectedClusterBgpPeerData ConnectedClusterBgpPeerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConnectedClusterBgpPeerProperties properties = default)
+        {
+            return new ConnectedClusterBgpPeerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Properties for the service resource. </summary>
+        /// <param name="rpObjectId"> The object id of the service principal of the RP provisioned in the tenant. </param>
+        /// <param name="provisioningState"> Resource provision state. </param>
+        /// <returns> A new <see cref="Models.ConnectedClusterServiceProperties"/> instance for mocking. </returns>
+        public static ConnectedClusterServiceProperties ConnectedClusterServiceProperties(Guid? rpObjectId = default, ContainerOrchestratorProvisioningState? provisioningState = default)
+        {
+            return new ConnectedClusterServiceProperties(rpObjectId, provisioningState, default);
+        }
+
         /// <summary> A Service resource for an Arc connected cluster (Microsoft.Kubernetes/connectedClusters). </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -299,15 +308,6 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> Properties for the service resource. </summary>
-        /// <param name="rpObjectId"> The object id of the service principal of the RP provisioned in the tenant. </param>
-        /// <param name="provisioningState"> Resource provision state. </param>
-        /// <returns> A new <see cref="Models.ConnectedClusterServiceProperties"/> instance for mocking. </returns>
-        public static ConnectedClusterServiceProperties ConnectedClusterServiceProperties(Guid? rpObjectId = default, ContainerOrchestratorProvisioningState? provisioningState = default)
-        {
-            return new ConnectedClusterServiceProperties(rpObjectId, provisioningState, default);
         }
     }
 }

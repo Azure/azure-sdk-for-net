@@ -36,30 +36,6 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             return new ConfidentialLedgerNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
-        /// <summary> Confidential Ledger. Contains the properties of Confidential Ledger Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of Confidential Ledger Resource. </param>
-        /// <returns> A new <see cref="ConfidentialLedger.ConfidentialLedgerData"/> instance for mocking. </returns>
-        public static ConfidentialLedgerData ConfidentialLedgerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfidentialLedgerProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConfidentialLedgerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <summary> Additional Confidential Ledger properties. </summary>
         /// <param name="ledgerName"> Unique name for the Confidential Ledger. </param>
         /// <param name="ledgerUri"> Endpoint for calling Ledger Service. </param>
@@ -126,6 +102,30 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         public static CertBasedSecurityPrincipal CertBasedSecurityPrincipal(string cert = default, ConfidentialLedgerRoleName? ledgerRoleName = default)
         {
             return new CertBasedSecurityPrincipal(cert, ledgerRoleName, default);
+        }
+
+        /// <summary> Confidential Ledger. Contains the properties of Confidential Ledger Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of Confidential Ledger Resource. </param>
+        /// <returns> A new <see cref="ConfidentialLedger.ConfidentialLedgerData"/> instance for mocking. </returns>
+        public static ConfidentialLedgerData ConfidentialLedgerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfidentialLedgerProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConfidentialLedgerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
         }
 
         /// <summary> Object representing Files Export properties of a Confidential Ledger Resource. </summary>

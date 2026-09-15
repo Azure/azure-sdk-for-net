@@ -18,37 +18,6 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
     public static partial class ArmComputeBulkActionsModelFactory
     {
 
-        /// <summary> Location based type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="zones"> Zones in which the LaunchBulkInstancesOperation is available. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="plan"> Details of the resource plan. </param>
-        /// <returns> A new <see cref="ComputeBulkActions.BulkActionData"/> instance for mocking. </returns>
-        public static BulkActionData BulkActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeBulkActionsLaunchBulkInstancesOperationProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
-        {
-            zones ??= new ChangeTrackingList<string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BulkActionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                location,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity,
-                plan,
-                default);
-        }
-
         /// <summary> Details of the LaunchBulkInstancesOperation. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="capacity"> Total capacity to achieve. It can be in terms of VMs or vCPUs. </param>
@@ -955,6 +924,37 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         public static BulkActionRetryPolicy BulkActionRetryPolicy(int? retryCount = default, int? retryWindowInMinutes = default)
         {
             return new BulkActionRetryPolicy(retryCount, retryWindowInMinutes, default);
+        }
+
+        /// <summary> Location based type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="zones"> Zones in which the LaunchBulkInstancesOperation is available. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
+        /// <returns> A new <see cref="ComputeBulkActions.BulkActionData"/> instance for mocking. </returns>
+        public static BulkActionData BulkActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeBulkActionsLaunchBulkInstancesOperationProperties properties = default, AzureLocation location = default, IEnumerable<string> zones = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ArmPlan plan = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BulkActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                plan,
+                default);
         }
 
         /// <summary> An instant Fleet's virtual machine. </summary>

@@ -19,30 +19,6 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     public static partial class ArmConnectedCacheModelFactory
     {
 
-        /// <summary> Represents the high level Nodes needed to provision isp customer resources. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ConnectedCache.IspCustomerData"/> instance for mocking. </returns>
-        public static IspCustomerData IspCustomerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCustomerProperty properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new IspCustomerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <summary> Model representing customer for connectedCache resource. </summary>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="customer"> Mcc customer resource (customer entity). </param>
@@ -179,17 +155,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
-        /// <summary> Mcc PATCH operation properties. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ConnectedCachePatchContent"/> instance for mocking. </returns>
-        public static ConnectedCachePatchContent ConnectedCachePatchContent(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConnectedCachePatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> Represents the high level Nodes needed to provision cache node resources. </summary>
+        /// <summary> Represents the high level Nodes needed to provision isp customer resources. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -197,12 +163,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ConnectedCache.IspCacheNodeData"/> instance for mocking. </returns>
-        public static IspCacheNodeData IspCacheNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCacheNodeProperty properties = default)
+        /// <returns> A new <see cref="ConnectedCache.IspCustomerData"/> instance for mocking. </returns>
+        public static IspCustomerData IspCustomerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCustomerProperty properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new IspCacheNodeData(
+            return new IspCustomerData(
                 id,
                 name,
                 resourceType,
@@ -211,6 +177,16 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 location,
                 properties,
                 default);
+        }
+
+        /// <summary> Mcc PATCH operation properties. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ConnectedCachePatchContent"/> instance for mocking. </returns>
+        public static ConnectedCachePatchContent ConnectedCachePatchContent(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConnectedCachePatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Model representing an Mcc cache node connectedCache resource. </summary>
@@ -543,6 +519,30 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public static CacheNodeDriveConfiguration CacheNodeDriveConfiguration(string physicalPath = default, int? sizeInGb = default, int? cacheNumber = default, string nginxMapping = default)
         {
             return new CacheNodeDriveConfiguration(physicalPath, sizeInGb, cacheNumber, nginxMapping, default);
+        }
+
+        /// <summary> Represents the high level Nodes needed to provision cache node resources. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ConnectedCache.IspCacheNodeData"/> instance for mocking. </returns>
+        public static IspCacheNodeData IspCacheNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MccCacheNodeProperty properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new IspCacheNodeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

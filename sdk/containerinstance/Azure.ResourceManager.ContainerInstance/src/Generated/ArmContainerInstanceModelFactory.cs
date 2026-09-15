@@ -603,44 +603,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="elasticProfile"> The elastic profile. </param>
-        /// <param name="containerGroupProfiles"> The Container Group Profiles that could be used in the NGroups resource. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
-        /// <param name="placementFaultDomainCount"> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <param name="identity"> The identity of the NGroup, if configured. </param>
-        /// <returns> A new <see cref="ContainerInstance.NGroupData"/> instance for mocking. </returns>
-        public static NGroupData NGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerGroupElasticProfile elasticProfile = default, IEnumerable<ContainerGroupProfileStub> containerGroupProfiles = default, NGroupProvisioningState? provisioningState = default, NGroupUpdateProfile updateProfile = default, int? placementFaultDomainCount = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new NGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                elasticProfile is null && placementFaultDomainCount is null && containerGroupProfiles is null && provisioningState is null && updateProfile is null ? default : new NGroupProperties(
-                    elasticProfile,
-                    new PlacementProfile(placementFaultDomainCount, default),
-                    (containerGroupProfiles ?? new ChangeTrackingList<ContainerGroupProfileStub>()).ToList(),
-                    provisioningState,
-                    updateProfile,
-                    default),
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                identity,
-                default);
-        }
-
         /// <param name="desiredCount"></param>
         /// <param name="maintainDesiredCount"> Flag that indicates whether desiredCount should be maintained when customer deletes SPECIFIC container groups (CGs) from the NGroups. In this case, new CGs will be created by NGroup to compensate for the specific deleted ones. </param>
         /// <param name="guidNamingPrefix"> The prefix can be used when there are tooling limitations (e.g. on the Azure portal where CGs from multiple NGroups exist in the same RG). The prefix with the suffixed resource name must still follow Azure resource naming guidelines. </param>
@@ -771,6 +733,44 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static NGroupRollingUpdateProfile NGroupRollingUpdateProfile(int? maxBatchPercent = default, int? maxUnhealthyPercent = default, string pauseTimeBetweenBatches = default, bool? inPlaceUpdate = default)
         {
             return new NGroupRollingUpdateProfile(maxBatchPercent, maxUnhealthyPercent, pauseTimeBetweenBatches, inPlaceUpdate, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="elasticProfile"> The elastic profile. </param>
+        /// <param name="containerGroupProfiles"> The Container Group Profiles that could be used in the NGroups resource. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
+        /// <param name="placementFaultDomainCount"> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="identity"> The identity of the NGroup, if configured. </param>
+        /// <returns> A new <see cref="ContainerInstance.NGroupData"/> instance for mocking. </returns>
+        public static NGroupData NGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerGroupElasticProfile elasticProfile = default, IEnumerable<ContainerGroupProfileStub> containerGroupProfiles = default, NGroupProvisioningState? provisioningState = default, NGroupUpdateProfile updateProfile = default, int? placementFaultDomainCount = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new NGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                elasticProfile is null && placementFaultDomainCount is null && containerGroupProfiles is null && provisioningState is null && updateProfile is null ? default : new NGroupProperties(
+                    elasticProfile,
+                    new PlacementProfile(placementFaultDomainCount, default),
+                    (containerGroupProfiles ?? new ChangeTrackingList<ContainerGroupProfileStub>()).ToList(),
+                    provisioningState,
+                    updateProfile,
+                    default),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                default);
         }
 
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
