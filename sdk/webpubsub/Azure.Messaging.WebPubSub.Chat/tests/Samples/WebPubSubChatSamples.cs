@@ -293,12 +293,14 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             WebPubSubChatRoom room = client.GetRoom("room1").Value;
 
             #region Snippet:WebPubSubChatUpdateMessage
-            var updatedContent = new WebPubSubChatMessageContent { Text = "Updated message text" };
+            var updatedMessage = new WebPubSubChatMessage(
+                "user1",
+                new WebPubSubChatMessageContent { Text = "Updated message text" });
 
             client.UpdateMessage(
                 room.DefaultConversation,
                 "<message-id>",
-                RequestContent.Create(updatedContent));
+                updatedMessage);
             #endregion
         }
 

@@ -36,7 +36,7 @@ namespace Azure.Messaging.WebPubSub.Chat
             ClientAccessUriOptions options = null,
             CancellationToken cancellationToken = default)
         {
-            options ??= ClientAccessUriOptions.Default;
+            options ??= new ClientAccessUriOptions();
             TimeSpan expiresAfter = GetExpiresAfter(options);
 
             string token = _keyCredential != null
@@ -58,7 +58,7 @@ namespace Azure.Messaging.WebPubSub.Chat
             ClientAccessUriOptions options = null,
             CancellationToken cancellationToken = default)
         {
-            options ??= ClientAccessUriOptions.Default;
+            options ??= new ClientAccessUriOptions();
             TimeSpan expiresAfter = GetExpiresAfter(options);
 
             string token = _keyCredential != null

@@ -13,18 +13,38 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
     public class WebPubSubChatServiceClientLiveTests : RecordedTestBase<WebPubSubChatTestEnvironment>
     {
         private WebPubSubChatServiceClient _client;
+        private WebPubSubChatServiceClient _accessKeyClient;
 
         public WebPubSubChatServiceClientLiveTests(bool isAsync) : base(isAsync)
         {
+            ReplacementHost = "sanitized.webpubsub.azure.com";
         }
 
         [SetUp]
         public void SetUp()
         {
+            WebPubSubChatServiceClientOptions options = InstrumentClientOptions(new WebPubSubChatServiceClientOptions());
             _client = new WebPubSubChatServiceClient(
-                TestEnvironment.ConnectionString,
+                new Uri(TestEnvironment.Endpoint),
                 "test_hub",
-                InstrumentClientOptions(new WebPubSubChatServiceClientOptions()));
+                TestEnvironment.Credential,
+                options);
+            if (!TestEnvironment.DisableLocalAuth)
+            {
+                _accessKeyClient = new WebPubSubChatServiceClient(TestEnvironment.ConnectionString, "test_hub", options);
+            }
+        }
+
+        [RecordedTest]
+        public async Task AccessKeyClientCanListRoles()
+        {
+            RequireLocalAuth();
+
+            await foreach (WebPubSubChatRole role in _accessKeyClient.GetRolesAsync(maxPageSize: 1))
+            {
+                Assert.That(role, Is.Not.Null);
+                break;
+            }
         }
 
         #region Roles
@@ -189,6 +209,88 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             }
         }
 
+        [RecordedTest]
+        public async Task ListUpdateAndDeleteMessages()
+        {
+            string suffix = Recording.GenerateId();
+            string userId = $"e2e-message-user-{suffix}";
+            string roomId = $"e2e-message-room-{suffix}";
+            string messageText = $"Live test message {suffix}";
+            string conversationId = null;
+            string messageId = null;
+
+            try
+            {
+                await _client.CreateOrReplaceUserAsync(userId,
+                    new WebPubSubHumanChatUser("Message Test User", BuiltInChatRoles.UserNormal));
+                WebPubSubChatRoom room = await _client.CreateOrReplaceRoomAsync(roomId,
+                    new WebPubSubChatRoom("Message Test Room"));
+                conversationId = room.DefaultConversation;
+                await _client.CreateOrReplaceRoomMemberAsync(roomId, userId,
+                    new WebPubSubChatRoomMember(BuiltInChatRoles.RoomMember));
+
+                Uri clientAccessUri = await _client.GetClientAccessUriAsync(
+                    new ClientAccessUriOptions { UserId = userId });
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await ChatMessageSeeder.SendTextMessageAsync(clientAccessUri, conversationId, messageText);
+                }
+
+                WebPubSubChatMessage createdMessage = null;
+                await foreach (WebPubSubChatMessage message in _client.GetMessagesAsync(conversationId))
+                {
+                    if (message.Content.Text == messageText)
+                    {
+                        createdMessage = message;
+                        break;
+                    }
+                }
+
+                Assert.That(createdMessage, Is.Not.Null, "The seeded chat message was not found.");
+                messageId = createdMessage.Id;
+
+                string updatedText = $"{messageText} updated";
+                var updatedMessage = new WebPubSubChatMessage(
+                    userId,
+                    new WebPubSubChatMessageContent { Text = updatedText });
+                await _client.UpdateMessageAsync(conversationId, messageId, updatedMessage);
+
+                WebPubSubChatMessage fetchedMessage = null;
+                await foreach (WebPubSubChatMessage message in _client.GetMessagesAsync(conversationId))
+                {
+                    if (message.Id == messageId)
+                    {
+                        fetchedMessage = message;
+                        break;
+                    }
+                }
+
+                Assert.That(fetchedMessage, Is.Not.Null);
+                Assert.That(fetchedMessage.Content.Text, Is.EqualTo(updatedText));
+
+                await _client.DeleteMessageAsync(conversationId, messageId);
+                messageId = null;
+            }
+            finally
+            {
+                if (conversationId != null && messageId != null)
+                {
+                    try
+                    { await _client.DeleteMessageAsync(conversationId, messageId); }
+                    catch { }
+                }
+                try
+                { await _client.DeleteRoomMemberAsync(roomId, userId); }
+                catch { }
+                try
+                { await _client.DeleteRoomAsync(roomId); }
+                catch { }
+                try
+                { await _client.DeleteUserAsync(userId); }
+                catch { }
+            }
+        }
+
         #endregion
 
         #region Room Members
@@ -280,9 +382,11 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
 
         #region Client Access
 
-        [Test]
-        public async Task GetClientAccessUri()
+        [RecordedTest]
+        public async Task AccessKeyClientCanGetClientAccessUri()
         {
+            RequireLocalAuth();
+
             const string userId = "e2e-access-user";
             const string roleName = "user.e2e_access_role";
 
@@ -293,7 +397,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
 
             try
             {
-                Uri uri = await _client.GetClientAccessUriAsync(
+                Uri uri = await _accessKeyClient.GetClientAccessUriAsync(
                     new ClientAccessUriOptions { UserId = userId });
 
                 Assert.That(uri, Is.Not.Null);
@@ -307,6 +411,14 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
                 try
                 { await _client.DeleteRoleAsync(roleName); }
                 catch { }
+            }
+        }
+
+        private void RequireLocalAuth()
+        {
+            if (TestEnvironment.DisableLocalAuth)
+            {
+                Assert.Ignore("This test requires a resource with local authentication enabled.");
             }
         }
 

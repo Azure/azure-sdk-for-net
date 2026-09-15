@@ -35,7 +35,6 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public partial class ClientAccessUriOptions
     {
-        public static readonly Azure.Messaging.WebPubSub.Chat.ClientAccessUriOptions Default;
         public ClientAccessUriOptions() { }
         public System.TimeSpan ExpiresAfter { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
@@ -243,7 +242,9 @@ namespace Azure.Messaging.WebPubSub.Chat
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUserAsync(string userId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser>> GetUserAsync(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateMessage(string conversationId, string messageId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage> UpdateMessage(string conversationId, string messageId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage message, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateMessageAsync(string conversationId, string messageId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage>> UpdateMessageAsync(string conversationId, string messageId, Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage message, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class WebPubSubChatServiceClientHostExtensions
     {

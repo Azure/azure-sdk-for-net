@@ -12,11 +12,6 @@ namespace Azure.Messaging.WebPubSub.Chat
     public class ClientAccessUriOptions
     {
         /// <summary>
-        /// Gets the default client access URI options.
-        /// </summary>
-        public static readonly ClientAccessUriOptions Default = new();
-
-        /// <summary>
         /// Optional user ID to embed in the token. When set, the token is bound to this user.
         /// </summary>
         public string UserId { get; set; }

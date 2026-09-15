@@ -40,15 +40,17 @@ Console.WriteLine($"Conversation {conversation.Id} belongs to room {conversation
 
 ## Update a message
 
-Update the content of an existing message using a protocol method:
+Update the content of an existing message:
 
 ```C# Snippet:WebPubSubChatUpdateMessage
-var updatedContent = new WebPubSubChatMessageContent { Text = "Updated message text" };
+var updatedMessage = new WebPubSubChatMessage(
+    "user1",
+    new WebPubSubChatMessageContent { Text = "Updated message text" });
 
 client.UpdateMessage(
     room.DefaultConversation,
     "<message-id>",
-    RequestContent.Create(updatedContent));
+    updatedMessage);
 ```
 
 ## Delete a message
