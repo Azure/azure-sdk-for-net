@@ -8,19 +8,6 @@
 - Added `BulkCreateProperties` and `BulkCreateVmSizeProfile` models.
 - Added `GetBulkCreateAsyncOperationStatus` for polling the status of a bulk create operation.
 
-### Breaking Changes
-
-- The launch bulk instances operation has been consolidated into bulk create. `LocationBasedLaunchBulkInstancesOperationResource`, `LocationBasedLaunchBulkInstancesOperationData`, `LocationBasedLaunchBulkInstancesOperationCollection`, and `LaunchBulkInstancesOperationProperties` were removed. Use the corresponding `LocationBasedBulkCreate*` types instead.
-- Removed the `GetLocationBasedLaunchBulkInstancesOperation`, `GetLocationBasedLaunchBulkInstancesOperations`, and `GetLocationBasedLaunchBulkInstancesOperationResource` extension methods. Use the `GetLocationBasedBulkCreate*` equivalents instead.
-- Removed the `BulkCreateOperation` and `BulkCreateOperationAsync` methods. Bulk create is now modeled as a resource, so create the operation through `LocationBasedBulkCreateCollection` instead.
-- Removed the `GetOperationStatus` and `GetVirtualMachines` methods. Use `GetBulkCreateAsyncOperationStatus` instead.
-- Renamed `VmSizeProfile` to `BulkCreateVmSizeProfile`.
-- Removed `OptimizationPreference`.
-- Removed attribute-based VM selection. `VMAttributes`, `VMAttributeSupport`, `VMAttributeMinMaxDouble`, `VMAttributeMinMaxInteger`, `VMCategory`, `AcceleratorManufacturer`, `AcceleratorType`, `ArchitectureType`, `CpuManufacturer`, `LocalStorageDiskType`, `HyperVGeneration`, and `OSType` were removed. Specify VM sizes through `BulkCreateVmSizeProfile` instead.
-- Removed the bulk operation error acknowledgement surface: `AcknowledgeBulkOperationErrorsRequestContent`, `AcknowledgeBulkOperationErrorsResponseResult`, `ApiError`, `ApiErrorBase`, and `BulkInstancesInnerError`.
-- Removed the VDI provisioning surface: `BulkActionsExecuteVdiCreateRequestContent`, `ExecuteCreateContent`, `ResourceProvisionPayload`, `ResourceProvisionVdiPayload`, and `FlexProperties`.
-- Removed `VirtualMachine`, `VMOperationStatus`, `CreateResourceOperationResult`, and `ScheduledActionsExecutionParametersContent`.
-
 ### Other Changes
 
 - Updated the client to target API version `2026-09-06-preview`.
