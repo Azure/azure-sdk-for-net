@@ -4,6 +4,7 @@
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,15 +13,69 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Results;
 
-public class StreamingClientResultTests
+public class AsyncStreamingResultTests
 {
+    [TestCase(typeof(AsyncStreamingResult))]
+    [TestCase(typeof(AsyncStreamingResult<>))]
+    public void PublicApiIsNotExperimental(Type type)
+    {
+        Assert.IsTrue(type.IsPublic);
+        AssertNotExperimental(type);
+        foreach (MemberInfo member in type.GetMembers(
+            BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+        {
+            AssertNotExperimental(member);
+        }
+
+        static void AssertNotExperimental(MemberInfo member)
+        {
+            foreach (CustomAttributeData attribute in member.GetCustomAttributesData())
+            {
+                Assert.AreNotEqual(
+                    "System.Diagnostics.CodeAnalysis.ExperimentalAttribute",
+                    attribute.AttributeType.FullName,
+                    $"{member.DeclaringType?.FullName}.{member.Name} must not be experimental.");
+            }
+        }
+    }
+
+    [Test]
+    public void AllFactoriesReturnAsyncStreamingResult()
+    {
+        MethodInfo[] factories = typeof(AsyncStreamingResult).GetMethods(
+            BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
+
+        Assert.AreEqual(5, factories.Length);
+        foreach (MethodInfo factory in factories)
+        {
+            Assert.IsTrue(factory.ReturnType.IsGenericType, factory.Name);
+            Assert.AreEqual(
+                typeof(AsyncStreamingResult<>),
+                factory.ReturnType.GetGenericTypeDefinition(),
+                factory.Name);
+        }
+    }
+
+    [Test]
+    public void CreateValidatesArguments()
+    {
+        ArgumentNullException? responseException = Assert.Throws<ArgumentNullException>(() =>
+            AsyncStreamingResult.Create<int>(null!, static (_, _) => GetValues([], default)));
+        Assert.AreEqual("response", responseException!.ParamName);
+
+        using MockPipelineResponse response = CreateResponse();
+        ArgumentNullException? producerException = Assert.Throws<ArgumentNullException>(() =>
+            AsyncStreamingResult.Create<int>(response, null!));
+        Assert.AreEqual("producer", producerException!.ParamName);
+    }
+
     [Test]
     public async Task ExposesResponseMetadataWithoutExposingResponse()
     {
         MockPipelineResponse response = CreateResponse();
         response.SetReasonPhrase("OK");
         response.SetHeader("x-test", "value");
-        AsyncStreamingClientResult<int> result = CreateResult([1], response);
+        AsyncStreamingResult<int> result = CreateResult([1], response);
 
         Assert.AreEqual(200, result.Status);
         Assert.AreEqual("OK", result.ReasonPhrase);
@@ -44,7 +99,7 @@ public class StreamingClientResultTests
 
         InvalidOperationException? exception =
             Assert.Throws<InvalidOperationException>(() =>
-                AsyncStreamingClientResult.Create<int>(
+                AsyncStreamingResult.Create<int>(
                     response,
                     static (_, _) => GetValues([], default)));
 
@@ -57,7 +112,7 @@ public class StreamingClientResultTests
     public async Task EnumeratesValuesAndDisposesResponse()
     {
         MockPipelineResponse response = CreateResponse();
-        AsyncStreamingClientResult<int> result = CreateResult([1, 2, 3], response);
+        AsyncStreamingResult<int> result = CreateResult([1, 2, 3], response);
 
         Assert.AreEqual(new[] { 1, 2, 3 }, await ToArrayAsync(result));
         Assert.IsNull(response.ContentStream);
@@ -67,7 +122,7 @@ public class StreamingClientResultTests
     public async Task DisposesResponseWhenEnumerationStopsEarly()
     {
         MockPipelineResponse response = CreateResponse();
-        AsyncStreamingClientResult<int> result = CreateResult([1, 2, 3], response);
+        AsyncStreamingResult<int> result = CreateResult([1, 2, 3], response);
 
         await using (IAsyncEnumerator<int> enumerator = ((IAsyncEnumerable<int>)result).GetAsyncEnumerator())
         {
@@ -82,7 +137,7 @@ public class StreamingClientResultTests
     public async Task DisposesBeforeEnumeration()
     {
         MockPipelineResponse response = CreateResponse();
-        AsyncStreamingClientResult<int> result = CreateResult([1], response);
+        AsyncStreamingResult<int> result = CreateResult([1], response);
 
         await result.DisposeAsync();
 
@@ -93,7 +148,7 @@ public class StreamingClientResultTests
     [Test]
     public async Task CanBeEnumeratedOnlyOnce()
     {
-        AsyncStreamingClientResult<int> result = CreateResult([1], CreateResponse());
+        AsyncStreamingResult<int> result = CreateResult([1], CreateResponse());
 
         Assert.AreEqual(new[] { 1 }, await ToArrayAsync(result));
         Assert.Throws<InvalidOperationException>(() => ((IAsyncEnumerable<int>)result).GetAsyncEnumerator());
@@ -103,7 +158,7 @@ public class StreamingClientResultTests
     public void DisposesResponseWhenProducerFails()
     {
         MockPipelineResponse response = CreateResponse();
-        AsyncStreamingClientResult<int> result = AsyncStreamingClientResult.Create<int>(
+        AsyncStreamingResult<int> result = AsyncStreamingResult.Create<int>(
             response,
             static (_, _) => throw new InvalidOperationException());
 
@@ -115,7 +170,7 @@ public class StreamingClientResultTests
     public void DisposesResponseWhenEnumerationFails()
     {
         MockPipelineResponse response = CreateResponse();
-        AsyncStreamingClientResult<int> result = AsyncStreamingClientResult.Create(
+        AsyncStreamingResult<int> result = AsyncStreamingResult.Create(
             response,
             static (_, cancellationToken) => ThrowAfterValue(cancellationToken));
 
@@ -132,7 +187,7 @@ public class StreamingClientResultTests
         using CancellationTokenSource operation = new();
         using CancellationTokenSource enumeration = new();
         CancellationToken receivedToken = default;
-        AsyncStreamingClientResult<int> result = AsyncStreamingClientResult.Create(
+        AsyncStreamingResult<int> result = AsyncStreamingResult.Create(
             response,
             (_, cancellationToken) =>
             {
@@ -163,7 +218,7 @@ public class StreamingClientResultTests
     {
         MockPipelineResponse response = CreateResponse();
         BlockingAsyncDisposeEnumerable values = new();
-        AsyncStreamingClientResult<int> result = AsyncStreamingClientResult.Create(
+        AsyncStreamingResult<int> result = AsyncStreamingResult.Create(
             response,
             (_, _) => values);
         IAsyncEnumerator<int> enumerator = ((IAsyncEnumerable<int>)result).GetAsyncEnumerator();
@@ -188,7 +243,7 @@ public class StreamingClientResultTests
     {
         MockPipelineResponse response = CreateResponse();
         ReentrantAsyncDisposeEnumerable values = new();
-        AsyncStreamingClientResult<int> result = AsyncStreamingClientResult.Create(
+        AsyncStreamingResult<int> result = AsyncStreamingResult.Create(
             response,
             (_, _) => values);
         values.DisposeResult = result.DisposeAsync;
@@ -210,7 +265,7 @@ public class StreamingClientResultTests
             new(TaskCreationOptions.RunContinuationsAsynchronously);
         TaskCompletionSource<object?> moveNextCompleted =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
-        AsyncStreamingClientResult<int> result = AsyncStreamingClientResult.Create(
+        AsyncStreamingResult<int> result = AsyncStreamingResult.Create(
             response,
             (_, cancellationToken) => BlockingIterator(
                 moveNextStarted,
@@ -238,7 +293,7 @@ public class StreamingClientResultTests
             new(TaskCreationOptions.RunContinuationsAsynchronously);
         TaskCompletionSource<object?> moveNextCompleted =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
-        AsyncStreamingClientResult<int> result = AsyncStreamingClientResult.Create(
+        AsyncStreamingResult<int> result = AsyncStreamingResult.Create(
             response,
             (_, cancellationToken) => BlockingIterator(
                 moveNextStarted,
@@ -269,7 +324,7 @@ public class StreamingClientResultTests
         {
             ContentStream = stream
         };
-        AsyncStreamingClientResult<int> result = CreateResult([1], response);
+        AsyncStreamingResult<int> result = CreateResult([1], response);
 
         Task firstDisposal = Task.Run(async () => await result.DisposeAsync());
         await stream.DisposeStarted.Task;
@@ -288,7 +343,7 @@ public class StreamingClientResultTests
     {
         MockPipelineResponse response = CreateResponse();
         BlockingAsyncDisposeEnumerable values = new();
-        AsyncStreamingClientResult<int> result = AsyncStreamingClientResult.Create(
+        AsyncStreamingResult<int> result = AsyncStreamingResult.Create(
             response,
             (_, _) => values);
         IAsyncEnumerator<int> enumerator = ((IAsyncEnumerable<int>)result).GetAsyncEnumerator();
@@ -313,7 +368,7 @@ public class StreamingClientResultTests
         {
             ContentStream = stream
         };
-        AsyncStreamingClientResult<int> result = AsyncStreamingClientResult.Create(
+        AsyncStreamingResult<int> result = AsyncStreamingResult.Create(
             response,
             static (content, cancellationToken) =>
                 ReadIgnoringCancellation(content, cancellationToken));
@@ -336,8 +391,8 @@ public class StreamingClientResultTests
     public async Task EagerProducerCanReentrantlyDisposeWithoutLifecycleLockDeadlock()
     {
         MockPipelineResponse response = CreateResponse();
-        AsyncStreamingClientResult<int>? result = null;
-        result = AsyncStreamingClientResult.Create(
+        AsyncStreamingResult<int>? result = null;
+        result = AsyncStreamingResult.Create(
             response,
             (_, cancellationToken) =>
             {
@@ -361,10 +416,10 @@ public class StreamingClientResultTests
     private static MockPipelineResponse CreateResponse()
         => new MockPipelineResponse(200).SetContent("stream");
 
-    private static AsyncStreamingClientResult<int> CreateResult(
+    private static AsyncStreamingResult<int> CreateResult(
         IEnumerable<int> values,
         PipelineResponse response)
-        => AsyncStreamingClientResult.Create(
+        => AsyncStreamingResult.Create(
             response,
             (_, cancellationToken) => GetValues(values, cancellationToken));
 
