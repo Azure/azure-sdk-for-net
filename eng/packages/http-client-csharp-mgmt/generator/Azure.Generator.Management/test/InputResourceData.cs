@@ -10,7 +10,7 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false, IReadOnlyList<InputModelProperty>? additionalProperties = null, InputModelType? baseModel = null, bool updatesAreLongRunning = false)
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -73,8 +73,13 @@ namespace Azure.Generator.Management.Tests.Common
                 getMethodParameters.Add(expandParameter);
             }
             var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [.. getMethodParameters], crossLanguageDefinitionId: Guid.NewGuid().ToString());
-            var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
-            var updateMethod = InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            var updateLroMetadata = InputFactory.LongRunningServiceMetadata(1, responseType, null);
+            InputServiceMethod createMethod = updatesAreLongRunning
+                ? InputFactory.LongRunningServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], longRunningServiceMetadata: updateLroMetadata, crossLanguageDefinitionId: Guid.NewGuid().ToString())
+                : InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
+            InputServiceMethod updateMethod = updatesAreLongRunning
+                ? InputFactory.LongRunningServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], longRunningServiceMetadata: updateLroMetadata, crossLanguageDefinitionId: Guid.NewGuid().ToString())
+                : InputFactory.BasicServiceMethod("update", updateOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var checkExistenceMethod = InputFactory.BasicServiceMethod("checkExistence", checkExistenceOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
             var resourceIdPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");

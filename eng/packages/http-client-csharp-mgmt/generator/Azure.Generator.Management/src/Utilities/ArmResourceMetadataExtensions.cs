@@ -76,7 +76,6 @@ namespace Azure.Generator.Management.Utilities
                 var methodsInResource = new List<ResourceMethod>();
                 var methodsInCollection = new List<ResourceMethod>();
                 var methodsInExtension = new List<ResourceMethod>();
-                bool hasUpdateMethod = false;
                 ResourceMethod? createMethod = null;
 
                 foreach (var method in resourceMetadata.Methods)
@@ -106,7 +105,6 @@ namespace Azure.Generator.Management.Utilities
                             // Temporarily omit check-existence operations until their public SDK shape is designed.
                             break;
                         case ResourceOperationKind.Update:
-                            hasUpdateMethod = true;
                             methodsInResource.Add(method);
                             break;
                         case ResourceOperationKind.Delete:
@@ -169,8 +167,9 @@ namespace Azure.Generator.Management.Utilities
                     }
                 }
 
-                // For non-singleton resource, if there is no update method, we will add the create method as update to the resource methods.
-                if (resourceMetadata.SingletonResourceName is null && !hasUpdateMethod && createMethod is not null)
+                // For non-singleton resources, the collection owns CreateOrUpdate while the resource
+                // exposes the same PUT operation as Update for compatibility with shipped SDKs.
+                if (resourceMetadata.SingletonResourceName is null && createMethod is not null)
                 {
                     methodsInResource.Add(createMethod);
                 }

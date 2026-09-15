@@ -11,6 +11,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.ComponentModel;
 using System.Reflection;
 
 namespace Azure.Generator.Management.Tests.Providers
@@ -325,6 +326,63 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.That(resourceProvider.BodyDependencyTypes, Does.Contain(plugin.Object.OutputLibrary.ArmOperation.Type));
             Assert.That(resourceProvider.BodyDependencyTypes.Any(type => type.Name.EndsWith("OperationSource")), Is.False);
         }
+
+        [TestCase]
+        public void Verify_PutCreateEmitsResourceUpdateAlongsidePatchUpdate()
+        {
+            ResourceClientProvider resourceProvider = GetResourceClientProvider();
+
+            var syncUpdateMethods = resourceProvider.Methods.Where(m => m.Signature.Name == "Update").ToArray();
+            Assert.That(syncUpdateMethods, Has.Length.EqualTo(2));
+
+            static bool StartsWithWaitUntil(MethodProvider method) =>
+                method.Signature.Parameters[0].Type.IsFrameworkType &&
+                method.Signature.Parameters[0].Type.FrameworkType == typeof(WaitUntil);
+
+            var syncPatchUpdate = syncUpdateMethods.Single(m => !StartsWithWaitUntil(m));
+            Assert.That(syncPatchUpdate.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Response<>)));
+            Assert.That(HasEditorBrowsableAttribute(syncPatchUpdate), Is.False);
+
+            var syncPutUpdate = syncUpdateMethods.Single(StartsWithWaitUntil);
+            Assert.That(syncPutUpdate.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+            Assert.That(HasEditorBrowsableAttribute(syncPutUpdate), Is.True);
+
+            var asyncUpdateMethods = resourceProvider.Methods.Where(m => m.Signature.Name == "UpdateAsync").ToArray();
+            Assert.That(asyncUpdateMethods, Has.Length.EqualTo(2));
+
+            var asyncPatchUpdate = asyncUpdateMethods.Single(m => !StartsWithWaitUntil(m));
+            Assert.That(asyncPatchUpdate.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(asyncPatchUpdate.Signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(Response<>)));
+            Assert.That(HasEditorBrowsableAttribute(asyncPatchUpdate), Is.False);
+
+            var asyncPutUpdate = asyncUpdateMethods.Single(StartsWithWaitUntil);
+            Assert.That(asyncPutUpdate.Signature.ReturnType?.FrameworkType, Is.EqualTo(typeof(Task<>)));
+            Assert.That(asyncPutUpdate.Signature.ReturnType?.Arguments[0].FrameworkType, Is.EqualTo(typeof(ArmOperation<>)));
+            Assert.That(HasEditorBrowsableAttribute(asyncPutUpdate), Is.True);
+        }
+
+        [TestCase]
+        public void Verify_PatchUpdateWinsWhenPutAndPatchSignaturesCollide()
+        {
+            var (client, models) = InputResourceData.ClientWithResource(updatesAreLongRunning: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single();
+
+            var syncUpdate = resourceProvider.Methods.Single(m => m.Signature.Name == "Update");
+            Assert.That(syncUpdate.BodyStatements?.ToDisplayString(), Does.Contain("CreateUpdateRequest"));
+            Assert.That(syncUpdate.BodyStatements?.ToDisplayString(), Does.Not.Contain("CreateCreateTestRequest"));
+            Assert.That(HasEditorBrowsableAttribute(syncUpdate), Is.False);
+
+            var asyncUpdate = resourceProvider.Methods.Single(m => m.Signature.Name == "UpdateAsync");
+            Assert.That(asyncUpdate.BodyStatements?.ToDisplayString(), Does.Contain("CreateUpdateRequest"));
+            Assert.That(asyncUpdate.BodyStatements?.ToDisplayString(), Does.Not.Contain("CreateCreateTestRequest"));
+            Assert.That(HasEditorBrowsableAttribute(asyncUpdate), Is.False);
+        }
+
+        private static bool HasEditorBrowsableAttribute(MethodProvider method)
+            => method.Signature.Attributes.Any(attribute =>
+                attribute.Type is { IsFrameworkType: true } &&
+                attribute.Type.FrameworkType == typeof(EditorBrowsableAttribute));
 
         [TestCase]
         public void Verify_ConstructorWithData()
