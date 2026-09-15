@@ -290,17 +290,12 @@ namespace Azure.Security.Attestation
                 return true;
             }
 
-            // Before we waste a lot of time, see if the token is unsecured. If it is, then validation is simple.
+            // An unsecured token carries no signature, so there is nothing to verify and it cannot be trusted.
+            // Reject it outright rather than falling through to the validation callback, whose result defaults
+            // to true and would otherwise allow an unsigned token to pass. See RFC 8725 section 3.1.
             if (Header.Algorithm.Equals("none", StringComparison.OrdinalIgnoreCase))
             {
-                if (!ValidateCommonProperties(options))
-                {
-                    return false;
-                }
-
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                return await CallValidationCallbackAsync(options, this, SigningCertificate, ClientDiagnostics, !async, cancellationToken).ConfigureAwait(false);
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+                return false;
             }
 
             // This token is a secured attestation token. If the caller provided signing certificates, then

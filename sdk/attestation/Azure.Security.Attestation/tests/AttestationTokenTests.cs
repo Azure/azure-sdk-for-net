@@ -80,7 +80,41 @@ namespace Azure.Security.Attestation.Tests
             var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody));
             string serializedToken = token.Serialize();
 
-            await ValidateSerializedToken(serializedToken, tokenBody);
+            var parsedToken = AttestationToken.Deserialize(serializedToken);
+            await Task.Yield();
+
+            // An unsecured token round-trips its body, but it carries no signature. Validation of unsecured
+            // tokens is covered by ValidateUnsecuredAttestationTokenFails.
+            Assert.AreEqual("none", parsedToken.Algorithm);
+            Assert.AreEqual(JsonSerializer.Serialize(tokenBody), Encoding.UTF8.GetString(parsedToken.TokenBodyBytes.ToArray()));
+        }
+
+        [RecordedTest]
+        public async Task ValidateUnsecuredAttestationTokenFails()
+        {
+            // Regression test: a token with "alg": "none" carries no signature, so there is nothing to verify
+            // and it must never pass validation.
+            object tokenBody = new JwtTestBody
+            {
+                StringField = "Foo",
+                NotBefore = DateTimeOffset.Now.AddSeconds(-5).ToUnixTimeSeconds(),
+                ExpiresAt = DateTimeOffset.Now.AddSeconds(60).ToUnixTimeSeconds(),
+            };
+
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody));
+            var parsedToken = AttestationToken.Deserialize(token.Serialize());
+
+            // The token is well formed and inside its validity window, so the missing signature is the only
+            // reason to reject it.
+            Assert.AreEqual("none", parsedToken.Algorithm);
+
+            // Default options, no signing certificates supplied (null or empty) - the exact relying-party
+            // call shape from the reported repro. An unsigned token must never validate.
+            Assert.IsFalse(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions(), null));
+            Assert.IsFalse(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions(), Array.Empty<AttestationSigner>()));
+
+            // Callers who explicitly turn validation off still opt out entirely.
+            Assert.IsTrue(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions { ValidateToken = false }, null));
         }
 
         [RecordedTest]
