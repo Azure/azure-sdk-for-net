@@ -20,72 +20,6 @@ namespace Azure.ResourceManager.Purview.Models
     public static partial class ArmPurviewModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="accountStatus"> Gets or sets the status of the account. </param>
-        /// <param name="createdOn"> Gets the time at which the entity was created. </param>
-        /// <param name="createdBy"> Gets the creator of the entity. </param>
-        /// <param name="createdByObjectId"> Gets the creators of the entity's object id. </param>
-        /// <param name="defaultDomain"> Gets the default domain in the account. </param>
-        /// <param name="endpoints"> The URIs that are the public endpoints of the account. </param>
-        /// <param name="friendlyName"> Gets or sets the friendly name. </param>
-        /// <param name="ingestionStorage"> Ingestion Storage Account Info. </param>
-        /// <param name="managedEventHubState"> Gets or sets the state of managed eventhub. If enabled managed eventhub will be created, if disabled the managed eventhub will be removed. </param>
-        /// <param name="managedResourceGroupName"> Gets or sets the managed resource group name. </param>
-        /// <param name="managedResources"> Gets the resource identifiers of the managed resources. </param>
-        /// <param name="managedResourcesPublicNetworkAccess"> Gets or sets the public network access for managed resources. </param>
-        /// <param name="mergeInfo"> Gets or sets the Merge Info. </param>
-        /// <param name="privateEndpointConnections"> Gets the private endpoint connections information. </param>
-        /// <param name="provisioningState"> Gets or sets the state of the provisioning. </param>
-        /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
-        /// <param name="tenantEndpointState"> Gets or sets the state of tenant endpoint. </param>
-        /// <param name="cloudConnectorsAwsExternalId">
-        /// AWS external identifier.
-        /// Configured in AWS to allow use of the role arn used for scanning
-        /// </param>
-        /// <param name="identity"> The Managed Identity of the resource. </param>
-        /// <param name="sku"> Gets or sets the Sku. </param>
-        /// <returns> A new <see cref="Purview.PurviewAccountData"/> instance for mocking. </returns>
-        public static PurviewAccountData PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PurviewAccountStatus accountStatus, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, string defaultDomain, PurviewAccountEndpoint endpoints, string friendlyName, PurviewIngestionStorage ingestionStorage, PurviewManagedEventHubState? managedEventHubState, string managedResourceGroupName, PurviewManagedResource managedResources, ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess, PurviewAccountMergeInfo mergeInfo, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState = default, PurviewPublicNetworkAccess? publicNetworkAccess = default, PurviewTenantEndpointState? tenantEndpointState = default, string cloudConnectorsAwsExternalId = default, ManagedServiceIdentity identity = default, PurviewAccountSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PurviewAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                accountStatus is null && cloudConnectorsAwsExternalId is null && createdOn is null && createdBy is null && createdByObjectId is null && defaultDomain is null && endpoints is null && friendlyName is null && ingestionStorage is null && managedEventHubState is null && managedResourceGroupName is null && managedResources is null && managedResourcesPublicNetworkAccess is null && mergeInfo is null && privateEndpointConnections is null && provisioningState is null && publicNetworkAccess is null && tenantEndpointState is null ? default : new PurviewAccountProperties(
-                    accountStatus,
-                    new CloudConnectors(cloudConnectorsAwsExternalId, default),
-                    createdOn,
-                    createdBy,
-                    createdByObjectId,
-                    defaultDomain,
-                    endpoints,
-                    friendlyName,
-                    ingestionStorage,
-                    managedEventHubState,
-                    managedResourceGroupName,
-                    managedResources,
-                    managedResourcesPublicNetworkAccess,
-                    mergeInfo,
-                    (privateEndpointConnections ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>()).ToList(),
-                    provisioningState,
-                    publicNetworkAccess,
-                    tenantEndpointState,
-                    default),
-                identity,
-                sku,
-                default);
-        }
-
         /// <param name="accountStatus"> Gets or sets the status of the account. </param>
         /// <param name="cloudConnectorsAwsExternalId">
         /// AWS external identifier.
@@ -225,6 +159,72 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewPrivateLinkServiceConnectionState(actionsRequired, description, status, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="accountStatus"> Gets or sets the status of the account. </param>
+        /// <param name="createdOn"> Gets the time at which the entity was created. </param>
+        /// <param name="createdBy"> Gets the creator of the entity. </param>
+        /// <param name="createdByObjectId"> Gets the creators of the entity's object id. </param>
+        /// <param name="defaultDomain"> Gets the default domain in the account. </param>
+        /// <param name="endpoints"> The URIs that are the public endpoints of the account. </param>
+        /// <param name="friendlyName"> Gets or sets the friendly name. </param>
+        /// <param name="ingestionStorage"> Ingestion Storage Account Info. </param>
+        /// <param name="managedEventHubState"> Gets or sets the state of managed eventhub. If enabled managed eventhub will be created, if disabled the managed eventhub will be removed. </param>
+        /// <param name="managedResourceGroupName"> Gets or sets the managed resource group name. </param>
+        /// <param name="managedResources"> Gets the resource identifiers of the managed resources. </param>
+        /// <param name="managedResourcesPublicNetworkAccess"> Gets or sets the public network access for managed resources. </param>
+        /// <param name="mergeInfo"> Gets or sets the Merge Info. </param>
+        /// <param name="privateEndpointConnections"> Gets the private endpoint connections information. </param>
+        /// <param name="provisioningState"> Gets or sets the state of the provisioning. </param>
+        /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
+        /// <param name="tenantEndpointState"> Gets or sets the state of tenant endpoint. </param>
+        /// <param name="cloudConnectorsAwsExternalId">
+        /// AWS external identifier.
+        /// Configured in AWS to allow use of the role arn used for scanning
+        /// </param>
+        /// <param name="identity"> The Managed Identity of the resource. </param>
+        /// <param name="sku"> Gets or sets the Sku. </param>
+        /// <returns> A new <see cref="Purview.PurviewAccountData"/> instance for mocking. </returns>
+        public static PurviewAccountData PurviewAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PurviewAccountStatus accountStatus, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, string defaultDomain, PurviewAccountEndpoint endpoints, string friendlyName, PurviewIngestionStorage ingestionStorage, PurviewManagedEventHubState? managedEventHubState, string managedResourceGroupName, PurviewManagedResource managedResources, ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess, PurviewAccountMergeInfo mergeInfo, IEnumerable<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState = default, PurviewPublicNetworkAccess? publicNetworkAccess = default, PurviewTenantEndpointState? tenantEndpointState = default, string cloudConnectorsAwsExternalId = default, ManagedServiceIdentity identity = default, PurviewAccountSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PurviewAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                accountStatus is null && cloudConnectorsAwsExternalId is null && createdOn is null && createdBy is null && createdByObjectId is null && defaultDomain is null && endpoints is null && friendlyName is null && ingestionStorage is null && managedEventHubState is null && managedResourceGroupName is null && managedResources is null && managedResourcesPublicNetworkAccess is null && mergeInfo is null && privateEndpointConnections is null && provisioningState is null && publicNetworkAccess is null && tenantEndpointState is null ? default : new PurviewAccountProperties(
+                    accountStatus,
+                    new CloudConnectors(cloudConnectorsAwsExternalId, default),
+                    createdOn,
+                    createdBy,
+                    createdByObjectId,
+                    defaultDomain,
+                    endpoints,
+                    friendlyName,
+                    ingestionStorage,
+                    managedEventHubState,
+                    managedResourceGroupName,
+                    managedResources,
+                    managedResourcesPublicNetworkAccess,
+                    mergeInfo,
+                    (privateEndpointConnections ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>()).ToList(),
+                    provisioningState,
+                    publicNetworkAccess,
+                    tenantEndpointState,
+                    default),
+                identity,
+                sku,
+                default);
+        }
+
         /// <summary> The Sku. </summary>
         /// <param name="capacity"> Gets or sets the sku capacity. </param>
         /// <param name="name"> Gets or sets the sku name. </param>
@@ -282,6 +282,15 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewAccountNameAvailabilityResult(message, isNameAvailable, reason, default);
         }
 
+        /// <summary> Credentials to access the event streaming service attached to the purview account. </summary>
+        /// <param name="identityId"> Identity identifier for UserAssign type. </param>
+        /// <param name="credentialsType"> Identity Type. </param>
+        /// <returns> A new <see cref="Models.PurviewCredentials"/> instance for mocking. </returns>
+        public static PurviewCredentials PurviewCredentials(string identityId = default, PurviewCredentialsType? credentialsType = default)
+        {
+            return new PurviewCredentials(identityId, credentialsType, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -311,15 +320,6 @@ namespace Azure.ResourceManager.Purview.Models
                     eventStreamingType,
                     default),
                 default);
-        }
-
-        /// <summary> Credentials to access the event streaming service attached to the purview account. </summary>
-        /// <param name="identityId"> Identity identifier for UserAssign type. </param>
-        /// <param name="credentialsType"> Identity Type. </param>
-        /// <returns> A new <see cref="Models.PurviewCredentials"/> instance for mocking. </returns>
-        public static PurviewCredentials PurviewCredentials(string identityId = default, PurviewCredentialsType? credentialsType = default)
-        {
-            return new PurviewCredentials(identityId, credentialsType, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

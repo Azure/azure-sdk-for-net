@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary></summary>
-    public partial class DataReplicationJobResource : IJsonModel<DataReplicationJobData>
+    public partial class DataReplicationJob1Resource : IJsonModel<DataReplicationJobData>
     {
         private static IJsonModel<DataReplicationJobData> s_dataDeserializationInstance;
 

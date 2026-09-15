@@ -18,32 +18,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
     public static partial class ArmRedHatOpenShiftHcpModelFactory
     {
 
-        /// <summary> HCP cluster resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="RedHatOpenShiftHcp.HcpOpenShiftClusterData"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterData HcpOpenShiftClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HcpOpenShiftClusterProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HcpOpenShiftClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
-        }
-
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="version"> Version of the control plane components. </param>
         /// <param name="dns"> Cluster DNS configuration. </param>
@@ -384,6 +358,32 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 default);
         }
 
+        /// <summary> HCP cluster resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="RedHatOpenShiftHcp.HcpOpenShiftClusterData"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterData HcpOpenShiftClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HcpOpenShiftClusterProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HcpOpenShiftClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
         /// <summary> HCP cluster admin credential request body. </summary>
         /// <param name="certificateSigningRequest"> PEM encoded certificate request. </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterAdminCredentialRequestContent"/> instance for mocking. </returns>
@@ -399,32 +399,6 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public static HcpOpenShiftClusterAdminCredential HcpOpenShiftClusterAdminCredential(string kubeconfig = default, DateTimeOffset expirationTimestampOn = default)
         {
             return new HcpOpenShiftClusterAdminCredential(kubeconfig, expirationTimestampOn, default);
-        }
-
-        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="RedHatOpenShiftHcp.HcpOpenShiftClusterNodePoolData"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterNodePoolData HcpOpenShiftClusterNodePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HcpOpenShiftClusterNodePoolProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HcpOpenShiftClusterNodePoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
         }
 
         /// <param name="provisioningState"> Provisioning state. </param>
@@ -582,21 +556,29 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             return new HcpOpenShiftClusterNodePoolTaint(key, value, effect, default);
         }
 
-        /// <summary> ExternalAuth resource. </summary>
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RedHatOpenShiftHcp.HcpOpenShiftClusterExternalAuthData"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterExternalAuthData HcpOpenShiftClusterExternalAuthData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HcpOpenShiftClusterExternalAuthProperties properties = default)
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="RedHatOpenShiftHcp.HcpOpenShiftClusterNodePoolData"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolData HcpOpenShiftClusterNodePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HcpOpenShiftClusterNodePoolProperties properties = default, ManagedServiceIdentity identity = default)
         {
-            return new HcpOpenShiftClusterExternalAuthData(
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HcpOpenShiftClusterNodePoolData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 properties,
+                identity,
                 default);
         }
 
@@ -808,16 +790,16 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             return new HcpOpenShiftClusterExternalAuthTokenRequiredClaim(claim, requiredValue, default);
         }
 
-        /// <summary> HcpOpenShiftVersion represents a location based available HCP OpenShift version. </summary>
+        /// <summary> ExternalAuth resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RedHatOpenShiftHcp.HcpOpenShiftVersionData"/> instance for mocking. </returns>
-        public static HcpOpenShiftVersionData HcpOpenShiftVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HcpOpenShiftVersionProperties properties = default)
+        /// <returns> A new <see cref="RedHatOpenShiftHcp.HcpOpenShiftClusterExternalAuthData"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthData HcpOpenShiftClusterExternalAuthData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HcpOpenShiftClusterExternalAuthProperties properties = default)
         {
-            return new HcpOpenShiftVersionData(
+            return new HcpOpenShiftClusterExternalAuthData(
                 id,
                 name,
                 resourceType,
@@ -834,6 +816,24 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public static HcpOpenShiftVersionProperties HcpOpenShiftVersionProperties(string channelGroup = default, bool enabled = default, DateTimeOffset endOfLifeTimestampOn = default)
         {
             return new HcpOpenShiftVersionProperties(channelGroup, enabled, endOfLifeTimestampOn, default);
+        }
+
+        /// <summary> HcpOpenShiftVersion represents a location based available HCP OpenShift version. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="RedHatOpenShiftHcp.HcpOpenShiftVersionData"/> instance for mocking. </returns>
+        public static HcpOpenShiftVersionData HcpOpenShiftVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HcpOpenShiftVersionProperties properties = default)
+        {
+            return new HcpOpenShiftVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary>

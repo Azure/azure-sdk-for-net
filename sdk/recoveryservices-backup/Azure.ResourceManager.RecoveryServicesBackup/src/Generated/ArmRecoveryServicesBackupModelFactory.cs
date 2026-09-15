@@ -22,6 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
 
         /// <summary> The resource storage details. </summary>
+        /// <param name="storageModelType"> Storage type. </param>
+        /// <param name="storageType"> Storage type. </param>
+        /// <param name="storageTypeState"> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </param>
+        /// <param name="enableCrossRegionRestore"> Opt in details of Cross Region Restore feature. </param>
+        /// <param name="dedupState"> Vault Dedup state. </param>
+        /// <param name="xcoolState"> Vault x-cool state. </param>
+        /// <returns> A new <see cref="Models.BackupResourceConfigProperties"/> instance for mocking. </returns>
+        public static BackupResourceConfigProperties BackupResourceConfigProperties(BackupStorageType? storageModelType = default, BackupStorageType? storageType = default, BackupStorageTypeState? storageTypeState = default, bool? enableCrossRegionRestore = default, VaultDedupState? dedupState = default, VaultXcoolState? xcoolState = default)
+        {
+            return new BackupResourceConfigProperties(
+                storageModelType,
+                storageType,
+                storageTypeState,
+                enableCrossRegionRestore,
+                dedupState,
+                xcoolState,
+                default);
+        }
+
+        /// <summary> The resource storage details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,26 +64,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 location,
                 properties,
                 eTag,
-                default);
-        }
-
-        /// <summary> The resource storage details. </summary>
-        /// <param name="storageModelType"> Storage type. </param>
-        /// <param name="storageType"> Storage type. </param>
-        /// <param name="storageTypeState"> Locked or Unlocked. Once a machine is registered against a resource, the storageTypeState is always Locked. </param>
-        /// <param name="enableCrossRegionRestore"> Opt in details of Cross Region Restore feature. </param>
-        /// <param name="dedupState"> Vault Dedup state. </param>
-        /// <param name="xcoolState"> Vault x-cool state. </param>
-        /// <returns> A new <see cref="Models.BackupResourceConfigProperties"/> instance for mocking. </returns>
-        public static BackupResourceConfigProperties BackupResourceConfigProperties(BackupStorageType? storageModelType = default, BackupStorageType? storageType = default, BackupStorageTypeState? storageTypeState = default, bool? enableCrossRegionRestore = default, VaultDedupState? dedupState = default, VaultXcoolState? xcoolState = default)
-        {
-            return new BackupResourceConfigProperties(
-                storageModelType,
-                storageType,
-                storageTypeState,
-                enableCrossRegionRestore,
-                dedupState,
-                xcoolState,
                 default);
         }
 
@@ -109,32 +109,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 correlationId,
                 (sourceContainerArmIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 doesPauseGC,
-                default);
-        }
-
-        /// <summary> Base class for backup ProtectionIntent. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ProtectionIntentResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/> instance for mocking. </returns>
-        public static BackupProtectionIntentData BackupProtectionIntentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionIntent properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupProtectionIntentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
                 default);
         }
 
@@ -260,21 +234,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 default);
         }
 
-        /// <summary> Backup resource vault config details. </summary>
+        /// <summary> Base class for backup ProtectionIntent. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> BackupResourceVaultConfigResource properties. </param>
+        /// <param name="properties"> ProtectionIntentResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceVaultConfigData"/> instance for mocking. </returns>
-        public static BackupResourceVaultConfigData BackupResourceVaultConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceVaultConfigProperties properties = default, ETag? eTag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionIntentData"/> instance for mocking. </returns>
+        public static BackupProtectionIntentData BackupProtectionIntentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionIntent properties = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BackupResourceVaultConfigData(
+            return new BackupProtectionIntentData(
                 id,
                 name,
                 resourceType,
@@ -312,21 +286,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 default);
         }
 
-        /// <summary> The BackupResourceEncryptionConfigExtendedData. </summary>
+        /// <summary> Backup resource vault config details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The properties of the backup resource encryption config extended resource. </param>
+        /// <param name="properties"> BackupResourceVaultConfigResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceEncryptionConfigExtendedData"/> instance for mocking. </returns>
-        public static BackupResourceEncryptionConfigExtendedData BackupResourceEncryptionConfigExtendedData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceEncryptionConfigExtendedProperties properties = default, ETag? eTag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceVaultConfigData"/> instance for mocking. </returns>
+        public static BackupResourceVaultConfigData BackupResourceVaultConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceVaultConfigProperties properties = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BackupResourceEncryptionConfigExtendedData(
+            return new BackupResourceVaultConfigData(
                 id,
                 name,
                 resourceType,
@@ -378,6 +352,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 default);
         }
 
+        /// <summary> The BackupResourceEncryptionConfigExtendedData. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the backup resource encryption config extended resource. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupResourceEncryptionConfigExtendedData"/> instance for mocking. </returns>
+        public static BackupResourceEncryptionConfigExtendedData BackupResourceEncryptionConfigExtendedData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupResourceEncryptionConfigExtendedProperties properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupResourceEncryptionConfigExtendedData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                default);
+        }
+
         /// <summary> The BackupResourceEncryptionConfigExtendedCreateOrUpdateContent. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -393,32 +393,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
-                default);
-        }
-
-        /// <summary> Private Endpoint Connection Response Properties. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> PrivateEndpointConnectionResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static BackupPrivateEndpointConnectionData BackupPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupPrivateEndpointConnectionProperties properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -452,21 +426,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new RecoveryServicesBackupPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
-        /// <summary> Base class for backup items. </summary>
+        /// <summary> Private Endpoint Connection Response Properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ProtectedItemResource properties. </param>
+        /// <param name="properties"> PrivateEndpointConnectionResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectedItemData"/> instance for mocking. </returns>
-        public static BackupProtectedItemData BackupProtectedItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectedItem properties = default, ETag? eTag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static BackupPrivateEndpointConnectionData BackupPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupPrivateEndpointConnectionProperties properties = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BackupProtectedItemData(
+            return new BackupPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -1696,6 +1670,581 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new MabFileFolderProtectedItemExtendedInfo(lastRefreshedOn, oldestRecoverOn, recoveryPointCount, default);
         }
 
+        /// <summary>
+        /// Base class for container with backup items. Containers with specific workloads are derived from this class.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BackupServerContainer"/>, <see cref="Models.DpmContainer"/>, <see cref="Models.IaasClassicComputeVmContainer"/>, <see cref="Models.IaasVmContainer"/>, <see cref="Models.IaasComputeVmContainer"/>, <see cref="Models.SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="Models.WorkloadContainer"/>, <see cref="Models.SqlContainer"/>, <see cref="Models.StorageContainer"/>, <see cref="Models.VmAppContainerProtectionContainer"/>, <see cref="Models.GenericContainer"/>, and <see cref="Models.MabContainer"/>.
+        /// </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="containerType">
+        /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
+        /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
+        /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
+        /// Backup is VMAppContainer
+        /// </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <returns> A new <see cref="Models.BackupGenericProtectionContainer"/> instance for mocking. </returns>
+        public static BackupGenericProtectionContainer BackupGenericProtectionContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string containerType = default, string protectableObjectType = default, AzureLocation? sourceLocation = default)
+        {
+            return new UnknownProtectionContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default);
+        }
+
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="canReRegister"> Specifies whether the container is re-registrable. </param>
+        /// <param name="containerId"> ID of container. </param>
+        /// <param name="protectedItemCount"> Number of protected items in the BackupEngine. </param>
+        /// <param name="dpmAgentVersion"> Backup engine Agent version. </param>
+        /// <param name="dpmServers"> List of BackupEngines protecting the container. </param>
+        /// <param name="isUpgradeAvailable"> To check if upgrade available. </param>
+        /// <param name="protectionStatus"> Protection status of the container. </param>
+        /// <param name="extendedInfoLastRefreshedOn"> Last refresh time of the DPMContainer. </param>
+        /// <returns> A new <see cref="Models.BackupServerContainer"/> instance for mocking. </returns>
+        public static BackupServerContainer BackupServerContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, bool? canReRegister = default, string containerId = default, long? protectedItemCount = default, string dpmAgentVersion = default, IEnumerable<string> dpmServers = default, bool? isUpgradeAvailable = default, string protectionStatus = default, DateTimeOffset? extendedInfoLastRefreshedOn = default)
+        {
+            dpmServers ??= new ChangeTrackingList<string>();
+
+            return new BackupServerContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default,
+                canReRegister,
+                containerId,
+                protectedItemCount,
+                dpmAgentVersion,
+                (dpmServers ?? new ChangeTrackingList<string>()).ToList(),
+                isUpgradeAvailable,
+                protectionStatus,
+                extendedInfoLastRefreshedOn is null ? default : new DPMContainerExtendedInfo(extendedInfoLastRefreshedOn, default));
+        }
+
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="canReRegister"> Specifies whether the container is re-registrable. </param>
+        /// <param name="containerId"> ID of container. </param>
+        /// <param name="protectedItemCount"> Number of protected items in the BackupEngine. </param>
+        /// <param name="dpmAgentVersion"> Backup engine Agent version. </param>
+        /// <param name="dpmServers"> List of BackupEngines protecting the container. </param>
+        /// <param name="isUpgradeAvailable"> To check if upgrade available. </param>
+        /// <param name="protectionStatus"> Protection status of the container. </param>
+        /// <param name="extendedInfoLastRefreshedOn"> Last refresh time of the DPMContainer. </param>
+        /// <returns> A new <see cref="Models.DpmContainer"/> instance for mocking. </returns>
+        public static DpmContainer DpmContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, bool? canReRegister = default, string containerId = default, long? protectedItemCount = default, string dpmAgentVersion = default, IEnumerable<string> dpmServers = default, bool? isUpgradeAvailable = default, string protectionStatus = default, DateTimeOffset? extendedInfoLastRefreshedOn = default)
+        {
+            dpmServers ??= new ChangeTrackingList<string>();
+
+            return new DpmContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default,
+                canReRegister,
+                containerId,
+                protectedItemCount,
+                dpmAgentVersion,
+                (dpmServers ?? new ChangeTrackingList<string>()).ToList(),
+                isUpgradeAvailable,
+                protectionStatus,
+                extendedInfoLastRefreshedOn is null ? default : new DPMContainerExtendedInfo(extendedInfoLastRefreshedOn, default));
+        }
+
+        /// <summary> IaaS VM workload-specific backup item representing a classic virtual machine. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="virtualMachineId"> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </param>
+        /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
+        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
+        /// <returns> A new <see cref="Models.IaasClassicComputeVmContainer"/> instance for mocking. </returns>
+        public static IaasClassicComputeVmContainer IaasClassicComputeVmContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier virtualMachineId = default, string virtualMachineVersion = default, string resourceGroup = default)
+        {
+            return new IaasClassicComputeVmContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default,
+                virtualMachineId,
+                virtualMachineVersion,
+                resourceGroup);
+        }
+
+        /// <summary> IaaS VM workload-specific container. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="virtualMachineId"> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </param>
+        /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
+        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
+        /// <returns> A new <see cref="Models.IaasVmContainer"/> instance for mocking. </returns>
+        public static IaasVmContainer IaasVmContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier virtualMachineId = default, string virtualMachineVersion = default, string resourceGroup = default)
+        {
+            return new IaasVmContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default,
+                virtualMachineId,
+                virtualMachineVersion,
+                resourceGroup);
+        }
+
+        /// <summary> IaaS VM workload-specific backup item representing an Azure Resource Manager virtual machine. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="virtualMachineId"> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </param>
+        /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
+        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
+        /// <returns> A new <see cref="Models.IaasComputeVmContainer"/> instance for mocking. </returns>
+        public static IaasComputeVmContainer IaasComputeVmContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier virtualMachineId = default, string virtualMachineVersion = default, string resourceGroup = default)
+        {
+            return new IaasComputeVmContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default,
+                virtualMachineId,
+                virtualMachineVersion,
+                resourceGroup);
+        }
+
+        /// <summary> Container for SQL workloads under SQL Availability Group. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="sourceResourceId"> ARM ID of the virtual machine represented by this Azure Workload Container. </param>
+        /// <param name="lastUpdatedOn"> Time stamp when this container was updated. </param>
+        /// <param name="extendedInfo"> Additional details of a workload container. </param>
+        /// <param name="workloadType"> Workload type for which registration was sent. </param>
+        /// <param name="operationType"> Re-Do Operation. </param>
+        /// <returns> A new <see cref="Models.SqlAvailabilityGroupWorkloadProtectionContainer"/> instance for mocking. </returns>
+        public static SqlAvailabilityGroupWorkloadProtectionContainer SqlAvailabilityGroupWorkloadProtectionContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier sourceResourceId = default, DateTimeOffset? lastUpdatedOn = default, WorkloadContainerExtendedInfo extendedInfo = default, BackupWorkloadType? workloadType = default, WorkloadOperationType? operationType = default)
+        {
+            return new SqlAvailabilityGroupWorkloadProtectionContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default,
+                sourceResourceId,
+                lastUpdatedOn,
+                extendedInfo,
+                workloadType,
+                operationType);
+        }
+
+        /// <summary> Container for the workloads running inside Azure Compute or Classic Compute. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="sourceResourceId"> ARM ID of the virtual machine represented by this Azure Workload Container. </param>
+        /// <param name="lastUpdatedOn"> Time stamp when this container was updated. </param>
+        /// <param name="extendedInfo"> Additional details of a workload container. </param>
+        /// <param name="workloadType"> Workload type for which registration was sent. </param>
+        /// <param name="operationType"> Re-Do Operation. </param>
+        /// <returns> A new <see cref="Models.WorkloadContainer"/> instance for mocking. </returns>
+        public static WorkloadContainer WorkloadContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier sourceResourceId = default, DateTimeOffset? lastUpdatedOn = default, WorkloadContainerExtendedInfo extendedInfo = default, BackupWorkloadType? workloadType = default, WorkloadOperationType? operationType = default)
+        {
+            return new WorkloadContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default,
+                sourceResourceId,
+                lastUpdatedOn,
+                extendedInfo,
+                workloadType,
+                operationType);
+        }
+
+        /// <summary> Extended information of the container. </summary>
+        /// <param name="hostServerName"> Host Os Name in case of Stand Alone and Cluster Name in case of distributed container. </param>
+        /// <param name="inquiryInfo"> Inquiry Status for the container. </param>
+        /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
+        /// <returns> A new <see cref="Models.WorkloadContainerExtendedInfo"/> instance for mocking. </returns>
+        public static WorkloadContainerExtendedInfo WorkloadContainerExtendedInfo(string hostServerName = default, WorkloadContainerInquiryInfo inquiryInfo = default, IEnumerable<DistributedNodesInfo> nodesList = default)
+        {
+            nodesList ??= new ChangeTrackingList<DistributedNodesInfo>();
+
+            return new WorkloadContainerExtendedInfo(hostServerName, inquiryInfo, (nodesList ?? new ChangeTrackingList<DistributedNodesInfo>()).ToList(), default);
+        }
+
+        /// <summary> Details about inquired protectable items under a given container. </summary>
+        /// <param name="status">
+        /// Inquiry Status for this container such as
+        /// InProgress | Failed | Succeeded
+        /// </param>
+        /// <param name="errorDetail"> Error Details if the Status is non-success. </param>
+        /// <param name="inquiryDetails">
+        /// Inquiry Details which will have workload specific details.
+        /// For e.g. - For SQL and oracle this will contain different details.
+        /// </param>
+        /// <returns> A new <see cref="Models.WorkloadContainerInquiryInfo"/> instance for mocking. </returns>
+        public static WorkloadContainerInquiryInfo WorkloadContainerInquiryInfo(string status = default, BackupErrorDetail errorDetail = default, IEnumerable<WorkloadInquiryDetails> inquiryDetails = default)
+        {
+            inquiryDetails ??= new ChangeTrackingList<WorkloadInquiryDetails>();
+
+            return new WorkloadContainerInquiryInfo(status, errorDetail, (inquiryDetails ?? new ChangeTrackingList<WorkloadInquiryDetails>()).ToList(), default);
+        }
+
+        /// <summary> Details of an inquired protectable item. </summary>
+        /// <param name="workloadInquiryDetailsType"> Type of the Workload such as SQL, Oracle etc. </param>
+        /// <param name="itemCount"> Contains the protectable item Count inside this Container. </param>
+        /// <param name="inquiryValidation"> Inquiry validation such as permissions and other backup validations. </param>
+        /// <returns> A new <see cref="Models.WorkloadInquiryDetails"/> instance for mocking. </returns>
+        public static WorkloadInquiryDetails WorkloadInquiryDetails(string workloadInquiryDetailsType = default, long? itemCount = default, InquiryValidation inquiryValidation = default)
+        {
+            return new WorkloadInquiryDetails(workloadInquiryDetailsType, itemCount, inquiryValidation, default);
+        }
+
+        /// <summary> Validation for inquired protectable items under a given container. </summary>
+        /// <param name="status"> Status for the Inquiry Validation. </param>
+        /// <param name="errorDetail"> Error Detail in case the status is non-success. </param>
+        /// <param name="additionalDetail"> Error Additional Detail in case the status is non-success. </param>
+        /// <param name="protectableItemCount"> Dictionary to store the count of ProtectableItems with key POType. </param>
+        /// <returns> A new <see cref="Models.InquiryValidation"/> instance for mocking. </returns>
+        public static InquiryValidation InquiryValidation(string status = default, BackupErrorDetail errorDetail = default, string additionalDetail = default, BinaryData protectableItemCount = default)
+        {
+            return new InquiryValidation(status, errorDetail, additionalDetail, protectableItemCount, default);
+        }
+
+        /// <summary> Container for SQL workloads under Azure Virtual Machines. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="sourceResourceId"> ARM ID of the virtual machine represented by this Azure Workload Container. </param>
+        /// <param name="lastUpdatedOn"> Time stamp when this container was updated. </param>
+        /// <param name="extendedInfo"> Additional details of a workload container. </param>
+        /// <param name="workloadType"> Workload type for which registration was sent. </param>
+        /// <param name="operationType"> Re-Do Operation. </param>
+        /// <returns> A new <see cref="Models.VmAppContainerProtectionContainer"/> instance for mocking. </returns>
+        public static VmAppContainerProtectionContainer VmAppContainerProtectionContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier sourceResourceId = default, DateTimeOffset? lastUpdatedOn = default, WorkloadContainerExtendedInfo extendedInfo = default, BackupWorkloadType? workloadType = default, WorkloadOperationType? operationType = default)
+        {
+            return new VmAppContainerProtectionContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default,
+                sourceResourceId,
+                lastUpdatedOn,
+                extendedInfo,
+                workloadType,
+                operationType);
+        }
+
+        /// <summary> Azure Sql workload-specific container. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <returns> A new <see cref="Models.SqlContainer"/> instance for mocking. </returns>
+        public static SqlContainer SqlContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default)
+        {
+            return new SqlContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default);
+        }
+
+        /// <summary> Azure Storage Account workload-specific container. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="sourceResourceId"> Fully qualified ARM url. </param>
+        /// <param name="storageAccountVersion"> Storage account version. </param>
+        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
+        /// <param name="protectedItemCount"> Number of items backed up in this container. </param>
+        /// <param name="acquireStorageAccountLock"> Whether storage account lock is to be acquired for this container or not. </param>
+        /// <param name="operationType"> Re-Do Operation. </param>
+        /// <param name="accessType">
+        /// Whether access to the storage account is key-based or identity-based.
+        /// When `IdentityBased`, `identityInfo` must be provided to identify the
+        /// managed identity used to access the storage account.
+        /// </param>
+        /// <param name="identityInfo"> Managed identity information required to access the storage account. </param>
+        /// <returns> A new <see cref="Models.StorageContainer"/> instance for mocking. </returns>
+        public static StorageContainer StorageContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier sourceResourceId = default, string storageAccountVersion = default, string resourceGroup = default, long? protectedItemCount = default, AcquireStorageAccountLock? acquireStorageAccountLock = default, WorkloadOperationType? operationType = default, AccessType? accessType = default, BackupIdentityInfo identityInfo = default)
+        {
+            return new StorageContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default,
+                sourceResourceId,
+                storageAccountVersion,
+                resourceGroup,
+                protectedItemCount,
+                acquireStorageAccountLock,
+                operationType,
+                accessType,
+                identityInfo);
+        }
+
+        /// <summary> Encapsulates Managed Identity related information. </summary>
+        /// <param name="isSystemAssignedIdentity"> To differentiate if the managed identity is system assigned or user assigned. </param>
+        /// <param name="managedIdentityResourceId">
+        /// Managed Identity Resource Id
+        /// Optional: Might not be required in the case of system assigned managed identity
+        /// </param>
+        /// <returns> A new <see cref="Models.BackupIdentityInfo"/> instance for mocking. </returns>
+        public static BackupIdentityInfo BackupIdentityInfo(bool? isSystemAssignedIdentity = default, ResourceIdentifier managedIdentityResourceId = default)
+        {
+            return new BackupIdentityInfo(isSystemAssignedIdentity, managedIdentityResourceId, default);
+        }
+
+        /// <summary> Base class for generic container of backup items. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="fabricName"> Name of the container's fabric. </param>
+        /// <param name="extendedInformation"> Extended information (not returned in List container API calls). </param>
+        /// <returns> A new <see cref="Models.GenericContainer"/> instance for mocking. </returns>
+        public static GenericContainer GenericContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, string fabricName = default, GenericContainerExtendedInfo extendedInformation = default)
+        {
+            return new GenericContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default,
+                fabricName,
+                extendedInformation);
+        }
+
+        /// <summary> Container extended information. </summary>
+        /// <param name="rawCertData"> Public key of container cert. </param>
+        /// <param name="containerIdentityInfo"> Container identity information. </param>
+        /// <param name="serviceEndpoints"> Azure Backup Service Endpoints for the container. </param>
+        /// <returns> A new <see cref="Models.GenericContainerExtendedInfo"/> instance for mocking. </returns>
+        public static GenericContainerExtendedInfo GenericContainerExtendedInfo(string rawCertData = default, ContainerIdentityInfo containerIdentityInfo = default, IDictionary<string, string> serviceEndpoints = default)
+        {
+            serviceEndpoints ??= new ChangeTrackingDictionary<string, string>();
+
+            return new GenericContainerExtendedInfo(rawCertData, containerIdentityInfo, serviceEndpoints ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> Container identity information. </summary>
+        /// <param name="uniqueName"> Unique name of the container. </param>
+        /// <param name="aadTenantId"> Protection container identity - AAD Tenant. </param>
+        /// <param name="servicePrincipalClientId"> Protection container identity - AAD Service Principal. </param>
+        /// <param name="audience"> Protection container identity - Audience. </param>
+        /// <returns> A new <see cref="Models.ContainerIdentityInfo"/> instance for mocking. </returns>
+        public static ContainerIdentityInfo ContainerIdentityInfo(string uniqueName = default, Guid? aadTenantId = default, string servicePrincipalClientId = default, string audience = default)
+        {
+            return new ContainerIdentityInfo(uniqueName, aadTenantId, servicePrincipalClientId, audience, default);
+        }
+
+        /// <summary> Container with items backed up using MAB backup engine. </summary>
+        /// <param name="friendlyName"> Friendly name of the container. </param>
+        /// <param name="backupManagementType"> Type of backup management for the container. </param>
+        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
+        /// <param name="healthStatus"> Status of health of the container. </param>
+        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
+        /// <param name="canReRegister"> Can the container be registered one more time. </param>
+        /// <param name="containerId"> ContainerID represents the container. </param>
+        /// <param name="protectedItemCount"> Number of items backed up in this container. </param>
+        /// <param name="agentVersion"> Agent version of this container. </param>
+        /// <param name="extendedInfo"> Additional information for this container. </param>
+        /// <param name="mabContainerHealthDetails"> Health details on this mab container. </param>
+        /// <param name="containerHealthState"> Health state of mab container. </param>
+        /// <returns> A new <see cref="Models.MabContainer"/> instance for mocking. </returns>
+        public static MabContainer MabContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, bool? canReRegister = default, long? containerId = default, long? protectedItemCount = default, string agentVersion = default, MabContainerExtendedInfo extendedInfo = default, IEnumerable<MabContainerHealthDetails> mabContainerHealthDetails = default, string containerHealthState = default)
+        {
+            mabContainerHealthDetails ??= new ChangeTrackingList<MabContainerHealthDetails>();
+
+            return new MabContainer(
+                friendlyName,
+                backupManagementType,
+                registrationStatus,
+                healthStatus,
+                default,
+                protectableObjectType,
+                sourceLocation,
+                default,
+                canReRegister,
+                containerId,
+                protectedItemCount,
+                agentVersion,
+                extendedInfo,
+                (mabContainerHealthDetails ?? new ChangeTrackingList<MabContainerHealthDetails>()).ToList(),
+                containerHealthState);
+        }
+
+        /// <summary> Additional information of the container. </summary>
+        /// <param name="lastRefreshedOn"> Time stamp when this container was refreshed. </param>
+        /// <param name="backupItemType"> Type of backup items associated with this container. </param>
+        /// <param name="backupItems"> List of backup items associated with this container. </param>
+        /// <param name="policyName"> Backup policy associated with this container. </param>
+        /// <param name="lastBackupStatus"> Latest backup status of this container. </param>
+        /// <returns> A new <see cref="Models.MabContainerExtendedInfo"/> instance for mocking. </returns>
+        public static MabContainerExtendedInfo MabContainerExtendedInfo(DateTimeOffset? lastRefreshedOn = default, BackupItemType? backupItemType = default, IEnumerable<string> backupItems = default, string policyName = default, string lastBackupStatus = default)
+        {
+            backupItems ??= new ChangeTrackingList<string>();
+
+            return new MabContainerExtendedInfo(
+                lastRefreshedOn,
+                backupItemType,
+                (backupItems ?? new ChangeTrackingList<string>()).ToList(),
+                policyName,
+                lastBackupStatus,
+                default);
+        }
+
+        /// <summary> MAB workload-specific Health Details. </summary>
+        /// <param name="code"> Health Code. </param>
+        /// <param name="title"> Health Title. </param>
+        /// <param name="message"> Health Message. </param>
+        /// <param name="recommendations"> Health Recommended Actions. </param>
+        /// <returns> A new <see cref="Models.MabContainerHealthDetails"/> instance for mocking. </returns>
+        public static MabContainerHealthDetails MabContainerHealthDetails(int? code = default, string title = default, string message = default, IEnumerable<string> recommendations = default)
+        {
+            recommendations ??= new ChangeTrackingList<string>();
+
+            return new MabContainerHealthDetails(code, title, message, (recommendations ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Base class for container with backup items. Containers with specific workloads are derived from this class. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> ProtectionContainerResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/> instance for mocking. </returns>
+        public static BackupProtectionContainerData BackupProtectionContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionContainer properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupProtectionContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> Base class for backup items. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> ProtectedItemResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectedItemData"/> instance for mocking. </returns>
+        public static BackupProtectedItemData BackupProtectedItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectedItem properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BackupProtectedItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                default);
+        }
+
         /// <summary> Base class for backup request. Workload-specific backup requests are derived from this class. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -2346,555 +2895,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static DiskDetails DiskDetails(int? lun = default, string diskName = default)
         {
             return new DiskDetails(lun, diskName, default);
-        }
-
-        /// <summary> Base class for container with backup items. Containers with specific workloads are derived from this class. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ProtectionContainerResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionContainerData"/> instance for mocking. </returns>
-        public static BackupProtectionContainerData BackupProtectionContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionContainer properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupProtectionContainerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
-                default);
-        }
-
-        /// <summary>
-        /// Base class for container with backup items. Containers with specific workloads are derived from this class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BackupServerContainer"/>, <see cref="Models.DpmContainer"/>, <see cref="Models.IaasClassicComputeVmContainer"/>, <see cref="Models.IaasVmContainer"/>, <see cref="Models.IaasComputeVmContainer"/>, <see cref="Models.SqlAvailabilityGroupWorkloadProtectionContainer"/>, <see cref="Models.WorkloadContainer"/>, <see cref="Models.SqlContainer"/>, <see cref="Models.StorageContainer"/>, <see cref="Models.VmAppContainerProtectionContainer"/>, <see cref="Models.GenericContainer"/>, and <see cref="Models.MabContainer"/>.
-        /// </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="containerType">
-        /// Type of the container. The value of this property for: 1. Compute Azure VM is Microsoft.Compute/virtualMachines 2.
-        /// Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines 3. Windows machines (like MAB, DPM etc) is
-        /// Windows 4. Azure SQL instance is AzureSqlContainer. 5. Storage containers is StorageContainer. 6. Azure workload
-        /// Backup is VMAppContainer
-        /// </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <returns> A new <see cref="Models.BackupGenericProtectionContainer"/> instance for mocking. </returns>
-        public static BackupGenericProtectionContainer BackupGenericProtectionContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string containerType = default, string protectableObjectType = default, AzureLocation? sourceLocation = default)
-        {
-            return new UnknownProtectionContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default);
-        }
-
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <param name="canReRegister"> Specifies whether the container is re-registrable. </param>
-        /// <param name="containerId"> ID of container. </param>
-        /// <param name="protectedItemCount"> Number of protected items in the BackupEngine. </param>
-        /// <param name="dpmAgentVersion"> Backup engine Agent version. </param>
-        /// <param name="dpmServers"> List of BackupEngines protecting the container. </param>
-        /// <param name="isUpgradeAvailable"> To check if upgrade available. </param>
-        /// <param name="protectionStatus"> Protection status of the container. </param>
-        /// <param name="extendedInfoLastRefreshedOn"> Last refresh time of the DPMContainer. </param>
-        /// <returns> A new <see cref="Models.BackupServerContainer"/> instance for mocking. </returns>
-        public static BackupServerContainer BackupServerContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, bool? canReRegister = default, string containerId = default, long? protectedItemCount = default, string dpmAgentVersion = default, IEnumerable<string> dpmServers = default, bool? isUpgradeAvailable = default, string protectionStatus = default, DateTimeOffset? extendedInfoLastRefreshedOn = default)
-        {
-            dpmServers ??= new ChangeTrackingList<string>();
-
-            return new BackupServerContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default,
-                canReRegister,
-                containerId,
-                protectedItemCount,
-                dpmAgentVersion,
-                (dpmServers ?? new ChangeTrackingList<string>()).ToList(),
-                isUpgradeAvailable,
-                protectionStatus,
-                extendedInfoLastRefreshedOn is null ? default : new DPMContainerExtendedInfo(extendedInfoLastRefreshedOn, default));
-        }
-
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <param name="canReRegister"> Specifies whether the container is re-registrable. </param>
-        /// <param name="containerId"> ID of container. </param>
-        /// <param name="protectedItemCount"> Number of protected items in the BackupEngine. </param>
-        /// <param name="dpmAgentVersion"> Backup engine Agent version. </param>
-        /// <param name="dpmServers"> List of BackupEngines protecting the container. </param>
-        /// <param name="isUpgradeAvailable"> To check if upgrade available. </param>
-        /// <param name="protectionStatus"> Protection status of the container. </param>
-        /// <param name="extendedInfoLastRefreshedOn"> Last refresh time of the DPMContainer. </param>
-        /// <returns> A new <see cref="Models.DpmContainer"/> instance for mocking. </returns>
-        public static DpmContainer DpmContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, bool? canReRegister = default, string containerId = default, long? protectedItemCount = default, string dpmAgentVersion = default, IEnumerable<string> dpmServers = default, bool? isUpgradeAvailable = default, string protectionStatus = default, DateTimeOffset? extendedInfoLastRefreshedOn = default)
-        {
-            dpmServers ??= new ChangeTrackingList<string>();
-
-            return new DpmContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default,
-                canReRegister,
-                containerId,
-                protectedItemCount,
-                dpmAgentVersion,
-                (dpmServers ?? new ChangeTrackingList<string>()).ToList(),
-                isUpgradeAvailable,
-                protectionStatus,
-                extendedInfoLastRefreshedOn is null ? default : new DPMContainerExtendedInfo(extendedInfoLastRefreshedOn, default));
-        }
-
-        /// <summary> IaaS VM workload-specific backup item representing a classic virtual machine. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <param name="virtualMachineId"> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </param>
-        /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
-        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        /// <returns> A new <see cref="Models.IaasClassicComputeVmContainer"/> instance for mocking. </returns>
-        public static IaasClassicComputeVmContainer IaasClassicComputeVmContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier virtualMachineId = default, string virtualMachineVersion = default, string resourceGroup = default)
-        {
-            return new IaasClassicComputeVmContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default,
-                virtualMachineId,
-                virtualMachineVersion,
-                resourceGroup);
-        }
-
-        /// <summary> IaaS VM workload-specific container. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <param name="virtualMachineId"> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </param>
-        /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
-        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        /// <returns> A new <see cref="Models.IaasVmContainer"/> instance for mocking. </returns>
-        public static IaasVmContainer IaasVmContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier virtualMachineId = default, string virtualMachineVersion = default, string resourceGroup = default)
-        {
-            return new IaasVmContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default,
-                virtualMachineId,
-                virtualMachineVersion,
-                resourceGroup);
-        }
-
-        /// <summary> IaaS VM workload-specific backup item representing an Azure Resource Manager virtual machine. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <param name="virtualMachineId"> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </param>
-        /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
-        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        /// <returns> A new <see cref="Models.IaasComputeVmContainer"/> instance for mocking. </returns>
-        public static IaasComputeVmContainer IaasComputeVmContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier virtualMachineId = default, string virtualMachineVersion = default, string resourceGroup = default)
-        {
-            return new IaasComputeVmContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default,
-                virtualMachineId,
-                virtualMachineVersion,
-                resourceGroup);
-        }
-
-        /// <summary> Container for SQL workloads under SQL Availability Group. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <param name="sourceResourceId"> ARM ID of the virtual machine represented by this Azure Workload Container. </param>
-        /// <param name="lastUpdatedOn"> Time stamp when this container was updated. </param>
-        /// <param name="extendedInfo"> Additional details of a workload container. </param>
-        /// <param name="workloadType"> Workload type for which registration was sent. </param>
-        /// <param name="operationType"> Re-Do Operation. </param>
-        /// <returns> A new <see cref="Models.SqlAvailabilityGroupWorkloadProtectionContainer"/> instance for mocking. </returns>
-        public static SqlAvailabilityGroupWorkloadProtectionContainer SqlAvailabilityGroupWorkloadProtectionContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier sourceResourceId = default, DateTimeOffset? lastUpdatedOn = default, WorkloadContainerExtendedInfo extendedInfo = default, BackupWorkloadType? workloadType = default, WorkloadOperationType? operationType = default)
-        {
-            return new SqlAvailabilityGroupWorkloadProtectionContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default,
-                sourceResourceId,
-                lastUpdatedOn,
-                extendedInfo,
-                workloadType,
-                operationType);
-        }
-
-        /// <summary> Container for the workloads running inside Azure Compute or Classic Compute. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <param name="sourceResourceId"> ARM ID of the virtual machine represented by this Azure Workload Container. </param>
-        /// <param name="lastUpdatedOn"> Time stamp when this container was updated. </param>
-        /// <param name="extendedInfo"> Additional details of a workload container. </param>
-        /// <param name="workloadType"> Workload type for which registration was sent. </param>
-        /// <param name="operationType"> Re-Do Operation. </param>
-        /// <returns> A new <see cref="Models.WorkloadContainer"/> instance for mocking. </returns>
-        public static WorkloadContainer WorkloadContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier sourceResourceId = default, DateTimeOffset? lastUpdatedOn = default, WorkloadContainerExtendedInfo extendedInfo = default, BackupWorkloadType? workloadType = default, WorkloadOperationType? operationType = default)
-        {
-            return new WorkloadContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default,
-                sourceResourceId,
-                lastUpdatedOn,
-                extendedInfo,
-                workloadType,
-                operationType);
-        }
-
-        /// <summary> Extended information of the container. </summary>
-        /// <param name="hostServerName"> Host Os Name in case of Stand Alone and Cluster Name in case of distributed container. </param>
-        /// <param name="inquiryInfo"> Inquiry Status for the container. </param>
-        /// <param name="nodesList"> List of the nodes in case of distributed container. </param>
-        /// <returns> A new <see cref="Models.WorkloadContainerExtendedInfo"/> instance for mocking. </returns>
-        public static WorkloadContainerExtendedInfo WorkloadContainerExtendedInfo(string hostServerName = default, WorkloadContainerInquiryInfo inquiryInfo = default, IEnumerable<DistributedNodesInfo> nodesList = default)
-        {
-            nodesList ??= new ChangeTrackingList<DistributedNodesInfo>();
-
-            return new WorkloadContainerExtendedInfo(hostServerName, inquiryInfo, (nodesList ?? new ChangeTrackingList<DistributedNodesInfo>()).ToList(), default);
-        }
-
-        /// <summary> Details about inquired protectable items under a given container. </summary>
-        /// <param name="status">
-        /// Inquiry Status for this container such as
-        /// InProgress | Failed | Succeeded
-        /// </param>
-        /// <param name="errorDetail"> Error Details if the Status is non-success. </param>
-        /// <param name="inquiryDetails">
-        /// Inquiry Details which will have workload specific details.
-        /// For e.g. - For SQL and oracle this will contain different details.
-        /// </param>
-        /// <returns> A new <see cref="Models.WorkloadContainerInquiryInfo"/> instance for mocking. </returns>
-        public static WorkloadContainerInquiryInfo WorkloadContainerInquiryInfo(string status = default, BackupErrorDetail errorDetail = default, IEnumerable<WorkloadInquiryDetails> inquiryDetails = default)
-        {
-            inquiryDetails ??= new ChangeTrackingList<WorkloadInquiryDetails>();
-
-            return new WorkloadContainerInquiryInfo(status, errorDetail, (inquiryDetails ?? new ChangeTrackingList<WorkloadInquiryDetails>()).ToList(), default);
-        }
-
-        /// <summary> Details of an inquired protectable item. </summary>
-        /// <param name="workloadInquiryDetailsType"> Type of the Workload such as SQL, Oracle etc. </param>
-        /// <param name="itemCount"> Contains the protectable item Count inside this Container. </param>
-        /// <param name="inquiryValidation"> Inquiry validation such as permissions and other backup validations. </param>
-        /// <returns> A new <see cref="Models.WorkloadInquiryDetails"/> instance for mocking. </returns>
-        public static WorkloadInquiryDetails WorkloadInquiryDetails(string workloadInquiryDetailsType = default, long? itemCount = default, InquiryValidation inquiryValidation = default)
-        {
-            return new WorkloadInquiryDetails(workloadInquiryDetailsType, itemCount, inquiryValidation, default);
-        }
-
-        /// <summary> Validation for inquired protectable items under a given container. </summary>
-        /// <param name="status"> Status for the Inquiry Validation. </param>
-        /// <param name="errorDetail"> Error Detail in case the status is non-success. </param>
-        /// <param name="additionalDetail"> Error Additional Detail in case the status is non-success. </param>
-        /// <param name="protectableItemCount"> Dictionary to store the count of ProtectableItems with key POType. </param>
-        /// <returns> A new <see cref="Models.InquiryValidation"/> instance for mocking. </returns>
-        public static InquiryValidation InquiryValidation(string status = default, BackupErrorDetail errorDetail = default, string additionalDetail = default, BinaryData protectableItemCount = default)
-        {
-            return new InquiryValidation(status, errorDetail, additionalDetail, protectableItemCount, default);
-        }
-
-        /// <summary> Container for SQL workloads under Azure Virtual Machines. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <param name="sourceResourceId"> ARM ID of the virtual machine represented by this Azure Workload Container. </param>
-        /// <param name="lastUpdatedOn"> Time stamp when this container was updated. </param>
-        /// <param name="extendedInfo"> Additional details of a workload container. </param>
-        /// <param name="workloadType"> Workload type for which registration was sent. </param>
-        /// <param name="operationType"> Re-Do Operation. </param>
-        /// <returns> A new <see cref="Models.VmAppContainerProtectionContainer"/> instance for mocking. </returns>
-        public static VmAppContainerProtectionContainer VmAppContainerProtectionContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier sourceResourceId = default, DateTimeOffset? lastUpdatedOn = default, WorkloadContainerExtendedInfo extendedInfo = default, BackupWorkloadType? workloadType = default, WorkloadOperationType? operationType = default)
-        {
-            return new VmAppContainerProtectionContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default,
-                sourceResourceId,
-                lastUpdatedOn,
-                extendedInfo,
-                workloadType,
-                operationType);
-        }
-
-        /// <summary> Azure Sql workload-specific container. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <returns> A new <see cref="Models.SqlContainer"/> instance for mocking. </returns>
-        public static SqlContainer SqlContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default)
-        {
-            return new SqlContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default);
-        }
-
-        /// <summary> Azure Storage Account workload-specific container. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <param name="sourceResourceId"> Fully qualified ARM url. </param>
-        /// <param name="storageAccountVersion"> Storage account version. </param>
-        /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        /// <param name="protectedItemCount"> Number of items backed up in this container. </param>
-        /// <param name="acquireStorageAccountLock"> Whether storage account lock is to be acquired for this container or not. </param>
-        /// <param name="operationType"> Re-Do Operation. </param>
-        /// <param name="accessType">
-        /// Whether access to the storage account is key-based or identity-based.
-        /// When `IdentityBased`, `identityInfo` must be provided to identify the
-        /// managed identity used to access the storage account.
-        /// </param>
-        /// <param name="identityInfo"> Managed identity information required to access the storage account. </param>
-        /// <returns> A new <see cref="Models.StorageContainer"/> instance for mocking. </returns>
-        public static StorageContainer StorageContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, ResourceIdentifier sourceResourceId = default, string storageAccountVersion = default, string resourceGroup = default, long? protectedItemCount = default, AcquireStorageAccountLock? acquireStorageAccountLock = default, WorkloadOperationType? operationType = default, AccessType? accessType = default, BackupIdentityInfo identityInfo = default)
-        {
-            return new StorageContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default,
-                sourceResourceId,
-                storageAccountVersion,
-                resourceGroup,
-                protectedItemCount,
-                acquireStorageAccountLock,
-                operationType,
-                accessType,
-                identityInfo);
-        }
-
-        /// <summary> Encapsulates Managed Identity related information. </summary>
-        /// <param name="isSystemAssignedIdentity"> To differentiate if the managed identity is system assigned or user assigned. </param>
-        /// <param name="managedIdentityResourceId">
-        /// Managed Identity Resource Id
-        /// Optional: Might not be required in the case of system assigned managed identity
-        /// </param>
-        /// <returns> A new <see cref="Models.BackupIdentityInfo"/> instance for mocking. </returns>
-        public static BackupIdentityInfo BackupIdentityInfo(bool? isSystemAssignedIdentity = default, ResourceIdentifier managedIdentityResourceId = default)
-        {
-            return new BackupIdentityInfo(isSystemAssignedIdentity, managedIdentityResourceId, default);
-        }
-
-        /// <summary> Base class for generic container of backup items. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <param name="fabricName"> Name of the container's fabric. </param>
-        /// <param name="extendedInformation"> Extended information (not returned in List container API calls). </param>
-        /// <returns> A new <see cref="Models.GenericContainer"/> instance for mocking. </returns>
-        public static GenericContainer GenericContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, string fabricName = default, GenericContainerExtendedInfo extendedInformation = default)
-        {
-            return new GenericContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default,
-                fabricName,
-                extendedInformation);
-        }
-
-        /// <summary> Container extended information. </summary>
-        /// <param name="rawCertData"> Public key of container cert. </param>
-        /// <param name="containerIdentityInfo"> Container identity information. </param>
-        /// <param name="serviceEndpoints"> Azure Backup Service Endpoints for the container. </param>
-        /// <returns> A new <see cref="Models.GenericContainerExtendedInfo"/> instance for mocking. </returns>
-        public static GenericContainerExtendedInfo GenericContainerExtendedInfo(string rawCertData = default, ContainerIdentityInfo containerIdentityInfo = default, IDictionary<string, string> serviceEndpoints = default)
-        {
-            serviceEndpoints ??= new ChangeTrackingDictionary<string, string>();
-
-            return new GenericContainerExtendedInfo(rawCertData, containerIdentityInfo, serviceEndpoints ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> Container identity information. </summary>
-        /// <param name="uniqueName"> Unique name of the container. </param>
-        /// <param name="aadTenantId"> Protection container identity - AAD Tenant. </param>
-        /// <param name="servicePrincipalClientId"> Protection container identity - AAD Service Principal. </param>
-        /// <param name="audience"> Protection container identity - Audience. </param>
-        /// <returns> A new <see cref="Models.ContainerIdentityInfo"/> instance for mocking. </returns>
-        public static ContainerIdentityInfo ContainerIdentityInfo(string uniqueName = default, Guid? aadTenantId = default, string servicePrincipalClientId = default, string audience = default)
-        {
-            return new ContainerIdentityInfo(uniqueName, aadTenantId, servicePrincipalClientId, audience, default);
-        }
-
-        /// <summary> Container with items backed up using MAB backup engine. </summary>
-        /// <param name="friendlyName"> Friendly name of the container. </param>
-        /// <param name="backupManagementType"> Type of backup management for the container. </param>
-        /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>
-        /// <param name="healthStatus"> Status of health of the container. </param>
-        /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
-        /// <param name="sourceLocation"> Source location of the container. </param>
-        /// <param name="canReRegister"> Can the container be registered one more time. </param>
-        /// <param name="containerId"> ContainerID represents the container. </param>
-        /// <param name="protectedItemCount"> Number of items backed up in this container. </param>
-        /// <param name="agentVersion"> Agent version of this container. </param>
-        /// <param name="extendedInfo"> Additional information for this container. </param>
-        /// <param name="mabContainerHealthDetails"> Health details on this mab container. </param>
-        /// <param name="containerHealthState"> Health state of mab container. </param>
-        /// <returns> A new <see cref="Models.MabContainer"/> instance for mocking. </returns>
-        public static MabContainer MabContainer(string friendlyName = default, BackupManagementType? backupManagementType = default, string registrationStatus = default, string healthStatus = default, string protectableObjectType = default, AzureLocation? sourceLocation = default, bool? canReRegister = default, long? containerId = default, long? protectedItemCount = default, string agentVersion = default, MabContainerExtendedInfo extendedInfo = default, IEnumerable<MabContainerHealthDetails> mabContainerHealthDetails = default, string containerHealthState = default)
-        {
-            mabContainerHealthDetails ??= new ChangeTrackingList<MabContainerHealthDetails>();
-
-            return new MabContainer(
-                friendlyName,
-                backupManagementType,
-                registrationStatus,
-                healthStatus,
-                default,
-                protectableObjectType,
-                sourceLocation,
-                default,
-                canReRegister,
-                containerId,
-                protectedItemCount,
-                agentVersion,
-                extendedInfo,
-                (mabContainerHealthDetails ?? new ChangeTrackingList<MabContainerHealthDetails>()).ToList(),
-                containerHealthState);
-        }
-
-        /// <summary> Additional information of the container. </summary>
-        /// <param name="lastRefreshedOn"> Time stamp when this container was refreshed. </param>
-        /// <param name="backupItemType"> Type of backup items associated with this container. </param>
-        /// <param name="backupItems"> List of backup items associated with this container. </param>
-        /// <param name="policyName"> Backup policy associated with this container. </param>
-        /// <param name="lastBackupStatus"> Latest backup status of this container. </param>
-        /// <returns> A new <see cref="Models.MabContainerExtendedInfo"/> instance for mocking. </returns>
-        public static MabContainerExtendedInfo MabContainerExtendedInfo(DateTimeOffset? lastRefreshedOn = default, BackupItemType? backupItemType = default, IEnumerable<string> backupItems = default, string policyName = default, string lastBackupStatus = default)
-        {
-            backupItems ??= new ChangeTrackingList<string>();
-
-            return new MabContainerExtendedInfo(
-                lastRefreshedOn,
-                backupItemType,
-                (backupItems ?? new ChangeTrackingList<string>()).ToList(),
-                policyName,
-                lastBackupStatus,
-                default);
-        }
-
-        /// <summary> MAB workload-specific Health Details. </summary>
-        /// <param name="code"> Health Code. </param>
-        /// <param name="title"> Health Title. </param>
-        /// <param name="message"> Health Message. </param>
-        /// <param name="recommendations"> Health Recommended Actions. </param>
-        /// <returns> A new <see cref="Models.MabContainerHealthDetails"/> instance for mocking. </returns>
-        public static MabContainerHealthDetails MabContainerHealthDetails(int? code = default, string title = default, string message = default, IEnumerable<string> recommendations = default)
-        {
-            recommendations ??= new ChangeTrackingList<string>();
-
-            return new MabContainerHealthDetails(code, title, message, (recommendations ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Base class for backup item. Workload-specific backup items are derived from this class. </summary>
@@ -4124,32 +4124,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 renewExistingRegistration);
         }
 
-        /// <summary> Base class for backup policy. Workload-specific backup policies are derived from this class. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ProtectionPolicyResource properties. </param>
-        /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/> instance for mocking. </returns>
-        public static BackupProtectionPolicyData BackupProtectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionPolicy properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BackupProtectionPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
-                default);
-        }
-
         /// <summary>
         /// Base class for backup policy. Workload-specific backup policies are derived from this class.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VmWorkloadProtectionPolicy"/>, <see cref="Models.FileShareProtectionPolicy"/>, <see cref="Models.IaasVmProtectionPolicy"/>, <see cref="Models.SqlProtectionPolicy"/>, <see cref="Models.GenericProtectionPolicy"/>, and <see cref="Models.MabProtectionPolicy"/>.
@@ -4613,21 +4587,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 retentionPolicy);
         }
 
-        /// <summary> Defines workload agnostic properties for a job. </summary>
+        /// <summary> Base class for backup policy. Workload-specific backup policies are derived from this class. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> JobResource properties. </param>
+        /// <param name="properties"> ProtectionPolicyResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupJobData"/> instance for mocking. </returns>
-        public static BackupJobData BackupJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericJob properties = default, ETag? eTag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupProtectionPolicyData"/> instance for mocking. </returns>
+        public static BackupProtectionPolicyData BackupProtectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericProtectionPolicy properties = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BackupJobData(
+            return new BackupProtectionPolicyData(
                 id,
                 name,
                 resourceType,
@@ -5171,21 +5145,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new VaultBackupJobErrorInfo(errorCode, errorString, (recommendations ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The base backup engine class. All workload specific backup engines derive from this class. </summary>
+        /// <summary> Defines workload agnostic properties for a job. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> BackupEngineBaseResource properties. </param>
+        /// <param name="properties"> JobResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.BackupEngineData"/> instance for mocking. </returns>
-        public static BackupEngineData BackupEngineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericEngine properties = default, ETag? eTag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupJobData"/> instance for mocking. </returns>
+        public static BackupJobData BackupJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericJob properties = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new BackupEngineData(
+            return new BackupJobData(
                 id,
                 name,
                 resourceType,
@@ -5324,21 +5298,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 default);
         }
 
-        /// <summary> The ResourceGuardProxyData. </summary>
+        /// <summary> The base backup engine class. All workload specific backup engines derive from this class. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
+        /// <param name="properties"> BackupEngineBaseResource properties. </param>
         /// <param name="eTag"> Optional ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/> instance for mocking. </returns>
-        public static ResourceGuardProxyData ResourceGuardProxyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceGuardProxyProperties properties = default, ETag? eTag = default)
+        /// <returns> A new <see cref="RecoveryServicesBackup.BackupEngineData"/> instance for mocking. </returns>
+        public static BackupEngineData BackupEngineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BackupGenericEngine properties = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ResourceGuardProxyData(
+            return new BackupEngineData(
                 id,
                 name,
                 resourceType,
@@ -5370,6 +5344,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static ResourceGuardOperationDetail ResourceGuardOperationDetail(string vaultCriticalOperation = default, ResourceIdentifier defaultResourceId = default)
         {
             return new ResourceGuardOperationDetail(vaultCriticalOperation, defaultResourceId, default);
+        }
+
+        /// <summary> The ResourceGuardProxyData. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> ResourceGuardProxyBaseResource properties. </param>
+        /// <param name="eTag"> Optional ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesBackup.ResourceGuardProxyData"/> instance for mocking. </returns>
+        public static ResourceGuardProxyData ResourceGuardProxyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceGuardProxyProperties properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceGuardProxyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                default);
         }
 
         /// <summary> Request body of unlock delete API. </summary>

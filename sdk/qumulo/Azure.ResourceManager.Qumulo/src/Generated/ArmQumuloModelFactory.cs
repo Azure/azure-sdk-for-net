@@ -20,6 +20,34 @@ namespace Azure.ResourceManager.Qumulo.Models
     public static partial class ArmQumuloModelFactory
     {
 
+        /// <summary> MarketplaceDetails of Qumulo FileSystem resource. </summary>
+        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
+        /// <param name="planId"> Plan Id. </param>
+        /// <param name="offerId"> Offer Id. </param>
+        /// <param name="publisherId"> Publisher Id. </param>
+        /// <param name="termUnit"> Term Unit. </param>
+        /// <param name="qumuloMarketplaceSubscriptionStatus"> Marketplace subscription status. </param>
+        /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
+        public static MarketplaceDetails MarketplaceDetails(string marketplaceSubscriptionId = default, string planId = default, string offerId = default, string publisherId = default, string termUnit = default, QumuloMarketplaceSubscriptionStatus? qumuloMarketplaceSubscriptionStatus = default)
+        {
+            return new MarketplaceDetails(
+                marketplaceSubscriptionId,
+                planId,
+                offerId,
+                publisherId,
+                termUnit,
+                qumuloMarketplaceSubscriptionStatus,
+                default);
+        }
+
+        /// <summary> User Details of Qumulo FileSystem resource. </summary>
+        /// <param name="email"> User Email. </param>
+        /// <returns> A new <see cref="Models.QumuloUserDetails"/> instance for mocking. </returns>
+        public static QumuloUserDetails QumuloUserDetails(string email = default)
+        {
+            return new QumuloUserDetails(email, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -65,34 +93,6 @@ namespace Azure.ResourceManager.Qumulo.Models
                 identity,
                 initialCapacity,
                 default);
-        }
-
-        /// <summary> MarketplaceDetails of Qumulo FileSystem resource. </summary>
-        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
-        /// <param name="planId"> Plan Id. </param>
-        /// <param name="offerId"> Offer Id. </param>
-        /// <param name="publisherId"> Publisher Id. </param>
-        /// <param name="termUnit"> Term Unit. </param>
-        /// <param name="qumuloMarketplaceSubscriptionStatus"> Marketplace subscription status. </param>
-        /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string marketplaceSubscriptionId = default, string planId = default, string offerId = default, string publisherId = default, string termUnit = default, QumuloMarketplaceSubscriptionStatus? qumuloMarketplaceSubscriptionStatus = default)
-        {
-            return new MarketplaceDetails(
-                marketplaceSubscriptionId,
-                planId,
-                offerId,
-                publisherId,
-                termUnit,
-                qumuloMarketplaceSubscriptionStatus,
-                default);
-        }
-
-        /// <summary> User Details of Qumulo FileSystem resource. </summary>
-        /// <param name="email"> User Email. </param>
-        /// <returns> A new <see cref="Models.QumuloUserDetails"/> instance for mocking. </returns>
-        public static QumuloUserDetails QumuloUserDetails(string email = default)
-        {
-            return new QumuloUserDetails(email, default);
         }
 
         /// <summary> The type used for update operations of the FileSystemResource. </summary>

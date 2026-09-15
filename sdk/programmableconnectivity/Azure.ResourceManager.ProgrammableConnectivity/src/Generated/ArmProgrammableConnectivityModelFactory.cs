@@ -18,30 +18,6 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
     public static partial class ArmProgrammableConnectivityModelFactory
     {
 
-        /// <summary> A Programmable Connectivity Gateway resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ProgrammableConnectivity.ProgrammableConnectivityGatewayData"/> instance for mocking. </returns>
-        public static ProgrammableConnectivityGatewayData ProgrammableConnectivityGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ProgrammableConnectivityGatewayProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ProgrammableConnectivityGatewayData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <summary> Gateway resource properties. </summary>
         /// <param name="operatorApiConnections"> List of Operator API Connections selected by the user. </param>
         /// <param name="gatewayBaseUri"> Base URL of the Gateway resource. This is the URL that the users would use to make Network API requests to the Operators via Azure. </param>
@@ -165,17 +141,7 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             return new ApplicationLocalRepresentative(countryCode, representative, default);
         }
 
-        /// <summary> The type used for updating tags in Gateway resources. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ProgrammableConnectivityGatewayPatch"/> instance for mocking. </returns>
-        public static ProgrammableConnectivityGatewayPatch ProgrammableConnectivityGatewayPatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ProgrammableConnectivityGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> A Programmable Connectivity Operator API Connection resource. </summary>
+        /// <summary> A Programmable Connectivity Gateway resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -183,12 +149,12 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ProgrammableConnectivity.OperatorApiConnectionData"/> instance for mocking. </returns>
-        public static OperatorApiConnectionData OperatorApiConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OperatorApiConnectionProperties properties = default)
+        /// <returns> A new <see cref="ProgrammableConnectivity.ProgrammableConnectivityGatewayData"/> instance for mocking. </returns>
+        public static ProgrammableConnectivityGatewayData ProgrammableConnectivityGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ProgrammableConnectivityGatewayProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new OperatorApiConnectionData(
+            return new ProgrammableConnectivityGatewayData(
                 id,
                 name,
                 resourceType,
@@ -197,6 +163,16 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 location,
                 properties,
                 default);
+        }
+
+        /// <summary> The type used for updating tags in Gateway resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ProgrammableConnectivityGatewayPatch"/> instance for mocking. </returns>
+        public static ProgrammableConnectivityGatewayPatch ProgrammableConnectivityGatewayPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ProgrammableConnectivityGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Operator API Connection resource properties that cannot be updated once a resource has been created. </summary>
@@ -282,6 +258,30 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             return new OperatorApiConnectionDataRegion(countryCode, commercialOrganization, isCommercialActivity, dataPrivacyFrameworkUri, default);
         }
 
+        /// <summary> A Programmable Connectivity Operator API Connection resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ProgrammableConnectivity.OperatorApiConnectionData"/> instance for mocking. </returns>
+        public static OperatorApiConnectionData OperatorApiConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OperatorApiConnectionProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OperatorApiConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> The type used for update operations of the OperatorApiConnection. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -316,24 +316,6 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
                 (purposes ?? new ChangeTrackingList<OperatorApiConnectionPurpose>()).ToList(),
                 purposeReason,
                 (dataProcessingList ?? new ChangeTrackingList<OperatorApiConnectionDataProcessing>()).ToList(),
-                default);
-        }
-
-        /// <summary> A Programmable Connectivity Operator API Plans resource. This is a readonly resource that indicates which Operator Network APIs are available in the user's subscription. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ProgrammableConnectivity.OperatorApiPlanData"/> instance for mocking. </returns>
-        public static OperatorApiPlanData OperatorApiPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperatorApiPlanProperties properties = default)
-        {
-            return new OperatorApiPlanData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
                 default);
         }
 
@@ -379,6 +361,24 @@ namespace Azure.ResourceManager.ProgrammableConnectivity.Models
             planTermsAndConditionsLinks ??= new ChangeTrackingList<string>();
 
             return new OperatorApiPlanMarketplaceProperties(offerId, publisherId, planId, (planTermsAndConditionsLinks ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> A Programmable Connectivity Operator API Plans resource. This is a readonly resource that indicates which Operator Network APIs are available in the user's subscription. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ProgrammableConnectivity.OperatorApiPlanData"/> instance for mocking. </returns>
+        public static OperatorApiPlanData OperatorApiPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperatorApiPlanProperties properties = default)
+        {
+            return new OperatorApiPlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
     }
 }

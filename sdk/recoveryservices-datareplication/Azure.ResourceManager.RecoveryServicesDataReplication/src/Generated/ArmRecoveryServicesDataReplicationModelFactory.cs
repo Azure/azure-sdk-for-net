@@ -19,24 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public static partial class ArmRecoveryServicesDataReplicationModelFactory
     {
 
-        /// <summary> Email configuration model. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationEmailConfigurationData"/> instance for mocking. </returns>
-        public static DataReplicationEmailConfigurationData DataReplicationEmailConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationEmailConfigurationProperties properties = default)
-        {
-            return new DataReplicationEmailConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Email configuration model properties. </summary>
         /// <param name="sendToOwners"> Gets or sets a value indicating whether to send email to subscription administrator. </param>
         /// <param name="customEmailAddresses"> Gets or sets the custom email address for sending emails. </param>
@@ -48,6 +30,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             customEmailAddresses ??= new ChangeTrackingList<string>();
 
             return new DataReplicationEmailConfigurationProperties(sendToOwners, (customEmailAddresses ?? new ChangeTrackingList<string>()).ToList(), locale, provisioningState, default);
+        }
+
+        /// <summary> Vault properties. </summary>
+        /// <param name="provisioningState"> Gets or sets the provisioning state of the vault. </param>
+        /// <param name="serviceResourceId"> Gets or sets the service resource Id. </param>
+        /// <param name="vaultType"> Gets or sets the type of vault. </param>
+        /// <returns> A new <see cref="Models.DataReplicationVaultProperties"/> instance for mocking. </returns>
+        public static DataReplicationVaultProperties DataReplicationVaultProperties(DataReplicationProvisioningState? provisioningState = default, ResourceIdentifier serviceResourceId = default, DataReplicationVaultType? vaultType = default)
+        {
+            return new DataReplicationVaultProperties(provisioningState, serviceResourceId, vaultType, default);
         }
 
         /// <summary> Vault model. </summary>
@@ -76,14 +68,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
-        /// <summary> Vault properties. </summary>
-        /// <param name="provisioningState"> Gets or sets the provisioning state of the vault. </param>
-        /// <param name="serviceResourceId"> Gets or sets the service resource Id. </param>
-        /// <param name="vaultType"> Gets or sets the type of vault. </param>
-        /// <returns> A new <see cref="Models.DataReplicationVaultProperties"/> instance for mocking. </returns>
-        public static DataReplicationVaultProperties DataReplicationVaultProperties(DataReplicationProvisioningState? provisioningState = default, ResourceIdentifier serviceResourceId = default, DataReplicationVaultType? vaultType = default)
+        /// <summary> Email configuration model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationEmailConfigurationData"/> instance for mocking. </returns>
+        public static DataReplicationEmailConfigurationData DataReplicationEmailConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationEmailConfigurationProperties properties = default)
         {
-            return new DataReplicationVaultProperties(provisioningState, serviceResourceId, vaultType, default);
+            return new DataReplicationEmailConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Vault model update. </summary>
@@ -107,24 +107,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties,
                 identity,
-                default);
-        }
-
-        /// <summary> Event model. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationEventData"/> instance for mocking. </returns>
-        public static DataReplicationEventData DataReplicationEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationEventProperties properties = default)
-        {
-            return new DataReplicationEventData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
                 default);
         }
 
@@ -278,26 +260,20 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 serverType);
         }
 
-        /// <summary> Fabric model. </summary>
+        /// <summary> Event model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationFabricData"/> instance for mocking. </returns>
-        public static DataReplicationFabricData DataReplicationFabricData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataReplicationFabricProperties properties = default)
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationEventData"/> instance for mocking. </returns>
+        public static DataReplicationEventData DataReplicationEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationEventProperties properties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DataReplicationFabricData(
+            return new DataReplicationEventData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 properties,
                 default);
         }
@@ -410,6 +386,30 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareMigrateFabricCustomProperties(default, default, vmwareSiteId, migrationSolutionId);
         }
 
+        /// <summary> Fabric model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationFabricData"/> instance for mocking. </returns>
+        public static DataReplicationFabricData DataReplicationFabricData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataReplicationFabricProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataReplicationFabricData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> Fabric model update. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -428,24 +428,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 resourceType,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                properties,
-                default);
-        }
-
-        /// <summary> Fabric agent model. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationFabricAgentData"/> instance for mocking. </returns>
-        public static DataReplicationFabricAgentData DataReplicationFabricAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationFabricAgentProperties properties = default)
-        {
-            return new DataReplicationFabricAgentData(
-                id,
-                name,
-                resourceType,
-                systemData,
                 properties,
                 default);
         }
@@ -520,16 +502,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareFabricAgentCustomProperties(default, default, biosId, marsAuthenticationIdentity);
         }
 
-        /// <summary> Job model. </summary>
+        /// <summary> Fabric agent model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationJobData"/> instance for mocking. </returns>
-        public static DataReplicationJobData DataReplicationJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationJobProperties properties = default)
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationFabricAgentData"/> instance for mocking. </returns>
+        public static DataReplicationFabricAgentData DataReplicationFabricAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationFabricAgentProperties properties = default)
         {
-            return new DataReplicationJobData(
+            return new DataReplicationFabricAgentData(
                 id,
                 name,
                 resourceType,
@@ -604,6 +586,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 endOn,
                 customInstanceType is null ? default : new DataReplicationTaskCustomProperties(customInstanceType, default),
                 (childrenJobs ?? new ChangeTrackingList<DataReplicationJobData>()).ToList(),
+                default);
+        }
+
+        /// <summary> Job model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationJobData"/> instance for mocking. </returns>
+        public static DataReplicationJobData DataReplicationJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationJobProperties properties = default)
+        {
+            return new DataReplicationJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
@@ -703,16 +703,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new TestFailoverJobCustomProperties(default, affectedObjectDetails, default, (protectedItemDetails ?? new ChangeTrackingList<FailoverProtectedItemProperties>()).ToList());
         }
 
-        /// <summary> Policy model. </summary>
+        /// <summary> Job model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationPolicyData"/> instance for mocking. </returns>
-        public static DataReplicationPolicyData DataReplicationPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationPolicyProperties properties = default)
+        /// <returns> A new <see cref="Models.DataReplicationJob1Data"/> instance for mocking. </returns>
+        public static DataReplicationJob1Data DataReplicationJob1Data(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationJobProperties properties = default)
         {
-            return new DataReplicationPolicyData(
+            return new DataReplicationJob1Data(
                 id,
                 name,
                 resourceType,
@@ -761,16 +761,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareToAzStackHciPolicyCustomProperties(default, default, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
         }
 
-        /// <summary> Represents private endpoint connection. </summary>
+        /// <summary> Policy model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static DataReplicationPrivateEndpointConnectionData DataReplicationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationPrivateEndpointConnectionProperties properties = default)
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationPolicyData"/> instance for mocking. </returns>
+        public static DataReplicationPolicyData DataReplicationPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationPolicyProperties properties = default)
         {
-            return new DataReplicationPrivateEndpointConnectionData(
+            return new DataReplicationPolicyData(
                 id,
                 name,
                 resourceType,
@@ -798,22 +798,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Represents private endpoint connection. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="etag"> Gets or sets ETag. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationPrivateEndpointConnectionProxyData"/> instance for mocking. </returns>
-        public static DataReplicationPrivateEndpointConnectionProxyData DataReplicationPrivateEndpointConnectionProxyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationPrivateEndpointConnectionProxyProperties properties = default, ETag? etag = default)
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static DataReplicationPrivateEndpointConnectionData DataReplicationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationPrivateEndpointConnectionProperties properties = default)
         {
-            return new DataReplicationPrivateEndpointConnectionProxyData(
+            return new DataReplicationPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
-                etag,
                 default);
         }
 
@@ -913,21 +912,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
-        /// <summary> Represents private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static DataReplicationPrivateLinkResourceData DataReplicationPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationPrivateLinkResourceProperties properties = default)
+        /// <param name="etag"> Gets or sets ETag. </param>
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationPrivateEndpointConnectionProxyData"/> instance for mocking. </returns>
+        public static DataReplicationPrivateEndpointConnectionProxyData DataReplicationPrivateEndpointConnectionProxyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationPrivateEndpointConnectionProxyProperties properties = default, ETag? etag = default)
         {
-            return new DataReplicationPrivateLinkResourceData(
+            return new DataReplicationPrivateEndpointConnectionProxyData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
+                etag,
                 default);
         }
 
@@ -945,16 +945,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default);
         }
 
-        /// <summary> Protected item model. </summary>
+        /// <summary> Represents private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationProtectedItemData"/> instance for mocking. </returns>
-        public static DataReplicationProtectedItemData DataReplicationProtectedItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationProtectedItemProperties properties = default)
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static DataReplicationPrivateLinkResourceData DataReplicationPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationPrivateLinkResourceProperties properties = default)
         {
-            return new DataReplicationProtectedItemData(
+            return new DataReplicationPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
@@ -1505,6 +1505,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Protected item model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationProtectedItemData"/> instance for mocking. </returns>
+        public static DataReplicationProtectedItemData DataReplicationProtectedItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationProtectedItemProperties properties = default)
+        {
+            return new DataReplicationProtectedItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1622,24 +1640,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareToAzStackHciPlannedFailoverCustomProperties(default, default, shutdownSourceVm);
         }
 
-        /// <summary> Recovery point model. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationRecoveryPointData"/> instance for mocking. </returns>
-        public static DataReplicationRecoveryPointData DataReplicationRecoveryPointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationRecoveryPointProperties properties = default)
-        {
-            return new DataReplicationRecoveryPointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Recovery point model properties. </summary>
         /// <param name="recoveryPointOn"> Gets or sets the recovery point time. </param>
         /// <param name="recoveryPointType"> Gets or sets the recovery point type. </param>
@@ -1682,16 +1682,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareToAzStackHciRecoveryPointCustomProperties(default, default, (diskIds ?? new ChangeTrackingList<string>()).ToList());
         }
 
-        /// <summary> Replication extension model. </summary>
+        /// <summary> Recovery point model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationExtensionData"/> instance for mocking. </returns>
-        public static DataReplicationExtensionData DataReplicationExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationExtensionProperties properties = default)
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationRecoveryPointData"/> instance for mocking. </returns>
+        public static DataReplicationRecoveryPointData DataReplicationRecoveryPointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationRecoveryPointProperties properties = default)
         {
-            return new DataReplicationExtensionData(
+            return new DataReplicationRecoveryPointData(
                 id,
                 name,
                 resourceType,
@@ -1800,6 +1800,24 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 resourceLocation,
                 subscriptionId,
                 resourceGroup);
+        }
+
+        /// <summary> Replication extension model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="RecoveryServicesDataReplication.DataReplicationExtensionData"/> instance for mocking. </returns>
+        public static DataReplicationExtensionData DataReplicationExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataReplicationExtensionProperties properties = default)
+        {
+            return new DataReplicationExtensionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Check name availability model. </summary>

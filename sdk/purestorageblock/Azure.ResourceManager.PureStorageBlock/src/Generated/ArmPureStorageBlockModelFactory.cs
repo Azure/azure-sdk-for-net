@@ -18,30 +18,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     public static partial class ArmPureStorageBlockModelFactory
     {
 
-        /// <summary> Pure Storage cloud service resource type, also called reservation. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="PureStorageBlock.PureStorageReservationData"/> instance for mocking. </returns>
-        public static PureStorageReservationData PureStorageReservationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PureStorageReservationProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PureStorageReservationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <summary> Properties of a Reservation resource. </summary>
         /// <param name="reservationInternalId"> Pure Storage's internal ID for the reservation. </param>
         /// <param name="marketplace"> Marketplace details. </param>
@@ -129,6 +105,30 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 state,
                 country,
                 postalCode,
+                default);
+        }
+
+        /// <summary> Pure Storage cloud service resource type, also called reservation. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="PureStorageBlock.PureStorageReservationData"/> instance for mocking. </returns>
+        public static PureStorageReservationData PureStorageReservationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PureStorageReservationProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PureStorageReservationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
                 default);
         }
 
@@ -263,32 +263,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 default);
         }
 
-        /// <summary> Storage pool resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="PureStorageBlock.PureStoragePoolData"/> instance for mocking. </returns>
-        public static PureStoragePoolData PureStoragePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PureStoragePoolProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PureStoragePoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
-        }
-
         /// <summary> Properties of a storage pool. </summary>
         /// <param name="storagePoolInternalId"> Pure Storage's internal ID of the storage pool. </param>
         /// <param name="availabilityZone"> Azure Availability Zone the Pool is located in. </param>
@@ -331,6 +305,32 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public static PureStorageAvs PureStorageAvs(bool isAvsEnabled = default, ResourceIdentifier clusterResourceId = default)
         {
             return new PureStorageAvs(isAvsEnabled, clusterResourceId, default);
+        }
+
+        /// <summary> Storage pool resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="PureStorageBlock.PureStoragePoolData"/> instance for mocking. </returns>
+        public static PureStoragePoolData PureStoragePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PureStoragePoolProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PureStoragePoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
         }
 
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -472,24 +472,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             return new ServiceInitializationInfo(serviceAccountUsername, serviceAccountPassword, vSphereIP, vSphereCertificate, default);
         }
 
-        /// <summary> AVS storage container resource type, representing a VMware storage container in a storage pool, which can be associated to and mounted as a datastore. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="PureStorageBlock.PureStorageAvsStorageContainerData"/> instance for mocking. </returns>
-        public static PureStorageAvsStorageContainerData PureStorageAvsStorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PureStorageAvsStorageContainerProperties properties = default)
-        {
-            return new PureStorageAvsStorageContainerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> AVS storage container properties. </summary>
         /// <param name="space"> Storage space usage. </param>
         /// <param name="resourceName"> Name of the storage container. </param>
@@ -508,6 +490,24 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 default);
         }
 
+        /// <summary> AVS storage container resource type, representing a VMware storage container in a storage pool, which can be associated to and mounted as a datastore. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="PureStorageBlock.PureStorageAvsStorageContainerData"/> instance for mocking. </returns>
+        public static PureStorageAvsStorageContainerData PureStorageAvsStorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PureStorageAvsStorageContainerProperties properties = default)
+        {
+            return new PureStorageAvsStorageContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <param name="avsStorageContainerVolumeUpdateSoftDeletion"> Volume's soft-deletion state. </param>
         /// <returns> A new <see cref="Models.PureStorageAvsStorageContainerVolumePatch"/> instance for mocking. </returns>
         public static PureStorageAvsStorageContainerVolumePatch PureStorageAvsStorageContainerVolumePatch(PureStorageSoftDeletionState avsStorageContainerVolumeUpdateSoftDeletion = default)
@@ -522,24 +522,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public static PureStorageSoftDeletionState PureStorageSoftDeletionState(bool isDestroyed = default, DateTimeOffset? eradicatedOn = default)
         {
             return new PureStorageSoftDeletionState(isDestroyed, eradicatedOn, default);
-        }
-
-        /// <summary> A volume contained in an AVS storage container. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="PureStorageBlock.PureStorageAvsStorageContainerVolumeData"/> instance for mocking. </returns>
-        public static PureStorageAvsStorageContainerVolumeData PureStorageAvsStorageContainerVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PureStorageVolumeProperties properties = default)
-        {
-            return new PureStorageAvsStorageContainerVolumeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> Volume properties. </summary>
@@ -594,29 +576,29 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 default);
         }
 
-        /// <param name="avsVmUpdateSoftDeletion"> AVS VM's soft-deletion state. </param>
-        /// <returns> A new <see cref="Models.PureStorageAvsVmPatch"/> instance for mocking. </returns>
-        public static PureStorageAvsVmPatch PureStorageAvsVmPatch(PureStorageSoftDeletionState avsVmUpdateSoftDeletion = default)
-        {
-            return new PureStorageAvsVmPatch(avsVmUpdateSoftDeletion is null ? default : new AvsVmUpdateProperties(avsVmUpdateSoftDeletion, default), default);
-        }
-
-        /// <summary> AVS VM resource type, representing all the volumes associated to an AVS VM as defined by VMware. </summary>
+        /// <summary> A volume contained in an AVS storage container. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="PureStorageBlock.PureStorageAvsVmData"/> instance for mocking. </returns>
-        public static PureStorageAvsVmData PureStorageAvsVmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PureStorageAvsVmProperties properties = default)
+        /// <returns> A new <see cref="PureStorageBlock.PureStorageAvsStorageContainerVolumeData"/> instance for mocking. </returns>
+        public static PureStorageAvsStorageContainerVolumeData PureStorageAvsStorageContainerVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PureStorageVolumeProperties properties = default)
         {
-            return new PureStorageAvsVmData(
+            return new PureStorageAvsStorageContainerVolumeData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
                 default);
+        }
+
+        /// <param name="avsVmUpdateSoftDeletion"> AVS VM's soft-deletion state. </param>
+        /// <returns> A new <see cref="Models.PureStorageAvsVmPatch"/> instance for mocking. </returns>
+        public static PureStorageAvsVmPatch PureStorageAvsVmPatch(PureStorageSoftDeletionState avsVmUpdateSoftDeletion = default)
+        {
+            return new PureStorageAvsVmPatch(avsVmUpdateSoftDeletion is null ? default : new AvsVmUpdateProperties(avsVmUpdateSoftDeletion, default), default);
         }
 
         /// <summary> AVS VM properties. </summary>
@@ -654,6 +636,24 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public static PureStorageAvsVmDetails PureStorageAvsVmDetails(string vmId = default, string vmName = default, PureStorageAvsVmType vmType = default, string avsVmInternalId = default)
         {
             return new PureStorageAvsVmDetails(vmId, vmName, vmType, avsVmInternalId, default);
+        }
+
+        /// <summary> AVS VM resource type, representing all the volumes associated to an AVS VM as defined by VMware. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="PureStorageBlock.PureStorageAvsVmData"/> instance for mocking. </returns>
+        public static PureStorageAvsVmData PureStorageAvsVmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PureStorageAvsVmProperties properties = default)
+        {
+            return new PureStorageAvsVmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <param name="avsVmVolumeUpdateSoftDeletion"> Volume's soft-deletion state. </param>

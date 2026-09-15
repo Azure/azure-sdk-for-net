@@ -71,13 +71,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
             return new DataReplicationFabricAgentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DataReplicationJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DataReplicationJob1Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataReplicationJobResource"/> object. </returns>
-        public virtual DataReplicationJobResource GetDataReplicationJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationJob1Resource"/> object. </returns>
+        public virtual DataReplicationJob1Resource GetDataReplicationJob1Resource(ResourceIdentifier id)
         {
-            DataReplicationJobResource.ValidateResourceId(id);
-            return new DataReplicationJobResource(Client, id);
+            DataReplicationJob1Resource.ValidateResourceId(id);
+            return new DataReplicationJob1Resource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DataReplicationPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
