@@ -13,52 +13,52 @@ using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> The ActionPropertiesParametersSchema. </summary>
-    public partial class ActionPropertiesParametersSchema : IJsonModel<ActionPropertiesParametersSchema>
+    /// <summary> The ActionParametersSchema. </summary>
+    public partial class ActionParametersSchema : IJsonModel<ActionParametersSchema>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActionPropertiesParametersSchema PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ActionParametersSchema PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionPropertiesParametersSchema>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionParametersSchema>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeActionPropertiesParametersSchema(document.RootElement, options);
+                        return DeserializeActionParametersSchema(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionPropertiesParametersSchema)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionParametersSchema)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionPropertiesParametersSchema>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionParametersSchema>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ActionPropertiesParametersSchema)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionParametersSchema)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActionPropertiesParametersSchema>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ActionParametersSchema>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionPropertiesParametersSchema IPersistableModel<ActionPropertiesParametersSchema>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ActionParametersSchema IPersistableModel<ActionParametersSchema>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActionPropertiesParametersSchema>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ActionParametersSchema>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActionPropertiesParametersSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ActionParametersSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionPropertiesParametersSchema>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionParametersSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionPropertiesParametersSchema)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionParametersSchema)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -93,24 +93,24 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActionPropertiesParametersSchema IJsonModel<ActionPropertiesParametersSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ActionParametersSchema IJsonModel<ActionParametersSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ActionPropertiesParametersSchema JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ActionParametersSchema JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ActionPropertiesParametersSchema>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActionParametersSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionPropertiesParametersSchema)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionParametersSchema)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeActionPropertiesParametersSchema(document.RootElement, options);
+            return DeserializeActionParametersSchema(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ActionPropertiesParametersSchema DeserializeActionPropertiesParametersSchema(JsonElement element, ModelReaderWriterOptions options)
+        internal static ActionParametersSchema DeserializeActionParametersSchema(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActionPropertiesParametersSchema(additionalBinaryDataProperties);
+            return new ActionParametersSchema(additionalBinaryDataProperties);
         }
     }
 }

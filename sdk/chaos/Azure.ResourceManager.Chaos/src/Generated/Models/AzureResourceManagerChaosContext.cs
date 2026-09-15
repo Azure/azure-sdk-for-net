@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Chaos
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActionDependency))]
     [ModelReaderWriterBuildable(typeof(ActionListResult))]
+    [ModelReaderWriterBuildable(typeof(ActionParametersSchema))]
     [ModelReaderWriterBuildable(typeof(ActionProperties))]
-    [ModelReaderWriterBuildable(typeof(ActionPropertiesParametersSchema))]
     [ModelReaderWriterBuildable(typeof(ActionVersionListResult))]
     [ModelReaderWriterBuildable(typeof(CapabilityListResult))]
     [ModelReaderWriterBuildable(typeof(CapabilityProperties))]

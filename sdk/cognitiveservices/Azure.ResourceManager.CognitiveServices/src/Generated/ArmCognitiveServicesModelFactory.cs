@@ -194,38 +194,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CalculateModelCapacityResultEstimatedCapacity(value, deployableValue, default);
         }
 
-        /// <summary> Cognitive Services account is an Azure resource representing the provisioned account, it's type, location and SKU. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of Cognitive Services account. </param>
-        /// <param name="eTag"> Resource Etag. </param>
-        /// <param name="kind"> The kind (type) of cognitive service account. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAccountData"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountData CognitiveServicesAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CognitiveServicesAccountProperties properties, ETag? eTag, string kind, CognitiveServicesSku sku, ManagedServiceIdentity identity)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CognitiveServicesAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
-                kind,
-                sku,
-                identity,
-                default);
-        }
-
         /// <summary> Properties of Cognitive Services account. </summary>
         /// <param name="provisioningState"> Gets the status of the cognitive services account at the time the operation was called. </param>
         /// <param name="endpoint"> Endpoint of the created account. </param>
@@ -600,6 +568,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 storageAccountResourceId);
         }
 
+        /// <summary> Cognitive Services account is an Azure resource representing the provisioned account, it's type, location and SKU. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of Cognitive Services account. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="kind"> The kind (type) of cognitive service account. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAccountData"/> instance for mocking. </returns>
+        public static CognitiveServicesAccountData CognitiveServicesAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CognitiveServicesAccountProperties properties, ETag? eTag, string kind, CognitiveServicesSku sku, ManagedServiceIdentity identity)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                kind,
+                sku,
+                identity,
+                default);
+        }
+
         /// <summary> The resource model definition representing SKU. </summary>
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
@@ -833,30 +833,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), displayName, default);
         }
 
-        /// <summary> Cognitive Services Rai External Safety provider Schema. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of Cognitive Services Rai External Safety provider. </param>
-        /// <param name="eTag"> Resource Etag. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="CognitiveServices.RaiExternalSafetyProviderSchemaData"/> instance for mocking. </returns>
-        public static RaiExternalSafetyProviderSchemaData RaiExternalSafetyProviderSchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiExternalSafetyProviderSchemaProperties properties = default, ETag? eTag = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new RaiExternalSafetyProviderSchemaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
         /// <summary> RAI External SafetyProvider schema properties. </summary>
         /// <param name="providerId"> The unique identifier of the safety provider. </param>
         /// <param name="providerName"> Name of the safety provider. </param>
@@ -880,6 +856,30 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 keyVaultUri,
                 createdOn,
                 lastModifiedOn,
+                default);
+        }
+
+        /// <summary> Cognitive Services Rai External Safety provider Schema. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services Rai External Safety provider. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.RaiExternalSafetyProviderSchemaData"/> instance for mocking. </returns>
+        public static RaiExternalSafetyProviderSchemaData RaiExternalSafetyProviderSchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiExternalSafetyProviderSchemaProperties properties = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RaiExternalSafetyProviderSchemaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 
@@ -977,32 +977,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default);
         }
 
-        /// <summary> Cognitive Services account deployment. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of Cognitive Services account deployment. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="eTag"> Resource Etag. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAccountDeploymentData"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesAccountDeploymentProperties properties, CognitiveServicesSku sku, ETag? eTag, IDictionary<string, string> tags)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CognitiveServicesAccountDeploymentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                sku,
-                eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
         /// <summary> Properties of Cognitive Services account deployment. </summary>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
@@ -1089,6 +1063,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesDeploymentRouting(mode, (models ?? new ChangeTrackingList<CognitiveServicesAccountDeploymentModel>()).ToList(), default);
         }
 
+        /// <summary> Cognitive Services account deployment. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services account deployment. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAccountDeploymentData"/> instance for mocking. </returns>
+        public static CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesAccountDeploymentProperties properties, CognitiveServicesSku sku, ETag? eTag, IDictionary<string, string> tags)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesAccountDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                sku,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
         /// <summary> The object being used to update tags and sku of a resource, in general used for PATCH operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
@@ -1118,36 +1118,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CognitiveServicesResourceSku CognitiveServicesResourceSku(string resourceType = default, CognitiveServicesSku sku = default, CognitiveServicesCapacityConfig capacity = default)
         {
             return new CognitiveServicesResourceSku(resourceType, sku, capacity, default);
-        }
-
-        /// <summary> Cognitive Services account commitment plan. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of Cognitive Services account commitment plan. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="eTag"> Resource Etag. </param>
-        /// <param name="kind"> The kind (type) of cognitive service account. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <returns> A new <see cref="CognitiveServices.CommitmentPlanData"/> instance for mocking. </returns>
-        public static CommitmentPlanData CommitmentPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CommitmentPlanProperties properties, IDictionary<string, string> tags, AzureLocation? location, ETag? eTag, string kind, CognitiveServicesSku sku)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CommitmentPlanData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                eTag,
-                kind,
-                sku,
-                default);
         }
 
         /// <summary> Properties of Cognitive Services account commitment plan. </summary>
@@ -1205,6 +1175,36 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CommitmentQuota(quantity, unit, default);
         }
 
+        /// <summary> Cognitive Services account commitment plan. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of Cognitive Services account commitment plan. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="kind"> The kind (type) of cognitive service account. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <returns> A new <see cref="CognitiveServices.CommitmentPlanData"/> instance for mocking. </returns>
+        public static CommitmentPlanData CommitmentPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CommitmentPlanProperties properties, IDictionary<string, string> tags, AzureLocation? location, ETag? eTag, string kind, CognitiveServicesSku sku)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CommitmentPlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                eTag,
+                kind,
+                sku,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1228,6 +1228,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default);
         }
 
+        /// <summary> Properties to EncryptionScope. </summary>
+        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
+        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
+        /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
+        /// <param name="state"> The encryptionScope state. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesEncryptionScopeProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesEncryptionScopeProperties CognitiveServicesEncryptionScopeProperties(CognitiveServicesKeyVaultProperties keyVaultProperties = default, ServiceAccountEncryptionKeySource? keySource = default, EncryptionScopeProvisioningState? provisioningState = default, EncryptionScopeState? state = default)
+        {
+            return new CognitiveServicesEncryptionScopeProperties(keyVaultProperties, keySource, default, provisioningState, state);
+        }
+
         /// <summary> Cognitive Services EncryptionScope. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1242,41 +1253,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CognitiveServicesEncryptionScopeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
-        /// <summary> Properties to EncryptionScope. </summary>
-        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
-        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
-        /// <param name="state"> The encryptionScope state. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesEncryptionScopeProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesEncryptionScopeProperties CognitiveServicesEncryptionScopeProperties(CognitiveServicesKeyVaultProperties keyVaultProperties = default, ServiceAccountEncryptionKeySource? keySource = default, EncryptionScopeProvisioningState? provisioningState = default, EncryptionScopeState? state = default)
-        {
-            return new CognitiveServicesEncryptionScopeProperties(keyVaultProperties, keySource, default, provisioningState, state);
-        }
-
-        /// <summary> Cognitive Services RaiPolicy. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of Cognitive Services RaiPolicy. </param>
-        /// <param name="eTag"> Resource Etag. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="CognitiveServices.RaiPolicyData"/> instance for mocking. </returns>
-        public static RaiPolicyData RaiPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RaiPolicyProperties properties, ETag? eTag, IDictionary<string, string> tags)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new RaiPolicyData(
                 id,
                 name,
                 resourceType,
@@ -1529,20 +1505,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new RaiEgressRewriteTarget(scheme, host, path, default);
         }
 
-        /// <summary> Cognitive Services RaiBlocklist Item. </summary>
+        /// <summary> Cognitive Services RaiPolicy. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of Cognitive Services RaiBlocklist Item. </param>
+        /// <param name="properties"> Properties of Cognitive Services RaiPolicy. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="CognitiveServices.RaiBlocklistItemData"/> instance for mocking. </returns>
-        public static RaiBlocklistItemData RaiBlocklistItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RaiBlocklistItemProperties properties, ETag? eTag, IDictionary<string, string> tags)
+        /// <returns> A new <see cref="CognitiveServices.RaiPolicyData"/> instance for mocking. </returns>
+        public static RaiPolicyData RaiPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RaiPolicyProperties properties, ETag? eTag, IDictionary<string, string> tags)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RaiBlocklistItemData(
+            return new RaiPolicyData(
                 id,
                 name,
                 resourceType,
@@ -1585,29 +1561,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default);
         }
 
-        /// <summary> The Cognitive Services RaiBlocklist Item request body. </summary>
-        /// <param name="name"></param>
-        /// <param name="properties"> Properties of Cognitive Services RaiBlocklist Item. </param>
-        /// <returns> A new <see cref="Models.RaiBlocklistItemBulkContent"/> instance for mocking. </returns>
-        public static RaiBlocklistItemBulkContent RaiBlocklistItemBulkContent(string name = default, RaiBlocklistItemProperties properties = default)
-        {
-            return new RaiBlocklistItemBulkContent(name, properties, default);
-        }
-
-        /// <summary> Cognitive Services Rai Topic. </summary>
+        /// <summary> Cognitive Services RaiBlocklist Item. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of Cognitive Services Rai Topic. </param>
+        /// <param name="properties"> Properties of Cognitive Services RaiBlocklist Item. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="CognitiveServices.RaiTopicData"/> instance for mocking. </returns>
-        public static RaiTopicData RaiTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiTopicProperties properties = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="CognitiveServices.RaiBlocklistItemData"/> instance for mocking. </returns>
+        public static RaiBlocklistItemData RaiBlocklistItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RaiBlocklistItemProperties properties, ETag? eTag, IDictionary<string, string> tags)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RaiTopicData(
+            return new RaiBlocklistItemData(
                 id,
                 name,
                 resourceType,
@@ -1616,6 +1583,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
+        }
+
+        /// <summary> The Cognitive Services RaiBlocklist Item request body. </summary>
+        /// <param name="name"></param>
+        /// <param name="properties"> Properties of Cognitive Services RaiBlocklist Item. </param>
+        /// <returns> A new <see cref="Models.RaiBlocklistItemBulkContent"/> instance for mocking. </returns>
+        public static RaiBlocklistItemBulkContent RaiBlocklistItemBulkContent(string name = default, RaiBlocklistItemProperties properties = default)
+        {
+            return new RaiBlocklistItemBulkContent(name, properties, default);
         }
 
         /// <summary> RAI Custom Topic properties. </summary>
@@ -1642,20 +1618,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default);
         }
 
-        /// <summary> Cognitive Services RAI Tool Label resource. </summary>
+        /// <summary> Cognitive Services Rai Topic. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the RAI Tool Label. </param>
+        /// <param name="properties"> Properties of Cognitive Services Rai Topic. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="CognitiveServices.RaiToolLabelData"/> instance for mocking. </returns>
-        public static RaiToolLabelData RaiToolLabelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiToolLabelProperties properties = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="CognitiveServices.RaiTopicData"/> instance for mocking. </returns>
+        public static RaiTopicData RaiTopicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiTopicProperties properties = default, ETag? eTag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new RaiToolLabelData(
+            return new RaiTopicData(
                 id,
                 name,
                 resourceType,
@@ -1688,21 +1664,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new RaiToolLabelPropertiesProjectScopesItem(project, labelValues ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> Azure OpenAI Content Filter. </summary>
+        /// <summary> Cognitive Services RAI Tool Label resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Azure OpenAI Content Filter Properties. </param>
-        /// <returns> A new <see cref="CognitiveServices.RaiContentFilterData"/> instance for mocking. </returns>
-        public static RaiContentFilterData RaiContentFilterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiContentFilterProperties properties = default)
+        /// <param name="properties"> Properties of the RAI Tool Label. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="CognitiveServices.RaiToolLabelData"/> instance for mocking. </returns>
+        public static RaiToolLabelData RaiToolLabelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiToolLabelProperties properties = default, ETag? eTag = default, IDictionary<string, string> tags = default)
         {
-            return new RaiContentFilterData(
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RaiToolLabelData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 
@@ -1716,16 +1698,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new RaiContentFilterProperties(name, isMultiLevelFilter, source, default);
         }
 
-        /// <summary> NSP Configuration for an Cognitive Services account. </summary>
+        /// <summary> Azure OpenAI Content Filter. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> NSP Configuration properties. </param>
-        /// <returns> A new <see cref="CognitiveServices.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterConfigurationProperties properties = default)
+        /// <param name="properties"> Azure OpenAI Content Filter Properties. </param>
+        /// <returns> A new <see cref="CognitiveServices.RaiContentFilterData"/> instance for mocking. </returns>
+        public static RaiContentFilterData RaiContentFilterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RaiContentFilterProperties properties = default)
         {
-            return new NetworkSecurityPerimeterConfigurationData(
+            return new RaiContentFilterData(
                 id,
                 name,
                 resourceType,
@@ -1856,6 +1838,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default);
         }
 
+        /// <summary> NSP Configuration for an Cognitive Services account. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> NSP Configuration properties. </param>
+        /// <returns> A new <see cref="CognitiveServices.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterConfigurationProperties properties = default)
+        {
+            return new NetworkSecurityPerimeterConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1876,6 +1876,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 state is null ? default : new DefenderForAISettingProperties(state, default),
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <summary> Properties of Cognitive Services Project'. </summary>
+        /// <param name="provisioningState"> Gets the status of the cognitive services project at the time the operation was called. </param>
+        /// <param name="displayName"> The display name of the Cognitive Services Project. </param>
+        /// <param name="description"> The description of the Cognitive Services Project. </param>
+        /// <param name="endpoints"> The list of endpoint for this Cognitive Services Project. </param>
+        /// <param name="isDefault"> Indicates whether the project is the default project for the account. </param>
+        /// <param name="capabilitySettings"> Effective agent capability settings for the project. Optional partial override of the account defaults; omitted fields inherit from the parent account when present. Settable only at create time. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesProjectProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState, string displayName, string description, IReadOnlyDictionary<string, string> endpoints, bool? isDefault, CapabilitySettings capabilitySettings)
+        {
+            endpoints ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesProjectProperties(
+                provisioningState,
+                displayName,
+                description,
+                endpoints ?? new ChangeTrackingDictionary<string, string>(),
+                isDefault,
+                capabilitySettings,
                 default);
         }
 
@@ -1904,46 +1926,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 properties,
                 eTag,
                 identity,
-                default);
-        }
-
-        /// <summary> Properties of Cognitive Services Project'. </summary>
-        /// <param name="provisioningState"> Gets the status of the cognitive services project at the time the operation was called. </param>
-        /// <param name="displayName"> The display name of the Cognitive Services Project. </param>
-        /// <param name="description"> The description of the Cognitive Services Project. </param>
-        /// <param name="endpoints"> The list of endpoint for this Cognitive Services Project. </param>
-        /// <param name="isDefault"> Indicates whether the project is the default project for the account. </param>
-        /// <param name="capabilitySettings"> Effective agent capability settings for the project. Optional partial override of the account defaults; omitted fields inherit from the parent account when present. Settable only at create time. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesProjectProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesProjectProperties CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState, string displayName, string description, IReadOnlyDictionary<string, string> endpoints, bool? isDefault, CapabilitySettings capabilitySettings)
-        {
-            endpoints ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CognitiveServicesProjectProperties(
-                provisioningState,
-                displayName,
-                description,
-                endpoints ?? new ChangeTrackingDictionary<string, string>(),
-                isDefault,
-                capabilitySettings,
-                default);
-        }
-
-        /// <summary> Connection base resource schema. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Connection property base schema. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesConnectionData"/> instance for mocking. </returns>
-        public static CognitiveServicesConnectionData CognitiveServicesConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesConnectionProperties properties = default)
-        {
-            return new CognitiveServicesConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
                 default);
         }
 
@@ -2508,30 +2490,30 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default);
         }
 
-        /// <summary> The properties that the Cognitive services connection will be updated with. </summary>
-        /// <param name="properties"> The properties that the Cognitive services connection will be updated with. </param>
-        /// <returns> A new <see cref="Models.CognitiveServicesConnectionPatch"/> instance for mocking. </returns>
-        public static CognitiveServicesConnectionPatch CognitiveServicesConnectionPatch(CognitiveServicesConnectionProperties properties = default)
-        {
-            return new CognitiveServicesConnectionPatch(properties, default);
-        }
-
-        /// <summary> Azure Resource Manager resource envelope. </summary>
+        /// <summary> Connection base resource schema. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesCapabilityHostData"/> instance for mocking. </returns>
-        public static CognitiveServicesCapabilityHostData CognitiveServicesCapabilityHostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesCapabilityHostProperties properties = default)
+        /// <param name="properties"> Connection property base schema. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesConnectionData"/> instance for mocking. </returns>
+        public static CognitiveServicesConnectionData CognitiveServicesConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesConnectionProperties properties = default)
         {
-            return new CognitiveServicesCapabilityHostData(
+            return new CognitiveServicesConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
                 default);
+        }
+
+        /// <summary> The properties that the Cognitive services connection will be updated with. </summary>
+        /// <param name="properties"> The properties that the Cognitive services connection will be updated with. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesConnectionPatch"/> instance for mocking. </returns>
+        public static CognitiveServicesConnectionPatch CognitiveServicesConnectionPatch(CognitiveServicesConnectionProperties properties = default)
+        {
+            return new CognitiveServicesConnectionPatch(properties, default);
         }
 
         /// <summary> The CognitiveServicesCapabilityHostProperties. </summary>
@@ -2579,16 +2561,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesResourceBase(description, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> Azure Resource Manager resource envelope for Project CapabilityHost. </summary>
+        /// <summary> Azure Resource Manager resource envelope. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesProjectScopedCapabilityHostData"/> instance for mocking. </returns>
-        public static CognitiveServicesProjectScopedCapabilityHostData CognitiveServicesProjectScopedCapabilityHostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesProjectScopedCapabilityHostProperties properties = default)
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesCapabilityHostData"/> instance for mocking. </returns>
+        public static CognitiveServicesCapabilityHostData CognitiveServicesCapabilityHostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesCapabilityHostProperties properties = default)
         {
-            return new CognitiveServicesProjectScopedCapabilityHostData(
+            return new CognitiveServicesCapabilityHostData(
                 id,
                 name,
                 resourceType,
@@ -2620,16 +2602,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default);
         }
 
-        /// <summary> The quota tier information for the subscription. </summary>
+        /// <summary> Azure Resource Manager resource envelope for Project CapabilityHost. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of quota tier resource. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesQuotaTierData"/> instance for mocking. </returns>
-        public static CognitiveServicesQuotaTierData CognitiveServicesQuotaTierData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesQuotaTierProperties properties = default)
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesProjectScopedCapabilityHostData"/> instance for mocking. </returns>
+        public static CognitiveServicesProjectScopedCapabilityHostData CognitiveServicesProjectScopedCapabilityHostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesProjectScopedCapabilityHostProperties properties = default)
         {
-            return new CognitiveServicesQuotaTierData(
+            return new CognitiveServicesProjectScopedCapabilityHostData(
                 id,
                 name,
                 resourceType,
@@ -2660,16 +2642,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new QuotaTierUpgradeEligibilityInfo(nextTierName, upgradeAvailabilityStatus, upgradeApplicableOn, upgradeUnavailabilityReason, default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <summary> The quota tier information for the subscription. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Outbound Rule for the managed network of a cognitive services account. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesOutboundRuleBasicData"/> instance for mocking. </returns>
-        public static CognitiveServicesOutboundRuleBasicData CognitiveServicesOutboundRuleBasicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesOutboundRuleBasicProperties properties = default)
+        /// <param name="properties"> Properties of quota tier resource. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesQuotaTierData"/> instance for mocking. </returns>
+        public static CognitiveServicesQuotaTierData CognitiveServicesQuotaTierData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesQuotaTierProperties properties = default)
         {
-            return new CognitiveServicesOutboundRuleBasicData(
+            return new CognitiveServicesQuotaTierData(
                 id,
                 name,
                 resourceType,
@@ -2796,24 +2778,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The properties of the managed network settings of a cognitive services account. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesManagedNetworkSettingsData"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedNetworkSettingsData CognitiveServicesManagedNetworkSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesManagedNetworkSettingsProperties properties = default)
-        {
-            return new CognitiveServicesManagedNetworkSettingsData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> The properties of the managed network settings of a cognitive services account. </summary>
         /// <param name="managedNetwork"> Managed Network settings for a cognitive services account. </param>
         /// <param name="provisioningState"> The current deployment state of the managed network resource. The provisioningState is to indicate states for resource provisioning. </param>
@@ -2884,32 +2848,47 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesManagedNetworkProvisionStatus(managedNetworkStatus, default);
         }
 
-        /// <summary> Managed Network Provisioning options for managed network of a cognitive services account. </summary>
-        /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkProvisionConfig"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedNetworkProvisionConfig CognitiveServicesManagedNetworkProvisionConfig()
-        {
-            return new CognitiveServicesManagedNetworkProvisionConfig(default);
-        }
-
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the Cognitive Services Arc deployment. </param>
-        /// <param name="skuName"> The name of the Arc deployment SKU. Must be Arc. </param>
-        /// <param name="eTag"> Resource Etag. </param>
-        /// <returns> A new <see cref="CognitiveServices.ArcDeploymentData"/> instance for mocking. </returns>
-        public static ArcDeploymentData ArcDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ArcDeploymentProperties properties = default, ArcDeploymentSkuName skuName = default, ETag? eTag = default)
+        /// <param name="properties"> The properties of the managed network settings of a cognitive services account. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesManagedNetworkSettingsData"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedNetworkSettingsData CognitiveServicesManagedNetworkSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesManagedNetworkSettingsProperties properties = default)
         {
-            return new ArcDeploymentData(
+            return new CognitiveServicesManagedNetworkSettingsData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
-                new ArcDeploymentSku(skuName, default),
-                eTag,
                 default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Outbound Rule for the managed network of a cognitive services account. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesOutboundRuleBasicData"/> instance for mocking. </returns>
+        public static CognitiveServicesOutboundRuleBasicData CognitiveServicesOutboundRuleBasicData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesOutboundRuleBasicProperties properties = default)
+        {
+            return new CognitiveServicesOutboundRuleBasicData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Managed Network Provisioning options for managed network of a cognitive services account. </summary>
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkProvisionConfig"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedNetworkProvisionConfig CognitiveServicesManagedNetworkProvisionConfig()
+        {
+            return new CognitiveServicesManagedNetworkProvisionConfig(default);
         }
 
         /// <summary> Properties of a Cognitive Services Arc deployment. </summary>
@@ -3025,6 +3004,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new ArcDeploymentProvisioningDetails(message, lastOperationOn, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the Cognitive Services Arc deployment. </param>
+        /// <param name="skuName"> The name of the Arc deployment SKU. Must be Arc. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <returns> A new <see cref="CognitiveServices.ArcDeploymentData"/> instance for mocking. </returns>
+        public static ArcDeploymentData ArcDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ArcDeploymentProperties properties = default, ArcDeploymentSkuName skuName = default, ETag? eTag = default)
+        {
+            return new ArcDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                new ArcDeploymentSku(skuName, default),
+                eTag,
+                default);
+        }
+
         /// <summary> The object used to update an Arc deployment. </summary>
         /// <param name="properties"> Properties that can be updated on an Arc deployment. </param>
         /// <returns> A new <see cref="Models.ArcDeploymentPatch"/> instance for mocking. </returns>
@@ -3061,24 +3061,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static ArcDeploymentPatchCpuMemoryResourceRequirements ArcDeploymentPatchCpuMemoryResourceRequirements(string cpu = default, string memory = default)
         {
             return new ArcDeploymentPatchCpuMemoryResourceRequirements(cpu, memory, default);
-        }
-
-        /// <summary> Agent Application resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAgentApplicationData"/> instance for mocking. </returns>
-        public static CognitiveServicesAgentApplicationData CognitiveServicesAgentApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesAgenticApplicationProperties properties = default)
-        {
-            return new CognitiveServicesAgentApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> Resource type representing an agentic application as a management construct. </summary>
@@ -3199,6 +3181,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesTrafficRoutingRule(ruleId, description, deploymentId, trafficPercentage, default);
         }
 
+        /// <summary> Agent Application resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAgentApplicationData"/> instance for mocking. </returns>
+        public static CognitiveServicesAgentApplicationData CognitiveServicesAgentApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesAgenticApplicationProperties properties = default)
+        {
+            return new CognitiveServicesAgentApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> Agent Reference resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -3209,24 +3209,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static CognitiveServicesAgentReference CognitiveServicesAgentReference(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesAgentReferenceProperties properties = default)
         {
             return new CognitiveServicesAgentReference(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> Agent Deployment resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAgentDeploymentData"/> instance for mocking. </returns>
-        public static CognitiveServicesAgentDeploymentData CognitiveServicesAgentDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesAgentDeploymentProperties properties = default)
-        {
-            return new CognitiveServicesAgentDeploymentData(
                 id,
                 name,
                 resourceType,
@@ -3349,25 +3331,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 maxReplicas);
         }
 
-        /// <summary> Cognitive Services account managed compute deployment, backed by managed compute (GPU) resources. </summary>
+        /// <summary> Agent Deployment resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the Cognitive Services managed compute deployment. </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="eTag"> Resource Etag. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesManagedComputeDeploymentData"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedComputeDeploymentData CognitiveServicesManagedComputeDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesManagedComputeDeploymentProperties properties = default, CognitiveServicesSku sku = default, ETag? eTag = default)
+        /// <param name="properties"> [Required] Additional attributes of the entity. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAgentDeploymentData"/> instance for mocking. </returns>
+        public static CognitiveServicesAgentDeploymentData CognitiveServicesAgentDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesAgentDeploymentProperties properties = default)
         {
-            return new CognitiveServicesManagedComputeDeploymentData(
+            return new CognitiveServicesAgentDeploymentData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
-                sku,
-                eTag,
                 default);
         }
 
@@ -3437,6 +3415,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesManagedComputeDeploymentRoutes(chatCompletionsScoringPath, swagger, messagesApiScoringPath, default);
         }
 
+        /// <summary> Cognitive Services account managed compute deployment, backed by managed compute (GPU) resources. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the Cognitive Services managed compute deployment. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesManagedComputeDeploymentData"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentData CognitiveServicesManagedComputeDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesManagedComputeDeploymentProperties properties = default, CognitiveServicesSku sku = default, ETag? eTag = default)
+        {
+            return new CognitiveServicesManagedComputeDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                sku,
+                eTag,
+                default);
+        }
+
         /// <summary> The object being used to update sku of a resource, in general used for PATCH operations. </summary>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentPatch"/> instance for mocking. </returns>
@@ -3486,37 +3486,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 modelId,
                 acceleratorCount,
                 instanceCount,
-                default);
-        }
-
-        /// <summary>
-        /// Cognitive Services compute resource. Supports polymorphic compute types
-        /// (Cluster, ContainerInstance) via the computeType discriminator in properties.
-        /// </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Polymorphic properties of the compute resource. Use computeType to select Cluster or ContainerInstance. </param>
-        /// <param name="eTag"> Resource Etag. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="kind"> The kind (type) of compute resource. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesComputeData"/> instance for mocking. </returns>
-        public static CognitiveServicesComputeData CognitiveServicesComputeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesComputeProperties properties = default, ETag? eTag = default, IDictionary<string, string> tags = default, string kind = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CognitiveServicesComputeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                kind,
-                identity,
                 default);
         }
 
@@ -3627,32 +3596,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary>
-        /// Workbench resource under a Cognitive Services project.
-        /// Provides interactive compute with data access for AI development.
+        /// Cognitive Services compute resource. Supports polymorphic compute types
+        /// (Cluster, ContainerInstance) via the computeType discriminator in properties.
         /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the workbench resource. </param>
+        /// <param name="properties"> Polymorphic properties of the compute resource. Use computeType to select Cluster or ContainerInstance. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        /// <param name="location"> The location of the workbench resource. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="kind"> The kind (type) of compute resource. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesWorkbenchData"/> instance for mocking. </returns>
-        public static CognitiveServicesWorkbenchData CognitiveServicesWorkbenchData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesWorkbenchProperties properties = default, ETag? eTag = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesComputeData"/> instance for mocking. </returns>
+        public static CognitiveServicesComputeData CognitiveServicesComputeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesComputeProperties properties = default, ETag? eTag = default, IDictionary<string, string> tags = default, string kind = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CognitiveServicesWorkbenchData(
+            return new CognitiveServicesComputeData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
                 eTag,
-                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
                 identity,
                 default);
         }
@@ -3684,6 +3653,37 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 provisioningState,
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
                 createdOn,
+                default);
+        }
+
+        /// <summary>
+        /// Workbench resource under a Cognitive Services project.
+        /// Provides interactive compute with data access for AI development.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the workbench resource. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="location"> The location of the workbench resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesWorkbenchData"/> instance for mocking. </returns>
+        public static CognitiveServicesWorkbenchData CognitiveServicesWorkbenchData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesWorkbenchProperties properties = default, ETag? eTag = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CognitiveServicesWorkbenchData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
                 default);
         }
 

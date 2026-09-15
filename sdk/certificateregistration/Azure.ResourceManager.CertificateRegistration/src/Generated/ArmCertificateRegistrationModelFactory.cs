@@ -18,6 +18,53 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
     public static partial class ArmCertificateRegistrationModelFactory
     {
 
+        /// <summary> Key Vault container for a certificate that is purchased through Azure. </summary>
+        /// <param name="keyVaultId"> Key Vault resource Id. </param>
+        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
+        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
+        /// <returns> A new <see cref="Models.AppServiceCertificateProperties"/> instance for mocking. </returns>
+        public static AppServiceCertificateProperties AppServiceCertificateProperties(ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, AppServiceVaultSecretStatus? provisioningState = default)
+        {
+            return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, default);
+        }
+
+        /// <summary> SSL certificate details. </summary>
+        /// <param name="version"> Certificate Version. </param>
+        /// <param name="serialNumber"> Certificate Serial Number. </param>
+        /// <param name="thumbprint"> Certificate Thumbprint. </param>
+        /// <param name="subject"> Certificate Subject. </param>
+        /// <param name="notBefore"> Date Certificate is valid from. </param>
+        /// <param name="notAfter"> Date Certificate is valid to. </param>
+        /// <param name="signatureAlgorithm"> Certificate Signature algorithm. </param>
+        /// <param name="issuer"> Certificate Issuer. </param>
+        /// <param name="rawData"> Raw certificate data. </param>
+        /// <returns> A new <see cref="Models.AppServiceCertificateDetails"/> instance for mocking. </returns>
+        public static AppServiceCertificateDetails AppServiceCertificateDetails(int? version = default, string serialNumber = default, string thumbprint = default, string subject = default, DateTimeOffset? notBefore = default, DateTimeOffset? notAfter = default, string signatureAlgorithm = default, string issuer = default, string rawData = default)
+        {
+            return new AppServiceCertificateDetails(
+                version,
+                serialNumber,
+                thumbprint,
+                subject,
+                notBefore,
+                notAfter,
+                signatureAlgorithm,
+                issuer,
+                rawData,
+                default);
+        }
+
+        /// <summary> The CertificateOrderContact. </summary>
+        /// <param name="email"></param>
+        /// <param name="nameFirst"></param>
+        /// <param name="nameLast"></param>
+        /// <param name="phone"></param>
+        /// <returns> A new <see cref="Models.CertificateOrderContact"/> instance for mocking. </returns>
+        public static CertificateOrderContact CertificateOrderContact(string email = default, string nameFirst = default, string nameLast = default, string phone = default)
+        {
+            return new CertificateOrderContact(email, nameFirst, nameLast, phone, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -81,53 +128,6 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     default),
                 kind,
                 default);
-        }
-
-        /// <summary> Key Vault container for a certificate that is purchased through Azure. </summary>
-        /// <param name="keyVaultId"> Key Vault resource Id. </param>
-        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
-        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        /// <returns> A new <see cref="Models.AppServiceCertificateProperties"/> instance for mocking. </returns>
-        public static AppServiceCertificateProperties AppServiceCertificateProperties(ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, AppServiceVaultSecretStatus? provisioningState = default)
-        {
-            return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, default);
-        }
-
-        /// <summary> SSL certificate details. </summary>
-        /// <param name="version"> Certificate Version. </param>
-        /// <param name="serialNumber"> Certificate Serial Number. </param>
-        /// <param name="thumbprint"> Certificate Thumbprint. </param>
-        /// <param name="subject"> Certificate Subject. </param>
-        /// <param name="notBefore"> Date Certificate is valid from. </param>
-        /// <param name="notAfter"> Date Certificate is valid to. </param>
-        /// <param name="signatureAlgorithm"> Certificate Signature algorithm. </param>
-        /// <param name="issuer"> Certificate Issuer. </param>
-        /// <param name="rawData"> Raw certificate data. </param>
-        /// <returns> A new <see cref="Models.AppServiceCertificateDetails"/> instance for mocking. </returns>
-        public static AppServiceCertificateDetails AppServiceCertificateDetails(int? version = default, string serialNumber = default, string thumbprint = default, string subject = default, DateTimeOffset? notBefore = default, DateTimeOffset? notAfter = default, string signatureAlgorithm = default, string issuer = default, string rawData = default)
-        {
-            return new AppServiceCertificateDetails(
-                version,
-                serialNumber,
-                thumbprint,
-                subject,
-                notBefore,
-                notAfter,
-                signatureAlgorithm,
-                issuer,
-                rawData,
-                default);
-        }
-
-        /// <summary> The CertificateOrderContact. </summary>
-        /// <param name="email"></param>
-        /// <param name="nameFirst"></param>
-        /// <param name="nameLast"></param>
-        /// <param name="phone"></param>
-        /// <returns> A new <see cref="Models.CertificateOrderContact"/> instance for mocking. </returns>
-        public static CertificateOrderContact CertificateOrderContact(string email = default, string nameFirst = default, string nameLast = default, string phone = default)
-        {
-            return new CertificateOrderContact(email, nameFirst, nameLast, phone, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -323,35 +323,6 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="metadata"> metadata for the detector. </param>
-        /// <param name="dataset"> Data Set. </param>
-        /// <param name="status"> Indicates status of the most severe insight. </param>
-        /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
-        /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <returns> A new <see cref="CertificateRegistration.AppServiceDetectorData"/> instance for mocking. </returns>
-        public static AppServiceDetectorData AppServiceDetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppServiceDetectorInfo metadata = default, IEnumerable<DiagnosticDataset> dataset = default, DetectorStatusInfo status = default, IEnumerable<DataProviderMetadata> dataProvidersMetadata = default, QueryUtterancesResults suggestedUtterances = default, string kind = default)
-        {
-            return new AppServiceDetectorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                metadata is null && dataset is null && status is null && dataProvidersMetadata is null && suggestedUtterances is null ? default : new DetectorResponseProperties(
-                    metadata,
-                    (dataset ?? new ChangeTrackingList<DiagnosticDataset>()).ToList(),
-                    status,
-                    (dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>()).ToList(),
-                    suggestedUtterances,
-                    default),
-                kind,
-                default);
-        }
-
         /// <summary> Definition of Detector. </summary>
         /// <param name="id"> Id of detector. </param>
         /// <param name="name"> Name of detector. </param>
@@ -493,6 +464,35 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             links ??= new ChangeTrackingList<string>();
 
             return new SampleUtterance(text, (links ?? new ChangeTrackingList<string>()).ToList(), qid, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="metadata"> metadata for the detector. </param>
+        /// <param name="dataset"> Data Set. </param>
+        /// <param name="status"> Indicates status of the most severe insight. </param>
+        /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
+        /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <returns> A new <see cref="CertificateRegistration.AppServiceDetectorData"/> instance for mocking. </returns>
+        public static AppServiceDetectorData AppServiceDetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppServiceDetectorInfo metadata = default, IEnumerable<DiagnosticDataset> dataset = default, DetectorStatusInfo status = default, IEnumerable<DataProviderMetadata> dataProvidersMetadata = default, QueryUtterancesResults suggestedUtterances = default, string kind = default)
+        {
+            return new AppServiceDetectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                metadata is null && dataset is null && status is null && dataProvidersMetadata is null && suggestedUtterances is null ? default : new DetectorResponseProperties(
+                    metadata,
+                    (dataset ?? new ChangeTrackingList<DiagnosticDataset>()).ToList(),
+                    status,
+                    (dataProvidersMetadata ?? new ChangeTrackingList<DataProviderMetadata>()).ToList(),
+                    suggestedUtterances,
+                    default),
+                kind,
+                default);
         }
     }
 }

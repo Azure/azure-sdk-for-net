@@ -54,24 +54,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new HealthModelPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> A signal definition in a health model. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CloudHealth.HealthModelSignalDefinitionData"/> instance for mocking. </returns>
-        public static HealthModelSignalDefinitionData HealthModelSignalDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelSignalDefinitionProperties properties = default)
-        {
-            return new HealthModelSignalDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary>
         /// SignalDefinition properties
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ResourceMetricSignalDefinitionProperties"/>, <see cref="Models.LogAnalyticsQuerySignalDefinitionProperties"/>, and <see cref="Models.PrometheusMetricsSignalDefinitionProperties"/>.
@@ -207,16 +189,16 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 timeGrain);
         }
 
-        /// <summary> An authentication setting in a health model. </summary>
+        /// <summary> A signal definition in a health model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CloudHealth.HealthModelAuthenticationSettingData"/> instance for mocking. </returns>
-        public static HealthModelAuthenticationSettingData HealthModelAuthenticationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelAuthenticationSettingProperties properties = default)
+        /// <returns> A new <see cref="CloudHealth.HealthModelSignalDefinitionData"/> instance for mocking. </returns>
+        public static HealthModelSignalDefinitionData HealthModelSignalDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelSignalDefinitionProperties properties = default)
         {
-            return new HealthModelAuthenticationSettingData(
+            return new HealthModelSignalDefinitionData(
                 id,
                 name,
                 resourceType,
@@ -248,16 +230,16 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new ManagedIdentityAuthenticationSettingProperties(provisioningState, displayName, default, default, managedIdentityName);
         }
 
-        /// <summary> An entity (aka node) of a health model. </summary>
+        /// <summary> An authentication setting in a health model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CloudHealth.HealthModelEntityData"/> instance for mocking. </returns>
-        public static HealthModelEntityData HealthModelEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelEntityProperties properties = default)
+        /// <returns> A new <see cref="CloudHealth.HealthModelAuthenticationSettingData"/> instance for mocking. </returns>
+        public static HealthModelAuthenticationSettingData HealthModelAuthenticationSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelAuthenticationSettingProperties properties = default)
         {
-            return new HealthModelEntityData(
+            return new HealthModelAuthenticationSettingData(
                 id,
                 name,
                 resourceType,
@@ -630,6 +612,24 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new EntityAlertConfiguration(severity, description, (actionGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
+        /// <summary> An entity (aka node) of a health model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="CloudHealth.HealthModelEntityData"/> instance for mocking. </returns>
+        public static HealthModelEntityData HealthModelEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelEntityProperties properties = default)
+        {
+            return new HealthModelEntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> Request body for getting entity health history. </summary>
         /// <param name="startsOn"> Start time for the history query. Defaults to 24 hours ago if not specified. </param>
         /// <param name="endsOn"> End time for the history query. Defaults to now if not specified. </param>
@@ -818,24 +818,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 default);
         }
 
-        /// <summary> A relationship (aka edge) between two entities in a health model. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CloudHealth.HealthModelRelationshipData"/> instance for mocking. </returns>
-        public static HealthModelRelationshipData HealthModelRelationshipData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelRelationshipProperties properties = default)
-        {
-            return new HealthModelRelationshipData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Relationship properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="displayName"> Display name. </param>
@@ -858,16 +840,16 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 default);
         }
 
-        /// <summary> A discovery rule which automatically finds entities and relationships in a health model based on an Azure Resource Graph query. </summary>
+        /// <summary> A relationship (aka edge) between two entities in a health model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CloudHealth.HealthModelDiscoveryRuleData"/> instance for mocking. </returns>
-        public static HealthModelDiscoveryRuleData HealthModelDiscoveryRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelDiscoveryRuleProperties properties = default)
+        /// <returns> A new <see cref="CloudHealth.HealthModelRelationshipData"/> instance for mocking. </returns>
+        public static HealthModelRelationshipData HealthModelRelationshipData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelRelationshipProperties properties = default)
         {
-            return new HealthModelDiscoveryRuleData(
+            return new HealthModelRelationshipData(
                 id,
                 name,
                 resourceType,
@@ -938,6 +920,24 @@ namespace Azure.ResourceManager.CloudHealth.Models
             context ??= new ChangeTrackingList<string>();
 
             return new DiscoveryError(message, (context ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> A discovery rule which automatically finds entities and relationships in a health model based on an Azure Resource Graph query. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="CloudHealth.HealthModelDiscoveryRuleData"/> instance for mocking. </returns>
+        public static HealthModelDiscoveryRuleData HealthModelDiscoveryRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HealthModelDiscoveryRuleProperties properties = default)
+        {
+            return new HealthModelDiscoveryRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
     }
 }
