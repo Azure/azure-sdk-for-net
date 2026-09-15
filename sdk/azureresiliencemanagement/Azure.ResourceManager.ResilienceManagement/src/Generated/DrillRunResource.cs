@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(ResourceType, out string drillRunApiVersion);
             _drillRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", ResourceType.Namespace, Diagnostics);
-            _drillRunsRestClient = new DrillRuns(_drillRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, drillRunApiVersion ?? "2026-08-31-preview");
+            _drillRunsRestClient = new DrillRuns(_drillRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, drillRunApiVersion ?? "2026-09-30-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> GenerateReportAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DrillReportSummary>> GenerateReportAsync(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -449,10 +449,16 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _drillRunsRestClient.CreateGenerateReportRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ResilienceManagementArmOperation<DrillReportSummary> operation = new ResilienceManagementArmOperation<DrillReportSummary>(
+                    new DrillReportSummaryOperationSource(),
+                    _drillRunsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -476,7 +482,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -489,7 +495,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation GenerateReport(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DrillReportSummary> GenerateReport(WaitUntil waitUntil, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
@@ -503,10 +509,16 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _drillRunsRestClient.CreateGenerateReportRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ResilienceManagementArmOperation<DrillReportSummary> operation = new ResilienceManagementArmOperation<DrillReportSummary>(
+                    new DrillReportSummaryOperationSource(),
+                    _drillRunsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -530,7 +542,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -544,7 +556,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> GetReportDownloadUriAsync(WaitUntil waitUntil, string operationId, ListReportDownloadUrlContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ListReportDownloadUrlResult>> GetReportDownloadUriAsync(WaitUntil waitUntil, string operationId, ListReportDownloadUrlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(content, nameof(content));
@@ -559,10 +571,16 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _drillRunsRestClient.CreateGetReportDownloadUriRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, ListReportDownloadUrlContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ResilienceManagementArmOperation<ListReportDownloadUrlResult> operation = new ResilienceManagementArmOperation<ListReportDownloadUrlResult>(
+                    new ListReportDownloadUrlResultOperationSource(),
+                    _drillRunsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -586,7 +604,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -600,7 +618,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation GetReportDownloadUri(WaitUntil waitUntil, string operationId, ListReportDownloadUrlContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ListReportDownloadUrlResult> GetReportDownloadUri(WaitUntil waitUntil, string operationId, ListReportDownloadUrlContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
             Argument.AssertNotNull(content, nameof(content));
@@ -615,10 +633,16 @@ namespace Azure.ResourceManager.ResilienceManagement
                 };
                 HttpMessage message = _drillRunsRestClient.CreateGetReportDownloadUriRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, ListReportDownloadUrlContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ResilienceManagementArmOperation<ListReportDownloadUrlResult> operation = new ResilienceManagementArmOperation<ListReportDownloadUrlResult>(
+                    new ListReportDownloadUrlResultOperationSource(),
+                    _drillRunsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -642,7 +666,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -698,7 +722,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -754,7 +778,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -809,7 +833,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -864,7 +888,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -918,7 +942,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-31-preview. </description>
+        /// <description> 2026-09-30-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

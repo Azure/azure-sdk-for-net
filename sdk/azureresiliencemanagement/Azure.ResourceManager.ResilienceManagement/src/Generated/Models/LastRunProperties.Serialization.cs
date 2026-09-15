@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("lastRunAttestation"u8);
                 writer.WriteStringValue(LastRunAttestation.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(LastRunRecoveryTimeActual))
+            {
+                writer.WritePropertyName("lastRunRecoveryTimeActual"u8);
+                writer.WriteStringValue(LastRunRecoveryTimeActual.Value, "P");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +145,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ResilienceManagementJobStatus? lastRunState = default;
             TimeSpan? lastRunDuration = default;
             DrillAttestation? lastRunAttestation = default;
+            TimeSpan? lastRunRecoveryTimeActual = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,12 +185,27 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     lastRunAttestation = new DrillAttestation(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("lastRunRecoveryTimeActual"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastRunRecoveryTimeActual = prop.Value.GetTimeSpan("P");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LastRunProperties(lastRunOn, lastRunState, lastRunDuration, lastRunAttestation, additionalBinaryDataProperties);
+            return new LastRunProperties(
+                lastRunOn,
+                lastRunState,
+                lastRunDuration,
+                lastRunAttestation,
+                lastRunRecoveryTimeActual,
+                additionalBinaryDataProperties);
         }
     }
 }

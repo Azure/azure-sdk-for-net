@@ -126,6 +126,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("report"u8);
                 writer.WriteObjectValue(Report, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(RecoveryTimeObjective))
+            {
+                writer.WritePropertyName("recoveryTimeObjective"u8);
+                writer.WriteStringValue(RecoveryTimeObjective.Value.ToString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -174,6 +179,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             IReadOnlyList<SupportedVerbsForStage> supportedVerbsForStage = default;
             string currentActiveOperationId = default;
             DrillReportSummary report = default;
+            IsoDuration? recoveryTimeObjective = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("status"u8))
@@ -375,6 +381,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     report = DrillReportSummary.DeserializeDrillReportSummary(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("recoveryTimeObjective"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryTimeObjective = new IsoDuration(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -401,7 +416,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 notes ?? new ChangeTrackingList<string>(),
                 supportedVerbsForStage ?? new ChangeTrackingList<SupportedVerbsForStage>(),
                 currentActiveOperationId,
-                report);
+                report,
+                recoveryTimeObjective);
         }
     }
 }

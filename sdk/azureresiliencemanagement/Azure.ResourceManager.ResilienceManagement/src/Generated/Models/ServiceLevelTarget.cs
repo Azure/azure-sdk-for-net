@@ -30,19 +30,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="ServiceLevelTarget"/>. </summary>
         /// <param name="serviceLevelIndicatorResourceId"> The arm id of the service level indicator resource. </param>
-        /// <param name="serviceLevelObjectiveResourceId"> The arm id of the service level object resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceLevelTarget(ResourceIdentifier serviceLevelIndicatorResourceId, ResourceIdentifier serviceLevelObjectiveResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceLevelTarget(ResourceIdentifier serviceLevelIndicatorResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceLevelIndicatorResourceId = serviceLevelIndicatorResourceId;
-            ServiceLevelObjectiveResourceId = serviceLevelObjectiveResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The arm id of the service level indicator resource. </summary>
         public ResourceIdentifier ServiceLevelIndicatorResourceId { get; set; }
-
-        /// <summary> The arm id of the service level object resource. </summary>
-        public ResourceIdentifier ServiceLevelObjectiveResourceId { get; set; }
     }
 }

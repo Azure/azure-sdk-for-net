@@ -10,40 +10,34 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.ResilienceManagement.Models;
 
 namespace Azure.ResourceManager.ResilienceManagement
 {
     /// <summary></summary>
-    internal partial class GoalTemplateResourceOperationSource : IOperationSource<GoalTemplateResource>
+    internal partial class DrillReportSummaryOperationSource : IOperationSource<DrillReportSummary>
     {
-        private readonly ArmClient _client;
-
         /// <summary></summary>
-        /// <param name="client"></param>
-        internal GoalTemplateResourceOperationSource(ArmClient client)
+        internal DrillReportSummaryOperationSource()
         {
-            _client = client;
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        GoalTemplateResource IOperationSource<GoalTemplateResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        DrillReportSummary IOperationSource<DrillReportSummary>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            GoalTemplateData data = GoalTemplateData.DeserializeGoalTemplateData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GoalTemplateResource(_client, data);
+            return DrillReportSummary.DeserializeDrillReportSummary(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<GoalTemplateResource> IOperationSource<GoalTemplateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DrillReportSummary> IOperationSource<DrillReportSummary>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            GoalTemplateData data = GoalTemplateData.DeserializeGoalTemplateData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new GoalTemplateResource(_client, data);
+            return DrillReportSummary.DeserializeDrillReportSummary(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 {
     /// <summary>
     /// Definition of recovery orchestration resource protection solution setting with recovery orchestration plan.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceNativeProtectionSolutionSetting"/>, <see cref="ResourceCustomProtectionSetting"/>, <see cref="ResourceSiteRecoveryProtectionSetting"/>, and <see cref="ResourceCrossZoneVmRecoveryProtectionSetting"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResourceAzureTemplateProtectionSetting"/>, <see cref="ResourceCosmosDBProtectionSetting"/>, <see cref="ResourceStorageAccountProtectionSetting"/>, <see cref="ResourceServiceBusProtectionSetting"/>, <see cref="ResourceNetAppFilesProtectionSetting"/>, <see cref="ResourceNativeProtectionSolutionSetting"/>, <see cref="ResourceCustomProtectionSetting"/>, <see cref="ResourceSiteRecoveryProtectionSetting"/>, and <see cref="ResourceCrossZoneVmRecoveryProtectionSetting"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownResourceBaseProtectionSolutionSetting))]
     public abstract partial class ResourceBaseProtectionSolutionSetting : IJsonModel<ResourceBaseProtectionSolutionSetting>
@@ -130,6 +130,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "AzureTemplate":
+                        return ResourceAzureTemplateProtectionSetting.DeserializeResourceAzureTemplateProtectionSetting(element, options);
+                    case "AzureCosmosDB":
+                        return ResourceCosmosDBProtectionSetting.DeserializeResourceCosmosDBProtectionSetting(element, options);
+                    case "AzureStorageAccount":
+                        return ResourceStorageAccountProtectionSetting.DeserializeResourceStorageAccountProtectionSetting(element, options);
+                    case "AzureServiceBus":
+                        return ResourceServiceBusProtectionSetting.DeserializeResourceServiceBusProtectionSetting(element, options);
+                    case "AzureNetAppFiles":
+                        return ResourceNetAppFilesProtectionSetting.DeserializeResourceNetAppFilesProtectionSetting(element, options);
                     case "AzureNative":
                         return ResourceNativeProtectionSolutionSetting.DeserializeResourceNativeProtectionSolutionSetting(element, options);
                     case "CustomRunbook":
