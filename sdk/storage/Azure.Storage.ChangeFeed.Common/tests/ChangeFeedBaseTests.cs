@@ -153,6 +153,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 startTime: window,
                 endTime: window,
                 config: CreateTestConfig(),
+                includeNonFinalizedEvents: false,
                 disableEventTimeFilter: disableEventTimeFilter);
         }
 

@@ -31,6 +31,7 @@ namespace Azure.Storage.ChangeFeed.Common
 
         private DateTimeOffset? _startTime;
         private DateTimeOffset? _endTime;
+        private readonly bool _includeNonFinalizedEvents;
 
         /// <summary>
         /// When <c>true</c>, <see cref="_startTime"/>/<see cref="_endTime"/> bound only which
@@ -54,6 +55,11 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="startTime">Optional inclusive start time for the change feed window.</param>
         /// <param name="endTime">Optional exclusive end time for the change feed window.</param>
         /// <param name="config">Change feed configuration.</param>
+        /// <param name="includeNonFinalizedEvents">
+        /// Whether the producing run was reading past the finalized watermark. When <c>true</c>,
+        /// emitted pages will not include a continuation token (resumption is not supported in
+        /// this mode because non-finalized segments may change between reads).
+        /// </param>
         /// <param name="disableEventTimeFilter">
         /// When <c>true</c>, <paramref name="startTime"/>/<paramref name="endTime"/> bound only
         /// which segments are enumerated; the per-event <c>EventTime</c> predicate and the
@@ -69,6 +75,7 @@ namespace Azure.Storage.ChangeFeed.Common
             DateTimeOffset? startTime,
             DateTimeOffset? endTime,
             ChangeFeedConfiguration<TEvent> config,
+            bool includeNonFinalizedEvents = false,
             bool disableEventTimeFilter = false)
         {
             _containerClient = containerClient;
@@ -80,6 +87,7 @@ namespace Azure.Storage.ChangeFeed.Common
             _startTime = startTime;
             _endTime = endTime;
             _config = config;
+            _includeNonFinalizedEvents = includeNonFinalizedEvents;
             _disableEventTimeFilter = disableEventTimeFilter;
             _empty = false;
         }
@@ -137,11 +145,14 @@ namespace Azure.Storage.ChangeFeed.Common
                 await AdvanceSegmentIfNecessary(async, cancellationToken).ConfigureAwait(false);
             }
 
-            // Always emit a continuation token capturing the exact read position (chunk, block,
-            // and event offset). This includes non-finalized reads: resuming re-opens the current
-            // segment at the saved position with modifications allowed, so a caller can persist a
-            // token and continue reading a segment that is still growing past the finalized watermark.
-            string continuationToken = JsonSerializer.Serialize<ChangeFeedCursor>(GetCursor());
+            // When IncludeNonFinalizedEvents is enabled the read is intrinsically unstable —
+            // segments past the finalized watermark may grow, shrink, or appear/disappear
+            // between calls — so resuming from a captured position would silently miss or
+            // duplicate events. Suppress the continuation token in that mode so callers
+            // cannot persist a position that we cannot honor.
+            string continuationToken = _includeNonFinalizedEvents
+                ? null
+                : JsonSerializer.Serialize<ChangeFeedCursor>(GetCursor());
 
             return new ChangeFeedEventPageBase<TEvent>(events, continuationToken);
         }

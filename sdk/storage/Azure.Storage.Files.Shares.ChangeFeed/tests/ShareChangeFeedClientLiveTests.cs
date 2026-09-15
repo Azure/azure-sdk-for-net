@@ -350,15 +350,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     ? await tailing.GetLastConsumableAsync()
                     : tailing.GetLastConsumable();
 
-                // Act - tailing reader. Iterate via AsPages so we can also assert that each page
-                // carries a continuation token (resumption is supported in non-finalized mode).
+                // Act - tailing reader. Iterate via AsPages so we can also assert that no page
+                // carries a continuation token (resumption is unsupported in non-finalized mode).
                 List<ShareChangeFeedEvent> tailingEvents = new List<ShareChangeFeedEvent>();
                 if (IsAsync)
                 {
                     await foreach (Page<ShareChangeFeedEvent> page in tailing.GetChangesAsync().AsPages())
                     {
-                        Assert.IsNotNull(page.ContinuationToken,
-                            "Pages produced with IncludeNonFinalizedEvents=true must carry a continuation token so callers can resume.");
+                        Assert.IsNull(page.ContinuationToken,
+                            "Pages produced with IncludeNonFinalizedEvents=true must not carry a continuation token.");
                         tailingEvents.AddRange(page.Values);
                     }
                 }
@@ -366,8 +366,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 {
                     foreach (Page<ShareChangeFeedEvent> page in tailing.GetChanges().AsPages())
                     {
-                        Assert.IsNotNull(page.ContinuationToken,
-                            "Pages produced with IncludeNonFinalizedEvents=true must carry a continuation token so callers can resume.");
+                        Assert.IsNull(page.ContinuationToken,
+                            "Pages produced with IncludeNonFinalizedEvents=true must not carry a continuation token.");
                         tailingEvents.AddRange(page.Values);
                     }
                 }
