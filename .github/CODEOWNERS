@@ -277,6 +277,9 @@
 # ServiceOwners: @thang-bit
 
 # PRLabel: %Device Update
+/sdk/deviceregistry/Azure.IoT.DeviceRegistry.SoftwareUpdate/    @devlie @wuqiten
+
+# PRLabel: %Device Update
 /sdk/deviceupdate/Azure.IoT.DeviceUpdate/    @devlie @wuqiten
 
 # ServiceLabel: %Device Update
@@ -328,7 +331,7 @@
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Functions
-# ServiceOwners: @fabiocav
+# ServiceOwners: @fabiocav @mathewc @alrod
 
 # PRLabel: %HDInsight
 /sdk/hdinsight/    @aim-for-better
@@ -513,6 +516,12 @@
 
 # ServiceLabel: %Synapse
 # ServiceOwners: @wanyang7
+
+# PRLabel: %Tables
+/sdk/tables/    @JonathanCrd @jsquire
+
+# AzureSdkOwners: @JonathanCrd @jsquire
+# ServiceLabel: %Tables
 
 # PRLabel: %Voice Live
 /sdk/voicelive/Azure.AI.VoiceLive/    @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang

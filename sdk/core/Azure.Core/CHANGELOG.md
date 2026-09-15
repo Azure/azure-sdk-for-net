@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Managed identity mTLS proof-of-possession now requires a KeyGuard-backed host capability and enforces KeyGuard as the minimum binding strength during token acquisition. ([#62585](https://github.com/Azure/azure-sdk-for-net/issues/62585))
+
 ### Other Changes
 
 ## 1.62.0 (2026-08-20)

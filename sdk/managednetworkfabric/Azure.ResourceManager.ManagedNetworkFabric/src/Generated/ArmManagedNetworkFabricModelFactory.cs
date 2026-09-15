@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="globalAccessControlListActionsEnableCount"> Configuration to enable or disable ACL action count. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/> instance for mocking. </returns>
-        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NetworkFabricConfigurationType configurationType = default, Uri aclsUri = default, CommunityActionType? defaultAction = default, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, DateTimeOffset? lastSyncedOn = default, NetworkFabricAclType? aclType = default, NetworkFabricDeviceRole? deviceRole = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, IEnumerable<ControlPlaneAclProperties> controlPlaneAclConfiguration = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = default, string lastOperationDetails = default)
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType configurationType, Uri aclsUri = default, CommunityActionType? defaultAction = default, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, DateTimeOffset? lastSyncedOn = default, NetworkFabricAclType? aclType = default, NetworkFabricDeviceRole? deviceRole = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, IEnumerable<ControlPlaneAclProperties> controlPlaneAclConfiguration = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricBooleanValue? globalAccessControlListActionsEnableCount = default, string lastOperationDetails = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -55,23 +55,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                globalAccessControlListActionsEnableCount is null && lastOperationDetails is null && controlPlaneAclConfiguration is null ? default : new AccessControlListProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                new AccessControlListProperties(
+                    annotation,
+                    configurationType,
+                    aclsUri,
+                    defaultAction,
+                    (matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>()).ToList(),
+                    (dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>()).ToList(),
+                    lastSyncedOn,
+                    aclType,
+                    deviceRole,
                     new GlobalAccessControlListActionProperties(globalAccessControlListActionsEnableCount, default),
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
+                    (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (controlPlaneAclConfiguration ?? new ChangeTrackingList<ControlPlaneAclProperties>()).ToList(),
-                    default,
-                    default,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default),
                 default);
         }
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="internetGatewayIds"> List of Internet Gateway resource Id. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData"/> instance for mocking. </returns>
-        public static NetworkFabricInternetGatewayRuleData NetworkFabricInternetGatewayRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, InternetGatewayRules ruleProperties = default, NetworkFabricProvisioningState? provisioningState = default, IEnumerable<string> internetGatewayIds = default, string lastOperationDetails = default)
+        public static NetworkFabricInternetGatewayRuleData NetworkFabricInternetGatewayRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, InternetGatewayRules ruleProperties, NetworkFabricProvisioningState? provisioningState, IEnumerable<string> internetGatewayIds, string lastOperationDetails)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -805,12 +805,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                ruleProperties is null && lastOperationDetails is null && internetGatewayIds is null ? default : new InternetGatewayRuleProperties(
-                    default,
+                annotation is null && ruleProperties is null && lastOperationDetails is null && provisioningState is null && internetGatewayIds is null ? default : new InternetGatewayRuleProperties(
+                    annotation,
                     default,
                     ruleProperties,
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
+                    provisioningState,
                     (internetGatewayIds ?? new ChangeTrackingList<string>()).ToList()),
                 default);
         }
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/> instance for mocking. </returns>
-        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier internetGatewayRuleId = default, string ipV4Address = default, int? port = default, InternetGatewayType? @type = default, InternetGatewayType? internetGatewayType = default, ResourceIdentifier networkFabricControllerId = default, NetworkFabricProvisioningState? provisioningState = default, string lastOperationDetails = default)
+        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string ipV4Address, int? port, InternetGatewayType? @type, InternetGatewayType? internetGatewayType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState, string lastOperationDetails)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -896,16 +896,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                internetGatewayRuleId is null && internetGatewayType is null && internetGatewayType is null && lastOperationDetails is null ? default : new InternetGatewayProperties(
-                    default,
+                annotation is null && internetGatewayRuleId is null && ipV4Address is null && port is null && internetGatewayType is null && internetGatewayType is null && networkFabricControllerId is null && lastOperationDetails is null && provisioningState is null ? default : new InternetGatewayProperties(
+                    annotation,
                     internetGatewayRuleId,
-                    default,
-                    default,
+                    ipV4Address,
+                    port,
                     internetGatewayType,
                     internetGatewayType,
-                    default,
+                    networkFabricControllerId,
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
+                    provisioningState,
                     default),
                 default);
         }
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/> instance for mocking. </returns>
-        public static NetworkFabricIPCommunityData NetworkFabricIPCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkFabricId = default, IEnumerable<IPCommunityRule> ipCommunityRules = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
+        public static NetworkFabricIPCommunityData NetworkFabricIPCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkFabricId, IEnumerable<IPCommunityRule> ipCommunityRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, string lastOperationDetails)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -945,14 +945,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                ipCommunityRules is null && lastOperationDetails is null ? default : new IPCommunityProperties(
-                    default,
-                    default,
+                annotation is null && networkFabricId is null && ipCommunityRules is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPCommunityProperties(
+                    annotation,
+                    networkFabricId,
                     (ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(),
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default),
                 default);
         }
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/> instance for mocking. </returns>
-        public static NetworkFabricIPExtendedCommunityData NetworkFabricIPExtendedCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules = default, ResourceIdentifier networkFabricId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
+        public static NetworkFabricIPExtendedCommunityData NetworkFabricIPExtendedCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, string lastOperationDetails)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1006,14 +1006,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                ipExtendedCommunityRules is null && lastOperationDetails is null ? default : new IPExtendedCommunityProperties(
-                    default,
+                annotation is null && ipExtendedCommunityRules is null && networkFabricId is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPExtendedCommunityProperties(
+                    annotation,
                     (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(),
-                    default,
+                    networkFabricId,
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default),
                 default);
         }
@@ -1055,7 +1055,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/> instance for mocking. </returns>
-        public static NetworkFabricIPPrefixData NetworkFabricIPPrefixData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkFabricId = default, IEnumerable<IPPrefixRule> ipPrefixRules = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
+        public static NetworkFabricIPPrefixData NetworkFabricIPPrefixData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkFabricId, IEnumerable<IPPrefixRule> ipPrefixRules, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, string lastOperationDetails)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1066,14 +1066,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                ipPrefixRules is null && lastOperationDetails is null ? default : new IPPrefixProperties(
-                    default,
-                    default,
+                annotation is null && networkFabricId is null && ipPrefixRules is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPPrefixProperties(
+                    annotation,
+                    networkFabricId,
                     (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(),
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default),
                 default);
         }
@@ -1125,7 +1125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/> instance for mocking. </returns>
-        public static NetworkFabricL2IsolationDomainData NetworkFabricL2IsolationDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkFabricId = default, int vlanId = default, int? mtu = default, NetworkFabricExtendedVlan? extendedVlan = default, ResourceIdentifier networkToNetworkInterconnectId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
+        public static NetworkFabricL2IsolationDomainData NetworkFabricL2IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkFabricId, int vlanId, int? mtu, NetworkFabricExtendedVlan? extendedVlan, ResourceIdentifier networkToNetworkInterconnectId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1136,18 +1136,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                lastOperationDetails is null ? default : new L2IsolationDomainProperties(
+                new L2IsolationDomainProperties(
+                    annotation,
                     default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    networkFabricId,
+                    vlanId,
+                    mtu,
+                    extendedVlan,
+                    networkToNetworkInterconnectId,
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
-                    default),
+                    configurationState,
+                    provisioningState,
+                    administrativeState),
                 identity,
                 default);
         }
@@ -1200,7 +1200,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="exportPolicies"> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL3IsolationDomainData"/> instance for mocking. </returns>
-        public static NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, RedistributeConnectedSubnet? redistributeConnectedSubnets = default, RedistributeStaticRoute? redistributeStaticRoutes = default, AggregateRouteConfiguration aggregateRouteConfiguration = default, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default, ResourceIdentifier networkFabricId = default, RoutePrefixLimitProperties v4RoutePrefixLimit = default, RoutePrefixLimitProperties v6RoutePrefixLimit = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, L3ExportRoutePolicy staticRouteExportRoutePolicy = default, IEnumerable<string> uniqueRds = default, string lastOperationDetails = default, IEnumerable<BmpExportPolicy> exportPolicies = default, ManagedServiceIdentity identity = default)
+        public static NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, ResourceIdentifier networkFabricId, RoutePrefixLimitProperties v4RoutePrefixLimit, RoutePrefixLimitProperties v6RoutePrefixLimit, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, L3ExportRoutePolicy staticRouteExportRoutePolicy, IEnumerable<string> uniqueRds, string lastOperationDetails, IEnumerable<BmpExportPolicy> exportPolicies, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1211,22 +1211,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                staticRouteExportRoutePolicy is null && uniqueRds is null && lastOperationDetails is null && exportPolicies is null ? default : new L3IsolationDomainProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                annotation is null && redistributeConnectedSubnets is null && redistributeStaticRoutes is null && aggregateRouteConfiguration is null && connectedSubnetRoutePolicy is null && networkFabricId is null && staticRouteExportRoutePolicy is null && uniqueRds is null && v4RoutePrefixLimit is null && v6RoutePrefixLimit is null && lastOperationDetails is null && exportPolicies is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new L3IsolationDomainProperties(
+                    annotation,
+                    redistributeConnectedSubnets,
+                    redistributeStaticRoutes,
+                    aggregateRouteConfiguration,
+                    connectedSubnetRoutePolicy,
+                    networkFabricId,
                     new StaticRouteRoutePolicy(staticRouteExportRoutePolicy, default),
                     new L3UniqueRouteDistinguisherProperties((uniqueRds ?? new ChangeTrackingList<string>()).ToList(), default),
-                    default,
-                    default,
+                    v4RoutePrefixLimit,
+                    v6RoutePrefixLimit,
                     new LastOperationProperties(lastOperationDetails, default),
                     new BmpExportPolicyProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), default),
-                    default,
-                    default,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default),
                 identity,
                 default);
@@ -1362,34 +1362,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="nativeIPv6PrefixLimits"> Prefix limits. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternalNetworkData"/> instance for mocking. </returns>
-        public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string annotation = default, StaticRouteConfigurationExtension? extension = default, int? mtu = default, IEnumerable<ConnectedSubnet> connectedIPv4Subnets = default, IEnumerable<ConnectedSubnet> connectedIPv6Subnets = default, ImportRoutePolicy importRoutePolicy = default, ExportRoutePolicy exportRoutePolicy = default, ResourceIdentifier ingressAclId = default, ResourceIdentifier egressAclId = default, IsMonitoringEnabled? isMonitoringEnabled = default, int vlanId = default, BgpConfiguration bgpSettings = default, StaticRouteConfiguration staticRouteSettings = default, ResourceIdentifier networkFabricId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits = default, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits = default, string lastOperationDetails = default)
+        public static NetworkFabricInternalNetworkData NetworkFabricInternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, StaticRouteConfigurationExtension? extension, int? mtu, IEnumerable<ConnectedSubnet> connectedIPv4Subnets, IEnumerable<ConnectedSubnet> connectedIPv6Subnets, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, int vlanId, BgpConfiguration bgpSettings, StaticRouteConfiguration staticRouteSettings, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IEnumerable<PrefixLimitProperties> nativeIPv4PrefixLimits, IEnumerable<PrefixLimitProperties> nativeIPv6PrefixLimits, string lastOperationDetails)
         {
             return new NetworkFabricInternalNetworkData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                nativeIPv4PrefixLimits is null && nativeIPv6PrefixLimits is null && lastOperationDetails is null && networkFabricId is null ? default : new InternalNetworkProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                new InternalNetworkProperties(
+                    annotation,
+                    extension,
+                    mtu,
+                    (connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>()).ToList(),
+                    (connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>()).ToList(),
+                    importRoutePolicy,
+                    exportRoutePolicy,
+                    ingressAclId,
+                    egressAclId,
+                    isMonitoringEnabled,
+                    vlanId,
+                    bgpSettings,
+                    staticRouteSettings,
                     new NativeIPv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
                     new NativeIPv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
                     new LastOperationProperties(lastOperationDetails, default),
                     networkFabricId,
-                    default,
-                    default,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default),
                 default);
         }
@@ -1793,27 +1793,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricExternalNetworkData"/> instance for mocking. </returns>
-        public static NetworkFabricExternalNetworkData NetworkFabricExternalNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string annotation = default, ResourceIdentifier networkToNetworkInterconnectId = default, ImportRoutePolicy importRoutePolicy = default, ExportRoutePolicy exportRoutePolicy = default, PeeringOption peeringOption = default, L3OptionBProperties optionBProperties = default, ExternalNetworkOptionAProperties optionAProperties = default, ExternalNetworkStaticRouteConfiguration staticRouteConfiguration = default, ResourceIdentifier networkFabricId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
+        public static NetworkFabricExternalNetworkData NetworkFabricExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier networkToNetworkInterconnectId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkOptionAProperties optionAProperties, ExternalNetworkStaticRouteConfiguration staticRouteConfiguration, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, string lastOperationDetails)
         {
             return new NetworkFabricExternalNetworkData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                networkToNetworkInterconnectId is null && lastOperationDetails is null && networkFabricId is null ? default : new ExternalNetworkProperties(
-                    default,
+                new ExternalNetworkProperties(
+                    annotation,
                     networkToNetworkInterconnectId,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    importRoutePolicy,
+                    exportRoutePolicy,
+                    peeringOption,
+                    optionBProperties,
+                    optionAProperties,
+                    staticRouteConfiguration,
                     new LastOperationProperties(lastOperationDetails, default),
                     networkFabricId,
-                    default,
-                    default,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default),
                 default);
         }
@@ -2096,7 +2096,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/> instance for mocking. </returns>
-        public static NetworkFabricNeighborGroupData NetworkFabricNeighborGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NeighborGroupDestination destination = default, IEnumerable<ResourceIdentifier> networkTapIds = default, IEnumerable<ResourceIdentifier> networkTapRuleIds = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
+        public static NetworkFabricNeighborGroupData NetworkFabricNeighborGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NeighborGroupDestination destination, IEnumerable<ResourceIdentifier> networkTapIds, IEnumerable<ResourceIdentifier> networkTapRuleIds, IEnumerable<ResourceIdentifier> networkFabricIds, NetworkFabricProvisioningState? provisioningState, NetworkFabricConfigurationState? configurationState, string lastOperationDetails, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2107,15 +2107,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                lastOperationDetails is null ? default : new NeighborGroupProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                annotation is null && destination is null && networkTapIds is null && networkTapRuleIds is null && networkFabricIds is null && lastOperationDetails is null && provisioningState is null && configurationState is null ? default : new NeighborGroupProperties(
+                    annotation,
+                    destination,
+                    (networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    (networkTapRuleIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
+                    provisioningState,
+                    configurationState,
                     default),
                 identity,
                 default);
@@ -2203,7 +2203,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                model is null && manufacturer is null && supportedVersions is null && supportedRoleTypes is null && interfaces is null && provisioningState is null ? default : new NetworkDeviceSkuProperties(
+                    model,
+                    manufacturer,
+                    (supportedVersions ?? new ChangeTrackingList<SupportedVersionProperties>()).ToList(),
+                    (supportedRoleTypes ?? new ChangeTrackingList<NetworkDeviceRoleName>()).ToList(),
+                    (interfaces ?? new ChangeTrackingList<NetworkDeviceInterfaceProperties>()).ToList(),
+                    provisioningState,
+                    default),
                 default);
         }
 
@@ -2265,7 +2272,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceData"/> instance for mocking. </returns>
-        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, string hostName = default, string serialNumber = default, NetworkFabricIdentitySelector identitySelector = default, string version = default, string networkDeviceSku = default, NetworkDeviceRole? networkDeviceRole = default, ResourceIdentifier networkRackId = default, IPAddress managementIPv4Address = default, string managementIPv6Address = default, string rwDeviceConfig = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = default, IEnumerable<NetworkFabricCertificateRotationStatus> certificateRotationStatus = default, ResourceIdentifier networkFabricId = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
+        public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, NetworkFabricIdentitySelector identitySelector, string version, string networkDeviceSku, NetworkDeviceRole? networkDeviceRole, ResourceIdentifier networkRackId, IPAddress managementIPv4Address, string managementIPv6Address, string rwDeviceConfig, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus, IEnumerable<NetworkFabricCertificateRotationStatus> certificateRotationStatus, ResourceIdentifier networkFabricId, string lastOperationDetails, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2276,24 +2283,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                networkDeviceSku is null && networkDeviceRole is null && networkRackId is null && rwDeviceConfig is null && lastOperationDetails is null && networkFabricId is null ? default : new NetworkDeviceProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                annotation is null && hostName is null && serialNumber is null && identitySelector is null && version is null && networkDeviceSku is null && networkDeviceRole is null && networkRackId is null && managementIPv4Address is null && managementIPv6Address is null && rwDeviceConfig is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null && secretRotationStatus is null && certificateRotationStatus is null && networkFabricId is null ? default : new NetworkDeviceProperties(
+                    annotation,
+                    hostName,
+                    serialNumber,
+                    identitySelector,
+                    version,
                     networkDeviceSku,
                     networkDeviceRole,
                     networkRackId,
-                    default,
-                    default,
+                    managementIPv4Address,
+                    managementIPv6Address,
                     rwDeviceConfig,
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
+                    (secretRotationStatus ?? new ChangeTrackingList<NetworkFabricSecretRotationStatus>()).ToList(),
+                    (certificateRotationStatus ?? new ChangeTrackingList<NetworkFabricCertificateRotationStatus>()).ToList(),
                     networkFabricId,
                     default),
                 identity,
@@ -2660,28 +2667,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/> instance for mocking. </returns>
-        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string annotation = default, string physicalIdentifier = default, string connectedTo = default, NetworkDeviceInterfaceType? interfaceType = default, IPAddress ipv4Address = default, string ipv6Address = default, string description = default, string additionalDescription = default, ResourceIdentifier networkFabricId = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
+        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, string description, string additionalDescription, ResourceIdentifier networkFabricId, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, string lastOperationDetails, ManagedServiceIdentity identity)
         {
             return new NetworkDeviceInterfaceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                interfaceType is null && lastOperationDetails is null && networkFabricId is null ? default : new NetworkInterfaceProperties(
+                annotation is null && physicalIdentifier is null && connectedTo is null && interfaceType is null && ipv4Address is null && ipv6Address is null && description is null && additionalDescription is null && lastOperationDetails is null && networkFabricId is null && provisioningState is null && administrativeState is null && configurationState is null ? default : new NetworkInterfaceProperties(
+                    annotation,
                     default,
-                    default,
-                    default,
-                    default,
+                    physicalIdentifier,
+                    connectedTo,
                     interfaceType,
-                    default,
-                    default,
-                    default,
-                    default,
+                    ipv4Address,
+                    ipv6Address,
+                    description,
+                    additionalDescription,
                     new LastOperationProperties(lastOperationDetails, default),
                     networkFabricId,
-                    default,
-                    default,
-                    default),
+                    provisioningState,
+                    administrativeState,
+                    configurationState),
                 identity,
                 default);
         }
@@ -2755,7 +2762,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                typePropertiesType is null && maxComputeRacks is null && maximumServerCount is null && supportedVersions is null && details is null && provisioningState is null ? default : new NetworkFabricSkuProperties(
+                    typePropertiesType,
+                    maxComputeRacks,
+                    maximumServerCount,
+                    (supportedVersions ?? new ChangeTrackingList<string>()).ToList(),
+                    details,
+                    provisioningState,
+                    default),
                 default);
         }
 
@@ -2798,7 +2812,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="qosConfigurationState"> QoS configuration state. Default is Disabled. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricData"/> instance for mocking. </returns>
-        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, string networkFabricSku = default, string fabricVersion = default, IEnumerable<string> routerIds = default, StorageAccountConfiguration storageAccountConfiguration = default, IEnumerable<NetworkFabricLock> fabricLocks = default, ResourceIdentifier networkFabricControllerId = default, int? rackCount = default, int serverCountPerRack = default, string ipv4Prefix = default, string ipv6Prefix = default, long fabricAsn = default, NetworkFabricTerminalServerConfiguration terminalServerSettings = default, ManagementNetworkConfigurationProperties managementNetworkConfiguration = default, IEnumerable<string> racks = default, IEnumerable<string> l2IsolationDomains = default, IEnumerable<string> l3IsolationDomains = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherProperties uniqueRdConfiguration = default, int? storageArrayCount = default, IEnumerable<string> activeCommitBatches = default, AuthorizedTransceiverProperties authorizedTransceiver = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, long? secretRotationSummaryActivePasswordSetCount = default, string lastOperationDetails = default, NetworkFabricQosConfigurationState? qosConfigurationState = default, ManagedServiceIdentity identity = default)
+        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string networkFabricSku, string fabricVersion, IEnumerable<string> routerIds, StorageAccountConfiguration storageAccountConfiguration, IEnumerable<NetworkFabricLock> fabricLocks, ResourceIdentifier networkFabricControllerId, int? rackCount, int serverCountPerRack, string ipv4Prefix = default, string ipv6Prefix = default, long fabricAsn = default, NetworkFabricTerminalServerConfiguration terminalServerSettings = default, ManagementNetworkConfigurationProperties managementNetworkConfiguration = default, IEnumerable<string> racks = default, IEnumerable<string> l2IsolationDomains = default, IEnumerable<string> l3IsolationDomains = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherProperties uniqueRdConfiguration = default, int? storageArrayCount = default, IEnumerable<string> activeCommitBatches = default, AuthorizedTransceiverProperties authorizedTransceiver = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, long? secretRotationSummaryActivePasswordSetCount = default, string lastOperationDetails = default, NetworkFabricQosConfigurationState? qosConfigurationState = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2809,38 +2823,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                networkFabricSku is null && fabricVersion is null && fabricLocks is null && networkFabricControllerId is null && managementNetworkConfiguration is null && secretRotationSummaryActivePasswordSetCount is null && lastOperationDetails is null && qosConfigurationState is null ? default : new NetworkFabricProperties(
-                    default,
+                new NetworkFabricProperties(
+                    annotation,
                     default,
                     networkFabricSku,
                     fabricVersion,
-                    default,
-                    default,
+                    (routerIds ?? new ChangeTrackingList<string>()).ToList(),
+                    storageAccountConfiguration,
                     (fabricLocks ?? new ChangeTrackingList<NetworkFabricLock>()).ToList(),
                     networkFabricControllerId,
-                    default,
-                    default,
-                    default,
-                    default,
+                    rackCount,
+                    serverCountPerRack,
+                    ipv4Prefix,
+                    ipv6Prefix,
                     fabricAsn,
-                    default,
+                    terminalServerSettings,
                     managementNetworkConfiguration,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    (racks ?? new ChangeTrackingList<string>()).ToList(),
+                    (l2IsolationDomains ?? new ChangeTrackingList<string>()).ToList(),
+                    (l3IsolationDomains ?? new ChangeTrackingList<string>()).ToList(),
+                    hardwareAlertThreshold,
+                    (controlPlaneAcls ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    (featureFlags ?? new ChangeTrackingList<NetworkFabricFeatureFlag>()).ToList(),
+                    (trustedIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    uniqueRdConfiguration,
+                    storageArrayCount,
+                    (activeCommitBatches ?? new ChangeTrackingList<string>()).ToList(),
                     new SecretRotationSummary(secretRotationSummaryActivePasswordSetCount, default),
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
-                    default,
-                    default,
+                    authorizedTransceiver,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     new QosProperties(qosConfigurationState, default)),
                 identity,
                 default);
@@ -2987,7 +3001,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="optionBProperties"> option B properties. </param>
         /// <param name="optionASettings"> option A properties. </param>
         /// <returns> A new <see cref="Models.VpnConfigurationProperties"/> instance for mocking. </returns>
-        public static VpnConfigurationProperties VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId = default, NetworkFabricAdministrativeState? administrativeState = default, PeeringOption peeringOption = default, OptionBProperties optionBProperties = default, VpnOptionAProperties optionASettings = default)
+        public static VpnConfigurationProperties VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId, NetworkFabricAdministrativeState? administrativeState, PeeringOption peeringOption, OptionBProperties optionBProperties = default, VpnOptionAProperties optionASettings = default)
         {
             return new VpnConfigurationProperties(
                 networkToNetworkInterconnectId,
@@ -3563,31 +3577,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkToNetworkInterconnectData"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NniType? nniType = default, IsManagementType? isManagementType = default, NetworkFabricBooleanValue useOptionB = default, Layer2Configuration layer2Configuration = default, OptionBLayer3Configuration optionBLayer3Settings = default, NpbStaticRouteConfiguration npbStaticRouteConfiguration = default, NniStaticRouteConfiguration staticRouteConfiguration = default, ImportRoutePolicyInformation importRoutePolicy = default, ExportRoutePolicyInformation exportRoutePolicy = default, ResourceIdentifier egressAclId = default, ResourceIdentifier ingressAclId = default, NetworkFabricMicroBfdState? microBfdState = default, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
+        public static NetworkToNetworkInterconnectData NetworkToNetworkInterconnectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NniType? nniType, IsManagementType? isManagementType, NetworkFabricBooleanValue useOptionB, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Settings, NpbStaticRouteConfiguration npbStaticRouteConfiguration, NniStaticRouteConfiguration staticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState, ConditionalDefaultRouteProperties conditionalDefaultRouteConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, string lastOperationDetails)
         {
             return new NetworkToNetworkInterconnectData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                lastOperationDetails is null ? default : new NetworkToNetworkInterconnectProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                new NetworkToNetworkInterconnectProperties(
+                    nniType,
+                    isManagementType,
+                    useOptionB,
+                    layer2Configuration,
+                    optionBLayer3Settings,
+                    npbStaticRouteConfiguration,
+                    staticRouteConfiguration,
+                    importRoutePolicy,
+                    exportRoutePolicy,
+                    egressAclId,
+                    ingressAclId,
+                    microBfdState,
+                    conditionalDefaultRouteConfiguration,
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default),
                 default);
         }
@@ -3711,7 +3725,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
         /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPatch"/> instance for mocking. </returns>
-        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Layer2ConfigurationPatch layer2Settings = default, OptionBLayer3ConfigurationPatchProperties optionBLayer3Settings = default, NpbStaticRouteConfigurationPatch npbStaticRouteSettings = default, NniStaticRoutePatchConfiguration staticRouteConfiguration = default, ImportRoutePolicyInformationPatch importRoutePolicySettings = default, ExportRoutePolicyInformationPatch exportRoutePolicySettings = default, ResourceIdentifier egressAclId = default, ResourceIdentifier ingressAclId = default, NetworkFabricMicroBfdState? microBfdState = default)
+        public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2ConfigurationPatch layer2Settings, OptionBLayer3ConfigurationPatchProperties optionBLayer3Settings, NpbStaticRouteConfigurationPatch npbStaticRouteSettings, NniStaticRoutePatchConfiguration staticRouteConfiguration, ImportRoutePolicyInformationPatch importRoutePolicySettings, ExportRoutePolicyInformationPatch exportRoutePolicySettings, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId, NetworkFabricMicroBfdState? microBfdState)
         {
             return new NetworkToNetworkInterconnectPatch(
                 id,
@@ -3889,7 +3903,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/> instance for mocking. </returns>
-        public static NetworkPacketBrokerData NetworkPacketBrokerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier networkFabricId = default, IEnumerable<ResourceIdentifier> networkDeviceIds = default, IEnumerable<ResourceIdentifier> sourceInterfaceIds = default, IEnumerable<ResourceIdentifier> networkTapIds = default, IEnumerable<ResourceIdentifier> neighborGroupIds = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
+        public static NetworkPacketBrokerData NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier networkFabricId, IEnumerable<ResourceIdentifier> networkDeviceIds, IEnumerable<ResourceIdentifier> sourceInterfaceIds, IEnumerable<ResourceIdentifier> networkTapIds, IEnumerable<ResourceIdentifier> neighborGroupIds, NetworkFabricProvisioningState? provisioningState, NetworkFabricConfigurationState? configurationState, string lastOperationDetails, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3900,15 +3914,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                networkFabricId is null && networkDeviceIds is null && networkTapIds is null && lastOperationDetails is null ? default : new NetworkPacketBrokerProperties(
+                networkFabricId is null && networkDeviceIds is null && sourceInterfaceIds is null && networkTapIds is null && neighborGroupIds is null && lastOperationDetails is null && provisioningState is null && configurationState is null ? default : new NetworkPacketBrokerProperties(
                     networkFabricId,
                     (networkDeviceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    default,
+                    (sourceInterfaceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     (networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    default,
+                    (neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
+                    provisioningState,
+                    configurationState,
                     default),
                 identity,
                 default);
@@ -3939,7 +3953,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkRackData"/> instance for mocking. </returns>
-        public static NetworkRackData NetworkRackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NetworkRackType? networkRackType = default, ResourceIdentifier networkFabricId = default, IEnumerable<ResourceIdentifier> networkDevices = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default)
+        public static NetworkRackData NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IEnumerable<ResourceIdentifier> networkDevices, NetworkFabricProvisioningState? provisioningState, NetworkFabricConfigurationState? configurationState, string lastOperationDetails)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3950,15 +3964,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                networkRackType is null && networkFabricId is null && networkDevices is null && lastOperationDetails is null ? default : new NetworkRackProperties(
-                    default,
+                annotation is null && networkRackType is null && networkFabricId is null && networkDevices is null && lastOperationDetails is null && provisioningState is null && configurationState is null ? default : new NetworkRackProperties(
+                    annotation,
                     default,
                     networkRackType,
                     networkFabricId,
                     (networkDevices ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default),
+                    provisioningState,
+                    configurationState),
                 default);
         }
 
@@ -3986,7 +4000,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapRuleData"/> instance for mocking. </returns>
-        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NetworkFabricConfigurationType configurationType = default, Uri tapRulesUri = default, NetworkFabricIdentitySelector identitySelector = default, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, ResourceIdentifier networkTapId = default, IEnumerable<ResourceIdentifier> networkTapIds = default, int? pollingIntervalInSecond = default, DateTimeOffset? lastSyncedOn = default, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
+        public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType configurationType, Uri tapRulesUri = default, NetworkFabricIdentitySelector identitySelector = default, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations = default, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default, ResourceIdentifier networkTapId = default, IEnumerable<ResourceIdentifier> networkTapIds = default, int? pollingIntervalInSecond = default, DateTimeOffset? lastSyncedOn = default, GlobalNetworkTapRuleActionProperties globalNetworkTapRuleActions = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3997,23 +4011,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                tapRulesUri is null && networkTapId is null && networkTapIds is null && globalNetworkTapRuleActions is null && lastOperationDetails is null && networkFabricIds is null ? default : new NetworkTapRuleProperties(
-                    default,
-                    default,
+                new NetworkTapRuleProperties(
+                    annotation,
+                    configurationType,
                     tapRulesUri,
-                    default,
-                    default,
-                    default,
+                    identitySelector,
+                    (matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>()).ToList(),
+                    (dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>()).ToList(),
                     networkTapId,
                     (networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    default,
-                    default,
+                    pollingIntervalInSecond,
+                    lastSyncedOn,
                     globalNetworkTapRuleActions,
                     new LastOperationProperties(lastOperationDetails, default),
                     (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    default,
-                    default,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default),
                 identity,
                 default);
@@ -4226,7 +4240,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapData"/> instance for mocking. </returns>
-        public static NetworkTapData NetworkTapData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkPacketBrokerId = default, ResourceIdentifier sourceTapRuleId = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, IEnumerable<NetworkTapDestinationProperties> destinationSettings = default, NetworkTapPollingType? pollingType = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
+        public static NetworkTapData NetworkTapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier networkPacketBrokerId, ResourceIdentifier sourceTapRuleId, IEnumerable<ResourceIdentifier> networkFabricIds, IEnumerable<NetworkTapDestinationProperties> destinationSettings, NetworkTapPollingType? pollingType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, string lastOperationDetails, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4237,18 +4251,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                networkPacketBrokerId is null && sourceTapRuleId is null && networkFabricIds is null && lastOperationDetails is null ? default : new NetworkTapProperties(
-                    default,
+                annotation is null && networkPacketBrokerId is null && sourceTapRuleId is null && networkFabricIds is null && destinationSettings is null && pollingType is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new NetworkTapProperties(
+                    annotation,
                     default,
                     networkPacketBrokerId,
                     sourceTapRuleId,
                     (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    default,
-                    default,
+                    (destinationSettings ?? new ChangeTrackingList<NetworkTapDestinationProperties>()).ToList(),
+                    pollingType,
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
-                    default),
+                    configurationState,
+                    provisioningState,
+                    administrativeState),
                 identity,
                 default);
         }
@@ -4368,7 +4382,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricRoutePolicyData"/> instance for mocking. </returns>
-        public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, CommunityActionType? defaultAction = default, IEnumerable<RoutePolicyStatementProperties> statements = default, ResourceIdentifier networkFabricId = default, AddressFamilyType? addressFamilyType = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
+        public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, CommunityActionType? defaultAction, IEnumerable<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, string lastOperationDetails)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4379,16 +4393,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                lastOperationDetails is null ? default : new RoutePolicyProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                annotation is null && defaultAction is null && statements is null && networkFabricId is null && addressFamilyType is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new RoutePolicyProperties(
+                    annotation,
+                    defaultAction,
+                    (statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>()).ToList(),
+                    networkFabricId,
+                    addressFamilyType,
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
-                    default,
+                    configurationState,
+                    provisioningState,
+                    administrativeState,
                     default),
                 default);
         }
@@ -4549,7 +4563,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkMonitorData"/> instance for mocking. </returns>
-        public static NetworkMonitorData NetworkMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, BmpConfigurationProperties bmpConfiguration = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
+        public static NetworkMonitorData NetworkMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, BmpConfigurationProperties bmpConfiguration, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, string lastOperationDetails)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4560,14 +4574,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                lastOperationDetails is null ? default : new NetworkMonitorProperties(
+                annotation is null && bmpConfiguration is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new NetworkMonitorProperties(
+                    annotation,
                     default,
-                    default,
-                    default,
+                    bmpConfiguration,
                     new LastOperationProperties(lastOperationDetails, default),
-                    default,
-                    default,
-                    default),
+                    configurationState,
+                    provisioningState,
+                    administrativeState),
                 default);
         }
 
@@ -4715,7 +4729,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkBootstrapDeviceData"/> instance for mocking. </returns>
-        public static NetworkBootstrapDeviceData NetworkBootstrapDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, string hostName = default, string serialNumber = default, string version = default, string networkDeviceSku = default, ResourceIdentifier networkFabricId = default, string secondaryManagementIPv4Address = default, string dhcpV4ServerIPAddress = default, string primaryManagementIPv6Address = default, string secondaryManagementIPv6Address = default, NetworkFabricProvisioningState? provisioningState = default, string primaryManagementIPv4Address = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricConfigurationState? configurationState = default, ManagedServiceIdentity identity = default)
+        public static NetworkBootstrapDeviceData NetworkBootstrapDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, ResourceIdentifier networkFabricId, string secondaryManagementIPv4Address, string dhcpV4ServerIPAddress, string primaryManagementIPv6Address, string secondaryManagementIPv6Address, NetworkFabricProvisioningState? provisioningState, string primaryManagementIPv4Address, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4726,21 +4740,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                networkDeviceSku is null && networkFabricId is null ? default : new NetworkBootstrapDeviceProperties(
-                    default,
-                    default,
-                    default,
-                    default,
+                annotation is null && hostName is null && serialNumber is null && version is null && networkDeviceSku is null && networkFabricId is null && secondaryManagementIPv4Address is null && dhcpV4ServerIPAddress is null && primaryManagementIPv6Address is null && secondaryManagementIPv6Address is null && provisioningState is null && primaryManagementIPv4Address is null && administrativeState is null && configurationState is null ? default : new NetworkBootstrapDeviceProperties(
+                    annotation,
+                    hostName,
+                    serialNumber,
+                    version,
                     networkDeviceSku,
                     networkFabricId,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    secondaryManagementIPv4Address,
+                    dhcpV4ServerIPAddress,
+                    primaryManagementIPv6Address,
+                    secondaryManagementIPv6Address,
+                    provisioningState,
+                    primaryManagementIPv4Address,
+                    administrativeState,
+                    configurationState,
                     default),
                 identity,
                 default);
@@ -4923,20 +4937,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name,
                 resourceType,
                 systemData,
-                interfaceType is null ? default : new NetworkBootstrapInterfaceProperties(
+                annotation is null && provisioningState is null && administrativeState is null && configurationState is null && physicalIdentifier is null && connectedTo is null && interfaceType is null && description is null && additionalDescription is null && ipv4Address is null && ipv6Address is null && serialNumber is null ? default : new NetworkBootstrapInterfaceProperties(
+                    annotation,
                     default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    provisioningState,
+                    administrativeState,
+                    configurationState,
+                    physicalIdentifier,
+                    connectedTo,
                     interfaceType,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default),
+                    description,
+                    additionalDescription,
+                    ipv4Address,
+                    ipv6Address,
+                    serialNumber),
                 default);
         }
 
@@ -4974,7 +4988,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && internetGatewayRuleId is null && port is null && networkFabricControllerId is null && provisioningState is null ? default : new InternetGatewayProperties(
+                new InternetGatewayProperties(
                     annotation,
                     internetGatewayRuleId,
                     default,
@@ -5137,7 +5151,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name,
                 resourceType,
                 systemData,
-                annotation is null && networkToNetworkInterconnectId is null && importRoutePolicy is null && exportRoutePolicy is null && optionBProperties is null && optionAProperties is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new ExternalNetworkProperties(
+                new ExternalNetworkProperties(
                     annotation,
                     networkToNetworkInterconnectId,
                     importRoutePolicy,
@@ -5523,7 +5537,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && networkFabricId is null && mtu is null && extendedVlan is null && networkToNetworkInterconnectId is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new L2IsolationDomainProperties(
+                new L2IsolationDomainProperties(
                     annotation,
                     default,
                     networkFabricId,
@@ -6040,7 +6054,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name,
                 resourceType,
                 systemData,
-                annotation is null && networkToNetworkInterconnectId is null && importRoutePolicy is null && exportRoutePolicy is null && optionBProperties is null && optionAProperties is null && staticRouteConfiguration is null && lastOperationDetails is null && networkFabricId is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new ExternalNetworkProperties(
+                new ExternalNetworkProperties(
                     annotation,
                     networkToNetworkInterconnectId,
                     importRoutePolicy,

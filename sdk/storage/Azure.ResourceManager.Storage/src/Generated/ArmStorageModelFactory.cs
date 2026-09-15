@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="name"> The storage account name. </param>
         /// <param name="resourceType"> The type of resource, Microsoft.Storage/storageAccounts. </param>
         /// <returns> A new <see cref="Models.StorageAccountNameAvailabilityContent"/> instance for mocking. </returns>
-        public static StorageAccountNameAvailabilityContent StorageAccountNameAvailabilityContent(string name = default, ResourceType resourceType = default)
+        public static StorageAccountNameAvailabilityContent StorageAccountNameAvailabilityContent(string name, ResourceType resourceType)
         {
             return new StorageAccountNameAvailabilityContent(name, resourceType, default);
         }
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="key1"></param>
         /// <param name="key2"></param>
         /// <returns> A new <see cref="Models.StorageAccountKeyCreationTime"/> instance for mocking. </returns>
-        public static StorageAccountKeyCreationTime StorageAccountKeyCreationTime(DateTimeOffset? key1 = default, DateTimeOffset? key2 = default)
+        public static StorageAccountKeyCreationTime StorageAccountKeyCreationTime(DateTimeOffset? key1, DateTimeOffset? key2)
         {
             return new StorageAccountKeyCreationTime(key1, key2, default);
         }
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
         /// <returns> A new <see cref="Storage.StoragePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StoragePrivateLinkServiceConnectionState connectionState = default, StoragePrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StoragePrivateLinkServiceConnectionState connectionState, StoragePrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId)
         {
             return new StoragePrivateEndpointConnectionData(
                 id,
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="corsRules"> The List of CORS rules. You can include up to five CorsRule elements in the request. </param>
         /// <param name="sku"> Sku name and tier. </param>
         /// <returns> A new <see cref="Storage.FileServiceData"/> instance for mocking. </returns>
-        public static FileServiceData FileServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeleteRetentionPolicy shareDeleteRetentionPolicy = default, FileServiceProtocolSettings protocolSettings = default, IEnumerable<StorageCorsRule> corsRules = default, StorageSku sku = default)
+        public static FileServiceData FileServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DeleteRetentionPolicy shareDeleteRetentionPolicy, FileServiceProtocolSettings protocolSettings, IEnumerable<StorageCorsRule> corsRules, StorageSku sku)
         {
             return new FileServiceData(
                 id,
@@ -2717,6 +2717,27 @@ namespace Azure.ResourceManager.Storage.Models
                 default);
         }
 
+        /// <summary> The Private Endpoint Connection resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="privateEndpointId"></param>
+        /// <returns> A new <see cref="Storage.StoragePrivateEndpointConnectionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StoragePrivateLinkServiceConnectionState connectionState = default, StoragePrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        {
+            return new StoragePrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                connectionState is null && provisioningState is null ? default : new StoragePrivateEndpointConnectionProperties(default, connectionState, provisioningState, default),
+                default);
+        }
+
         /// <summary> The storage account. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -3266,7 +3287,7 @@ namespace Azure.ResourceManager.Storage.Models
                 name,
                 resourceType.GetValueOrDefault(),
                 default,
-                migrationStatus is null && migrationFailedReason is null && migrationFailedDetailedReason is null ? default : new StorageAccountMigrationProperties(targetSkuName, migrationStatus, migrationFailedReason, migrationFailedDetailedReason, default),
+                new StorageAccountMigrationProperties(targetSkuName, migrationStatus, migrationFailedReason, migrationFailedDetailedReason, default),
                 name,
                 default);
         }
