@@ -11,6 +11,9 @@ parameters:
 - name: AuthToken
   type: string
   default: ''
+- name: Condition
+  type: string
+  default: and(succeededOrFailed(), ne(variables['Skip.Verify-RestApiSpecLocation'], 'true'))
 
 steps:
   - ${{ if eq(parameters.AuthToken, '') }}:
@@ -18,6 +21,7 @@ steps:
       parameters:
         TokenOwners:
           - Azure
+        Condition: ${{ parameters.Condition }}
 
   - task: Powershell@2
     inputs:
@@ -31,4 +35,4 @@ steps:
     displayName: Verify REST API spec location for "${{ parameters.PackageName }}"
     env:
       GH_TOKEN: ${{ coalesce(parameters.AuthToken, '$(GH_TOKEN)') }}
-    condition: and(succeededOrFailed(), ne(variables['Skip.Verify-RestApiSpecLocation'], 'true'))
+    condition: ${{ parameters.Condition }}
