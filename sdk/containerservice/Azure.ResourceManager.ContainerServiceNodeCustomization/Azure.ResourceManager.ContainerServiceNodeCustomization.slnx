@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.ContainerServiceNodeCustomization.csproj" />
+  <Project Path="tests/Azure.ResourceManager.ContainerServiceNodeCustomization.Tests.csproj" />
+</Solution>
