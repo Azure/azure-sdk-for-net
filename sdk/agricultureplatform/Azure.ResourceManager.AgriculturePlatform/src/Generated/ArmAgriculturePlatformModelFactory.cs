@@ -19,34 +19,6 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
     public static partial class ArmAgriculturePlatformModelFactory
     {
 
-        /// <summary> Schema of the AgriService resource from Microsoft.AgriculturePlatform resource provider. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <returns> A new <see cref="AgriculturePlatform.AgricultureServiceData"/> instance for mocking. </returns>
-        public static AgricultureServiceData AgricultureServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AgricultureServiceProperties properties = default, ManagedServiceIdentity identity = default, AgriculturePlatformSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AgricultureServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                sku,
-                default);
-        }
-
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="config"> Config of the AgriService instance. </param>
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Associated MoboBrokerResources. </param>
@@ -142,6 +114,34 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 saasSubscriptionId,
                 saasSubscriptionName,
                 planId,
+                default);
+        }
+
+        /// <summary> Schema of the AgriService resource from Microsoft.AgriculturePlatform resource provider. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <returns> A new <see cref="AgriculturePlatform.AgricultureServiceData"/> instance for mocking. </returns>
+        public static AgricultureServiceData AgricultureServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AgricultureServiceProperties properties = default, ManagedServiceIdentity identity = default, AgriculturePlatformSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AgricultureServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                sku,
                 default);
         }
 

@@ -221,6 +221,35 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default), default);
         }
 
+        /// <summary> Gallery information for a workbook template. </summary>
+        /// <param name="name"> Name of the workbook template in the gallery. </param>
+        /// <param name="category"> Category for the gallery. </param>
+        /// <param name="workbookType"> Type of workbook supported by the workbook template. </param>
+        /// <param name="order"> Order of the template within the gallery. </param>
+        /// <param name="resourceType"> Azure resource type supported by the gallery. </param>
+        /// <returns> A new <see cref="Models.WorkbookTemplateGallery"/> instance for mocking. </returns>
+        public static WorkbookTemplateGallery WorkbookTemplateGallery(string name = default, string category = default, string workbookType = default, int? order = default, string resourceType = default)
+        {
+            return new WorkbookTemplateGallery(
+                name,
+                category,
+                workbookType,
+                order,
+                resourceType,
+                default);
+        }
+
+        /// <summary> Localized template data and gallery information. </summary>
+        /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
+        /// <param name="galleries"> Workbook galleries supported by the template. </param>
+        /// <returns> A new <see cref="Models.WorkbookTemplateLocalizedGallery"/> instance for mocking. </returns>
+        public static WorkbookTemplateLocalizedGallery WorkbookTemplateLocalizedGallery(BinaryData templateData = default, IEnumerable<WorkbookTemplateGallery> galleries = default)
+        {
+            galleries ??= new ChangeTrackingList<WorkbookTemplateGallery>();
+
+            return new WorkbookTemplateLocalizedGallery(templateData, (galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>()).ToList(), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -252,35 +281,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     default,
                     default),
                 default);
-        }
-
-        /// <summary> Gallery information for a workbook template. </summary>
-        /// <param name="name"> Name of the workbook template in the gallery. </param>
-        /// <param name="category"> Category for the gallery. </param>
-        /// <param name="workbookType"> Type of workbook supported by the workbook template. </param>
-        /// <param name="order"> Order of the template within the gallery. </param>
-        /// <param name="resourceType"> Azure resource type supported by the gallery. </param>
-        /// <returns> A new <see cref="Models.WorkbookTemplateGallery"/> instance for mocking. </returns>
-        public static WorkbookTemplateGallery WorkbookTemplateGallery(string name = default, string category = default, string workbookType = default, int? order = default, string resourceType = default)
-        {
-            return new WorkbookTemplateGallery(
-                name,
-                category,
-                workbookType,
-                order,
-                resourceType,
-                default);
-        }
-
-        /// <summary> Localized template data and gallery information. </summary>
-        /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
-        /// <param name="galleries"> Workbook galleries supported by the template. </param>
-        /// <returns> A new <see cref="Models.WorkbookTemplateLocalizedGallery"/> instance for mocking. </returns>
-        public static WorkbookTemplateLocalizedGallery WorkbookTemplateLocalizedGallery(BinaryData templateData = default, IEnumerable<WorkbookTemplateGallery> galleries = default)
-        {
-            galleries ??= new ChangeTrackingList<WorkbookTemplateGallery>();
-
-            return new WorkbookTemplateLocalizedGallery(templateData, (galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>()).ToList(), default);
         }
 
         /// <param name="tags"> Resource tags. </param>

@@ -55,6 +55,15 @@ namespace Azure.ResourceManager.Advisor.Models
             return new RecommendationShortDescription(problem, solution, default);
         }
 
+        /// <summary> The metadata supported value detail. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="displayName"> The display name. </param>
+        /// <returns> A new <see cref="Models.MetadataSupportedValueDetail"/> instance for mocking. </returns>
+        public static MetadataSupportedValueDetail MetadataSupportedValueDetail(string id = default, string displayName = default)
+        {
+            return new MetadataSupportedValueDetail(id, displayName, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -75,13 +84,53 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
-        /// <summary> The metadata supported value detail. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="displayName"> The display name. </param>
-        /// <returns> A new <see cref="Models.MetadataSupportedValueDetail"/> instance for mocking. </returns>
-        public static MetadataSupportedValueDetail MetadataSupportedValueDetail(string id = default, string displayName = default)
+        /// <summary> Recommendation resource metadata. </summary>
+        /// <param name="resourceId"> Azure resource Id of the assessed resource. </param>
+        /// <param name="source"> Source from which recommendation is generated. </param>
+        /// <param name="action"> The action to view resource. </param>
+        /// <param name="singular"> The singular user friendly name of resource type. eg: virtual machine. </param>
+        /// <param name="plural"> The plural user friendly name of resource type. eg: virtual machines. </param>
+        /// <returns> A new <see cref="Models.RecommendationResourceMetadata"/> instance for mocking. </returns>
+        public static RecommendationResourceMetadata RecommendationResourceMetadata(ResourceIdentifier resourceId = default, string source = default, IDictionary<string, BinaryData> action = default, string singular = default, string plural = default)
         {
-            return new MetadataSupportedValueDetail(id, displayName, default);
+            action ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new RecommendationResourceMetadata(
+                resourceId,
+                source,
+                action ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                singular,
+                plural,
+                default);
+        }
+
+        /// <summary> The tracked properties of a Recommendation. </summary>
+        /// <param name="state"> The state of the Recommendation. </param>
+        /// <param name="postponedUntil"> The time the Recommendation was postponed until. </param>
+        /// <param name="reason"> The reason the state of the Recommendation was changed. </param>
+        /// <param name="priority"> The Priority of the Recommendation. </param>
+        /// <returns> A new <see cref="Models.TrackedRecommendationProperties"/> instance for mocking. </returns>
+        public static TrackedRecommendationProperties TrackedRecommendationProperties(RecommendationState? state = default, DateTimeOffset? postponedUntil = default, RecommendationStateChangeReason? reason = default, RecommendationPriority? priority = default)
+        {
+            return new TrackedRecommendationProperties(state, postponedUntil, reason, priority, default);
+        }
+
+        /// <summary> The Review that this Recommendation belongs to. </summary>
+        /// <param name="id"> The ARM Resource Id of the Review. </param>
+        /// <param name="name"> The Name of the Review. </param>
+        /// <returns> A new <see cref="Models.RecommendationReview"/> instance for mocking. </returns>
+        public static RecommendationReview RecommendationReview(string id = default, string name = default)
+        {
+            return new RecommendationReview(id, name, default);
+        }
+
+        /// <summary> The Workload that this Resource belongs to. </summary>
+        /// <param name="id"> The Id of the Workload. </param>
+        /// <param name="name"> The Name of the Workload. </param>
+        /// <returns> A new <see cref="Models.RecommendationResourceWorkload"/> instance for mocking. </returns>
+        public static RecommendationResourceWorkload RecommendationResourceWorkload(string id = default, string name = default)
+        {
+            return new RecommendationResourceWorkload(id, name, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -153,55 +202,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 default);
         }
 
-        /// <summary> Recommendation resource metadata. </summary>
-        /// <param name="resourceId"> Azure resource Id of the assessed resource. </param>
-        /// <param name="source"> Source from which recommendation is generated. </param>
-        /// <param name="action"> The action to view resource. </param>
-        /// <param name="singular"> The singular user friendly name of resource type. eg: virtual machine. </param>
-        /// <param name="plural"> The plural user friendly name of resource type. eg: virtual machines. </param>
-        /// <returns> A new <see cref="Models.RecommendationResourceMetadata"/> instance for mocking. </returns>
-        public static RecommendationResourceMetadata RecommendationResourceMetadata(ResourceIdentifier resourceId = default, string source = default, IDictionary<string, BinaryData> action = default, string singular = default, string plural = default)
-        {
-            action ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new RecommendationResourceMetadata(
-                resourceId,
-                source,
-                action ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                singular,
-                plural,
-                default);
-        }
-
-        /// <summary> The tracked properties of a Recommendation. </summary>
-        /// <param name="state"> The state of the Recommendation. </param>
-        /// <param name="postponedUntil"> The time the Recommendation was postponed until. </param>
-        /// <param name="reason"> The reason the state of the Recommendation was changed. </param>
-        /// <param name="priority"> The Priority of the Recommendation. </param>
-        /// <returns> A new <see cref="Models.TrackedRecommendationProperties"/> instance for mocking. </returns>
-        public static TrackedRecommendationProperties TrackedRecommendationProperties(RecommendationState? state = default, DateTimeOffset? postponedUntil = default, RecommendationStateChangeReason? reason = default, RecommendationPriority? priority = default)
-        {
-            return new TrackedRecommendationProperties(state, postponedUntil, reason, priority, default);
-        }
-
-        /// <summary> The Review that this Recommendation belongs to. </summary>
-        /// <param name="id"> The ARM Resource Id of the Review. </param>
-        /// <param name="name"> The Name of the Review. </param>
-        /// <returns> A new <see cref="Models.RecommendationReview"/> instance for mocking. </returns>
-        public static RecommendationReview RecommendationReview(string id = default, string name = default)
-        {
-            return new RecommendationReview(id, name, default);
-        }
-
-        /// <summary> The Workload that this Resource belongs to. </summary>
-        /// <param name="id"> The Id of the Workload. </param>
-        /// <param name="name"> The Name of the Workload. </param>
-        /// <returns> A new <see cref="Models.RecommendationResourceWorkload"/> instance for mocking. </returns>
-        public static RecommendationResourceWorkload RecommendationResourceWorkload(string id = default, string name = default)
-        {
-            return new RecommendationResourceWorkload(id, name, default);
-        }
-
         /// <param name="advisorRecommendationPatchTrackedProperties"> The tracked properties of a Recommendation. </param>
         /// <returns> A new <see cref="Models.AdvisorRecommendationPatch"/> instance for mocking. </returns>
         public static AdvisorRecommendationPatch AdvisorRecommendationPatch(TrackedRecommendationProperties advisorRecommendationPatchTrackedProperties = default)
@@ -225,24 +225,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 resourceType,
                 systemData,
                 suppressionId is null && ttl is null && expiresOn is null ? default : new AdvisorSuppressionProperties(suppressionId, ttl, expiresOn, default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="lastRefreshedScore"> The details of latest available score. </param>
-        /// <param name="timeSeries"> The historic Advisor score data. </param>
-        /// <returns> A new <see cref="Advisor.AdvisorScoreEntityData"/> instance for mocking. </returns>
-        public static AdvisorScoreEntityData AdvisorScoreEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AdvisorScoreEntityContent lastRefreshedScore = default, IEnumerable<AdvisorTimeSeriesEntity> timeSeries = default)
-        {
-            return new AdvisorScoreEntityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                lastRefreshedScore is null && timeSeries is null ? default : new AdvisorScoreEntityProperties(lastRefreshedScore, (timeSeries ?? new ChangeTrackingList<AdvisorTimeSeriesEntity>()).ToList(), default),
                 default);
         }
 
@@ -275,6 +257,24 @@ namespace Azure.ResourceManager.Advisor.Models
             scoreHistory ??= new ChangeTrackingList<AdvisorScoreEntityContent>();
 
             return new AdvisorTimeSeriesEntity(aggregationLevel, (scoreHistory ?? new ChangeTrackingList<AdvisorScoreEntityContent>()).ToList(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="lastRefreshedScore"> The details of latest available score. </param>
+        /// <param name="timeSeries"> The historic Advisor score data. </param>
+        /// <returns> A new <see cref="Advisor.AdvisorScoreEntityData"/> instance for mocking. </returns>
+        public static AdvisorScoreEntityData AdvisorScoreEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AdvisorScoreEntityContent lastRefreshedScore = default, IEnumerable<AdvisorTimeSeriesEntity> timeSeries = default)
+        {
+            return new AdvisorScoreEntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastRefreshedScore is null && timeSeries is null ? default : new AdvisorScoreEntityProperties(lastRefreshedScore, (timeSeries ?? new ChangeTrackingList<AdvisorTimeSeriesEntity>()).ToList(), default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

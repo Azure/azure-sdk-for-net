@@ -19,24 +19,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     public static partial class ArmAlertsManagementModelFactory
     {
 
-        /// <summary> An alert created in alert management service. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Alert property bag. </param>
-        /// <returns> A new <see cref="AlertsManagement.ServiceAlertData"/> instance for mocking. </returns>
-        public static ServiceAlertData ServiceAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceAlertProperties properties = default)
-        {
-            return new ServiceAlertData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Alert property bag. </summary>
         /// <param name="essentials"> This object contains consistent fields across different monitor services. </param>
         /// <param name="context"> Information specific to the monitor service that gives more contextual details about the alert. </param>
@@ -92,6 +74,24 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 lastModifiedBy,
                 isSuppressed is null ? default : new ServiceAlertActionStatus(isSuppressed, default),
                 description,
+                default);
+        }
+
+        /// <summary> An alert created in alert management service. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Alert property bag. </param>
+        /// <returns> A new <see cref="AlertsManagement.ServiceAlertData"/> instance for mocking. </returns>
+        public static ServiceAlertData ServiceAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceAlertProperties properties = default)
+        {
+            return new ServiceAlertData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
