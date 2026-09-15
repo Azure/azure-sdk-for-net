@@ -17,24 +17,6 @@ namespace Azure.ResourceManager.ManagedOps.Models
     public static partial class ArmManagedOpsModelFactory
     {
 
-        /// <summary> The Managed Operations resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ManagedOps.ManagedOpData"/> instance for mocking. </returns>
-        public static ManagedOpData ManagedOpData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedOpsProperties properties = default)
-        {
-            return new ManagedOpData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <param name="sku"> Product plan details of this resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="desiredConfiguration"> Desired configuration input by the user. </param>
@@ -114,6 +96,24 @@ namespace Azure.ResourceManager.ManagedOps.Models
         public static ManagedOpsAzureMonitorInformation ManagedOpsAzureMonitorInformation(ResourceIdentifier dcrId = default, ManagedOpsEnablementStatus enablementStatus = default)
         {
             return new ManagedOpsAzureMonitorInformation(dcrId, enablementStatus, default);
+        }
+
+        /// <summary> The Managed Operations resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ManagedOps.ManagedOpData"/> instance for mocking. </returns>
+        public static ManagedOpData ManagedOpData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedOpsProperties properties = default)
+        {
+            return new ManagedOpData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <param name="managedOpUpdateDesiredConfiguration"> Desired configuration input by the user. </param>

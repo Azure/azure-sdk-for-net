@@ -105,43 +105,6 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             return new SapInstancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="serverName"> This is the Virtual Machine Name of the SAP system. Add all the virtual machines attached to an SAP system which you wish to migrate to Azure. Keeping this not equal to ID as for single tier all InstanceTypes would be on same server, leading to multiple resources with same servername. </param>
-        /// <param name="sapInstanceType"> Defines the type SAP instance on this server instance. </param>
-        /// <param name="instanceSid"> This is the Instance SID for ASCS/AP/DB instance.  An SAP system with HANA database for example could have a different SID for database Instance than that of ASCS instance. </param>
-        /// <param name="sapProduct"> This is the SAP Application Component; e.g. SAP S/4HANA 2022, SAP ERP ENHANCE PACKAGE. </param>
-        /// <param name="sapProductVersion"> Provide the product version of the SAP product. </param>
-        /// <param name="operatingSystem"> This is Operating System on which the host server is running. </param>
-        /// <param name="configurationData"> Configuration data for this server instance. </param>
-        /// <param name="performanceData"> Configuration data for this server instance. </param>
-        /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Defines the errors related to SAP Instance resource. </param>
-        /// <returns> A new <see cref="MigrationDiscoverySap.SapDiscoveryServerInstanceData"/> instance for mocking. </returns>
-        public static SapDiscoveryServerInstanceData SapDiscoveryServerInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string serverName = default, SapInstanceType? sapInstanceType = default, string instanceSid = default, string sapProduct = default, string sapProductVersion = default, SapDiscoveryOperatingSystem? operatingSystem = default, ConfigurationDetail configurationData = default, PerformanceDetail performanceData = default, SapDiscoveryProvisioningState? provisioningState = default, SapMigrateError errors = default)
-        {
-            return new SapDiscoveryServerInstanceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                serverName is null && sapInstanceType is null && instanceSid is null && sapProduct is null && sapProductVersion is null && operatingSystem is null && configurationData is null && performanceData is null && provisioningState is null && errors is null ? default : new ServerInstanceProperties(
-                    serverName,
-                    sapInstanceType,
-                    instanceSid,
-                    sapProduct,
-                    sapProductVersion,
-                    operatingSystem,
-                    configurationData,
-                    performanceData,
-                    provisioningState,
-                    errors,
-                    default),
-                default);
-        }
-
         /// <summary> Defines the SAP Instance properties. </summary>
         /// <param name="serverName"> This is the Virtual Machine Name of the SAP system. Add all the virtual machines attached to an SAP system which you wish to migrate to Azure. Keeping this not equal to ID as for single tier all InstanceTypes would be on same server, leading to multiple resources with same servername. </param>
         /// <param name="sapInstanceType"> Defines the type SAP instance on this server instance. </param>
@@ -225,6 +188,43 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static NativePerformanceDetail NativePerformanceDetail()
         {
             return new NativePerformanceDetail(default, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="serverName"> This is the Virtual Machine Name of the SAP system. Add all the virtual machines attached to an SAP system which you wish to migrate to Azure. Keeping this not equal to ID as for single tier all InstanceTypes would be on same server, leading to multiple resources with same servername. </param>
+        /// <param name="sapInstanceType"> Defines the type SAP instance on this server instance. </param>
+        /// <param name="instanceSid"> This is the Instance SID for ASCS/AP/DB instance.  An SAP system with HANA database for example could have a different SID for database Instance than that of ASCS instance. </param>
+        /// <param name="sapProduct"> This is the SAP Application Component; e.g. SAP S/4HANA 2022, SAP ERP ENHANCE PACKAGE. </param>
+        /// <param name="sapProductVersion"> Provide the product version of the SAP product. </param>
+        /// <param name="operatingSystem"> This is Operating System on which the host server is running. </param>
+        /// <param name="configurationData"> Configuration data for this server instance. </param>
+        /// <param name="performanceData"> Configuration data for this server instance. </param>
+        /// <param name="provisioningState"> Defines the provisioning states. </param>
+        /// <param name="errors"> Defines the errors related to SAP Instance resource. </param>
+        /// <returns> A new <see cref="MigrationDiscoverySap.SapDiscoveryServerInstanceData"/> instance for mocking. </returns>
+        public static SapDiscoveryServerInstanceData SapDiscoveryServerInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string serverName = default, SapInstanceType? sapInstanceType = default, string instanceSid = default, string sapProduct = default, string sapProductVersion = default, SapDiscoveryOperatingSystem? operatingSystem = default, ConfigurationDetail configurationData = default, PerformanceDetail performanceData = default, SapDiscoveryProvisioningState? provisioningState = default, SapMigrateError errors = default)
+        {
+            return new SapDiscoveryServerInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serverName is null && sapInstanceType is null && instanceSid is null && sapProduct is null && sapProductVersion is null && operatingSystem is null && configurationData is null && performanceData is null && provisioningState is null && errors is null ? default : new ServerInstanceProperties(
+                    serverName,
+                    sapInstanceType,
+                    instanceSid,
+                    sapProduct,
+                    sapProductVersion,
+                    operatingSystem,
+                    configurationData,
+                    performanceData,
+                    provisioningState,
+                    errors,
+                    default),
+                default);
         }
 
         /// <summary> Defines the request body for updating Server Instances resource. </summary>

@@ -18,36 +18,6 @@ namespace Azure.ResourceManager.Maps.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMapsModelFactory
     {
-        /// <summary> An Azure resource which represents access to a suite of Maps REST APIs. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The map account properties. </param>
-        /// <param name="sku"> The SKU of this account. </param>
-        /// <param name="kind"> Get or Set Kind property. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Maps.MapsAccountData"/> instance for mocking. </returns>
-        public static MapsAccountData MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsAccountProperties properties, MapsSku sku, MapsAccountKind? kind, ManagedServiceIdentity identity)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MapsAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                sku,
-                kind,
-                identity,
-                default);
-        }
-
         /// <param name="uniqueId"> A unique identifier for the Maps Account. </param>
         /// <param name="disableLocalAuth"> Allows toggle functionality on Azure Policy to disable Azure Maps local authentication support. This will disable Shared Keys and Shared Access Signature Token authentication from any usage. </param>
         /// <param name="provisioningState"> The provisioning state of the Maps account resource, Account updates can only be performed on terminal states. Terminal states: `Succeeded` and `Failed`. </param>
@@ -163,6 +133,36 @@ namespace Azure.ResourceManager.Maps.Models
             return new MapsPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> An Azure resource which represents access to a suite of Maps REST APIs. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The map account properties. </param>
+        /// <param name="sku"> The SKU of this account. </param>
+        /// <param name="kind"> Get or Set Kind property. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Maps.MapsAccountData"/> instance for mocking. </returns>
+        public static MapsAccountData MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsAccountProperties properties, MapsSku sku, MapsAccountKind? kind, ManagedServiceIdentity identity)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MapsAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                sku,
+                kind,
+                identity,
+                default);
+        }
+
         /// <summary> The SKU of the Maps Account. </summary>
         /// <param name="name"> The name of the SKU, in standard format (such as G2). </param>
         /// <param name="tier"> Gets the sku tier. This is based on the SKU name. </param>
@@ -258,6 +258,17 @@ namespace Azure.ResourceManager.Maps.Models
             return new MapsKeySpecification(keyType, default);
         }
 
+        /// <summary> Creator resource properties. </summary>
+        /// <param name="provisioningState"> The state of the resource provisioning, terminal states: Succeeded, Failed, Canceled. </param>
+        /// <param name="storageUnits"> The storage units to be allocated. Integer values from 1 to 100, inclusive. </param>
+        /// <param name="totalStorageUnitSizeInBytes"> The total allocated storage unit size in bytes for the creator resource. </param>
+        /// <param name="consumedStorageUnitSizeInBytes"> The consumed storage unit size in bytes for the creator resource. </param>
+        /// <returns> A new <see cref="Models.MapsCreatorProperties"/> instance for mocking. </returns>
+        public static MapsCreatorProperties MapsCreatorProperties(string provisioningState, int storageUnits, int? totalStorageUnitSizeInBytes, int? consumedStorageUnitSizeInBytes = default)
+        {
+            return new MapsCreatorProperties(provisioningState, storageUnits, totalStorageUnitSizeInBytes, consumedStorageUnitSizeInBytes, default);
+        }
+
         /// <summary> An Azure resource which represents Maps Creator product and provides ability to manage private location data. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -280,17 +291,6 @@ namespace Azure.ResourceManager.Maps.Models
                 location,
                 properties,
                 default);
-        }
-
-        /// <summary> Creator resource properties. </summary>
-        /// <param name="provisioningState"> The state of the resource provisioning, terminal states: Succeeded, Failed, Canceled. </param>
-        /// <param name="storageUnits"> The storage units to be allocated. Integer values from 1 to 100, inclusive. </param>
-        /// <param name="totalStorageUnitSizeInBytes"> The total allocated storage unit size in bytes for the creator resource. </param>
-        /// <param name="consumedStorageUnitSizeInBytes"> The consumed storage unit size in bytes for the creator resource. </param>
-        /// <returns> A new <see cref="Models.MapsCreatorProperties"/> instance for mocking. </returns>
-        public static MapsCreatorProperties MapsCreatorProperties(string provisioningState, int storageUnits, int? totalStorageUnitSizeInBytes, int? consumedStorageUnitSizeInBytes = default)
-        {
-            return new MapsCreatorProperties(provisioningState, storageUnits, totalStorageUnitSizeInBytes, consumedStorageUnitSizeInBytes, default);
         }
 
         /// <param name="tags"> Gets or sets a list of key value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. </param>

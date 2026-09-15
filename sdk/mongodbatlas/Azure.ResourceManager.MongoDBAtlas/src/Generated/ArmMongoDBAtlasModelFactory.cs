@@ -18,32 +18,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
     public static partial class ArmMongoDBAtlasModelFactory
     {
 
-        /// <summary> The resource model definition for an Azure Organization. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasOrganizationData"/> instance for mocking. </returns>
-        public static MongoDBAtlasOrganizationData MongoDBAtlasOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MongoDBAtlasOrganizationProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MongoDBAtlasOrganizationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
-        }
-
         /// <summary> Properties specific to Organization. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
@@ -115,6 +89,32 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             return new MongoDBAtlasPartnerProperties(organizationId, redirectUri, organizationName, default);
         }
 
+        /// <summary> The resource model definition for an Azure Organization. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasOrganizationData"/> instance for mocking. </returns>
+        public static MongoDBAtlasOrganizationData MongoDBAtlasOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MongoDBAtlasOrganizationProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MongoDBAtlasOrganizationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
         /// <summary> The type used for update operations of the OrganizationResource. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -136,24 +136,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             return new MongoDBAtlasOrganizationUpdateProperties(user, partnerProperties, default);
         }
 
-        /// <summary> The MongoDB Atlas Project resource type. A project is a logical grouping of clusters within an organization. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasProjectData"/> instance for mocking. </returns>
-        public static MongoDBAtlasProjectData MongoDBAtlasProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoDBAtlasProjectProperties properties = default)
-        {
-            return new MongoDBAtlasProjectData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties specific to a MongoDB Atlas Project. </summary>
         /// <param name="projectId"> Atlas project id. </param>
         /// <param name="projectName"> Atlas project name. </param>
@@ -169,6 +151,24 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 organizationId,
                 clusterCount,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> The MongoDB Atlas Project resource type. A project is a logical grouping of clusters within an organization. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasProjectData"/> instance for mocking. </returns>
+        public static MongoDBAtlasProjectData MongoDBAtlasProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoDBAtlasProjectProperties properties = default)
+        {
+            return new MongoDBAtlasProjectData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
@@ -216,24 +216,6 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             return new MongoDBAtlasTierRegions(tier, (regions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The MongoDB Atlas Cluster resource type. A cluster is a managed database deployment within a project. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasClusterData"/> instance for mocking. </returns>
-        public static MongoDBAtlasClusterData MongoDBAtlasClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoDBAtlasClusterProperties properties = default)
-        {
-            return new MongoDBAtlasClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties specific to a MongoDB Atlas Cluster. </summary>
         /// <param name="clusterName"> Name of the MongoDB Atlas Cluster. </param>
         /// <param name="clusterTier"> Cluster tier (FREE, FLEX, M10, M30). </param>
@@ -253,6 +235,24 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                 isBackupsEnabled,
                 state,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> The MongoDB Atlas Cluster resource type. A cluster is a managed database deployment within a project. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MongoDBAtlas.MongoDBAtlasClusterData"/> instance for mocking. </returns>
+        public static MongoDBAtlasClusterData MongoDBAtlasClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoDBAtlasClusterProperties properties = default)
+        {
+            return new MongoDBAtlasClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
     }
