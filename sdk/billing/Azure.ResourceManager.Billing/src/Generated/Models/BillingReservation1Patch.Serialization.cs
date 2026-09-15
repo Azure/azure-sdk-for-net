@@ -15,61 +15,61 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The request for reservation patch. </summary>
-    public partial class BillingReservationPatch : IJsonModel<BillingReservationPatch>
+    public partial class BillingReservation1Patch : IJsonModel<BillingReservation1Patch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BillingReservationPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual BillingReservation1Patch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingReservation1Patch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeBillingReservationPatch(document.RootElement, options);
+                        return DeserializeBillingReservation1Patch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingReservationPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingReservation1Patch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingReservation1Patch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(BillingReservationPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingReservation1Patch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BillingReservationPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BillingReservation1Patch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BillingReservationPatch IPersistableModel<BillingReservationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BillingReservation1Patch IPersistableModel<BillingReservation1Patch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BillingReservationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BillingReservation1Patch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="billingReservationPatch"> The <see cref="BillingReservationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BillingReservationPatch billingReservationPatch)
+        /// <param name="billingReservation1Patch"> The <see cref="BillingReservation1Patch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BillingReservation1Patch billingReservation1Patch)
         {
-            if (billingReservationPatch == null)
+            if (billingReservation1Patch == null)
             {
                 return null;
             }
-            return RequestContent.Create(billingReservationPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(billingReservation1Patch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<BillingReservationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BillingReservation1Patch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingReservation1Patch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingReservationPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingReservation1Patch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -130,24 +130,24 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BillingReservationPatch IJsonModel<BillingReservationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BillingReservation1Patch IJsonModel<BillingReservation1Patch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BillingReservationPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual BillingReservation1Patch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BillingReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingReservation1Patch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingReservationPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingReservation1Patch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBillingReservationPatch(document.RootElement, options);
+            return DeserializeBillingReservation1Patch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BillingReservationPatch DeserializeBillingReservationPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static BillingReservation1Patch DeserializeBillingReservation1Patch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BillingReservationPatch(properties, sku, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new BillingReservation1Patch(properties, sku, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

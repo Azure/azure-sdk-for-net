@@ -238,21 +238,21 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingReservationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="BillingReservation1Resource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingReservationResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingReservation1Resource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BillingReservationResource"/> object. </returns>
-        public static BillingReservationResource GetBillingReservationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingReservation1Resource"/> object. </returns>
+        public static BillingReservation1Resource GetBillingReservation1Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableBillingArmClient(client).GetBillingReservationResource(id);
+            return GetMockableBillingArmClient(client).GetBillingReservation1Resource(id);
         }
 
         /// <summary>

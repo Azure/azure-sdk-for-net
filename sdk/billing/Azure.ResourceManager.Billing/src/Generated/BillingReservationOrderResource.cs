@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -187,11 +188,11 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        /// <summary> Gets a collection of BillingReservations in the <see cref="BillingReservationOrderResource"/>. </summary>
-        /// <returns> An object representing collection of BillingReservations and their operations over a BillingReservationResource. </returns>
-        public virtual BillingReservationCollection GetBillingReservations()
+        /// <summary> Gets a collection of BillingReservation1s in the <see cref="BillingReservationOrderResource"/>. </summary>
+        /// <returns> An object representing collection of BillingReservation1s and their operations over a BillingReservation1Resource. </returns>
+        public virtual BillingReservation1Collection GetBillingReservation1s()
         {
-            return GetCachedClient(client => new BillingReservationCollection(client, Id));
+            return GetCachedClient(client => new BillingReservation1Collection(client, Id));
         }
 
         /// <summary> Get specific Reservation details in the billing account. </summary>
@@ -201,11 +202,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BillingReservationResource>> GetBillingReservationAsync(string reservationId, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingReservation1Data>> GetBillingReservation1Async(string reservationId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
-            return await GetBillingReservations().GetAsync(reservationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetBillingReservation1s().GetAsync(reservationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get specific Reservation details in the billing account. </summary>
@@ -215,11 +216,11 @@ namespace Azure.ResourceManager.Billing
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BillingReservationResource> GetBillingReservation(string reservationId, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<BillingReservation1Data> GetBillingReservation1(string reservationId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
-            return GetBillingReservations().Get(reservationId, expand, cancellationToken);
+            return GetBillingReservation1s().Get(reservationId, expand, cancellationToken);
         }
     }
 }

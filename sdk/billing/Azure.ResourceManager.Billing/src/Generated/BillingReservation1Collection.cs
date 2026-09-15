@@ -15,32 +15,33 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingReservationResource"/> and their operations.
-    /// Each <see cref="BillingReservationResource"/> in the collection will belong to the same instance of <see cref="BillingReservationOrderResource"/>.
-    /// To get a <see cref="BillingReservationCollection"/> instance call the GetBillingReservations method from an instance of <see cref="BillingReservationOrderResource"/>.
+    /// A class representing a collection of <see cref="BillingReservation1Resource"/> and their operations.
+    /// Each <see cref="BillingReservation1Resource"/> in the collection will belong to the same instance of <see cref="BillingReservationOrderResource"/>.
+    /// To get a <see cref="BillingReservation1Collection"/> instance call the GetBillingReservation1s method from an instance of <see cref="BillingReservationOrderResource"/>.
     /// </summary>
-    public partial class BillingReservationCollection : ArmCollection, IEnumerable<BillingReservationResource>, IAsyncEnumerable<BillingReservationResource>
+    public partial class BillingReservation1Collection : ArmCollection, IEnumerable<BillingReservation1Resource>, IAsyncEnumerable<BillingReservation1Resource>
     {
         private readonly ClientDiagnostics _reservationsClientDiagnostics;
         private readonly Reservations _reservationsRestClient;
 
-        /// <summary> Initializes a new instance of BillingReservationCollection for mocking. </summary>
-        protected BillingReservationCollection()
+        /// <summary> Initializes a new instance of BillingReservation1Collection for mocking. </summary>
+        protected BillingReservation1Collection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingReservationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingReservation1Collection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BillingReservationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BillingReservation1Collection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(BillingReservationResource.ResourceType, out string billingReservationApiVersion);
-            _reservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingReservationResource.ResourceType.Namespace, Diagnostics);
-            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingReservationApiVersion ?? "2024-04-01");
+            TryGetApiVersion(BillingReservation1Resource.ResourceType, out string billingReservation1ApiVersion);
+            _reservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingReservation1Resource.ResourceType.Namespace, Diagnostics);
+            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingReservation1ApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -76,11 +77,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BillingReservationResource>> GetAsync(string reservationId, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingReservation1Data>> GetAsync(string reservationId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationCollection.Get");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Collection.Get");
             scope.Start();
             try
             {
@@ -90,12 +91,12 @@ namespace Azure.ResourceManager.Billing
                 };
                 HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Name, Id.Name, reservationId, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
+                Response<BillingReservation1Data> response = Response.FromValue(BillingReservation1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -126,11 +127,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BillingReservationResource> Get(string reservationId, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<BillingReservation1Data> Get(string reservationId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationCollection.Get");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Collection.Get");
             scope.Start();
             try
             {
@@ -140,12 +141,12 @@ namespace Azure.ResourceManager.Billing
                 };
                 HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Name, Id.Name, reservationId, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
+                Response<BillingReservation1Data> response = Response.FromValue(BillingReservation1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -172,14 +173,14 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingReservationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingReservation1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingReservation1Resource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByReservationOrderAsyncCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservationCollection.GetAll"), data => new BillingReservationResource(Client, data));
+            return new AsyncPageableWrapper<BillingReservationData, BillingReservation1Resource>(new ReservationsGetByReservationOrderAsyncCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservation1Collection.GetAll"), data => new BillingReservation1Resource(Client, data));
         }
 
         /// <summary>
@@ -200,14 +201,14 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingReservationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingReservation1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingReservation1Resource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByReservationOrderCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservationCollection.GetAll"), data => new BillingReservationResource(Client, data));
+            return new PageableWrapper<BillingReservationData, BillingReservation1Resource>(new ReservationsGetByReservationOrderCollectionResultOfT(_reservationsRestClient, Id.Parent.Name, Id.Name, context, "BillingReservation1Collection.GetAll"), data => new BillingReservation1Resource(Client, data));
         }
 
         /// <summary>
@@ -236,7 +237,7 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationCollection.Exists");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Collection.Exists");
             scope.Start();
             try
             {
@@ -247,14 +248,14 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Name, Id.Name, reservationId, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<BillingReservationData> response = default;
+                Response<BillingReservation1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BillingReservationData.FromResponse(result), result);
+                        response = Response.FromValue(BillingReservation1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BillingReservationData)null, result);
+                        response = Response.FromValue((BillingReservation1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -294,7 +295,7 @@ namespace Azure.ResourceManager.Billing
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationCollection.Exists");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Collection.Exists");
             scope.Start();
             try
             {
@@ -305,14 +306,14 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Name, Id.Name, reservationId, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<BillingReservationData> response = default;
+                Response<BillingReservation1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BillingReservationData.FromResponse(result), result);
+                        response = Response.FromValue(BillingReservation1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BillingReservationData)null, result);
+                        response = Response.FromValue((BillingReservation1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -348,11 +349,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<BillingReservationResource>> GetIfExistsAsync(string reservationId, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<BillingReservation1Resource>> GetIfExistsAsync(string reservationId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationCollection.GetIfExists");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Collection.GetIfExists");
             scope.Start();
             try
             {
@@ -363,23 +364,23 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Name, Id.Name, reservationId, expand, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<BillingReservationData> response = default;
+                Response<BillingReservation1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BillingReservationData.FromResponse(result), result);
+                        response = Response.FromValue(BillingReservation1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BillingReservationData)null, result);
+                        response = Response.FromValue((BillingReservation1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<BillingReservationResource>(response.GetRawResponse());
+                    return new NoValueResponse<BillingReservation1Resource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingReservation1Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -410,11 +411,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<BillingReservationResource> GetIfExists(string reservationId, string expand = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<BillingReservation1Resource> GetIfExists(string reservationId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationCollection.GetIfExists");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Collection.GetIfExists");
             scope.Start();
             try
             {
@@ -425,23 +426,23 @@ namespace Azure.ResourceManager.Billing
                 HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Name, Id.Name, reservationId, expand, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<BillingReservationData> response = default;
+                Response<BillingReservation1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BillingReservationData.FromResponse(result), result);
+                        response = Response.FromValue(BillingReservation1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BillingReservationData)null, result);
+                        response = Response.FromValue((BillingReservation1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<BillingReservationResource>(response.GetRawResponse());
+                    return new NoValueResponse<BillingReservation1Resource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BillingReservation1Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -450,7 +451,7 @@ namespace Azure.ResourceManager.Billing
             }
         }
 
-        IEnumerator<BillingReservationResource> IEnumerable<BillingReservationResource>.GetEnumerator()
+        IEnumerator<BillingReservation1Resource> IEnumerable<BillingReservation1Resource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -461,7 +462,7 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<BillingReservationResource> IAsyncEnumerable<BillingReservationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<BillingReservation1Resource> IAsyncEnumerable<BillingReservation1Resource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Billing
 {
     /// <summary></summary>
-    public partial class BillingReservationResource : IJsonModel<BillingReservationData>
+    public partial class BillingReservation1Resource : IJsonModel<BillingReservationData>
     {
         private static IJsonModel<BillingReservationData> s_dataDeserializationInstance;
 

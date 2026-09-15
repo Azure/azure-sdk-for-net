@@ -19,24 +19,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     public static partial class ArmResilienceManagementModelFactory
     {
 
-        /// <summary> Goal assignment a AzureResilienceProviderHub resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.GoalAssignmentData"/> instance for mocking. </returns>
-        public static GoalAssignmentData GoalAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GoalAssignmentProperties properties = default)
-        {
-            return new GoalAssignmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Definition of goal assignment property. </summary>
         /// <param name="goalTemplateId"> Arm id of the goal template. </param>
         /// <param name="goalAssignmentType"> The type of goal assignment. </param>
@@ -64,6 +46,24 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static ServiceLevelTarget ServiceLevelTarget(ResourceIdentifier serviceLevelIndicatorResourceId = default, ResourceIdentifier serviceLevelObjectiveResourceId = default)
         {
             return new ServiceLevelTarget(serviceLevelIndicatorResourceId, serviceLevelObjectiveResourceId, default);
+        }
+
+        /// <summary> Goal assignment a AzureResilienceProviderHub resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ResilienceManagement.GoalAssignmentData"/> instance for mocking. </returns>
+        public static GoalAssignmentData GoalAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GoalAssignmentProperties properties = default)
+        {
+            return new GoalAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Request model for update goal resource. </summary>
@@ -154,24 +154,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new RecommendCapacityContent((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
-        /// <summary> Goal template a AzureResilienceProviderHub resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.GoalTemplateData"/> instance for mocking. </returns>
-        public static GoalTemplateData GoalTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GoalTemplateProperties properties = default)
-        {
-            return new GoalTemplateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Definition of goal template property. </summary>
         /// <param name="requireHighAvailability"> Option specified by customer under high availability section of goal template. </param>
         /// <param name="requireDisasterRecovery"> Option specified by customer under disaster recovery section of goal template. </param>
@@ -194,23 +176,21 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
-        /// <summary> Represents a recovery orchestration plan resource in the Azure Resilience Management provider namespace. </summary>
+        /// <summary> Goal template a AzureResilienceProviderHub resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.RecoveryPlanData"/> instance for mocking. </returns>
-        public static RecoveryPlanData RecoveryPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecoveryPlanProperties properties = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="ResilienceManagement.GoalTemplateData"/> instance for mocking. </returns>
+        public static GoalTemplateData GoalTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GoalTemplateProperties properties = default)
         {
-            return new RecoveryPlanData(
+            return new GoalTemplateData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
-                identity,
                 default);
         }
 
@@ -363,6 +343,26 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         public static RecoveryPlanOperationStatus RecoveryPlanOperationStatus(DateTimeOffset? lastExecutedOn = default, RecoveryOperationStatus? operationStatus = default, ResponseError errorDetails = default)
         {
             return new RecoveryPlanOperationStatus(lastExecutedOn, operationStatus, errorDetails, default);
+        }
+
+        /// <summary> Represents a recovery orchestration plan resource in the Azure Resilience Management provider namespace. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="ResilienceManagement.RecoveryPlanData"/> instance for mocking. </returns>
+        public static RecoveryPlanData RecoveryPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecoveryPlanProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            return new RecoveryPlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                identity,
+                default);
         }
 
         /// <param name="bodyError"> The error object. </param>
@@ -629,24 +629,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new TestFailoverCleanupContent(comments, default);
         }
 
-        /// <summary> Represents a recovery job resource in the Azure Resilience Management provider namespace. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.RecoveryJobData"/> instance for mocking. </returns>
-        public static RecoveryJobData RecoveryJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecoveryJobProperties properties = default)
-        {
-            return new RecoveryJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <param name="status"> The current status of the job execution. </param>
         /// <param name="startsOn"> The start time of the job execution. </param>
         /// <param name="endsOn"> The end time of the job execution. </param>
@@ -872,30 +854,30 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new SupportedVerbsForStage(drillRunStage, (supportedVerbs ?? new ChangeTrackingList<DrillRunOperationVerbs>()).ToList(), default);
         }
 
-        /// <summary> Request body for providing user input for a recovery action. </summary>
-        /// <param name="description"> User-provided input for the action. </param>
-        /// <returns> A new <see cref="Models.RecoveryActionContent"/> instance for mocking. </returns>
-        public static RecoveryActionContent RecoveryActionContent(string description = default)
-        {
-            return new RecoveryActionContent(description, default);
-        }
-
-        /// <summary> Represents a recovery orchestration job resource in the Azure Resilience Management provider namespace. </summary>
+        /// <summary> Represents a recovery job resource in the Azure Resilience Management provider namespace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.RecoveryJobTargetData"/> instance for mocking. </returns>
-        public static RecoveryJobTargetData RecoveryJobTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecoveryJobResourceProperties properties = default)
+        /// <returns> A new <see cref="ResilienceManagement.RecoveryJobData"/> instance for mocking. </returns>
+        public static RecoveryJobData RecoveryJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecoveryJobProperties properties = default)
         {
-            return new RecoveryJobTargetData(
+            return new RecoveryJobData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
                 default);
+        }
+
+        /// <summary> Request body for providing user input for a recovery action. </summary>
+        /// <param name="description"> User-provided input for the action. </param>
+        /// <returns> A new <see cref="Models.RecoveryActionContent"/> instance for mocking. </returns>
+        public static RecoveryActionContent RecoveryActionContent(string description = default)
+        {
+            return new RecoveryActionContent(description, default);
         }
 
         /// <summary> Properties of a recovery orchestration job resource associated with a recovery orchestration plan. </summary>
@@ -1042,23 +1024,21 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 provisioningState);
         }
 
-        /// <summary> Drill resource. </summary>
+        /// <summary> Represents a recovery orchestration job resource in the Azure Resilience Management provider namespace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.ResilienceManagementDrillData"/> instance for mocking. </returns>
-        public static ResilienceManagementDrillData ResilienceManagementDrillData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DrillProperties properties = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="ResilienceManagement.RecoveryJobTargetData"/> instance for mocking. </returns>
+        public static RecoveryJobTargetData RecoveryJobTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RecoveryJobResourceProperties properties = default)
         {
-            return new ResilienceManagementDrillData(
+            return new RecoveryJobTargetData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
-                identity,
                 default);
         }
 
@@ -1337,6 +1317,26 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
+        /// <summary> Drill resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="ResilienceManagement.ResilienceManagementDrillData"/> instance for mocking. </returns>
+        public static ResilienceManagementDrillData ResilienceManagementDrillData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DrillProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            return new ResilienceManagementDrillData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                identity,
+                default);
+        }
+
         /// <summary> The type used for update operations of the Drill. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -1453,24 +1453,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new IncludeOrUpdateContent(id, faultProperties, default);
         }
 
-        /// <summary> Drill Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.DrillTargetData"/> instance for mocking. </returns>
-        public static DrillTargetData DrillTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DrillResourceProperties properties = default)
-        {
-            return new DrillTargetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties of the Resiliency Drill Resource. </summary>
         /// <param name="resourceId"> ARM Id of the underlying resource. </param>
         /// <param name="resourceType"> Type of the Drill resource. </param>
@@ -1539,6 +1521,24 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new DrillResourceAttentionReason(faultRbacOnTargetResource, runbookFaultRbacOnTargets, monitoringRbacOnTargets, (resourceState ?? new ChangeTrackingList<DrillResourceState>()).ToList(), default);
         }
 
+        /// <summary> Drill Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ResilienceManagement.DrillTargetData"/> instance for mocking. </returns>
+        public static DrillTargetData DrillTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DrillResourceProperties properties = default)
+        {
+            return new DrillTargetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> DrillRun resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1602,24 +1602,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
-        /// <summary> A unified resilience item represents a computed and aggregated resilience information of Azure Applications. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ResilienceManagement.UnifiedResilienceItemData"/> instance for mocking. </returns>
-        public static UnifiedResilienceItemData UnifiedResilienceItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, UnifiedResilienceItemProperties properties = default)
-        {
-            return new UnifiedResilienceItemData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="goals"> Computed and copied data of resilience goals. </param>
         /// <param name="recommendationsHighAvailability"> The high availability section of resilience recommendation. </param>
@@ -1669,6 +1651,34 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new RecommendationsHighAvailabilityInfo(enabledResourceCount, notEnabledResourceCount, notEvaluatedResourceCount, evaluationOn, default);
         }
 
+        /// <summary> A unified resilience item represents a computed and aggregated resilience information of Azure Applications. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ResilienceManagement.UnifiedResilienceItemData"/> instance for mocking. </returns>
+        public static UnifiedResilienceItemData UnifiedResilienceItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, UnifiedResilienceItemProperties properties = default)
+        {
+            return new UnifiedResilienceItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Definition of usage plan properties. </summary>
+        /// <param name="planType"> The type of the usage plan. </param>
+        /// <param name="provisioningState"> Provisioning state of the usage plan. </param>
+        /// <param name="errorDetails"> Details of any errors encountered during Usage Plan create or update. </param>
+        /// <returns> A new <see cref="Models.UsagePlanProperties"/> instance for mocking. </returns>
+        public static UsagePlanProperties UsagePlanProperties(UsagePlanType? planType = default, ResilienceManagementProvisioningState? provisioningState = default, ResponseError errorDetails = default)
+        {
+            return new UsagePlanProperties(planType, provisioningState, errorDetails, default);
+        }
+
         /// <summary> A usage plan resource for Resiliency feature billing. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1693,16 +1703,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 default);
         }
 
-        /// <summary> Definition of usage plan properties. </summary>
-        /// <param name="planType"> The type of the usage plan. </param>
-        /// <param name="provisioningState"> Provisioning state of the usage plan. </param>
-        /// <param name="errorDetails"> Details of any errors encountered during Usage Plan create or update. </param>
-        /// <returns> A new <see cref="Models.UsagePlanProperties"/> instance for mocking. </returns>
-        public static UsagePlanProperties UsagePlanProperties(UsagePlanType? planType = default, ResilienceManagementProvisioningState? provisioningState = default, ResponseError errorDetails = default)
-        {
-            return new UsagePlanProperties(planType, provisioningState, errorDetails, default);
-        }
-
         /// <summary> The type used for updating tags in UsagePlan resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.UsagePlanPatch"/> instance for mocking. </returns>
@@ -1711,6 +1711,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new UsagePlanPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> Definition of enrollment properties. </summary>
+        /// <param name="serviceGroupId"> ARM resource identifier of the service group associated with this usage plan. </param>
+        /// <param name="provisioningState"> Provisioning state of the enrollment. </param>
+        /// <param name="errorDetails"> Details of any errors encountered during Enrollment create or update. </param>
+        /// <returns> A new <see cref="Models.EnrollmentProperties"/> instance for mocking. </returns>
+        public static EnrollmentProperties EnrollmentProperties(ResourceIdentifier serviceGroupId = default, ResilienceManagementProvisioningState? provisioningState = default, ResponseError errorDetails = default)
+        {
+            return new EnrollmentProperties(serviceGroupId, provisioningState, errorDetails, default);
         }
 
         /// <summary> An enrollment that links a usage plan to a service group. </summary>
@@ -1729,16 +1739,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> Definition of enrollment properties. </summary>
-        /// <param name="serviceGroupId"> ARM resource identifier of the service group associated with this usage plan. </param>
-        /// <param name="provisioningState"> Provisioning state of the enrollment. </param>
-        /// <param name="errorDetails"> Details of any errors encountered during Enrollment create or update. </param>
-        /// <returns> A new <see cref="Models.EnrollmentProperties"/> instance for mocking. </returns>
-        public static EnrollmentProperties EnrollmentProperties(ResourceIdentifier serviceGroupId = default, ResilienceManagementProvisioningState? provisioningState = default, ResponseError errorDetails = default)
-        {
-            return new EnrollmentProperties(serviceGroupId, provisioningState, errorDetails, default);
         }
     }
 }

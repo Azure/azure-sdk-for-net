@@ -94,6 +94,265 @@ namespace Azure.ResourceManager.Avs.Models
             return new AddonArcProperties(default, provisioningState, default, vCenter);
         }
 
+        /// <summary> vCenter Single Sign On Identity Source. </summary>
+        /// <param name="name"> The name of the identity source. </param>
+        /// <param name="alias"> The domain's NetBIOS name. </param>
+        /// <param name="domain"> The domain's DNS name. </param>
+        /// <param name="baseUserDN"> The base distinguished name for users. </param>
+        /// <param name="baseGroupDN"> The base distinguished name for groups. </param>
+        /// <param name="primaryServer"> Primary server URL. </param>
+        /// <param name="secondaryServer"> Secondary server URL. </param>
+        /// <param name="ssl"> Protect LDAP communication using SSL certificate (LDAPS). </param>
+        /// <param name="username">
+        /// The ID of an Active Directory user with a minimum of read-only access to Base
+        /// DN for users and group
+        /// </param>
+        /// <param name="password">
+        /// The password of the Active Directory user with a minimum of read-only access to
+        /// Base DN for users and groups.
+        /// </param>
+        /// <returns> A new <see cref="Models.SingleSignOnIdentitySource"/> instance for mocking. </returns>
+        public static SingleSignOnIdentitySource SingleSignOnIdentitySource(string name = default, string @alias = default, string domain = default, string baseUserDN = default, string baseGroupDN = default, Uri primaryServer = default, Uri secondaryServer = default, SslCertificateStatus? ssl = default, string username = default, string password = default)
+        {
+            return new SingleSignOnIdentitySource(
+                name,
+                @alias,
+                domain,
+                baseUserDN,
+                baseGroupDN,
+                primaryServer,
+                secondaryServer,
+                ssl,
+                username,
+                password,
+                default);
+        }
+
+        /// <summary> The properties describing private cloud availability zone distribution. </summary>
+        /// <param name="strategy"> The availability strategy for the private cloud. </param>
+        /// <param name="zone"> The primary availability zone for the private cloud. </param>
+        /// <param name="secondaryZone"> The secondary availability zone for the private cloud. </param>
+        /// <returns> A new <see cref="Models.PrivateCloudAvailabilityProperties"/> instance for mocking. </returns>
+        public static PrivateCloudAvailabilityProperties PrivateCloudAvailabilityProperties(AvailabilityStrategy? strategy = default, int? zone = default, int? secondaryZone = default)
+        {
+            return new PrivateCloudAvailabilityProperties(strategy, zone, secondaryZone, default);
+        }
+
+        /// <summary> The properties of customer managed encryption key. </summary>
+        /// <param name="status"> Status of customer managed encryption key. </param>
+        /// <param name="keyVaultProperties"> The key vault where the encryption key is stored. </param>
+        /// <returns> A new <see cref="Models.CustomerManagedEncryption"/> instance for mocking. </returns>
+        public static CustomerManagedEncryption CustomerManagedEncryption(AvsEncryptionState? status = default, AvsEncryptionKeyVaultProperties keyVaultProperties = default)
+        {
+            return new CustomerManagedEncryption(status, keyVaultProperties, default);
+        }
+
+        /// <summary> An Encryption Key. </summary>
+        /// <param name="keyName"> The name of the key. </param>
+        /// <param name="keyVersion"> The version of the key. </param>
+        /// <param name="autoDetectedKeyVersion"> The auto-detected version of the key if versionType is auto-detected. </param>
+        /// <param name="keyVaultUri"> The URL of the vault. </param>
+        /// <param name="keyState"> The state of key provided. </param>
+        /// <param name="versionType"> Property of the key if user provided or auto detected. </param>
+        /// <returns> A new <see cref="Models.AvsEncryptionKeyVaultProperties"/> instance for mocking. </returns>
+        public static AvsEncryptionKeyVaultProperties AvsEncryptionKeyVaultProperties(string keyName = default, string keyVersion = default, string autoDetectedKeyVersion = default, Uri keyVaultUri = default, AvsEncryptionKeyStatus? keyState = default, AvsEncryptionVersionType? versionType = default)
+        {
+            return new AvsEncryptionKeyVaultProperties(
+                keyName,
+                keyVersion,
+                autoDetectedKeyVersion,
+                keyVaultUri,
+                keyState,
+                versionType,
+                default);
+        }
+
+        /// <summary> An ExpressRoute Circuit. </summary>
+        /// <param name="primarySubnet"> CIDR of primary subnet. </param>
+        /// <param name="secondarySubnet"> CIDR of secondary subnet. </param>
+        /// <param name="expressRouteId"> Identifier of the ExpressRoute Circuit (Microsoft Colo only). </param>
+        /// <param name="expressRoutePrivatePeeringId"> ExpressRoute Circuit private peering identifier. </param>
+        /// <returns> A new <see cref="Models.ExpressRouteCircuit"/> instance for mocking. </returns>
+        public static ExpressRouteCircuit ExpressRouteCircuit(string primarySubnet = default, string secondarySubnet = default, ResourceIdentifier expressRouteId = default, ResourceIdentifier expressRoutePrivatePeeringId = default)
+        {
+            return new ExpressRouteCircuit(primarySubnet, secondarySubnet, expressRouteId, expressRoutePrivatePeeringId, default);
+        }
+
+        /// <summary> Endpoint addresses. </summary>
+        /// <param name="nsxtManager"> Endpoint FQDN for the NSX-T Data Center manager. </param>
+        /// <param name="vcsa"> Endpoint FQDN for Virtual Center Server Appliance. </param>
+        /// <param name="hcxCloudManager"> Endpoint FQDN for the HCX Cloud Manager. </param>
+        /// <param name="nsxtManagerIP"> Endpoint IP for the NSX-T Data Center manager. </param>
+        /// <param name="vcenterIP"> Endpoint IP for Virtual Center Server Appliance. </param>
+        /// <param name="hcxCloudManagerIP"> Endpoint IP for the HCX Cloud Manager. </param>
+        /// <returns> A new <see cref="Models.AvsPrivateCloudEndpoints"/> instance for mocking. </returns>
+        public static AvsPrivateCloudEndpoints AvsPrivateCloudEndpoints(string nsxtManager = default, string vcsa = default, string hcxCloudManager = default, string nsxtManagerIP = default, string vcenterIP = default, string hcxCloudManagerIP = default)
+        {
+            return new AvsPrivateCloudEndpoints(
+                nsxtManager,
+                vcsa,
+                hcxCloudManager,
+                nsxtManagerIP,
+                vcenterIP,
+                hcxCloudManagerIP,
+                default);
+        }
+
+        /// <summary>
+        /// A VMware Cloud Foundation license
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Vcf5License"/>.
+        /// </summary>
+        /// <param name="kind"> License kind. </param>
+        /// <param name="provisioningState"> The state of the license provisioning. </param>
+        /// <returns> A new <see cref="Models.VcfLicense"/> instance for mocking. </returns>
+        public static VcfLicense VcfLicense(string kind = default, AvsLicenseProvisioningState? provisioningState = default)
+        {
+            return new UnknownVcfLicense(default, provisioningState, default);
+        }
+
+        /// <summary> A VMware Cloud Foundation (VCF) 5.0 license. </summary>
+        /// <param name="provisioningState"> The state of the license provisioning. </param>
+        /// <param name="licenseKey"> License key. </param>
+        /// <param name="cores"> Number of cores included in the license. </param>
+        /// <param name="endOn"> UTC datetime when the license expires. </param>
+        /// <param name="broadcomSiteId"> The Broadcom site ID associated with the license. </param>
+        /// <param name="broadcomContractNumber"> The Broadcom contract number associated with the license. </param>
+        /// <param name="labels"> Additional labels passed through for license reporting. </param>
+        /// <returns> A new <see cref="Models.Vcf5License"/> instance for mocking. </returns>
+        public static Vcf5License Vcf5License(AvsLicenseProvisioningState? provisioningState = default, string licenseKey = default, int cores = default, DateTimeOffset endOn = default, string broadcomSiteId = default, string broadcomContractNumber = default, IEnumerable<AvsLicenseLabel> labels = default)
+        {
+            labels ??= new ChangeTrackingList<AvsLicenseLabel>();
+
+            return new Vcf5License(
+                default,
+                provisioningState,
+                default,
+                licenseKey,
+                cores,
+                endOn,
+                broadcomSiteId,
+                broadcomContractNumber,
+                (labels ?? new ChangeTrackingList<AvsLicenseLabel>()).ToList());
+        }
+
+        /// <summary> A key-value pair representing a label. </summary>
+        /// <param name="key"> The key of the label. </param>
+        /// <param name="value"> The value of the label. </param>
+        /// <returns> A new <see cref="Models.AvsLicenseLabel"/> instance for mocking. </returns>
+        public static AvsLicenseLabel AvsLicenseLabel(string key = default, string value = default)
+        {
+            return new AvsLicenseLabel(key, value, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="managementCluster"> The default cluster used for management. </param>
+        /// <param name="internet"> Connectivity to internet is enabled or disabled. </param>
+        /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
+        /// <param name="availability"> Properties describing how the cloud is distributed across availability zones. </param>
+        /// <param name="encryption"> Customer managed key encryption, can be enabled or disabled. </param>
+        /// <param name="extendedNetworkBlocks">
+        /// Array of additional networks noncontiguous with networkBlock. Networks must be
+        /// unique and non-overlapping across VNet in your subscription, on-premise, and
+        /// this privateCloud networkBlock attribute. Make sure the CIDR format conforms to
+        /// (A.B.C.D/X).
+        /// </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="circuit"> An ExpressRoute Circuit. </param>
+        /// <param name="endpoints"> The endpoints. </param>
+        /// <param name="networkBlock">
+        /// The block of addresses should be unique across VNet in your subscription as
+        /// well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
+        /// A,B,C,D are between 0 and 255, and X is between 0 and 22
+        /// </param>
+        /// <param name="managementNetwork"> Network used to access vCenter Server and NSX-T Manager. </param>
+        /// <param name="provisioningNetwork"> Used for virtual machine cold migration, cloning, and snapshot migration. </param>
+        /// <param name="vMotionNetwork"> Used for live migration of virtual machines. </param>
+        /// <param name="vCenterPassword"> Optionally, set the vCenter admin password when the private cloud is created. </param>
+        /// <param name="nsxtPassword"> Optionally, set the NSX-T Manager password when the private cloud is created. </param>
+        /// <param name="vCenterCertificateThumbprint"> Thumbprint of the vCenter Server SSL certificate. </param>
+        /// <param name="nsxtCertificateThumbprint"> Thumbprint of the NSX-T Manager SSL certificate. </param>
+        /// <param name="externalCloudLinks"> Array of cloud link IDs from other clouds that connect to this one. </param>
+        /// <param name="secondaryCircuit">
+        /// A secondary expressRoute circuit from a separate AZ. Only present in a
+        /// stretched private cloud
+        /// </param>
+        /// <param name="nsxPublicIPQuotaRaised">
+        /// Flag to indicate whether the private cloud has the quota for provisioned NSX
+        /// Public IP count raised from 64 to 1024
+        /// </param>
+        /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
+        /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
+        /// <param name="vcfLicense"> The private cloud license. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <returns> A new <see cref="Avs.AvsPrivateCloudData"/> instance for mocking. </returns>
+        public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AvsManagementCluster managementCluster = default, InternetConnectivityState? internet = default, IEnumerable<SingleSignOnIdentitySource> identitySources = default, PrivateCloudAvailabilityProperties availability = default, CustomerManagedEncryption encryption = default, IEnumerable<string> extendedNetworkBlocks = default, AvsPrivateCloudProvisioningState? provisioningState = default, ExpressRouteCircuit circuit = default, AvsPrivateCloudEndpoints endpoints = default, string networkBlock = default, string managementNetwork = default, string provisioningNetwork = default, string vMotionNetwork = default, string vCenterPassword = default, string nsxtPassword = default, string vCenterCertificateThumbprint = default, string nsxtCertificateThumbprint = default, IEnumerable<ResourceIdentifier> externalCloudLinks = default, ExpressRouteCircuit secondaryCircuit = default, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default, ResourceIdentifier virtualNetworkId = default, AvsDnsZoneType? dnsZoneType = default, VcfLicense vcfLicense = default, AvsSku sku = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new AvsPrivateCloudData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managementCluster is null && internet is null && identitySources is null && availability is null && encryption is null && extendedNetworkBlocks is null && provisioningState is null && circuit is null && endpoints is null && networkBlock is null && managementNetwork is null && provisioningNetwork is null && vMotionNetwork is null && vCenterPassword is null && nsxtPassword is null && vCenterCertificateThumbprint is null && nsxtCertificateThumbprint is null && externalCloudLinks is null && secondaryCircuit is null && nsxPublicIPQuotaRaised is null && virtualNetworkId is null && dnsZoneType is null && vcfLicense is null ? default : new PrivateCloudProperties(
+                    managementCluster,
+                    internet,
+                    (identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>()).ToList(),
+                    availability,
+                    encryption,
+                    (extendedNetworkBlocks ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    circuit,
+                    endpoints,
+                    networkBlock,
+                    managementNetwork,
+                    provisioningNetwork,
+                    vMotionNetwork,
+                    vCenterPassword,
+                    nsxtPassword,
+                    vCenterCertificateThumbprint,
+                    nsxtCertificateThumbprint,
+                    (externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    secondaryCircuit,
+                    nsxPublicIPQuotaRaised,
+                    virtualNetworkId,
+                    dnsZoneType,
+                    vcfLicense,
+                    default),
+                sku,
+                identity,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <summary> The resource model definition representing SKU. </summary>
+        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
+        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
+        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
+        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
+        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
+        /// <returns> A new <see cref="Models.AvsSku"/> instance for mocking. </returns>
+        public static AvsSku AvsSku(string name = default, AvsSkuTier? tier = default, string size = default, string family = default, int? capacity = default)
+        {
+            return new AvsSku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -130,24 +389,6 @@ namespace Azure.ResourceManager.Avs.Models
                 resourceType,
                 systemData,
                 provisioningState is null && status is null && linkedCloud is null ? default : new CloudLinkProperties(provisioningState, status, linkedCloud, default),
-                default);
-        }
-
-        /// <summary> The resource model definition representing SKU. </summary>
-        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
-        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
-        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
-        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
-        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <returns> A new <see cref="Models.AvsSku"/> instance for mocking. </returns>
-        public static AvsSku AvsSku(string name = default, AvsSkuTier? tier = default, string size = default, string family = default, int? capacity = default)
-        {
-            return new AvsSku(
-                name,
-                tier,
-                size,
-                family,
-                capacity,
                 default);
         }
 
@@ -455,15 +696,6 @@ namespace Azure.ResourceManager.Avs.Models
                 broadcomSiteId,
                 broadcomContractNumber,
                 (labels ?? new ChangeTrackingList<AvsLicenseLabel>()).ToList());
-        }
-
-        /// <summary> A key-value pair representing a label. </summary>
-        /// <param name="key"> The key of the label. </param>
-        /// <param name="value"> The value of the label. </param>
-        /// <returns> A new <see cref="Models.AvsLicenseLabel"/> instance for mocking. </returns>
-        public static AvsLicenseLabel AvsLicenseLabel(string key = default, string value = default)
-        {
-            return new AvsLicenseLabel(key, value, default);
         }
 
         /// <summary> Subscription trial availability. </summary>
@@ -862,238 +1094,6 @@ namespace Azure.ResourceManager.Avs.Models
                 default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="managementCluster"> The default cluster used for management. </param>
-        /// <param name="internet"> Connectivity to internet is enabled or disabled. </param>
-        /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
-        /// <param name="availability"> Properties describing how the cloud is distributed across availability zones. </param>
-        /// <param name="encryption"> Customer managed key encryption, can be enabled or disabled. </param>
-        /// <param name="extendedNetworkBlocks">
-        /// Array of additional networks noncontiguous with networkBlock. Networks must be
-        /// unique and non-overlapping across VNet in your subscription, on-premise, and
-        /// this privateCloud networkBlock attribute. Make sure the CIDR format conforms to
-        /// (A.B.C.D/X).
-        /// </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="circuit"> An ExpressRoute Circuit. </param>
-        /// <param name="endpoints"> The endpoints. </param>
-        /// <param name="networkBlock">
-        /// The block of addresses should be unique across VNet in your subscription as
-        /// well as on-premise. Make sure the CIDR format is conformed to (A.B.C.D/X) where
-        /// A,B,C,D are between 0 and 255, and X is between 0 and 22
-        /// </param>
-        /// <param name="managementNetwork"> Network used to access vCenter Server and NSX-T Manager. </param>
-        /// <param name="provisioningNetwork"> Used for virtual machine cold migration, cloning, and snapshot migration. </param>
-        /// <param name="vMotionNetwork"> Used for live migration of virtual machines. </param>
-        /// <param name="vCenterPassword"> Optionally, set the vCenter admin password when the private cloud is created. </param>
-        /// <param name="nsxtPassword"> Optionally, set the NSX-T Manager password when the private cloud is created. </param>
-        /// <param name="vCenterCertificateThumbprint"> Thumbprint of the vCenter Server SSL certificate. </param>
-        /// <param name="nsxtCertificateThumbprint"> Thumbprint of the NSX-T Manager SSL certificate. </param>
-        /// <param name="externalCloudLinks"> Array of cloud link IDs from other clouds that connect to this one. </param>
-        /// <param name="secondaryCircuit">
-        /// A secondary expressRoute circuit from a separate AZ. Only present in a
-        /// stretched private cloud
-        /// </param>
-        /// <param name="nsxPublicIPQuotaRaised">
-        /// Flag to indicate whether the private cloud has the quota for provisioned NSX
-        /// Public IP count raised from 64 to 1024
-        /// </param>
-        /// <param name="virtualNetworkId"> Azure resource ID of the virtual network. </param>
-        /// <param name="dnsZoneType"> The type of DNS zone to use. </param>
-        /// <param name="vcfLicense"> The private cloud license. </param>
-        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="Avs.AvsPrivateCloudData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudData AvsPrivateCloudData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AvsManagementCluster managementCluster = default, InternetConnectivityState? internet = default, IEnumerable<SingleSignOnIdentitySource> identitySources = default, PrivateCloudAvailabilityProperties availability = default, CustomerManagedEncryption encryption = default, IEnumerable<string> extendedNetworkBlocks = default, AvsPrivateCloudProvisioningState? provisioningState = default, ExpressRouteCircuit circuit = default, AvsPrivateCloudEndpoints endpoints = default, string networkBlock = default, string managementNetwork = default, string provisioningNetwork = default, string vMotionNetwork = default, string vCenterPassword = default, string nsxtPassword = default, string vCenterCertificateThumbprint = default, string nsxtCertificateThumbprint = default, IEnumerable<ResourceIdentifier> externalCloudLinks = default, ExpressRouteCircuit secondaryCircuit = default, NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default, ResourceIdentifier virtualNetworkId = default, AvsDnsZoneType? dnsZoneType = default, VcfLicense vcfLicense = default, AvsSku sku = default, ManagedServiceIdentity identity = default, IEnumerable<string> zones = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new AvsPrivateCloudData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                managementCluster is null && internet is null && identitySources is null && availability is null && encryption is null && extendedNetworkBlocks is null && provisioningState is null && circuit is null && endpoints is null && networkBlock is null && managementNetwork is null && provisioningNetwork is null && vMotionNetwork is null && vCenterPassword is null && nsxtPassword is null && vCenterCertificateThumbprint is null && nsxtCertificateThumbprint is null && externalCloudLinks is null && secondaryCircuit is null && nsxPublicIPQuotaRaised is null && virtualNetworkId is null && dnsZoneType is null && vcfLicense is null ? default : new PrivateCloudProperties(
-                    managementCluster,
-                    internet,
-                    (identitySources ?? new ChangeTrackingList<SingleSignOnIdentitySource>()).ToList(),
-                    availability,
-                    encryption,
-                    (extendedNetworkBlocks ?? new ChangeTrackingList<string>()).ToList(),
-                    provisioningState,
-                    circuit,
-                    endpoints,
-                    networkBlock,
-                    managementNetwork,
-                    provisioningNetwork,
-                    vMotionNetwork,
-                    vCenterPassword,
-                    nsxtPassword,
-                    vCenterCertificateThumbprint,
-                    nsxtCertificateThumbprint,
-                    (externalCloudLinks ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    secondaryCircuit,
-                    nsxPublicIPQuotaRaised,
-                    virtualNetworkId,
-                    dnsZoneType,
-                    vcfLicense,
-                    default),
-                sku,
-                identity,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
-        }
-
-        /// <summary> vCenter Single Sign On Identity Source. </summary>
-        /// <param name="name"> The name of the identity source. </param>
-        /// <param name="alias"> The domain's NetBIOS name. </param>
-        /// <param name="domain"> The domain's DNS name. </param>
-        /// <param name="baseUserDN"> The base distinguished name for users. </param>
-        /// <param name="baseGroupDN"> The base distinguished name for groups. </param>
-        /// <param name="primaryServer"> Primary server URL. </param>
-        /// <param name="secondaryServer"> Secondary server URL. </param>
-        /// <param name="ssl"> Protect LDAP communication using SSL certificate (LDAPS). </param>
-        /// <param name="username">
-        /// The ID of an Active Directory user with a minimum of read-only access to Base
-        /// DN for users and group
-        /// </param>
-        /// <param name="password">
-        /// The password of the Active Directory user with a minimum of read-only access to
-        /// Base DN for users and groups.
-        /// </param>
-        /// <returns> A new <see cref="Models.SingleSignOnIdentitySource"/> instance for mocking. </returns>
-        public static SingleSignOnIdentitySource SingleSignOnIdentitySource(string name = default, string @alias = default, string domain = default, string baseUserDN = default, string baseGroupDN = default, Uri primaryServer = default, Uri secondaryServer = default, SslCertificateStatus? ssl = default, string username = default, string password = default)
-        {
-            return new SingleSignOnIdentitySource(
-                name,
-                @alias,
-                domain,
-                baseUserDN,
-                baseGroupDN,
-                primaryServer,
-                secondaryServer,
-                ssl,
-                username,
-                password,
-                default);
-        }
-
-        /// <summary> The properties describing private cloud availability zone distribution. </summary>
-        /// <param name="strategy"> The availability strategy for the private cloud. </param>
-        /// <param name="zone"> The primary availability zone for the private cloud. </param>
-        /// <param name="secondaryZone"> The secondary availability zone for the private cloud. </param>
-        /// <returns> A new <see cref="Models.PrivateCloudAvailabilityProperties"/> instance for mocking. </returns>
-        public static PrivateCloudAvailabilityProperties PrivateCloudAvailabilityProperties(AvailabilityStrategy? strategy = default, int? zone = default, int? secondaryZone = default)
-        {
-            return new PrivateCloudAvailabilityProperties(strategy, zone, secondaryZone, default);
-        }
-
-        /// <summary> The properties of customer managed encryption key. </summary>
-        /// <param name="status"> Status of customer managed encryption key. </param>
-        /// <param name="keyVaultProperties"> The key vault where the encryption key is stored. </param>
-        /// <returns> A new <see cref="Models.CustomerManagedEncryption"/> instance for mocking. </returns>
-        public static CustomerManagedEncryption CustomerManagedEncryption(AvsEncryptionState? status = default, AvsEncryptionKeyVaultProperties keyVaultProperties = default)
-        {
-            return new CustomerManagedEncryption(status, keyVaultProperties, default);
-        }
-
-        /// <summary> An Encryption Key. </summary>
-        /// <param name="keyName"> The name of the key. </param>
-        /// <param name="keyVersion"> The version of the key. </param>
-        /// <param name="autoDetectedKeyVersion"> The auto-detected version of the key if versionType is auto-detected. </param>
-        /// <param name="keyVaultUri"> The URL of the vault. </param>
-        /// <param name="keyState"> The state of key provided. </param>
-        /// <param name="versionType"> Property of the key if user provided or auto detected. </param>
-        /// <returns> A new <see cref="Models.AvsEncryptionKeyVaultProperties"/> instance for mocking. </returns>
-        public static AvsEncryptionKeyVaultProperties AvsEncryptionKeyVaultProperties(string keyName = default, string keyVersion = default, string autoDetectedKeyVersion = default, Uri keyVaultUri = default, AvsEncryptionKeyStatus? keyState = default, AvsEncryptionVersionType? versionType = default)
-        {
-            return new AvsEncryptionKeyVaultProperties(
-                keyName,
-                keyVersion,
-                autoDetectedKeyVersion,
-                keyVaultUri,
-                keyState,
-                versionType,
-                default);
-        }
-
-        /// <summary> An ExpressRoute Circuit. </summary>
-        /// <param name="primarySubnet"> CIDR of primary subnet. </param>
-        /// <param name="secondarySubnet"> CIDR of secondary subnet. </param>
-        /// <param name="expressRouteId"> Identifier of the ExpressRoute Circuit (Microsoft Colo only). </param>
-        /// <param name="expressRoutePrivatePeeringId"> ExpressRoute Circuit private peering identifier. </param>
-        /// <returns> A new <see cref="Models.ExpressRouteCircuit"/> instance for mocking. </returns>
-        public static ExpressRouteCircuit ExpressRouteCircuit(string primarySubnet = default, string secondarySubnet = default, ResourceIdentifier expressRouteId = default, ResourceIdentifier expressRoutePrivatePeeringId = default)
-        {
-            return new ExpressRouteCircuit(primarySubnet, secondarySubnet, expressRouteId, expressRoutePrivatePeeringId, default);
-        }
-
-        /// <summary> Endpoint addresses. </summary>
-        /// <param name="nsxtManager"> Endpoint FQDN for the NSX-T Data Center manager. </param>
-        /// <param name="vcsa"> Endpoint FQDN for Virtual Center Server Appliance. </param>
-        /// <param name="hcxCloudManager"> Endpoint FQDN for the HCX Cloud Manager. </param>
-        /// <param name="nsxtManagerIP"> Endpoint IP for the NSX-T Data Center manager. </param>
-        /// <param name="vcenterIP"> Endpoint IP for Virtual Center Server Appliance. </param>
-        /// <param name="hcxCloudManagerIP"> Endpoint IP for the HCX Cloud Manager. </param>
-        /// <returns> A new <see cref="Models.AvsPrivateCloudEndpoints"/> instance for mocking. </returns>
-        public static AvsPrivateCloudEndpoints AvsPrivateCloudEndpoints(string nsxtManager = default, string vcsa = default, string hcxCloudManager = default, string nsxtManagerIP = default, string vcenterIP = default, string hcxCloudManagerIP = default)
-        {
-            return new AvsPrivateCloudEndpoints(
-                nsxtManager,
-                vcsa,
-                hcxCloudManager,
-                nsxtManagerIP,
-                vcenterIP,
-                hcxCloudManagerIP,
-                default);
-        }
-
-        /// <summary>
-        /// A VMware Cloud Foundation license
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Vcf5License"/>.
-        /// </summary>
-        /// <param name="kind"> License kind. </param>
-        /// <param name="provisioningState"> The state of the license provisioning. </param>
-        /// <returns> A new <see cref="Models.VcfLicense"/> instance for mocking. </returns>
-        public static VcfLicense VcfLicense(string kind = default, AvsLicenseProvisioningState? provisioningState = default)
-        {
-            return new UnknownVcfLicense(default, provisioningState, default);
-        }
-
-        /// <summary> A VMware Cloud Foundation (VCF) 5.0 license. </summary>
-        /// <param name="provisioningState"> The state of the license provisioning. </param>
-        /// <param name="licenseKey"> License key. </param>
-        /// <param name="cores"> Number of cores included in the license. </param>
-        /// <param name="endOn"> UTC datetime when the license expires. </param>
-        /// <param name="broadcomSiteId"> The Broadcom site ID associated with the license. </param>
-        /// <param name="broadcomContractNumber"> The Broadcom contract number associated with the license. </param>
-        /// <param name="labels"> Additional labels passed through for license reporting. </param>
-        /// <returns> A new <see cref="Models.Vcf5License"/> instance for mocking. </returns>
-        public static Vcf5License Vcf5License(AvsLicenseProvisioningState? provisioningState = default, string licenseKey = default, int cores = default, DateTimeOffset endOn = default, string broadcomSiteId = default, string broadcomContractNumber = default, IEnumerable<AvsLicenseLabel> labels = default)
-        {
-            labels ??= new ChangeTrackingList<AvsLicenseLabel>();
-
-            return new Vcf5License(
-                default,
-                provisioningState,
-                default,
-                licenseKey,
-                cores,
-                endOn,
-                broadcomSiteId,
-                broadcomContractNumber,
-                (labels ?? new ChangeTrackingList<AvsLicenseLabel>()).ToList());
-        }
-
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -1247,6 +1247,33 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="description"> User friendly description of the package. </param>
+        /// <param name="version"> Module version. </param>
+        /// <param name="company"> Company that created and supports the package. </param>
+        /// <param name="uri"> Link to support by the package vendor. </param>
+        /// <returns> A new <see cref="Avs.ScriptPackageData"/> instance for mocking. </returns>
+        public static ScriptPackageData ScriptPackageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScriptPackageProvisioningState? provisioningState = default, string description = default, string version = default, string company = default, Uri uri = default)
+        {
+            return new ScriptPackageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && description is null && version is null && company is null && uri is null ? default : new ScriptPackageProperties(
+                    provisioningState,
+                    description,
+                    version,
+                    company,
+                    uri,
+                    default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="scriptCmdletId"> A reference to the script cmdlet resource if user is running a AVS script. </param>
         /// <param name="parameters"> Parameters the script will accept. </param>
         /// <param name="hiddenParameters">
@@ -1334,33 +1361,6 @@ namespace Azure.ResourceManager.Avs.Models
         public static PSCredentialExecutionParameterDetails PSCredentialExecutionParameterDetails(string name = default, string username = default, string password = default)
         {
             return new PSCredentialExecutionParameterDetails(default, name, default, username, password);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="description"> User friendly description of the package. </param>
-        /// <param name="version"> Module version. </param>
-        /// <param name="company"> Company that created and supports the package. </param>
-        /// <param name="uri"> Link to support by the package vendor. </param>
-        /// <returns> A new <see cref="Avs.ScriptPackageData"/> instance for mocking. </returns>
-        public static ScriptPackageData ScriptPackageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScriptPackageProvisioningState? provisioningState = default, string description = default, string version = default, string company = default, Uri uri = default)
-        {
-            return new ScriptPackageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && description is null && version is null && company is null && uri is null ? default : new ScriptPackageProperties(
-                    provisioningState,
-                    description,
-                    version,
-                    company,
-                    uri,
-                    default),
-                default);
         }
 
         /// <summary> A SKU for a resource. </summary>

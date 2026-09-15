@@ -19,24 +19,6 @@ namespace Azure.ResourceManager.Billing.Trust.Models
     public static partial class ArmBillingTrustModelFactory
     {
 
-        /// <summary> A billing trust assessment. An assessment runs a set of rules to evaluate trust attributes of a billing account. The assessment is a singleton per parent resource and is always named 'default'. Re-issuing PUT with the same `assessmentType` is idempotent; changing `assessmentType` after the assessment exists is not supported. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Trust.BillingTrustAssessmentData"/> instance for mocking. </returns>
-        public static BillingTrustAssessmentData BillingTrustAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingTrustAssessmentProperties properties = default)
-        {
-            return new BillingTrustAssessmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> The properties of an Assessment resource. </summary>
         /// <param name="assessmentType"> The name of the assessment template whose rules will be evaluated (e.g. 'Edu'). Immutable after creation. </param>
         /// <param name="evaluationState"> The aggregated evaluation state of all active rules within this assessment. </param>
@@ -93,30 +75,30 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             return new BillingTrustDomainEntry((domainNames ?? new ChangeTrackingList<string>()).ToList(), tenantId, state, error, default);
         }
 
-        /// <summary> Response containing an upload token for supplemental document uploads. </summary>
-        /// <param name="token"> The time-bound, principal-bound upload token. </param>
-        /// <returns> A new <see cref="Models.GenerateUploadTokenResult"/> instance for mocking. </returns>
-        public static GenerateUploadTokenResult GenerateUploadTokenResult(string token = default)
-        {
-            return new GenerateUploadTokenResult(token, default);
-        }
-
-        /// <summary> A rule within an assessment. </summary>
+        /// <summary> A billing trust assessment. An assessment runs a set of rules to evaluate trust attributes of a billing account. The assessment is a singleton per parent resource and is always named 'default'. Re-issuing PUT with the same `assessmentType` is idempotent; changing `assessmentType` after the assessment exists is not supported. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Trust.BillingTrustRuleData"/> instance for mocking. </returns>
-        public static BillingTrustRuleData BillingTrustRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingTrustRuleProperties properties = default)
+        /// <returns> A new <see cref="Trust.BillingTrustAssessmentData"/> instance for mocking. </returns>
+        public static BillingTrustAssessmentData BillingTrustAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingTrustAssessmentProperties properties = default)
         {
-            return new BillingTrustRuleData(
+            return new BillingTrustAssessmentData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
                 default);
+        }
+
+        /// <summary> Response containing an upload token for supplemental document uploads. </summary>
+        /// <param name="token"> The time-bound, principal-bound upload token. </param>
+        /// <returns> A new <see cref="Models.GenerateUploadTokenResult"/> instance for mocking. </returns>
+        public static GenerateUploadTokenResult GenerateUploadTokenResult(string token = default)
+        {
+            return new GenerateUploadTokenResult(token, default);
         }
 
         /// <summary>
@@ -274,6 +256,24 @@ namespace Azure.ResourceManager.Billing.Trust.Models
         public static BillingTrustExternalId BillingTrustExternalId(string @type = default, string value = default)
         {
             return new BillingTrustExternalId(@type, value, default);
+        }
+
+        /// <summary> A rule within an assessment. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Trust.BillingTrustRuleData"/> instance for mocking. </returns>
+        public static BillingTrustRuleData BillingTrustRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingTrustRuleProperties properties = default)
+        {
+            return new BillingTrustRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary>

@@ -20,11 +20,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
-    /// A class representing a BillingReservation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingReservationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BillingReservationOrderResource"/> using the GetBillingReservations method.
+    /// A class representing a BillingReservation1 along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingReservation1Resource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BillingReservationOrderResource"/> using the GetBillingReservation1s method.
     /// </summary>
-    public partial class BillingReservationResource : ArmResource
+    public partial class BillingReservation1Resource : ArmResource
     {
         private readonly ClientDiagnostics _reservationsClientDiagnostics;
         private readonly Reservations _reservationsRestClient;
@@ -32,28 +32,28 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/reservationOrders/reservations";
 
-        /// <summary> Initializes a new instance of BillingReservationResource for mocking. </summary>
-        protected BillingReservationResource()
+        /// <summary> Initializes a new instance of BillingReservation1Resource for mocking. </summary>
+        protected BillingReservation1Resource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingReservationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingReservation1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BillingReservationResource(ArmClient client, BillingReservationData data) : this(client, data.Id)
+        internal BillingReservation1Resource(ArmClient client, BillingReservationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingReservationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingReservation1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BillingReservationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BillingReservation1Resource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string billingReservationApiVersion);
+            TryGetApiVersion(ResourceType, out string billingReservation1ApiVersion);
             _reservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingReservationApiVersion ?? "2024-04-01");
+            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingReservation1ApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -110,15 +110,15 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BillingReservationResource"/>. </description>
+        /// <description> <see cref="BillingReservation1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BillingReservationResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingReservation1Data>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationResource.Get");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Resource.Get");
             scope.Start();
             try
             {
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.Billing
                 };
                 HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
+                Response<BillingReservation1Data> response = Response.FromValue(BillingReservation1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BillingReservationResource"/>. </description>
+        /// <description> <see cref="BillingReservation1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BillingReservationResource> Get(string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<BillingReservation1Data> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationResource.Get");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Resource.Get");
             scope.Start();
             try
             {
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.Billing
                 };
                 HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
+                Response<BillingReservation1Data> response = Response.FromValue(BillingReservation1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BillingReservationResource"/>. </description>
+        /// <description> <see cref="BillingReservation1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,11 +216,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="patch"> Request body for patching a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<BillingReservationResource>> UpdateAsync(WaitUntil waitUntil, BillingReservationPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BillingReservation1Data>> UpdateAsync(WaitUntil waitUntil, BillingReservation1Patch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationResource.Update");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Resource.Update");
             scope.Start();
             try
             {
@@ -228,10 +228,10 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingReservationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _reservationsRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingReservation1Patch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                BillingArmOperation<BillingReservationResource> operation = new BillingArmOperation<BillingReservationResource>(
-                    new BillingReservationResourceOperationSource(Client),
+                BillingArmOperation<BillingReservation1Data> operation = new BillingArmOperation<BillingReservation1Data>(
+                    new BillingReservation1DataOperationSource(),
                     _reservationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Billing
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BillingReservationResource"/>. </description>
+        /// <description> <see cref="BillingReservation1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="patch"> Request body for patching a reservation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<BillingReservationResource> Update(WaitUntil waitUntil, BillingReservationPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BillingReservation1Data> Update(WaitUntil waitUntil, BillingReservation1Patch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationResource.Update");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Resource.Update");
             scope.Start();
             try
             {
@@ -287,10 +287,10 @@ namespace Azure.ResourceManager.Billing
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingReservationPatch.ToRequestContent(patch), context);
+                HttpMessage message = _reservationsRestClient.CreateUpdateByBillingAccountRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BillingReservation1Patch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                BillingArmOperation<BillingReservationResource> operation = new BillingArmOperation<BillingReservationResource>(
-                    new BillingReservationResourceOperationSource(Client),
+                BillingArmOperation<BillingReservation1Data> operation = new BillingArmOperation<BillingReservation1Data>(
+                    new BillingReservation1DataOperationSource(),
                     _reservationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -314,12 +314,12 @@ namespace Azure.ResourceManager.Billing
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<BillingReservationResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingReservation1Resource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationResource.AddTag");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Resource.AddTag");
             scope.Start();
             try
             {
@@ -335,18 +335,18 @@ namespace Azure.ResourceManager.Billing
                     HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
-                    return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BillingReservation1Resource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BillingReservationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BillingReservationPatch patch = new BillingReservationPatch();
+                    BillingReservation1Patch patch = new BillingReservation1Patch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<BillingReservationResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingReservation1Data> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -362,12 +362,12 @@ namespace Azure.ResourceManager.Billing
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<BillingReservationResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<BillingReservation1Resource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationResource.AddTag");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Resource.AddTag");
             scope.Start();
             try
             {
@@ -383,18 +383,18 @@ namespace Azure.ResourceManager.Billing
                     HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
-                    return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BillingReservation1Resource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BillingReservationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BillingReservationPatch patch = new BillingReservationPatch();
+                    BillingReservation1Patch patch = new BillingReservation1Patch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<BillingReservationResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<BillingReservation1Data> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<BillingReservationResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingReservation1Resource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationResource.SetTags");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Resource.SetTags");
             scope.Start();
             try
             {
@@ -430,14 +430,14 @@ namespace Azure.ResourceManager.Billing
                     HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
-                    return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BillingReservation1Resource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BillingReservationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BillingReservationPatch patch = new BillingReservationPatch();
+                    BillingReservation1Patch patch = new BillingReservation1Patch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<BillingReservationResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingReservation1Data> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -452,11 +452,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<BillingReservationResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<BillingReservation1Resource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationResource.SetTags");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Resource.SetTags");
             scope.Start();
             try
             {
@@ -473,14 +473,14 @@ namespace Azure.ResourceManager.Billing
                     HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
-                    return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BillingReservation1Resource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BillingReservationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BillingReservationPatch patch = new BillingReservationPatch();
+                    BillingReservation1Patch patch = new BillingReservation1Patch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<BillingReservationResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<BillingReservation1Data> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -495,11 +495,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<BillingReservationResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BillingReservation1Resource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationResource.RemoveTag");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Resource.RemoveTag");
             scope.Start();
             try
             {
@@ -515,18 +515,18 @@ namespace Azure.ResourceManager.Billing
                     HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
-                    return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BillingReservation1Resource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BillingReservationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    BillingReservationPatch patch = new BillingReservationPatch();
+                    BillingReservation1Patch patch = new BillingReservation1Patch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<BillingReservationResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<BillingReservation1Data> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -541,11 +541,11 @@ namespace Azure.ResourceManager.Billing
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<BillingReservationResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<BillingReservation1Resource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservationResource.RemoveTag");
+            using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("BillingReservation1Resource.RemoveTag");
             scope.Start();
             try
             {
@@ -561,18 +561,18 @@ namespace Azure.ResourceManager.Billing
                     HttpMessage message = _reservationsRestClient.CreateGetByReservationOrderRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, default, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<BillingReservationData> response = Response.FromValue(BillingReservationData.FromResponse(result), result);
-                    return Response.FromValue(new BillingReservationResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new BillingReservation1Resource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     BillingReservationData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    BillingReservationPatch patch = new BillingReservationPatch();
+                    BillingReservation1Patch patch = new BillingReservation1Patch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<BillingReservationResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<BillingReservation1Data> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -22,6 +22,35 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
+        /// <returns> A new <see cref="Attestation.AttestationPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static AttestationPrivateEndpointConnectionData AttestationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AttestationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        {
+            return new AttestationPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                default);
+        }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.AttestationPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static AttestationPrivateLinkServiceConnectionState AttestationPrivateLinkServiceConnectionState(AttestationPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new AttestationPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="trustModel"> Trust model for the attestation provider. </param>
@@ -51,35 +80,6 @@ namespace Azure.ResourceManager.Attestation.Models
                     tpmAttestationAuthentication,
                     default),
                 default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
-        /// <returns> A new <see cref="Attestation.AttestationPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static AttestationPrivateEndpointConnectionData AttestationPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AttestationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new AttestationPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
-                default);
-        }
-
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.AttestationPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static AttestationPrivateLinkServiceConnectionState AttestationPrivateLinkServiceConnectionState(AttestationPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
-        {
-            return new AttestationPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
         /// <summary> Parameters for creating an attestation provider. </summary>

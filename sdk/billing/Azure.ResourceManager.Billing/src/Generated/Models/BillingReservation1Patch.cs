@@ -12,23 +12,23 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The request for reservation patch. </summary>
-    public partial class BillingReservationPatch
+    public partial class BillingReservation1Patch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BillingReservationPatch"/>. </summary>
-        public BillingReservationPatch()
+        /// <summary> Initializes a new instance of <see cref="BillingReservation1Patch"/>. </summary>
+        public BillingReservation1Patch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BillingReservationPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingReservation1Patch"/>. </summary>
         /// <param name="properties"> Properties for reservation patch. </param>
         /// <param name="sku"> The sku information associated to this reservation. </param>
         /// <param name="tags"> Tags for this reservation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingReservationPatch(PatchProperties properties, ReservationSkuProperty sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingReservation1Patch(PatchProperties properties, ReservationSkuProperty sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Sku = sku;
