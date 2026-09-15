@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Elastic
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string monitorName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string monitorName, bool? softDelete, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -136,6 +136,10 @@ namespace Azure.ResourceManager.Elastic
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (softDelete != null)
+            {
+                uri.AppendQuery("softDelete", TypeFormatters.ConvertToString(softDelete), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
