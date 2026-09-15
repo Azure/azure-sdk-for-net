@@ -546,7 +546,7 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary>
         /// Recurrence model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LoadTesting.DailyRecurrence"/>, <see cref="LoadTesting.HourlyRecurrence"/>, <see cref="LoadTesting.MonthlyRecurrenceByWeekDays"/>, <see cref="LoadTesting.MonthlyRecurrenceByDates"/>, <see cref="LoadTesting.RecurrenceWithCron"/>, and <see cref="LoadTesting.WeeklyRecurrence"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LoadTesting.DailyRecurrence"/>, <see cref="LoadTesting.HourlyRecurrence"/>, <see cref="LoadTesting.MonthlyRecurrenceByDates"/>, <see cref="LoadTesting.MonthlyRecurrenceByWeekDays"/>, <see cref="LoadTesting.RecurrenceWithCron"/>, and <see cref="LoadTesting.WeeklyRecurrence"/>.
         /// </summary>
         /// <param name="frequency"> Frequency of the recurrence. </param>
         /// <param name="recurrenceEnd"> Recurrence end model. You can specify the end either by providing a numberOfOccurrences (which will end the recurrence after the specified number of occurrences) or by providing an endDateTime (which will end the recurrence after the specified date). If neither value is provided, the recurrence will continue until it is manually ended. However, if both values are provided, an error will be thrown. </param>
