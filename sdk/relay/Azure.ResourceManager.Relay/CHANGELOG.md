@@ -8,7 +8,7 @@
 
 ### Other Changes
 
-- Upgraded dependent `Azure.Core` to `1.61.0`.
+- Upgraded dependent `Azure.Core` to `1.62.0`.
 
 ## 1.2.2 (2026-04-29)
 
