@@ -1,5 +1,5 @@
 directory: specification/edgeoperator/resource-manager/Microsoft.EdgeOperator/SystemReadiness
-commit: 0cfc001947bf7e61161800e8d8fbfe9aa01cc0e4
+commit: c765bfa05a2bce47b705d262d5afcdd1ab4cc06e
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
