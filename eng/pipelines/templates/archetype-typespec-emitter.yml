@@ -517,6 +517,9 @@ extends:
                 }
               }
 
+              # Preserve PR validation while skipping redundant CI after the regeneration PR is merged.
+              $prTitle = "[skip ci] $prTitle"
+
               Write-Host "Setting variable 'PullRequestTitle' to '$prTitle'"
               Write-Host "##vso[task.setvariable variable=PullRequestTitle]$prTitle"
 
