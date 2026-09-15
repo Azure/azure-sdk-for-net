@@ -88,6 +88,41 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                 default);
         }
 
+        /// <summary> The encryption settings for a configuration store. </summary>
+        /// <param name="keyVault"> Key vault properties. </param>
+        /// <param name="state"> The state of onboarding, which only appears in the response. </param>
+        /// <returns> A new <see cref="Models.EnterprisePolicyEncryptionProperties"/> instance for mocking. </returns>
+        public static EnterprisePolicyEncryptionProperties EnterprisePolicyEncryptionProperties(PowerPlatformKeyVaultProperties keyVault = default, EnterprisePolicyOnboardingState? state = default)
+        {
+            return new EnterprisePolicyEncryptionProperties(keyVault, state, default);
+        }
+
+        /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
+        /// <param name="vaultUri"> Uri of KeyVault. </param>
+        /// <param name="key"> Identity of the secret that includes name and version. </param>
+        /// <returns> A new <see cref="Models.PowerPlatformKeyVaultProperties"/> instance for mocking. </returns>
+        public static PowerPlatformKeyVaultProperties PowerPlatformKeyVaultProperties(Uri vaultUri = default, PowerPlatformKeyProperties key = default)
+        {
+            return new PowerPlatformKeyVaultProperties(vaultUri, key, default);
+        }
+
+        /// <summary> Url and version of the KeyVault Secret. </summary>
+        /// <param name="name"> The identifier of the key vault key used to encrypt data. </param>
+        /// <param name="version"> The version of the identity which will be used to access key vault. </param>
+        /// <returns> A new <see cref="Models.PowerPlatformKeyProperties"/> instance for mocking. </returns>
+        public static PowerPlatformKeyProperties PowerPlatformKeyProperties(string name = default, string version = default)
+        {
+            return new PowerPlatformKeyProperties(name, version, default);
+        }
+
+        /// <param name="id"> Uri of the virtual network. </param>
+        /// <param name="subnetName"> Subnet name. </param>
+        /// <returns> A new <see cref="Models.PowerPlatformVirtualNetworkProperties"/> instance for mocking. </returns>
+        public static PowerPlatformVirtualNetworkProperties PowerPlatformVirtualNetworkProperties(ResourceIdentifier id = default, string subnetName = default)
+        {
+            return new PowerPlatformVirtualNetworkProperties(id, subnetName is null ? default : new SubnetProperties(subnetName, default), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -123,41 +158,6 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                 identity,
                 kind,
                 default);
-        }
-
-        /// <summary> The encryption settings for a configuration store. </summary>
-        /// <param name="keyVault"> Key vault properties. </param>
-        /// <param name="state"> The state of onboarding, which only appears in the response. </param>
-        /// <returns> A new <see cref="Models.EnterprisePolicyEncryptionProperties"/> instance for mocking. </returns>
-        public static EnterprisePolicyEncryptionProperties EnterprisePolicyEncryptionProperties(PowerPlatformKeyVaultProperties keyVault = default, EnterprisePolicyOnboardingState? state = default)
-        {
-            return new EnterprisePolicyEncryptionProperties(keyVault, state, default);
-        }
-
-        /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
-        /// <param name="vaultUri"> Uri of KeyVault. </param>
-        /// <param name="key"> Identity of the secret that includes name and version. </param>
-        /// <returns> A new <see cref="Models.PowerPlatformKeyVaultProperties"/> instance for mocking. </returns>
-        public static PowerPlatformKeyVaultProperties PowerPlatformKeyVaultProperties(Uri vaultUri = default, PowerPlatformKeyProperties key = default)
-        {
-            return new PowerPlatformKeyVaultProperties(vaultUri, key, default);
-        }
-
-        /// <summary> Url and version of the KeyVault Secret. </summary>
-        /// <param name="name"> The identifier of the key vault key used to encrypt data. </param>
-        /// <param name="version"> The version of the identity which will be used to access key vault. </param>
-        /// <returns> A new <see cref="Models.PowerPlatformKeyProperties"/> instance for mocking. </returns>
-        public static PowerPlatformKeyProperties PowerPlatformKeyProperties(string name = default, string version = default)
-        {
-            return new PowerPlatformKeyProperties(name, version, default);
-        }
-
-        /// <param name="id"> Uri of the virtual network. </param>
-        /// <param name="subnetName"> Subnet name. </param>
-        /// <returns> A new <see cref="Models.PowerPlatformVirtualNetworkProperties"/> instance for mocking. </returns>
-        public static PowerPlatformVirtualNetworkProperties PowerPlatformVirtualNetworkProperties(ResourceIdentifier id = default, string subnetName = default)
-        {
-            return new PowerPlatformVirtualNetworkProperties(id, subnetName is null ? default : new SubnetProperties(subnetName, default), default);
         }
 
         /// <summary> The identity of the EnterprisePolicy. </summary>
@@ -207,6 +207,16 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                     default));
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.PowerPlatformPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static PowerPlatformPrivateLinkServiceConnectionState PowerPlatformPrivateLinkServiceConnectionState(PowerPlatformPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new PowerPlatformPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -224,16 +234,6 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                 systemData,
                 privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
-        }
-
-        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <returns> A new <see cref="Models.PowerPlatformPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static PowerPlatformPrivateLinkServiceConnectionState PowerPlatformPrivateLinkServiceConnectionState(PowerPlatformPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
-        {
-            return new PowerPlatformPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

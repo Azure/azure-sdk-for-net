@@ -19,6 +19,29 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmPolicyInsightsModelFactory
     {
+
+        /// <summary> The filters that will be applied to determine which resources to remediate. </summary>
+        /// <param name="locations"> The resource locations that will be remediated. </param>
+        /// <param name="resourceIds"> The IDs of the resources that will be remediated. Can specify at most 100 IDs. This filter cannot be used when ReEvaluateCompliance is set to ReEvaluateCompliance, and cannot be empty if provided. </param>
+        /// <returns> A new <see cref="Models.RemediationFilters"/> instance for mocking. </returns>
+        public static RemediationFilters RemediationFilters(IEnumerable<AzureLocation> locations = default, IEnumerable<string> resourceIds = default)
+        {
+            locations ??= new ChangeTrackingList<AzureLocation>();
+            resourceIds ??= new ChangeTrackingList<string>();
+
+            return new RemediationFilters((locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (resourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> The deployment status summary for all deployments created by the remediation. </summary>
+        /// <param name="totalDeployments"> The number of deployments required by the remediation. </param>
+        /// <param name="successfulDeployments"> The number of deployments required by the remediation that have succeeded. </param>
+        /// <param name="failedDeployments"> The number of deployments required by the remediation that have failed. </param>
+        /// <returns> A new <see cref="Models.RemediationDeploymentSummary"/> instance for mocking. </returns>
+        public static RemediationDeploymentSummary RemediationDeploymentSummary(int? totalDeployments = default, int? successfulDeployments = default, int? failedDeployments = default)
+        {
+            return new RemediationDeploymentSummary(totalDeployments, successfulDeployments, failedDeployments, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -60,28 +83,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     new RemediationPropertiesFailureThreshold(failureThresholdPercentage, default),
                     default),
                 default);
-        }
-
-        /// <summary> The filters that will be applied to determine which resources to remediate. </summary>
-        /// <param name="locations"> The resource locations that will be remediated. </param>
-        /// <param name="resourceIds"> The IDs of the resources that will be remediated. Can specify at most 100 IDs. This filter cannot be used when ReEvaluateCompliance is set to ReEvaluateCompliance, and cannot be empty if provided. </param>
-        /// <returns> A new <see cref="Models.RemediationFilters"/> instance for mocking. </returns>
-        public static RemediationFilters RemediationFilters(IEnumerable<AzureLocation> locations = default, IEnumerable<string> resourceIds = default)
-        {
-            locations ??= new ChangeTrackingList<AzureLocation>();
-            resourceIds ??= new ChangeTrackingList<string>();
-
-            return new RemediationFilters((locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (resourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
-        /// <summary> The deployment status summary for all deployments created by the remediation. </summary>
-        /// <param name="totalDeployments"> The number of deployments required by the remediation. </param>
-        /// <param name="successfulDeployments"> The number of deployments required by the remediation that have succeeded. </param>
-        /// <param name="failedDeployments"> The number of deployments required by the remediation that have failed. </param>
-        /// <returns> A new <see cref="Models.RemediationDeploymentSummary"/> instance for mocking. </returns>
-        public static RemediationDeploymentSummary RemediationDeploymentSummary(int? totalDeployments = default, int? successfulDeployments = default, int? failedDeployments = default)
-        {
-            return new RemediationDeploymentSummary(totalDeployments, successfulDeployments, failedDeployments, default);
         }
 
         /// <summary> Parameter group for OData query options. </summary>
@@ -132,6 +133,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 default);
         }
 
+        /// <summary> A piece of evidence supporting the compliance state set in the attestation. </summary>
+        /// <param name="description"> The description for this piece of evidence. </param>
+        /// <param name="sourceUri"> The URI location of the evidence. </param>
+        /// <returns> A new <see cref="Models.AttestationEvidence"/> instance for mocking. </returns>
+        public static AttestationEvidence AttestationEvidence(string description = default, Uri sourceUri = default)
+        {
+            return new AttestationEvidence(description, sourceUri, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -169,15 +179,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     metadata,
                     default),
                 default);
-        }
-
-        /// <summary> A piece of evidence supporting the compliance state set in the attestation. </summary>
-        /// <param name="description"> The description for this piece of evidence. </param>
-        /// <param name="sourceUri"> The URI location of the evidence. </param>
-        /// <returns> A new <see cref="Models.AttestationEvidence"/> instance for mocking. </returns>
-        public static AttestationEvidence AttestationEvidence(string description = default, Uri sourceUri = default)
-        {
-            return new AttestationEvidence(description, sourceUri, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
