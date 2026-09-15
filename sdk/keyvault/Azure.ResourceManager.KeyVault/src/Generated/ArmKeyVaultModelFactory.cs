@@ -246,24 +246,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 default);
         }
 
-        /// <summary> Deleted vault information with extended details. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the vault. </param>
-        /// <returns> A new <see cref="KeyVault.DeletedKeyVaultData"/> instance for mocking. </returns>
-        public static DeletedKeyVaultData DeletedKeyVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeletedKeyVaultProperties properties = default)
-        {
-            return new DeletedKeyVaultData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties of the deleted vault. </summary>
         /// <param name="vaultId"> The resource id of the original vault. </param>
         /// <param name="location"> The location of the original vault. </param>
@@ -283,6 +265,24 @@ namespace Azure.ResourceManager.KeyVault.Models
                 scheduledPurgeOn,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 purgeProtectionEnabled,
+                default);
+        }
+
+        /// <summary> Deleted vault information with extended details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        /// <returns> A new <see cref="KeyVault.DeletedKeyVaultData"/> instance for mocking. </returns>
+        public static DeletedKeyVaultData DeletedKeyVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeletedKeyVaultProperties properties = default)
+        {
+            return new DeletedKeyVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
@@ -450,24 +450,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmSku(family, name, default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the deleted managed HSM. </param>
-        /// <returns> A new <see cref="KeyVault.DeletedManagedHsmData"/> instance for mocking. </returns>
-        public static DeletedManagedHsmData DeletedManagedHsmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeletedManagedHsmProperties properties = default)
-        {
-            return new DeletedManagedHsmData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties of the deleted managed HSM. </summary>
         /// <param name="managedHsmId"> The resource id of the original managed HSM. </param>
         /// <param name="location"> The location of the original managed HSM. </param>
@@ -490,27 +472,21 @@ namespace Azure.ResourceManager.KeyVault.Models
                 default);
         }
 
-        /// <summary> Resource information with extended details. </summary>
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the secret. </param>
-        /// <param name="location"> Azure location of the key vault resource. </param>
-        /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        /// <returns> A new <see cref="KeyVault.KeyVaultSecretData"/> instance for mocking. </returns>
-        public static KeyVaultSecretData KeyVaultSecretData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecretProperties properties = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default)
+        /// <param name="properties"> Properties of the deleted managed HSM. </param>
+        /// <returns> A new <see cref="KeyVault.DeletedManagedHsmData"/> instance for mocking. </returns>
+        public static DeletedManagedHsmData DeletedManagedHsmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeletedManagedHsmProperties properties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new KeyVaultSecretData(
+            return new DeletedManagedHsmData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 
@@ -565,6 +541,30 @@ namespace Azure.ResourceManager.KeyVault.Models
                 expires,
                 created,
                 updated,
+                default);
+        }
+
+        /// <summary> Resource information with extended details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the secret. </param>
+        /// <param name="location"> Azure location of the key vault resource. </param>
+        /// <param name="tags"> Tags assigned to the key vault resource. </param>
+        /// <returns> A new <see cref="KeyVault.KeyVaultSecretData"/> instance for mocking. </returns>
+        public static KeyVaultSecretData KeyVaultSecretData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecretProperties properties = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new KeyVaultSecretData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 

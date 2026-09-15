@@ -18,6 +18,66 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesConfigurationExtensionsModelFactory
     {
+
+        /// <param name="clusterReleaseNamespace"> Namespace where the extension Release must be placed, for a Cluster scoped extension.  If this namespace does not exist, it will be created. </param>
+        /// <param name="targetNamespace"> Namespace where the extension will be created for an Namespace scoped extension.  If this namespace does not exist, it will be created. </param>
+        /// <returns> A new <see cref="Models.KubernetesClusterExtensionScope"/> instance for mocking. </returns>
+        public static KubernetesClusterExtensionScope KubernetesClusterExtensionScope(string clusterReleaseNamespace = default, string targetNamespace = default)
+        {
+            return new KubernetesClusterExtensionScope(clusterReleaseNamespace is null ? default : new KubernetesClusterExtensionScopeCluster(clusterReleaseNamespace, default), targetNamespace is null ? default : new KubernetesClusterExtensionScopeNamespace(targetNamespace, default), default);
+        }
+
+        /// <summary> Status from the extension. </summary>
+        /// <param name="code"> Status code provided by the Extension. </param>
+        /// <param name="displayStatus"> Short description of status of the extension. </param>
+        /// <param name="level"> Level of the status. </param>
+        /// <param name="message"> Detailed message of the status from the Extension. </param>
+        /// <param name="time"> DateLiteral (per ISO8601) noting the time of installation status. </param>
+        /// <returns> A new <see cref="Models.KubernetesClusterExtensionStatus"/> instance for mocking. </returns>
+        public static KubernetesClusterExtensionStatus KubernetesClusterExtensionStatus(string code = default, string displayStatus = default, KubernetesClusterExtensionStatusLevel? level = default, string message = default, string time = default)
+        {
+            return new KubernetesClusterExtensionStatus(
+                code,
+                displayStatus,
+                level,
+                message,
+                time,
+                default);
+        }
+
+        /// <summary> Metadata about the managing entity of the extension and the permitted operations. </summary>
+        /// <param name="category"> The category of the managing entity. </param>
+        /// <param name="accessDetails"> The list of access details of the managing entity. </param>
+        /// <returns> A new <see cref="Models.KubernetesClusterManagementDetails"/> instance for mocking. </returns>
+        public static KubernetesClusterManagementDetails KubernetesClusterManagementDetails(string category = default, IEnumerable<KubernetesClusterAccessDetail> accessDetails = default)
+        {
+            accessDetails ??= new ChangeTrackingList<KubernetesClusterAccessDetail>();
+
+            return new KubernetesClusterManagementDetails(category, (accessDetails ?? new ChangeTrackingList<KubernetesClusterAccessDetail>()).ToList(), default);
+        }
+
+        /// <summary> Metadata about the access details of the managing entity of the extension. </summary>
+        /// <param name="entity"> The entity to which the access details apply. </param>
+        /// <param name="allowedActions"> The list of allowed actions for the entity. </param>
+        /// <param name="description"> The description of the entity. </param>
+        /// <returns> A new <see cref="Models.KubernetesClusterAccessDetail"/> instance for mocking. </returns>
+        public static KubernetesClusterAccessDetail KubernetesClusterAccessDetail(string entity = default, IEnumerable<string> allowedActions = default, string description = default)
+        {
+            allowedActions ??= new ChangeTrackingList<string>();
+
+            return new KubernetesClusterAccessDetail(entity, (allowedActions ?? new ChangeTrackingList<string>()).ToList(), description, default);
+        }
+
+        /// <summary> Additional details provided by the publisher of the extension. </summary>
+        /// <param name="docs"> Documentation for the extension. </param>
+        /// <param name="releaseNotes"> Release Notes of the extension. </param>
+        /// <param name="troubleshootingGuide"> Troubleshooting guide for the extension. </param>
+        /// <returns> A new <see cref="Models.KubernetesClusterAdditionalDetails"/> instance for mocking. </returns>
+        public static KubernetesClusterAdditionalDetails KubernetesClusterAdditionalDetails(string docs = default, string releaseNotes = default, string troubleshootingGuide = default)
+        {
+            return new KubernetesClusterAdditionalDetails(docs, releaseNotes, troubleshootingGuide, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -80,65 +140,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
                 managedBy,
                 plan,
                 default);
-        }
-
-        /// <param name="clusterReleaseNamespace"> Namespace where the extension Release must be placed, for a Cluster scoped extension.  If this namespace does not exist, it will be created. </param>
-        /// <param name="targetNamespace"> Namespace where the extension will be created for an Namespace scoped extension.  If this namespace does not exist, it will be created. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterExtensionScope"/> instance for mocking. </returns>
-        public static KubernetesClusterExtensionScope KubernetesClusterExtensionScope(string clusterReleaseNamespace = default, string targetNamespace = default)
-        {
-            return new KubernetesClusterExtensionScope(clusterReleaseNamespace is null ? default : new KubernetesClusterExtensionScopeCluster(clusterReleaseNamespace, default), targetNamespace is null ? default : new KubernetesClusterExtensionScopeNamespace(targetNamespace, default), default);
-        }
-
-        /// <summary> Status from the extension. </summary>
-        /// <param name="code"> Status code provided by the Extension. </param>
-        /// <param name="displayStatus"> Short description of status of the extension. </param>
-        /// <param name="level"> Level of the status. </param>
-        /// <param name="message"> Detailed message of the status from the Extension. </param>
-        /// <param name="time"> DateLiteral (per ISO8601) noting the time of installation status. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterExtensionStatus"/> instance for mocking. </returns>
-        public static KubernetesClusterExtensionStatus KubernetesClusterExtensionStatus(string code = default, string displayStatus = default, KubernetesClusterExtensionStatusLevel? level = default, string message = default, string time = default)
-        {
-            return new KubernetesClusterExtensionStatus(
-                code,
-                displayStatus,
-                level,
-                message,
-                time,
-                default);
-        }
-
-        /// <summary> Metadata about the managing entity of the extension and the permitted operations. </summary>
-        /// <param name="category"> The category of the managing entity. </param>
-        /// <param name="accessDetails"> The list of access details of the managing entity. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterManagementDetails"/> instance for mocking. </returns>
-        public static KubernetesClusterManagementDetails KubernetesClusterManagementDetails(string category = default, IEnumerable<KubernetesClusterAccessDetail> accessDetails = default)
-        {
-            accessDetails ??= new ChangeTrackingList<KubernetesClusterAccessDetail>();
-
-            return new KubernetesClusterManagementDetails(category, (accessDetails ?? new ChangeTrackingList<KubernetesClusterAccessDetail>()).ToList(), default);
-        }
-
-        /// <summary> Metadata about the access details of the managing entity of the extension. </summary>
-        /// <param name="entity"> The entity to which the access details apply. </param>
-        /// <param name="allowedActions"> The list of allowed actions for the entity. </param>
-        /// <param name="description"> The description of the entity. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterAccessDetail"/> instance for mocking. </returns>
-        public static KubernetesClusterAccessDetail KubernetesClusterAccessDetail(string entity = default, IEnumerable<string> allowedActions = default, string description = default)
-        {
-            allowedActions ??= new ChangeTrackingList<string>();
-
-            return new KubernetesClusterAccessDetail(entity, (allowedActions ?? new ChangeTrackingList<string>()).ToList(), description, default);
-        }
-
-        /// <summary> Additional details provided by the publisher of the extension. </summary>
-        /// <param name="docs"> Documentation for the extension. </param>
-        /// <param name="releaseNotes"> Release Notes of the extension. </param>
-        /// <param name="troubleshootingGuide"> Troubleshooting guide for the extension. </param>
-        /// <returns> A new <see cref="Models.KubernetesClusterAdditionalDetails"/> instance for mocking. </returns>
-        public static KubernetesClusterAdditionalDetails KubernetesClusterAdditionalDetails(string docs = default, string releaseNotes = default, string troubleshootingGuide = default)
-        {
-            return new KubernetesClusterAdditionalDetails(docs, releaseNotes, troubleshootingGuide, default);
         }
 
         /// <param name="isAutoUpgradeMinorVersionEnabled"> Flag to note if this extension participates in auto upgrade of minor version, or not. </param>
