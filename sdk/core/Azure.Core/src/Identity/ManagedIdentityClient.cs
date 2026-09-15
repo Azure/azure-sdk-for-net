@@ -141,21 +141,21 @@ namespace Azure.Identity
                 availableSource == MSAL.ManagedIdentitySource.Imds ||
                 (!requiresManagedIdentityCapabilities && availableSource == MSAL.ManagedIdentitySource.None);
 #pragma warning restore CS0618
-            if (shouldProbeImds && _isChainedCredential && !_probeRequestSent)
-            {
-                var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false);
-                _probeRequestSent = true;
-                return probedFlowTokenResult;
-            }
-
-            // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
-            if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ManagedIdentityId?._idType != ManagedIdentityIdType.SystemAssigned))
-            {
-                throw new AuthenticationFailedException(Constants.MiSeviceFabricNoUserAssignedIdentityMessage);
-            }
-
             try
             {
+                if (shouldProbeImds && _isChainedCredential && !_probeRequestSent)
+                {
+                    var probedFlowTokenResult = await AuthenticateCoreAsync(async, context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false);
+                    _probeRequestSent = true;
+                    return probedFlowTokenResult;
+                }
+
+                // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
+                if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ManagedIdentityId?._idType != ManagedIdentityIdType.SystemAssigned))
+                {
+                    throw new AuthenticationFailedException(Constants.MiSeviceFabricNoUserAssignedIdentityMessage);
+                }
+
                 // The default case is to use the MSAL implementation, which does no probing of the IMDS endpoint.
                 result = async ?
                     await _msalManagedIdentityClient.AcquireTokenForManagedIdentityAsync(context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false) :
