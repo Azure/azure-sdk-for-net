@@ -845,7 +845,11 @@
           "decorators": [
             {
               "name": "TypeSpec.@minLength",
-              "arguments": {}
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
             }
           ],
           "isExactName": false
@@ -935,7 +939,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaders.two6k.apiVersion",
@@ -977,7 +985,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -1013,7 +1025,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -1044,15 +1060,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -1081,15 +1107,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -1120,7 +1156,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -1149,7 +1187,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false

@@ -2654,7 +2654,9 @@
           "decorators": [
             {
               "name": "TypeSpec.@pattern",
-              "arguments": {}
+              "arguments": {
+                "pattern": "^[a-zA-Z0-9-]{3,24}$"
+              }
             }
           ],
           "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Order.name",
@@ -3199,7 +3201,9 @@
           "decorators": [
             {
               "name": "TypeSpec.@pattern",
-              "arguments": {}
+              "arguments": {
+                "pattern": ""
+              }
             }
           ],
           "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.CostReport.name",
@@ -3409,7 +3413,9 @@
                   "decorators": [
                     {
                       "name": "TypeSpec.@pattern",
-                      "arguments": {}
+                      "arguments": {
+                        "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                      }
                     }
                   ],
                   "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Product.name",
@@ -3784,7 +3790,9 @@
           "decorators": [
             {
               "name": "TypeSpec.@pattern",
-              "arguments": {}
+              "arguments": {
+                "pattern": "^[a-zA-Z0-9-]{3,24}$"
+              }
             }
           ],
           "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Configuration.name",
@@ -3989,7 +3997,9 @@
           "decorators": [
             {
               "name": "TypeSpec.@pattern",
-              "arguments": {}
+              "arguments": {
+                "pattern": "^[a-zA-Z0-9-]{3,24}$"
+              }
             }
           ],
           "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Widget.name",
@@ -4474,7 +4484,9 @@
           "decorators": [
             {
               "name": "TypeSpec.@pattern",
-              "arguments": {}
+              "arguments": {
+                "pattern": "^[a-zA-Z0-9-]{3,24}$"
+              }
             }
           ],
           "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Monitor.name",
@@ -4908,7 +4920,9 @@
                   "decorators": [
                     {
                       "name": "TypeSpec.@pattern",
-                      "arguments": {}
+                      "arguments": {
+                        "pattern": ""
+                      }
                     }
                   ],
                   "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Collection.name",
@@ -5024,7 +5038,11 @@
           "decorators": [
             {
               "name": "TypeSpec.@minLength",
-              "arguments": {}
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
             }
           ],
           "isExactName": false
@@ -5368,7 +5386,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list.apiVersion",
@@ -5580,7 +5602,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.CheckNameAvailability.checkGlobal.apiVersion",
@@ -5618,7 +5644,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -5656,7 +5686,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -5692,7 +5726,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -5941,7 +5979,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.CheckNameAvailability.checkLocal.apiVersion",
@@ -5983,7 +6025,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -6025,7 +6071,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -6061,7 +6111,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -6368,7 +6422,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Lro.createOrReplace.apiVersion",
@@ -6406,7 +6464,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -6444,7 +6506,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -6480,7 +6546,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -6511,15 +6581,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -6548,15 +6628,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -6587,7 +6677,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -6616,7 +6708,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false
@@ -6930,7 +7024,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Lro.export.apiVersion",
@@ -6972,7 +7070,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -7007,15 +7109,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -7044,15 +7156,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -7083,7 +7205,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -7112,7 +7236,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false
@@ -7435,7 +7561,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Lro.delete.apiVersion",
@@ -7477,7 +7607,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -7512,15 +7646,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -7549,15 +7693,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -7588,7 +7742,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -7617,7 +7773,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false
@@ -7769,7 +7927,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Lro.exportArray.apiVersion",
@@ -7811,7 +7973,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -8134,7 +8300,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Lro.getLro.apiVersion",
@@ -8219,7 +8389,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": ""
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -8248,7 +8420,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": ""
+                            }
                           }
                         ],
                         "isExactName": false
@@ -8484,7 +8658,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.LroPaging.postPagingLro.apiVersion",
@@ -8522,7 +8700,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -8560,7 +8742,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -8596,7 +8782,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -8627,15 +8817,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -8664,15 +8864,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -8703,7 +8913,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -8732,7 +8944,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false
@@ -8956,7 +9170,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.LroPaging.postPagingLroWithBody.apiVersion",
@@ -8998,7 +9216,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -9033,15 +9255,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -9070,15 +9302,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -9109,7 +9351,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -9138,7 +9382,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false
@@ -9527,7 +9773,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Legacy.routedGet.apiVersion",
@@ -9565,7 +9815,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -9603,7 +9857,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -9639,7 +9897,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -9670,15 +9932,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -9707,15 +9979,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -9974,7 +10256,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Legacy.createOrReplaceOptionalBody.apiVersion",
@@ -10016,7 +10302,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -10051,15 +10341,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -10088,15 +10388,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -10127,7 +10437,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -10156,7 +10468,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false
@@ -10476,7 +10790,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OptionalBody.get.apiVersion",
@@ -10514,7 +10832,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -10552,7 +10874,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -10588,7 +10914,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -10619,15 +10949,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -10656,15 +10996,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -10695,7 +11045,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -10724,7 +11076,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false
@@ -10889,7 +11243,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OptionalBody.patch.apiVersion",
@@ -10931,7 +11289,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -10966,15 +11328,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -11003,15 +11375,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -11042,7 +11424,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -11071,7 +11455,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false
@@ -11331,7 +11717,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OptionalBody.post.apiVersion",
@@ -11373,7 +11763,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -11408,15 +11802,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -11445,15 +11849,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -11484,7 +11898,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -11513,7 +11929,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false
@@ -11773,7 +12191,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OptionalBody.providerPost.apiVersion",
@@ -11815,7 +12237,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -12128,7 +12554,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Paging.get.apiVersion",
@@ -12166,7 +12596,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -12204,7 +12638,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -12240,7 +12678,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -12271,15 +12713,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -12308,15 +12760,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -12347,7 +12809,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -12376,7 +12840,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false
@@ -12541,7 +13007,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Paging.postActionPaging.apiVersion",
@@ -12583,7 +13053,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -12618,15 +13092,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -12655,15 +13139,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -12694,7 +13188,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -12723,7 +13219,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false
@@ -12998,7 +13496,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Paging.markAsPageable.apiVersion",
@@ -13040,7 +13542,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -13075,15 +13581,25 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[-\\w\\._\\(\\)]+$"
+                        }
                       },
                       {
                         "name": "TypeSpec.@maxLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       },
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -13112,15 +13628,25 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[-\\w\\._\\(\\)]+$"
+                            }
                           },
                           {
                             "name": "TypeSpec.@maxLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           },
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -13151,7 +13677,9 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@pattern",
-                        "arguments": {}
+                        "arguments": {
+                          "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -13180,7 +13708,9 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@pattern",
-                            "arguments": {}
+                            "arguments": {
+                              "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                            }
                           }
                         ],
                         "isExactName": false

@@ -3,11 +3,11 @@
 
 import { deepStrictEqual, strictEqual } from "assert";
 import { describe, it } from "vitest";
-import { removeUnusedDecoratorArguments } from "../src/decorator-sanitizer.js";
+import { removeModelDecoratorArguments } from "../src/decorator-sanitizer.js";
 import { armProviderSchema, clientOption } from "../src/sdk-context-options.js";
 
 describe("Decorator sanitizer", () => {
-  it("removes unused arguments without claiming shared references", () => {
+  it("removes only listed model decorator arguments", () => {
     const sharedType = {
       decorators: [
         {
@@ -16,8 +16,12 @@ describe("Decorator sanitizer", () => {
         }
       ]
     };
-    const unusedDecorator = {
+    const modelDecorator = {
       name: "Azure.ResourceManager.Private.@armResourceInternal",
+      arguments: { type: sharedType }
+    };
+    const unknownDecorator = {
+      name: "Contoso.@unknown",
       arguments: { type: sharedType }
     };
     const providerSchemaDecorator = {
@@ -30,17 +34,19 @@ describe("Decorator sanitizer", () => {
     };
     const codeModel = {
       decorators: [
-        unusedDecorator,
+        modelDecorator,
+        unknownDecorator,
         providerSchemaDecorator,
         clientOptionDecorator
       ],
       models: [sharedType]
     };
 
-    removeUnusedDecoratorArguments(codeModel);
+    removeModelDecoratorArguments(codeModel);
 
-    deepStrictEqual(unusedDecorator.arguments, {});
-    deepStrictEqual(sharedType.decorators[0].arguments, {});
+    deepStrictEqual(modelDecorator.arguments, {});
+    strictEqual(unknownDecorator.arguments.type, sharedType);
+    deepStrictEqual(sharedType.decorators[0].arguments, { value: 10 });
     strictEqual(providerSchemaDecorator.arguments.type, sharedType);
     deepStrictEqual(clientOptionDecorator.arguments, {
       name: "disable-safe-flatten",

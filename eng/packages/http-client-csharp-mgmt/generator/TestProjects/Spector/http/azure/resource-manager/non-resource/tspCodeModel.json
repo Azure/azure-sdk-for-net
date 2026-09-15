@@ -628,7 +628,11 @@
           "decorators": [
             {
               "name": "TypeSpec.@minLength",
-              "arguments": {}
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
             }
           ],
           "isExactName": false
@@ -727,7 +731,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.get.apiVersion",
@@ -769,7 +777,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,
@@ -805,7 +817,11 @@
                         "decorators": [
                           {
                             "name": "TypeSpec.@minLength",
-                            "arguments": {}
+                            "arguments": {
+                              "value": {
+                                "isInteger": true
+                              }
+                            }
                           }
                         ],
                         "isExactName": false
@@ -1063,7 +1079,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResourceOperations.create.apiVersion",
@@ -1105,7 +1125,11 @@
                     "decorators": [
                       {
                         "name": "TypeSpec.@minLength",
-                        "arguments": {}
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
                       }
                     ],
                     "readOnly": false,

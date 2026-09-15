@@ -1,9 +1,33 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { armProviderSchema, clientOption } from "./sdk-context-options.js";
+import {
+  armResourceAction,
+  armResourceCreateOrUpdate,
+  armResourceDelete,
+  armResourceInternal,
+  armResourceList,
+  armResourceOperations,
+  armResourceRead,
+  armResourceUpdate,
+  armResourceWithParameter,
+  parentResource
+} from "./sdk-context-options.js";
 
-export function removeUnusedDecoratorArguments(
+const decoratorsWithModelArguments = new Set([
+  parentResource,
+  armResourceOperations,
+  armResourceAction,
+  armResourceCreateOrUpdate,
+  armResourceRead,
+  armResourceUpdate,
+  armResourceDelete,
+  armResourceList,
+  armResourceInternal,
+  armResourceWithParameter
+]);
+
+export function removeModelDecoratorArguments(
   value: unknown,
   visited = new WeakSet<object>()
 ): void {
@@ -15,7 +39,7 @@ export function removeUnusedDecoratorArguments(
 
   if (Array.isArray(value)) {
     for (const item of value) {
-      removeUnusedDecoratorArguments(item, visited);
+      removeModelDecoratorArguments(item, visited);
     }
     return;
   }
@@ -27,8 +51,8 @@ export function removeUnusedDecoratorArguments(
         decorator !== null &&
         typeof decorator === "object" &&
         "name" in decorator &&
-        decorator.name !== armProviderSchema &&
-        decorator.name !== clientOption
+        typeof decorator.name === "string" &&
+        decoratorsWithModelArguments.has(decorator.name)
       ) {
         decorator.arguments = {};
       }
@@ -36,6 +60,6 @@ export function removeUnusedDecoratorArguments(
   }
 
   for (const child of Object.values(record)) {
-    removeUnusedDecoratorArguments(child, visited);
+    removeModelDecoratorArguments(child, visited);
   }
 }
