@@ -21,6 +21,23 @@
             }
           }
         },
+        "ContentProvenanceClient": {
+          "type": "object",
+          "description": "Configuration for ContentProvenanceClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/contentSafetyClientOptions"
+            }
+          }
+        },
         "BlocklistClient": {
           "type": "object",
           "description": "Configuration for BlocklistClient.",
