@@ -341,6 +341,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.A2A)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.BrowserAutomation)]
+    // The GA-ed version of Browser Automation tool is not supported yet.
+    // [TestCase(ToolType.BrowserAutomationGA)]
     [TestCase(ToolType.WorkIQ)]
     [TestCase(ToolType.FabricIQ)]
     [TestCase(ToolType.ReminderPreview)]

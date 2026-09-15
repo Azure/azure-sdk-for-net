@@ -13,9 +13,9 @@ using OpenAI.Responses;
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 #pragma warning disable AAIP001
 
-public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
+public class Sample_BrowserAutomotionPreview : ProjectsOpenAITestBase
 {
-    #region Snippet:Sample_ParseResponse_BrowserAutomotion
+    #region Snippet:Sample_ParseResponse_BrowserAutomotionPreview
     private static void ParseResponse(StreamingResponseUpdate streamResponse)
     {
         if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
@@ -39,10 +39,10 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 
     [Test]
     [AsyncOnly]
-    public async Task BrowserAutomotionAsync()
+    public async Task BrowserAutomotionPreviewAsync()
     {
         IgnoreSampleMayBe();
-        #region Snippet:Sample_CreateProjectClient_BrowserAutomotion
+        #region Snippet:Sample_CreateProjectClient_BrowserAutomotionPreview
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
@@ -59,7 +59,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 
         #endregion
-        #region Snippet:Sample_CreateAgent_BrowserAutomotion_Async
+        #region Snippet:Sample_CreateAgent_BrowserAutomotionPreview_Async
         AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
         BrowserAutomationPreviewTool playwrightTool = new(
             new BrowserAutomationToolOptions(
@@ -77,7 +77,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        #region Snippet:Sample_CreateResponse_BrowserAutomotion_Async
+        #region Snippet:Sample_CreateResponse_BrowserAutomotionPreview_Async
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
@@ -99,14 +99,14 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         }
         #endregion
 
-        #region Snippet:Sample_Cleanup_BrowserAutomotion_Async
+        #region Snippet:Sample_Cleanup_BrowserAutomotionPreview_Async
         await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
     [Test]
     [SyncOnly]
-    public void BrowserAutomotion()
+    public void BrowserAutomotionPreview()
     {
         IgnoreSampleMayBe();
 #if SNIPPET
@@ -123,7 +123,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             NetworkTimeout = TimeSpan.FromMinutes(5)
         };
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
-        #region Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
+        #region Snippet:Sample_CreateAgent_BrowserAutomotionPreview_Sync
         AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
         BrowserAutomationPreviewTool playwrightTool = new(
             new BrowserAutomationToolOptions(
@@ -141,7 +141,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             agentName: "myAgent",
             options: new(agentDefinition));
         #endregion
-        #region Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
+        #region Snippet:Sample_CreateResponse_BrowserAutomotionPreview_Sync
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         CreateResponseOptions responseOptions = new()
         {
@@ -163,11 +163,11 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         }
         #endregion
 
-        #region Snippet:Sample_Cleanup_BrowserAutomotion_Sync
+        #region Snippet:Sample_Cleanup_BrowserAutomotionPreview_Sync
         projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         #endregion
     }
 
-    public Sample_BrowserAutomotion(bool isAsync) : base(isAsync)
+    public Sample_BrowserAutomotionPreview(bool isAsync) : base(isAsync)
     { }
 }
