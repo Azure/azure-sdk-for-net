@@ -18,34 +18,6 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
     public static partial class ArmManufacturingPlatformModelFactory
     {
 
-        /// <summary> A ManufacturingPlatformProviderHub resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <returns> A new <see cref="ManufacturingPlatform.ManufacturingDataServiceData"/> instance for mocking. </returns>
-        public static ManufacturingDataServiceData ManufacturingDataServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManufacturingDataServiceProperties properties = default, ManagedServiceIdentity identity = default, ManufacturingPlatformSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ManufacturingDataServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                sku,
-                default);
-        }
-
         /// <summary> The properties related to Azure Data Explorer (Adx) Resource. </summary>
         /// <param name="id"> Resource Id of Adx Resource. </param>
         /// <param name="uri"> Uri of Adx Resource. </param>
@@ -136,6 +108,34 @@ namespace Azure.ResourceManager.ManufacturingPlatform.Models
         public static DenyAssignmentExclusion DenyAssignmentExclusion(string id = default, string @type = default)
         {
             return new DenyAssignmentExclusion(id, @type, default);
+        }
+
+        /// <summary> A ManufacturingPlatformProviderHub resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
+        /// <returns> A new <see cref="ManufacturingPlatform.ManufacturingDataServiceData"/> instance for mocking. </returns>
+        public static ManufacturingDataServiceData ManufacturingDataServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManufacturingDataServiceProperties properties = default, ManagedServiceIdentity identity = default, ManufacturingPlatformSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ManufacturingDataServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                sku,
+                default);
         }
 
         /// <summary> The resource model definition representing SKU. </summary>

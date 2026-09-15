@@ -20,32 +20,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public static partial class ArmMongoClusterModelFactory
     {
 
-        /// <summary> Represents a mongo cluster resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="MongoCluster.MongoClusterData"/> instance for mocking. </returns>
-        public static MongoClusterData MongoClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MongoClusterProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MongoClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
-        }
-
         /// <param name="createMode"> The mode to create a mongo cluster. </param>
         /// <param name="restoreParameters"> The parameters to create a point-in-time restore mongo cluster. </param>
         /// <param name="replicaParameters"> The parameters to create a replica mongo cluster. </param>
@@ -205,6 +179,32 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterKeyEncryptionKeyIdentity(identityType, userAssignedIdentityResourceId, default);
         }
 
+        /// <summary> Represents a mongo cluster resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="MongoCluster.MongoClusterData"/> instance for mocking. </returns>
+        public static MongoClusterData MongoClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MongoClusterProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MongoClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
         /// <summary> The type used for update operations of the MongoCluster. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -300,6 +300,16 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new PromoteReplicaContent(promoteOption, mode, default);
         }
 
+        /// <summary> The properties of a mongo cluster firewall rule. </summary>
+        /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
+        /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
+        /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
+        /// <returns> A new <see cref="Models.MongoClusterFirewallRuleProperties"/> instance for mocking. </returns>
+        public static MongoClusterFirewallRuleProperties MongoClusterFirewallRuleProperties(MongoClusterProvisioningState? provisioningState = default, string startIPAddress = default, string endIPAddress = default)
+        {
+            return new MongoClusterFirewallRuleProperties(provisioningState, startIPAddress, endIPAddress, default);
+        }
+
         /// <summary> Represents a mongo cluster firewall rule. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -316,16 +326,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> The properties of a mongo cluster firewall rule. </summary>
-        /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
-        /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
-        /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
-        /// <returns> A new <see cref="Models.MongoClusterFirewallRuleProperties"/> instance for mocking. </returns>
-        public static MongoClusterFirewallRuleProperties MongoClusterFirewallRuleProperties(MongoClusterProvisioningState? provisioningState = default, string startIPAddress = default, string endIPAddress = default)
-        {
-            return new MongoClusterFirewallRuleProperties(provisioningState, startIPAddress, endIPAddress, default);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -395,24 +395,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
-        /// <summary> Represents a Mongo cluster user. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="MongoCluster.MongoClusterUserData"/> instance for mocking. </returns>
-        public static MongoClusterUserData MongoClusterUserData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoClusterUserProperties properties = default)
-        {
-            return new MongoClusterUserData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Definition of Mongo user resource on a cluster. </summary>
         /// <param name="provisioningState"> The provisioning state of the user. </param>
         /// <param name="identityProvider"> The user's identity provider definition. </param>
@@ -458,6 +440,24 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static MongoClusterDatabaseRole MongoClusterDatabaseRole(string db = default, MongoClusterUserRole role = default)
         {
             return new MongoClusterDatabaseRole(db, role, default);
+        }
+
+        /// <summary> Represents a Mongo cluster user. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MongoCluster.MongoClusterUserData"/> instance for mocking. </returns>
+        public static MongoClusterUserData MongoClusterUserData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoClusterUserProperties properties = default)
+        {
+            return new MongoClusterUserData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> The properties of a mongo cluster. </summary>

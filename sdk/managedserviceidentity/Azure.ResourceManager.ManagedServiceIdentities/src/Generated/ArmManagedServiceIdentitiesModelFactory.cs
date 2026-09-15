@@ -45,26 +45,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="issuerUri"> The URL of the issuer to be trusted. </param>
-        /// <param name="subject"> The identifier of the external identity. </param>
-        /// <param name="audiences"> The list of audiences that can appear in the issued token. </param>
-        /// <param name="claimsMatchingExpression"> Object for defining the allowed identifiers of external identities. Either 'subject' or 'claimsMatchingExpression' must be defined, but not both. Introduced in 2025-01-31-preview. </param>
-        /// <returns> A new <see cref="ManagedServiceIdentities.FederatedIdentityCredentialData"/> instance for mocking. </returns>
-        public static FederatedIdentityCredentialData FederatedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri issuerUri, string subject, IEnumerable<string> audiences, FederatedIdentityClaimsMatchingExpression claimsMatchingExpression)
-        {
-            return new FederatedIdentityCredentialData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                issuerUri is null && subject is null && audiences is null && claimsMatchingExpression is null ? default : new FederatedIdentityCredentialProperties(issuerUri, subject, (audiences ?? new ChangeTrackingList<string>()).ToList(), claimsMatchingExpression, default),
-                default);
-        }
-
         /// <summary> Object for defining the allowed identifiers of external identities. Introduced in 2025-01-31-preview. </summary>
         /// <param name="value"> Wildcard-based expression for matching incoming subject claims. </param>
         /// <param name="languageVersion"> Specifies the version of the flexible fic language used in the expression. </param>
@@ -104,6 +84,26 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     isolationScope,
                     assignmentRestrictionsProviders is null ? default : new AssignmentRestrictions((assignmentRestrictionsProviders ?? new ChangeTrackingList<string>()).ToList(), default),
                     default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="issuerUri"> The URL of the issuer to be trusted. </param>
+        /// <param name="subject"> The identifier of the external identity. </param>
+        /// <param name="audiences"> The list of audiences that can appear in the issued token. </param>
+        /// <param name="claimsMatchingExpression"> Object for defining the allowed identifiers of external identities. Either 'subject' or 'claimsMatchingExpression' must be defined, but not both. Introduced in 2025-01-31-preview. </param>
+        /// <returns> A new <see cref="ManagedServiceIdentities.FederatedIdentityCredentialData"/> instance for mocking. </returns>
+        public static FederatedIdentityCredentialData FederatedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri issuerUri, string subject, IEnumerable<string> audiences, FederatedIdentityClaimsMatchingExpression claimsMatchingExpression)
+        {
+            return new FederatedIdentityCredentialData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                issuerUri is null && subject is null && audiences is null && claimsMatchingExpression is null ? default : new FederatedIdentityCredentialProperties(issuerUri, subject, (audiences ?? new ChangeTrackingList<string>()).ToList(), claimsMatchingExpression, default),
                 default);
         }
 

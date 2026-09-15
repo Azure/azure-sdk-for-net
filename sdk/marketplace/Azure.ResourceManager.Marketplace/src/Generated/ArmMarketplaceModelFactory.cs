@@ -48,6 +48,16 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new SetRulesContent((value ?? new ChangeTrackingList<MarketplaceRule>()).ToList(), nextLink, default);
         }
 
+        /// <summary> Describes the json payload for a notified recipient for new requests. </summary>
+        /// <param name="principalId"> Principal ID. </param>
+        /// <param name="emailAddress"> Email Address. </param>
+        /// <param name="displayName"> Display Name. </param>
+        /// <returns> A new <see cref="Models.NotificationRecipient"/> instance for mocking. </returns>
+        public static NotificationRecipient NotificationRecipient(Guid? principalId = default, string emailAddress = default, string displayName = default)
+        {
+            return new NotificationRecipient(principalId, emailAddress, displayName, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -82,16 +92,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                     recipients is null && sendToAllMarketplaceAdmins is null ? default : new NotificationsSettingsProperties((recipients ?? new ChangeTrackingList<NotificationRecipient>()).ToList(), sendToAllMarketplaceAdmins, default),
                     default),
                 default);
-        }
-
-        /// <summary> Describes the json payload for a notified recipient for new requests. </summary>
-        /// <param name="principalId"> Principal ID. </param>
-        /// <param name="emailAddress"> Email Address. </param>
-        /// <param name="displayName"> Display Name. </param>
-        /// <returns> A new <see cref="Models.NotificationRecipient"/> instance for mocking. </returns>
-        public static NotificationRecipient NotificationRecipient(Guid? principalId = default, string emailAddress = default, string displayName = default)
-        {
-            return new NotificationRecipient(principalId, emailAddress, displayName, default);
         }
 
         /// <summary> Response object of query if are there existing offers in the collections. </summary>
@@ -449,6 +449,26 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new SubscriptionsContextList((subscriptionsIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Return plan with request details. </summary>
+        /// <param name="planId"> Gets or sets Plan Id. </param>
+        /// <param name="status"> Gets the plan status. </param>
+        /// <param name="requestDate"> Gets request date. </param>
+        /// <param name="justification"> Gets or sets user's justification for the plan's request. </param>
+        /// <param name="subscriptionId"> Gets or sets the subscription id that the user is requesting to add the plan to. </param>
+        /// <param name="subscriptionName"> Gets or sets the subscription name that the user is requesting to add the plan to. </param>
+        /// <returns> A new <see cref="Models.PrivateStorePlanDetails"/> instance for mocking. </returns>
+        public static PrivateStorePlanDetails PrivateStorePlanDetails(string planId = default, PrivateStorePlanStatus? status = default, BinaryData requestDate = default, string justification = default, string subscriptionId = default, string subscriptionName = default)
+        {
+            return new PrivateStorePlanDetails(
+                planId,
+                status,
+                requestDate,
+                justification,
+                subscriptionId,
+                subscriptionName,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -475,26 +495,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                     isClosed,
                     messageCode,
                     default),
-                default);
-        }
-
-        /// <summary> Return plan with request details. </summary>
-        /// <param name="planId"> Gets or sets Plan Id. </param>
-        /// <param name="status"> Gets the plan status. </param>
-        /// <param name="requestDate"> Gets request date. </param>
-        /// <param name="justification"> Gets or sets user's justification for the plan's request. </param>
-        /// <param name="subscriptionId"> Gets or sets the subscription id that the user is requesting to add the plan to. </param>
-        /// <param name="subscriptionName"> Gets or sets the subscription name that the user is requesting to add the plan to. </param>
-        /// <returns> A new <see cref="Models.PrivateStorePlanDetails"/> instance for mocking. </returns>
-        public static PrivateStorePlanDetails PrivateStorePlanDetails(string planId = default, PrivateStorePlanStatus? status = default, BinaryData requestDate = default, string justification = default, string subscriptionId = default, string subscriptionName = default)
-        {
-            return new PrivateStorePlanDetails(
-                planId,
-                status,
-                requestDate,
-                justification,
-                subscriptionId,
-                subscriptionName,
                 default);
         }
 
@@ -525,6 +525,36 @@ namespace Azure.ResourceManager.Marketplace.Models
         public static WithdrawPlanContent WithdrawPlanContent(string planId = default, string publisherId = default)
         {
             return new WithdrawPlanContent(planId is null && publisherId is null ? default : new WithdrawDetails(planId, publisherId, default), default);
+        }
+
+        /// <summary> Plan with requesters details. </summary>
+        /// <param name="planId"> Gets the plan id. </param>
+        /// <param name="planDisplayName"> Gets the plan display name. </param>
+        /// <param name="requesters"> Gets requesters details list. </param>
+        /// <returns> A new <see cref="Models.PlanRequesterDetails"/> instance for mocking. </returns>
+        public static PlanRequesterDetails PlanRequesterDetails(string planId = default, string planDisplayName = default, IEnumerable<PlanRequesterInfo> requesters = default)
+        {
+            requesters ??= new ChangeTrackingList<PlanRequesterInfo>();
+
+            return new PlanRequesterDetails(planId, planDisplayName, (requesters ?? new ChangeTrackingList<PlanRequesterInfo>()).ToList(), default);
+        }
+
+        /// <summary> user request details. </summary>
+        /// <param name="user"> Gets user id. </param>
+        /// <param name="date"> Gets request date. </param>
+        /// <param name="justification"> Gets justification. </param>
+        /// <param name="subscriptionId"> Gets the subscription id that the user is requesting to add the plan to. </param>
+        /// <param name="subscriptionName"> Gets the subscription name that the user is requesting to add the plan to. </param>
+        /// <returns> A new <see cref="Models.PlanRequesterInfo"/> instance for mocking. </returns>
+        public static PlanRequesterInfo PlanRequesterInfo(string user = default, string date = default, string justification = default, string subscriptionId = default, string subscriptionName = default)
+        {
+            return new PlanRequesterInfo(
+                user,
+                date,
+                justification,
+                subscriptionId,
+                subscriptionName,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -561,36 +591,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                     (collectionIds ?? new ChangeTrackingList<Guid>()).ToList(),
                     iconUri,
                     default),
-                default);
-        }
-
-        /// <summary> Plan with requesters details. </summary>
-        /// <param name="planId"> Gets the plan id. </param>
-        /// <param name="planDisplayName"> Gets the plan display name. </param>
-        /// <param name="requesters"> Gets requesters details list. </param>
-        /// <returns> A new <see cref="Models.PlanRequesterDetails"/> instance for mocking. </returns>
-        public static PlanRequesterDetails PlanRequesterDetails(string planId = default, string planDisplayName = default, IEnumerable<PlanRequesterInfo> requesters = default)
-        {
-            requesters ??= new ChangeTrackingList<PlanRequesterInfo>();
-
-            return new PlanRequesterDetails(planId, planDisplayName, (requesters ?? new ChangeTrackingList<PlanRequesterInfo>()).ToList(), default);
-        }
-
-        /// <summary> user request details. </summary>
-        /// <param name="user"> Gets user id. </param>
-        /// <param name="date"> Gets request date. </param>
-        /// <param name="justification"> Gets justification. </param>
-        /// <param name="subscriptionId"> Gets the subscription id that the user is requesting to add the plan to. </param>
-        /// <param name="subscriptionName"> Gets the subscription name that the user is requesting to add the plan to. </param>
-        /// <returns> A new <see cref="Models.PlanRequesterInfo"/> instance for mocking. </returns>
-        public static PlanRequesterInfo PlanRequesterInfo(string user = default, string date = default, string justification = default, string subscriptionId = default, string subscriptionName = default)
-        {
-            return new PlanRequesterInfo(
-                user,
-                date,
-                justification,
-                subscriptionId,
-                subscriptionName,
                 default);
         }
 

@@ -19,6 +19,45 @@ namespace Azure.ResourceManager.Maintenance.Models
     public static partial class ArmMaintenanceModelFactory
     {
 
+        /// <summary> Input configuration for a patch run. </summary>
+        /// <param name="rebootSetting"> Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed. </param>
+        /// <param name="windowsPatchSettings"> Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property. </param>
+        /// <param name="linuxPatchSettings"> Input parameters specific to patching Linux machine. For Windows machines, do not pass this property. </param>
+        /// <returns> A new <see cref="Models.MaintenancePatchConfiguration"/> instance for mocking. </returns>
+        public static MaintenancePatchConfiguration MaintenancePatchConfiguration(MaintenanceRebootOption? rebootSetting = default, MaintenanceWindowsPatchSettings windowsPatchSettings = default, MaintenanceLinuxPatchSettings linuxPatchSettings = default)
+        {
+            return new MaintenancePatchConfiguration(rebootSetting, windowsPatchSettings, linuxPatchSettings, default);
+        }
+
+        /// <summary> Input properties for patching a Windows machine. </summary>
+        /// <param name="kbNumbersToExclude"> Windows KBID to be excluded for patching. </param>
+        /// <param name="kbNumbersToInclude"> Windows KBID to be included for patching. </param>
+        /// <param name="classificationsToInclude"> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', 'UpdateRollup', 'FeaturePack', 'ServicePack', 'Definition', 'Tools', and 'Updates'. </param>
+        /// <param name="isExcludeKbsRebootRequired"> Exclude patches which need reboot. </param>
+        /// <returns> A new <see cref="Models.MaintenanceWindowsPatchSettings"/> instance for mocking. </returns>
+        public static MaintenanceWindowsPatchSettings MaintenanceWindowsPatchSettings(IEnumerable<string> kbNumbersToExclude = default, IEnumerable<string> kbNumbersToInclude = default, IEnumerable<string> classificationsToInclude = default, bool? isExcludeKbsRebootRequired = default)
+        {
+            kbNumbersToExclude ??= new ChangeTrackingList<string>();
+            kbNumbersToInclude ??= new ChangeTrackingList<string>();
+            classificationsToInclude ??= new ChangeTrackingList<string>();
+
+            return new MaintenanceWindowsPatchSettings((kbNumbersToExclude ?? new ChangeTrackingList<string>()).ToList(), (kbNumbersToInclude ?? new ChangeTrackingList<string>()).ToList(), (classificationsToInclude ?? new ChangeTrackingList<string>()).ToList(), isExcludeKbsRebootRequired, default);
+        }
+
+        /// <summary> Input properties for patching a Linux machine. </summary>
+        /// <param name="packageNameMasksToExclude"> Package names to be excluded for patching. </param>
+        /// <param name="packageNameMasksToInclude"> Package names to be included for patching. </param>
+        /// <param name="classificationsToInclude"> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', and 'Other'. </param>
+        /// <returns> A new <see cref="Models.MaintenanceLinuxPatchSettings"/> instance for mocking. </returns>
+        public static MaintenanceLinuxPatchSettings MaintenanceLinuxPatchSettings(IEnumerable<string> packageNameMasksToExclude = default, IEnumerable<string> packageNameMasksToInclude = default, IEnumerable<string> classificationsToInclude = default)
+        {
+            packageNameMasksToExclude ??= new ChangeTrackingList<string>();
+            packageNameMasksToInclude ??= new ChangeTrackingList<string>();
+            classificationsToInclude ??= new ChangeTrackingList<string>();
+
+            return new MaintenanceLinuxPatchSettings((packageNameMasksToExclude ?? new ChangeTrackingList<string>()).ToList(), (packageNameMasksToInclude ?? new ChangeTrackingList<string>()).ToList(), (classificationsToInclude ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -64,45 +103,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                 default);
         }
 
-        /// <summary> Input configuration for a patch run. </summary>
-        /// <param name="rebootSetting"> Possible reboot preference as defined by the user based on which it would be decided to reboot the machine or not after the patch operation is completed. </param>
-        /// <param name="windowsPatchSettings"> Input parameters specific to patching a Windows machine. For Linux machines, do not pass this property. </param>
-        /// <param name="linuxPatchSettings"> Input parameters specific to patching Linux machine. For Windows machines, do not pass this property. </param>
-        /// <returns> A new <see cref="Models.MaintenancePatchConfiguration"/> instance for mocking. </returns>
-        public static MaintenancePatchConfiguration MaintenancePatchConfiguration(MaintenanceRebootOption? rebootSetting = default, MaintenanceWindowsPatchSettings windowsPatchSettings = default, MaintenanceLinuxPatchSettings linuxPatchSettings = default)
-        {
-            return new MaintenancePatchConfiguration(rebootSetting, windowsPatchSettings, linuxPatchSettings, default);
-        }
-
-        /// <summary> Input properties for patching a Windows machine. </summary>
-        /// <param name="kbNumbersToExclude"> Windows KBID to be excluded for patching. </param>
-        /// <param name="kbNumbersToInclude"> Windows KBID to be included for patching. </param>
-        /// <param name="classificationsToInclude"> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', 'UpdateRollup', 'FeaturePack', 'ServicePack', 'Definition', 'Tools', and 'Updates'. </param>
-        /// <param name="isExcludeKbsRebootRequired"> Exclude patches which need reboot. </param>
-        /// <returns> A new <see cref="Models.MaintenanceWindowsPatchSettings"/> instance for mocking. </returns>
-        public static MaintenanceWindowsPatchSettings MaintenanceWindowsPatchSettings(IEnumerable<string> kbNumbersToExclude = default, IEnumerable<string> kbNumbersToInclude = default, IEnumerable<string> classificationsToInclude = default, bool? isExcludeKbsRebootRequired = default)
-        {
-            kbNumbersToExclude ??= new ChangeTrackingList<string>();
-            kbNumbersToInclude ??= new ChangeTrackingList<string>();
-            classificationsToInclude ??= new ChangeTrackingList<string>();
-
-            return new MaintenanceWindowsPatchSettings((kbNumbersToExclude ?? new ChangeTrackingList<string>()).ToList(), (kbNumbersToInclude ?? new ChangeTrackingList<string>()).ToList(), (classificationsToInclude ?? new ChangeTrackingList<string>()).ToList(), isExcludeKbsRebootRequired, default);
-        }
-
-        /// <summary> Input properties for patching a Linux machine. </summary>
-        /// <param name="packageNameMasksToExclude"> Package names to be excluded for patching. </param>
-        /// <param name="packageNameMasksToInclude"> Package names to be included for patching. </param>
-        /// <param name="classificationsToInclude"> Classification category of patches to be patched. Allowed values are 'Critical', 'Security', and 'Other'. </param>
-        /// <returns> A new <see cref="Models.MaintenanceLinuxPatchSettings"/> instance for mocking. </returns>
-        public static MaintenanceLinuxPatchSettings MaintenanceLinuxPatchSettings(IEnumerable<string> packageNameMasksToExclude = default, IEnumerable<string> packageNameMasksToInclude = default, IEnumerable<string> classificationsToInclude = default)
-        {
-            packageNameMasksToExclude ??= new ChangeTrackingList<string>();
-            packageNameMasksToInclude ??= new ChangeTrackingList<string>();
-            classificationsToInclude ??= new ChangeTrackingList<string>();
-
-            return new MaintenanceLinuxPatchSettings((packageNameMasksToExclude ?? new ChangeTrackingList<string>()).ToList(), (packageNameMasksToInclude ?? new ChangeTrackingList<string>()).ToList(), (classificationsToInclude ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -119,27 +119,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                 resourceType,
                 systemData,
                 status is null && resourceId is null && lastUpdatedOn is null ? default : new ApplyUpdateProperties(status, resourceId, lastUpdatedOn, default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
-        /// <param name="resourceId"> The unique resourceId. </param>
-        /// <param name="filter"> Properties of the configuration assignment. </param>
-        /// <param name="location"> Location of the resource. </param>
-        /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
-        public static Maintenance.MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier maintenanceConfigurationId = default, ResourceIdentifier resourceId = default, MaintenanceConfigurationAssignmentFilter filter = default, AzureLocation? location = default)
-        {
-            return new Maintenance.MaintenanceConfigurationAssignmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                maintenanceConfigurationId is null && resourceId is null && filter is null ? default : new ConfigurationAssignmentProperties(maintenanceConfigurationId, resourceId, filter, default),
-                location,
                 default);
         }
 
@@ -175,6 +154,27 @@ namespace Azure.ResourceManager.Maintenance.Models
             tags ??= new ChangeTrackingDictionary<string, IList<string>>();
 
             return new MaintenanceVmTagSettings(tags ?? new ChangeTrackingDictionary<string, IList<string>>(), filterOperator, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
+        /// <param name="resourceId"> The unique resourceId. </param>
+        /// <param name="filter"> Properties of the configuration assignment. </param>
+        /// <param name="location"> Location of the resource. </param>
+        /// <returns> A new <see cref="Maintenance.MaintenanceConfigurationAssignmentData"/> instance for mocking. </returns>
+        public static Maintenance.MaintenanceConfigurationAssignmentData MaintenanceConfigurationAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier maintenanceConfigurationId = default, ResourceIdentifier resourceId = default, MaintenanceConfigurationAssignmentFilter filter = default, AzureLocation? location = default)
+        {
+            return new Maintenance.MaintenanceConfigurationAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                maintenanceConfigurationId is null && resourceId is null && filter is null ? default : new ConfigurationAssignmentProperties(maintenanceConfigurationId, resourceId, filter, default),
+                location,
+                default);
         }
 
         /// <summary> Response of ScheduledEvents acknowledge. </summary>
