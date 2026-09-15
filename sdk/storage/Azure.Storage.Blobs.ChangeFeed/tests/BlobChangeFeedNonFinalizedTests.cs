@@ -77,6 +77,105 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         [Test]
+        public async Task GetPage_IncludeNonFinalizedEventsFalse_BoundsEventsAtLastConsumableExclusive()
+        {
+            // Bucket 08:30 with a watermark 30 seconds inside it, so the boundary segment is not
+            // gated whole and we can observe the event-level (exclusive) cap.
+            DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 8, 30, 0, TimeSpan.Zero);
+            DateTimeOffset watermark = bucket.AddSeconds(30);
+
+            List<BlobChangeFeedEvent> events = new List<BlobChangeFeedEvent>
+            {
+                BuildEvent(bucket.AddSeconds(10)), // before watermark - returned
+                BuildEvent(watermark),             // == watermark - excluded (exclusive)
+                BuildEvent(bucket.AddSeconds(40)), // after watermark - excluded
+            };
+
+            List<BlobChangeFeedEvent> collected = await CollectAsync(bucket, events, watermark, includeNonFinalizedEvents: false);
+
+            Assert.AreEqual(1, collected.Count);
+            Assert.AreEqual(bucket.AddSeconds(10), collected[0].EventTime);
+        }
+
+        [Test]
+        public async Task GetPage_IncludeNonFinalizedEventsTrue_ReturnsEventsPastLastConsumable()
+        {
+            DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 8, 30, 0, TimeSpan.Zero);
+            DateTimeOffset watermark = bucket.AddSeconds(30);
+
+            List<BlobChangeFeedEvent> events = new List<BlobChangeFeedEvent>
+            {
+                BuildEvent(bucket.AddSeconds(10)),
+                BuildEvent(watermark),
+                BuildEvent(bucket.AddSeconds(40)),
+            };
+
+            List<BlobChangeFeedEvent> collected = await CollectAsync(bucket, events, watermark, includeNonFinalizedEvents: true);
+
+            Assert.AreEqual(3, collected.Count);
+        }
+
+        private async Task<List<BlobChangeFeedEvent>> CollectAsync(
+            DateTimeOffset bucket,
+            List<BlobChangeFeedEvent> events,
+            DateTimeOffset lastConsumable,
+            bool includeNonFinalizedEvents)
+        {
+            SegmentBase<BlobChangeFeedEvent> segment = BuildSegmentWithEvents(
+                $"idx/segments/{bucket:yyyy/MM/dd}/{bucket:HHmm}/meta.json", bucket, events);
+
+            Mock<BlobContainerClient> container = new Mock<BlobContainerClient>(MockBehavior.Loose);
+            container.Setup(c => c.Uri).Returns(new Uri("https://account.blob.core.windows.net/$blobchangefeed"));
+
+            ChangeFeedBase<BlobChangeFeedEvent> changeFeed = new ChangeFeedBase<BlobChangeFeedEvent>(
+                containerClient: container.Object,
+                segmentFactory: new Mock<SegmentFactoryBase<BlobChangeFeedEvent>>().Object,
+                years: new Queue<string>(),
+                segments: new Queue<string>(),
+                currentSegment: segment,
+                lastConsumable: lastConsumable,
+                startTime: null,
+                endTime: null,
+                config: BlobChangeFeedClient.CreateConfiguration(),
+                includeNonFinalizedEvents: includeNonFinalizedEvents,
+                disableEventTimeFilter: false);
+
+            List<BlobChangeFeedEvent> collected = new List<BlobChangeFeedEvent>();
+            while (changeFeed.HasNext())
+            {
+                foreach (BlobChangeFeedEvent e in (await changeFeed.GetPage(IsAsync, pageSize: 5000, CancellationToken.None)).Values)
+                {
+                    collected.Add(e);
+                }
+            }
+
+            return collected;
+        }
+
+        private static BlobChangeFeedEvent BuildEvent(DateTimeOffset eventTime)
+            => new BlobChangeFeedEvent { EventTime = eventTime, Id = Guid.NewGuid() };
+
+        private static SegmentBase<BlobChangeFeedEvent> BuildSegmentWithEvents(
+            string manifestPath,
+            DateTimeOffset segmentTime,
+            List<BlobChangeFeedEvent> events)
+        {
+            int index = 0;
+            Mock<ShardBase<BlobChangeFeedEvent>> shard = new Mock<ShardBase<BlobChangeFeedEvent>>();
+            shard.Setup(s => s.HasNext()).Returns(() => index < events.Count);
+            shard.Setup(s => s.Next(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => events[index++]);
+            shard.Setup(s => s.ShardPath).Returns("log/00/" + manifestPath);
+            shard.Setup(s => s.GetCursor()).Returns(new ShardCursor("chunk0", 0, 0));
+
+            return new SegmentBase<BlobChangeFeedEvent>(
+                new List<ShardBase<BlobChangeFeedEvent>> { shard.Object },
+                shardIndex: 0,
+                dateTime: segmentTime,
+                manifestPath: manifestPath);
+        }
+
+        [Test]
         public async Task BuildChangeFeed_IncludeNonFinalizedEventsTrue_NoMetadata_StillScansSegments()
         {
             // When meta/segments.json is missing (brand-new change feed), the default reader returns
