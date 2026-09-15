@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="permissionProfile"> The type of permission which determines which accounts are admins on the Azure DevOps pool. </param>
         /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
         /// <returns> A new <see cref="Models.DevOpsAzureOrganizationProfile"/> instance for mocking. </returns>
-        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(string description = default, bool? updateDescription = default, IEnumerable<DevOpsOrganization> organizations = default, DevOpsAzurePermissionProfile permissionProfile = default, string @alias = default)
+        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(string description, bool? updateDescription, IEnumerable<DevOpsOrganization> organizations, DevOpsAzurePermissionProfile permissionProfile, string @alias = default)
         {
             organizations ??= new ChangeTrackingList<DevOpsOrganization>();
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="storageProfile"> The storage profile of the machines in the pool. </param>
         /// <param name="networkProfile"> The network profile of the machines in the pool. </param>
         /// <returns> A new <see cref="Models.DevOpsVmssFabricProfile"/> instance for mocking. </returns>
-        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(DevOpsAzureSku sku = default, IEnumerable<DevOpsPoolVmImage> images = default, DevOpsOSProfile osProfile = default, DevOpsStorageProfile storageProfile = default, DevOpsNetworkProfile networkProfile = default)
+        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(DevOpsAzureSku sku, IEnumerable<DevOpsPoolVmImage> images, DevOpsOSProfile osProfile, DevOpsStorageProfile storageProfile, DevOpsNetworkProfile networkProfile)
         {
             images ??= new ChangeTrackingList<DevOpsPoolVmImage>();
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="provisioningScriptShouldRestart"> Determines whether the machine should be restarted after provisioning script execution for this image. </param>
         /// <param name="provisioningScriptEntryPoint"> The provisioning script entry point for this image. </param>
         /// <returns> A new <see cref="Models.DevOpsPoolVmImage"/> instance for mocking. </returns>
-        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = default, string wellKnownImageName = default, IEnumerable<string> aliases = default, string buffer = default, DevOpsEphemeralType? ephemeralType = default, bool? isEphemeral = default, ResourceIdentifier provisioningScriptStorageAccountResourceId = default, string provisioningScriptManagedIdentityClientId = default, bool? provisioningScriptShouldRestart = default, string provisioningScriptEntryPoint = default)
+        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId, string wellKnownImageName, IEnumerable<string> aliases, string buffer, DevOpsEphemeralType? ephemeralType, bool? isEphemeral, ResourceIdentifier provisioningScriptStorageAccountResourceId, string provisioningScriptManagedIdentityClientId = default, bool? provisioningScriptShouldRestart = default, string provisioningScriptEntryPoint = default)
         {
             aliases ??= new ChangeTrackingList<string>();
 

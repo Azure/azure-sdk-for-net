@@ -7,7 +7,6 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
-    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:
@@ -21,6 +20,10 @@ updates:
     ignore:
       # Updated manually to align with minimum supported Node version
       - dependency-name: "@types/node"
+      # Updated by a separate generator upgrade process
+      - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
+      - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
         patterns:
@@ -39,7 +42,6 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
-    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:
@@ -53,6 +55,10 @@ updates:
     ignore:
       # Updated manually to align with minimum supported Node version
       - dependency-name: "@types/node"
+      # Updated by a separate generator upgrade process
+      - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
+      - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
         patterns:
@@ -71,7 +77,6 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
-    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:
@@ -85,6 +90,10 @@ updates:
     ignore:
       # Updated manually to align with minimum supported Node version
       - dependency-name: "@types/node"
+      # Updated by a separate generator upgrade process
+      - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
+      - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
         patterns:
@@ -103,7 +112,6 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
-    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:
@@ -117,6 +125,10 @@ updates:
     ignore:
       # Updated manually to align with minimum supported Node version
       - dependency-name: "@types/node"
+      # Updated by a separate generator upgrade process
+      - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
+      - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
         patterns:
