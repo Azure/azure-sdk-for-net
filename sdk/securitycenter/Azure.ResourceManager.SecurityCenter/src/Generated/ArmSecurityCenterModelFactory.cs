@@ -1681,7 +1681,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
         }
 
@@ -3563,7 +3563,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName is null && description is null && assignedStandardId is null && effect is null && excludedScopes is null && expiresOn is null && exemptionData is null && attestationData is null && metadata is null ? default : new StandardAssignmentProperties(
                     displayName,
                     description,
-                    new AssignedStandardItem(assignedStandardId, default),
+                    assignedStandardId is null ? default : new AssignedStandardItem(assignedStandardId, default),
                     effect,
                     (excludedScopes ?? new ChangeTrackingList<string>()).ToList(),
                     expiresOn,
@@ -3955,12 +3955,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 displayName is null && description is null && assignedStandardId is null && assignedComponentKey is null && scope is null && effect is null && expiresOn is null && additionalDataExemptionCategory is null && metadata is null ? default : new AssignmentProperties(
                     displayName,
                     description,
-                    new AssignedStandardItem(assignedStandardId, default),
-                    new AssignedComponentItem(assignedComponentKey, default),
+                    assignedStandardId is null ? default : new AssignedStandardItem(assignedStandardId, default),
+                    assignedComponentKey is null ? default : new AssignedComponentItem(assignedComponentKey, default),
                     scope,
                     effect,
                     expiresOn,
-                    new AssignmentPropertiesAdditionalData(additionalDataExemptionCategory, default),
+                    additionalDataExemptionCategory is null ? default : new AssignmentPropertiesAdditionalData(additionalDataExemptionCategory, default),
                     metadata,
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -4070,7 +4070,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     resourceDetails,
                     displayName,
                     additionalData ?? new ChangeTrackingDictionary<string, string>(),
-                    new AssessmentLinks(linksAzurePortalUri, default),
+                    linksAzurePortalUri is null ? default : new AssessmentLinks(linksAzurePortalUri, default),
                     metadata,
                     partnersData,
                     default,
@@ -4253,7 +4253,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     resourceDetails,
                     displayName,
                     additionalData ?? new ChangeTrackingDictionary<string, string>(),
-                    new AssessmentLinks(linksAzurePortalUri, default),
+                    linksAzurePortalUri is null ? default : new AssessmentLinks(linksAzurePortalUri, default),
                     metadata,
                     partnersData,
                     default,
@@ -4792,7 +4792,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                displayName is null && max is null && current is null && percentage is null && weight is null ? default : new SecureScoreItemProperties(displayName, new ScoreDetails(max, current, percentage, default), weight, default),
+                displayName is null && max is null && current is null && percentage is null && weight is null ? default : new SecureScoreItemProperties(displayName, max is null && current is null && percentage is null ? default : new ScoreDetails(max, current, percentage, default), weight, default),
                 default);
         }
 
@@ -4819,7 +4819,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 systemData,
                 displayName is null && max is null && current is null && percentage is null && healthyResourceCount is null && unhealthyResourceCount is null && notApplicableResourceCount is null && weight is null && definition is null ? default : new SecureScoreControlScoreDetails(
                     displayName,
-                    new ScoreDetails(max, current, percentage, default),
+                    max is null && current is null && percentage is null ? default : new ScoreDetails(max, current, percentage, default),
                     healthyResourceCount,
                     unhealthyResourceCount,
                     notApplicableResourceCount,
@@ -4850,7 +4850,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     displayName,
                     description,
                     maxScore,
-                    new SecureScoreControlDefinitionSource(sourceType, default),
+                    sourceType is null ? default : new SecureScoreControlDefinitionSource(sourceType, default),
                     (assessmentDefinitions ?? new ChangeTrackingList<SubResource>()).ToList(),
                     default),
                 default);

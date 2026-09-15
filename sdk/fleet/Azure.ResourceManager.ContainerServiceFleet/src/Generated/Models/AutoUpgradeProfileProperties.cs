@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         {
             get
             {
-                return NodeImageSelection is null ? default : NodeImageSelection.SelectionType;
+                return NodeImageSelection is null ? (AutoUpgradeNodeImageSelectionType?)default : NodeImageSelection.SelectionType;
             }
             set
             {
