@@ -74,10 +74,10 @@ namespace Azure.Security.Attestation
             Endpoint = endpoint;
 
             // Initialize the Policy Rest Client.
-            _policyClient = new PolicyRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
+            _policyClient = new PolicyRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
 
             // Initialize the Certificates Rest Client.
-            _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint.AbsoluteUri, options.Version);
+            _policyManagementClient = new PolicyCertificatesRestClient(_clientDiagnostics, _pipeline, Endpoint, options.Version);
 
             // Initialize the Attestation Rest Client.
             _attestationClient = new AttestationClient(endpoint, credential, options);
@@ -162,9 +162,11 @@ namespace Azure.Security.Attestation
 
                 PolicyModificationResult policyResult = token.GetBody<PolicyModificationResult>();
 
-                var response = new AttestationResponse<StoredAttestationPolicy>(result.GetRawResponse(), policyResult.PolicyToken);
+                // An attestation type with no configured policy is returned as a policy token with an empty body,
+                // so there is no StoredAttestationPolicy to read and the resulting policy is null.
+                StoredAttestationPolicy storedPolicy = policyResult.PolicyToken?.GetBody<StoredAttestationPolicy>();
 
-                return new AttestationResponse<string>(result.GetRawResponse(), token, response.Value.AttestationPolicy);
+                return new AttestationResponse<string>(result.GetRawResponse(), token, storedPolicy?.AttestationPolicy);
             }
             catch (Exception ex)
             {
@@ -485,12 +487,12 @@ namespace Azure.Security.Attestation
                     }
                 }
                 List<X509Certificate2> certificates = new List<X509Certificate2>();
-                foreach (var cert in token.GetBody<PolicyCertificatesResult>().InternalPolicyCertificates.Keys)
+                foreach (var cert in token.GetBody<PolicyCertificatesResult>().PolicyCertificates.Keys)
                 {
 #if NET9_0_OR_GREATER
-                    certificates.Add(X509CertificateLoader.LoadCertificate(Convert.FromBase64String(cert.X5C[0])));
+                    certificates.Add(X509CertificateLoader.LoadCertificate(Convert.FromBase64String(cert.X5c[0])));
 #else
-                    certificates.Add(new X509Certificate2(Convert.FromBase64String(cert.X5C[0])));
+                    certificates.Add(new X509Certificate2(Convert.FromBase64String(cert.X5c[0])));
 #endif
                 }
                 return new AttestationResponse<IReadOnlyList<X509Certificate2>>(result.GetRawResponse(), token, certificates.AsReadOnly());
@@ -501,6 +503,27 @@ namespace Azure.Security.Attestation
                 throw;
             }
         }
+
+        /// <summary>
+        /// Builds the request body for the policy certificate management operations.
+        /// </summary>
+        /// <param name="token">The signed attestation token describing the certificate to add or remove.</param>
+        /// <returns>The body to send to the service.</returns>
+        /// <remarks>
+        /// The service expects the attestation token to be the entire request body, sent as a JSON string.
+        /// The TypeSpec for <c>certificates:add</c> and <c>certificates:remove</c> models the token as a property
+        /// of a request object rather than as the body root, so the generated convenience overloads wrap it and the
+        /// service rejects the call with <c>InvalidParameter: Parameter binding failed</c>. The generated protocol
+        /// overloads pass the body through untouched, so they are used with an explicitly built body until the
+        /// specification is corrected.
+        /// <para>
+        /// Do not replace these call sites with <c>PolicyCertificatesRestClient.Add(string)</c> or
+        /// <c>Remove(string)</c>. Both operations are <c>LiveOnly</c>, so the resulting failure is not visible to
+        /// playback runs.
+        /// </para>
+        /// </remarks>
+        private static RequestContent CreatePolicyCertificateContent(AttestationToken token)
+            => RequestContent.Create(BinaryData.FromObjectAsJson(token.Serialize()));
 
         /// <summary>
         /// Adds the specified new signing certificate to the set of policy management certificates.
@@ -526,8 +549,9 @@ namespace Azure.Security.Attestation
                 var tokenToAdd = new AttestationToken(
                         BinaryData.FromObjectAsJson(new PolicyCertificateModification(newSigningCertificate)),
                         existingSigningKey);
-                var result = _policyManagementClient.Add(tokenToAdd.Serialize(), cancellationToken);
-                var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
+                using RequestContent content = CreatePolicyCertificateContent(tokenToAdd);
+                Response result = _policyManagementClient.Add(content, cancellationToken.ToRequestContext());
+                var token = AttestationToken.Deserialize(((PolicyCertificatesModifyResponse)result).Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
@@ -536,7 +560,7 @@ namespace Azure.Security.Attestation
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
                 }
-                return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
+                return new AttestationResponse<PolicyCertificatesModificationResult>(result, token);
             }
             catch (Exception ex)
             {
@@ -567,8 +591,9 @@ namespace Azure.Security.Attestation
                 var tokenToAdd = new AttestationToken(
                         BinaryData.FromObjectAsJson(new PolicyCertificateModification(newSigningCertificate)),
                         existingSigningKey);
-                var result = await _policyManagementClient.AddAsync(tokenToAdd.Serialize(), cancellationToken).ConfigureAwait(false);
-                var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
+                using RequestContent content = CreatePolicyCertificateContent(tokenToAdd);
+                Response result = await _policyManagementClient.AddAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                var token = AttestationToken.Deserialize(((PolicyCertificatesModifyResponse)result).Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
@@ -577,7 +602,7 @@ namespace Azure.Security.Attestation
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
                 }
-                return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
+                return new AttestationResponse<PolicyCertificatesModificationResult>(result, token);
             }
             catch (Exception ex)
             {
@@ -606,8 +631,9 @@ namespace Azure.Security.Attestation
                         BinaryData.FromObjectAsJson(new PolicyCertificateModification(certificateToRemove)),
                         existingSigningKey);
 
-                var result = _policyManagementClient.Remove(tokenToRemove.Serialize(), cancellationToken);
-                var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
+                using RequestContent content = CreatePolicyCertificateContent(tokenToRemove);
+                Response result = _policyManagementClient.Remove(content, cancellationToken.ToRequestContext());
+                var token = AttestationToken.Deserialize(((PolicyCertificatesModifyResponse)result).Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = GetSignersAsync(false, cancellationToken).EnsureCompleted();
@@ -616,7 +642,7 @@ namespace Azure.Security.Attestation
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
                 }
-                return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
+                return new AttestationResponse<PolicyCertificatesModificationResult>(result, token);
             }
             catch (Exception ex)
             {
@@ -645,8 +671,9 @@ namespace Azure.Security.Attestation
                         BinaryData.FromObjectAsJson(new PolicyCertificateModification(certificateToRemove)),
                         existingSigningKey);
 
-                var result = await _policyManagementClient.RemoveAsync(tokenToRemove.Serialize(), cancellationToken).ConfigureAwait(false);
-                var token = AttestationToken.Deserialize(result.Value.Token, _clientDiagnostics);
+                using RequestContent content = CreatePolicyCertificateContent(tokenToRemove);
+                Response result = await _policyManagementClient.RemoveAsync(content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                var token = AttestationToken.Deserialize(((PolicyCertificatesModifyResponse)result).Token, _clientDiagnostics);
                 if (_options.TokenOptions.ValidateToken)
                 {
                     var signers = await GetSignersAsync(true, cancellationToken).ConfigureAwait(false);
@@ -655,7 +682,7 @@ namespace Azure.Security.Attestation
                         AttestationTokenValidationFailedException.ThrowFailure(signers, token);
                     }
                 }
-                return new AttestationResponse<PolicyCertificatesModificationResult>(result.GetRawResponse(), token);
+                return new AttestationResponse<PolicyCertificatesModificationResult>(result, token);
             }
             catch (Exception ex)
             {
