@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2026-10-06)
 
 ### Features Added
 
@@ -10,9 +10,3 @@
 - Added reading of message history from a conversation, and updating and deleting messages.
 - Added `GetClientAccessUri` to generate a client access URI for connecting to the service.
 - Added generated extensible chat permissions (`ChatPermission`) and built-in roles (`BuiltInChatRoles`).
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
