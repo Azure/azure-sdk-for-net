@@ -987,7 +987,6 @@
 
 # Common repository-wide assets and configuration
 /.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
-# /.config/1espt/                                                  Missing CODEOWNER
 /.vscode/                                                          @jsquire @m-nash @JoshLove-msft
 /.devcontainer/                                                    @jsquire @m-nash @JoshLove-msft
 /doc/                                                              @jsquire @m-nash @JoshLove-msft
