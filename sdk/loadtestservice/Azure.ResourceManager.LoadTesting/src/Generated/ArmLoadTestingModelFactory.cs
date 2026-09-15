@@ -174,6 +174,16 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 default);
         }
 
+        /// <summary> Azure LoadTest mapping resource properties. </summary>
+        /// <param name="sourceResourceId"> Mapped source resource Id. </param>
+        /// <param name="azureLoadTestingResourceId"> Mapped Azure Load Test resource Id. </param>
+        /// <param name="testId"> Mapped Azure Load Test resource test-id. </param>
+        /// <returns> A new <see cref="Models.LoadTestMappingProperties"/> instance for mocking. </returns>
+        public static LoadTestMappingProperties LoadTestMappingProperties(ResourceIdentifier sourceResourceId = default, ResourceIdentifier azureLoadTestingResourceId = default, string testId = default)
+        {
+            return new LoadTestMappingProperties(sourceResourceId, azureLoadTestingResourceId, testId, default);
+        }
+
         /// <summary> LoadTest mapping resource details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -190,16 +200,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> Azure LoadTest mapping resource properties. </summary>
-        /// <param name="sourceResourceId"> Mapped source resource Id. </param>
-        /// <param name="azureLoadTestingResourceId"> Mapped Azure Load Test resource Id. </param>
-        /// <param name="testId"> Mapped Azure Load Test resource test-id. </param>
-        /// <returns> A new <see cref="Models.LoadTestMappingProperties"/> instance for mocking. </returns>
-        public static LoadTestMappingProperties LoadTestMappingProperties(ResourceIdentifier sourceResourceId = default, ResourceIdentifier azureLoadTestingResourceId = default, string testId = default)
-        {
-            return new LoadTestMappingProperties(sourceResourceId, azureLoadTestingResourceId, testId, default);
         }
 
         /// <summary> The type used for update operations of the LoadTestMappingResource. </summary>
@@ -220,6 +220,16 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestMappingUpdateProperties(sourceResourceId, azureLoadTestingResourceId, testId, default);
         }
 
+        /// <summary> Azure LoadTest profile mapping resource properties. </summary>
+        /// <param name="sourceResourceId"> Mapped source resource Id. </param>
+        /// <param name="azureLoadTestingResourceId"> Mapped Azure Load Test resource Id. </param>
+        /// <param name="testProfileId"> Mapped Azure Load Test resource test-profile-id. </param>
+        /// <returns> A new <see cref="Models.LoadTestProfileMappingProperties"/> instance for mocking. </returns>
+        public static LoadTestProfileMappingProperties LoadTestProfileMappingProperties(ResourceIdentifier sourceResourceId = default, ResourceIdentifier azureLoadTestingResourceId = default, string testProfileId = default)
+        {
+            return new LoadTestProfileMappingProperties(sourceResourceId, azureLoadTestingResourceId, testProfileId, default);
+        }
+
         /// <summary> LoadTest profile mapping resource details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -236,16 +246,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> Azure LoadTest profile mapping resource properties. </summary>
-        /// <param name="sourceResourceId"> Mapped source resource Id. </param>
-        /// <param name="azureLoadTestingResourceId"> Mapped Azure Load Test resource Id. </param>
-        /// <param name="testProfileId"> Mapped Azure Load Test resource test-profile-id. </param>
-        /// <returns> A new <see cref="Models.LoadTestProfileMappingProperties"/> instance for mocking. </returns>
-        public static LoadTestProfileMappingProperties LoadTestProfileMappingProperties(ResourceIdentifier sourceResourceId = default, ResourceIdentifier azureLoadTestingResourceId = default, string testProfileId = default)
-        {
-            return new LoadTestProfileMappingProperties(sourceResourceId, azureLoadTestingResourceId, testProfileId, default);
         }
 
         /// <summary> The type used for update operations of the LoadTestProfileMappingResource. </summary>
@@ -266,6 +266,16 @@ namespace Azure.ResourceManager.LoadTesting.Models
             return new LoadTestProfileMappingUpdateProperties(sourceResourceId, azureLoadTestingResourceId, testProfileId, default);
         }
 
+        /// <summary> Max monthly virtual usage hours resource limit properties. </summary>
+        /// <param name="limit"> Current limit value, with -1 indicating that there is no limit. </param>
+        /// <param name="usage"> Current usage value. </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <returns> A new <see cref="Models.MaxMonthlyVirtualUserHoursProperties"/> instance for mocking. </returns>
+        public static MaxMonthlyVirtualUserHoursProperties MaxMonthlyVirtualUserHoursProperties(int? limit = default, int? usage = default, LoadTestingProvisioningState? provisioningState = default)
+        {
+            return new MaxMonthlyVirtualUserHoursProperties(limit, usage, provisioningState, default);
+        }
+
         /// <summary> Max monthly virtual usage hours resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -282,16 +292,6 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> Max monthly virtual usage hours resource limit properties. </summary>
-        /// <param name="limit"> Current limit value, with -1 indicating that there is no limit. </param>
-        /// <param name="usage"> Current usage value. </param>
-        /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <returns> A new <see cref="Models.MaxMonthlyVirtualUserHoursProperties"/> instance for mocking. </returns>
-        public static MaxMonthlyVirtualUserHoursProperties MaxMonthlyVirtualUserHoursProperties(int? limit = default, int? usage = default, LoadTestingProvisioningState? provisioningState = default)
-        {
-            return new MaxMonthlyVirtualUserHoursProperties(limit, usage, provisioningState, default);
         }
 
         /// <summary> Max monthly virtual usage hours limit request payload. </summary>

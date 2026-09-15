@@ -17,22 +17,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesConfigurationPrivateLinkScopesModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="PrivateLinkScopes.KubernetesConfigurationPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static KubernetesConfigurationPrivateLinkResourceData KubernetesConfigurationPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+
+        /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
+        /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
+        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
+        /// <param name="clusterResourceId"> Managed Cluster ARM ID for the private link scope  (Required). </param>
+        /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
+        /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
+        /// <returns> A new <see cref="Models.KubernetesConfigurationPrivateLinkScopeProperties"/> instance for mocking. </returns>
+        public static KubernetesConfigurationPrivateLinkScopeProperties KubernetesConfigurationPrivateLinkScopeProperties(KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType? publicNetworkAccess = default, KubernetesConfigurationPrivateLinkScopeProvisioningState? provisioningState = default, ResourceIdentifier clusterResourceId = default, Guid? privateLinkScopeId = default, IEnumerable<KubernetesConfigurationPrivateEndpointConnectionData> privateEndpointConnections = default)
         {
-            return new KubernetesConfigurationPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
+            privateEndpointConnections ??= new ChangeTrackingList<KubernetesConfigurationPrivateEndpointConnectionData>();
+
+            return new KubernetesConfigurationPrivateLinkScopeProperties(
+                publicNetworkAccess,
+                provisioningState,
+                clusterResourceId,
+                privateLinkScopeId,
+                (privateEndpointConnections ?? new ChangeTrackingList<KubernetesConfigurationPrivateEndpointConnectionData>()).ToList(),
                 default);
         }
 
@@ -89,23 +91,22 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Models
                 default);
         }
 
-        /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
-        /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
-        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
-        /// <param name="clusterResourceId"> Managed Cluster ARM ID for the private link scope  (Required). </param>
-        /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
-        /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
-        /// <returns> A new <see cref="Models.KubernetesConfigurationPrivateLinkScopeProperties"/> instance for mocking. </returns>
-        public static KubernetesConfigurationPrivateLinkScopeProperties KubernetesConfigurationPrivateLinkScopeProperties(KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType? publicNetworkAccess = default, KubernetesConfigurationPrivateLinkScopeProvisioningState? provisioningState = default, ResourceIdentifier clusterResourceId = default, Guid? privateLinkScopeId = default, IEnumerable<KubernetesConfigurationPrivateEndpointConnectionData> privateEndpointConnections = default)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="PrivateLinkScopes.KubernetesConfigurationPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static KubernetesConfigurationPrivateLinkResourceData KubernetesConfigurationPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
-            privateEndpointConnections ??= new ChangeTrackingList<KubernetesConfigurationPrivateEndpointConnectionData>();
-
-            return new KubernetesConfigurationPrivateLinkScopeProperties(
-                publicNetworkAccess,
-                provisioningState,
-                clusterResourceId,
-                privateLinkScopeId,
-                (privateEndpointConnections ?? new ChangeTrackingList<KubernetesConfigurationPrivateEndpointConnectionData>()).ToList(),
+            return new KubernetesConfigurationPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 
