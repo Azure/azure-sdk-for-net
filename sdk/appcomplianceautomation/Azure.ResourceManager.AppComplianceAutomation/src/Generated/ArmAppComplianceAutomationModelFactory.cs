@@ -17,24 +17,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAppComplianceAutomationModelFactory
     {
-        /// <summary> A class represent an AppComplianceAutomation report resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Report property. </param>
-        /// <returns> A new <see cref="AppComplianceAutomation.AppComplianceReportData"/> instance for mocking. </returns>
-        public static AppComplianceReportData AppComplianceReportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppComplianceReportProperties properties = default)
-        {
-            return new AppComplianceReportData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <param name="triggerOn"> Report collection trigger time. </param>
         /// <param name="timeZone">
         /// Report collection trigger time's time zone, the available list can be obtained by executing "Get-TimeZone -ListAvailable" in PowerShell.
@@ -145,6 +127,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public static ControlSyncRecord ControlSyncRecord(string controlId = default, string controlStatus = default)
         {
             return new ControlSyncRecord(controlId, controlStatus, default);
+        }
+
+        /// <summary> A class represent an AppComplianceAutomation report resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Report property. </param>
+        /// <returns> A new <see cref="AppComplianceAutomation.AppComplianceReportData"/> instance for mocking. </returns>
+        public static AppComplianceReportData AppComplianceReportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppComplianceReportProperties properties = default)
+        {
+            return new AppComplianceReportData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> A class represent a AppComplianceAutomation report resource update properties. </summary>
@@ -284,24 +284,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ReportVerificationResult(result, reason, default);
         }
 
-        /// <summary> A class represent an AppComplianceAutomation webhook resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Webhook property. </param>
-        /// <returns> A new <see cref="AppComplianceAutomation.AppComplianceReportWebhookData"/> instance for mocking. </returns>
-        public static AppComplianceReportWebhookData AppComplianceReportWebhookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppComplianceReportWebhookProperties properties = default)
-        {
-            return new AppComplianceReportWebhookData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Webhook properties. </summary>
         /// <param name="webhookId"> Webhook id in database. </param>
         /// <param name="status"> Webhook status. </param>
@@ -338,30 +320,30 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
-        /// <summary> A class represent a AppComplianceAutomation webhook resource update properties. </summary>
-        /// <param name="properties"> Webhook property. </param>
-        /// <returns> A new <see cref="Models.AppComplianceReportWebhookPatch"/> instance for mocking. </returns>
-        public static AppComplianceReportWebhookPatch AppComplianceReportWebhookPatch(AppComplianceReportWebhookProperties properties = default)
-        {
-            return new AppComplianceReportWebhookPatch(properties, default);
-        }
-
-        /// <summary> A class represent a AppComplianceAutomation snapshot resource. </summary>
+        /// <summary> A class represent an AppComplianceAutomation webhook resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Snapshot's property. </param>
-        /// <returns> A new <see cref="AppComplianceAutomation.AppComplianceReportSnapshotData"/> instance for mocking. </returns>
-        public static AppComplianceReportSnapshotData AppComplianceReportSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppComplianceReportSnapshotProperties properties = default)
+        /// <param name="properties"> Webhook property. </param>
+        /// <returns> A new <see cref="AppComplianceAutomation.AppComplianceReportWebhookData"/> instance for mocking. </returns>
+        public static AppComplianceReportWebhookData AppComplianceReportWebhookData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppComplianceReportWebhookProperties properties = default)
         {
-            return new AppComplianceReportSnapshotData(
+            return new AppComplianceReportWebhookData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
                 default);
+        }
+
+        /// <summary> A class represent a AppComplianceAutomation webhook resource update properties. </summary>
+        /// <param name="properties"> Webhook property. </param>
+        /// <returns> A new <see cref="Models.AppComplianceReportWebhookPatch"/> instance for mocking. </returns>
+        public static AppComplianceReportWebhookPatch AppComplianceReportWebhookPatch(AppComplianceReportWebhookProperties properties = default)
+        {
+            return new AppComplianceReportWebhookPatch(properties, default);
         }
 
         /// <summary> Snapshot's properties. </summary>
@@ -531,6 +513,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new RecommendationSolution(recommendationSolutionIndex, recommendationSolutionContent, isRecommendSolution, default);
         }
 
+        /// <summary> A class represent a AppComplianceAutomation snapshot resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Snapshot's property. </param>
+        /// <returns> A new <see cref="AppComplianceAutomation.AppComplianceReportSnapshotData"/> instance for mocking. </returns>
+        public static AppComplianceReportSnapshotData AppComplianceReportSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppComplianceReportSnapshotProperties properties = default)
+        {
+            return new AppComplianceReportSnapshotData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> Snapshot's download request. </summary>
         /// <param name="reportCreatorTenantId"> Tenant id. </param>
         /// <param name="downloadType"> Indicates the download type. </param>
@@ -597,24 +597,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
-        /// <summary> A class represent an AppComplianceAutomation scoping configuration resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> ScopingConfiguration property. </param>
-        /// <returns> A new <see cref="AppComplianceAutomation.AppComplianceReportScopingConfigurationData"/> instance for mocking. </returns>
-        public static AppComplianceReportScopingConfigurationData AppComplianceReportScopingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppComplianceReportScopingConfigurationProperties properties = default)
-        {
-            return new AppComplianceReportScopingConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> ScopingConfiguration's properties. </summary>
         /// <param name="answers"> List of scoping question answers. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
@@ -637,16 +619,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ScopingAnswer(questionId, (answers ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> A class represent an AppComplianceAutomation evidence resource. </summary>
+        /// <summary> A class represent an AppComplianceAutomation scoping configuration resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Evidence property. </param>
-        /// <returns> A new <see cref="AppComplianceAutomation.AppComplianceReportEvidenceData"/> instance for mocking. </returns>
-        public static AppComplianceReportEvidenceData AppComplianceReportEvidenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppComplianceReportEvidenceProperties properties = default)
+        /// <param name="properties"> ScopingConfiguration property. </param>
+        /// <returns> A new <see cref="AppComplianceAutomation.AppComplianceReportScopingConfigurationData"/> instance for mocking. </returns>
+        public static AppComplianceReportScopingConfigurationData AppComplianceReportScopingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppComplianceReportScopingConfigurationProperties properties = default)
         {
-            return new AppComplianceReportEvidenceData(
+            return new AppComplianceReportScopingConfigurationData(
                 id,
                 name,
                 resourceType,
@@ -672,6 +654,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 controlId,
                 responsibilityId,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> A class represent an AppComplianceAutomation evidence resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Evidence property. </param>
+        /// <returns> A new <see cref="AppComplianceAutomation.AppComplianceReportEvidenceData"/> instance for mocking. </returns>
+        public static AppComplianceReportEvidenceData AppComplianceReportEvidenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppComplianceReportEvidenceProperties properties = default)
+        {
+            return new AppComplianceReportEvidenceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 

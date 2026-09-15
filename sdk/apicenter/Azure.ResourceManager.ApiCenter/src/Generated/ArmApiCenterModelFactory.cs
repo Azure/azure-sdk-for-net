@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public static partial class ArmApiCenterModelFactory
     {
 
+        /// <summary> The properties of the service. </summary>
+        /// <param name="provisioningState"> Provisioning state of the service. </param>
+        /// <param name="isRestore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
+        /// <returns> A new <see cref="Models.ApiCenterServiceProperties"/> instance for mocking. </returns>
+        public static ApiCenterServiceProperties ApiCenterServiceProperties(ApiCenterProvisioningState? provisioningState = default, bool? isRestore = default)
+        {
+            return new ApiCenterServiceProperties(provisioningState, isRestore, default);
+        }
+
         /// <summary> The service entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -43,15 +52,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 properties,
                 identity,
                 default);
-        }
-
-        /// <summary> The properties of the service. </summary>
-        /// <param name="provisioningState"> Provisioning state of the service. </param>
-        /// <param name="isRestore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
-        /// <returns> A new <see cref="Models.ApiCenterServiceProperties"/> instance for mocking. </returns>
-        public static ApiCenterServiceProperties ApiCenterServiceProperties(ApiCenterProvisioningState? provisioningState = default, bool? isRestore = default)
-        {
-            return new ApiCenterServiceProperties(provisioningState, isRestore, default);
         }
 
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -82,6 +82,15 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new MetadataSchemaExportResult(format, value, default);
         }
 
+        /// <summary> Deleted service properties. </summary>
+        /// <param name="scheduledPurgeOn"> UTC date and time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
+        /// <param name="softDeletedOn"> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
+        /// <returns> A new <see cref="Models.ApiCenterDeletedServiceProperties"/> instance for mocking. </returns>
+        public static ApiCenterDeletedServiceProperties ApiCenterDeletedServiceProperties(DateTimeOffset? scheduledPurgeOn = default, DateTimeOffset? softDeletedOn = default)
+        {
+            return new ApiCenterDeletedServiceProperties(scheduledPurgeOn, softDeletedOn, default);
+        }
+
         /// <summary> Soft-deleted service entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -92,33 +101,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static ApiCenterDeletedServiceData ApiCenterDeletedServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterDeletedServiceProperties properties = default)
         {
             return new ApiCenterDeletedServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> Deleted service properties. </summary>
-        /// <param name="scheduledPurgeOn"> UTC date and time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
-        /// <param name="softDeletedOn"> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
-        /// <returns> A new <see cref="Models.ApiCenterDeletedServiceProperties"/> instance for mocking. </returns>
-        public static ApiCenterDeletedServiceProperties ApiCenterDeletedServiceProperties(DateTimeOffset? scheduledPurgeOn = default, DateTimeOffset? softDeletedOn = default)
-        {
-            return new ApiCenterDeletedServiceProperties(scheduledPurgeOn, softDeletedOn, default);
-        }
-
-        /// <summary> Metadata schema entity. Used to define metadata for the entities in API catalog. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterMetadataSchemaData"/> instance for mocking. </returns>
-        public static ApiCenterMetadataSchemaData ApiCenterMetadataSchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterMetadataSchemaProperties properties = default)
-        {
-            return new ApiCenterMetadataSchemaData(
                 id,
                 name,
                 resourceType,
@@ -148,16 +130,16 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterMetadataAssignment(entity, @required, deprecated, default);
         }
 
-        /// <summary> Workspace entity. </summary>
+        /// <summary> Metadata schema entity. Used to define metadata for the entities in API catalog. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterWorkspaceData"/> instance for mocking. </returns>
-        public static ApiCenterWorkspaceData ApiCenterWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterWorkspaceProperties properties = default)
+        /// <returns> A new <see cref="ApiCenter.ApiCenterMetadataSchemaData"/> instance for mocking. </returns>
+        public static ApiCenterMetadataSchemaData ApiCenterMetadataSchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterMetadataSchemaProperties properties = default)
         {
-            return new ApiCenterWorkspaceData(
+            return new ApiCenterMetadataSchemaData(
                 id,
                 name,
                 resourceType,
@@ -175,16 +157,16 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterWorkspaceProperties(title, description, default);
         }
 
-        /// <summary> API entity. </summary>
+        /// <summary> Workspace entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterApiData"/> instance for mocking. </returns>
-        public static ApiCenterApiData ApiCenterApiData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterApiProperties properties = default)
+        /// <returns> A new <see cref="ApiCenter.ApiCenterWorkspaceData"/> instance for mocking. </returns>
+        public static ApiCenterWorkspaceData ApiCenterWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterWorkspaceProperties properties = default)
         {
-            return new ApiCenterApiData(
+            return new ApiCenterWorkspaceData(
                 id,
                 name,
                 resourceType,
@@ -259,16 +241,16 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiLicenseInformation(name, uri, identifier, default);
         }
 
-        /// <summary> API version entity. </summary>
+        /// <summary> API entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterApiVersionData"/> instance for mocking. </returns>
-        public static ApiCenterApiVersionData ApiCenterApiVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterApiVersionProperties properties = default)
+        /// <returns> A new <see cref="ApiCenter.ApiCenterApiData"/> instance for mocking. </returns>
+        public static ApiCenterApiData ApiCenterApiData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterApiProperties properties = default)
         {
-            return new ApiCenterApiVersionData(
+            return new ApiCenterApiData(
                 id,
                 name,
                 resourceType,
@@ -286,16 +268,16 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterApiVersionProperties(title, lifecycleStage, default);
         }
 
-        /// <summary> API definition entity. </summary>
+        /// <summary> API version entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterApiDefinitionData"/> instance for mocking. </returns>
-        public static ApiCenterApiDefinitionData ApiCenterApiDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterApiDefinitionProperties properties = default)
+        /// <returns> A new <see cref="ApiCenter.ApiCenterApiVersionData"/> instance for mocking. </returns>
+        public static ApiCenterApiVersionData ApiCenterApiVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterApiVersionProperties properties = default)
         {
-            return new ApiCenterApiDefinitionData(
+            return new ApiCenterApiVersionData(
                 id,
                 name,
                 resourceType,
@@ -321,6 +303,24 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static ApiSpecificationDetails ApiSpecificationDetails(string name = default, string version = default)
         {
             return new ApiSpecificationDetails(name, version, default);
+        }
+
+        /// <summary> API definition entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterApiDefinitionData"/> instance for mocking. </returns>
+        public static ApiCenterApiDefinitionData ApiCenterApiDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterApiDefinitionProperties properties = default)
+        {
+            return new ApiCenterApiDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> The API specification source entity properties. </summary>
@@ -349,24 +349,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static ApiSpecExportResult ApiSpecExportResult(ApiSpecExportResultFormat? format = default, string value = default)
         {
             return new ApiSpecExportResult(format, value, default);
-        }
-
-        /// <summary> API source entity. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiSourceData"/> instance for mocking. </returns>
-        public static ApiSourceData ApiSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiSourceProperties properties = default)
-        {
-            return new ApiSourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> API source properties. </summary>
@@ -406,16 +388,16 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterLinkState(state, message, lastUpdatedOn, default);
         }
 
-        /// <summary> API deployment entity. </summary>
+        /// <summary> API source entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterDeploymentData"/> instance for mocking. </returns>
-        public static ApiCenterDeploymentData ApiCenterDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterDeploymentProperties properties = default)
+        /// <returns> A new <see cref="ApiCenter.ApiSourceData"/> instance for mocking. </returns>
+        public static ApiSourceData ApiSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiSourceProperties properties = default)
         {
-            return new ApiCenterDeploymentData(
+            return new ApiSourceData(
                 id,
                 name,
                 resourceType,
@@ -445,16 +427,16 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
-        /// <summary> Environment entity. </summary>
+        /// <summary> API deployment entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ApiCenter.ApiCenterEnvironmentData"/> instance for mocking. </returns>
-        public static ApiCenterEnvironmentData ApiCenterEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterEnvironmentProperties properties = default)
+        /// <returns> A new <see cref="ApiCenter.ApiCenterDeploymentData"/> instance for mocking. </returns>
+        public static ApiCenterDeploymentData ApiCenterDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterDeploymentProperties properties = default)
         {
-            return new ApiCenterEnvironmentData(
+            return new ApiCenterDeploymentData(
                 id,
                 name,
                 resourceType,
@@ -503,6 +485,24 @@ namespace Azure.ResourceManager.ApiCenter.Models
             developerPortalUri ??= new ChangeTrackingList<Uri>();
 
             return new EnvironmentOnboardingInformation(instructions, (developerPortalUri ?? new ChangeTrackingList<Uri>()).ToList(), default);
+        }
+
+        /// <summary> Environment entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ApiCenter.ApiCenterEnvironmentData"/> instance for mocking. </returns>
+        public static ApiCenterEnvironmentData ApiCenterEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterEnvironmentProperties properties = default)
+        {
+            return new ApiCenterEnvironmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> The service entity. </summary>

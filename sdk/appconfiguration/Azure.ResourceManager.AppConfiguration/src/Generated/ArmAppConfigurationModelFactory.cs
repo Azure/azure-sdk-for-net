@@ -19,6 +19,62 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAppConfigurationModelFactory
     {
+
+        /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
+        /// <param name="keyIdentifier"> The URI of the key vault key used to encrypt data. </param>
+        /// <param name="identityClientId"> The client id of the identity which will be used to access key vault. </param>
+        /// <returns> A new <see cref="Models.AppConfigurationKeyVaultProperties"/> instance for mocking. </returns>
+        public static AppConfigurationKeyVaultProperties AppConfigurationKeyVaultProperties(string keyIdentifier = default, string identityClientId = default)
+        {
+            return new AppConfigurationKeyVaultProperties(keyIdentifier, identityClientId, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning status of the private endpoint connection. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="privateEndpointId"> The resource Id for private endpoint. </param>
+        /// <returns> A new <see cref="Models.AppConfigurationPrivateEndpointConnectionReference"/> instance for mocking. </returns>
+        public static AppConfigurationPrivateEndpointConnectionReference AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppConfigurationProvisioningState? provisioningState, AppConfigurationPrivateLinkServiceConnectionState connectionState, ResourceIdentifier privateEndpointId)
+        {
+            return new AppConfigurationPrivateEndpointConnectionReference(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, default),
+                default);
+        }
+
+        /// <summary> The state of a private link service connection. </summary>
+        /// <param name="status"> The private link service connection status. </param>
+        /// <param name="description"> The private link service connection description. </param>
+        /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>
+        /// <returns> A new <see cref="Models.AppConfigurationPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static AppConfigurationPrivateLinkServiceConnectionState AppConfigurationPrivateLinkServiceConnectionState(AppConfigurationPrivateLinkServiceConnectionStatus? status = default, string description = default, AppConfigurationActionsRequired? actionsRequired = default)
+        {
+            return new AppConfigurationPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <summary> The data plane proxy settings for a configuration store. </summary>
+        /// <param name="authenticationMode"> The data plane proxy authentication mode. This property manages the authentication mode of request to the data plane resources. </param>
+        /// <param name="privateLinkDelegation"> The data plane proxy private link delegation. This property manages if a request from delegated ARM private link is allowed when the data plane resource requires private link. </param>
+        /// <returns> A new <see cref="Models.AppConfigurationDataPlaneProxyProperties"/> instance for mocking. </returns>
+        public static AppConfigurationDataPlaneProxyProperties AppConfigurationDataPlaneProxyProperties(DataPlaneProxyAuthenticationMode? authenticationMode = default, DataPlaneProxyPrivateLinkDelegation? privateLinkDelegation = default)
+        {
+            return new AppConfigurationDataPlaneProxyProperties(authenticationMode, privateLinkDelegation, default);
+        }
+
+        /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
+        /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
+        /// <returns> A new <see cref="Models.AppConfigurationMoboBrokerResourceInfo"/> instance for mocking. </returns>
+        public static AppConfigurationMoboBrokerResourceInfo AppConfigurationMoboBrokerResourceInfo(ResourceIdentifier id = default)
+        {
+            return new AppConfigurationMoboBrokerResourceInfo(id, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -74,61 +130,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 identity,
                 skuName is null ? default : new AppConfigurationSku(skuName, default),
                 default);
-        }
-
-        /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
-        /// <param name="keyIdentifier"> The URI of the key vault key used to encrypt data. </param>
-        /// <param name="identityClientId"> The client id of the identity which will be used to access key vault. </param>
-        /// <returns> A new <see cref="Models.AppConfigurationKeyVaultProperties"/> instance for mocking. </returns>
-        public static AppConfigurationKeyVaultProperties AppConfigurationKeyVaultProperties(string keyIdentifier = default, string identityClientId = default)
-        {
-            return new AppConfigurationKeyVaultProperties(keyIdentifier, identityClientId, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning status of the private endpoint connection. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="privateEndpointId"> The resource Id for private endpoint. </param>
-        /// <returns> A new <see cref="Models.AppConfigurationPrivateEndpointConnectionReference"/> instance for mocking. </returns>
-        public static AppConfigurationPrivateEndpointConnectionReference AppConfigurationPrivateEndpointConnectionReference(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppConfigurationProvisioningState? provisioningState, AppConfigurationPrivateLinkServiceConnectionState connectionState, ResourceIdentifier privateEndpointId)
-        {
-            return new AppConfigurationPrivateEndpointConnectionReference(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, default),
-                default);
-        }
-
-        /// <summary> The state of a private link service connection. </summary>
-        /// <param name="status"> The private link service connection status. </param>
-        /// <param name="description"> The private link service connection description. </param>
-        /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>
-        /// <returns> A new <see cref="Models.AppConfigurationPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static AppConfigurationPrivateLinkServiceConnectionState AppConfigurationPrivateLinkServiceConnectionState(AppConfigurationPrivateLinkServiceConnectionStatus? status = default, string description = default, AppConfigurationActionsRequired? actionsRequired = default)
-        {
-            return new AppConfigurationPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
-        }
-
-        /// <summary> The data plane proxy settings for a configuration store. </summary>
-        /// <param name="authenticationMode"> The data plane proxy authentication mode. This property manages the authentication mode of request to the data plane resources. </param>
-        /// <param name="privateLinkDelegation"> The data plane proxy private link delegation. This property manages if a request from delegated ARM private link is allowed when the data plane resource requires private link. </param>
-        /// <returns> A new <see cref="Models.AppConfigurationDataPlaneProxyProperties"/> instance for mocking. </returns>
-        public static AppConfigurationDataPlaneProxyProperties AppConfigurationDataPlaneProxyProperties(DataPlaneProxyAuthenticationMode? authenticationMode = default, DataPlaneProxyPrivateLinkDelegation? privateLinkDelegation = default)
-        {
-            return new AppConfigurationDataPlaneProxyProperties(authenticationMode, privateLinkDelegation, default);
-        }
-
-        /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
-        /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
-        /// <returns> A new <see cref="Models.AppConfigurationMoboBrokerResourceInfo"/> instance for mocking. </returns>
-        public static AppConfigurationMoboBrokerResourceInfo AppConfigurationMoboBrokerResourceInfo(ResourceIdentifier id = default)
-        {
-            return new AppConfigurationMoboBrokerResourceInfo(id, default);
         }
 
         /// <summary> Describes a configuration store SKU. </summary>

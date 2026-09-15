@@ -17,40 +17,6 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmPrometheusRuleGroupsModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="description"> Rule group description. </param>
-        /// <param name="isEnabled"> Enable/disable rule group. </param>
-        /// <param name="clusterName"> Apply rule to data from a specific cluster. </param>
-        /// <param name="scopes"> Target Azure Monitor workspaces resource ids. This api-version is currently limited to creating with one scope. This may change in future. </param>
-        /// <param name="interval"> The interval in which to run the Prometheus rule group represented in ISO 8601 duration format. Should be between 1 and 15 minutes. </param>
-        /// <param name="rules"> Defines the rules in the Prometheus rule group. </param>
-        /// <returns> A new <see cref="PrometheusRuleGroups.PrometheusRuleGroupData"/> instance for mocking. </returns>
-        public static PrometheusRuleGroupData PrometheusRuleGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, string clusterName = default, IEnumerable<ResourceIdentifier> scopes = default, TimeSpan? interval = default, IEnumerable<PrometheusRule> rules = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PrometheusRuleGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                description is null && isEnabled is null && clusterName is null && scopes is null && interval is null && rules is null ? default : new PrometheusRuleGroupProperties(
-                    description,
-                    isEnabled,
-                    clusterName,
-                    (scopes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                    interval,
-                    (rules ?? new ChangeTrackingList<PrometheusRule>()).ToList(),
-                    default),
-                default);
-        }
 
         /// <summary> An Azure Prometheus alerting or recording rule. </summary>
         /// <param name="record"> Recorded metrics name. </param>
@@ -102,6 +68,41 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         public static PrometheusRuleResolveConfiguration PrometheusRuleResolveConfiguration(bool? isAutoResolved = default, TimeSpan? timeToResolve = default)
         {
             return new PrometheusRuleResolveConfiguration(isAutoResolved, timeToResolve, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="description"> Rule group description. </param>
+        /// <param name="isEnabled"> Enable/disable rule group. </param>
+        /// <param name="clusterName"> Apply rule to data from a specific cluster. </param>
+        /// <param name="scopes"> Target Azure Monitor workspaces resource ids. This api-version is currently limited to creating with one scope. This may change in future. </param>
+        /// <param name="interval"> The interval in which to run the Prometheus rule group represented in ISO 8601 duration format. Should be between 1 and 15 minutes. </param>
+        /// <param name="rules"> Defines the rules in the Prometheus rule group. </param>
+        /// <returns> A new <see cref="PrometheusRuleGroups.PrometheusRuleGroupData"/> instance for mocking. </returns>
+        public static PrometheusRuleGroupData PrometheusRuleGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, string clusterName = default, IEnumerable<ResourceIdentifier> scopes = default, TimeSpan? interval = default, IEnumerable<PrometheusRule> rules = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PrometheusRuleGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description is null && isEnabled is null && clusterName is null && scopes is null && interval is null && rules is null ? default : new PrometheusRuleGroupProperties(
+                    description,
+                    isEnabled,
+                    clusterName,
+                    (scopes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    interval,
+                    (rules ?? new ChangeTrackingList<PrometheusRule>()).ToList(),
+                    default),
+                default);
         }
 
         /// <param name="tags"> Resource tags. </param>
