@@ -36,7 +36,7 @@ public class VoiceAgentWebSocketTests
             {
                 Input = new VoiceAgentAudioInputConfig
                 {
-                    Format = new RealtimePcmAudioFormat { Rate = 24000 },
+                    Format = CreatePcmAudioFormat(24000),
                     NoiseReduction = new VoiceAgentNoiseReduction(VoiceAgentNoiseReductionType.NearField),
                     TurnDetection = new VoiceAgentServerVadTurnDetection
                     {
@@ -475,101 +475,6 @@ public class VoiceAgentWebSocketTests
     }
 
     [Test]
-    public void ClientCommandsRejectMissingRequiredArguments()
-    {
-        Assert.Multiple(() =>
-        {
-            Assert.That(() => new VoiceAgentClientCommandSessionAvatarConnect(null), Throws.TypeOf<ArgumentNullException>());
-            Assert.That(() => new VoiceAgentClientCommandRtcCallSdpCreate(null), Throws.TypeOf<ArgumentNullException>());
-        });
-    }
-
-    [Test]
-    public void ClientCommandsExposeTypedProperties()
-    {
-        VoiceAgentClientCommandSessionAvatarConnect avatarCommand = new("client-sdp-offer");
-        VoiceAgentClientCommandRtcCallSdpCreate rtcCommand = new("rtc-sdp-offer", BinaryData.FromObjectAsJson(new { model = "voice-model" }));
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(avatarCommand.ClientSdp, Is.EqualTo("client-sdp-offer"));
-            Assert.That(avatarCommand.Kind.ToString(), Is.EqualTo("session.avatar.connect"));
-            Assert.That(rtcCommand.SdpOffer, Is.EqualTo("rtc-sdp-offer"));
-            Assert.That(rtcCommand.Kind.ToString(), Is.EqualTo("rtc.call.sdp.create"));
-        });
-    }
-
-    // Verifies gap #4's fix: a custom RealtimeServerUpdate subclass built on VoiceAgentServerUpdateBase<TSelf>
-    // deserializes correctly via ModelReaderWriter.Read<T>, both for a type with typed properties
-    // (VoiceAgentServerUpdateSessionAvatarConnecting) and one exposing only the universal EventId
-    // (VoiceAgentServerUpdateSessionSubagentStarted), proving the base class works for any subclass.
-    [Test]
-    public void ServerUpdatesRoundTripTypedPropertiesFromRawJson()
-    {
-        BinaryData avatarJson = BinaryData.FromString(
-            """{"type":"session.avatar.connecting","event_id":"evt-1","server_sdp":"server-sdp-answer"}""");
-        BinaryData rtcJson = BinaryData.FromString(
-            """{"type":"rtc.call.sdp.created","event_id":"evt-2","rtc_call_id":"call-1","sdp_answer":"rtc-sdp-answer"}""");
-        BinaryData subagentJson = BinaryData.FromString(
-            """{"type":"session.subagent.started","event_id":"evt-3"}""");
-
-        VoiceAgentServerUpdateSessionAvatarConnecting avatarUpdate =
-            ModelReaderWriter.Read<VoiceAgentServerUpdateSessionAvatarConnecting>(avatarJson, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
-        VoiceAgentServerUpdateRtcCallSdpCreated rtcUpdate =
-            ModelReaderWriter.Read<VoiceAgentServerUpdateRtcCallSdpCreated>(rtcJson, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
-        VoiceAgentServerUpdateSessionSubagentStarted subagentUpdate =
-            ModelReaderWriter.Read<VoiceAgentServerUpdateSessionSubagentStarted>(subagentJson, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(avatarUpdate.Kind.ToString(), Is.EqualTo("session.avatar.connecting"));
-            Assert.That(avatarUpdate.EventId, Is.EqualTo("evt-1"));
-            Assert.That(avatarUpdate.ServerSdp, Is.EqualTo("server-sdp-answer"));
-            Assert.That(rtcUpdate.EventId, Is.EqualTo("evt-2"));
-            Assert.That(rtcUpdate.RtcCallId, Is.EqualTo("call-1"));
-            Assert.That(rtcUpdate.SdpAnswer, Is.EqualTo("rtc-sdp-answer"));
-            Assert.That(subagentUpdate.EventId, Is.EqualTo("evt-3"));
-        });
-    }
-
-    // Verifies AsFoundryServerUpdate<T>(): the extension method a caller uses when they receive an
-    // opaque, generic RealtimeServerUpdate (what OpenAI's own base client returns for an
-    // unrecognized event kind, simulated here) and want to convert it to our typed subclass.
-    [Test]
-    public void AsFoundryServerUpdateConvertsGenericUpdateToTypedSubclass()
-    {
-        BinaryData json = BinaryData.FromString(
-            """{"type":"session.avatar.connecting","event_id":"evt-9","server_sdp":"server-sdp-answer"}""");
-        RealtimeServerUpdate genericUpdate = ModelReaderWriter.Read<RealtimeServerUpdate>(json, ModelReaderWriterOptions.Json, OpenAIContext.Default);
-
-        VoiceAgentServerUpdateSessionAvatarConnecting typedUpdate = genericUpdate.AsFoundryServerUpdate<VoiceAgentServerUpdateSessionAvatarConnecting>();
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(typedUpdate.EventId, Is.EqualTo("evt-9"));
-            Assert.That(typedUpdate.ServerSdp, Is.EqualTo("server-sdp-answer"));
-        });
-    }
-
-    [Test]
-    public void VoiceAgentSessionMessageAsConvertsToTypedServerUpdate()
-    {
-        VoiceAgentSessionMessage message = new(
-            WebSocketMessageType.Text,
-            BinaryData.FromString("""{"type":"rtc.call.sdp.created","event_id":"evt-7","rtc_call_id":"call-2","sdp_answer":"rtc-sdp-answer-2"}"""));
-
-        VoiceAgentServerUpdateRtcCallSdpCreated typedUpdate = message.As<VoiceAgentServerUpdateRtcCallSdpCreated>();
-
-        Assert.Multiple(() =>
-        {
-            Assert.That(message.EventType.ToString(), Is.EqualTo("rtc.call.sdp.created"));
-            Assert.That(typedUpdate.EventId, Is.EqualTo("evt-7"));
-            Assert.That(typedUpdate.RtcCallId, Is.EqualTo("call-2"));
-            Assert.That(typedUpdate.SdpAnswer, Is.EqualTo("rtc-sdp-answer-2"));
-        });
-    }
-
-    [Test]
     public void OpenAIStyleSessionAndSecretMembersAreNotSupported()
     {
         VoiceAgentWebSocket client = new(
@@ -634,6 +539,18 @@ public class VoiceAgentWebSocketTests
             Assert.That(invalidJson.EventType, Is.Null);
             Assert.That(binary.EventType, Is.Null);
         });
+    }
+
+    /// <summary>
+    /// Builds a PCM audio format at the given sample rate. <see cref="RealtimePcmAudioFormat.Rate"/> is
+    /// read-only in the current OpenAI SDK "patch model" shape, so the rate must be set through the
+    /// underlying <see cref="System.ClientModel.Primitives.JsonPatch"/> instead of an object initializer.
+    /// </summary>
+    private static RealtimePcmAudioFormat CreatePcmAudioFormat(int rate)
+    {
+        RealtimePcmAudioFormat format = new();
+        format.Patch.Set("$.rate"u8, rate);
+        return format;
     }
 
     private sealed class TestWebSocket : WebSocket

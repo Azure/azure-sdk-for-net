@@ -21,7 +21,6 @@
 - Added `AgentEndpointConversations.GetAgentConversationItemGeneratedAudio(Async)` and `GetAgentConversationItemGeneratedAudioContent(Async)` for retrieving generated-audio metadata and content for a persisted conversation item.
 - Added `ContentFilterConfiguration.InvocationsModeration` (typed `RaiInvocationModeration`) for declaring where user/agent text lives in agent-defined invocations request/response bodies, so content-safety guardrails can extract and moderate it.
 - Added `VoiceAgentSession.ConnectAvatarAsync` and `VoiceAgentSession.CreateRtcCallSdpAsync` for the `session.avatar.connect` and `rtc.call.sdp.create` realtime events (avatar media and WebRTC call signaling), rounding out the Voice-Agents-specific realtime commands that have no equivalent in OpenAI's realtime command set.
-- Added strongly-typed realtime server updates (e.g. `VoiceAgentServerUpdateSessionAvatarConnecting`, `VoiceAgentServerUpdateRtcCallSdpCreated`) for Voice-Agents-specific events, plus `VoiceAgentSessionMessage.As<T>()` and `RealtimeServerUpdateExtensions.AsFoundryServerUpdate<T>()` for converting a generic `OpenAI.Realtime.RealtimeServerUpdate` to its typed Voice Agents subclass. The public `VoiceAgentServerUpdateBase<TSelf>` base class is also available for defining additional custom event types.
 - Added `VoiceAgentConnectionOptions.Transport` for selecting the `websocket` (default) or `webrtc` connection transport; `webrtc` is required for the WebSocket to carry only SDP signaling via `CreateRtcCallSdpAsync`.
 
 ### Breaking Changes
