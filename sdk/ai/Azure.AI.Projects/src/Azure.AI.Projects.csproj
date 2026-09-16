@@ -19,11 +19,16 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Storage.Blobs" />
-    <ProjectReference Include="../../Azure.AI.Extensions.OpenAI/src/Azure.AI.Extensions.OpenAI.csproj" />
     <ProjectReference Include="../../Azure.AI.Projects.Agents/src/Azure.AI.Projects.Agents.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <!-- We need to explicitly link Azure.AI.Extensions.OpenAI so the code generator will replace the gemerated types by OpenAI ones.  -->
+    <PackageReference Include="Azure.AI.Extensions.OpenAI" />
+  </ItemGroup>
 
-  <!-- Shared source from Azure.Core -->
+
+    <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />

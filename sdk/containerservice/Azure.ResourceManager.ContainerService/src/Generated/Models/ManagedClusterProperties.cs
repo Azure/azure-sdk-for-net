@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             get
             {
-                return ControlPlaneScalingProfile is null ? default : ControlPlaneScalingProfile.ScalingSize;
+                return ControlPlaneScalingProfile is null ? (ManagedClusterControlPlaneScalingSize?)default : ControlPlaneScalingProfile.ScalingSize;
             }
             set
             {

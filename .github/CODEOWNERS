@@ -277,6 +277,9 @@
 # ServiceOwners: @thang-bit
 
 # PRLabel: %Device Update
+/sdk/deviceregistry/Azure.IoT.DeviceRegistry.SoftwareUpdate/    @devlie @wuqiten
+
+# PRLabel: %Device Update
 /sdk/deviceupdate/Azure.IoT.DeviceUpdate/    @devlie @wuqiten
 
 # ServiceLabel: %Device Update
@@ -328,7 +331,7 @@
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Functions
-# ServiceOwners: @fabiocav
+# ServiceOwners: @fabiocav @mathewc @alrod
 
 # PRLabel: %HDInsight
 /sdk/hdinsight/    @aim-for-better
@@ -513,6 +516,12 @@
 
 # ServiceLabel: %Synapse
 # ServiceOwners: @wanyang7
+
+# PRLabel: %Tables
+/sdk/tables/    @JonathanCrd @jsquire
+
+# AzureSdkOwners: @JonathanCrd @jsquire
+# ServiceLabel: %Tables
 
 # PRLabel: %Voice Live
 /sdk/voicelive/Azure.AI.VoiceLive/    @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
@@ -910,14 +919,14 @@
 # AzureSdkOwners:                                                  @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
-/eng/                                                              @danieljurek @benbp @raych1
+/eng/                                                              @danieljurek @raych1
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
 /eng/common/pipelines/codeowners-linter.yml                        @jsquire
-/eng/pipelines/docindex.yml                                        @danieljurek @raych1 @benbp
+/eng/pipelines/docindex.yml                                        @danieljurek @raych1
 
 # Add owners for overrides and suppressions
 /eng/analyzerallowlist/                                            @Azure/azure-sdk-write-net-core @jsquire
@@ -978,7 +987,6 @@
 
 # Common repository-wide assets and configuration
 /.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
-/.config/1espt/                                                    @benbp
 /.vscode/                                                          @jsquire @m-nash @JoshLove-msft
 /.devcontainer/                                                    @jsquire @m-nash @JoshLove-msft
 /doc/                                                              @jsquire @m-nash @JoshLove-msft

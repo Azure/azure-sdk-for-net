@@ -79,21 +79,21 @@ namespace Azure.ResourceManager.StorageMover.Models
                 name,
                 resourceType,
                 systemData,
-                agentVersion is null && agentStatus is null && uploadLimitScheduleWeeklyRecurrences is null ? default : new AgentProperties(
-                    default,
+                description is null && agentVersion is null && arcResourceId is null && arcVmUuid is null && agentStatus is null && lastStatusUpdate is null && localIPAddress is null && memoryInMB is null && numberOfCores is null && uptimeInSeconds is null && timeZone is null && uploadLimitScheduleWeeklyRecurrences is null && errorDetails is null && provisioningState is null ? default : new AgentProperties(
+                    description,
                     agentVersion,
-                    default,
-                    default,
+                    arcResourceId,
+                    arcVmUuid,
                     agentStatus,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    new UploadLimitSchedule((uploadLimitScheduleWeeklyRecurrences ?? new ChangeTrackingList<UploadLimitWeeklyRecurrence>()).ToList(), default),
-                    default,
-                    default,
+                    lastStatusUpdate,
+                    localIPAddress,
+                    memoryInMB,
+                    numberOfCores,
+                    uptimeInSeconds,
+                    timeZone,
+                    uploadLimitScheduleWeeklyRecurrences is null ? default : new UploadLimitSchedule((uploadLimitScheduleWeeklyRecurrences ?? new ChangeTrackingList<UploadLimitWeeklyRecurrence>()).ToList(), default),
+                    errorDetails,
+                    provisioningState,
                     default),
                 default);
         }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.StorageMoverAgentPatch"/> instance for mocking. </returns>
         public static StorageMoverAgentPatch StorageMoverAgentPatch(string description = default, IEnumerable<UploadLimitWeeklyRecurrence> uploadLimitScheduleWeeklyRecurrences = default)
         {
-            return new StorageMoverAgentPatch(description is null && uploadLimitScheduleWeeklyRecurrences is null ? default : new AgentUpdateProperties(description, new UploadLimitSchedule((uploadLimitScheduleWeeklyRecurrences ?? new ChangeTrackingList<UploadLimitWeeklyRecurrence>()).ToList(), default), default), default);
+            return new StorageMoverAgentPatch(description is null && uploadLimitScheduleWeeklyRecurrences is null ? default : new AgentUpdateProperties(description, uploadLimitScheduleWeeklyRecurrences is null ? default : new UploadLimitSchedule((uploadLimitScheduleWeeklyRecurrences ?? new ChangeTrackingList<UploadLimitWeeklyRecurrence>()).ToList(), default), default), default);
         }
 
         /// <summary> The Endpoint resource, which contains information about file sources and targets. </summary>

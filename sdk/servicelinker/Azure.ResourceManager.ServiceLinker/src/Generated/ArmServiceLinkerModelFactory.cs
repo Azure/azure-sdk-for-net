@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="keyVaultReferenceIdentity"> The identity for key vault reference, system or user-assigned managed identity ID. </param>
         /// <param name="description"> Descriptive information for the configuration. </param>
         /// <returns> A new <see cref="Models.SourceConfiguration"/> instance for mocking. </returns>
-        public static SourceConfiguration SourceConfiguration(string name = default, string value = default, LinkerConfigurationType? configType = default, string keyVaultReferenceIdentity = default, string description = default)
+        public static SourceConfiguration SourceConfiguration(string name, string value, LinkerConfigurationType? configType, string keyVaultReferenceIdentity = default, string description = default)
         {
             return new SourceConfiguration(
                 name,
@@ -557,23 +557,23 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="secretStoreKeyVaultId"> The key vault id to store secret. </param>
         /// <param name="keyVaultSecretName"> The key vault secret name to store secret, only valid when storing one secret. </param>
         /// <returns> A new <see cref="ServiceLinker.LinkerResourceData"/> instance for mocking. </returns>
-        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TargetServiceBaseInfo targetService = default, AuthBaseInfo authInfo = default, LinkerClientType? clientType = default, string provisioningState = default, string scope = default, LinkerPublicNetworkSolution publicNetworkSolution = default, LinkerConfigurationInfo configurationInfo = default, VnetSolutionType? solutionType = default, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default, ResourceIdentifier secretStoreKeyVaultId = default, string keyVaultSecretName = default)
+        public static LinkerResourceData LinkerResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, string scope, LinkerPublicNetworkSolution publicNetworkSolution, LinkerConfigurationInfo configurationInfo, VnetSolutionType? solutionType, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default, ResourceIdentifier secretStoreKeyVaultId = default, string keyVaultSecretName = default)
         {
             return new LinkerResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                solutionType is null && secretStoreKeyVaultId is null && keyVaultSecretName is null ? default : new LinkerProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    new VnetSolution(solutionType, default, default),
-                    new LinkerSecretStore(secretStoreKeyVaultId, keyVaultSecretName, default),
-                    default,
-                    default,
-                    default,
+                targetService is null && authInfo is null && clientType is null && provisioningState is null && solutionType is null && deleteOrUpdateBehavior is null && secretStoreKeyVaultId is null && keyVaultSecretName is null && scope is null && publicNetworkSolution is null && configurationInfo is null ? default : new LinkerProperties(
+                    targetService,
+                    authInfo,
+                    clientType,
+                    provisioningState,
+                    solutionType is null && deleteOrUpdateBehavior is null ? default : new VnetSolution(solutionType, deleteOrUpdateBehavior, default),
+                    secretStoreKeyVaultId is null && keyVaultSecretName is null ? default : new LinkerSecretStore(secretStoreKeyVaultId, keyVaultSecretName, default),
+                    scope,
+                    publicNetworkSolution,
+                    configurationInfo,
                     default),
                 default);
         }
@@ -590,15 +590,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="secretStoreKeyVaultId"> The key vault id to store secret. </param>
         /// <param name="keyVaultSecretName"> The key vault secret name to store secret, only valid when storing one secret. </param>
         /// <returns> A new <see cref="Models.LinkerResourcePatch"/> instance for mocking. </returns>
-        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService = default, AuthBaseInfo authInfo = default, LinkerClientType? clientType = default, string provisioningState = default, string scope = default, LinkerPublicNetworkSolution publicNetworkSolution = default, LinkerConfigurationInfo configurationInfo = default, VnetSolutionType? solutionType = default, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default, ResourceIdentifier secretStoreKeyVaultId = default, string keyVaultSecretName = default)
+        public static LinkerResourcePatch LinkerResourcePatch(TargetServiceBaseInfo targetService, AuthBaseInfo authInfo, LinkerClientType? clientType, string provisioningState, string scope, LinkerPublicNetworkSolution publicNetworkSolution, LinkerConfigurationInfo configurationInfo, VnetSolutionType? solutionType, LinkerDeleteOrUpdateBehavior? deleteOrUpdateBehavior = default, ResourceIdentifier secretStoreKeyVaultId = default, string keyVaultSecretName = default)
         {
             return new LinkerResourcePatch(targetService is null && authInfo is null && clientType is null && provisioningState is null && solutionType is null && deleteOrUpdateBehavior is null && secretStoreKeyVaultId is null && keyVaultSecretName is null && scope is null && publicNetworkSolution is null && configurationInfo is null ? default : new LinkerProperties(
                 targetService,
                 authInfo,
                 clientType,
                 provisioningState,
-                new VnetSolution(solutionType, deleteOrUpdateBehavior, default),
-                new LinkerSecretStore(secretStoreKeyVaultId, keyVaultSecretName, default),
+                solutionType is null && deleteOrUpdateBehavior is null ? default : new VnetSolution(solutionType, deleteOrUpdateBehavior, default),
+                secretStoreKeyVaultId is null && keyVaultSecretName is null ? default : new LinkerSecretStore(secretStoreKeyVaultId, keyVaultSecretName, default),
                 scope,
                 publicNetworkSolution,
                 configurationInfo,
@@ -678,8 +678,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     authInfo,
                     clientType,
                     provisioningState,
-                    new VnetSolution(solutionType, default, default),
-                    new LinkerSecretStore(secretStoreKeyVaultId, default, default),
+                    solutionType is null ? default : new VnetSolution(solutionType, default, default),
+                    secretStoreKeyVaultId is null ? default : new LinkerSecretStore(secretStoreKeyVaultId, default, default),
                     scope,
                     default,
                     default,
@@ -704,8 +704,8 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 authInfo,
                 clientType,
                 provisioningState,
-                new VnetSolution(solutionType, default, default),
-                new LinkerSecretStore(secretStoreKeyVaultId, default, default),
+                solutionType is null ? default : new VnetSolution(solutionType, default, default),
+                secretStoreKeyVaultId is null ? default : new LinkerSecretStore(secretStoreKeyVaultId, default, default),
                 scope,
                 default,
                 default,

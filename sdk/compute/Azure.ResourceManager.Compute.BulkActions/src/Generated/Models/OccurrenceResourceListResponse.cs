@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Paged collection of OccurrenceResource items. </summary>
+    /// <summary> Paged list of resources included in a scheduled action occurrence. </summary>
     internal partial class OccurrenceResourceListResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

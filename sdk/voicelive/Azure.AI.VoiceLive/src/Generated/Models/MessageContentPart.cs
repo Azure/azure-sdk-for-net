@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for any message content part; discriminated by `type`.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InputTextContentPart"/>, <see cref="InputAudioContentPart"/>, and <see cref="OutputTextContentPart"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="InputAudioContentPart"/>, <see cref="InputTextContentPart"/>, and <see cref="OutputTextContentPart"/>.
     /// </summary>
     public abstract partial class MessageContentPart
     {

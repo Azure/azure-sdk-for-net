@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Hci.Models
                     isolatedVmAttestationConfiguration,
                     trialDaysRemaining,
                     billingModel,
-                    new ClusterBillingProperties(nextBillingModel, default),
+                    nextBillingModel is null ? default : new ClusterBillingProperties(nextBillingModel, default),
                     registrationTimestamp,
                     lastSyncTimestamp,
                     lastBillingTimestamp,
@@ -1640,7 +1640,7 @@ namespace Azure.ResourceManager.Hci.Models
                 systemData,
                 provisioningState is null && forceUpdateTag is null && publisher is null && arcExtensionType is null && typeHandlerVersion is null && shouldAutoUpgradeMinorVersion is null && settings is null && protectedSettings is null && enableAutomaticUpgrade is null && aggregateState is null && perNodeExtensionDetails is null && managedBy is null ? default : new ExtensionProperties(
                     provisioningState,
-                    new ExtensionParameters(
+                    forceUpdateTag is null && publisher is null && arcExtensionType is null && typeHandlerVersion is null && shouldAutoUpgradeMinorVersion is null && settings is null && protectedSettings is null && enableAutomaticUpgrade is null ? default : new ExtensionParameters(
                         forceUpdateTag,
                         publisher,
                         arcExtensionType,
@@ -1888,7 +1888,7 @@ namespace Azure.ResourceManager.Hci.Models
                     availabilityType,
                     packageType,
                     additionalProperties,
-                    new UpdateStateProperties(progressPercentage, notifyMessage, default),
+                    progressPercentage is null && notifyMessage is null ? default : new UpdateStateProperties(progressPercentage, notifyMessage, default),
                     default),
                 location,
                 default);
@@ -2211,7 +2211,7 @@ namespace Azure.ResourceManager.Hci.Models
                     isolatedVmAttestationConfiguration,
                     trialDaysRemaining,
                     billingModel,
-                    new ClusterBillingProperties(new NextBillingModel(billingModel, default, trialDaysRemaining, default), default),
+                    billingModel is null && trialDaysRemaining is null ? default : new ClusterBillingProperties(billingModel is null && trialDaysRemaining is null ? default : new NextBillingModel(billingModel, default, trialDaysRemaining, default), default),
                     default,
                     default,
                     default,
@@ -2380,7 +2380,7 @@ namespace Azure.ResourceManager.Hci.Models
                     lastCompletedOn,
                     duration,
                     state,
-                    new HciUpdateStep(
+                    namePropertiesProgressName is null && description is null && errorMessage is null && status is null && startOn is null && endOn is null && lastUpdatedOn is null && expectedExecutionTime is null && steps is null ? default : new HciUpdateStep(
                         namePropertiesProgressName,
                         description,
                         errorMessage,
@@ -2502,7 +2502,7 @@ namespace Azure.ResourceManager.Hci.Models
                     availabilityType,
                     packageType,
                     additionalProperties,
-                    new UpdateStateProperties(progressPercentage, notifyMessage, default),
+                    progressPercentage is null && notifyMessage is null ? default : new UpdateStateProperties(progressPercentage, notifyMessage, default),
                     default),
                 location,
                 default);
@@ -2688,7 +2688,7 @@ namespace Azure.ResourceManager.Hci.Models
                     default,
                     trialDaysRemaining,
                     billingModel,
-                    new ClusterBillingProperties(new NextBillingModel(billingModel, default, trialDaysRemaining, default), default),
+                    billingModel is null && trialDaysRemaining is null ? default : new ClusterBillingProperties(billingModel is null && trialDaysRemaining is null ? default : new NextBillingModel(billingModel, default, trialDaysRemaining, default), default),
                     default,
                     default,
                     default,
@@ -2800,7 +2800,7 @@ namespace Azure.ResourceManager.Hci.Models
                 systemData,
                 provisioningState is null && forceUpdateTag is null && publisher is null && arcExtensionType is null && typeHandlerVersion is null && shouldAutoUpgradeMinorVersion is null && settings is null && protectedSettings is null && enableAutomaticUpgrade is null && aggregateState is null && perNodeExtensionDetails is null ? default : new ExtensionProperties(
                     provisioningState,
-                    new ExtensionParameters(
+                    forceUpdateTag is null && publisher is null && arcExtensionType is null && typeHandlerVersion is null && shouldAutoUpgradeMinorVersion is null && settings is null && protectedSettings is null && enableAutomaticUpgrade is null ? default : new ExtensionParameters(
                         forceUpdateTag,
                         publisher,
                         arcExtensionType,

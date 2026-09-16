@@ -33,7 +33,7 @@ public class BasicApiManagementTests
                 infra.Add(publisherName);
 
                 ApiManagementService apiService =
-                    new(nameof(apiService), ApiManagementService.ResourceVersions.V2024_05_01)
+                    new(nameof(apiService), ApiManagementService.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Sku = new ApiManagementServiceSkuProperties
                         {
@@ -73,8 +73,8 @@ public class BasicApiManagementTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource apiService 'Microsoft.ApiManagement/service@2024-05-01' = {
-              name: take('apiservice${uniqueString(resourceGroup().id)}', 24)
+            resource apiService 'Microsoft.ApiManagement/service@2025-09-01-preview' = {
+              name: take('apiService-${uniqueString(resourceGroup().id)}', 50)
               location: location
               identity: {
                 type: 'SystemAssigned'
@@ -135,7 +135,7 @@ public class BasicApiManagementTests
 
                 // Service
                 ApiManagementService apiService =
-                    new(nameof(apiService), ApiManagementService.ResourceVersions.V2024_05_01)
+                    new(nameof(apiService), ApiManagementService.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Sku = new ApiManagementServiceSkuProperties
                         {
@@ -149,7 +149,7 @@ public class BasicApiManagementTests
 
                 // Tenant policy
                 ApiManagementPolicy tenantPolicyResource =
-                    new("tenantPolicyResource", ApiManagementPolicy.ResourceVersions.V2024_05_01)
+                    new("tenantPolicyResource", ApiManagementPolicy.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = apiService,
                         Value = tenantPolicy
@@ -158,7 +158,7 @@ public class BasicApiManagementTests
 
                 // API
                 ApiManagementApi exampleApi =
-                    new("exampleApi", ApiManagementApi.ResourceVersions.V2024_05_01)
+                    new("exampleApi", ApiManagementApi.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = apiService,
                         DisplayName = "Example API Name",
@@ -170,7 +170,7 @@ public class BasicApiManagementTests
 
                 // Operations
                 ApiOperation exampleOperationDelete =
-                    new("exampleOperationDelete", ApiOperation.ResourceVersions.V2024_05_01)
+                    new("exampleOperationDelete", ApiOperation.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = exampleApi,
                         DisplayName = "DELETE resource",
@@ -181,7 +181,7 @@ public class BasicApiManagementTests
                 infra.Add(exampleOperationDelete);
 
                 ApiOperation exampleOperationGet =
-                    new("exampleOperationGet", ApiOperation.ResourceVersions.V2024_05_01)
+                    new("exampleOperationGet", ApiOperation.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = exampleApi,
                         DisplayName = "GET resource",
@@ -193,7 +193,7 @@ public class BasicApiManagementTests
 
                 // Operation policy
                 ApiOperationPolicy exampleOperationGetPolicy =
-                    new("exampleOperationGetPolicy", ApiOperationPolicy.ResourceVersions.V2024_05_01)
+                    new("exampleOperationGetPolicy", ApiOperationPolicy.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = exampleOperationGet,
                         Value = operationPolicy
@@ -202,7 +202,7 @@ public class BasicApiManagementTests
 
                 // API with policy
                 ApiManagementApi exampleApiWithPolicy =
-                    new("exampleApiWithPolicy", ApiManagementApi.ResourceVersions.V2024_05_01)
+                    new("exampleApiWithPolicy", ApiManagementApi.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = apiService,
                         DisplayName = "Example API Name with Policy",
@@ -213,7 +213,7 @@ public class BasicApiManagementTests
                 infra.Add(exampleApiWithPolicy);
 
                 ApiPolicy exampleApiWithPolicyPolicy =
-                    new("exampleApiWithPolicyPolicy", ApiPolicy.ResourceVersions.V2024_05_01)
+                    new("exampleApiWithPolicyPolicy", ApiPolicy.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = exampleApiWithPolicy,
                         Value = apiPolicy
@@ -222,7 +222,7 @@ public class BasicApiManagementTests
 
                 // Product with policy
                 ApiManagementProduct exampleProduct =
-                    new("exampleProduct", ApiManagementProduct.ResourceVersions.V2024_05_01)
+                    new("exampleProduct", ApiManagementProduct.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = apiService,
                         DisplayName = "Example Product Name",
@@ -235,7 +235,7 @@ public class BasicApiManagementTests
                 infra.Add(exampleProduct);
 
                 ApiManagementProductPolicy exampleProductPolicy =
-                    new("exampleProductPolicy", ApiManagementProductPolicy.ResourceVersions.V2024_05_01)
+                    new("exampleProductPolicy", ApiManagementProductPolicy.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = exampleProduct,
                         Value = productPolicy
@@ -244,7 +244,7 @@ public class BasicApiManagementTests
 
                 // Users
                 ApiManagementUser exampleUser1 =
-                    new("exampleUser1", ApiManagementUser.ResourceVersions.V2024_05_01)
+                    new("exampleUser1", ApiManagementUser.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = apiService,
                         FirstName = "ExampleFirstName1",
@@ -256,7 +256,7 @@ public class BasicApiManagementTests
                 infra.Add(exampleUser1);
 
                 ApiManagementUser exampleUser2 =
-                    new("exampleUser2", ApiManagementUser.ResourceVersions.V2024_05_01)
+                    new("exampleUser2", ApiManagementUser.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = apiService,
                         FirstName = "ExampleFirstName2",
@@ -269,7 +269,7 @@ public class BasicApiManagementTests
 
                 // Named value
                 ApiManagementNamedValue exampleNamedValue =
-                    new("exampleNamedValue", ApiManagementNamedValue.ResourceVersions.V2024_05_01)
+                    new("exampleNamedValue", ApiManagementNamedValue.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = apiService,
                         DisplayName = "propertyExampleName",
@@ -280,7 +280,7 @@ public class BasicApiManagementTests
 
                 // Group
                 ApiManagementGroup exampleGroup =
-                    new("exampleGroup", ApiManagementGroup.ResourceVersions.V2024_05_01)
+                    new("exampleGroup", ApiManagementGroup.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = apiService,
                         DisplayName = "Example Group Name",
@@ -290,7 +290,7 @@ public class BasicApiManagementTests
 
                 // OpenId Connect provider
                 ApiManagementOpenIdConnectProvider exampleOpenIdConnectProvider =
-                    new("exampleOpenIdConnectProvider", ApiManagementOpenIdConnectProvider.ResourceVersions.V2024_05_01)
+                    new("exampleOpenIdConnectProvider", ApiManagementOpenIdConnectProvider.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = apiService,
                         DisplayName = "exampleOpenIdConnectProviderName",
@@ -302,7 +302,7 @@ public class BasicApiManagementTests
 
                 // Logger
                 ApiManagementLogger exampleLogger =
-                    new("exampleLogger", ApiManagementLogger.ResourceVersions.V2024_05_01)
+                    new("exampleLogger", ApiManagementLogger.ResourceVersions.V2025_09_01_PREVIEW)
                     {
                         Parent = apiService,
                         LoggerType = LoggerType.AzureEventHub,
@@ -346,8 +346,8 @@ public class BasicApiManagementTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource apiService 'Microsoft.ApiManagement/service@2024-05-01' = {
-              name: take('apiservice${uniqueString(resourceGroup().id)}', 24)
+            resource apiService 'Microsoft.ApiManagement/service@2025-09-01-preview' = {
+              name: take('apiService-${uniqueString(resourceGroup().id)}', 50)
               location: location
               properties: {
                 publisherEmail: publisherEmail
@@ -359,7 +359,7 @@ public class BasicApiManagementTests
               }
             }
 
-            resource tenantPolicyResource 'Microsoft.ApiManagement/service/policies@2024-05-01' = {
+            resource tenantPolicyResource 'Microsoft.ApiManagement/service/policies@2025-09-01-preview' = {
               name: take('tenantpolicyresource${uniqueString(resourceGroup().id)}', 24)
               parent: apiService
               properties: {
@@ -367,8 +367,8 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleApi 'Microsoft.ApiManagement/service/apis@2024-05-01' = {
-              name: take('exampleapi${uniqueString(resourceGroup().id)}', 24)
+            resource exampleApi 'Microsoft.ApiManagement/service/apis@2025-09-01-preview' = {
+              name: take('exampleApi-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 description: 'Description for example API'
@@ -380,8 +380,8 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleOperationDelete 'Microsoft.ApiManagement/service/apis/operations@2024-05-01' = {
-              name: take('exampleoperationdelete${uniqueString(resourceGroup().id)}', 24)
+            resource exampleOperationDelete 'Microsoft.ApiManagement/service/apis/operations@2025-09-01-preview' = {
+              name: take('exampleOperationDelete-${uniqueString(resourceGroup().id)}', 80)
               parent: exampleApi
               properties: {
                 description: 'A demonstration of a DELETE call'
@@ -391,8 +391,8 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleOperationGet 'Microsoft.ApiManagement/service/apis/operations@2024-05-01' = {
-              name: take('exampleoperationget${uniqueString(resourceGroup().id)}', 24)
+            resource exampleOperationGet 'Microsoft.ApiManagement/service/apis/operations@2025-09-01-preview' = {
+              name: take('exampleOperationGet-${uniqueString(resourceGroup().id)}', 80)
               parent: exampleApi
               properties: {
                 description: 'A demonstration of a GET call'
@@ -402,7 +402,7 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleOperationGetPolicy 'Microsoft.ApiManagement/service/apis/operations/policies@2024-05-01' = {
+            resource exampleOperationGetPolicy 'Microsoft.ApiManagement/service/apis/operations/policies@2025-09-01-preview' = {
               name: take('exampleoperationgetpolicy${uniqueString(resourceGroup().id)}', 24)
               parent: exampleOperationGet
               properties: {
@@ -410,8 +410,8 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleApiWithPolicy 'Microsoft.ApiManagement/service/apis@2024-05-01' = {
-              name: take('exampleapiwithpolicy${uniqueString(resourceGroup().id)}', 24)
+            resource exampleApiWithPolicy 'Microsoft.ApiManagement/service/apis@2025-09-01-preview' = {
+              name: take('exampleApiWithPolicy-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 description: 'Description for example API with policy'
@@ -423,7 +423,7 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleApiWithPolicyPolicy 'Microsoft.ApiManagement/service/apis/policies@2024-05-01' = {
+            resource exampleApiWithPolicyPolicy 'Microsoft.ApiManagement/service/apis/policies@2025-09-01-preview' = {
               name: take('exampleapiwithpolicypolicy${uniqueString(resourceGroup().id)}', 24)
               parent: exampleApiWithPolicy
               properties: {
@@ -431,8 +431,8 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleProduct 'Microsoft.ApiManagement/service/products@2024-05-01' = {
-              name: take('exampleproduct${uniqueString(resourceGroup().id)}', 24)
+            resource exampleProduct 'Microsoft.ApiManagement/service/products@2025-09-01-preview' = {
+              name: take('exampleProduct-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 approvalRequired: false
@@ -444,7 +444,7 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleProductPolicy 'Microsoft.ApiManagement/service/products/policies@2024-05-01' = {
+            resource exampleProductPolicy 'Microsoft.ApiManagement/service/products/policies@2025-09-01-preview' = {
               name: take('exampleproductpolicy${uniqueString(resourceGroup().id)}', 24)
               parent: exampleProduct
               properties: {
@@ -452,8 +452,8 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleUser1 'Microsoft.ApiManagement/service/users@2024-05-01' = {
-              name: take('exampleuser${uniqueString(resourceGroup().id)}', 24)
+            resource exampleUser1 'Microsoft.ApiManagement/service/users@2025-09-01-preview' = {
+              name: take('exampleUser1-${uniqueString(resourceGroup().id)}', 80)
               parent: apiService
               properties: {
                 email: 'examplefirst1@example.com'
@@ -464,8 +464,8 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleUser2 'Microsoft.ApiManagement/service/users@2024-05-01' = {
-              name: take('exampleuser${uniqueString(resourceGroup().id)}', 24)
+            resource exampleUser2 'Microsoft.ApiManagement/service/users@2025-09-01-preview' = {
+              name: take('exampleUser2-${uniqueString(resourceGroup().id)}', 80)
               parent: apiService
               properties: {
                 email: 'examplefirst2@example.com'
@@ -476,8 +476,8 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleNamedValue 'Microsoft.ApiManagement/service/namedValues@2024-05-01' = {
-              name: take('examplenamedvalue${uniqueString(resourceGroup().id)}', 24)
+            resource exampleNamedValue 'Microsoft.ApiManagement/service/namedValues@2025-09-01-preview' = {
+              name: take('exampleNamedValue-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 displayName: 'propertyExampleName'
@@ -488,8 +488,8 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleGroup 'Microsoft.ApiManagement/service/groups@2024-05-01' = {
-              name: take('examplegroup${uniqueString(resourceGroup().id)}', 24)
+            resource exampleGroup 'Microsoft.ApiManagement/service/groups@2025-09-01-preview' = {
+              name: take('exampleGroup-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 description: 'Example group description'
@@ -497,8 +497,8 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleOpenIdConnectProvider 'Microsoft.ApiManagement/service/openidConnectProviders@2024-05-01' = {
-              name: take('exampleopenidconnectprovider${uniqueString(resourceGroup().id)}', 24)
+            resource exampleOpenIdConnectProvider 'Microsoft.ApiManagement/service/openidConnectProviders@2025-09-01-preview' = {
+              name: take('exampleOpenIdConnectProvider-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 clientId: 'exampleClientId'
@@ -508,8 +508,8 @@ public class BasicApiManagementTests
               }
             }
 
-            resource exampleLogger 'Microsoft.ApiManagement/service/loggers@2024-05-01' = {
-              name: take('examplelogger${uniqueString(resourceGroup().id)}', 24)
+            resource exampleLogger 'Microsoft.ApiManagement/service/loggers@2025-09-01-preview' = {
+              name: take('exampleLogger-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 description: 'Description for example logger'
