@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.ChangeFeed.Common;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.Shares;
@@ -190,13 +191,26 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
             Harness h = Harness.Create(this);
 
+            ChangeFeedCursor innerCursor = new ChangeFeedCursor
+            {
+                CursorVersion = 1,
+                UrlHost = "account.blob.core.windows.net",
+                EndTime = DateTimeOffset.Parse(endSnap),
+                CurrentSegmentCursor = new SegmentCursor
+                {
+                    SegmentPath = "idx/segments/2024/01/15/0800/meta.json",
+                    CurrentShardPath = "idx/segments/2024/01/15/0800/log/00/",
+                    ShardCursors = new List<ShardCursor>(),
+                },
+            };
+
             ShareChangeFeedSnapshotCursor cursor = new ShareChangeFeedSnapshotCursor(
                 urlHost: "account.blob.core.windows.net",
                 beginSnapshot: beginSnap,
                 endSnapshot: endSnap,
                 beginCvId: 50,
                 endCvId: 200,
-                innerCursor: null);
+                innerCursor: innerCursor);
             string token = SnapshotCursorSerializer.Serialize(cursor);
 
             List<ShareChangeFeedEvent> collected = new List<ShareChangeFeedEvent>();
