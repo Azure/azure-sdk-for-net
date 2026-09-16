@@ -8,33 +8,22 @@ dotnet build sdk\websites\Azure.Provisioning.AppService\src\Azure.Provisioning.A
 
 ## Summary
 
-The build failed ApiCompat with **3 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
+The build failed ApiCompat with **1 unique compatibility diagnostic**. The same diagnostic occurs for `netstandard2.0`, `net8.0`, and `net10.0`.
 
 | Category | API changes | ApiCompat diagnostics |
 |---|---:|---:|
-| Removed public properties | 1 property | 2 |
 | Missing enum members | 1 member | 1 |
-| **Total** | **2 changes** | **3** |
-
-ApiCompat reports property getters and setters independently. Therefore, a removed read/write property normally produces two `CP0002` diagnostics.
+| **Total** | **1 change** | **1** |
 
 ## Unresolved issues
 
-### 1. Removed public properties
-
-| Type | Removed read/write property |
-|---|---|
-| `FunctionAppStorage` | `Value` |
-
-This accounts for **1 removed property and 2 diagnostics**.
-
-### 2. Missing enum member
+### 1. Missing enum member
 
 `AppServiceSupportedTlsVersion.One3` is missing. The migrated enum exposes `Tls1_3`, making this an enum-member rename.
 
 ### Concentration and suggested order
 
-The remaining work consists of two deliberate API-shape compatibility customizations: restoring `FunctionAppStorage.Value` and `AppServiceSupportedTlsVersion.One3`.
+The remaining work consists of restoring the legacy `AppServiceSupportedTlsVersion.One3` enum-member name.
 
 ## Resolved issues
 
@@ -148,3 +137,9 @@ The linked-backend resource ID required removing an existing `armResourceIdentif
 `ResponseMessageEnvelopeRemotePrivateEndpointConnection.Error` again exposes `BicepValue<Azure.ResponseError>`, matching both the legacy provisioning API and the current management API. A targeted TypeSpec `@@alternateType` maps the service-specific `ErrorEntity` property to `Azure.Core.Foundations.Error`, which both C# generators map to the shared `Azure.ResponseError` CLR type while preserving the `error` wire path.
 
 The management generator now emits its `ResponseError` property directly, so the previous handwritten management compatibility partial has been removed. This resolves **1 diagnostic**.
+
+### 10. Function app deployment storage URI
+
+`FunctionAppStorage.Value` has been restored as `BicepValue<Uri>` with `CodeGenMember`, preserving the legacy name and the existing `value` Bicep path. The generated `AzureStorageUriStringValue` member already had the correct URI type, so no conversion property or TypeSpec change was needed.
+
+This restores **1 property and resolves 2 diagnostics**.

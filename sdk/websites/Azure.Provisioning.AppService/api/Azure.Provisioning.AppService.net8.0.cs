@@ -1916,6 +1916,7 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.AppService.FunctionAppStorageAuthentication Authentication { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> AzureStorageUriStringValue { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.FunctionAppStorageType> StorageType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum FunctionAppStorageAccountAuthenticationType
