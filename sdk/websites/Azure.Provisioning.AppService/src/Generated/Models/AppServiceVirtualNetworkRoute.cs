@@ -17,7 +17,6 @@ namespace Azure.Provisioning.AppService
     {
         private VnetRouteProperties _properties;
         private BicepValue<string> _name;
-        private BicepValue<string> _kind;
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<ResourceType> _type;
         private SystemData _systemData;
@@ -44,16 +43,6 @@ namespace Azure.Provisioning.AppService
             {
                 Initialize();
                 return _name;
-            }
-        }
-
-        /// <summary> Gets the Kind. </summary>
-        public BicepValue<string> Kind
-        {
-            get
-            {
-                Initialize();
-                return _kind;
             }
         }
 
@@ -87,40 +76,12 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the StartAddress. </summary>
-        public BicepValue<string> StartAddress
-        {
-            get
-            {
-                return Properties.StartAddress;
-            }
-        }
-
-        /// <summary> Gets the EndAddress. </summary>
-        public BicepValue<string> EndAddress
-        {
-            get
-            {
-                return Properties.EndAddress;
-            }
-        }
-
-        /// <summary> Gets the RouteType. </summary>
-        public BicepValue<AppServiceVirtualNetworkRouteType> RouteType
-        {
-            get
-            {
-                return Properties.RouteType;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for AppServiceVirtualNetworkRoute. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<VnetRouteProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
-            _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _type = DefineProperty<ResourceType>(nameof(Type), new string[] { "type" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);

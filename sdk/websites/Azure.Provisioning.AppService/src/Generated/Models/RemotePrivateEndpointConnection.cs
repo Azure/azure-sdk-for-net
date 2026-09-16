@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Net;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -17,7 +16,6 @@ namespace Azure.Provisioning.AppService
     public partial class RemotePrivateEndpointConnection : ProvisionableConstruct
     {
         private RemotePrivateEndpointConnectionProperties _properties;
-        private BicepValue<string> _kind;
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private BicepValue<ResourceType> _type;
@@ -35,16 +33,6 @@ namespace Azure.Provisioning.AppService
             {
                 Initialize();
                 return _properties;
-            }
-        }
-
-        /// <summary> Gets the Kind. </summary>
-        public BicepValue<string> Kind
-        {
-            get
-            {
-                Initialize();
-                return _kind;
             }
         }
 
@@ -93,25 +81,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the PrivateLinkServiceConnectionState. </summary>
-        public PrivateLinkConnectionState PrivateLinkServiceConnectionState
-        {
-            get
-            {
-                return Properties.PrivateLinkServiceConnectionState;
-            }
-        }
-
-        /// <summary> Gets the IPAddresses. </summary>
-        public BicepList<IPAddress> IPAddresses
-        {
-            get
-            {
-                return Properties.IPAddresses;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -120,7 +90,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.PrivateEndpointId;
+                return Properties is null ? default : Properties.PrivateEndpointId;
             }
         }
 
@@ -129,7 +99,6 @@ namespace Azure.Provisioning.AppService
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<RemotePrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isOutput: true);
             _type = DefineProperty<ResourceType>(nameof(Type), new string[] { "type" }, isOutput: true);

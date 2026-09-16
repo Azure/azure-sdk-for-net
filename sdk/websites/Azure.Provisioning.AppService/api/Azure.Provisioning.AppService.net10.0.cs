@@ -1057,12 +1057,12 @@ namespace Azure.Provisioning.AppService
     public partial class AppServiceVirtualNetworkRoute : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppServiceVirtualNetworkRoute() { }
-        public Azure.Provisioning.BicepValue<string> EndAddress { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> EndAddress { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.AppServiceVirtualNetworkRouteType> RouteType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> StartAddress { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.AppServiceVirtualNetworkRouteType> RouteType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> StartAddress { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -2769,11 +2769,11 @@ namespace Azure.Provisioning.AppService
     {
         public RemotePrivateEndpointConnection() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepList<System.Net.IPAddress> IPAddresses { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
+        public Azure.Provisioning.BicepList<System.Net.IPAddress> IPAddresses { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
-        public Azure.Provisioning.AppService.PrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } }
+        public Azure.Provisioning.AppService.PrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> Type { get { throw null; } }
@@ -5576,6 +5576,7 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.AppService.StaticSite Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.CustomDomainStatus> Status { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ValidationMethod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ValidationToken { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.StaticSiteCustomDomainOverview FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
