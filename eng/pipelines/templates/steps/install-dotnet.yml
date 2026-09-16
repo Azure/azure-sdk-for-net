@@ -7,12 +7,28 @@ steps:
   # Need to authenticate so our pipeline can update packages in the feed.
   - task: NuGetAuthenticate@1
 
+  # UseDotNet's useGlobalJson applies the rollForward policy against the set of downloadable
+  # SDKs, so 'feature' installs the newest 10.0.x rather than the version named in global.json.
+  # That drags CI onto same-day SDK releases whose implicit ILLink/ILCompiler packs may not have
+  # reached our NuGet feed yet. Install the exact version instead; rollForward is still honored
+  # when selecting among installed SDKs, so local development is unaffected.
+  - pwsh: |
+      $globalJsonPath = Join-Path '$(Build.SourcesDirectory)' 'global.json'
+      $sdkVersion = (Get-Content $globalJsonPath -Raw | ConvertFrom-Json).sdk.version
+      if (-not $sdkVersion) {
+        Write-Error "Unable to read sdk.version from $globalJsonPath"
+        exit 1
+      }
+      Write-Host "Pinning the .NET SDK install to $sdkVersion (from global.json)"
+      echo "##vso[task.setvariable variable=DotNetSdkVersion]$sdkVersion"
+    displayName: 'Resolve .NET SDK version from global.json'
+
   # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
   - task: UseDotNet@2
     displayName: 'Use .NET SDK'
     retryCountOnTaskFailure: 3
     inputs:
-      useGlobalJson: true
+      version: $(DotNetSdkVersion)
       performMultiLevelLookup: true
   - task: UseDotNet@2 # We need .NET 9 for the .NET 9 tests
     displayName: 'Use .NET 9.0 SDK'

@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("nodeImageSelection"u8);
                 writer.WriteObjectValue(NodeImageSelection, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(FailureCount))
+            {
+                writer.WritePropertyName("failureCount"u8);
+                writer.WriteNumberValue(FailureCount.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,6 +144,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             ContainerServiceFleetUpdateStatus status = default;
             IReadOnlyList<ContainerServiceFleetUpdateStageStatus> stages = default;
             NodeImageSelectionStatus nodeImageSelection = default;
+            int? failureCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,12 +180,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     nodeImageSelection = NodeImageSelectionStatus.DeserializeNodeImageSelectionStatus(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("failureCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failureCount = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerServiceFleetUpdateRunStatus(status, stages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStageStatus>(), nodeImageSelection, additionalBinaryDataProperties);
+            return new ContainerServiceFleetUpdateRunStatus(status, stages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStageStatus>(), nodeImageSelection, failureCount, additionalBinaryDataProperties);
         }
     }
 }

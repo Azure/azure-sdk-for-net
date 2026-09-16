@@ -72,7 +72,7 @@ namespace Azure.Communication.Messages
 
         /// <summary>
         /// The message content object used to create interactive messages components.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.TextMessageContent"/>, <see cref="Messages.DocumentMessageContent"/>, <see cref="Messages.ImageMessageContent"/>, <see cref="Messages.VideoMessageContent"/>, <see cref="Messages.ButtonSetContent"/>, <see cref="Messages.LinkContent"/>, and <see cref="Messages.ActionGroupContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.ActionGroupContent"/>, <see cref="Messages.ButtonSetContent"/>, <see cref="Messages.DocumentMessageContent"/>, <see cref="Messages.ImageMessageContent"/>, <see cref="Messages.LinkContent"/>, <see cref="Messages.TextMessageContent"/>, and <see cref="Messages.VideoMessageContent"/>.
         /// </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <returns> A new <see cref="Messages.MessageContent"/> instance for mocking. </returns>
@@ -138,7 +138,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.LinkContent"/> instance for mocking. </returns>
         public static LinkContent LinkContent(string title = default, Uri uri = default)
         {
-            return new LinkContent(MessageContentKind.Url, additionalBinaryDataProperties: null, title, uri);
+            return new LinkContent(MessageContentKind.Uri, additionalBinaryDataProperties: null, title, uri);
         }
 
         /// <summary> The action content of type ActionGroup. </summary>
@@ -175,7 +175,7 @@ namespace Azure.Communication.Messages
 
         /// <summary>
         /// Binding actions to the interactive message.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppListActionBindings"/>, <see cref="Models.Channels.WhatsAppButtonActionBindings"/>, and <see cref="Models.Channels.WhatsAppUrlActionBindings"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Channels.WhatsAppButtonActionBindings"/>, <see cref="Models.Channels.WhatsAppListActionBindings"/>, and <see cref="Models.Channels.WhatsAppUrlActionBindings"/>.
         /// </summary>
         /// <param name="kind"> Kind of the MessageActionBinding. </param>
         /// <returns> A new <see cref="Messages.ActionBindings"/> instance for mocking. </returns>
@@ -291,7 +291,7 @@ namespace Azure.Communication.Messages
 
         /// <summary>
         /// Advanced Messaging conversation participant.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.InternalConversationParticipant"/> and <see cref="Messages.ExternalConversationParticipant"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.ExternalConversationParticipant"/> and <see cref="Messages.InternalConversationParticipant"/>.
         /// </summary>
         /// <param name="id"> Participant Identifier. </param>
         /// <param name="displayName"> Participant display name. </param>
@@ -314,7 +314,7 @@ namespace Azure.Communication.Messages
 
         /// <summary>
         /// Details of an external platform contact.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.CommunicationContact"/>, <see cref="Messages.BotContact"/>, and <see cref="Models.Channels.WhatsAppContact"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.BotContact"/>, <see cref="Messages.CommunicationContact"/>, and <see cref="Models.Channels.WhatsAppContact"/>.
         /// </summary>
         /// <param name="id"> External platform identifier. </param>
         /// <param name="kind"> Type of message platform (e.g., WhatsApp). </param>
@@ -391,7 +391,7 @@ namespace Azure.Communication.Messages
 
         /// <summary>
         /// Details of the conversation message content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.TextConversationMessageContent"/>, <see cref="Messages.ImageConversationMessageContent"/>, <see cref="Messages.DocumentConversationMessageContent"/>, <see cref="Messages.VideoConversationMessageContent"/>, <see cref="Messages.AudioConversationMessageContent"/>, and <see cref="Messages.TemplateConversationMessageContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Messages.AudioConversationMessageContent"/>, <see cref="Messages.DocumentConversationMessageContent"/>, <see cref="Messages.ImageConversationMessageContent"/>, <see cref="Messages.TemplateConversationMessageContent"/>, <see cref="Messages.TextConversationMessageContent"/>, and <see cref="Messages.VideoConversationMessageContent"/>.
         /// </summary>
         /// <param name="kind"> The type discriminator describing a message type. </param>
         /// <returns> A new <see cref="Messages.ConversationMessageContent"/> instance for mocking. </returns>

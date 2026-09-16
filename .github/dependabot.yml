@@ -5,6 +5,8 @@ updates:
       - "/eng/packages/http-client-csharp-mgmt"
     schedule:
       interval: "daily"
+    labels:
+      - "dependencies"
     cooldown:
       default-days: 7
       exclude:
@@ -18,6 +20,10 @@ updates:
     ignore:
       # Updated manually to align with minimum supported Node version
       - dependency-name: "@types/node"
+      # Updated by a separate generator upgrade process
+      - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
+      - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
         patterns:
@@ -34,6 +40,8 @@ updates:
       - "/eng/packages/http-client-csharp-provisioning"
     schedule:
       interval: "daily"
+    labels:
+      - "dependencies"
     cooldown:
       default-days: 7
       exclude:
@@ -47,6 +55,10 @@ updates:
     ignore:
       # Updated manually to align with minimum supported Node version
       - dependency-name: "@types/node"
+      # Updated by a separate generator upgrade process
+      - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
+      - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
         patterns:
@@ -63,6 +75,8 @@ updates:
       - "/eng/packages/http-client-csharp"
     schedule:
       interval: "daily"
+    labels:
+      - "dependencies"
     cooldown:
       default-days: 7
       exclude:
@@ -76,6 +90,10 @@ updates:
     ignore:
       # Updated manually to align with minimum supported Node version
       - dependency-name: "@types/node"
+      # Updated by a separate generator upgrade process
+      - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
+      - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
         patterns:
@@ -92,6 +110,8 @@ updates:
       - "/eng/packages/http-server-csharp-aspnet"
     schedule:
       interval: "daily"
+    labels:
+      - "dependencies"
     cooldown:
       default-days: 7
       exclude:
@@ -105,6 +125,10 @@ updates:
     ignore:
       # Updated manually to align with minimum supported Node version
       - dependency-name: "@types/node"
+      # Updated by a separate generator upgrade process
+      - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
+      - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
         patterns:

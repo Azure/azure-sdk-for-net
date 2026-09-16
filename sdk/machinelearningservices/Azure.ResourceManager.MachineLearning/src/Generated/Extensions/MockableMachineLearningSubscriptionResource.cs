@@ -31,8 +31,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         private VirtualMachineSizes _virtualMachineSizesRestClient;
         private ClientDiagnostics _quotasClientDiagnostics;
         private Quotas _quotasRestClient;
-        private ClientDiagnostics _ptuQuotaClientDiagnostics;
-        private PTUQuota _ptuQuotaRestClient;
 
         /// <summary> Initializes a new instance of MockableMachineLearningSubscriptionResource for mocking. </summary>
         protected MockableMachineLearningSubscriptionResource()
@@ -48,27 +46,23 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics RegistriesClientDiagnostics => _registriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Registries RegistriesRestClient => _registriesRestClient ??= new Registries(RegistriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
+        private Registries RegistriesRestClient => _registriesRestClient ??= new Registries(RegistriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics VirtualMachineSizesClientDiagnostics => _virtualMachineSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineSizes VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizes(VirtualMachineSizesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
+        private VirtualMachineSizes VirtualMachineSizesRestClient => _virtualMachineSizesRestClient ??= new VirtualMachineSizes(VirtualMachineSizesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics QuotasClientDiagnostics => _quotasClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Quotas QuotasRestClient => _quotasRestClient ??= new Quotas(QuotasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
-
-        private ClientDiagnostics PTUQuotaClientDiagnostics => _ptuQuotaClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MachineLearning.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private PTUQuota PTUQuotaRestClient => _ptuQuotaRestClient ??= new PTUQuota(PTUQuotaClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-15-preview");
+        private Quotas QuotasRestClient => _quotasRestClient ??= new Quotas(QuotasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         /// <summary>
         /// Lists all the available machine learning workspaces under the specified subscription.
@@ -83,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,7 +181,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,7 +209,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,7 +258,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,264 +292,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List available MaaS PTU quota.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/availableQuota. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PTUQuotaOperationGroup_ListAvailable. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AvailableQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableQuota> GetAvailableAsync(string location, string skip = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PTUQuotaGetAvailableAsyncCollectionResultOfT(
-                PTUQuotaRestClient,
-                Id.SubscriptionId,
-                location,
-                skip,
-                context,
-                "MockableMachineLearningSubscriptionResource.GetAvailable");
-        }
-
-        /// <summary>
-        /// List available MaaS PTU quota.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/availableQuota. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PTUQuotaOperationGroup_ListAvailable. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="AvailableQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableQuota> GetAvailable(string location, string skip = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PTUQuotaGetAvailableCollectionResultOfT(
-                PTUQuotaRestClient,
-                Id.SubscriptionId,
-                location,
-                skip,
-                context,
-                "MockableMachineLearningSubscriptionResource.GetAvailable");
-        }
-
-        /// <summary>
-        /// Get available MaaS PTU quota.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/availableQuota/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PTUQuotaOperationGroup_GetAvailable. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AvailableQuota>> GetAvailableAsync(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            using DiagnosticScope scope = PTUQuotaClientDiagnostics.CreateScope("MockableMachineLearningSubscriptionResource.GetAvailable");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PTUQuotaRestClient.CreateGetAvailableRequest(Id.SubscriptionId, location, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AvailableQuota> response = Response.FromValue(AvailableQuota.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get available MaaS PTU quota.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/availableQuota/default. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PTUQuotaOperationGroup_GetAvailable. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AvailableQuota> GetAvailable(string location, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            using DiagnosticScope scope = PTUQuotaClientDiagnostics.CreateScope("MockableMachineLearningSubscriptionResource.GetAvailable");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PTUQuotaRestClient.CreateGetAvailableRequest(Id.SubscriptionId, location, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<AvailableQuota> response = Response.FromValue(AvailableQuota.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List MaaS PTU usage and quota.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotaAndUsage. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PTUQuotaOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="UsageAndQuotaDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UsageAndQuotaDetails> GetAllAsync(string location, string skip = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PTUQuotaGetAllAsyncCollectionResultOfT(
-                PTUQuotaRestClient,
-                Id.SubscriptionId,
-                location,
-                skip,
-                context,
-                "MockableMachineLearningSubscriptionResource.GetAll");
-        }
-
-        /// <summary>
-        /// List MaaS PTU usage and quota.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.MachineLearningServices/locations/{location}/quotaAndUsage. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PTUQuotaOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="UsageAndQuotaDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UsageAndQuotaDetails> GetAll(string location, string skip = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PTUQuotaGetAllCollectionResultOfT(
-                PTUQuotaRestClient,
-                Id.SubscriptionId,
-                location,
-                skip,
-                context,
-                "MockableMachineLearningSubscriptionResource.GetAll");
         }
     }
 }

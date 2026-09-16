@@ -24,6 +24,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         /// <summary> Creates a new ContainerRegistryFileTaskRunContent. </summary>
         public ContainerRegistryFileTaskRunContent()
         {
+            Type.Assign("FileTaskRunRequest");
         }
 
         /// <summary> Gets or sets the TaskFilePath. </summary>
@@ -167,7 +168,6 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "FileTaskRunRequest");
             _taskFilePath = DefineProperty<string>(nameof(TaskFilePath), new string[] { "taskFilePath" }, isRequired: true);
             _valuesFilePath = DefineProperty<string>(nameof(ValuesFilePath), new string[] { "valuesFilePath" });
             _values = DefineListProperty<ContainerRegistryTaskSetValue>(nameof(Values), new string[] { "values" });

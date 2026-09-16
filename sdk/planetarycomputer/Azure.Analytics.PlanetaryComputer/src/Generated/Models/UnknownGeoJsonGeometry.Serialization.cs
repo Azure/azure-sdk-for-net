@@ -105,14 +105,14 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            GeometryType @type = default;
+            GeometryKind @type = default;
             IList<float> boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new GeometryType(prop.Value.GetString());
+                    @type = new GeometryKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("bbox"u8))
@@ -131,7 +131,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new UnknownGeoJsonGeometry(@type, boundingBox ?? new ChangeTrackingList<float>(), additionalBinaryDataProperties);

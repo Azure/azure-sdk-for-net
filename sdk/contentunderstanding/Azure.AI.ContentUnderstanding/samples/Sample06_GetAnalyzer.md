@@ -119,7 +119,7 @@ var analyzer = new ContentAnalyzer
     Config = config,
     FieldSchema = fieldSchema
 };
-analyzer.Models["completion"] = "gpt-4.1";
+analyzer.Models["completion"] = "gpt-5.2";
 
 // Create the analyzer
 await client.CreateAnalyzerAsync(

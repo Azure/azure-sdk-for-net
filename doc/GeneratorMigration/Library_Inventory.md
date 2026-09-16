@@ -16,30 +16,31 @@
 
 ## Summary
 
-- Total libraries: 442
-- Management Plane (MPG): 260
-  - Autorest/Swagger: 43
-  - New Emitter (TypeSpec): 217
+- Total libraries: 463
+- Management Plane (MPG): 271
+  - Autorest/Swagger: 39
+  - New Emitter (TypeSpec): 232
   - Old TypeSpec: 0
-- Data Plane (DPG): 129
+- Data Plane (DPG): 126
   - Autorest/Swagger: 30
-  - New Emitter (TypeSpec): 51
-  - Old TypeSpec: 1
-- Provisioning: 53
-  - Reflection-based generator: 25
-  - TypeSpec-based generator: 26
-  - No generator: 2
-- No generator: 47
+  - New Emitter (TypeSpec): 55
+  - Old TypeSpec: 0
+- Provisioning: 66
+  - Reflection-based generator: 5
+  - TypeSpec-based generator: 60
+  - No generator: 1
+- No generator: 41
 
 
 ## Data Plane Libraries (DPG) - Migrated to New Emitter
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 51 / 52 (98.1%)
+**Migration Status**: 55 / 55 (100%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
+| agentserver | Azure.AI.AgentServer.Core | ✅ |  |
 | agentserver | Azure.AI.AgentServer.Responses | ✅ | ✅ |
 | ai | Azure.AI.Agents.Persistent | ✅ |  |
 | ai | Azure.AI.Extensions.OpenAI | ✅ | ✅ |
@@ -57,11 +58,13 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | communication | Azure.Communication.JobRouter | ✅ |  |
 | communication | Azure.Communication.Messages | ✅ |  |
 | confidentialledger | Azure.Security.CodeTransparency | ✅ |  |
-| confidentialledger | Azure.Security.ConfidentialLedger |  |  |
+| confidentialledger | Azure.Security.ConfidentialLedger | ✅ |  |
 | contentsafety | Azure.AI.ContentSafety | ✅ |  |
 | contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |  |
 | devcenter | Azure.Developer.DevCenter | ✅ |  |
+| deviceregistry | Azure.IoT.DeviceRegistry.SoftwareUpdate | ✅ |  |
 | deviceupdate | Azure.IoT.DeviceUpdate | ✅ |  |
+| discovery | Azure.AI.Discovery | ✅ |  |
 | documentintelligence | Azure.AI.DocumentIntelligence | ✅ |  |
 | easm | Azure.Analytics.Defender.Easm | ✅ |  |
 | eventgrid | Azure.Messaging.EventGrid.Namespaces | ✅ |  |
@@ -136,12 +139,13 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 217 / 217 (100%)
+**Migration Status**: 232 / 232 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
 | advisor | Azure.ResourceManager.Advisor | ✅ |
 | agricultureplatform | Azure.ResourceManager.AgriculturePlatform | ✅ |
+| aimanager | Azure.ResourceManager.ContainerServiceAIManager | ✅ |
 | alertsmanagement | Azure.ResourceManager.AlertProcessingRules | ✅ |
 | alertsmanagement | Azure.ResourceManager.AlertRuleRecommendations | ✅ |
 | alertsmanagement | Azure.ResourceManager.AlertsManagement | ✅ |
@@ -157,7 +161,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | arc-scvmm | Azure.ResourceManager.ScVmm | ✅ |
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
 | artifactsigning | Azure.ResourceManager.ArtifactSigning | ✅ |
-| astronomer | Azure.ResourceManager.Astro | ✅ |
 | attestation | Azure.ResourceManager.Attestation | ✅ |
 | authorization | Azure.ResourceManager.Authorization | ✅ |
 | automation | Azure.ResourceManager.Automation | ✅ |
@@ -177,7 +180,10 @@ Libraries that provide resource management APIs for Azure services and have been
 | chaos | Azure.ResourceManager.Chaos | ✅ |
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | cognitiveservices | Azure.ResourceManager.CognitiveServices | ✅ |
+| commerce | Azure.ResourceManager.Commerce | ✅ |
+| commonedgesitemanageroperations | Azure.ResourceManager.CommonEdgeSiteManagerOperations | ✅ |
 | communication | Azure.ResourceManager.Communication | ✅ |
+| commvaultcontentstore | Azure.ResourceManager.CommvaultContentStore | ✅ |
 | compute | Azure.ResourceManager.Compute | ✅ |
 | compute | Azure.ResourceManager.Compute.BulkActions | ✅ |
 | computebulkactions | Azure.ResourceManager.ComputeBulkActions | ✅ |
@@ -200,6 +206,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | cosmosdb | Azure.ResourceManager.CosmosDB | ✅ |
 | cosmosdbforpostgresql | Azure.ResourceManager.CosmosDBForPostgreSql | ✅ |
 | costmanagement | Azure.ResourceManager.CostManagement | ✅ |
+| databasefleetmanager | Azure.ResourceManager.DatabaseFleetManager | ✅ |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | ✅ |
 | databox | Azure.ResourceManager.DataBox | ✅ |
 | databoxedge | Azure.ResourceManager.DataBoxEdge | ✅ |
@@ -241,12 +248,14 @@ Libraries that provide resource management APIs for Azure services and have been
 | frontdoor | Azure.ResourceManager.FrontDoor | ✅ |
 | grafana | Azure.ResourceManager.Grafana | ✅ |
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration | ✅ |
+| hanaonazure | Azure.ResourceManager.HanaOnAzure | ✅ |
 | hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | hdinsight | Azure.ResourceManager.HDInsight | ✅ |
 | healthbot | Azure.ResourceManager.HealthBot | ✅ |
 | healthcareapis | Azure.ResourceManager.HealthcareApis | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | horizondb | Azure.ResourceManager.HorizonDB | ✅ |
+| hybridaks | Azure.ResourceManager.HybridContainerService | ✅ |
 | hybridcompute | Azure.ResourceManager.HybridCompute | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity | ✅ |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
@@ -270,11 +279,15 @@ Libraries that provide resource management APIs for Azure services and have been
 | managednetworkfabric | Azure.ResourceManager.ManagedNetworkFabric | ✅ |
 | managedops | Azure.ResourceManager.ManagedOps | ✅ |
 | managedserviceidentity | Azure.ResourceManager.ManagedServiceIdentities | ✅ |
+| manufacturingplatform | Azure.ResourceManager.ManufacturingPlatform | ✅ |
 | maps | Azure.ResourceManager.Maps | ✅ |
 | marketplace | Azure.ResourceManager.Marketplace | ✅ |
+| marketplace | Azure.ResourceManager.Marketplace.Reviews | ✅ |
+| migrationdiscoverysap | Azure.ResourceManager.MigrationDiscoverySap | ✅ |
 | mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
 | monitor | Azure.ResourceManager.Monitor | ✅ |
+| monitor | Azure.ResourceManager.Monitor.Agents | ✅ |
 | monitor | Azure.ResourceManager.Monitor.Slis | ✅ |
 | monitor | Azure.ResourceManager.Monitor.Workspaces | ✅ |
 | monitorpipelinegroups | Azure.ResourceManager.Monitor.PipelineGroups | ✅ |
@@ -302,6 +315,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | powerplatform | Azure.ResourceManager.PowerPlatform | ✅ |
 | privatedns | Azure.ResourceManager.PrivateDns | ✅ |
 | programenrollment | Azure.ResourceManager.ProgramEnrollment | ✅ |
+| programmableconnectivity | Azure.ResourceManager.ProgrammableConnectivity | ✅ |
 | providerhub | Azure.ResourceManager.ProviderHub | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock | ✅ |
 | purview | Azure.ResourceManager.Purview | ✅ |
@@ -313,6 +327,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication | ✅ |
 | recoveryservices-siterecovery | Azure.ResourceManager.RecoveryServicesSiteRecovery | ✅ |
 | redhatopenshift | Azure.ResourceManager.RedHatOpenShift | ✅ |
+| redhatopenshifthcp | Azure.ResourceManager.RedHatOpenShiftHcp | ✅ |
 | redis | Azure.ResourceManager.Redis | ✅ |
 | redisenterprise | Azure.ResourceManager.RedisEnterprise | ✅ |
 | relationships | Azure.ResourceManager.Relationships | ✅ |
@@ -335,6 +350,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | servicefabric | Azure.ResourceManager.ServiceFabric | ✅ |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters | ✅ |
 | servicegroups | Azure.ResourceManager.ServiceGroups | ✅ |
+| servicelinker | Azure.ResourceManager.ServiceLinker | ✅ |
 | servicenetworking | Azure.ResourceManager.ServiceNetworking | ✅ |
 | signalr | Azure.ResourceManager.SignalR | ✅ |
 | sitemanager | Azure.ResourceManager.SiteManager | ✅ |
@@ -352,16 +368,18 @@ Libraries that provide resource management APIs for Azure services and have been
 | support | Azure.ResourceManager.Support | ✅ |
 | terraform | Azure.ResourceManager.Terraform | ✅ |
 | trafficmanager | Azure.ResourceManager.TrafficManager | ✅ |
+| verifiedid | Azure.ResourceManager.VerifiedId | ✅ |
 | webpubsub | Azure.ResourceManager.WebPubSub | ✅ |
 | websites | Azure.ResourceManager.AppService | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
 | workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
+| workloadssapmonitor | Azure.ResourceManager.WorkloadsSapMonitor | ✅ |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | ✅ |
 
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 39
 
 | Service | Library |
 | ------- | ------- |
@@ -381,10 +399,8 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
 | fluidrelay | Azure.ResourceManager.FluidRelay |
 | graphservices | Azure.ResourceManager.GraphServices |
-| hybridaks | Azure.ResourceManager.HybridContainerService |
 | iot | Azure.ResourceManager.IotFirmwareDefense |
 | iotcentral | Azure.ResourceManager.IotCentral |
-| kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration |
 | labservices | Azure.ResourceManager.LabServices |
 | logic | Azure.ResourceManager.Logic |
 | machinelearningcompute | Azure.ResourceManager.MachineLearningCompute |
@@ -393,14 +409,12 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 | managementpartner | Azure.ResourceManager.ManagementPartner |
 | marketplaceordering | Azure.ResourceManager.MarketplaceOrdering |
 | migrationassessment | Azure.ResourceManager.Migration.Assessment |
-| migrationdiscoverysap | Azure.ResourceManager.MigrationDiscoverySap |
 | openenergyplatform | Azure.ResourceManager.EnergyServices |
 | orbital | Azure.ResourceManager.Orbital |
 | resourcemanager | Azure.ResourceManager |
 | resourcemover | Azure.ResourceManager.ResourceMover |
 | resources | Azure.ResourceManager.Resources |
 | securitydevops | Azure.ResourceManager.SecurityDevOps |
-| servicelinker | Azure.ResourceManager.ServiceLinker |
 | springappdiscovery | Azure.ResourceManager.SpringAppDiscovery |
 | storagepool | Azure.ResourceManager.StoragePool |
 | streamanalytics | Azure.ResourceManager.StreamAnalytics |
@@ -414,80 +428,87 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 43
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 26 / 53 migrated to TypeSpec-based generator
+**Migration Status**: 60 / 66 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
-| apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement ✅ | Reflection |
-| appconfiguration | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | Reflection |
-| applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights ✅ | Reflection |
+| apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement ✅ | TypeSpec ✅ |
+| appconfiguration | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | TypeSpec ✅ |
+| applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights ✅ | TypeSpec ✅ |
+| attestation | Azure.Provisioning.Attestation | Azure.ResourceManager.Attestation ✅ | TypeSpec ✅ |
 | batch | Azure.Provisioning.Batch | Azure.ResourceManager.Batch ✅ | TypeSpec ✅ |
 | botservice | Azure.Provisioning.BotService | Azure.ResourceManager.BotService ✅ | TypeSpec ✅ |
 | cdn | Azure.Provisioning.Cdn | Azure.ResourceManager.Cdn ✅ | TypeSpec ✅ |
-| cognitiveservices | Azure.Provisioning.CognitiveServices | Azure.ResourceManager.CognitiveServices ✅ | Reflection |
+| cognitiveservices | Azure.Provisioning.CognitiveServices | Azure.ResourceManager.CognitiveServices ✅ | TypeSpec ✅ |
 | communication | Azure.Provisioning.Communication | Azure.ResourceManager.Communication ✅ | TypeSpec ✅ |
 | compute | Azure.Provisioning.Compute | Azure.ResourceManager.Compute ✅ | TypeSpec ✅ |
-| containerapps | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers ✅ | Reflection |
+| containerapps | Azure.Provisioning.AppContainers | Azure.ResourceManager.AppContainers ✅ | TypeSpec ✅ |
 | containerinstance | Azure.Provisioning.ContainerInstance | Azure.ResourceManager.ContainerInstance ✅ | TypeSpec ✅ |
-| containerregistry | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry ✅ | Reflection |
+| containerregistry | Azure.Provisioning.ContainerRegistry | Azure.ResourceManager.ContainerRegistry ✅ | TypeSpec ✅ |
 | containerregistry | Azure.Provisioning.ContainerRegistry.Tasks | Azure.ResourceManager.ContainerRegistry.Tasks ✅ | TypeSpec ✅ |
 | containerservice | Azure.Provisioning.ContainerService | Azure.ResourceManager.ContainerService ✅ | TypeSpec ✅ |
-| cosmosdb | Azure.Provisioning.CosmosDB | Azure.ResourceManager.CosmosDB ✅ | Reflection |
+| cosmosdb | Azure.Provisioning.CosmosDB | Azure.ResourceManager.CosmosDB ✅ | TypeSpec ✅ |
 | costmanagement | Azure.Provisioning.CostManagement | Azure.ResourceManager.CostManagement ✅ | TypeSpec ✅ |
 | datafactory | Azure.Provisioning.DataFactory | Azure.ResourceManager.DataFactory ✅ | Reflection |
-| dns | Azure.Provisioning.Dns | Azure.ResourceManager.Dns ✅ | None |
+| desktopvirtualization | Azure.Provisioning.DesktopVirtualization | Azure.ResourceManager.DesktopVirtualization ✅ | TypeSpec ✅ |
+| dns | Azure.Provisioning.Dns | Azure.ResourceManager.Dns ✅ | TypeSpec ✅ |
 | domainregistration | Azure.Provisioning.DomainRegistration | Azure.ResourceManager.DomainRegistration ✅ | TypeSpec ✅ |
 | durabletask | Azure.Provisioning.DurableTask | Azure.ResourceManager.DurableTask ✅ | TypeSpec ✅ |
-| eventgrid | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid ✅ | Reflection |
+| enclave | Azure.Provisioning.Enclave | Azure.ResourceManager.Enclave ✅ | TypeSpec ✅ |
+| eventgrid | Azure.Provisioning.EventGrid | Azure.ResourceManager.EventGrid ✅ | TypeSpec ✅ |
 | eventhub | Azure.Provisioning.EventHubs | Azure.ResourceManager.EventHubs ✅ | TypeSpec ✅ |
 | frontdoor | Azure.Provisioning.FrontDoor | Azure.ResourceManager.FrontDoor ✅ | TypeSpec ✅ |
 | hybridkubernetes | Azure.Provisioning.Kubernetes | Azure.ResourceManager.Kubernetes ✅ | TypeSpec ✅ |
+| iothub | Azure.Provisioning.IotHub | Azure.ResourceManager.IotHub ✅ | TypeSpec ✅ |
 | keyvault | Azure.Provisioning.KeyVault | Azure.ResourceManager.KeyVault ✅ | TypeSpec ✅ |
-| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration | Azure.ResourceManager.KubernetesConfiguration | Reflection |
-| kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto ✅ | Reflection |
+| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration.Extensions | Azure.ResourceManager.KubernetesConfiguration.Extensions ✅ | TypeSpec ✅ |
+| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration.ExtensionTypes | Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes ✅ | TypeSpec ✅ |
+| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration.FluxConfigurations | Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations ✅ | TypeSpec ✅ |
+| kubernetesconfiguration | Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes | Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes ✅ | TypeSpec ✅ |
+| kusto | Azure.Provisioning.Kusto | Azure.ResourceManager.Kusto ✅ | TypeSpec ✅ |
+| loadtestservice | Azure.Provisioning.LoadTesting | Azure.ResourceManager.LoadTesting ✅ | TypeSpec ✅ |
 | logic | Azure.Provisioning.Logic | Azure.ResourceManager.Logic | Reflection |
 | machinelearningservices | Azure.Provisioning.MachineLearning | Azure.ResourceManager.MachineLearning ✅ | TypeSpec ✅ |
-| monitor | Azure.Provisioning.Monitor | Azure.ResourceManager.Monitor ✅ | Reflection |
+| maps | Azure.Provisioning.Maps | Azure.ResourceManager.Maps ✅ | TypeSpec ✅ |
+| monitor | Azure.Provisioning.Monitor | Azure.ResourceManager.Monitor ✅ | TypeSpec ✅ |
 | mysql | Azure.Provisioning.MySql | Azure.ResourceManager.MySql ✅ | TypeSpec ✅ |
 | network | Azure.Provisioning.Network | Azure.ResourceManager.Network ✅ | Reflection |
 | operationalinsights | Azure.Provisioning.OperationalInsights | Azure.ResourceManager.OperationalInsights ✅ | TypeSpec ✅ |
-| postgresql | Azure.Provisioning.PostgreSql | Azure.ResourceManager.PostgreSql ✅ | Reflection |
-| privatedns | Azure.Provisioning.PrivateDns | Azure.ResourceManager.PrivateDns ✅ | Reflection |
+| postgresql | Azure.Provisioning.PostgreSql | Azure.ResourceManager.PostgreSql ✅ | TypeSpec ✅ |
+| privatedns | Azure.Provisioning.PrivateDns | Azure.ResourceManager.PrivateDns ✅ | TypeSpec ✅ |
 | provisioning | Azure.Provisioning | Azure.ResourceManager<br>Azure.ResourceManager.Resources<br>Azure.ResourceManager.Authorization ✅<br>Azure.ResourceManager.ManagedServiceIdentities ✅ | Reflection |
 | provisioning | Azure.Provisioning.Deployment | Azure.ResourceManager<br>Azure.ResourceManager.Resources | None |
+| recoveryservices | Azure.Provisioning.RecoveryServices | Azure.ResourceManager.RecoveryServices ✅ | TypeSpec ✅ |
+| recoveryservices-backup | Azure.Provisioning.RecoveryServicesBackup | Azure.ResourceManager.RecoveryServicesBackup ✅ | TypeSpec ✅ |
 | redis | Azure.Provisioning.Redis | Azure.ResourceManager.Redis ✅ | TypeSpec ✅ |
-| redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | Reflection |
+| redisenterprise | Azure.Provisioning.RedisEnterprise | Azure.ResourceManager.RedisEnterprise ✅ | TypeSpec ✅ |
 | resourcegraph | Azure.Provisioning.ResourceGraph | Azure.ResourceManager.ResourceGraph ✅ | TypeSpec ✅ |
+| resourcehealth | Azure.Provisioning.ResourceHealth | Azure.ResourceManager.ResourceHealth ✅ | TypeSpec ✅ |
 | search | Azure.Provisioning.Search | Azure.ResourceManager.Search ✅ | TypeSpec ✅ |
-| securitycenter | Azure.Provisioning.SecurityCenter | Azure.ResourceManager.SecurityCenter ✅ | Reflection |
-| servicebus | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus ✅ | Reflection |
+| securitycenter | Azure.Provisioning.SecurityCenter | Azure.ResourceManager.SecurityCenter ✅ | TypeSpec ✅ |
+| servicebus | Azure.Provisioning.ServiceBus | Azure.ResourceManager.ServiceBus ✅ | TypeSpec ✅ |
 | servicefabric | Azure.Provisioning.ServiceFabric | Azure.ResourceManager.ServiceFabric ✅ | TypeSpec ✅ |
 | servicefabricmanagedclusters | Azure.Provisioning.ServiceFabricManagedClusters | Azure.ResourceManager.ServiceFabricManagedClusters ✅ | TypeSpec ✅ |
 | servicenetworking | Azure.Provisioning.ServiceNetworking | Azure.ResourceManager.ServiceNetworking ✅ | TypeSpec ✅ |
-| signalr | Azure.Provisioning.SignalR | Azure.ResourceManager.SignalR ✅ | Reflection |
-| sqlmanagement | Azure.Provisioning.Sql | Azure.ResourceManager.Sql ✅ | Reflection |
+| signalr | Azure.Provisioning.SignalR | Azure.ResourceManager.SignalR ✅ | TypeSpec ✅ |
+| sqlmanagement | Azure.Provisioning.Sql | Azure.ResourceManager.Sql ✅ | TypeSpec ✅ |
 | standbypool | Azure.Provisioning.StandbyPool | Azure.ResourceManager.StandbyPool ✅ | TypeSpec ✅ |
-| storage | Azure.Provisioning.Storage | Azure.ResourceManager.Storage ✅ | Reflection |
+| storage | Azure.Provisioning.Storage | Azure.ResourceManager.Storage ✅ | TypeSpec ✅ |
+| subscription | Azure.Provisioning.Subscription | Azure.ResourceManager.Subscription ✅ | TypeSpec ✅ |
 | trafficmanager | Azure.Provisioning.TrafficManager | Azure.ResourceManager.TrafficManager ✅ | TypeSpec ✅ |
-| webpubsub | Azure.Provisioning.WebPubSub | Azure.ResourceManager.WebPubSub ✅ | Reflection |
+| webpubsub | Azure.Provisioning.WebPubSub | Azure.ResourceManager.WebPubSub ✅ | TypeSpec ✅ |
 | websites | Azure.Provisioning.AppService | Azure.ResourceManager.AppService ✅ | Reflection |
 
 
 ## Libraries with No Generator
 
-Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 47
+Libraries with no generator have neither autorest.md nor tsp-location.yaml files. Total: 41
 
 | Service | Library |
 | ------- | ------- |
-| agentserver | Azure.AI.AgentServer.Core |
+| agentserver | Azure.AI.AgentServer.Activity |
 | agentserver | Azure.AI.AgentServer.Invocations |
 | ai | Azure.AI.Inference |
-| cloudmachine | Azure.Projects |
-| cloudmachine | Azure.Projects.AI |
-| cloudmachine | Azure.Projects.AI.Foundry |
-| cloudmachine | Azure.Projects.Provisioning |
-| cloudmachine | Azure.Projects.Tsp |
-| cloudmachine | Azure.Projects.Web |
 | communication | Azure.Communication.Common |
 | core | Azure.Core |
 | core | Azure.Core.Amqp |

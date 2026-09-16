@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 

@@ -15,7 +15,7 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> Client options for <see cref="ContentUnderstandingClient"/>. </summary>
     public partial class ContentUnderstandingClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_06_01_Preview;
 
         /// <summary> Initializes a new instance of ContentUnderstandingClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -24,6 +24,7 @@ namespace Azure.AI.ContentUnderstanding
             Version = version switch
             {
                 ServiceVersion.V2025_11_01 => "2025-11-01",
+                ServiceVersion.V2026_06_01_Preview => "2026-06-01-preview",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -34,7 +35,7 @@ namespace Azure.AI.ContentUnderstanding
         [Experimental("SCME0002")]
         internal ContentUnderstandingClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2025-11-01";
+            Version = "2026-06-01-preview";
             if (section is null || !section.Exists())
             {
                 return;
@@ -56,7 +57,9 @@ namespace Azure.AI.ContentUnderstanding
         public enum ServiceVersion
         {
             /// <summary> The 2025-11-01 version of the Content Understanding service. </summary>
-            V2025_11_01 = 1
+            V2025_11_01 = 1,
+            /// <summary> The 2026-06-01-preview version of the Content Understanding service. </summary>
+            V2026_06_01_Preview = 2
         }
     }
 }

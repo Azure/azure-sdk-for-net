@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 throw new FormatException($"The model {nameof(ScopedRegistrationTokenContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("expirationTimeInUtc"u8);
-            writer.WriteStringValue(ExpirationOn, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,13 +134,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            DateTimeOffset expirationOn = default;
+            DateTimeOffset expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("expirationTimeInUtc"u8))
                 {
-                    expirationOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScopedRegistrationTokenContent(expirationOn, additionalBinaryDataProperties);
+            return new ScopedRegistrationTokenContent(expiresOn, additionalBinaryDataProperties);
         }
     }
 }

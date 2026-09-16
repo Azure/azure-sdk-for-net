@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
     public static partial class ArmPineconeVectorDBModelFactory
     {
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 default);
         }
 
+        /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
@@ -69,6 +71,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
             return new PineconeVectorDBMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
         }
 
+        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <param name="offerId"> Offer Id for the marketplace offer. </param>
         /// <param name="planId"> Plan Id for the marketplace offer. </param>
@@ -88,6 +91,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 default);
         }
 
+        /// <summary> User details for an organization. </summary>
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="emailAddress"> Email address of the user. </param>
@@ -105,6 +109,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 default);
         }
 
+        /// <summary> Properties specific to Single Sign On Resource. </summary>
         /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
         /// <param name="state"> State of the Single Sign On for the resource. </param>
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the Organization Resource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.PineconeVectorDBOrganizationPatch"/> instance for mocking. </returns>

@@ -12,12 +12,16 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.CostManagement
 {
-    /// <summary> Setting definition. </summary>
+    /// <summary>
+    /// Setting definition.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="TagInheritanceSetting"/>.
+    /// </summary>
     public partial class CostManagementSetting : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
+        private BicepValue<SettingsKind> _kind;
         private ResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new CostManagementSetting. </summary>
@@ -62,6 +66,16 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
+        /// <summary> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </summary>
+        internal BicepValue<SettingsKind> Kind
+        {
+            get
+            {
+                Initialize();
+                return _kind;
+            }
+        }
+
         /// <summary> Gets or sets the Scope. </summary>
         public ProvisionableResource Scope
         {
@@ -84,6 +98,7 @@ namespace Azure.Provisioning.CostManagement
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _kind = DefineProperty<SettingsKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
             _scope = DefineResource<ProvisionableResource>(nameof(Scope), new string[] { "scope" });
             DefineAdditionalProperties();
         }

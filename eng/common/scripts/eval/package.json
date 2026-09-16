@@ -5,12 +5,12 @@
   "description": "Vally eval CI glue scripts (matrix sharding, shard runner, JUnit summary) plus the pinned @microsoft/vally-cli the shards install from the committed lockfile. Synced via eng/common; not published.",
   "type": "module",
   "engines": {
-    "node": ">=22.6"
+    "node": ">=22.12.0"
   },
   "scripts": {
     "test": "node --experimental-strip-types --test"
   },
   "devDependencies": {
-    "@microsoft/vally-cli": "0.7.0"
+    "@microsoft/vally-cli": "0.14.0"
   }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition for a job. </summary>
+    /// <summary>
+    /// Base definition for a job.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/>, and <see cref="MachineLearningSweepJob"/>.
+    /// </summary>
     public partial class MachineLearningJobProperties : MachineLearningResourceBase, IJsonModel<MachineLearningJobProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -111,11 +114,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("notificationSetting"u8);
                 writer.WriteObjectValue(NotificationSetting, options);
             }
-            if (Optional.IsDefined(ParentJobName))
-            {
-                writer.WritePropertyName("parentJobName"u8);
-                writer.WriteStringValue(ParentJobName);
-            }
             if (Optional.IsCollectionDefined(Services))
             {
                 writer.WritePropertyName("services"u8);
@@ -167,10 +165,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return AutoMLJob.DeserializeAutoMLJob(element, options);
                     case "Command":
                         return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element, options);
-                    case "Distillation":
-                        return DistillationJob.DeserializeDistillationJob(element, options);
-                    case "FineTuning":
-                        return FineTuningJob.DeserializeFineTuningJob(element, options);
                     case "Pipeline":
                         return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element, options);
                     case "Spark":

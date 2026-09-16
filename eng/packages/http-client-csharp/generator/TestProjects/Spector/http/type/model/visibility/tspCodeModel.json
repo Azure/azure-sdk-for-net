@@ -162,6 +162,7 @@
       "$id": "19",
       "kind": "model",
       "name": "VisibilityModel",
+      "apiVersions": [],
       "namespace": "Type.Model.Visibility",
       "crossLanguageDefinitionId": "Type.Model.Visibility.VisibilityModel",
       "usage": "Input,Output,Json",
@@ -178,6 +179,7 @@
           "$id": "20",
           "kind": "property",
           "name": "readProp",
+          "apiVersions": [],
           "serializedName": "readProp",
           "doc": "Required string, illustrating a readonly property.",
           "type": {
@@ -205,6 +207,7 @@
           "$id": "22",
           "kind": "property",
           "name": "queryProp",
+          "apiVersions": [],
           "serializedName": "queryProp",
           "doc": "Required int32, illustrating a query property.",
           "type": {
@@ -232,6 +235,7 @@
           "$id": "24",
           "kind": "property",
           "name": "createProp",
+          "apiVersions": [],
           "serializedName": "createProp",
           "doc": "Required string[], illustrating a create property.",
           "type": {
@@ -266,6 +270,7 @@
           "$id": "27",
           "kind": "property",
           "name": "updateProp",
+          "apiVersions": [],
           "serializedName": "updateProp",
           "doc": "Required int32[], illustrating a update property.",
           "type": {
@@ -300,6 +305,7 @@
           "$id": "30",
           "kind": "property",
           "name": "deleteProp",
+          "apiVersions": [],
           "serializedName": "deleteProp",
           "doc": "Required bool, illustrating a delete property.",
           "type": {
@@ -329,6 +335,7 @@
       "$id": "32",
       "kind": "model",
       "name": "ReadOnlyModel",
+      "apiVersions": [],
       "namespace": "Type.Model.Visibility",
       "crossLanguageDefinitionId": "Type.Model.Visibility.ReadOnlyModel",
       "usage": "Input,Output,Json",
@@ -345,6 +352,7 @@
           "$id": "33",
           "kind": "property",
           "name": "optionalNullableIntList",
+          "apiVersions": [],
           "serializedName": "optionalNullableIntList",
           "doc": "Optional readonly nullable int list.",
           "type": {
@@ -373,6 +381,7 @@
           "$id": "35",
           "kind": "property",
           "name": "optionalStringRecord",
+          "apiVersions": [],
           "serializedName": "optionalStringRecord",
           "doc": "Optional readonly string dictionary.",
           "type": {

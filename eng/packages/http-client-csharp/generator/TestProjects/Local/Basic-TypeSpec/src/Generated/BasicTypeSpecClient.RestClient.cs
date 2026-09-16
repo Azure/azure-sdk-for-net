@@ -15,9 +15,12 @@ namespace BasicTypeSpec
     public partial class BasicTypeSpecClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
+        private static ResponseClassifier _pipelineMessageClassifier200204;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+
+        private static ResponseClassifier PipelineMessageClassifier200204 => _pipelineMessageClassifier200204 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 204 });
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
@@ -633,6 +636,19 @@ namespace BasicTypeSpec
             request.Uri = uri;
             request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "text/event-stream");
+            return message;
+        }
+
+        internal HttpMessage CreateGetOptionalResponseRequest(RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/optional-response", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200204);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

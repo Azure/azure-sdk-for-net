@@ -19,6 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningFlowModelJobInput. </summary>
         public MachineLearningFlowModelJobInput()
         {
+            JobInputType.Assign(MachineLearning.JobInputType.MlflowModel);
         }
 
         /// <summary> Gets or sets the Mode. </summary>
@@ -55,7 +56,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobInputType", new string[] { "jobInputType" }, defaultValue: "mlflow_model");
             _mode = DefineProperty<MachineLearningInputDeliveryMode>(nameof(Mode), new string[] { "mode" });
             _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "uri" }, isRequired: true);
             DefineAdditionalProperties();

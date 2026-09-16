@@ -13,7 +13,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Application Monitoring Open Telemetry Logs and Traces Profile for AKS. Collects OpenTelemetry logs and traces of the application using Azure Monitor OpenTelemetry based SDKs. See https://aka.ms/AKSAppMonitoringDocs and https://aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
+    /// <summary> Application Monitoring OpenTelemetry logs and traces profile for AKS. Collects OpenTelemetry logs and traces of the application using Azure Monitor OpenTelemetry based SDKs. See https://aka.ms/AKSAppMonitoringDocs and https://aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
     public partial class ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces : IJsonModel<ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces>
     {
         /// <param name="data"> The data to parse. </param>

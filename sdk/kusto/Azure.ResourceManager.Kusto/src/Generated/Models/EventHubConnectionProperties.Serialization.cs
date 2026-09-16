@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WritePropertyName("databaseRouting"u8);
                 writer.WriteStringValue(DatabaseRouting.Value.ToString());
             }
-            if (Optional.IsDefined(RetrievalStartOn))
+            if (Optional.IsDefined(RetrievalStartsOn))
             {
                 writer.WritePropertyName("retrievalStartDate"u8);
-                writer.WriteStringValue(RetrievalStartOn.Value, "O");
+                writer.WriteStringValue(RetrievalStartsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Kusto.Models
             ResourceIdentifier managedIdentityResourceId = default;
             Guid? managedIdentityObjectId = default;
             KustoDatabaseRouting? databaseRouting = default;
-            DateTimeOffset? retrievalStartOn = default;
+            DateTimeOffset? retrievalStartsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    retrievalStartOn = prop.Value.GetDateTimeOffset("O");
+                    retrievalStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 managedIdentityResourceId,
                 managedIdentityObjectId,
                 databaseRouting,
-                retrievalStartOn,
+                retrievalStartsOn,
                 additionalBinaryDataProperties);
         }
     }

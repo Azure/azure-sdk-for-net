@@ -697,9 +697,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<Guid?>(),
                     It.IsAny<CancellationToken>()))
-                .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, CancellationToken>(
-                    (entityPath, _, _, _, _, _, _, _, _) => capturedEntityPath = entityPath)
+                .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, bool, Guid?, CancellationToken>(
+                    (entityPath, _, _, _, _, _, _, _, _, _, _) => capturedEntityPath = entityPath)
                 .Returns(mockTransportReceiver.Object);
 
             mockTransportReceiver
@@ -795,6 +797,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<Guid?>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(mockTransportReceiver.Object);
 

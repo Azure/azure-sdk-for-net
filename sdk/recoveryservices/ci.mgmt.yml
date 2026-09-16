@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.RecoveryServices
       safeName: AzureResourceManagerRecoveryServices
+    - name: Azure.Provisioning.RecoveryServices
+      safeName: AzureProvisioningRecoveryServices

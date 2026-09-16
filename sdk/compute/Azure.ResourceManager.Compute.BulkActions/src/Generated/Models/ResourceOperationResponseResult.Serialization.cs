@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The response from scheduled action resource requests, which contains the status of each resource. </summary>
+    /// <summary> Results of a scheduled action operation for targeted resources. </summary>
     public partial class ResourceOperationResponseResult : IJsonModel<ResourceOperationResponseResult>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceOperationResponseResult"/> for deserialization. </summary>

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         {
             Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
 
-            IpConfigurations = ipConfigurations.ToList();
+            IPConfigurations = ipConfigurations.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkActionsVirtualMachineNetworkInterfaceConfigurationProperties"/>. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
             IsIPForwardingEnabled = isIPForwardingEnabled;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             DscpConfiguration = dscpConfiguration;
             AuxiliaryMode = auxiliaryMode;
             AuxiliarySku = auxiliarySku;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         internal VirtualMachineNetworkInterfaceDnsSettingsConfiguration DnsSettings { get; set; }
 
         /// <summary> Specifies the IP configurations of the network interface. </summary>
-        public IList<ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration> IpConfigurations { get; }
+        public IList<ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration> IPConfigurations { get; }
 
         /// <summary> The DSCP configuration for the network interface. </summary>
         internal ComputeBulkActionsSubResource DscpConfiguration { get; set; }

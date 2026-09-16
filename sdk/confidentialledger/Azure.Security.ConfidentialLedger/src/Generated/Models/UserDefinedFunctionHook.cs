@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
     /// <summary> Hook for a user defined function execution. </summary>
     public partial class UserDefinedFunctionHook
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserDefinedFunctionHook"/>. </summary>
         /// <param name="functionId"> ID of the user defined function to execute. </param>
@@ -58,21 +30,17 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <summary> Initializes a new instance of <see cref="UserDefinedFunctionHook"/>. </summary>
         /// <param name="functionId"> ID of the user defined function to execute. </param>
         /// <param name="properties"> The properties for executing a user defined function. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserDefinedFunctionHook(string functionId, UserDefinedFunctionExecutionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UserDefinedFunctionHook(string functionId, UserDefinedFunctionExecutionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FunctionId = functionId;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UserDefinedFunctionHook"/> for deserialization. </summary>
-        internal UserDefinedFunctionHook()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ID of the user defined function to execute. </summary>
         public string FunctionId { get; set; }
+
         /// <summary> The properties for executing a user defined function. </summary>
         public UserDefinedFunctionExecutionProperties Properties { get; set; }
     }

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> IP Community patchable properties. </param>
-        internal NetworkFabricIPCommunityPatchContent(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpCommunityPatchableProperties properties) : base(tags, additionalBinaryDataProperties)
+        internal NetworkFabricIPCommunityPatchContent(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPCommunityPatchableProperties properties) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> IP Community patchable properties. </summary>
-        internal IpCommunityPatchableProperties Properties { get; set; }
+        internal IPCommunityPatchableProperties Properties { get; set; }
 
         /// <summary> List of IP Community Rules. </summary>
         public IList<IPCommunityRule> IPCommunityRules
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new IpCommunityPatchableProperties();
+                    Properties = new IPCommunityPatchableProperties();
                 }
                 return Properties.IPCommunityRules;
             }

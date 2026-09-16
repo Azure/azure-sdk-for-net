@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             ItemsAccepted = null
         };
 
-        private static bool IsRetriableStatus(int statusCode) => statusCode == ResponseStatusCodes.RequestTimeout
+        internal static bool IsRetriableStatus(int statusCode) => statusCode == ResponseStatusCodes.RequestTimeout
                                                                                 || statusCode == ResponseStatusCodes.ResponseCodeTooManyRequests
                                                                                 || statusCode == ResponseStatusCodes.ResponseCodeTooManyRequestsAndRefreshCache
                                                                                 || statusCode == ResponseStatusCodes.Unauthorized
@@ -172,8 +172,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         continue;
                     }
 
-                    var telemetryType = GetTelemetryTypeFromJson(telemetryItems[errorIndex]);
-                    DecrementCounterByType(successCounter, telemetryType);
+                    var (telemetryType, telemetrySuccess) = GetTelemetryDetailsFromJson(telemetryItems[errorIndex]);
+                    DecrementCounterByType(successCounter, telemetryType, telemetrySuccess);
 
                     if (error.StatusCode == ResponseStatusCodes.RequestTimeout
                         || error.StatusCode == ResponseStatusCodes.ServiceUnavailable
@@ -190,12 +190,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             partialContent += '\n' + telemetryItems[errorIndex];
                         }
 
-                        IncrementCounterByType(retryCounter, telemetryType);
+                        IncrementCounterByType(retryCounter, telemetryType, telemetrySuccess);
                     }
                     else
                     {
                         AzureMonitorExporterEventSource.Log.PartialContentResponseUnhandled(error);
-                        IncrementCounterByType(droppedCounter, telemetryType);
+                        IncrementCounterByType(droppedCounter, telemetryType, telemetrySuccess);
                     }
                 }
             }
@@ -303,32 +303,44 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return result;
         }
 
-        internal static string GetTelemetryTypeFromJson(string jsonItem)
+        internal static (string TelemetryType, bool? TelemetrySuccess) GetTelemetryDetailsFromJson(string jsonItem)
         {
             try
             {
                 using var doc = JsonDocument.Parse(jsonItem);
                 if (doc.RootElement.TryGetProperty("name", out var nameElement))
                 {
-                    return nameElement.GetString() ?? "Unknown";
+                    var telemetryType = nameElement.GetString() ?? "Unknown";
+                    bool? telemetrySuccess = null;
+
+                    if ((telemetryType == "Request" || telemetryType == "RemoteDependency")
+                        && doc.RootElement.TryGetProperty("data", out var dataElement)
+                        && dataElement.TryGetProperty("baseData", out var baseDataElement)
+                        && baseDataElement.TryGetProperty("success", out var successElement)
+                        && (successElement.ValueKind == JsonValueKind.True || successElement.ValueKind == JsonValueKind.False))
+                    {
+                        telemetrySuccess = successElement.GetBoolean();
+                    }
+
+                    return (telemetryType, telemetrySuccess);
                 }
             }
             catch
             {
                 // Ignore parsing errors
             }
-            return "Unknown";
+            return ("Unknown", null);
         }
 
-        internal static void IncrementCounterByType(TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, string telemetryType)
+        internal static void IncrementCounterByType(TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, string telemetryType, bool? telemetrySuccess = null)
         {
             switch (telemetryType)
             {
                 case "Request":
-                    telemetrySchemaTypeCounter._requestCount++;
+                    telemetrySchemaTypeCounter.IncrementRequest(telemetrySuccess);
                     break;
                 case "RemoteDependency":
-                    telemetrySchemaTypeCounter._dependencyCount++;
+                    telemetrySchemaTypeCounter.IncrementDependency(telemetrySuccess);
                     break;
                 case "Exception":
                     telemetrySchemaTypeCounter._exceptionCount++;
@@ -401,19 +413,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var (partialContent, successCounter, retryCounter, droppedCounter) = ProcessPartialSuccessWithCounting(trackResponse, httpMessage.Request.Content, telemetrySchemaTypeCounter);
 
-            if (successCounter != null)
+            // Partial-success counting synthesizes its own counters, so a caller that opted out of
+            // customer SDK stats by passing none would otherwise still publish them.
+            var trackCustomerStats = telemetrySchemaTypeCounter != null;
+
+            if (trackCustomerStats && successCounter != null)
             {
                 CustomerSdkStatsHelper.TrackSuccess(successCounter);
             }
 
             if (partialContent == null || blobProvider == null)
             {
+                // Nothing retryable came back, so the caller is free to discard the originals.
+                result.PartialSuccessHandled = true;
+
                 // No retry possible - track everything else as dropped
-                if (retryCounter != null)
+                if (trackCustomerStats && retryCounter != null)
                 {
                     CustomerSdkStatsHelper.TrackDropped(retryCounter, ResponseStatusCodes.PartialSuccess, "Partial success - no retry");
                 }
-                if (droppedCounter != null)
+                if (trackCustomerStats && droppedCounter != null)
                 {
                     CustomerSdkStatsHelper.TrackDropped(droppedCounter, ResponseStatusCodes.PartialSuccess, "Partial success - non-retriable");
                 }
@@ -432,19 +451,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             result.ExportResult = blobProvider.SaveTelemetry(partialContent);
             result.WillRetry = (result.ExportResult == ExportResult.Success);
             result.SavedToStorage = result.WillRetry;
+            result.PartialSuccessHandled = result.WillRetry;
 
-            if (result.WillRetry && retryCounter != null)
+            if (trackCustomerStats && retryCounter != null)
             {
-                CustomerSdkStatsHelper.TrackRetry(retryCounter, ResponseStatusCodes.PartialSuccess, "Partial success");
-            }
-            else if (retryCounter != null)
-            {
-                // Storage failed - track as dropped due to storage issues
-                CustomerSdkStatsHelper.TrackDropped(retryCounter, (int)DropCode.ClientPersistenceIssue, "Storage failure");
+                if (result.WillRetry)
+                {
+                    CustomerSdkStatsHelper.TrackRetry(retryCounter, ResponseStatusCodes.PartialSuccess, "Partial success");
+                }
+                else
+                {
+                    // Storage failed - track as dropped due to storage issues
+                    CustomerSdkStatsHelper.TrackDropped(retryCounter, (int)DropCode.ClientPersistenceIssue, "Storage failure");
+                }
             }
 
             // Track non-retriable errors as dropped
-            if (droppedCounter != null)
+            if (trackCustomerStats && droppedCounter != null)
             {
                 CustomerSdkStatsHelper.TrackDropped(droppedCounter, ResponseStatusCodes.PartialSuccess, "Partial success - non-retriable");
             }
@@ -478,15 +501,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static void DecrementCounterByType(TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, string telemetryType)
+        private static void DecrementCounterByType(TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, string telemetryType, bool? telemetrySuccess)
         {
             switch (telemetryType)
             {
                 case "Request":
-                    telemetrySchemaTypeCounter._requestCount = Math.Max(0, telemetrySchemaTypeCounter._requestCount - 1);
+                    telemetrySchemaTypeCounter.DecrementRequest(telemetrySuccess);
                     break;
                 case "RemoteDependency":
-                    telemetrySchemaTypeCounter._dependencyCount = Math.Max(0, telemetrySchemaTypeCounter._dependencyCount - 1);
+                    telemetrySchemaTypeCounter.DecrementDependency(telemetrySuccess);
                     break;
                 case "Exception":
                     telemetrySchemaTypeCounter._exceptionCount = Math.Max(0, telemetrySchemaTypeCounter._exceptionCount - 1);

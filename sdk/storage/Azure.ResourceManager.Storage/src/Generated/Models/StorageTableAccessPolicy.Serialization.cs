@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             writer.WritePropertyName("permission"u8);
             writer.WriteStringValue(Permission);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             DateTimeOffset? startOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             string permission = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("permission"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageTableAccessPolicy(startOn, expireOn, permission, additionalBinaryDataProperties);
+            return new StorageTableAccessPolicy(startOn, expiresOn, permission, additionalBinaryDataProperties);
         }
     }
 }

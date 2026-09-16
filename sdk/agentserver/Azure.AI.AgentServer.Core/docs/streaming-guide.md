@@ -376,13 +376,12 @@ The typical recovery path is: the producer uses the same per-turn stream id, cal
 `GetOrCreateAsync(id)`, reads `GetLastEventIdAsync()`, and resumes emitting after the
 last event id it saw.
 
-### Don't double-track in task metadata
+### Don't double-track stream progress
 
 If you are bridging a task to a stream, let the stream's event id be the single source
-of truth for "where am I". Do not also record per-event progress in task `Metadata` —
-that duplicates state and the two can drift. Task `Metadata` is for workflow
-watermarks (which side-effecting work you have already completed), not for mirroring
-stream state. Use `GetLastEventIdAsync` to read the current position.
+of truth for "where am I". Do not also record per-event progress in a State Store item —
+that duplicates state and the two can drift. Use `GetLastEventIdAsync` to read the
+current position.
 
 ---
 

@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
         /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
         /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
-        /// <param name="spotExpirationOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
-        /// <param name="freeOfferExpirationOn"> The time when the server farm free offer expires. </param>
+        /// <param name="spotExpiresOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
+        /// <param name="freeOfferExpiresOn"> The time when the server farm free offer expires. </param>
         /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
         /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServicePlanPatchResourceProperties(string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpirationOn, DateTimeOffset? freeOfferExpirationOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServicePlanPatchResourceProperties(string workerTierName, AppServicePlanStatus? status, string subscription, HostingEnvironmentProfile hostingEnvironmentProfile, int? maximumNumberOfWorkers, int? numberOfWorkers, string geoRegion, bool? isPerSiteScaling, bool? isElasticScaleEnabled, int? maximumElasticWorkerCount, int? numberOfSites, bool? isSpot, DateTimeOffset? spotExpiresOn, DateTimeOffset? freeOfferExpiresOn, string resourceGroup, bool? isReserved, bool? isXenon, bool? isHyperV, int? targetWorkerCount, int? targetWorkerSizeId, ProvisioningState? provisioningState, KubeEnvironmentProfile kubeEnvironmentProfile, bool? isZoneRedundant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkerTierName = workerTierName;
             Status = status;
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.AppService.Models
             MaximumElasticWorkerCount = maximumElasticWorkerCount;
             NumberOfSites = numberOfSites;
             IsSpot = isSpot;
-            SpotExpirationOn = spotExpirationOn;
-            FreeOfferExpirationOn = freeOfferExpirationOn;
+            SpotExpiresOn = spotExpiresOn;
+            FreeOfferExpiresOn = freeOfferExpiresOn;
             ResourceGroup = resourceGroup;
             IsReserved = isReserved;
             IsXenon = isXenon;
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The time when the server farm expires. Valid only if it is a spot server farm. </summary>
         [WirePath("spotExpirationTime")]
-        public DateTimeOffset? SpotExpirationOn { get; set; }
+        public DateTimeOffset? SpotExpiresOn { get; set; }
 
         /// <summary> The time when the server farm free offer expires. </summary>
         [WirePath("freeOfferExpirationTime")]
-        public DateTimeOffset? FreeOfferExpirationOn { get; set; }
+        public DateTimeOffset? FreeOfferExpiresOn { get; set; }
 
         /// <summary> Resource group of the App Service plan. </summary>
         [WirePath("resourceGroup")]

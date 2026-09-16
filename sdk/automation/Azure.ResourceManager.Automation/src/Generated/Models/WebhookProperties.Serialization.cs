@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(LastInvokedOn))
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             bool? isEnabled = default;
             Uri uri = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             DateTimeOffset? lastInvokedOn = default;
             IDictionary<string, string> parameters = default;
             RunbookAssociationProperty runbook = default;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastInvokedTime"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Automation.Models
             return new WebhookProperties(
                 isEnabled,
                 uri,
-                expireOn,
+                expiresOn,
                 lastInvokedOn,
                 parameters ?? new ChangeTrackingDictionary<string, string>(),
                 runbook,

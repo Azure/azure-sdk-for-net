@@ -21,6 +21,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningManagedIdentity. </summary>
         public MachineLearningManagedIdentity()
         {
+            IdentityType.Assign(IdentityConfigurationType.Managed);
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
@@ -72,7 +73,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("identityType", new string[] { "identityType" }, defaultValue: "Managed");
             _clientId = DefineProperty<Guid>(nameof(ClientId), new string[] { "clientId" });
             _objectId = DefineProperty<Guid>(nameof(ObjectId), new string[] { "objectId" });
             _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });

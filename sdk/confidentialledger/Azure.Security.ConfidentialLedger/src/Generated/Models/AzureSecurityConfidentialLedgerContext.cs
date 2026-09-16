@@ -12,11 +12,12 @@ namespace Azure.Security.ConfidentialLedger
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ApplicationClaim))]
     [ModelReaderWriterBuildable(typeof(ClaimDigest))]
     [ModelReaderWriterBuildable(typeof(ConfidentialLedgerEnclaves))]
+    [ModelReaderWriterBuildable(typeof(Consortium))]
     [ModelReaderWriterBuildable(typeof(ConsortiumMember))]
     [ModelReaderWriterBuildable(typeof(EnclaveQuote))]
     [ModelReaderWriterBuildable(typeof(EndpointProperties))]
@@ -35,6 +36,12 @@ namespace Azure.Security.ConfidentialLedger
     [ModelReaderWriterBuildable(typeof(LedgerWriteResult))]
     [ModelReaderWriterBuildable(typeof(MethodToEndpointProperties))]
     [ModelReaderWriterBuildable(typeof(ModuleDef))]
+    [ModelReaderWriterBuildable(typeof(PagedCollections))]
+    [ModelReaderWriterBuildable(typeof(PagedLedgerEntries))]
+    [ModelReaderWriterBuildable(typeof(PagedLedgerUsers))]
+    [ModelReaderWriterBuildable(typeof(PagedTags))]
+    [ModelReaderWriterBuildable(typeof(PagedUserDefinedFunctions))]
+    [ModelReaderWriterBuildable(typeof(PagedUsers))]
     [ModelReaderWriterBuildable(typeof(ReceiptContents))]
     [ModelReaderWriterBuildable(typeof(ReceiptElement))]
     [ModelReaderWriterBuildable(typeof(ReceiptLeafComponents))]

@@ -154,36 +154,6 @@ namespace Azure.Provisioning.ServiceFabric
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<string> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationResourceProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the TypeName. </summary>
-        public BicepValue<string> TypeName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TypeName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ApplicationResourceProperties();
-                }
-                Properties.TypeName = value;
-            }
-        }
-
         /// <summary> Gets or sets the TypeVersion. </summary>
         public BicepValue<string> TypeVersion
         {
@@ -320,6 +290,36 @@ namespace Azure.Provisioning.ServiceFabric
             }
         }
 
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<string> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the TypeName. </summary>
+        public BicepValue<string> TypeName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypeName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationResourceProperties();
+                }
+                Properties.TypeName = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ServiceFabricApplication. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -332,7 +332,7 @@ namespace Azure.Provisioning.ServiceFabric
             _properties = DefineModelProperty<ApplicationResourceProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<ServiceFabricCluster>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ServiceFabricCluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

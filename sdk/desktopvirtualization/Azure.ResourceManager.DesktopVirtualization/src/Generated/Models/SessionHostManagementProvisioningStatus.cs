@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="properties"> The custom properties of the SessionHost Provisioning Status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostManagementProvisioningStatus(ResourceIdentifier id, string name, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, ResponseError error, SessionHostManagementProvisioningOperationStatus status, SessionHostManagementProvisioningStatusProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostManagementProvisioningStatus(ResourceIdentifier id, string name, double? percentComplete, DateTimeOffset? startsOn, DateTimeOffset? endsOn, ResponseError error, SessionHostManagementProvisioningOperationStatus status, SessionHostManagementProvisioningStatusProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             PercentComplete = percentComplete;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Error = error;
             Status = status;
             Properties = properties;
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The start time of the operation. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the operation. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> If present, details of the operation error. </summary>
         [WirePath("error")]

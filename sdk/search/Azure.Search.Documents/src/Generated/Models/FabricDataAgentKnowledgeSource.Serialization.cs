@@ -113,6 +113,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             KnowledgeSourceKind kind = default;
+            KnowledgeSourceResultsProcessing? resultsProcessing = default;
             ETag? eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -132,6 +133,15 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = new KnowledgeSourceKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("resultsProcessing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultsProcessing = new KnowledgeSourceResultsProcessing(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("@odata.etag"u8))
@@ -160,13 +170,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new FabricDataAgentKnowledgeSource(
                 name,
                 description,
                 kind,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties,

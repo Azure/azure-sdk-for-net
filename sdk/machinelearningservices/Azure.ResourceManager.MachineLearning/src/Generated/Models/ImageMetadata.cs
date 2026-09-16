@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="ImageMetadata"/>. </summary>
         /// <param name="currentImageVersion"> Specifies the current operating system image version this compute instance is running on. </param>
         /// <param name="latestImageVersion"> Specifies the latest available operating system image version. </param>
-        /// <param name="isLatestOsImageVersion"> Specifies whether this compute instance is running on the latest operating system image. </param>
+        /// <param name="isLatestOSImageVersion"> Specifies whether this compute instance is running on the latest operating system image. </param>
         /// <param name="osPatchingStatus"> Metadata about the os patching. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageMetadata(string currentImageVersion, string latestImageVersion, bool? isLatestOsImageVersion, OsPatchingStatus osPatchingStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageMetadata(string currentImageVersion, string latestImageVersion, bool? isLatestOSImageVersion, OSPatchingStatus osPatchingStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentImageVersion = currentImageVersion;
             LatestImageVersion = latestImageVersion;
-            IsLatestOsImageVersion = isLatestOsImageVersion;
-            OsPatchingStatus = osPatchingStatus;
+            IsLatestOSImageVersion = isLatestOSImageVersion;
+            OSPatchingStatus = osPatchingStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,12 +45,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("latestImageVersion")]
         public string LatestImageVersion { get; }
 
-        /// <summary> Specifies whether this compute instance is running on the latest operating system image. </summary>
-        [WirePath("isLatestOsImageVersion")]
-        public bool? IsLatestOsImageVersion { get; }
-
         /// <summary> Metadata about the os patching. </summary>
         [WirePath("osPatchingStatus")]
-        public OsPatchingStatus OsPatchingStatus { get; }
+        public OSPatchingStatus OSPatchingStatus { get; }
     }
 }

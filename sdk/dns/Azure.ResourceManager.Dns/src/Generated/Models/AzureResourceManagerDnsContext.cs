@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.Dns
     [ModelReaderWriterBuildable(typeof(DnsSoaRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsSrvRecordInfo))]
     [ModelReaderWriterBuildable(typeof(DnsSrvRecordResource))]
+    [ModelReaderWriterBuildable(typeof(DnsSubResourceInfo))]
     [ModelReaderWriterBuildable(typeof(DnsTlsaRecordInfo))]
     [ModelReaderWriterBuildable(typeof(DnsTlsaRecordResource))]
     [ModelReaderWriterBuildable(typeof(DnsTxtRecordInfo))]

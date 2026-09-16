@@ -22,7 +22,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task CopyAnalyzerAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             // Generate unique analyzer IDs (deterministic for playback)
@@ -69,7 +69,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Config = sourceConfig,
                 FieldSchema = sourceFieldSchema
             };
-            sourceAnalyzer.Models["completion"] = "gpt-4.1";
+            sourceAnalyzer.Models["completion"] = ModelProfile.CompletionModel;
             sourceAnalyzer.Tags.Add("modelType", "in_development");
 
             var createOperation = await client.CreateAnalyzerAsync(
@@ -125,7 +125,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual("prebuilt-document", sourceAnalyzer.BaseAnalyzerId, "Base analyzer ID should match");
             Assert.AreEqual("Source analyzer for copying", sourceAnalyzer.Description, "Description should match");
             Assert.IsTrue(sourceAnalyzer.Models.ContainsKey("completion"), "Should have completion model");
-            Assert.AreEqual("gpt-4.1", sourceAnalyzer.Models["completion"], "Completion model should be gpt-4.1");
+            Assert.AreEqual(ModelProfile.CompletionModel, sourceAnalyzer.Models["completion"], "Completion model should match the configured model");
             Assert.IsTrue(sourceAnalyzer.Tags.ContainsKey("modelType"), "Should have modelType tag");
             Assert.AreEqual("in_development", sourceAnalyzer.Tags["modelType"], "modelType tag should be in_development");
             Console.WriteLine("Source analyzer object verified");
@@ -170,7 +170,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Verify models in result
             Assert.IsNotNull(sourceResult.Models, "Models should not be null");
             Assert.IsTrue(sourceResult.Models.ContainsKey("completion"), "Should have completion model");
-            Assert.AreEqual("gpt-4.1", sourceResult.Models["completion"], "Completion model should match");
+            Assert.AreEqual(ModelProfile.CompletionModel, sourceResult.Models["completion"], "Completion model should match");
             Console.WriteLine($"Models preserved in result: {sourceResult.Models.Count} model(s)");
 
             Console.WriteLine($"\nSource analyzer creation completed:");
@@ -528,7 +528,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsNotNull(updatedTargetAnalyzer.Models, "Models should still exist after update");
                 if (updatedTargetAnalyzer.Models.ContainsKey("completion"))
                 {
-                    Assert.AreEqual("gpt-4.1", updatedTargetAnalyzer.Models["completion"],
+                    Assert.AreEqual(ModelProfile.CompletionModel, updatedTargetAnalyzer.Models["completion"],
                         "Completion model should be preserved");
                     Console.WriteLine($"Models preserved: completion={updatedTargetAnalyzer.Models["completion"]}");
                 }

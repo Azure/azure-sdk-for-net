@@ -89,119 +89,6 @@ public class InMemoryResponsesProviderTests : IDisposable
     }
 
     // ---------------------------------------------------------------
-    // T017: Event Streaming
-    // ---------------------------------------------------------------
-
-    [Test]
-    public async Task CreateEventPublisherAsync_ReturnsObserver()
-    {
-        var response = new Models.ResponseObject("resp_pub", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
-
-        var publisher = await _provider.CreateEventPublisherAsync("resp_pub");
-
-        Assert.That(publisher, Is.Not.Null);
-    }
-
-    private static ResponseOutputItemAddedEvent CreateItemAddedEvent(int index)
-    {
-        var msg = new OutputItemMessage(
-            $"msg_{index}",
-            MessageStatus.Completed,
-            MessageRole.Assistant,
-            Array.Empty<MessageContent>());
-        return new ResponseOutputItemAddedEvent(0, index, msg);
-    }
-
-    [Test]
-    public async Task EventStreaming_PublishAndSubscribe_ReceivesAllEvents()
-    {
-        var response = new Models.ResponseObject("resp_stream", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
-
-        var publisher = await _provider.CreateEventPublisherAsync("resp_stream");
-
-        // Publish 10 events
-        for (int i = 0; i < 10; i++)
-        {
-            await publisher.OnNextAsync(CreateItemAddedEvent(i));
-        }
-        await publisher.OnCompletedAsync();
-
-        // Subscribe and collect all
-        var received = new List<ResponseStreamEvent>();
-        var tcs = new TaskCompletionSource();
-        var observer = new CollectingObserver(received, tcs);
-
-        await using var sub = await _provider.SubscribeToEventsAsync("resp_stream", observer);
-        await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5));
-
-        Assert.That(received.Count, Is.EqualTo(10));
-    }
-
-    [Test]
-    public async Task EventStreaming_CursorSubscription_SkipsEventsAtOrBeforeCursor()
-    {
-        var response = new Models.ResponseObject("resp_cursor", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
-
-        var publisher = await _provider.CreateEventPublisherAsync("resp_cursor");
-
-        // Publish 10 events (seq 0–9 will be auto-assigned)
-        for (int i = 0; i < 10; i++)
-        {
-            await publisher.OnNextAsync(CreateItemAddedEvent(i));
-        }
-        await publisher.OnCompletedAsync();
-
-        // Subscribe from cursor=4 — should receive events 5–9 (5 events)
-        var received = new List<ResponseStreamEvent>();
-        var tcs = new TaskCompletionSource();
-        var observer = new CollectingObserver(received, tcs);
-
-        await using var sub = await _provider.SubscribeToEventsAsync("resp_cursor", observer, cursor: 4);
-        await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5));
-
-        Assert.That(received.Count, Is.EqualTo(5));
-    }
-
-    [Test]
-    public async Task EventStreaming_DisposeSubscription_StopsReceiving()
-    {
-        var response = new Models.ResponseObject("resp_dispose", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await _provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
-
-        var publisher = await _provider.CreateEventPublisherAsync("resp_dispose");
-
-        var received = new List<ResponseStreamEvent>();
-        var tcs = new TaskCompletionSource();
-        var observer = new CollectingObserver(received, tcs);
-
-        var sub = await _provider.SubscribeToEventsAsync("resp_dispose", observer);
-
-        // Push 3 events
-        for (int i = 0; i < 3; i++)
-        {
-            await publisher.OnNextAsync(CreateItemAddedEvent(i));
-        }
-
-        // Dispose subscription
-        await sub.DisposeAsync();
-
-        // Push more events — should not be received
-        for (int i = 3; i < 6; i++)
-        {
-            await publisher.OnNextAsync(CreateItemAddedEvent(i));
-        }
-
-        // Complete the subject to flush any pending events
-        await publisher.OnCompletedAsync();
-        await Task.Delay(50); // Brief wait for any stray async deliveries
-
-        Assert.That(received.Count <= 3, Is.True, $"Expected at most 3 events after dispose, got {received.Count}");
-    }
-
-    // ---------------------------------------------------------------
     // T018: Cancellation
     // ---------------------------------------------------------------
 
@@ -271,40 +158,11 @@ public class InMemoryResponsesProviderTests : IDisposable
     }
 
     // ---------------------------------------------------------------
-    // TTL Eviction (event streams only — responses retained indefinitely)
+    // TTL Eviction (responses retained indefinitely; cancellation tokens evicted)
     // ---------------------------------------------------------------
 
     [Test]
-    public async Task EvictsEventStream_AfterTtl()
-    {
-        var timeProvider = new FakeTimeProvider();
-        var options = Options.Create(new InMemoryProviderOptions { EventStreamTtl = TimeSpan.FromMinutes(5) });
-        using var provider = new InMemoryResponsesProvider(options, timeProvider);
-
-        var response = new Models.ResponseObject("resp_evict", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
-        await provider.CreateEventPublisherAsync("resp_evict");
-        await provider.GetResponseCancellationTokenAsync("resp_evict");
-
-        // Move to terminal state
-        response.Status = ResponseStatus.Completed;
-        await provider.UpdateResponseAsync(response, PlatformContext.Empty);
-
-        // Advance past event stream TTL
-        timeProvider.Advance(TimeSpan.FromMinutes(5).Add(TimeSpan.FromSeconds(1)));
-
-        // Models.ResponseObject is still retrievable (responses are never evicted)
-        Assert.That(await provider.GetResponseAsync("resp_evict", PlatformContext.Empty), Is.Not.Null);
-
-        // Event stream evicted — subscribing throws
-        var tcs = new TaskCompletionSource();
-        var observer = new CollectingObserver(new List<ResponseStreamEvent>(), tcs);
-        Assert.ThrowsAsync<BadRequestException>(
-            () => provider.SubscribeToEventsAsync("resp_evict", observer));
-    }
-
-    [Test]
-    public async Task ResponseNotEvicted_AfterEventStreamTtl()
+    public async Task ResponseNotEvicted_AfterTtl()
     {
         var timeProvider = new FakeTimeProvider();
         var options = Options.Create(new InMemoryProviderOptions { EventStreamTtl = TimeSpan.FromMinutes(1) });
@@ -316,43 +174,15 @@ public class InMemoryResponsesProviderTests : IDisposable
         response.Status = ResponseStatus.Completed;
         await provider.UpdateResponseAsync(response, PlatformContext.Empty);
 
-        // Advance well past event stream TTL
+        // Advance well past TTL
         timeProvider.Advance(TimeSpan.FromHours(1));
 
-        // Models.ResponseObject still retrievable — responses are retained indefinitely
+        // Response still retrievable — responses are retained indefinitely
         Assert.That(await provider.GetResponseAsync("resp_persist", PlatformContext.Empty), Is.Not.Null);
     }
 
     [Test]
-    public async Task DoesNotEvictEventStream_BeforeTtlElapses()
-    {
-        var timeProvider = new FakeTimeProvider();
-        var options = Options.Create(new InMemoryProviderOptions { EventStreamTtl = TimeSpan.FromMinutes(10) });
-        using var provider = new InMemoryResponsesProvider(options, timeProvider);
-
-        var response = new Models.ResponseObject("resp_early", "gpt-4o") { Status = ResponseStatus.InProgress };
-        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
-        var publisher = await provider.CreateEventPublisherAsync("resp_early");
-        await publisher.OnNextAsync(CreateItemAddedEvent(0));
-        await publisher.OnCompletedAsync();
-
-        response.Status = ResponseStatus.Completed;
-        await provider.UpdateResponseAsync(response, PlatformContext.Empty);
-
-        // Advance only halfway through TTL
-        timeProvider.Advance(TimeSpan.FromMinutes(5));
-
-        // Event stream still available
-        var received = new List<ResponseStreamEvent>();
-        var tcs = new TaskCompletionSource();
-        var observer = new CollectingObserver(received, tcs);
-        await using var sub = await provider.SubscribeToEventsAsync("resp_early", observer);
-        await tcs.Task.WaitAsync(TimeSpan.FromSeconds(5));
-        XAssert.Single(received);
-    }
-
-    [Test]
-    public async Task DoesNotEvict_InProgressResponse_EventStream()
+    public async Task DoesNotEvict_InProgressResponse()
     {
         var timeProvider = new FakeTimeProvider();
         var options = Options.Create(new InMemoryProviderOptions { EventStreamTtl = TimeSpan.FromMinutes(5) });
@@ -377,7 +207,6 @@ public class InMemoryResponsesProviderTests : IDisposable
 
         var response = new Models.ResponseObject("resp_cleanup", "gpt-4o") { Status = ResponseStatus.InProgress };
         await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
-        await provider.CreateEventPublisherAsync("resp_cleanup");
         var ct = await provider.GetResponseCancellationTokenAsync("resp_cleanup");
 
         response.Status = ResponseStatus.Completed;
@@ -385,82 +214,12 @@ public class InMemoryResponsesProviderTests : IDisposable
 
         timeProvider.Advance(TimeSpan.FromMinutes(1).Add(TimeSpan.FromSeconds(1)));
 
-        // Models.ResponseObject still available (never evicted)
+        // Response still available (never evicted)
         Assert.That(await provider.GetResponseAsync("resp_cleanup", PlatformContext.Empty), Is.Not.Null);
-
-        // Event stream evicted
-        var tcs = new TaskCompletionSource();
-        var observer = new CollectingObserver(new List<ResponseStreamEvent>(), tcs);
-        Assert.ThrowsAsync<BadRequestException>(
-            () => provider.SubscribeToEventsAsync("resp_cleanup", observer));
 
         // CancellationTokenSource evicted — new call creates a fresh one
         var newCt = await provider.GetResponseCancellationTokenAsync("resp_cleanup");
         Assert.That(newCt, Is.Not.EqualTo(ct));
-    }
-
-    [Test]
-    public async Task EvictsEventStream_NonBackgroundPath_CreateWithTerminalStatus()
-    {
-        var timeProvider = new FakeTimeProvider();
-        var options = Options.Create(new InMemoryProviderOptions { EventStreamTtl = TimeSpan.FromMinutes(5) });
-        using var provider = new InMemoryResponsesProvider(options, timeProvider);
-
-        // Non-background path: CreateResponseAsync is called with a terminal response
-        // (no UpdateResponseAsync call)
-        var response = new Models.ResponseObject("resp_nonbg", "gpt-4o") { Status = ResponseStatus.Completed };
-        await provider.CreateResponseAsync(new CreateResponseRequest(response, null, null), PlatformContext.Empty);
-        await provider.CreateEventPublisherAsync("resp_nonbg");
-        await provider.GetResponseCancellationTokenAsync("resp_nonbg");
-
-        // Advance past TTL
-        timeProvider.Advance(TimeSpan.FromMinutes(5).Add(TimeSpan.FromSeconds(1)));
-
-        // Models.ResponseObject still available
-        Assert.That(await provider.GetResponseAsync("resp_nonbg", PlatformContext.Empty), Is.Not.Null);
-
-        // Event stream evicted
-        var tcs = new TaskCompletionSource();
-        var observer = new CollectingObserver(new List<ResponseStreamEvent>(), tcs);
-        Assert.ThrowsAsync<BadRequestException>(
-            () => provider.SubscribeToEventsAsync("resp_nonbg", observer));
-    }
-
-    // ---------------------------------------------------------------
-    // Test Helpers
-    // ---------------------------------------------------------------
-
-    /// <summary>
-    /// An IAsyncObserver that collects events and signals completion.
-    /// </summary>
-    private sealed class CollectingObserver : IAsyncObserver<ResponseStreamEvent>
-    {
-        private readonly List<ResponseStreamEvent> _received;
-        private readonly TaskCompletionSource _tcs;
-
-        public CollectingObserver(List<ResponseStreamEvent> received, TaskCompletionSource tcs)
-        {
-            _received = received;
-            _tcs = tcs;
-        }
-
-        public ValueTask OnNextAsync(ResponseStreamEvent value)
-        {
-            _received.Add(value);
-            return default;
-        }
-
-        public ValueTask OnErrorAsync(Exception error)
-        {
-            _tcs.TrySetException(error);
-            return default;
-        }
-
-        public ValueTask OnCompletedAsync()
-        {
-            _tcs.TrySetResult();
-            return default;
-        }
     }
 
     public void Dispose()
