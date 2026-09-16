@@ -8,14 +8,13 @@ dotnet build sdk\websites\Azure.Provisioning.AppService\src\Azure.Provisioning.A
 
 ## Summary
 
-The build failed ApiCompat with **4 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
+The build failed ApiCompat with **3 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
 
 | Category | API changes | ApiCompat diagnostics |
 |---|---:|---:|
 | Removed public properties | 1 property | 2 |
-| Changed property types | 1 property | 1 |
 | Missing enum members | 1 member | 1 |
-| **Total** | **3 changes** | **4** |
+| **Total** | **2 changes** | **3** |
 
 ApiCompat reports property getters and setters independently. Therefore, a removed read/write property normally produces two `CP0002` diagnostics.
 
@@ -29,23 +28,13 @@ ApiCompat reports property getters and setters independently. Therefore, a remov
 
 This accounts for **1 removed property and 2 diagnostics**.
 
-### 2. Changed property types
-
-This property still exists, but its migrated getter signature no longer matches the previous package:
-
-| Type.property | Previous type | Current type |
-|---|---|---|
-| `ResponseMessageEnvelopeRemotePrivateEndpointConnection.Error` | `BicepValue<Azure.ResponseError>` | `ErrorEntity` |
-
-This model-type difference cannot be addressed through a scalar `@@alternateType` customization.
-
-### 3. Missing enum member
+### 2. Missing enum member
 
 `AppServiceSupportedTlsVersion.One3` is missing. The migrated enum exposes `Tls1_3`, making this an enum-member rename.
 
 ### Concentration and suggested order
 
-The remaining work consists of three deliberate API-shape compatibility customizations: restoring `FunctionAppStorage.Value`, preserving the legacy `Azure.ResponseError` representation, and restoring `AppServiceSupportedTlsVersion.One3`.
+The remaining work consists of two deliberate API-shape compatibility customizations: restoring `FunctionAppStorage.Value` and `AppServiceSupportedTlsVersion.One3`.
 
 ## Resolved issues
 
@@ -153,3 +142,9 @@ TypeSpec `@@alternateType` customizations now align 14 provisioning properties w
 | `StaticSiteTemplate.TemplateRepositoryUri` | `BicepValue<Uri>` |
 
 The linked-backend resource ID required removing an existing `armResourceIdentifier` override because both the legacy provisioning API and the management API expose it as `string`. These changes resolve **14 diagnostics**.
+
+### 9. Remote private endpoint response error
+
+`ResponseMessageEnvelopeRemotePrivateEndpointConnection.Error` again exposes `BicepValue<Azure.ResponseError>`, matching both the legacy provisioning API and the current management API. A targeted TypeSpec `@@alternateType` maps the service-specific `ErrorEntity` property to `Azure.Core.Foundations.Error`, which both C# generators map to the shared `Azure.ResponseError` CLR type while preserving the `error` wire path.
+
+The management generator now emits its `ResponseError` property directly, so the previous handwritten management compatibility partial has been removed. This resolves **1 diagnostic**.

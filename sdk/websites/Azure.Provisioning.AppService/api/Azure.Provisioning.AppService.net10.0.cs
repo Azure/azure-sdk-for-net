@@ -2803,7 +2803,7 @@ namespace Azure.Provisioning.AppService
     public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ResponseMessageEnvelopeRemotePrivateEndpointConnection() { }
-        public Azure.Provisioning.AppService.ErrorEntity Error { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ResponseError> Error { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }

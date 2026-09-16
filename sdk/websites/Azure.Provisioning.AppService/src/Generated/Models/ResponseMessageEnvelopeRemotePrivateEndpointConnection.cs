@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -21,7 +22,7 @@ namespace Azure.Provisioning.AppService
         private RemotePrivateEndpointConnection _properties;
         private AppServiceSkuDescription _sku;
         private BicepValue<string> _status;
-        private ErrorEntity _error;
+        private BicepValue<ResponseError> _error;
         private ManagedServiceIdentity _identity;
         private BicepList<string> _zones;
         private BicepValue<ResourceIdentifier> _id;
@@ -95,7 +96,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets the Error. </summary>
-        public ErrorEntity Error
+        public BicepValue<ResponseError> Error
         {
             get
             {
@@ -174,7 +175,7 @@ namespace Azure.Provisioning.AppService
             _properties = DefineModelProperty<RemotePrivateEndpointConnection>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<AppServiceSkuDescription>(nameof(Sku), new string[] { "sku" });
             _status = DefineProperty<string>(nameof(Status), new string[] { "status" });
-            _error = DefineModelProperty<ErrorEntity>(nameof(Error), new string[] { "error" });
+            _error = DefineProperty<ResponseError>(nameof(Error), new string[] { "error" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
