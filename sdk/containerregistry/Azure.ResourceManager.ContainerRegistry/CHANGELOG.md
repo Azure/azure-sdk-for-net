@@ -4,11 +4,16 @@
 
 ### Features Added
 
+- Updated API version to 2026-09-01-preview.
+- Added `Identity` to `ConnectedRegistryData` and `ConnectedRegistryPatch` for user-assigned managed identity synchronization using `AuthType.ManagedIdentity`.
+- Added `AuthType` to `ConnectedRegistrySyncProperties` and `ConnectedRegistrySyncUpdateProperties`, supporting `SyncToken` and `ManagedIdentity`.
+- Added read-only `TotalGib` and `AvailableGib` properties to `ConnectedRegistryStatusDetail` for disk space in gibibytes.
+- Added `ArmContainerRegistryModelFactory` parameters for mocking the new properties.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Made `ConnectedRegistrySyncProperties.TokenId` optional and added a constructor accepting only `messageTtl`. Existing constructor calls remain compatible, but null `tokenId` values no longer throw `ArgumentNullException`, and unset `TokenId` values are omitted from requests.
+- Changed `ArmContainerRegistryModelFactory` signatures for `ConnectedRegistryData` (the `registrySyncResult` overload), `ConnectedRegistryPatch`, and `ConnectedRegistrySyncUpdateProperties`. Recompile callers and update method-group delegates matching the previous signatures.
 
 ## 1.5.0-beta.3 (2026-08-07)
 
