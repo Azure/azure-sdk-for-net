@@ -1317,7 +1317,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Tools = { ResponseTool.CreateMcpTool(
         serverLabel: "api-specs",
         serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
     )) }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -1378,7 +1378,7 @@ When the connection is created, we can set it on the MCPTool and use it in `Decl
 McpTool tool = ResponseTool.CreateMcpTool(
         serverLabel: "api-specs",
         serverUri: new Uri("https://api.githubcopilot.com/mcp"),
-        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
     ));
 tool.ProjectConnectionId = mcpProjectConnectionName;
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1691,7 +1691,7 @@ the Fabric IQ connection in Microsoft Foundry and use `FabricIQPreviewTool` in t
 ```C# Snippet:Sample_CreateAgent_FabricIQ_Async
 FabricIQPreviewTool fabricIQTool = new(projectConnectionId: fabricIQProjectConnectionId)
 {
-    RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+    RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -1958,7 +1958,7 @@ Web IQ allows returning responses, grounded by web data. By operating on Pareto 
 string WebIQProjectConnectionId = (await projectClient.Connections.GetConnectionAsync(WebIQProjectConnectionName)).Value.Id;
 WebIQPreviewTool WebIQTool = new(projectConnectionId: WebIQProjectConnectionId)
 {
-    RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+    RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {

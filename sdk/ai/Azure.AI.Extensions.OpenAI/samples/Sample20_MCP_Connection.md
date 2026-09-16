@@ -18,7 +18,7 @@ Synchronous sample:
 McpTool tool = ResponseTool.CreateMcpTool(
         serverLabel: "api-specs",
         serverUri: new Uri("https://api.githubcopilot.com/mcp"),
-        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
     ));
 tool.ProjectConnectionId = mcpProjectConnectionName;
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -36,7 +36,7 @@ Asynchronous sample:
 McpTool tool = ResponseTool.CreateMcpTool(
         serverLabel: "api-specs",
         serverUri: new Uri("https://api.githubcopilot.com/mcp"),
-        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
     ));
 tool.ProjectConnectionId = mcpProjectConnectionName;
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

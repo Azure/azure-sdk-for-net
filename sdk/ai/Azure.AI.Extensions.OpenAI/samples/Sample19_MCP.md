@@ -19,7 +19,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Tools = { ResponseTool.CreateMcpTool(
         serverLabel: "api-specs",
         serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
     )) }
 };
 ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
@@ -35,7 +35,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Tools = { ResponseTool.CreateMcpTool(
         serverLabel: "api-specs",
         serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
     )) }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
