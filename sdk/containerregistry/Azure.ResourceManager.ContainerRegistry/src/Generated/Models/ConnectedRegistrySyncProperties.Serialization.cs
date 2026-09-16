@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             TimeSpan messageTtl = default;
             DateTimeOffset? lastSyncOn = default;
             string gatewayEndpoint = default;
-            AuthType? authType = default;
+            ContainerRegistryAuthType? authType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    authType = new AuthType(prop.Value.GetString());
+                    authType = new ContainerRegistryAuthType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

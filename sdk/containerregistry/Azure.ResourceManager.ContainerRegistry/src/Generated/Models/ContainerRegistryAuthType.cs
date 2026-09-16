@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerRegistry;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The authentication type used for the connected registry to sync with its parent. </summary>
-    public readonly partial struct AuthType : IEquatable<AuthType>
+    public readonly partial struct ContainerRegistryAuthType : IEquatable<ContainerRegistryAuthType>
     {
         private readonly string _value;
         /// <summary> Sync authentication is done using ACR tokens. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Sync authentication is done using managed identity. </summary>
         private const string ManagedIdentityValue = "ManagedIdentity";
 
-        /// <summary> Initializes a new instance of <see cref="AuthType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AuthType(string value)
+        public ContainerRegistryAuthType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Sync authentication is done using ACR tokens. </summary>
-        public static AuthType SyncToken { get; } = new AuthType(SyncTokenValue);
+        public static ContainerRegistryAuthType SyncToken { get; } = new ContainerRegistryAuthType(SyncTokenValue);
 
         /// <summary> Sync authentication is done using managed identity. </summary>
-        public static AuthType ManagedIdentity { get; } = new AuthType(ManagedIdentityValue);
+        public static ContainerRegistryAuthType ManagedIdentity { get; } = new ContainerRegistryAuthType(ManagedIdentityValue);
 
-        /// <summary> Determines if two <see cref="AuthType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerRegistryAuthType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AuthType left, AuthType right) => left.Equals(right);
+        public static bool operator ==(ContainerRegistryAuthType left, ContainerRegistryAuthType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AuthType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerRegistryAuthType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AuthType left, AuthType right) => !left.Equals(right);
+        public static bool operator !=(ContainerRegistryAuthType left, ContainerRegistryAuthType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AuthType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerRegistryAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuthType(string value) => new AuthType(value);
+        public static implicit operator ContainerRegistryAuthType(string value) => new ContainerRegistryAuthType(value);
 
-        /// <summary> Converts a string to a <see cref="AuthType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerRegistryAuthType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AuthType?(string value) => value == null ? null : new AuthType(value);
+        public static implicit operator ContainerRegistryAuthType?(string value) => value == null ? null : new ContainerRegistryAuthType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AuthType other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerRegistryAuthType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AuthType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerRegistryAuthType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

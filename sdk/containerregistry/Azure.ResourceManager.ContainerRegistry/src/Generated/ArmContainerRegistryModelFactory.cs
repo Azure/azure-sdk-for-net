@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="gatewayEndpoint"> The gateway endpoint used by the connected registry to communicate with its parent. </param>
         /// <param name="authType"> The authentication type used for the connected registry to sync with its parent. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistrySyncProperties"/> instance for mocking. </returns>
-        public static ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, string schedule, TimeSpan? syncWindow, TimeSpan messageTtl, DateTimeOffset? lastSyncOn, string gatewayEndpoint, AuthType? authType)
+        public static ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, string schedule, TimeSpan? syncWindow, TimeSpan messageTtl, DateTimeOffset? lastSyncOn, string gatewayEndpoint, ContainerRegistryAuthType? authType)
         {
             return new ConnectedRegistrySyncProperties(
                 tokenId,
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
         /// <param name="authType"> The authentication type used for the connected registry to sync with its parent. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistrySyncUpdateProperties"/> instance for mocking. </returns>
-        public static ConnectedRegistrySyncUpdateProperties ConnectedRegistrySyncUpdateProperties(string schedule = default, TimeSpan? syncWindow = default, TimeSpan? messageTtl = default, AuthType? authType = default)
+        public static ConnectedRegistrySyncUpdateProperties ConnectedRegistrySyncUpdateProperties(string schedule = default, TimeSpan? syncWindow = default, TimeSpan? messageTtl = default, ContainerRegistryAuthType? authType = default)
         {
             return new ConnectedRegistrySyncUpdateProperties(schedule, syncWindow, messageTtl, authType, default);
         }

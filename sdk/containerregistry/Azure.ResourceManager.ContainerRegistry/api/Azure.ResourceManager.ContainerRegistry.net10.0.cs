@@ -1347,8 +1347,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail ConnectedRegistryStatusDetail(string statusDetailType = null, string code = null, string description = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.Guid? correlationId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryStatusDetail ConnectedRegistryStatusDetail(string statusDetailType, string code, string description, System.DateTimeOffset? timestamp, System.Guid? correlationId, double? totalGib, double? availableGib = default(double?)) { throw null; }
         public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(Azure.Core.ResourceIdentifier tokenId = null, string schedule = null, System.TimeSpan? syncWindow = default(System.TimeSpan?), System.TimeSpan messageTtl = default(System.TimeSpan), System.DateTimeOffset? lastSyncOn = default(System.DateTimeOffset?), string gatewayEndpoint = null) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(Azure.Core.ResourceIdentifier tokenId, string schedule, System.TimeSpan? syncWindow, System.TimeSpan messageTtl, System.DateTimeOffset? lastSyncOn, string gatewayEndpoint, Azure.ResourceManager.ContainerRegistry.Models.AuthType? authType) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties ConnectedRegistrySyncUpdateProperties(string schedule = null, System.TimeSpan? syncWindow = default(System.TimeSpan?), System.TimeSpan? messageTtl = default(System.TimeSpan?), Azure.ResourceManager.ContainerRegistry.Models.AuthType? authType = default(Azure.ResourceManager.ContainerRegistry.Models.AuthType?)) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(Azure.Core.ResourceIdentifier tokenId, string schedule, System.TimeSpan? syncWindow, System.TimeSpan messageTtl, System.DateTimeOffset? lastSyncOn, string gatewayEndpoint, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType? authType) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties ConnectedRegistrySyncUpdateProperties(string schedule = null, System.TimeSpan? syncWindow = default(System.TimeSpan?), System.TimeSpan? messageTtl = default(System.TimeSpan?), Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType? authType = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType?)) { throw null; }
         [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         public static Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolData ContainerRegistryAgentPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? count = default(int?), string tier = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS? os = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS?), Azure.Core.ResourceIdentifier virtualNetworkSubnetResourceId = null, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState?)) { throw null; }
         [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
@@ -1461,23 +1461,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static Azure.ResourceManager.ContainerRegistry.Models.ScopeMapPatch ScopeMapPatch(string description = null, System.Collections.Generic.IEnumerable<string> actions = null) { throw null; }
         [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
         public static Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition SourceUploadDefinition(System.Uri uploadUri = null, string relativePath = null) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AuthType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.AuthType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AuthType(string value) { throw null; }
-        public static Azure.ResourceManager.ContainerRegistry.Models.AuthType ManagedIdentity { get { throw null; } }
-        public static Azure.ResourceManager.ContainerRegistry.Models.AuthType SyncToken { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.AuthType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.AuthType left, Azure.ResourceManager.ContainerRegistry.Models.AuthType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.AuthType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.AuthType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.AuthType left, Azure.ResourceManager.ContainerRegistry.Models.AuthType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutoGeneratedDomainNameLabelScope : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.AutoGeneratedDomainNameLabelScope>
@@ -1679,7 +1662,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         public ConnectedRegistrySyncProperties(Azure.Core.ResourceIdentifier tokenId, System.TimeSpan messageTtl) { }
         public ConnectedRegistrySyncProperties(System.TimeSpan messageTtl) { }
-        public Azure.ResourceManager.ContainerRegistry.Models.AuthType? AuthType { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType? AuthType { get { throw null; } set { } }
         public string GatewayEndpoint { get { throw null; } }
         public System.DateTimeOffset? LastSyncOn { get { throw null; } }
         public System.TimeSpan MessageTtl { get { throw null; } set { } }
@@ -1699,7 +1682,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public partial class ConnectedRegistrySyncUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties>
     {
         public ConnectedRegistrySyncUpdateProperties() { }
-        public Azure.ResourceManager.ContainerRegistry.Models.AuthType? AuthType { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType? AuthType { get { throw null; } set { } }
         public System.TimeSpan? MessageTtl { get { throw null; } set { } }
         public string Schedule { get { throw null; } set { } }
         public System.TimeSpan? SyncWindow { get { throw null; } set { } }
@@ -1783,6 +1766,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthCredential System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthCredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthCredential>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthCredential>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryAuthType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryAuthType(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType ManagedIdentity { get { throw null; } }
+        public static Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType SyncToken { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistry.Tasks and will be removed in a future version.")]
     public partial class ContainerRegistryBaseImageDependency : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependency>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependency>

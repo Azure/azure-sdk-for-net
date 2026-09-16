@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
         /// <param name="authType"> The authentication type used for the connected registry to sync with its parent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistrySyncUpdateProperties(string schedule, TimeSpan? syncWindow, TimeSpan? messageTtl, AuthType? authType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedRegistrySyncUpdateProperties(string schedule, TimeSpan? syncWindow, TimeSpan? messageTtl, ContainerRegistryAuthType? authType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Schedule = schedule;
             SyncWindow = syncWindow;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The authentication type used for the connected registry to sync with its parent. </summary>
         [WirePath("authType")]
-        public AuthType? AuthType { get; set; }
+        public ContainerRegistryAuthType? AuthType { get; set; }
     }
 }
