@@ -6118,6 +6118,10 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<bool> IsScmSiteAlsoStopped { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsSshEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsStorageAccountRequired { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsVnetBackupRestoreEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsVnetContentShareEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsVnetImagePullEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsVnetRouteAllEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsXenon { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KeyVaultReferenceIdentity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
@@ -6692,6 +6696,10 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<bool> IsScmSiteAlsoStopped { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsSshEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsStorageAccountRequired { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsVnetBackupRestoreEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsVnetContentShareEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsVnetImagePullEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsVnetRouteAllEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsXenon { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KeyVaultReferenceIdentity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }

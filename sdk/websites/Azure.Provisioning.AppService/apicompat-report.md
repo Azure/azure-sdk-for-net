@@ -8,31 +8,20 @@ dotnet build sdk\websites\Azure.Provisioning.AppService\src\Azure.Provisioning.A
 
 ## Summary
 
-The build failed ApiCompat with **44 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
+The build failed ApiCompat with **28 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
 
 | Category | API changes | ApiCompat diagnostics |
 |---|---:|---:|
-| Removed public properties | 15 properties | 28 |
+| Removed public properties | 7 properties | 12 |
 | Changed property types | 15 properties | 15 |
 | Missing enum members | 1 member | 1 |
-| **Total** | **31 changes** | **44** |
+| **Total** | **23 changes** | **28** |
 
 ApiCompat reports property getters and setters independently. Therefore, a removed read/write property normally produces two `CP0002` diagnostics.
 
 ## Unresolved issues
 
 ### 1. Removed public properties
-
-### Web site VNet settings
-
-The following four read/write properties are absent from both `WebSite` and `WebSiteSlot`:
-
-- `IsVnetBackupRestoreEnabled`
-- `IsVnetContentShareEnabled`
-- `IsVnetImagePullEnabled`
-- `IsVnetRouteAllEnabled`
-
-This accounts for **8 removed properties and 16 diagnostics**.
 
 ### API definition URI
 
@@ -94,11 +83,11 @@ Most of this category is scalar semantic drift from URI, resource identifier, lo
 
 The failures are concentrated rather than spread evenly:
 
-1. Restore the `WebSite` and `WebSiteSlot` VNet flags: **16 diagnostics**.
-2. Address the 15 scalar/model type changes.
-3. Restore smaller renamed or removed members: `ApiDefinitionUri`, certificate `Thumbprint`, function app properties, and `One3`.
+1. Address the 15 scalar/model type changes.
+2. Restore `ApiDefinitionUri`: **6 diagnostics**.
+3. Restore the function app properties, certificate `Thumbprint`, and `One3`.
 
-The VNet flag cluster accounts for **16 of 44 diagnostics (36%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
+The scalar/model type changes account for **15 of 28 diagnostics (54%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
 
 ## Resolved issues
 
@@ -144,3 +133,16 @@ The same [#61011](https://github.com/Azure/azure-sdk-for-net/issues/61011) limit
 | `RemotePrivateEndpointConnection` | setters for `IPAddresses` and `PrivateLinkServiceConnectionState` | `properties.ipAddresses` and `properties.privateLinkServiceConnectionState` |
 
 The `Microsoft.Web@2025-03-01` Bicep schema marks none of these fields read-only. Custom partial classes preserve their prior writable API surface and resolve **9 diagnostics**.
+
+### 4. Legacy flattened VNet properties
+
+The following legacy properties have been restored on both `WebSite` and `WebSiteSlot`:
+
+- `IsVnetBackupRestoreEnabled`
+- `IsVnetContentShareEnabled`
+- `IsVnetImagePullEnabled`
+- `IsVnetRouteAllEnabled`
+
+Each public compatibility property is hidden from IntelliSense with `EditorBrowsableState.Never` and delegates to an internal `SiteProperties` property that preserves its original flattened wire path under `properties`. The current management library retains the same public compatibility APIs without marking them obsolete. New code should use `OutboundVnetRouting`.
+
+This restores **8 properties and resolves 16 diagnostics**.
