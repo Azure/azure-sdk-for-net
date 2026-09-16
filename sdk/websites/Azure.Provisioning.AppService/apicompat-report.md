@@ -8,30 +8,20 @@ dotnet build sdk\websites\Azure.Provisioning.AppService\src\Azure.Provisioning.A
 
 ## Summary
 
-The build failed ApiCompat with **28 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
+The build failed ApiCompat with **22 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
 
 | Category | API changes | ApiCompat diagnostics |
 |---|---:|---:|
-| Removed public properties | 7 properties | 12 |
+| Removed public properties | 4 properties | 6 |
 | Changed property types | 15 properties | 15 |
 | Missing enum members | 1 member | 1 |
-| **Total** | **23 changes** | **28** |
+| **Total** | **20 changes** | **22** |
 
 ApiCompat reports property getters and setters independently. Therefore, a removed read/write property normally produces two `CP0002` diagnostics.
 
 ## Unresolved issues
 
 ### 1. Removed public properties
-
-### API definition URI
-
-The read/write `ApiDefinitionUri` property is absent from:
-
-- `SiteConfigProperties`
-- `WebSiteConfig`
-- `WebSiteSlotConfig`
-
-This accounts for **3 removed properties and 6 diagnostics**.
 
 ### Function app models
 
@@ -84,10 +74,10 @@ Most of this category is scalar semantic drift from URI, resource identifier, lo
 The failures are concentrated rather than spread evenly:
 
 1. Address the 15 scalar/model type changes.
-2. Restore `ApiDefinitionUri`: **6 diagnostics**.
-3. Restore the function app properties, certificate `Thumbprint`, and `One3`.
+2. Restore the function app properties and certificate `Thumbprint`.
+3. Restore `AppServiceSupportedTlsVersion.One3`.
 
-The scalar/model type changes account for **15 of 28 diagnostics (54%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
+The scalar/model type changes account for **15 of 22 diagnostics (68%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
 
 ## Resolved issues
 
@@ -146,3 +136,15 @@ The following legacy properties have been restored on both `WebSite` and `WebSit
 Each public compatibility property is hidden from IntelliSense with `EditorBrowsableState.Never` and delegates to an internal `SiteProperties` property that preserves its original flattened wire path under `properties`. The current management library retains the same public compatibility APIs without marking them obsolete. New code should use `OutboundVnetRouting`.
 
 This restores **8 properties and resolves 16 diagnostics**.
+
+### 5. Legacy API definition URI
+
+The URI-typed `ApiDefinitionUri` property has been restored on:
+
+- `SiteConfigProperties`
+- `WebSiteConfig`
+- `WebSiteSlotConfig`
+
+The current schema still uses `apiDefinition.url`, but the generated API now exposes it as the string-typed `ApiDefinitionUriStringValue` through an internal `AppServiceApiDefinitionInfo` model. The management library preserves the old URI-typed property with `EditorBrowsableState.Never` and no obsolete attribute.
+
+The provisioning compatibility implementation follows the same public pattern. An internal URI-typed property preserves the `url` wire binding, and the three public EBN properties flatten it through the current nested models. This resolves **6 diagnostics**.

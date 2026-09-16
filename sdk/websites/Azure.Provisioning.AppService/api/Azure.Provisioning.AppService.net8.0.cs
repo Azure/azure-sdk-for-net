@@ -3044,6 +3044,7 @@ namespace Azure.Provisioning.AppService
         public SiteConfigProperties() { }
         public Azure.Provisioning.BicepValue<string> AcrUserManagedIdentityId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> AllowIPSecurityRestrictionsForScmToUseMain { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> ApiDefinitionUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ApiDefinitionUriStringValue { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ApiManagementConfigId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AppCommandLine { get { throw null; } set { } }
@@ -6222,6 +6223,7 @@ namespace Azure.Provisioning.AppService
         public WebSiteConfig(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AcrUserManagedIdentityId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> AllowIPSecurityRestrictionsForScmToUseMain { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> ApiDefinitionUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ApiDefinitionUriStringValue { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ApiManagementConfigId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AppCommandLine { get { throw null; } set { } }
@@ -6795,6 +6797,7 @@ namespace Azure.Provisioning.AppService
         public WebSiteSlotConfig(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AcrUserManagedIdentityId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> AllowIPSecurityRestrictionsForScmToUseMain { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> ApiDefinitionUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ApiDefinitionUriStringValue { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ApiManagementConfigId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AppCommandLine { get { throw null; } set { } }
