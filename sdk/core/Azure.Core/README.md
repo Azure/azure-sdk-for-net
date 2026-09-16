@@ -245,6 +245,14 @@ var credential = new DefaultAzureCredential();
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
 ```
 
+#### Managed identities on Azure Arc
+
+On [Azure Arc-enabled servers](https://learn.microsoft.com/azure/azure-arc/servers/managed-identity-authentication) with user-assigned managed identity support, `ManagedIdentityCredential` supports both system-assigned and user-assigned identities. Select an attached user-assigned identity with `ManagedIdentityId.FromUserAssignedClientId`, `ManagedIdentityId.FromUserAssignedResourceId`, or `ManagedIdentityId.FromUserAssignedObjectId`.
+
+`DefaultAzureCredential` supports selecting an Arc user-assigned identity through `DefaultAzureCredentialOptions.ManagedIdentityClientId` (also defaulted from `AZURE_CLIENT_ID`) or `ManagedIdentityResourceId`. Configure only one selector. Without a selector, the system-assigned identity is used.
+
+These credentials remain in the `Azure.Identity` namespace and are included in `Azure.Core`; no separate Azure.Identity package is required. User-assigned authentication requires a compatible Arc agent and an identity assigned to the host. If the host does not honor the selected identity or the identity is not assigned, authentication fails rather than silently falling back to the system-assigned identity.
+
 ## Distributed tracing with OpenTelemetry
 
 Azure SDKs are instrumented for distributed tracing using [OpenTelemetry](https://opentelemetry.io/). Distributed tracing allows to follow request through multiple services, record how long network or logical call take along with structured properties describing such operations.

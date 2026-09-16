@@ -5,6 +5,7 @@
 ### Features Added
 
 - The mTLS proof-of-possession APIs on `BearerTokenAuthenticationPolicy` and `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` are no longer experimental and no longer require `AZID0004` suppression.
+- Added support for Azure Arc user-assigned managed identities. `ManagedIdentityCredential` supports selection by client ID, resource ID, or object ID; `DefaultAzureCredential` supports selection through its client ID and resource ID options.
 
 ### Breaking Changes
 
@@ -15,6 +16,8 @@
 - Managed identity mTLS proof-of-possession now requires a KeyGuard-backed host capability and enforces KeyGuard as the minimum binding strength during token acquisition. ([#62585](https://github.com/Azure/azure-sdk-for-net/issues/62585))
 
 ### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to `4.89.0`.
 
 ## 1.62.0 (2026-08-20)
 

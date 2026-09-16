@@ -12,16 +12,59 @@ using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
+using Azure.Identity;
+using Microsoft.Identity.Client;
 using Moq;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     public class DefaultAzureCredentialTests : ClientTestBase
     {
         public DefaultAzureCredentialTests(bool isAsync) : base(isAsync)
         {
+        }
+
+        [NonParallelizable]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task VerifyArcUserAssignedManagedIdentity(bool useResourceId)
+        {
+            using var environment = CredentialTestHelpers.CreateArcManagedIdentityEnvironment(useDefaultCredential: true);
+            ApplicationBase.ResetStateForTest();
+            try
+            {
+                string identityId = useResourceId
+                    ? $"/subscriptions/{Guid.NewGuid()}/resourceGroups/test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/arc-uami"
+                    : Guid.NewGuid().ToString();
+                string identityParameter = useResourceId ? "msi_res_id" : "client_id";
+                const string expectedToken = "arc-user-assigned-token";
+                var transport = new MockTransport(CredentialTestHelpers.CreateMockArcTokenResponse(
+                    expectedToken, identityParameter, identityId));
+                var options = new DefaultAzureCredentialOptions { Transport = transport };
+                if (useResourceId)
+                {
+                    options.ManagedIdentityResourceId = new ResourceIdentifier(identityId);
+                }
+                else
+                {
+                    options.ManagedIdentityClientId = identityId;
+                }
+
+                var credential = InstrumentClient(new DefaultAzureCredential(options));
+                var requestContext = new TokenRequestContext(MockScopes.Default);
+
+                AccessToken token = await credential.GetTokenAsync(requestContext);
+                AccessToken cachedToken = await credential.GetTokenAsync(requestContext);
+
+                Assert.AreEqual(expectedToken, token.Token);
+                Assert.AreEqual(token.Token, cachedToken.Token);
+                Assert.That(transport.Requests, Has.Count.EqualTo(1));
+                CredentialTestHelpers.AssertArcManagedIdentityRequest(transport.Requests.Single(), identityParameter, identityId);
+            }
+            finally
+            {
+                ApplicationBase.ResetStateForTest();
+            }
         }
 
         [Test]
