@@ -147,7 +147,7 @@ function Install-Standalone-Tool (
             if ($rawTags) {
                 $matchingTags = @()
                 foreach ($line in $rawTags) {
-                    if ($line -match "refs/tags/(${Package}_(.+))$") {
+                    if ($line -match "refs/tags/(${Package}_(?!.*dev)(.+))$") {
                         $matchingTags += [PSCustomObject]@{
                             Tag     = $matches[1]
                             Version = $matches[2]
