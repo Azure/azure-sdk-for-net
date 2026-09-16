@@ -63,7 +63,7 @@ namespace Azure.Generator.Provisioning.Utilities
                         throw new InvalidOperationException($"Duplicate CodeGenEnumValue customization for {value.EnumName}.{value.MemberName}.");
                     }
                     var duplicate = values.Values.FirstOrDefault(existing => existing.EnumName == value.EnumName && existing.Value == value.Value);
-                    if (duplicate != null)
+                    if (duplicate != null && (duplicate.WireName is null || duplicate.WireName != value.WireName))
                     {
                         throw new InvalidOperationException($"Duplicate CodeGenEnumValue ordinal {value.Value} for {value.EnumName}.{duplicate.MemberName} and {value.EnumName}.{value.MemberName}.");
                     }

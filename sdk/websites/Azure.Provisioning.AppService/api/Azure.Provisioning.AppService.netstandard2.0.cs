@@ -965,6 +965,9 @@ namespace Azure.Provisioning.AppService
         Tls1_1 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.2")]
         Tls1_2 = 2,
+        [System.ObsoleteAttribute("Use Tls1_3 instead.")]
+        [System.Runtime.Serialization.DataMemberAttribute(Name="1.3")]
+        One3 = 3,
         [System.Runtime.Serialization.DataMemberAttribute(Name="1.3")]
         Tls1_3 = 3,
     }

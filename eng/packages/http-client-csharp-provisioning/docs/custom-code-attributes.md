@@ -132,6 +132,21 @@ The generator emits:
 LegacyKind = 4
 ```
 
+### Add a compatibility alias
+
+Two members may share an ordinal when both customizations explicitly use the same wire name. Pin the current member as well as the compatibility alias so generated ordinal allocation remains stable.
+
+```csharp
+[assembly: CodeGenEnumValue("SampleKind", "CurrentKind", 3, WireName = "current-kind")]
+[assembly: CodeGenEnumValue(
+    "SampleKind",
+    "LegacyKind",
+    3,
+    WireName = "current-kind",
+    EditorBrowsableNever = true,
+    ObsoleteMessage = "Use CurrentKind instead.")]
+```
+
 ### Parameters
 
 | Parameter | Description |
@@ -143,4 +158,4 @@ LegacyKind = 4
 | `EditorBrowsableNever` | Optional settable property. When `true`, emits `[EditorBrowsable(EditorBrowsableState.Never)]`. |
 | `ObsoleteMessage` | Optional settable property. When provided, emits `[Obsolete("...")]` with the supplied message. |
 
-The generator fails fast if two `CodeGenEnumValue` attributes target the same enum member or assign the same explicit ordinal within the same enum.
+The generator fails fast if two `CodeGenEnumValue` attributes target the same enum member. Duplicate ordinals are rejected unless both attributes explicitly use the same wire name.

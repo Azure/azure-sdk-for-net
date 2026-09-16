@@ -8,22 +8,11 @@ dotnet build sdk\websites\Azure.Provisioning.AppService\src\Azure.Provisioning.A
 
 ## Summary
 
-The build failed ApiCompat with **1 unique compatibility diagnostic**. The same diagnostic occurs for `netstandard2.0`, `net8.0`, and `net10.0`.
+The build passes ApiCompat with **0 compatibility diagnostics** for `netstandard2.0`, `net8.0`, and `net10.0`.
 
 | Category | API changes | ApiCompat diagnostics |
 |---|---:|---:|
-| Missing enum members | 1 member | 1 |
-| **Total** | **1 change** | **1** |
-
-## Unresolved issues
-
-### 1. Missing enum member
-
-`AppServiceSupportedTlsVersion.One3` is missing. The migrated enum exposes `Tls1_3`, making this an enum-member rename.
-
-### Concentration and suggested order
-
-The remaining work consists of restoring the legacy `AppServiceSupportedTlsVersion.One3` enum-member name.
+| **Total unresolved** | **0 changes** | **0** |
 
 ## Resolved issues
 
@@ -143,3 +132,9 @@ The management generator now emits its `ResponseError` property directly, so the
 `FunctionAppStorage.Value` has been restored as `BicepValue<Uri>` with `CodeGenMember`, preserving the legacy name and the existing `value` Bicep path. The generated `AzureStorageUriStringValue` member already had the correct URI type, so no conversion property or TypeSpec change was needed.
 
 This restores **1 property and resolves 2 diagnostics**.
+
+### 11. Legacy TLS 1.3 enum member
+
+`AppServiceSupportedTlsVersion.One3` has been restored as an EBN, obsolete alias of `Tls1_3`. Both members have enum value `3` and wire name `"1.3"`; `One3` directs callers to use `Tls1_3`.
+
+This restores **1 enum member and resolves 1 diagnostic**.

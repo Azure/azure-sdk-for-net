@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.AppService
@@ -23,6 +25,11 @@ namespace Azure.Provisioning.AppService
         Tls1_2 = 2,
         /// <summary> Tls1_3. </summary>
         [DataMember(Name = "1.3")]
-        Tls1_3 = 3
+        Tls1_3 = 3,
+        /// <summary> One3. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Tls1_3 instead.")]
+        [DataMember(Name = "1.3")]
+        One3 = 3
     }
 }
