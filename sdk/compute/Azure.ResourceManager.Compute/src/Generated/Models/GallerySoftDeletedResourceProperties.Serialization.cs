@@ -90,6 +90,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("softDeletedTime"u8);
                 writer.WriteStringValue(SoftDeletedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(ConsumptionEndsOn))
+            {
+                writer.WritePropertyName("consumptionEndTime"u8);
+                writer.WriteStringValue(ConsumptionEndsOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(HardDeletionTargetOn))
+            {
+                writer.WritePropertyName("hardDeletionTargetTime"u8);
+                writer.WriteStringValue(HardDeletionTargetOn.Value, "O");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,6 +145,8 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceIdentifier resourceArmId = default;
             GallerySoftDeletedArtifactType? softDeletedArtifactType = default;
             DateTimeOffset? softDeletedOn = default;
+            DateTimeOffset? consumptionEndsOn = default;
+            DateTimeOffset? hardDeletionTargetOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,12 +177,36 @@ namespace Azure.ResourceManager.Compute.Models
                     softDeletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("consumptionEndTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    consumptionEndsOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("hardDeletionTargetTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardDeletionTargetOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GallerySoftDeletedResourceProperties(resourceArmId, softDeletedArtifactType, softDeletedOn, additionalBinaryDataProperties);
+            return new GallerySoftDeletedResourceProperties(
+                resourceArmId,
+                softDeletedArtifactType,
+                softDeletedOn,
+                consumptionEndsOn,
+                hardDeletionTargetOn,
+                additionalBinaryDataProperties);
         }
     }
 }

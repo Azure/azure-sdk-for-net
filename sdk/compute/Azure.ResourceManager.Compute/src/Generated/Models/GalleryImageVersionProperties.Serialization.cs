@@ -116,6 +116,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("validationsProfile"u8);
                 writer.WriteObjectValue(ValidationsProfile, options);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ImageMetadataProfiles))
+            {
+                writer.WritePropertyName("imageMetadataProfiles"u8);
+                writer.WriteStartArray();
+                foreach (ImageMetadataProfile item in ImageMetadataProfiles)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -166,6 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
             ImageVersionSecurityProfile securityProfile = default;
             bool? isRestoreEnabled = default;
             GalleryImageValidationsProfile validationsProfile = default;
+            IReadOnlyList<ImageMetadataProfile> imageMetadataProfiles = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -237,6 +248,20 @@ namespace Azure.ResourceManager.Compute.Models
                     validationsProfile = GalleryImageValidationsProfile.DeserializeGalleryImageValidationsProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("imageMetadataProfiles"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ImageMetadataProfile> array = new List<ImageMetadataProfile>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ImageMetadataProfile.DeserializeImageMetadataProfile(item, options));
+                    }
+                    imageMetadataProfiles = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -251,6 +276,7 @@ namespace Azure.ResourceManager.Compute.Models
                 securityProfile,
                 isRestoreEnabled,
                 validationsProfile,
+                imageMetadataProfiles ?? new ChangeTrackingList<ImageMetadataProfile>(),
                 additionalBinaryDataProperties);
         }
     }

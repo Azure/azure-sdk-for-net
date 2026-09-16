@@ -5199,12 +5199,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="description"> The description of this Shared Image Gallery resource. This property is updatable. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
+        /// <param name="softDeletePolicy"> Contains information about the soft deletion policy of the gallery. </param>
         /// <param name="sharingStatus"> Sharing status of current gallery. </param>
         /// <param name="identifierUniqueName"> The unique name of the Shared Image Gallery. This name is generated automatically by Azure. </param>
-        /// <param name="isSoftDeleteEnabled"> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </param>
         /// <param name="identity"> The identity of the gallery, if configured. </param>
         /// <returns> A new <see cref="Compute.GalleryData"/> instance for mocking. </returns>
-        public static GalleryData GalleryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, SharingStatus sharingStatus = default, string identifierUniqueName = default, bool? isSoftDeleteEnabled = default, ManagedServiceIdentity identity = default)
+        public static GalleryData GalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, GalleryProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy, SharingStatus sharingStatus, string identifierUniqueName, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5215,12 +5215,12 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                description is null && identifierUniqueName is null && provisioningState is null && sharingProfile is null && isSoftDeleteEnabled is null && sharingStatus is null ? default : new GalleryProperties(
+                description is null && identifierUniqueName is null && provisioningState is null && sharingProfile is null && softDeletePolicy is null && sharingStatus is null ? default : new GalleryProperties(
                     description,
                     identifierUniqueName is null ? default : new GalleryIdentifier(identifierUniqueName, default),
                     provisioningState,
                     sharingProfile,
-                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default),
+                    softDeletePolicy,
                     sharingStatus,
                     default),
                 identity,
@@ -5272,6 +5272,16 @@ namespace Azure.ResourceManager.Compute.Models
                 default);
         }
 
+        /// <summary> Contains information about the soft deletion policy of the gallery. </summary>
+        /// <param name="isSoftDeleteEnabled"> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </param>
+        /// <param name="retentionPeriodInDays"> The retention period in days for a soft-deleted resource. After this period elapses, the soft-deleted gallery image version transitions to a simulated hard-deleted state. </param>
+        /// <param name="gracePeriodInDays"> The grace period in days for a simulated hard-deleted resource. During this period the gallery image version is unusable but can still be recovered if required. After this period elapses, the gallery image version is permanently (hard) deleted. </param>
+        /// <returns> A new <see cref="Models.SoftDeletePolicy"/> instance for mocking. </returns>
+        public static SoftDeletePolicy SoftDeletePolicy(bool? isSoftDeleteEnabled = default, int? retentionPeriodInDays = default, int? gracePeriodInDays = default)
+        {
+            return new SoftDeletePolicy(isSoftDeleteEnabled, retentionPeriodInDays, gracePeriodInDays, default);
+        }
+
         /// <summary> Sharing status of current gallery. </summary>
         /// <param name="aggregatedState"> Aggregated sharing state of current gallery. </param>
         /// <param name="summary"> Summary of all regional sharing status. </param>
@@ -5300,13 +5310,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="description"> The description of this Shared Image Gallery resource. This property is updatable. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
+        /// <param name="softDeletePolicy"> Contains information about the soft deletion policy of the gallery. </param>
         /// <param name="sharingStatus"> Sharing status of current gallery. </param>
         /// <param name="identifierUniqueName"> The unique name of the Shared Image Gallery. This name is generated automatically by Azure. </param>
-        /// <param name="isSoftDeleteEnabled"> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </param>
         /// <param name="identity"> The identity of the gallery, if configured. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryPatch"/> instance for mocking. </returns>
-        public static GalleryPatch GalleryPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, SharingStatus sharingStatus = default, string identifierUniqueName = default, bool? isSoftDeleteEnabled = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
+        public static GalleryPatch GalleryPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, GalleryProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy, SharingStatus sharingStatus, string identifierUniqueName, ManagedServiceIdentity identity, IDictionary<string, string> tags)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5315,17 +5325,26 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                description is null && identifierUniqueName is null && provisioningState is null && sharingProfile is null && isSoftDeleteEnabled is null && sharingStatus is null ? default : new GalleryProperties(
+                description is null && identifierUniqueName is null && provisioningState is null && sharingProfile is null && softDeletePolicy is null && sharingStatus is null ? default : new GalleryProperties(
                     description,
                     identifierUniqueName is null ? default : new GalleryIdentifier(identifierUniqueName, default),
                     provisioningState,
                     sharingProfile,
-                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default),
+                    softDeletePolicy,
                     sharingStatus,
                     default),
                 identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
+        }
+
+        /// <summary> The security profile of a gallery image version. </summary>
+        /// <param name="uefiSettings"> Contains UEFI settings for the image version. </param>
+        /// <param name="secretsProvisioningSettings"> Specifies the secrets provisioning settings for the gallery image version. Used on create or update to configure secrets provisioning. </param>
+        /// <returns> A new <see cref="Models.ImageVersionSecurityProfile"/> instance for mocking. </returns>
+        public static ImageVersionSecurityProfile ImageVersionSecurityProfile(GalleryImageVersionUefiSettings uefiSettings = default, SecretsProvisioningSettings secretsProvisioningSettings = default)
+        {
+            return new ImageVersionSecurityProfile(uefiSettings, secretsProvisioningSettings, default);
         }
 
         /// <summary> Contains UEFI settings for the image version. </summary>
@@ -5365,6 +5384,27 @@ namespace Azure.ResourceManager.Compute.Models
             return new UefiKey(keyType, (value ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Describes the secrets provisioning settings for a gallery image version. </summary>
+        /// <param name="isSupported"> Specifies whether the image version supports secrets provisioning. </param>
+        /// <param name="osName"> The name of the operating system (e.g., "mariner"). </param>
+        /// <param name="components"> The list of component versions involved in secrets provisioning. </param>
+        /// <returns> A new <see cref="Models.SecretsProvisioningSettings"/> instance for mocking. </returns>
+        public static SecretsProvisioningSettings SecretsProvisioningSettings(bool? isSupported = default, string osName = default, IEnumerable<SecretsProvisioningComponent> components = default)
+        {
+            components ??= new ChangeTrackingList<SecretsProvisioningComponent>();
+
+            return new SecretsProvisioningSettings(isSupported, osName, (components ?? new ChangeTrackingList<SecretsProvisioningComponent>()).ToList(), default);
+        }
+
+        /// <summary> Describes a component involved in secrets provisioning. </summary>
+        /// <param name="name"> The name of the component. </param>
+        /// <param name="version"> The version of the component. </param>
+        /// <returns> A new <see cref="Models.SecretsProvisioningComponent"/> instance for mocking. </returns>
+        public static SecretsProvisioningComponent SecretsProvisioningComponent(SecretsProvisioningComponentName? name = default, string version = default)
+        {
+            return new SecretsProvisioningComponent(name, version, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -5374,8 +5414,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="resourceArmId"> arm id of the soft-deleted resource. </param>
         /// <param name="softDeletedArtifactType"> artifact type of the soft-deleted resource. </param>
         /// <param name="softDeletedOn"> The timestamp for when the resource is soft-deleted. In dateTime offset format. </param>
+        /// <param name="consumptionEndsOn"> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period. In dateTime offset format. </param>
+        /// <param name="hardDeletionTargetOn"> The timestamp at which a soft-deleted gallery image version is permanently (hard) deleted and can no longer be recovered. In dateTime offset format. </param>
         /// <returns> A new <see cref="Models.GallerySoftDeletedResourceDetails"/> instance for mocking. </returns>
-        public static GallerySoftDeletedResourceDetails GallerySoftDeletedResourceDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier resourceArmId = default, GallerySoftDeletedArtifactType? softDeletedArtifactType = default, DateTimeOffset? softDeletedOn = default)
+        public static GallerySoftDeletedResourceDetails GallerySoftDeletedResourceDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier resourceArmId, GallerySoftDeletedArtifactType? softDeletedArtifactType, DateTimeOffset? softDeletedOn, DateTimeOffset? consumptionEndsOn, DateTimeOffset? hardDeletionTargetOn = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5386,7 +5428,13 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                resourceArmId is null && softDeletedArtifactType is null && softDeletedOn is null ? default : new GallerySoftDeletedResourceProperties(resourceArmId, softDeletedArtifactType, softDeletedOn, default),
+                resourceArmId is null && softDeletedArtifactType is null && softDeletedOn is null && consumptionEndsOn is null && hardDeletionTargetOn is null ? default : new GallerySoftDeletedResourceProperties(
+                    resourceArmId,
+                    softDeletedArtifactType,
+                    softDeletedOn,
+                    consumptionEndsOn,
+                    hardDeletionTargetOn,
+                    default),
                 default);
         }
 
@@ -5568,11 +5616,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="securityProfile"> The security profile of a gallery image version. </param>
         /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
-        /// <param name="securityUefiSettings"> Contains UEFI settings for the image version. </param>
+        /// <param name="imageMetadataProfiles"> The image metadata profiles associated with the gallery image version. </param>
         /// <returns> A new <see cref="Compute.GalleryImageVersionData"/> instance for mocking. </returns>
-        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? isRestoreEnabled = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default)
+        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? isRestoreEnabled, GalleryImageValidationsProfile validationsProfile, IEnumerable<ImageMetadataProfile> imageMetadataProfiles)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5583,15 +5632,16 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && isRestoreEnabled is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
+                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityProfile is null && isRestoreEnabled is null && validationsProfile is null && imageMetadataProfiles is null ? default : new GalleryImageVersionProperties(
                     publishingProfile,
                     provisioningState,
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
-                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default),
+                    securityProfile,
                     isRestoreEnabled,
                     validationsProfile,
+                    (imageMetadataProfiles ?? new ChangeTrackingList<ImageMetadataProfile>()).ToList(),
                     default),
                 default);
         }
@@ -5715,11 +5765,21 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Contains encryption settings for a data disk image. </summary>
         /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
+        /// <param name="securityProfile"> This property specifies the security profile of a data disk image. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
         /// <returns> A new <see cref="Models.DataDiskImageEncryption"/> instance for mocking. </returns>
-        public static DataDiskImageEncryption DataDiskImageEncryption(ResourceIdentifier diskEncryptionSetId = default, int lun = default)
+        public static DataDiskImageEncryption DataDiskImageEncryption(ResourceIdentifier diskEncryptionSetId, DataDiskImageSecurityProfile securityProfile, int lun = default)
         {
-            return new DataDiskImageEncryption(diskEncryptionSetId, default, lun);
+            return new DataDiskImageEncryption(diskEncryptionSetId, default, securityProfile, lun);
+        }
+
+        /// <summary> Contains security profile for a DataDisk image. </summary>
+        /// <param name="confidentialVMEncryptionType"> confidential VM encryption types. </param>
+        /// <param name="secureVMDiskEncryptionSetId"> secure VM disk encryption set id. </param>
+        /// <returns> A new <see cref="Models.DataDiskImageSecurityProfile"/> instance for mocking. </returns>
+        public static DataDiskImageSecurityProfile DataDiskImageSecurityProfile(ConfidentialVmEncryptionType? confidentialVMEncryptionType = default, string secureVMDiskEncryptionSetId = default)
+        {
+            return new DataDiskImageSecurityProfile(confidentialVMEncryptionType, secureVMDiskEncryptionSetId, default);
         }
 
         /// <summary> Describes the additional replica set information. </summary>
@@ -5914,6 +5974,28 @@ namespace Azure.ResourceManager.Compute.Models
             return new ComputeGalleryPlatformAttribute(name, value, default);
         }
 
+        /// <summary> Describes the metadata profile of an image. </summary>
+        /// <param name="type"> The type of metadata. </param>
+        /// <param name="publicMetadataList"> The list of public metadata key-value pairs. Contains non-sensitive image capability metadata such as supported OS, component names, and versions. No secret material is emitted in this list. </param>
+        /// <param name="internalMetadataList"> The list of internal metadata key-value pairs. Contains non-sensitive service-internal metadata for diagnostics and tracking. No secret material is emitted in this list. </param>
+        /// <returns> A new <see cref="Models.ImageMetadataProfile"/> instance for mocking. </returns>
+        public static ImageMetadataProfile ImageMetadataProfile(MetadataType @type = default, IEnumerable<MetadataKeyValue> publicMetadataList = default, IEnumerable<MetadataKeyValue> internalMetadataList = default)
+        {
+            publicMetadataList ??= new ChangeTrackingList<MetadataKeyValue>();
+            internalMetadataList ??= new ChangeTrackingList<MetadataKeyValue>();
+
+            return new ImageMetadataProfile(@type, (publicMetadataList ?? new ChangeTrackingList<MetadataKeyValue>()).ToList(), (internalMetadataList ?? new ChangeTrackingList<MetadataKeyValue>()).ToList(), default);
+        }
+
+        /// <summary> Describes a key-value pair for image metadata. </summary>
+        /// <param name="metadataKey"> The metadata key. Known keys emitted by the service include 'Linux.AzureSecretsProvisioning.Enabled', 'OS.Name', and '{componentName}.Version' (e.g., 'AzureGuestAgent.Version'). All values are non-sensitive configuration; no secrets, credentials, or cryptographic material transit this field. </param>
+        /// <param name="metadataValue"> The metadata value. Contains non-sensitive configuration such as capability flags ('true'/'false'), OS names ('Linux', 'Windows'), and version strings (e.g., '1.0.0'). </param>
+        /// <returns> A new <see cref="Models.MetadataKeyValue"/> instance for mocking. </returns>
+        public static MetadataKeyValue MetadataKeyValue(string metadataKey = default, string metadataValue = default)
+        {
+            return new MetadataKeyValue(metadataKey, metadataValue, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -5923,12 +6005,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="securityProfile"> The security profile of a gallery image version. </param>
         /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
-        /// <param name="securityUefiSettings"> Contains UEFI settings for the image version. </param>
+        /// <param name="imageMetadataProfiles"> The image metadata profiles associated with the gallery image version. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionPatch"/> instance for mocking. </returns>
-        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? isRestoreEnabled = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default, IDictionary<string, string> tags = default)
+        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? isRestoreEnabled, GalleryImageValidationsProfile validationsProfile, IEnumerable<ImageMetadataProfile> imageMetadataProfiles, IDictionary<string, string> tags)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5937,15 +6020,16 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && isRestoreEnabled is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
+                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityProfile is null && isRestoreEnabled is null && validationsProfile is null && imageMetadataProfiles is null ? default : new GalleryImageVersionProperties(
                     publishingProfile,
                     provisioningState,
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
-                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default),
+                    securityProfile,
                     isRestoreEnabled,
                     validationsProfile,
+                    (imageMetadataProfiles ?? new ChangeTrackingList<ImageMetadataProfile>()).ToList(),
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
@@ -6699,15 +6783,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
+        /// <param name="consumptionEndsOn"> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period, and is not present for active gallery image versions. In dateTime offset format. </param>
+        /// <param name="imageState"> The state of the gallery image version, derived from its soft-delete status. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryImageVersionData"/> instance for mocking. </returns>
-        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = default, AzureLocation? location = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, IDictionary<string, string> artifactTags = default)
+        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, IDictionary<string, string> artifactTags, DateTimeOffset? consumptionEndsOn, GalleryImageVersionState? imageState = default)
         {
-            return new SharedGalleryImageVersionData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && artifactTags is null ? default : new SharedGalleryImageVersionProperties(
+            return new SharedGalleryImageVersionData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && artifactTags is null && consumptionEndsOn is null && imageState is null ? default : new SharedGalleryImageVersionProperties(
                 publishedOn,
                 endOfLifeOn,
                 isExcludedFromLatest,
                 storageProfile,
                 artifactTags ?? new ChangeTrackingDictionary<string, string>(),
+                consumptionEndsOn,
+                imageState,
                 default));
         }
 
@@ -6872,8 +6960,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
+        /// <param name="consumptionEndsOn"> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period, and is not present for active gallery image versions. In dateTime offset format. </param>
+        /// <param name="imageState"> The state of the gallery image version, derived from its soft-delete status. </param>
         /// <returns> A new <see cref="Compute.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
-        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default)
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, string disclaimer, IDictionary<string, string> artifactTags, DateTimeOffset? consumptionEndsOn, GalleryImageVersionState? imageState = default)
         {
             return new CommunityGalleryImageVersionData(
                 name,
@@ -6881,13 +6971,15 @@ namespace Azure.ResourceManager.Compute.Models
                 resourceType,
                 uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, default),
                 default,
-                publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && disclaimer is null && artifactTags is null ? default : new CommunityGalleryImageVersionProperties(
+                publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && disclaimer is null && artifactTags is null && consumptionEndsOn is null && imageState is null ? default : new CommunityGalleryImageVersionProperties(
                     publishedOn,
                     endOfLifeOn,
                     isExcludedFromLatest,
                     storageProfile,
                     disclaimer,
                     artifactTags ?? new ChangeTrackingDictionary<string, string>(),
+                    consumptionEndsOn,
+                    imageState,
                     default));
         }
 
@@ -7019,6 +7111,254 @@ namespace Azure.ResourceManager.Compute.Models
             zones ??= new ChangeTrackingList<string>();
 
             return new ComputeResourceSkuRestrictionInfo((locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (zones ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Specifies information about the Shared Image Gallery that you want to create or update. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="description"> The description of this Shared Image Gallery resource. This property is updatable. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
+        /// <param name="sharingStatus"> Sharing status of current gallery. </param>
+        /// <param name="identifierUniqueName"> The unique name of the Shared Image Gallery. This name is generated automatically by Azure. </param>
+        /// <param name="isSoftDeleteEnabled"> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </param>
+        /// <param name="identity"> The identity of the gallery, if configured. </param>
+        /// <returns> A new <see cref="Compute.GalleryData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GalleryData GalleryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, SharingStatus sharingStatus = default, string identifierUniqueName = default, bool? isSoftDeleteEnabled = default, ManagedServiceIdentity identity = default)
+        {
+            return new GalleryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description is null && identifierUniqueName is null && provisioningState is null && sharingProfile is null && isSoftDeleteEnabled is null && sharingStatus is null ? default : new GalleryProperties(
+                    description,
+                    identifierUniqueName is null ? default : new GalleryIdentifier(identifierUniqueName, default),
+                    provisioningState,
+                    sharingProfile,
+                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default, default, default),
+                    sharingStatus,
+                    default),
+                identity,
+                default);
+        }
+
+        /// <summary> Specifies information about the Shared Image Gallery that you want to update. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="description"> The description of this Shared Image Gallery resource. This property is updatable. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="sharingProfile"> Profile for gallery sharing to subscription or tenant. </param>
+        /// <param name="sharingStatus"> Sharing status of current gallery. </param>
+        /// <param name="identifierUniqueName"> The unique name of the Shared Image Gallery. This name is generated automatically by Azure. </param>
+        /// <param name="isSoftDeleteEnabled"> Enables soft-deletion for resources in this gallery, allowing them to be recovered within retention time. </param>
+        /// <param name="identity"> The identity of the gallery, if configured. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.GalleryPatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GalleryPatch GalleryPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, GalleryProvisioningState? provisioningState = default, SharingProfile sharingProfile = default, SharingStatus sharingStatus = default, string identifierUniqueName = default, bool? isSoftDeleteEnabled = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
+        {
+            return new GalleryPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && identifierUniqueName is null && provisioningState is null && sharingProfile is null && isSoftDeleteEnabled is null && sharingStatus is null ? default : new GalleryProperties(
+                    description,
+                    identifierUniqueName is null ? default : new GalleryIdentifier(identifierUniqueName, default),
+                    provisioningState,
+                    sharingProfile,
+                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default, default, default),
+                    sharingStatus,
+                    default),
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <summary> The details information of soft-deleted resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="resourceArmId"> arm id of the soft-deleted resource. </param>
+        /// <param name="softDeletedArtifactType"> artifact type of the soft-deleted resource. </param>
+        /// <param name="softDeletedOn"> The timestamp for when the resource is soft-deleted. In dateTime offset format. </param>
+        /// <returns> A new <see cref="Models.GallerySoftDeletedResourceDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GallerySoftDeletedResourceDetails GallerySoftDeletedResourceDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier resourceArmId = default, GallerySoftDeletedArtifactType? softDeletedArtifactType = default, DateTimeOffset? softDeletedOn = default)
+        {
+            return new GallerySoftDeletedResourceDetails(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resourceArmId is null && softDeletedArtifactType is null && softDeletedOn is null ? default : new GallerySoftDeletedResourceProperties(
+                    resourceArmId,
+                    softDeletedArtifactType,
+                    softDeletedOn,
+                    default,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="publishingProfile"> The publishing profile of a gallery image Version. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
+        /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
+        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
+        /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
+        /// <param name="securityUefiSettings"> Contains UEFI settings for the image version. </param>
+        /// <returns> A new <see cref="Compute.GalleryImageVersionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? isRestoreEnabled = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default)
+        {
+            return new GalleryImageVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && isRestoreEnabled is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
+                    publishingProfile,
+                    provisioningState,
+                    storageProfile,
+                    safetyProfile,
+                    replicationStatus,
+                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default, default),
+                    isRestoreEnabled,
+                    validationsProfile,
+                    default,
+                    default),
+                default);
+        }
+
+        /// <summary> Contains encryption settings for a data disk image. </summary>
+        /// <param name="diskEncryptionSetId"> A relative URI containing the resource ID of the disk encryption set. </param>
+        /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
+        /// <returns> A new <see cref="Models.DataDiskImageEncryption"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataDiskImageEncryption DataDiskImageEncryption(ResourceIdentifier diskEncryptionSetId = default, int lun = 0)
+        {
+            return new DataDiskImageEncryption(diskEncryptionSetId, default, default, lun);
+        }
+
+        /// <summary> Specifies information about the gallery image version that you want to update. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="publishingProfile"> The publishing profile of a gallery image Version. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
+        /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
+        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
+        /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
+        /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
+        /// <param name="securityUefiSettings"> Contains UEFI settings for the image version. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.GalleryImageVersionPatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? isRestoreEnabled = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default, IDictionary<string, string> tags = default)
+        {
+            return new GalleryImageVersionPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && isRestoreEnabled is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
+                    publishingProfile,
+                    provisioningState,
+                    storageProfile,
+                    safetyProfile,
+                    replicationStatus,
+                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default, default),
+                    isRestoreEnabled,
+                    validationsProfile,
+                    default,
+                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="uniqueId"> The unique id of this shared gallery. </param>
+        /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
+        /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
+        /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
+        /// <returns> A new <see cref="Compute.SharedGalleryImageVersionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = default, AzureLocation? location = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, IDictionary<string, string> artifactTags = default)
+        {
+            return new SharedGalleryImageVersionData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && artifactTags is null ? default : new SharedGalleryImageVersionProperties(
+                publishedOn,
+                endOfLifeOn,
+                isExcludedFromLatest,
+                storageProfile,
+                artifactTags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                default,
+                default));
+        }
+
+        /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="uniqueId"> The unique id of this community gallery. </param>
+        /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
+        /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
+        /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
+        /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
+        /// <returns> A new <see cref="Compute.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IDictionary<string, string> artifactTags = default)
+        {
+            return new CommunityGalleryImageVersionData(
+                name,
+                location,
+                resourceType,
+                uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, default),
+                default,
+                publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && disclaimer is null && artifactTags is null ? default : new CommunityGalleryImageVersionProperties(
+                    publishedOn,
+                    endOfLifeOn,
+                    isExcludedFromLatest,
+                    storageProfile,
+                    disclaimer,
+                    artifactTags ?? new ChangeTrackingDictionary<string, string>(),
+                    default,
+                    default,
+                    default));
         }
 
         /// <summary> Describes a virtual machine scale set virtual machine profile. </summary>
@@ -10077,7 +10417,7 @@ namespace Azure.ResourceManager.Compute.Models
                     identifierUniqueName is null ? default : new GalleryIdentifier(identifierUniqueName, default),
                     provisioningState,
                     sharingProfile,
-                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default),
+                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default, default, default),
                     sharingStatus,
                     default),
                 identity,
@@ -10180,6 +10520,8 @@ namespace Azure.ResourceManager.Compute.Models
                     storageProfile,
                     disclaimer,
                     new ChangeTrackingDictionary<string, string>(artifactTags ?? new ChangeTrackingDictionary<string, string>()),
+                    default,
+                    default,
                     default));
         }
 
@@ -10240,6 +10582,8 @@ namespace Azure.ResourceManager.Compute.Models
                 isExcludedFromLatest,
                 storageProfile,
                 new ChangeTrackingDictionary<string, string>(artifactTags ?? new ChangeTrackingDictionary<string, string>()),
+                default,
+                default,
                 default));
         }
 
@@ -10270,7 +10614,7 @@ namespace Azure.ResourceManager.Compute.Models
                     identifierUniqueName is null ? default : new GalleryIdentifier(identifierUniqueName, default),
                     provisioningState,
                     sharingProfile,
-                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default),
+                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default, default, default),
                     sharingStatus,
                     default),
                 identity,
@@ -10468,9 +10812,10 @@ namespace Azure.ResourceManager.Compute.Models
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
-                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default),
+                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default, default),
                     isRestoreEnabled,
                     validationsProfile,
+                    default,
                     default),
                 default);
         }
@@ -10504,9 +10849,10 @@ namespace Azure.ResourceManager.Compute.Models
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
-                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default),
+                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default, default),
                     default,
                     validationsProfile,
+                    default,
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
@@ -11544,6 +11890,7 @@ namespace Azure.ResourceManager.Compute.Models
                     default,
                     default,
                     default,
+                    default,
                     default),
                 default);
         }
@@ -11613,6 +11960,8 @@ namespace Azure.ResourceManager.Compute.Models
                 endOfLifeOn,
                 isExcludedFromLatest,
                 storageProfile,
+                default,
+                default,
                 default,
                 default));
         }
@@ -11706,6 +12055,8 @@ namespace Azure.ResourceManager.Compute.Models
                     storageProfile,
                     default,
                     default,
+                    default,
+                    default,
                     default));
         }
 
@@ -11738,7 +12089,7 @@ namespace Azure.ResourceManager.Compute.Models
                     identifierUniqueName is null ? default : new GalleryIdentifier(identifierUniqueName, default),
                     provisioningState,
                     sharingProfile,
-                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default),
+                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default, default, default),
                     sharingStatus,
                     default),
                 default,
@@ -11771,7 +12122,7 @@ namespace Azure.ResourceManager.Compute.Models
                     identifierUniqueName is null ? default : new GalleryIdentifier(identifierUniqueName, default),
                     provisioningState,
                     sharingProfile,
-                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default),
+                    isSoftDeleteEnabled is null ? default : new SoftDeletePolicy(isSoftDeleteEnabled, default, default, default),
                     sharingStatus,
                     default),
                 default,
@@ -11915,7 +12266,8 @@ namespace Azure.ResourceManager.Compute.Models
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
-                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default),
+                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default, default),
+                    default,
                     default,
                     default,
                     default),
@@ -11960,7 +12312,8 @@ namespace Azure.ResourceManager.Compute.Models
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
-                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default),
+                    securityUefiSettings is null ? default : new ImageVersionSecurityProfile(securityUefiSettings, default, default),
+                    default,
                     default,
                     default,
                     default),
