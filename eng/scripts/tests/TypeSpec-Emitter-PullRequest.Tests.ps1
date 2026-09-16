@@ -6,7 +6,8 @@ Invoke-Pester eng/scripts/tests/TypeSpec-Emitter-PullRequest.Tests.ps1
 
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 Install-ModuleIfNotInstalled "Pester" "5.3.3" | Import-Module
-Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
+# Match the other eng/scripts suites to avoid conflicting YAML module versions in one session.
+Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
 
 Set-StrictMode -Version 3
 
