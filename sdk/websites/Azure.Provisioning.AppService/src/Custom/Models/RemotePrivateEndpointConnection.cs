@@ -26,24 +26,37 @@ public partial class RemotePrivateEndpointConnection
     [CodeGenMember("PrivateLinkServiceConnectionState")]
     public PrivateLinkConnectionState PrivateLinkServiceConnectionState
     {
-        get { Initialize(); return _customPrivateLinkServiceConnectionState; }
-        set { Initialize(); AssignOrReplace(ref _customPrivateLinkServiceConnectionState, value); }
+        get { return Properties is null ? default : Properties.PrivateLinkServiceConnectionState; }
+        set { EnsureProperties(); Properties.SetPrivateLinkServiceConnectionState(value); }
     }
-    private PrivateLinkConnectionState _customPrivateLinkServiceConnectionState;
 
     /// <summary> Private IP addresses mapped to the remote private endpoint. </summary>
     [CodeGenMember("IPAddresses")]
     public BicepList<IPAddress> IPAddresses
     {
-        get { Initialize(); return _customIPAddresses; }
-        set { Initialize(); _customIPAddresses.Assign(value); }
+        get { return Properties is null ? default : Properties.IPAddresses; }
+        set { EnsureProperties(); Properties.IPAddresses.Assign(value); }
     }
-    private BicepList<IPAddress> _customIPAddresses;
 
     partial void DefineAdditionalProperties()
     {
         _customKind = DefineProperty<string>(nameof(Kind), ["kind"]);
-        _customPrivateLinkServiceConnectionState = DefineModelProperty<PrivateLinkConnectionState>(nameof(PrivateLinkServiceConnectionState), ["properties", "privateLinkServiceConnectionState"]);
-        _customIPAddresses = DefineListProperty<IPAddress>(nameof(IPAddresses), ["properties", "ipAddresses"]);
+    }
+
+    private void EnsureProperties()
+    {
+        if (Properties is null)
+        {
+            AssignOrReplace(ref _properties, new RemotePrivateEndpointConnectionProperties());
+        }
+    }
+}
+
+internal partial class RemotePrivateEndpointConnectionProperties
+{
+    internal void SetPrivateLinkServiceConnectionState(PrivateLinkConnectionState value)
+    {
+        Initialize();
+        AssignOrReplace(ref _privateLinkServiceConnectionState, value);
     }
 }

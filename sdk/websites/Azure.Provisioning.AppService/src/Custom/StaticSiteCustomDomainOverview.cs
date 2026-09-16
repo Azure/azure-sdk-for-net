@@ -14,14 +14,18 @@ public partial class StaticSiteCustomDomainOverview
     /// <summary> Validation method for adding a custom domain. </summary>
     public BicepValue<string> ValidationMethod
     {
-        get { Initialize(); return _validationMethod; }
-        set { Initialize(); _validationMethod.Assign(value); }
-    }
-    private BicepValue<string> _validationMethod;
-
-    partial void DefineAdditionalProperties()
-    {
-        _validationMethod = DefineProperty<string>(nameof(ValidationMethod), ["properties", "validationMethod"]);
+        get
+        {
+            return Properties is null ? default : Properties.ValidationMethod;
+        }
+        set
+        {
+            if (Properties is null)
+            {
+                Properties = new StaticSiteCustomDomainOverviewARMResourceProperties();
+            }
+            Properties.ValidationMethod = value;
+        }
     }
 
     public static partial class ResourceVersions

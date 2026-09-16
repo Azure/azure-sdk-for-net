@@ -25,34 +25,36 @@ public partial class AppServiceVirtualNetworkRoute
     [CodeGenMember("StartAddress")]
     public BicepValue<string> StartAddress
     {
-        get { Initialize(); return _customStartAddress; }
-        set { Initialize(); _customStartAddress.Assign(value); }
+        get { return Properties is null ? default : Properties.StartAddress; }
+        set { EnsureProperties(); Properties.StartAddress.Assign(value); }
     }
-    private BicepValue<string> _customStartAddress;
 
     /// <summary> The ending address for this route. If the start address is specified in CIDR notation, this must be omitted. </summary>
     [CodeGenMember("EndAddress")]
     public BicepValue<string> EndAddress
     {
-        get { Initialize(); return _customEndAddress; }
-        set { Initialize(); _customEndAddress.Assign(value); }
+        get { return Properties is null ? default : Properties.EndAddress; }
+        set { EnsureProperties(); Properties.EndAddress.Assign(value); }
     }
-    private BicepValue<string> _customEndAddress;
 
     /// <summary> The type of route this is. </summary>
     [CodeGenMember("RouteType")]
     public BicepValue<AppServiceVirtualNetworkRouteType> RouteType
     {
-        get { Initialize(); return _customRouteType; }
-        set { Initialize(); _customRouteType.Assign(value); }
+        get { return Properties is null ? default : Properties.RouteType; }
+        set { EnsureProperties(); Properties.RouteType.Assign(value); }
     }
-    private BicepValue<AppServiceVirtualNetworkRouteType> _customRouteType;
 
     partial void DefineAdditionalProperties()
     {
         _customKind = DefineProperty<string>(nameof(Kind), ["kind"]);
-        _customStartAddress = DefineProperty<string>(nameof(StartAddress), ["properties", "startAddress"]);
-        _customEndAddress = DefineProperty<string>(nameof(EndAddress), ["properties", "endAddress"]);
-        _customRouteType = DefineProperty<AppServiceVirtualNetworkRouteType>(nameof(RouteType), ["properties", "routeType"]);
+    }
+
+    private void EnsureProperties()
+    {
+        if (Properties is null)
+        {
+            AssignOrReplace(ref _properties, new VnetRouteProperties());
+        }
     }
 }

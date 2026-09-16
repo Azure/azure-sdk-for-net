@@ -64,15 +64,27 @@ public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
     [EditorBrowsable(EditorBrowsableState.Never)]
     public BicepValue<float> HttpPerInstanceConcurrency
     {
-        get { Initialize(); return _httpPerInstanceConcurrency!; }
-        set { Initialize(); _httpPerInstanceConcurrency!.Assign(value); }
+        get
+        {
+            return Triggers?.Http?.HttpPerInstanceConcurrency ?? default!;
+        }
+        set
+        {
+            if (Triggers is null)
+            {
+                Triggers = new FunctionsScaleAndConcurrencyTriggers();
+            }
+            if (Triggers.Http is null)
+            {
+                Triggers.Http = new FunctionsScaleAndConcurrencyTriggersHttp();
+            }
+            Triggers.Http.HttpPerInstanceConcurrency = value;
+        }
     }
-    private BicepValue<float>? _httpPerInstanceConcurrency;
 
     partial void DefineAdditionalProperties()
     {
         _maximumInstanceCount = DefineProperty<float>(nameof(MaximumInstanceCount), new string[] { "maximumInstanceCount" });
         _instanceMemoryMB = DefineProperty<float>(nameof(InstanceMemoryMB), new string[] { "instanceMemoryMB" });
-        _httpPerInstanceConcurrency = DefineProperty<float>(nameof(HttpPerInstanceConcurrency), new string[] { "triggers", "http", "perInstanceConcurrency" });
     }
 }

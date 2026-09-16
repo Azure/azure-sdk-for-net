@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Provisioning.ApplicationInsights;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
@@ -207,6 +208,73 @@ public class BasicAppServiceTests
                   ftpsState: 'FtpsOnly'
                   minTlsVersion: '1.2'
                 }
+              }
+            }
+            """);
+    }
+
+    [Test]
+    public async Task CustomDeploymentPropertiesSharePropertiesObject()
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                WebSite site = new(nameof(site))
+                {
+                    Name = "site",
+                    Location = new AzureLocation("westus"),
+                    FunctionAppConfig = new FunctionAppConfig
+                    {
+                        ScaleAndConcurrency = new FunctionAppScaleAndConcurrency
+                        {
+                            FunctionAppMaximumInstanceCount = 10,
+                            HttpPerInstanceConcurrency = 2.5F
+                        }
+                    }
+                };
+                infra.Add(site);
+
+                SiteExtension extension = new(nameof(extension))
+                {
+                    Parent = site,
+                    ConnectionString = "Server=example;",
+                    DBType = "SQL",
+                    IsAppOffline = true,
+                    SkipAppData = true
+                };
+                infra.Add(extension);
+
+                return infra;
+            });
+
+        test.Compare(
+            """
+            resource site 'Microsoft.Web/sites@2025-03-01' = {
+              name: 'site'
+              location: 'westus'
+              properties: {
+                functionAppConfig: {
+                  scaleAndConcurrency: {
+                    maximumInstanceCount: 10
+                    triggers: {
+                      http: {
+                        perInstanceConcurrency: json('2.5')
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            resource extension 'Microsoft.Web/sites/extensions@2025-03-01' = {
+              name: 'MSDeploy'
+              parent: site
+              properties: {
+                appOffline: true
+                connectionString: 'Server=example;'
+                dbType: 'SQL'
+                skipAppData: true
               }
             }
             """);
