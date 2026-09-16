@@ -98,7 +98,7 @@ For example, a demonstration in which the caller deliberately configures a clien
 
 ### Diagnostic Logging and Telemetry
 
-* The Azure SDK is responsible for redacting and sanitizing industry-standard sensitive fields and well-known Azure sensitive fields by default. This includes fields in headers, URL components, and request and response bodies used for diagnostic logging and telemetry, but does not extend to arbitrary application data. For example, logging an unredacted `Authorization` header value under the default sanitization policy is a failure of SDK redaction.
+* The Azure SDK redacts and sanitizes industry-standard sensitive fields and well-known Azure sensitive fields in headers and URL components by default for diagnostic logging and telemetry. Request and response content logging is disabled by default and, when enabled, is not sanitized by the shared pipeline; callers must protect and redact that output as needed.
 
 * An individual Azure SDK client is responsible for extending the diagnostic sanitizers when its associated service uses non-standard sensitive fields. For example, if an Azure service includes a SAS key in the response body, its associated client should ensure that value is sanitized. Reports for missed non-standard fields must identify the specific client package and demonstrate a failure of its service-specific sanitization. Scope the report to that client package, not the shared diagnostic infrastructure.
 
