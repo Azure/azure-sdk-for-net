@@ -24,8 +24,9 @@ BeforeDiscovery {
                     $versionDescription = if ($prerelease) { "prerelease $version" } else { $version }
                     $title = "Update $emitter version to $versionDescription"
                     if ($result -ne "Succeeded") { $title = "Failed: $title" }
-                    if ($reason -eq "Manual") { $title = "[Preview] $title" }
                     if ($reason -eq "Schedule") { $title = "Scheduled code regeneration test" }
+                    $title = "[skip ci] $title"
+                    if ($reason -eq "Manual") { $title = "[Preview] $title" }
                     @{
                         Emitter = $emitter
                         Prerelease = $prerelease
@@ -47,7 +48,7 @@ BeforeDiscovery {
             @{
                 Reason = $reason
                 Result = $result
-                ExpectedPrefix = if ($result -eq "Succeeded") { "" } else { "Failed: " }
+                ExpectedPrefix = if ($result -eq "Succeeded") { "[skip ci] " } else { "[skip ci] Failed: " }
             }
         }
     }
@@ -68,7 +69,7 @@ BeforeDiscovery {
                     Reason = $reason
                     Result = $result
                     ExpectedDraft = $reason -ne "IndividualCI" -or $result -ne "Succeeded" -or $source.Ref -ne "refs/heads/main"
-                    ExpectedPrefix = "$(if ($reason -eq 'Manual') { '[Preview] ' })$(if ($result -ne 'Succeeded') { 'Failed: ' })"
+                    ExpectedPrefix = "$(if ($reason -eq 'Manual') { '[Preview] ' })[skip ci] $(if ($result -ne 'Succeeded') { 'Failed: ' })"
                 }
             }
         }
@@ -173,12 +174,12 @@ Describe "TypeSpec emitter regeneration PR metadata" -Tag "UnitTest" {
     ) {
         $actual = Invoke-TitleStep -EmitterIdentifier $Identifier
 
-        $actual.PullRequestTitle | Should -BeExactly "[Preview] Update $ExpectedName version to prerelease 1.0.0-alpha.20260911.1"
+        $actual.PullRequestTitle | Should -BeExactly "[Preview] [skip ci] Update $ExpectedName version to prerelease 1.0.0-alpha.20260911.1"
     }
 }
 
 Describe "Stale generator upgrade workflow compatibility" -Tag "UnitTest" {
-    It "excludes manual previews while still finding stale automatic upgrades with the real workflow" {
+    It "excludes previews and preserves cleanup eligibility for current and legacy automatic titles" {
         $workflow = Get-Content (Join-Path $repoRoot ".github" "workflows" "close-stale-generator-upgrade-prs.yml") -Raw | ConvertFrom-Yaml
         $steps = @($workflow.jobs.'close-stale-prs'.steps | Where-Object name -eq "Find and close stale generator upgrade PRs")
         $steps.Count | Should -Be 1
@@ -191,6 +192,10 @@ Describe "Stale generator upgrade workflow compatibility" -Tag "UnitTest" {
                     $number = $pulls.Count + 1
                     $pulls += @{ number = $number; title = $metadata.PullRequestTitle; user = @{ login = "azure-sdk-automation[bot]" } }
                     if ($reason -eq "IndividualCI") {
+                        # The current workflow recognizes legacy titles, but not main's new [skip ci] prefix.
+                        $number = $pulls.Count + 1
+                        $legacyTitle = $metadata.PullRequestTitle -replace '^\[skip ci\] ', ''
+                        $pulls += @{ number = $number; title = $legacyTitle; user = @{ login = "azure-sdk-automation[bot]" } }
                         $expectedStaleNumbers += $number
                     }
                 }

@@ -517,6 +517,9 @@ extends:
                 }
               }
 
+              # Preserve PR validation while skipping redundant CI after the regeneration PR is merged.
+              $prTitle = "[skip ci] $prTitle"
+
               # Keep manually requested previews out of stale generator upgrade cleanup.
               if ($reason -eq 'Manual') {
                 $prTitle = "[Preview] $prTitle"

@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// The abstract base class for RedactionPolicy.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CharacterMaskPolicyType"/>, <see cref="SyntheticReplacementPolicyType"/>, <see cref="NoMaskPolicyType"/>, and <see cref="EntityMaskPolicyType"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskPolicyType"/>, <see cref="NoMaskPolicyType"/>, and <see cref="SyntheticReplacementPolicyType"/>.
     /// </summary>
     public abstract partial class BaseRedactionPolicy
     {
