@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure;
+using Azure.Core;
 using Azure.Core.Extensions;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
@@ -44,6 +45,33 @@ namespace Microsoft.Extensions.Azure
             Uri endpoint,
             string indexName,
             AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder =>
+            builder.RegisterClientFactory<SearchClient, SearchClientOptions>(
+                options => new SearchClient(endpoint, indexName, credential, options));
+
+        /// <summary>
+        /// Registers a <see cref="SearchClient"/> instance with the provided
+        /// <paramref name="endpoint"/>, <paramref name="indexName"/>, and
+        /// <paramref name="credential"/>.
+        /// </summary>
+        /// <typeparam name="TBuilder">Type of the client factory builder.</typeparam>
+        /// <param name="builder">The client factory builder.</param>
+        /// <param name="endpoint">
+        /// Required. The URI endpoint of the Search Service. This is likely
+        /// to be similar to "https://{search_service}.search.windows.net".
+        /// The URI must use HTTPS.
+        /// </param>
+        /// <param name="indexName">Required. The name of the Search Index.</param>
+        /// <param name="credential">
+        /// Required. The token credential used to authenticate requests
+        /// against the search service.
+        /// </param>
+        /// <returns>An Azure client builder.</returns>
+        public static IAzureClientBuilder<SearchClient, SearchClientOptions> AddSearchClient<TBuilder>(
+            this TBuilder builder,
+            Uri endpoint,
+            string indexName,
+            TokenCredential credential)
             where TBuilder : IAzureClientFactoryBuilder =>
             builder.RegisterClientFactory<SearchClient, SearchClientOptions>(
                 options => new SearchClient(endpoint, indexName, credential, options));
@@ -94,6 +122,30 @@ namespace Microsoft.Extensions.Azure
                 options => new SearchIndexClient(endpoint, credential, options));
 
         /// <summary>
+        /// Registers a <see cref="SearchIndexClient"/> instance with the
+        /// provided <paramref name="endpoint"/> and <paramref name="credential"/>.
+        /// </summary>
+        /// <typeparam name="TBuilder">Type of the client factory builder.</typeparam>
+        /// <param name="builder">The client factory builder.</param>
+        /// <param name="endpoint">
+        /// Required. The URI endpoint of the Search Service. This is likely
+        /// to be similar to "https://{search_service}.search.windows.net".
+        /// The URI must use HTTPS.
+        /// </param>
+        /// <param name="credential">
+        /// Required. The token credential used to authenticate requests
+        /// against the search service.
+        /// </param>
+        /// <returns>An Azure client builder.</returns>
+        public static IAzureClientBuilder<SearchIndexClient, SearchClientOptions> AddSearchIndexClient<TBuilder>(
+            this TBuilder builder,
+            Uri endpoint,
+            TokenCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder =>
+            builder.RegisterClientFactory<SearchIndexClient, SearchClientOptions>(
+                options => new SearchIndexClient(endpoint, credential, options));
+
+        /// <summary>
         /// Registers a <see cref="SearchIndexClient"/> instance with connection
         /// options loaded from the provided <paramref name="configuration"/>
         /// instance.
@@ -134,6 +186,30 @@ namespace Microsoft.Extensions.Azure
             this TBuilder builder,
             Uri endpoint,
             AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder =>
+            builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>(
+                options => new SearchIndexerClient(endpoint, credential, options));
+
+        /// <summary>
+        /// Registers a <see cref="SearchIndexerClient"/> instance with the
+        /// provided <paramref name="endpoint"/> and <paramref name="credential"/>.
+        /// </summary>
+        /// <typeparam name="TBuilder">Type of the client factory builder.</typeparam>
+        /// <param name="builder">The client factory builder.</param>
+        /// <param name="endpoint">
+        /// Required. The URI endpoint of the Search Service. This is likely
+        /// to be similar to "https://{search_service}.search.windows.net".
+        /// The URI must use HTTPS.
+        /// </param>
+        /// <param name="credential">
+        /// Required. The token credential used to authenticate requests
+        /// against the search service.
+        /// </param>
+        /// <returns>An Azure client builder.</returns>
+        public static IAzureClientBuilder<SearchIndexerClient, SearchClientOptions> AddSearchIndexerClient<TBuilder>(
+            this TBuilder builder,
+            Uri endpoint,
+            TokenCredential credential)
             where TBuilder : IAzureClientFactoryBuilder =>
             builder.RegisterClientFactory<SearchIndexerClient, SearchClientOptions>(
                 options => new SearchIndexerClient(endpoint, credential, options));
