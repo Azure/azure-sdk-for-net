@@ -15,19 +15,117 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// <summary>
 /// Durable filesystem-backed implementation of <see cref="ResponsesProvider"/> for local
 /// (non-hosted) resilient operation. Persists each response envelope, its ordered input/output/
-/// history item id lists, and the shared item store to disk under
-/// <c>{AGENTSERVER_STATE_ROOT:-~/.agentserver}/responses/</c> so that a background response
+/// history item id lists, and a per-user item store to disk under
+/// <c>{AGENTSERVER_STATE_ROOT:-~/.agentserver}/responses/partitions-v1/</c> so that a background response
 /// interrupted by a process crash or graceful shutdown can be recovered and re-invoked after the
 /// single sandbox restarts. Semantics mirror <see cref="InMemoryResponsesProvider"/> exactly
 /// (user isolation, deletion tracking, history/conversation resolution); the difference is that
 /// state survives process restart.
 /// </summary>
 /// <remarks>
-/// On construction the provider rehydrates its in-memory indexes by scanning the on-disk state so
+/// On first access to each user partition the provider rehydrates its indexes from that partition so
 /// reads are fast and post-restart recovery sees the pre-crash envelopes. Writes are write-through
 /// and use an atomic temp-file + rename so a crash mid-write never corrupts a committed record.
 /// </remarks>
 internal sealed class FileResponsesProvider : ResponsesProvider
+{
+    private readonly string _root;
+    private readonly ConcurrentDictionary<ResponseStorePartition, Lazy<FileResponseStore>> _partitions = new();
+
+    public FileResponsesProvider(string? baseDir = null)
+    {
+        // Legacy global files have no reliable item ownership. Never read or modify them.
+        _root = Path.Combine(baseDir ?? ResponsesStatePaths.ResponsesRoot(), "partitions-v1");
+    }
+
+    private FileResponseStore GetStore(PlatformContext context, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        var partition = ResponseStorePartition.FromContext(context);
+        return _partitions.GetOrAdd(partition, key =>
+            new Lazy<FileResponseStore>(() => new FileResponseStore(Path.Combine(_root, key.DirectoryName)))).Value;
+    }
+
+    public override Task CreateResponseAsync(CreateResponseRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+    {
+        var store = GetStore(context, cancellationToken);
+        lock (store)
+        {
+            return store.CreateResponseAsync(request, context, cancellationToken);
+        }
+    }
+
+    public override Task<Models.ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
+    {
+        var store = GetStore(context, cancellationToken);
+        lock (store)
+        {
+            return store.GetResponseAsync(responseId, context, cancellationToken);
+        }
+    }
+
+    public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
+    {
+        var store = GetStore(context, cancellationToken);
+        lock (store)
+        {
+            return store.UpdateResponseAsync(response, context, cancellationToken);
+        }
+    }
+
+    public override Task DeleteResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
+    {
+        var store = GetStore(context, cancellationToken);
+        lock (store)
+        {
+            return store.DeleteResponseAsync(responseId, context, cancellationToken);
+        }
+    }
+
+    public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+        string responseId, PlatformContext context, int limit = 20, bool ascending = false,
+        string? after = null, string? before = null, CancellationToken cancellationToken = default)
+    {
+        var store = GetStore(context, cancellationToken);
+        lock (store)
+        {
+            return store.GetInputItemsAsync(responseId, context, limit, ascending, after, before, cancellationToken);
+        }
+    }
+
+    public override Task<IEnumerable<OutputItem?>> GetItemsAsync(
+        IEnumerable<string> itemIds, PlatformContext context, CancellationToken cancellationToken = default)
+    {
+        var store = GetStore(context, cancellationToken);
+        lock (store)
+        {
+            return store.GetItemsAsync(itemIds, context, cancellationToken);
+        }
+    }
+
+    public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(
+        string? previousResponseId, string? conversationId, int limit, PlatformContext context,
+        CancellationToken cancellationToken = default)
+    {
+        var store = GetStore(context, cancellationToken);
+        lock (store)
+        {
+            return store.GetHistoryItemIdsAsync(previousResponseId, conversationId, limit, context, cancellationToken);
+        }
+    }
+
+    internal IReadOnlyCollection<string> ListResponseIds()
+    {
+        var store = GetStore(PlatformContext.Empty, default);
+        lock (store)
+        {
+            return store.ListResponseIds();
+        }
+    }
+}
+
+// All operations complete synchronously under the owning provider's per-partition lock.
+internal sealed class FileResponseStore : ResponsesProvider
 {
     private const string EnvelopesDirName = "envelopes";
     private const string ItemsDirName = "items";
@@ -43,11 +141,8 @@ internal sealed class FileResponsesProvider : ResponsesProvider
     private readonly ConcurrentDictionary<string, OutputItem> _itemStore = new();
     private readonly ConcurrentDictionary<string, List<string>> _conversationResponses = new();
 
-    /// <summary>Initializes a new instance of <see cref="FileResponsesProvider"/>.</summary>
-    /// <param name="baseDir">Override for the <c>responses</c> root directory; resolved from config when null.</param>
-    public FileResponsesProvider(string? baseDir = null)
+    public FileResponseStore(string root)
     {
-        var root = baseDir ?? ResponsesStatePaths.ResponsesRoot();
         _envelopesDir = Path.Combine(root, EnvelopesDirName);
         _itemsDir = Path.Combine(root, ItemsDirName);
         Directory.CreateDirectory(_envelopesDir);
@@ -112,14 +207,13 @@ internal sealed class FileResponsesProvider : ResponsesProvider
     /// <inheritdoc/>
     public override Task UpdateResponseAsync(Models.ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
     {
-        var record = _records.AddOrUpdate(
-            response.Id,
-            _ => new ResponseRecord { Envelope = response },
-            (_, existing) =>
-            {
-                existing.Envelope = response;
-                return existing;
-            });
+        if (!_records.TryGetValue(response.Id, out var record) || record.Deleted)
+        {
+            throw new ResourceNotFoundException($"Response '{response.Id}' not found.");
+        }
+
+        EnforceUserIsolation(record, context);
+        record.Envelope = response;
 
         StoreOutputItems(record, response);
         AddToConversation(response);
@@ -220,7 +314,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
         PlatformContext context,
         CancellationToken cancellationToken = default)
     {
-        var results = itemIds.Select(id => _itemStore.TryGetValue(id, out var item) ? item : null);
+        IEnumerable<OutputItem?> results = itemIds.Select(id => _itemStore.TryGetValue(id, out var item) ? item : null).ToArray();
         return Task.FromResult(results);
     }
 
@@ -342,7 +436,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
     private void WriteRecord(ResponseRecord record)
     {
         var node = record.ToJson();
-        AtomicWrite(Path.Combine(_envelopesDir, record.Id + ".json"), node);
+        AtomicWrite(Path.Combine(_envelopesDir, ResponseStorePartition.Hash(record.Id) + ".json"), node);
     }
 
     private void WriteItem(string itemId, OutputItem item)
@@ -351,7 +445,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
         var node = JsonNode.Parse(json.ToString());
         if (node is not null)
         {
-            AtomicWrite(Path.Combine(_itemsDir, SanitizeFileName(itemId) + ".json"), node);
+            AtomicWrite(Path.Combine(_itemsDir, ResponseStorePartition.Hash(itemId) + ".json"), node);
         }
     }
 
@@ -397,7 +491,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
 
             _records[record.Id] = record;
 
-            if (!record.Deleted && record.ConversationId is { Length: > 0 } convId)
+            if (record.ConversationId is { Length: > 0 } convId)
             {
                 var list = _conversationResponses.GetOrAdd(convId, _ => new List<string>());
                 lock (list)
@@ -471,16 +565,6 @@ internal sealed class FileResponsesProvider : ResponsesProvider
                 // Best-effort.
             }
         }
-    }
-
-    private static string SanitizeFileName(string id)
-    {
-        foreach (var invalid in Path.GetInvalidFileNameChars())
-        {
-            id = id.Replace(invalid, '_');
-        }
-
-        return id;
     }
 
     /// <summary>
