@@ -20,6 +20,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
     public class SessionProcessorLiveTests : ServiceBusLiveTestBase
     {
+        /// <summary>
+        ///   An any-session processor can retain credit while its closing callback runs. Hold the callback
+        ///   until AMQP releases a late message, then reacquire the session and verify order and delivery counts.
+        ///   Cover both an empty session list and a list containing a null entry.
+        /// </summary>
         [Test]
         [NonParallelizable]
         public async Task MessagesArrivingDuringSessionClosingPreserveOrder([Values(false, true)] bool nullSessionEntry)

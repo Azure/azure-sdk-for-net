@@ -234,6 +234,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             }
         }
 
+        /// <summary>
+        ///   Opening a session link replaces a null requested ID with the accepted ID. Exercise the receive path
+        ///   after that assignment to preserve the any-session processor exemption, while checking drain and
+        ///   prefetch credit restoration for the other receiver modes and for empty, partial, and full results.
+        /// </summary>
         [TestCaseSource(nameof(ReceiveDrainTestCases))]
         public async Task ReceiveMessagesDrainsAccordingToRequestedSession(
             bool isSessionReceiver,
@@ -321,7 +326,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         /// <summary>
-        ///   Recreating a link must use the resolved session ID without changing the original drain intent.
+        ///   A replacement link opens with the resolved session ID but must retain the original drain intent.
+        ///   This isolates cache recreation from the normal session-lock-loss lifecycle, which ends the receiver.
         /// </summary>
         [Test]
         public async Task ReceiveMessagesPreservesDrainIntentWhenLinkIsRecreated(
@@ -372,7 +378,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         /// <summary>
-        ///   A failed drain still closes a prefetching link to protect ordering and is handled by the receive path.
+        ///   Let an unanswered drain expire through the AMQP timeout path. The receive must handle the failure
+        ///   and close a prefetching link to protect ordering; a link without prefetch remains open.
         /// </summary>
         [Test]
         public async Task ReceiveMessagesHandlesDrainTimeout([Values(0u, 5u)] uint prefetchCount)

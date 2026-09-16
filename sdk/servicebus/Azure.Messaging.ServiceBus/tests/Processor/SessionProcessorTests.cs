@@ -15,6 +15,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
     public class SessionProcessorTests
     {
+        /// <summary>
+        ///   A null entry in a configured session list still selects any available session. After an empty
+        ///   receive, that receiver must close even when the list's size allows receivers to stay open.
+        ///   Non-null IDs retain the configured idle policy.
+        /// </summary>
         [TestCase(null, false, true)]
         [TestCase(null, true, true)]
         [TestCase("session", false, true)]
