@@ -1,6 +1,6 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (2026-09-16)
 
 ### Features Added
 
@@ -8,22 +8,24 @@
   ([#62850](https://github.com/Azure/azure-sdk-for-net/pull/62850))
 
 - Multi-endpoint routing now maps the `microsoft.multi_endpoint_cloud_role` attribute to `ai.cloud.role` for traces and logs. Missing or invalid values use `unknown_service`, while `ai.cloud.roleInstance` remains host-derived. The attribute is read from Activity tags for traces and `LogRecord.Attributes` for logs, and only affects cloud role when multi-endpoint routing is enabled.
+  ([#62909](https://github.com/Azure/azure-sdk-for-net/pull/62909))
 
 - Added multi-endpoint routing for traces, off by default and enabled with the `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch. When enabled, an Activity carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes is sent to that endpoint instead of the exporter's own; Activities without both attributes are dropped. Live Metrics is disabled while the switch is on, and sampling defaults to fixed-rate rather than rate-limited because a per-process rate limit would be shared across every destination the process carries. The switch cannot be combined with Microsoft Entra ID authentication, because the credential is scoped to the exporter's own audience and would be sent to endpoints supplied by telemetry.
   ([#62707](https://github.com/Azure/azure-sdk-for-net/pull/62707))
 
 - Extended multi-endpoint routing to logs, off by default and enabled with the same `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch used for traces. When enabled, a `LogRecord` carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes is sent to that endpoint instead of the exporter's own; log records without both attributes are dropped. The two routing attributes are consumed for routing and are not emitted as custom properties. Routing reads only `LogRecord.Attributes`, not logging scopes. Live Metrics disablement and the Microsoft Entra ID restriction that apply to multi-endpoint traces apply to logs as well, since both are enforced on the shared transmitter.
+  ([#62885](https://github.com/Azure/azure-sdk-for-net/pull/62885))
 
 - Extended multi-endpoint routing to metrics, off by default and enabled with the same `Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting` AppContext switch used for traces and logs. A measurement carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` dimensions is sent to that endpoint instead of the exporter's own; measurements without both are dropped. Unlike traces and logs, the routing values are supplied as dimensions at measurement time rather than stamped afterwards, because a metric's dimensions are part of its aggregation key: each destination becomes its own time series, and one instrument can feed several endpoints. Routing is applied per `MetricPoint`, the three routing dimensions are consumed rather than emitted as custom properties, and `microsoft.multi_endpoint_cloud_role` sets `ai.cloud.role` as it does for traces and logs. Standard metrics and performance counters are not collected while the switch is on: routed destinations are not sent standard metrics, and a process-scoped performance counter has no single owner among the destinations a routed process carries.
+  ([#62957](https://github.com/Azure/azure-sdk-for-net/pull/62957))
 
 - A connection string is no longer required when multi-endpoint routing is enabled. Routing takes every destination from the telemetry itself, so a process that only routes has no component of its own to name, and previously had to nominate one that received nothing. Telemetry carrying valid routing attributes is still sent to the endpoint it names; telemetry without them is dropped, as it already was. SDK statistics are not collected in this configuration, because they identify a component by instrumentation key and select their region from its ingestion endpoint, neither of which exists without a connection string. Behaviour is unchanged when a connection string is configured, and unchanged when the switch is off: a missing connection string is still an error.
   ([#63004](https://github.com/Azure/azure-sdk-for-net/pull/63004))
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Added self-diagnostics for multi-endpoint routing, including rejected telemetry, endpoint delivery, partition limits, and storage eviction.
+  ([#62925](https://github.com/Azure/azure-sdk-for-net/pull/62925))
 
 ## 1.9.0 (2026-09-04)
 
