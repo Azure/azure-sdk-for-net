@@ -3476,14 +3476,21 @@ namespace Azure.Provisioning.AppService
     public partial class SiteExtension : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public SiteExtension(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> ConnectionString { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DBType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Deployer { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAppOffline { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsComplete { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> PackageUri { get { throw null; } set { } }
         public Azure.Provisioning.AppService.WebSite Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.MSDeployProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> SetParameters { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> SetParametersXmlFileUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> SkipAppData { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -3686,14 +3693,21 @@ namespace Azure.Provisioning.AppService
     public partial class SiteInstanceExtension : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public SiteInstanceExtension(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> ConnectionString { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DBType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Deployer { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAppOffline { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsComplete { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> PackageUri { get { throw null; } set { } }
         public Azure.Provisioning.AppService.SiteInstance Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.MSDeployProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> SetParameters { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> SetParametersXmlFileUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> SkipAppData { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -4451,14 +4465,21 @@ namespace Azure.Provisioning.AppService
     public partial class SiteSlotExtension : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public SiteSlotExtension(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> ConnectionString { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DBType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Deployer { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAppOffline { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsComplete { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> PackageUri { get { throw null; } set { } }
         public Azure.Provisioning.AppService.WebSiteSlot Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.MSDeployProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> SetParameters { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> SetParametersXmlFileUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> SkipAppData { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -4656,14 +4677,21 @@ namespace Azure.Provisioning.AppService
     public partial class SiteSlotInstanceExtension : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public SiteSlotInstanceExtension(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> ConnectionString { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DBType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Deployer { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsAppOffline { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsComplete { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Uri> PackageUri { get { throw null; } set { } }
         public Azure.Provisioning.AppService.SiteSlotInstance Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.MSDeployProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> SetParameters { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> SetParametersXmlFileUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> SkipAppData { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }

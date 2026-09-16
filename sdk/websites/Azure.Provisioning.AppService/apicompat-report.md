@@ -8,15 +8,15 @@ dotnet build sdk\websites\Azure.Provisioning.AppService\src\Azure.Provisioning.A
 
 ## Summary
 
-The build failed ApiCompat with **109 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
+The build failed ApiCompat with **53 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
 
 | Category | API changes | ApiCompat diagnostics |
 |---|---:|---:|
-| Removed public properties | 44 properties | 86 |
+| Removed public properties | 16 properties | 30 |
 | Changed property types | 15 properties | 15 |
 | Removed public setters | 7 properties | 7 |
 | Missing enum members | 1 member | 1 |
-| **Total** | **67 changes** | **109** |
+| **Total** | **39 changes** | **53** |
 
 ApiCompat reports property getters and setters independently. Therefore, a removed read/write property normally produces two `CP0002` diagnostics.
 
@@ -33,21 +33,23 @@ The four legacy publishing-credential policy resource types have been restored a
 
 The four original missing top-level type diagnostics and their nested `ResourceVersions` compatibility diagnostics are resolved. Each compatibility class owns its historical nested API-version metadata because nested types are not inherited as derived-type CLR metadata.
 
-## 2. Removed public properties
+## 2. Deployment-extension compatibility properties
 
-### Deployment-extension resources
+The seven legacy deployment-input properties have been restored on `SiteExtension`, `SiteInstanceExtension`, `SiteSlotExtension`, and `SiteSlotInstanceExtension`:
 
-The following seven read/write properties are absent from each of `SiteExtension`, `SiteInstanceExtension`, `SiteSlotExtension`, and `SiteSlotInstanceExtension`:
+| Property | Bicep path |
+|---|---|
+| `ConnectionString` | `properties.connectionString` |
+| `DBType` | `properties.dbType` |
+| `IsAppOffline` | `properties.appOffline` |
+| `PackageUri` | `properties.packageUri` |
+| `SetParameters` | `properties.setParameters` |
+| `SetParametersXmlFileUri` | `properties.setParametersXmlFileUri` |
+| `SkipAppData` | `properties.skipAppData` |
 
-- `ConnectionString`
-- `DBType`
-- `IsAppOffline`
-- `PackageUri`
-- `SetParameters`
-- `SetParametersXmlFileUri`
-- `SkipAppData`
+The authoritative `Microsoft.Web@2025-03-01` Bicep schema declares all seven as write-only members of `MSDeployCoreOrMSDeployStatusProperties` and uses that model for all four writable resources. No legacy property was excluded. Custom partial classes temporarily restore the create-body properties omitted from the generated response model because of [#61011](https://github.com/Azure/azure-sdk-for-net/issues/61011). This resolves **28 removed properties and 56 diagnostics**.
 
-This accounts for **28 removed properties and 56 diagnostics**.
+## 3. Removed public properties
 
 ### Web site VNet settings
 
@@ -89,7 +91,7 @@ This accounts for **2 removed properties and 4 diagnostics**.
 
 The certificate types now expose `ThumbprintString`, so the two `Thumbprint` failures appear to be API renames rather than removal of the underlying service data.
 
-## 3. Changed property types
+## 4. Changed property types
 
 These properties still exist, but their migrated getter signatures no longer match the previous package:
 
@@ -113,7 +115,7 @@ These properties still exist, but their migrated getter signatures no longer mat
 
 Most of this category is scalar semantic drift from URI, resource identifier, location, or GUID types to `string`. `StaticSiteLinkedBackendInfo.BackendResourceId` changed in the opposite direction, from `string` to `ResourceIdentifier`.
 
-## 4. Removed public setters
+## 5. Removed public setters
 
 These properties remain readable but became read-only:
 
@@ -124,7 +126,7 @@ These properties remain readable but became read-only:
 
 This category produces **7 `CP0002` diagnostics**.
 
-## 5. Missing enum member
+## 6. Missing enum member
 
 `AppServiceSupportedTlsVersion.One3` is missing. The migrated enum exposes `Tls1_3`, making this an enum-member rename.
 
@@ -132,9 +134,8 @@ This category produces **7 `CP0002` diagnostics**.
 
 The failures are concentrated rather than spread evenly:
 
-1. Restore the four deployment-extension property sets first: **56 diagnostics**.
-2. Restore the `WebSite` and `WebSiteSlot` VNet flags: **16 diagnostics**.
-3. Address the 15 scalar/model type changes and 7 setter-accessibility changes.
-4. Restore smaller renamed or removed members: `ApiDefinitionUri`, certificate `Thumbprint`, `ValidationMethod`, function app properties, and `One3`.
+1. Restore the `WebSite` and `WebSiteSlot` VNet flags: **16 diagnostics**.
+2. Address the 15 scalar/model type changes and 7 setter-accessibility changes.
+3. Restore smaller renamed or removed members: `ApiDefinitionUri`, certificate `Thumbprint`, `ValidationMethod`, function app properties, and `One3`.
 
-The first two clusters account for **72 of 109 diagnostics (66%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
+The VNet flag cluster accounts for **16 of 53 diagnostics (30%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
