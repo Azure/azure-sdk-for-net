@@ -105,6 +105,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("urlPathMap"u8);
                 writer.WriteObjectValue(UrlPathMap, options);
             }
+            if (Optional.IsDefined(AdvancedRoutingMap))
+            {
+                writer.WritePropertyName("advancedRoutingMap"u8);
+                writer.WriteObjectValue(AdvancedRoutingMap, options);
+            }
             if (Optional.IsDefined(RewriteRuleSet))
             {
                 writer.WritePropertyName("rewriteRuleSet"u8);
@@ -124,6 +129,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("entraJWTValidationConfig"u8);
                 writer.WriteStringValue(EntraJWTValidationConfig);
+            }
+            if (Optional.IsCollectionDefined(AuthConfigs))
+            {
+                writer.WritePropertyName("authConfigs"u8);
+                writer.WriteStartArray();
+                foreach (ApplicationGatewayAuthConfig item in AuthConfigs)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -178,10 +193,12 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource backendHttpSettings = default;
             NetworkSubResource httpListener = default;
             NetworkSubResource urlPathMap = default;
+            NetworkSubResource advancedRoutingMap = default;
             NetworkSubResource rewriteRuleSet = default;
             NetworkSubResource redirectConfiguration = default;
             NetworkSubResource loadDistributionPolicy = default;
             ResourceIdentifier entraJWTValidationConfig = default;
+            IList<ApplicationGatewayAuthConfig> authConfigs = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -240,6 +257,15 @@ namespace Azure.ResourceManager.Network.Models
                     urlPathMap = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("advancedRoutingMap"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    advancedRoutingMap = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("rewriteRuleSet"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -276,6 +302,20 @@ namespace Azure.ResourceManager.Network.Models
                     entraJWTValidationConfig = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("authConfigs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ApplicationGatewayAuthConfig> array = new List<ApplicationGatewayAuthConfig>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ApplicationGatewayAuthConfig.DeserializeApplicationGatewayAuthConfig(item, options));
+                    }
+                    authConfigs = array;
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -297,10 +337,12 @@ namespace Azure.ResourceManager.Network.Models
                 backendHttpSettings,
                 httpListener,
                 urlPathMap,
+                advancedRoutingMap,
                 rewriteRuleSet,
                 redirectConfiguration,
                 loadDistributionPolicy,
                 entraJWTValidationConfig,
+                authConfigs ?? new ChangeTrackingList<ApplicationGatewayAuthConfig>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }

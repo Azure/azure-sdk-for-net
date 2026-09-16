@@ -2,9 +2,11 @@
 
 ## Scope
 
-This report describes issues observed after a fresh TypeSpec generation of
-`Azure.Provisioning.Network`. No breaking-change mitigations were applied, and no
-source changes were made after generation to mitigate the reported problems.
+This report describes issues observed after fresh TypeSpec generation of
+`Azure.Provisioning.Network` and the related regeneration of
+`Azure.ResourceManager.Network`. Broad provisioning breaking-change mitigation
+remains deferred; only the requested resource-name, resource-version, and
+deprecated management API compatibility changes have been applied.
 
 Generation used:
 
@@ -13,14 +15,15 @@ Generation used:
 - `@typespec/compiler` version `1.15.0`
 - `Microsoft.Network` API version `2025-05-01`
 - `Microsoft.Compute` API version `2018-10-01`
-- Azure REST API specs commit `4ab86f6985d73c4fa4812a79cbdd334f47ef9837`
+- Azure REST API specs commit `13c6ef00a1f2f708fc7a90069312f7977a06fe7d`
+- Draft spec PR
+  [Azure/azure-rest-api-specs#46412](https://github.com/Azure/azure-rest-api-specs/pull/46412)
 
 ## Spec changes required for generation
 
-The upstream spec commit referenced by `tsp-location.yaml` does not contain the
-local provisioning-emitter configuration used for this generation. A spec
-change must be committed and the SDK's `tsp-location.yaml` updated to that commit
-before the generated output is reproducible remotely.
+The provisioning-emitter configuration and required C# customizations are
+committed in the draft spec PR. Both the provisioning and management SDK
+`tsp-location.yaml` files pin the PR head commit, so generation is reproducible.
 
 The following six deprecated Compute-backed Cloud Services operations also had
 to be excluded from the C# scope:
@@ -77,6 +80,31 @@ frameworks:
 The standard package-scoped API export succeeded with its normal
 `RunApiCompat=false` setting, producing updated API listings for all three target
 frameworks.
+
+## Management SDK regeneration
+
+The six Cloud Services exclusions also remove public APIs from
+`Azure.ResourceManager.Network`. Regenerating the management SDK initially
+reported 17 unique `CP0002` removals:
+
+- 14 deprecated Cloud Services extension and mockable-resource-group methods
+- Two legacy `BastionHostResource.Update` overloads accepting
+  `NetworkTagsObject`
+- The legacy `HubVirtualNetworkConnectionData.EnableOnlyIPv6Peering` property
+
+The removed APIs are restored in per-type customization files and marked with
+both `[EditorBrowsable(EditorBrowsableState.Never)]` and `[Obsolete]`. Deprecated
+Cloud Services operations use the package's existing unsupported compatibility
+shim pattern and throw `NotSupportedException`.
+
+The current service model represents `enableOnlyIPv6Peering` as a Boolean. A
+C#-only `@@clientName` customization emits the new property as
+`EnableOnlyIPv6PeeringValue`, allowing the old enum-typed property to remain as
+an obsolete adapter without changing the wire name.
+
+After these changes, the normal `Azure.ResourceManager.Network` build and
+ApiCompat checks succeed for `netstandard2.0`, `net8.0`, and `net10.0`. The
+service-scoped API export also succeeds for both Network packages.
 
 ## Baseline public types no longer generated
 
@@ -222,6 +250,5 @@ Generation completed successfully but emitted these diagnostics:
 Per the requested stopping point, the following remain pending:
 
 - Unit and live tests
-- Breaking-change mitigations
+- Broad `Azure.Provisioning.Network` breaking-change mitigation
 - Changelog updates
-- Commit and pull request creation

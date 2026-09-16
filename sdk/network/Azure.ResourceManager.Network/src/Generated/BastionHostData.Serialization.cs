@@ -124,6 +124,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -161,6 +166,7 @@ namespace Azure.ResourceManager.Network
             IList<string> zones = default;
             ETag? eTag = default;
             NetworkSku sku = default;
+            NetworkManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -260,6 +266,15 @@ namespace Azure.ResourceManager.Network
                     sku = NetworkSku.DeserializeNetworkSku(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = NetworkManagedServiceIdentity.DeserializeNetworkManagedServiceIdentity(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -275,7 +290,8 @@ namespace Azure.ResourceManager.Network
                 properties,
                 zones ?? new ChangeTrackingList<string>(),
                 eTag,
-                sku);
+                sku,
+                identity);
         }
     }
 }

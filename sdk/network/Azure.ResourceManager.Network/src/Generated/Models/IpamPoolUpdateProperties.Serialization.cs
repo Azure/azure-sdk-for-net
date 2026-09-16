@@ -84,6 +84,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
+            if (Optional.IsDefined(MinAllocationSize))
+            {
+                writer.WritePropertyName("minAllocationSize"u8);
+                writer.WriteStringValue(MinAllocationSize);
+            }
+            if (Optional.IsDefined(MaxAllocationSize))
+            {
+                writer.WritePropertyName("maxAllocationSize"u8);
+                writer.WriteStringValue(MaxAllocationSize);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +138,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             string description = default;
             string displayName = default;
+            string minAllocationSize = default;
+            string maxAllocationSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,12 +153,22 @@ namespace Azure.ResourceManager.Network.Models
                     displayName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("minAllocationSize"u8))
+                {
+                    minAllocationSize = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("maxAllocationSize"u8))
+                {
+                    maxAllocationSize = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IpamPoolUpdateProperties(description, displayName, additionalBinaryDataProperties);
+            return new IpamPoolUpdateProperties(description, displayName, minAllocationSize, maxAllocationSize, additionalBinaryDataProperties);
         }
     }
 }
