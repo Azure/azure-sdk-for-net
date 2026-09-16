@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SnapshotCreationOn))
+            if (options.Format != "W" && Optional.IsDefined(SnapshotCreatedOn))
             {
                 writer.WritePropertyName("snapshotCreationDate"u8);
-                writer.WriteStringValue(SnapshotCreationOn.Value, "O");
+                writer.WriteStringValue(SnapshotCreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CompletionOn))
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string backupId = default;
             DateTimeOffset? createdOn = default;
-            DateTimeOffset? snapshotCreationOn = default;
+            DateTimeOffset? snapshotCreatedOn = default;
             DateTimeOffset? completionOn = default;
             string provisioningState = default;
             long? size = default;
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        snapshotCreationOn = null;
+                        snapshotCreatedOn = null;
                         continue;
                     }
-                    snapshotCreationOn = prop.Value.GetDateTimeOffset("O");
+                    snapshotCreatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("completionDate"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.NetApp.Models
             return new BackupProperties(
                 backupId,
                 createdOn,
-                snapshotCreationOn,
+                snapshotCreatedOn,
                 completionOn,
                 provisioningState,
                 size,

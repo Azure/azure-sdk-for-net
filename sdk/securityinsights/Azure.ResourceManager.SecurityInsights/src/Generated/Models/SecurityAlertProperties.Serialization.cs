@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Intent))
             {
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("providerAlertId"u8);
                 writer.WriteStringValue(ProviderAlertId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProcessingEndOn))
+            if (options.Format != "W" && Optional.IsDefined(ProcessingEndsOn))
             {
                 writer.WritePropertyName("processingEndTime"u8);
-                writer.WriteStringValue(ProcessingEndOn.Value, "O");
+                writer.WriteStringValue(ProcessingEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProductComponentName))
             {
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -275,16 +275,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             double? confidenceScore = default;
             SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus = default;
             string description = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             SecurityInsightsKillChainIntent? intent = default;
             string providerAlertId = default;
-            DateTimeOffset? processingEndOn = default;
+            DateTimeOffset? processingEndsOn = default;
             string productComponentName = default;
             string productName = default;
             string productVersion = default;
             IReadOnlyList<string> remediationSteps = default;
             SecurityInsightsAlertSeverity? severity = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             SecurityInsightsAlertStatus? status = default;
             string systemAlertId = default;
             IReadOnlyList<SecurityInsightsAttackTactic> tactics = default;
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("intent"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    processingEndOn = prop.Value.GetDateTimeOffset("O");
+                    processingEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("productComponentName"u8))
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -552,16 +552,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 confidenceScore,
                 confidenceScoreStatus,
                 description,
-                endOn,
+                endsOn,
                 intent,
                 providerAlertId,
-                processingEndOn,
+                processingEndsOn,
                 productComponentName,
                 productName,
                 productVersion,
                 remediationSteps ?? new ChangeTrackingList<string>(),
                 severity,
-                startOn,
+                startsOn,
                 status,
                 systemAlertId,
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),

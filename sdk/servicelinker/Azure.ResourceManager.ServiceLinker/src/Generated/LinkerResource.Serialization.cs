@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
+    /// <summary></summary>
     public partial class LinkerResource : IJsonModel<LinkerResourceData>
     {
-        private static LinkerResourceData s_dataDeserializationInstance;
-        private static LinkerResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LinkerResourceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LinkerResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LinkerResourceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LinkerResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LinkerResourceData>)Data).Write(writer, options);
 
-        LinkerResourceData IJsonModel<LinkerResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LinkerResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LinkerResourceData IJsonModel<LinkerResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LinkerResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LinkerResourceData>(Data, options, AzureResourceManagerServiceLinkerContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LinkerResourceData IPersistableModel<LinkerResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LinkerResourceData>(data, options, AzureResourceManagerServiceLinkerContext.Default);
 
-        string IPersistableModel<LinkerResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LinkerResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LinkerResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

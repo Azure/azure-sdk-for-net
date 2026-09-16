@@ -34,18 +34,5 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> The type of the solution. </summary>
         public string SolutionType { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, string> SolutionAdditionalProperties
-        {
-            get
-            {
-                if (SolutionSettings is null)
-                {
-                    SolutionSettings = new PublicCloudConnectorSolutionSettings();
-                }
-                return SolutionSettings.AdditionalProperties;
-            }
-        }
     }
 }

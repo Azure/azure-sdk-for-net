@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Monitor compute identity base definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmlTokenComputeIdentity"/> and <see cref="ManagedComputeIdentity"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AmlTokenComputeIdentity"/> and <see cref="ManagedComputeIdentity"/>.
     /// </summary>
     public partial class MonitorComputeIdentityBase : ProvisionableConstruct
     {
+        private BicepValue<MonitorComputeIdentityType> _computeIdentityType;
+
         /// <summary> Creates a new MonitorComputeIdentityBase. </summary>
         public MonitorComputeIdentityBase()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of identity to use within the monitoring jobs. </summary>
+        internal BicepValue<MonitorComputeIdentityType> ComputeIdentityType
+        {
+            get
+            {
+                Initialize();
+                return _computeIdentityType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MonitorComputeIdentityBase. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _computeIdentityType = DefineProperty<MonitorComputeIdentityType>(nameof(ComputeIdentityType), new string[] { "computeIdentityType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

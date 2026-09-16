@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary> Class representing an data connection. </summary>
+    /// <summary>
+    /// Class representing an data connection.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="KustoEventHubDataConnection"/>, <see cref="KustoIotHubDataConnection"/>, <see cref="KustoEventGridDataConnection"/>, <see cref="KustoCosmosDBDataConnection"/>, <see cref="EventGridDataConnectionWithManagedIdentity"/>, and <see cref="EventHubDataConnectionWithManagedIdentity"/>.
+    /// </summary>
     public partial class KustoDataConnectionData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

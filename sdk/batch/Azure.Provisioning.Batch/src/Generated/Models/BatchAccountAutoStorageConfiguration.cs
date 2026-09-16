@@ -6,19 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Batch
 {
     /// <summary> Contains information about the auto-storage account associated with a Batch account. </summary>
-    public partial class BatchAccountAutoStorageConfiguration : ProvisionableConstruct
+    public partial class BatchAccountAutoStorageConfiguration : BatchAccountAutoStorageBaseConfiguration
     {
         private BicepValue<DateTimeOffset> _lastKeySyncedOn;
-        private BicepValue<ResourceIdentifier> _storageAccountId;
-        private BicepValue<BatchAutoStorageAuthenticationMode> _authenticationMode;
-        private ComputeNodeIdentityReference _nodeIdentity;
 
         /// <summary> Creates a new BatchAccountAutoStorageConfiguration. </summary>
         public BatchAccountAutoStorageConfiguration()
@@ -35,53 +30,11 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets the StorageAccountId. </summary>
-        public BicepValue<ResourceIdentifier> StorageAccountId
-        {
-            get
-            {
-                Initialize();
-                return _storageAccountId;
-            }
-        }
-
-        /// <summary> Gets the AuthenticationMode. </summary>
-        public BicepValue<BatchAutoStorageAuthenticationMode> AuthenticationMode
-        {
-            get
-            {
-                Initialize();
-                return _authenticationMode;
-            }
-        }
-
-        /// <summary> Gets the NodeIdentity. </summary>
-        internal ComputeNodeIdentityReference NodeIdentity
-        {
-            get
-            {
-                Initialize();
-                return _nodeIdentity;
-            }
-        }
-
-        /// <summary> Gets or sets the ResourceId. </summary>
-        public BicepValue<ResourceIdentifier> NodeIdentityResourceId
-        {
-            get
-            {
-                return NodeIdentity.ResourceId;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for BatchAccountAutoStorageConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _lastKeySyncedOn = DefineProperty<DateTimeOffset>(nameof(LastKeySyncedOn), new string[] { "lastKeySync" }, format: "O");
-            _storageAccountId = DefineProperty<ResourceIdentifier>(nameof(StorageAccountId), new string[] { "storageAccountId" });
-            _authenticationMode = DefineProperty<BatchAutoStorageAuthenticationMode>(nameof(AuthenticationMode), new string[] { "authenticationMode" });
-            _nodeIdentity = DefineModelProperty<ComputeNodeIdentityReference>(nameof(NodeIdentity), new string[] { "nodeIdentityReference" });
             DefineAdditionalProperties();
         }
 

@@ -1255,7 +1255,9 @@ namespace Azure.Identity
     public sealed partial class AzureCredentialResolver : System.ClientModel.Primitives.CredentialResolver
     {
         public AzureCredentialResolver() { }
+        public static Azure.Identity.AzureCredentialResolver Default { get { throw null; } }
         public override bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
+        protected override bool TryResolveCore(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider?> resolveChild, out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     public partial class AzureDeveloperCliCredential : Azure.Core.TokenCredential

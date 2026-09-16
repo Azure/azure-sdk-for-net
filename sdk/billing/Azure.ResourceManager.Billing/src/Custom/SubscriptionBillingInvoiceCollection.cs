@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.Billing
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<SubscriptionBillingInvoiceResource> GetAllAsync(SubscriptionBillingInvoiceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            return GetAllAsync(periodStartDate: options?.PeriodStartDate, periodEndDate: options?.PeriodEndDate, filter: options?.Filter, orderBy: options?.OrderBy, maxCount: options?.Top, skip: options?.Skip, count: options?.Count, search: options?.Search, cancellationToken: cancellationToken);
+            return GetAllAsync(periodStartsOn: options?.PeriodStartDate, periodEndsOn: options?.PeriodEndDate, filter: options?.Filter, orderBy: options?.OrderBy, maxCount: options?.Top, skip: options?.Skip, count: options?.Count, search: options?.Search, cancellationToken: cancellationToken);
         }
 
         /// <summary> Back-compat overload for GA 1.2.2 callers that pass an Options aggregate. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<SubscriptionBillingInvoiceResource> GetAll(SubscriptionBillingInvoiceCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            return GetAll(periodStartDate: options?.PeriodStartDate, periodEndDate: options?.PeriodEndDate, filter: options?.Filter, orderBy: options?.OrderBy, maxCount: options?.Top, skip: options?.Skip, count: options?.Count, search: options?.Search, cancellationToken: cancellationToken);
+            return GetAll(periodStartsOn: options?.PeriodStartDate, periodEndsOn: options?.PeriodEndDate, filter: options?.Filter, orderBy: options?.OrderBy, maxCount: options?.Top, skip: options?.Skip, count: options?.Count, search: options?.Search, cancellationToken: cancellationToken);
         }
     }
 }

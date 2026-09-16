@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents.Telemetry;
@@ -586,7 +587,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> DeleteAgentAsync(string agentName, RequestOptions options)
     {
-        return await DeleteAgentAsync(agentName:agentName, force: null, options: options).ConfigureAwait(false);
+        return await DeleteAgentAsync(agentName: agentName, force: null, options: options).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -765,5 +766,38 @@ public partial class AgentAdministrationClient
 
         using PipelineMessage message = CreateDeleteAgentVersionRequest(agentName, agentVersion, force, options);
         return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+    }
+    /// <summary>
+    /// Generates and creates an agent from kind-specific high-level inputs.
+    /// The generated definition remains fully editable through the standard agent versioning operations.
+    /// </summary>
+    /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP001")]
+    public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
+    {
+        return GenerateAgent(
+            body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
+            cancellationToken: cancellationToken
+        );
+    }
+
+    /// <summary>
+    /// Generates and creates an agent from kind-specific high-level inputs.
+    /// The generated definition remains fully editable through the standard agent versioning operations.
+    /// </summary>
+    /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP001")]
+    public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
+    {
+        return await GenerateAgentAsync(
+            body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
+            cancellationToken: cancellationToken
+        ).ConfigureAwait(false);
     }
 }

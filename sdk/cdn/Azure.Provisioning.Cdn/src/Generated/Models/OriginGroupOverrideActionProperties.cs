@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new OriginGroupOverrideActionProperties. </summary>
         public OriginGroupOverrideActionProperties()
         {
+            TypeName.Assign(DeliveryRuleActionParametersType.DeliveryRuleOriginGroupOverrideActionParameters);
         }
 
         /// <summary> Gets or sets the OriginGroup. </summary>
@@ -56,7 +57,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleOriginGroupOverrideActionParameters");
             _originGroup = DefineModelProperty<CdnResourceReference>(nameof(OriginGroup), new string[] { "originGroup" }, isRequired: true);
             DefineAdditionalProperties();
         }

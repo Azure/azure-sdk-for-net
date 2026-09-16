@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Sql.Models
         private const string FailedValue = "Failed";
         /// <summary> Provisioning Canceled. </summary>
         private const string CanceledValue = "Canceled";
+        private const string ApprovingValue = "Approving";
+        private const string ReadyValue = "Ready";
+        private const string DroppingValue = "Dropping";
+        private const string RejectingValue = "Rejecting";
 
         /// <summary> Initializes a new instance of <see cref="SqlPrivateEndpointProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -50,6 +54,18 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Provisioning Canceled. </summary>
         public static SqlPrivateEndpointProvisioningState Canceled { get; } = new SqlPrivateEndpointProvisioningState(CanceledValue);
+
+        /// <summary> Gets the Approving. </summary>
+        public static SqlPrivateEndpointProvisioningState Approving { get; } = new SqlPrivateEndpointProvisioningState(ApprovingValue);
+
+        /// <summary> Gets the Ready. </summary>
+        public static SqlPrivateEndpointProvisioningState Ready { get; } = new SqlPrivateEndpointProvisioningState(ReadyValue);
+
+        /// <summary> Gets the Dropping. </summary>
+        public static SqlPrivateEndpointProvisioningState Dropping { get; } = new SqlPrivateEndpointProvisioningState(DroppingValue);
+
+        /// <summary> Gets the Rejecting. </summary>
+        public static SqlPrivateEndpointProvisioningState Rejecting { get; } = new SqlPrivateEndpointProvisioningState(RejectingValue);
 
         /// <summary> Determines if two <see cref="SqlPrivateEndpointProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

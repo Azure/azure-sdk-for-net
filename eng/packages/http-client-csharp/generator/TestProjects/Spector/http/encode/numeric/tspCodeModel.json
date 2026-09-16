@@ -111,6 +111,7 @@
       "$id": "13",
       "kind": "model",
       "name": "SafeintAsStringProperty",
+      "apiVersions": [],
       "namespace": "Encode.Numeric.Property",
       "crossLanguageDefinitionId": "Encode.Numeric.Property.SafeintAsStringProperty",
       "usage": "Input,Output,Json",
@@ -126,6 +127,7 @@
           "$id": "14",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "15",
@@ -155,6 +157,7 @@
       "$id": "16",
       "kind": "model",
       "name": "Uint32AsStringProperty",
+      "apiVersions": [],
       "namespace": "Encode.Numeric.Property",
       "crossLanguageDefinitionId": "Encode.Numeric.Property.Uint32AsStringProperty",
       "usage": "Input,Output,Json",
@@ -170,6 +173,7 @@
           "$id": "17",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "18",
@@ -199,6 +203,7 @@
       "$id": "19",
       "kind": "model",
       "name": "Uint8AsStringProperty",
+      "apiVersions": [],
       "namespace": "Encode.Numeric.Property",
       "crossLanguageDefinitionId": "Encode.Numeric.Property.Uint8AsStringProperty",
       "usage": "Input,Output,Json",
@@ -214,6 +219,7 @@
           "$id": "20",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "21",

@@ -65,6 +65,11 @@ namespace Azure.Generator.Providers
         private string CreateRequestMethodName
             => Client.RestClient.GetCreateRequestMethod(_operation).Signature.Name;
 
+        private ValueExpression ProtocolSerializationOptions
+            => _operation.Responses.First(r => !r.IsErrorResponse).SerializationOptions?.Xml != null
+                ? Static<ModelReaderWriterOptions>().Property(nameof(ModelReaderWriterOptions.Xml))
+                : Static<ModelReaderWriterOptions>().Property(nameof(ModelReaderWriterOptions.Json));
+
         // We use "_diagnosticScope" rather than "_scope" to reduce collision risk with API parameters.
         // If a collision does occur, the framework's CodeWriter dedup renames declarations but not
         // AsValueExpression references, causing incorrect codegen. See: https://github.com/microsoft/typespec/issues/10130
@@ -229,7 +234,7 @@ namespace Azure.Generator.Providers
                     itemsVariable.Invoke("Add", Static(typeof(ModelReaderWriter)).Invoke(nameof(ModelReaderWriter.Write),
                         [
                             itemVariable,
-                            Static<ModelSerializationExtensionsDefinition>().Property(ModelSerializationExtensionsDefinition.WireOptionsFieldName),
+                            ProtocolSerializationOptions,
                             Static<ModelReaderWriterContextDefinition>().Property("Default")
                         ])).Terminate()
                 }
@@ -257,7 +262,7 @@ namespace Azure.Generator.Providers
                 statements.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [BuildGetPropertyExpression(Paging.ItemPropertySegments, resultVariable).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), Null, responseVariable])));
             }
 
-            return [..statements];
+            return [.. statements];
         }
 
         private MethodProvider BuildGetNextResponseMethod()

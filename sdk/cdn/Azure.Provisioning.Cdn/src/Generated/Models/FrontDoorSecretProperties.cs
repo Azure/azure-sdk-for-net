@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Cdn
 {
     /// <summary>
     /// The json object containing secret parameters
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriSigningKeyProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, and <see cref="AzureFirstPartyManagedCertificateProperties"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="UriSigningKeyProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, and <see cref="AzureFirstPartyManagedCertificateProperties"/>.
     /// </summary>
     public partial class FrontDoorSecretProperties : ProvisionableConstruct
     {
+        private BicepValue<SecretType> _secretType;
+
         /// <summary> Creates a new FrontDoorSecretProperties. </summary>
         public FrontDoorSecretProperties()
         {
+        }
+
+        /// <summary> The type of the secret resource. </summary>
+        internal BicepValue<SecretType> SecretType
+        {
+            get
+            {
+                Initialize();
+                return _secretType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for FrontDoorSecretProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _secretType = DefineProperty<SecretType>(nameof(SecretType), new string[] { "type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -20,5 +20,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI
         // Operation name
         internal const string GenAiOperationName = "gen_ai.operation.name";
         internal const string InvokeAgentOperationName = "invoke_agent";
+
+        // GenAI Project Constants
+        // The Azure AI Foundry project identifier.
+        internal const string GenAiAzureAiProjectId = "gen_ai.azure_ai_project.id";
+
+        // The Microsoft Foundry project identifier.
+        internal const string GenAiFoundryProjectId = "microsoft.foundry.project.id";
     }
 }

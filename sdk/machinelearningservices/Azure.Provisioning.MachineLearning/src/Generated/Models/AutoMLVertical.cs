@@ -13,12 +13,13 @@ namespace Azure.Provisioning.MachineLearning
     /// <summary>
     /// AutoML vertical class.
     /// Base class for AutoML verticals - TableVertical/ImageVertical/NLPVertical
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/>, and <see cref="TextNer"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/>, and <see cref="TextNer"/>.
     /// </summary>
     public partial class AutoMLVertical : ProvisionableConstruct
     {
         private BicepValue<MachineLearningLogVerbosity> _logVerbosity;
         private BicepValue<string> _targetColumnName;
+        private BicepValue<TaskType> _taskType;
         private MachineLearningTableJobInput _trainingData;
 
         /// <summary> Creates a new AutoMLVertical. </summary>
@@ -56,6 +57,16 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> [Required] Task type for AutoMLJob. </summary>
+        internal BicepValue<TaskType> TaskType
+        {
+            get
+            {
+                Initialize();
+                return _taskType;
+            }
+        }
+
         /// <summary> Gets or sets the TrainingData. </summary>
         public MachineLearningTableJobInput TrainingData
         {
@@ -77,6 +88,7 @@ namespace Azure.Provisioning.MachineLearning
             base.DefineProvisionableProperties();
             _logVerbosity = DefineProperty<MachineLearningLogVerbosity>(nameof(LogVerbosity), new string[] { "logVerbosity" });
             _targetColumnName = DefineProperty<string>(nameof(TargetColumnName), new string[] { "targetColumnName" });
+            _taskType = DefineProperty<TaskType>(nameof(TaskType), new string[] { "taskType" }, isRequired: true);
             _trainingData = DefineModelProperty<MachineLearningTableJobInput>(nameof(TrainingData), new string[] { "trainingData" }, isRequired: true);
             DefineAdditionalProperties();
         }

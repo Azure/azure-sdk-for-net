@@ -24,9 +24,9 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="desiredDirection"> The desired direction for changes in the metric value. </param>
         /// <param name="definition"> The metric definition specifying how the metric value is calculated from event data. </param>
         /// <param name="eTag"> ETag of the experiment metric. </param>
-        /// <param name="lastModifiedAt"> The timestamp (UTC) of the last modification to the experiment metric resource. </param>
+        /// <param name="lastModifiedOn"> The timestamp (UTC) of the last modification to the experiment metric resource. </param>
         /// <returns> A new <see cref="OnlineExperimentation.ExperimentMetric"/> instance for mocking. </returns>
-        public static ExperimentMetric ExperimentMetric(string id = default, LifecycleStage lifecycle = default, string displayName = default, string description = default, IEnumerable<string> categories = default, DesiredDirection desiredDirection = default, ExperimentMetricDefinition definition = default, ETag eTag = default, DateTimeOffset lastModifiedAt = default)
+        public static ExperimentMetric ExperimentMetric(string id = default, LifecycleStage lifecycle = default, string displayName = default, string description = default, IEnumerable<string> categories = default, DesiredDirection desiredDirection = default, ExperimentMetricDefinition definition = default, ETag eTag = default, DateTimeOffset lastModifiedOn = default)
         {
             categories ??= new ChangeTrackingList<string>();
 
@@ -39,13 +39,13 @@ namespace Azure.Analytics.OnlineExperimentation
                 desiredDirection,
                 definition,
                 eTag,
-                lastModifiedAt,
+                lastModifiedOn,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// The metric definition, which determines how the metric value is calculated from event data.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OnlineExperimentation.EventCountMetricDefinition"/>, <see cref="OnlineExperimentation.UserCountMetricDefinition"/>, <see cref="OnlineExperimentation.EventRateMetricDefinition"/>, <see cref="OnlineExperimentation.UserRateMetricDefinition"/>, <see cref="OnlineExperimentation.SumMetricDefinition"/>, <see cref="OnlineExperimentation.AverageMetricDefinition"/>, and <see cref="OnlineExperimentation.PercentileMetricDefinition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OnlineExperimentation.AverageMetricDefinition"/>, <see cref="OnlineExperimentation.EventCountMetricDefinition"/>, <see cref="OnlineExperimentation.EventRateMetricDefinition"/>, <see cref="OnlineExperimentation.PercentileMetricDefinition"/>, <see cref="OnlineExperimentation.SumMetricDefinition"/>, <see cref="OnlineExperimentation.UserCountMetricDefinition"/>, and <see cref="OnlineExperimentation.UserRateMetricDefinition"/>.
         /// </summary>
         /// <param name="type"> Discriminator property for ExperimentMetricDefinition. </param>
         /// <returns> A new <see cref="OnlineExperimentation.ExperimentMetricDefinition"/> instance for mocking. </returns>

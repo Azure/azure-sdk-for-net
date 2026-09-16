@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -292,6 +293,60 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             string enclavesJson = new StreamReader(enclavesResponse.ContentStream).ReadToEnd();
 
             Console.WriteLine(enclavesJson);
+
+            #endregion
+        }
+
+        [Test]
+        public void LedgerGatewayQueuedSubmission()
+        {
+            #region Snippet:CreateClientLedgerGateway
+
+#if SNIPPET
+            var ledgerClient = new ConfidentialLedgerClient(
+                ledgerEndpoint: new Uri("https://my-ledger-url.confidential-ledger.azure.com"),
+                credential: new DefaultAzureCredential(),
+                options: new ConfidentialLedgerClientOptions { UseLedgerGateway = true });
+#else
+            var ledgerClient = new ConfidentialLedgerClient(
+                ledgerEndpoint: TestEnvironment.ConfidentialLedgerUrl,
+                credential: TestEnvironment.Credential,
+                options: new ConfidentialLedgerClientOptions { UseLedgerGateway = true });
+#endif
+
+            #endregion
+
+            #region Snippet:PostLedgerEntryWaitUntilStarted
+
+            // When UseLedgerGateway = true and waitUntil is Started, the SDK accepts a 202 Accepted
+            // response and returns an operation whose Id is the gateway-assigned operationId.
+            Operation operation = ledgerClient.PostLedgerEntry(
+                waitUntil: WaitUntil.Started,
+                RequestContent.Create(new { contents = "Hello from the Ledger Gateway!" }));
+
+            string operationId = operation.Id;
+            Console.WriteLine($"Submitted ledger entry. Operation Id: {operationId}");
+
+            // The application can persist operationId and exit. The submission is durable on the
+            // server for the gateway's operation-record retention period.
+
+            #endregion
+
+            #region Snippet:RehydratePostLedgerEntryOperation
+
+            // Later, in a different process or after a restart, resume polling with the saved
+            // operation Id. Rehydration performs no I/O until you start polling.
+            Operation resumed = ledgerClient.RehydratePostLedgerEntryOperation(operationId);
+
+            // The Ledger Gateway write queue can stay pending for an extended period during an outage.
+            // Always bound the wait with a CancellationToken so the call cannot hang indefinitely.
+            using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+            Response completed = resumed.WaitForCompletionResponse(cts.Token);
+
+            // Once committed, Operation.Id flips to the CCF transaction Id.
+            string transactionId = resumed.Id;
+            Console.WriteLine($"Operation {operationId} committed as transaction {transactionId}");
+            Console.WriteLine($"Final status: {completed.Status}");
 
             #endregion
         }

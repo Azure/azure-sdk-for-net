@@ -104,12 +104,8 @@ namespace Azure.Analytics.PlanetaryComputer
 #endif
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("_where"u8);
-            writer.WriteStringValue(Where);
-            writer.WritePropertyName("orderby"u8);
-            writer.WriteStringValue(OrderBy);
             writer.WritePropertyName("lastused"u8);
-            writer.WriteStringValue(LastUsed, "O");
+            writer.WriteStringValue(LastUsedOn, "O");
             writer.WritePropertyName("usecount"u8);
             writer.WriteNumberValue(UseCount);
             writer.WritePropertyName("metadata"u8);
@@ -158,9 +154,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             string hash = default;
             IDictionary<string, BinaryData> search = default;
-            string @where = default;
-            string orderBy = default;
-            DateTimeOffset lastUsed = default;
+            DateTimeOffset lastUsedOn = default;
             int useCount = default;
             MosaicMetadata metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -182,25 +176,15 @@ namespace Azure.Analytics.PlanetaryComputer
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     search = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("_where"u8))
-                {
-                    @where = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("orderby"u8))
-                {
-                    orderBy = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("lastused"u8))
                 {
-                    lastUsed = prop.Value.GetDateTimeOffset("O");
+                    lastUsedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("usecount"u8))
@@ -215,15 +199,13 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TilerStacSearchDefinition(
                 hash,
                 search,
-                @where,
-                orderBy,
-                lastUsed,
+                lastUsedOn,
                 useCount,
                 metadata,
                 additionalBinaryDataProperties);

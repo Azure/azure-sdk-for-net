@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.AdministratorType;
+                return Properties is null ? (ManagedInstanceAdministratorType?)default : Properties.AdministratorType;
             }
             set
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.Sid;
+                return Properties is null ? (Guid?)default : Properties.Sid;
             }
             set
             {

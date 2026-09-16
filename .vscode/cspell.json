@@ -144,7 +144,6 @@
     "otel",
     "overridden",
     "parallelization",
-    "personalizer",
     "petabit",
     "picometer",
     "pids",
@@ -243,12 +242,6 @@
       "words": [
         "dynatrace",
         "fqdns"
-      ]
-    },
-    {
-      "filename": "**/sdk/astronomer/**/*.cs",
-      "words": [
-        "astro"
       ]
     },
     {
@@ -773,13 +766,6 @@
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
-      ]
-    },
-    {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
-      "words": [
-        "kustomization",
-        "kustomizations"
       ]
     },
     {

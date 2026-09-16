@@ -102,6 +102,39 @@ The SDK also caches the latest primary node URL from redirect responses and reus
 
 No additional configuration is required to enable this behavior.
 
+### Read failover and retry behavior
+
+The client discovers failover ledgers through the configured confidential ledger Identity Service. Failover is limited to the synchronous and asynchronous `GetLedgerEntry` and `GetCurrentLedgerEntry` methods. Writes, receipts, governance operations, transaction status, ranged queries, and all other `GET` operations remain on the primary ledger.
+
+Failover occurs for HTTP 408, 429, and 5xx responses and for retryable transport failures such as connection failures and network timeouts. The primary endpoint first consumes its normal `Retry.MaxRetries` budget. Each discovered failover endpoint then receives a fresh, independent retry budget. Caller-requested cancellation stops immediately and never triggers discovery or failover. If discovery is unavailable, metadata is malformed, or every failover fails, the original primary response or exception is surfaced.
+
+```C#
+var options = new ConfidentialLedgerClientOptions
+{
+    Failover = ConfidentialLedgerClientOptions.FailoverSelection.Ordered,
+    FailoverNetworkTimeout = TimeSpan.FromSeconds(30),
+};
+options.Retry.MaxRetries = 3;
+
+var ledgerClient = new ConfidentialLedgerClient(ledgerEndpoint, credential, options);
+```
+
+`Ordered` uses the Identity Service order. `Random` shuffles candidates independently for each request. `FailoverNetworkTimeout`, when set, replaces the network timeout for each failover endpoint attempt; it does not create an overall operation deadline. Use the request `CancellationToken` for an overall deadline.
+
+`GetLedgerEntry` automatically re-polls a successful response whose state is `Loading`. The configured `Retry.MaxRetries` bounds the additional loading polls and `Retry.Delay` controls their spacing.
+
+Collection pruning can remove the live value while retaining its history. Archived fallback is disabled by default because the service returns the same 404 for a pruned collection and a collection that never existed, and searching ledger history can be expensive on a ledger with a long transaction history. To transparently query history and return the latest retained entry, including tags, explicitly set `EnableArchivedCollectionFallback = true`. A missing collection still surfaces the original 404 when history contains no entry.
+
+```C#
+var options = new ConfidentialLedgerClientOptions
+{
+    EnableArchivedCollectionFallback = true,
+};
+var ledgerClient = new ConfidentialLedgerClient(ledgerEndpoint, credential, options);
+```
+
+Each endpoint uses its own transport pipeline and the TLS identity certificate returned by the independently validated Identity Service is pinned specifically to that endpoint's ledger id. A certificate trusted for one ledger is not accepted for another ledger, including during concurrent failover. Custom transports remain in use; their TLS behavior remains the custom transport owner's responsibility. Do not disable `VerifyConnection` in production.
+
 #### Receipts
 
 State changes to the a confidential ledger are saved in a data structure called a Merkle tree. To cryptographically verify that writes were correctly saved, a Merkle proof, or receipt, can be retrieved for any transaction id.
@@ -361,6 +394,51 @@ Console.WriteLine(enclavesJson);
 ```
 
 [Microsoft Azure Attestation Service](https://azure.microsoft.com/services/azure-attestation/) is one provider of SGX enclave quotes.
+
+### Ledger Gateway (opt-in)
+
+The confidential ledger can be fronted by the **Ledger Gateway**, which terminates TLS with publicly-rooted certificates and can queue write submissions so callers can submit-and-disconnect instead of holding a connection open against a CCF primary node. Opt in by setting `ConfidentialLedgerClientOptions.UseLedgerGateway = true`. When enabled, the SDK skips the CCF identity-service TLS bootstrap (the OS trust store is sufficient), and only `TokenCredential` authentication is supported (client-certificate / mTLS is rejected).
+
+```C# Snippet:CreateClientLedgerGateway
+var ledgerClient = new ConfidentialLedgerClient(
+    ledgerEndpoint: new Uri("https://my-ledger-url.confidential-ledger.azure.com"),
+    credential: new DefaultAzureCredential(),
+    options: new ConfidentialLedgerClientOptions { UseLedgerGateway = true });
+```
+
+When the underlying CCF cluster is temporarily unreachable, `PostLedgerEntry` may return `202 Accepted`: the write is queued and the returned `Operation.Id` is the gateway-assigned `operationId`. Submit with `WaitUntil.Started` and persist the `operationId` so you can resume later:
+
+```C# Snippet:PostLedgerEntryWaitUntilStarted
+// When UseLedgerGateway = true and waitUntil is Started, the SDK accepts a 202 Accepted
+// response and returns an operation whose Id is the gateway-assigned operationId.
+Operation operation = ledgerClient.PostLedgerEntry(
+    waitUntil: WaitUntil.Started,
+    RequestContent.Create(new { contents = "Hello from the Ledger Gateway!" }));
+
+string operationId = operation.Id;
+Console.WriteLine($"Submitted ledger entry. Operation Id: {operationId}");
+
+// The application can persist operationId and exit. The submission is durable on the
+// server for the gateway's operation-record retention period.
+```
+
+Later — in a different process or after a restart — resume polling with the saved `operationId`. Rehydration performs no I/O until you start polling, and once the write commits `Operation.Id` flips to the CCF transaction id. Always bound the wait with a `CancellationToken`:
+
+```C# Snippet:RehydratePostLedgerEntryOperation
+// Later, in a different process or after a restart, resume polling with the saved
+// operation Id. Rehydration performs no I/O until you start polling.
+Operation resumed = ledgerClient.RehydratePostLedgerEntryOperation(operationId);
+
+// The Ledger Gateway write queue can stay pending for an extended period during an outage.
+// Always bound the wait with a CancellationToken so the call cannot hang indefinitely.
+using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+Response completed = resumed.WaitForCompletionResponse(cts.Token);
+
+// Once committed, Operation.Id flips to the CCF transaction Id.
+string transactionId = resumed.Id;
+Console.WriteLine($"Operation {operationId} committed as transaction {transactionId}");
+Console.WriteLine($"Final status: {completed.Status}");
+```
 
 ### Thread safety
 

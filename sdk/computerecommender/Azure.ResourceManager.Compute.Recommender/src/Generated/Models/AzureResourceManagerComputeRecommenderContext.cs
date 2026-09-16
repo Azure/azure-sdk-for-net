@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Compute.Recommender.Models;
 using Azure.ResourceManager.Models;
 
@@ -22,6 +23,21 @@ namespace Azure.ResourceManager.Compute.Recommender
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderGenerateResult))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderPlacementScore))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderResourceSize))]
+    [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementCapacityLimit))]
+    [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementData))]
+    [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementDeploymentChoice))]
+    [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementGenerateContent))]
+    [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementGenerateResult))]
+    [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementItem))]
+    [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementResource))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SkuMixPlacementCapacityProfile))]
+    [ModelReaderWriterBuildable(typeof(SkuMixPlacementInstanceDescription))]
+    [ModelReaderWriterBuildable(typeof(SkuMixPlacementProperties))]
+    [ModelReaderWriterBuildable(typeof(SkuMixPlacementSpotPriorityProfile))]
+    [ModelReaderWriterBuildable(typeof(SkuMixPlacementVMSize))]
+    [ModelReaderWriterBuildable(typeof(SkuMixPlacementZoneAllocationPolicy))]
+    [ModelReaderWriterBuildable(typeof(SkuMixPlacementZonePreference))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerComputeRecommenderContext : ModelReaderWriterContext
     {

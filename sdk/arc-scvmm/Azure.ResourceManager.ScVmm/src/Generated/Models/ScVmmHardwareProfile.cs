@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ScVmm.Models
     /// <summary> Defines the resource properties. </summary>
     public partial class ScVmmHardwareProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScVmmHardwareProfile"/>. </summary>
         public ScVmmHardwareProfile()
@@ -58,8 +29,8 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="dynamicMemoryMaxMB"> Gets or sets the max dynamic memory for the vm. </param>
         /// <param name="dynamicMemoryMinMB"> Gets or sets the min dynamic memory for the vm. </param>
         /// <param name="isHighlyAvailable"> Gets highly available property. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmHardwareProfile(int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, IsHighlyAvailable? isHighlyAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmHardwareProfile(int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, IsHighlyAvailable? isHighlyAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MemoryMB = memoryMB;
             CpuCount = cpuCount;
@@ -68,21 +39,27 @@ namespace Azure.ResourceManager.ScVmm.Models
             DynamicMemoryMaxMB = dynamicMemoryMaxMB;
             DynamicMemoryMinMB = dynamicMemoryMinMB;
             IsHighlyAvailable = isHighlyAvailable;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> MemoryMB is the size of a virtual machine's memory, in MB. </summary>
         public int? MemoryMB { get; set; }
+
         /// <summary> Gets or sets the number of vCPUs for the vm. </summary>
         public int? CpuCount { get; set; }
+
         /// <summary> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </summary>
         public LimitCpuForMigration? LimitCpuForMigration { get; set; }
+
         /// <summary> Gets or sets a value indicating whether to enable dynamic memory or not. </summary>
         public DynamicMemoryEnabled? DynamicMemoryEnabled { get; set; }
+
         /// <summary> Gets or sets the max dynamic memory for the vm. </summary>
         public int? DynamicMemoryMaxMB { get; set; }
+
         /// <summary> Gets or sets the min dynamic memory for the vm. </summary>
         public int? DynamicMemoryMinMB { get; set; }
+
         /// <summary> Gets highly available property. </summary>
         public IsHighlyAvailable? IsHighlyAvailable { get; }
     }

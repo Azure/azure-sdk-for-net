@@ -82,54 +82,6 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets the ResourceState. </summary>
-        public BicepValue<FrontDoorResourceState> ResourceState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
-                return Properties.ResourceState;
-            }
-        }
-
-        /// <summary> Gets the CustomHttpsProvisioningState. </summary>
-        public BicepValue<FrontendEndpointCustomHttpsProvisioningState> CustomHttpsProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
-                return Properties.CustomHttpsProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the CustomHttpsProvisioningSubstate. </summary>
-        public BicepValue<FrontendEndpointCustomHttpsProvisioningSubstate> CustomHttpsProvisioningSubstate
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontendEndpointProperties();
-                }
-                return Properties.CustomHttpsProvisioningSubstate;
-            }
-        }
-
-        /// <summary> Gets the CustomHttpsConfiguration. </summary>
-        public CustomHttpsConfiguration CustomHttpsConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.CustomHttpsConfiguration;
-            }
-        }
-
         /// <summary> Gets or sets the HostName. </summary>
         public BicepValue<string> HostName
         {
@@ -198,6 +150,54 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
+        /// <summary> Gets the ResourceState. </summary>
+        public BicepValue<FrontDoorResourceState> ResourceState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                return Properties.ResourceState;
+            }
+        }
+
+        /// <summary> Gets the CustomHttpsProvisioningState. </summary>
+        public BicepValue<FrontendEndpointCustomHttpsProvisioningState> CustomHttpsProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                return Properties.CustomHttpsProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the CustomHttpsProvisioningSubstate. </summary>
+        public BicepValue<FrontendEndpointCustomHttpsProvisioningSubstate> CustomHttpsProvisioningSubstate
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendEndpointProperties();
+                }
+                return Properties.CustomHttpsProvisioningSubstate;
+            }
+        }
+
+        /// <summary> Gets the CustomHttpsConfiguration. </summary>
+        public CustomHttpsConfiguration CustomHttpsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomHttpsConfiguration;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for FrontendEndpoint. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -205,7 +205,7 @@ namespace Azure.Provisioning.FrontDoor
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<FrontendEndpointProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FrontDoorResource>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<FrontDoorResource>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

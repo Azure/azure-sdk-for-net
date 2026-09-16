@@ -133,15 +133,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (Optional.IsDefined(QueryStartOn))
+            if (Optional.IsDefined(QueryStartsOn))
             {
                 writer.WritePropertyName("queryStartTime"u8);
-                writer.WriteStringValue(QueryStartOn.Value, "O");
+                writer.WriteStringValue(QueryStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(QueryEndOn))
+            if (Optional.IsDefined(QueryEndsOn))
             {
                 writer.WritePropertyName("queryEndTime"u8);
-                writer.WriteStringValue(QueryEndOn.Value, "O");
+                writer.WriteStringValue(QueryEndsOn.Value, "O");
             }
             if (Optional.IsDefined(IncidentInfo))
             {
@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             DateTimeOffset? updatedOn = default;
             SecurityInsightsUserInfo updatedBy = default;
             DateTimeOffset? eventOn = default;
-            DateTimeOffset? queryStartOn = default;
-            DateTimeOffset? queryEndOn = default;
+            DateTimeOffset? queryStartsOn = default;
+            DateTimeOffset? queryEndsOn = default;
             SecurityInsightsBookmarkIncidentInfo incidentInfo = default;
             IList<BookmarkEntityMappings> entityMappings = default;
             IList<SecurityInsightsAttackTactic> tactics = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    queryStartOn = prop.Value.GetDateTimeOffset("O");
+                    queryStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("queryEndTime"u8))
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    queryEndOn = prop.Value.GetDateTimeOffset("O");
+                    queryEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("incidentInfo"u8))
@@ -422,8 +422,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 updatedOn,
                 updatedBy,
                 eventOn,
-                queryStartOn,
-                queryEndOn,
+                queryStartsOn,
+                queryEndsOn,
                 incidentInfo,
                 entityMappings ?? new ChangeTrackingList<BookmarkEntityMappings>(),
                 tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),

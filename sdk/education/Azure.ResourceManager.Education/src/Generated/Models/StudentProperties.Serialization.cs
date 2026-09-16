@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Education.Models
                 writer.WriteStringValue(SubscriptionId);
             }
             writer.WritePropertyName("expirationDate"u8);
-            writer.WriteStringValue(ExpireOn, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Education.Models
             StudentRole role = default;
             EducationAmount budget = default;
             string subscriptionId = default;
-            DateTimeOffset expireOn = default;
+            DateTimeOffset expiresOn = default;
             StudentLabStatus? status = default;
             DateTimeOffset? effectiveOn = default;
             string subscriptionAlias = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Education.Models
                 }
                 if (prop.NameEquals("expirationDate"u8))
                 {
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Education.Models
                 role,
                 budget,
                 subscriptionId,
-                expireOn,
+                expiresOn,
                 status,
                 effectiveOn,
                 subscriptionAlias,

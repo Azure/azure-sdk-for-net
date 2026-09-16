@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageVm"/>. </summary>
         /// <param name="sourceVmId"> The source vm identifier. </param>
-        /// <param name="windowsOsInfo"> The Windows OS information of the VM. </param>
-        /// <param name="linuxOsInfo"> The Linux OS information of the VM. </param>
+        /// <param name="windowsOSInfo"> The Windows OS information of the VM. </param>
+        /// <param name="linuxOSInfo"> The Linux OS information of the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabCustomImageVm(string sourceVmId, DevTestLabWindowsOSInfo windowsOsInfo, DevTestLabLinuxOSInfo linuxOsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabCustomImageVm(string sourceVmId, DevTestLabWindowsOSInfo windowsOSInfo, DevTestLabLinuxOSInfo linuxOSInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceVmId = sourceVmId;
-            WindowsOsInfo = windowsOsInfo;
-            LinuxOsInfo = linuxOsInfo;
+            WindowsOSInfo = windowsOSInfo;
+            LinuxOSInfo = linuxOSInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,25 +38,25 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public string SourceVmId { get; set; }
 
         /// <summary> The Windows OS information of the VM. </summary>
-        internal DevTestLabWindowsOSInfo WindowsOsInfo { get; set; }
+        internal DevTestLabWindowsOSInfo WindowsOSInfo { get; set; }
 
         /// <summary> The Linux OS information of the VM. </summary>
-        internal DevTestLabLinuxOSInfo LinuxOsInfo { get; set; }
+        internal DevTestLabLinuxOSInfo LinuxOSInfo { get; set; }
 
         /// <summary> The state of the Windows OS (i.e. NonSysprepped, SysprepRequested, SysprepApplied). </summary>
         public WindowsOSState? WindowsOSState
         {
             get
             {
-                return WindowsOsInfo is null ? default : WindowsOsInfo.WindowsOSState;
+                return WindowsOSInfo is null ? default : WindowsOSInfo.WindowsOSState;
             }
             set
             {
-                if (WindowsOsInfo is null)
+                if (WindowsOSInfo is null)
                 {
-                    WindowsOsInfo = new DevTestLabWindowsOSInfo();
+                    WindowsOSInfo = new DevTestLabWindowsOSInfo();
                 }
-                WindowsOsInfo.WindowsOSState = value;
+                WindowsOSInfo.WindowsOSState = value;
             }
         }
 
@@ -65,15 +65,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             get
             {
-                return LinuxOsInfo is null ? default : LinuxOsInfo.LinuxOSState;
+                return LinuxOSInfo is null ? default : LinuxOSInfo.LinuxOSState;
             }
             set
             {
-                if (LinuxOsInfo is null)
+                if (LinuxOSInfo is null)
                 {
-                    LinuxOsInfo = new DevTestLabLinuxOSInfo();
+                    LinuxOSInfo = new DevTestLabLinuxOSInfo();
                 }
-                LinuxOsInfo.LinuxOSState = value;
+                LinuxOSInfo.LinuxOSState = value;
             }
         }
     }

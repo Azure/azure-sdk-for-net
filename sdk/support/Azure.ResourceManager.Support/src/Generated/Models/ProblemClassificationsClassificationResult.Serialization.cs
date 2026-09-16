@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("relatedService"u8);
                 writer.WriteObjectValue(RelatedService, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ArticleId))
+            {
+                writer.WritePropertyName("articleId"u8);
+                writer.WriteStringValue(ArticleId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.Support.Models
             string serviceId = default;
             string problemClassificationId = default;
             SupportClassificationService relatedService = default;
+            string articleId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,6 +195,11 @@ namespace Azure.ResourceManager.Support.Models
                     relatedService = SupportClassificationService.DeserializeSupportClassificationService(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("articleId"u8))
+                {
+                    articleId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -201,6 +212,7 @@ namespace Azure.ResourceManager.Support.Models
                 serviceId,
                 problemClassificationId,
                 relatedService,
+                articleId,
                 additionalBinaryDataProperties);
         }
     }

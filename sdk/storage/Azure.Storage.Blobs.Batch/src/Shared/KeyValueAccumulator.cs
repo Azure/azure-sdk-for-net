@@ -12,6 +12,7 @@ using System.Collections.Generic;
 
 namespace Azure.Core.Http.Multipart
 {
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal struct KeyValueAccumulator
     {
         private Dictionary<string, StringValues> _accumulator;

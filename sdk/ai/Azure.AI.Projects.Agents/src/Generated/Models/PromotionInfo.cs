@@ -16,31 +16,31 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PromotionInfo"/>. </summary>
-        /// <param name="promotedAt"> Timestamp when promotion occurred, represented in Unix time. </param>
+        /// <param name="promotedOn"> Timestamp when promotion occurred, represented in Unix time. </param>
         /// <param name="agentName"> Name of the Foundry agent this candidate was promoted to. </param>
         /// <param name="agentVersion"> Version of the Foundry agent this candidate was promoted to. </param>
-        internal PromotionInfo(DateTimeOffset promotedAt, string agentName, string agentVersion)
+        internal PromotionInfo(DateTimeOffset promotedOn, string agentName, string agentVersion)
         {
-            PromotedAt = promotedAt;
+            PromotedOn = promotedOn;
             AgentName = agentName;
             AgentVersion = agentVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="PromotionInfo"/>. </summary>
-        /// <param name="promotedAt"> Timestamp when promotion occurred, represented in Unix time. </param>
+        /// <param name="promotedOn"> Timestamp when promotion occurred, represented in Unix time. </param>
         /// <param name="agentName"> Name of the Foundry agent this candidate was promoted to. </param>
         /// <param name="agentVersion"> Version of the Foundry agent this candidate was promoted to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PromotionInfo(DateTimeOffset promotedAt, string agentName, string agentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PromotionInfo(DateTimeOffset promotedOn, string agentName, string agentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PromotedAt = promotedAt;
+            PromotedOn = promotedOn;
             AgentName = agentName;
             AgentVersion = agentVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Timestamp when promotion occurred, represented in Unix time. </summary>
-        public DateTimeOffset PromotedAt { get; }
+        public DateTimeOffset PromotedOn { get; }
 
         /// <summary> Name of the Foundry agent this candidate was promoted to. </summary>
         public string AgentName { get; }

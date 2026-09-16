@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MedianStoppingPolicy. </summary>
         public MedianStoppingPolicy()
         {
+            PolicyType.Assign(EarlyTerminationPolicyType.MedianStopping);
         }
 
         /// <summary> Define all the provisionable properties for MedianStoppingPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("policyType", new string[] { "policyType" }, defaultValue: "MedianStopping");
             DefineAdditionalProperties();
         }
 

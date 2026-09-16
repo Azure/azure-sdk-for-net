@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    internal partial class ScVmmInfrastructureProfileUpdate : IUtf8JsonSerializable, IJsonModel<ScVmmInfrastructureProfileUpdate>
+    /// <summary> Specifies the vmmServer infrastructure specific update settings for the virtual machine instance. </summary>
+    internal partial class ScVmmInfrastructureProfileUpdate : IJsonModel<ScVmmInfrastructureProfileUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmInfrastructureProfileUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScVmmInfrastructureProfileUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmInfrastructureProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeScVmmInfrastructureProfileUpdate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScVmmInfrastructureProfileUpdate)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmInfrastructureProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ScVmmInfrastructureProfileUpdate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScVmmInfrastructureProfileUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScVmmInfrastructureProfileUpdate IPersistableModel<ScVmmInfrastructureProfileUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScVmmInfrastructureProfileUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScVmmInfrastructureProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,26 +69,25 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmInfrastructureProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmInfrastructureProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScVmmInfrastructureProfileUpdate)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(CheckpointType))
             {
                 writer.WritePropertyName("checkpointType"u8);
                 writer.WriteStringValue(CheckpointType);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -56,74 +96,46 @@ namespace Azure.ResourceManager.ScVmm.Models
             }
         }
 
-        ScVmmInfrastructureProfileUpdate IJsonModel<ScVmmInfrastructureProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScVmmInfrastructureProfileUpdate IJsonModel<ScVmmInfrastructureProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScVmmInfrastructureProfileUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmInfrastructureProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmInfrastructureProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScVmmInfrastructureProfileUpdate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScVmmInfrastructureProfileUpdate(document.RootElement, options);
         }
 
-        internal static ScVmmInfrastructureProfileUpdate DeserializeScVmmInfrastructureProfileUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScVmmInfrastructureProfileUpdate DeserializeScVmmInfrastructureProfileUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string checkpointType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("checkpointType"u8))
+                if (prop.NameEquals("checkpointType"u8))
                 {
-                    checkpointType = property.Value.GetString();
+                    checkpointType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ScVmmInfrastructureProfileUpdate(checkpointType, serializedAdditionalRawData);
+            return new ScVmmInfrastructureProfileUpdate(checkpointType, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ScVmmInfrastructureProfileUpdate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmInfrastructureProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ScVmmInfrastructureProfileUpdate)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ScVmmInfrastructureProfileUpdate IPersistableModel<ScVmmInfrastructureProfileUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmInfrastructureProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeScVmmInfrastructureProfileUpdate(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ScVmmInfrastructureProfileUpdate)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ScVmmInfrastructureProfileUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

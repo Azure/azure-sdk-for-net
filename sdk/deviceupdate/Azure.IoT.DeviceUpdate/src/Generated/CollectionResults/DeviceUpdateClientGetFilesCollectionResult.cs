@@ -60,7 +60,7 @@ namespace Azure.IoT.DeviceUpdate
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureIoTDeviceUpdateContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureIoTDeviceUpdateContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

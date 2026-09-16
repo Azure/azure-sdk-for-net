@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Forecasting target rolling window size.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoTargetRollingWindowSize"/> and <see cref="CustomTargetRollingWindowSize"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoTargetRollingWindowSize"/> and <see cref="CustomTargetRollingWindowSize"/>.
     /// </summary>
     public partial class TargetRollingWindowSize : ProvisionableConstruct
     {
+        private BicepValue<TargetRollingWindowSizeMode> _mode;
+
         /// <summary> Creates a new TargetRollingWindowSize. </summary>
         public TargetRollingWindowSize()
         {
+        }
+
+        /// <summary> [Required] TargetRollingWindowSiz detection mode. </summary>
+        internal BicepValue<TargetRollingWindowSizeMode> Mode
+        {
+            get
+            {
+                Initialize();
+                return _mode;
+            }
         }
 
         /// <summary> Define all the provisionable properties for TargetRollingWindowSize. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _mode = DefineProperty<TargetRollingWindowSizeMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
