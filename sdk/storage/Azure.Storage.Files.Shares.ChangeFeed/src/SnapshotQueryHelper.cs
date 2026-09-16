@@ -72,7 +72,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 throw ShareChangeFeedErrors.SnapshotMetadataNotFound(snapshotTimestamp, path, ex);
             }
 
-            return await ParseSnapshotMetadataAsync(result, path, async, cancellationToken).ConfigureAwait(false);
+using (result)
+            {
+                return await ParseSnapshotMetadataAsync(result, path, async, cancellationToken).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
