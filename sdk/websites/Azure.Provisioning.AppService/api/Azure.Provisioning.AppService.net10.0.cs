@@ -2826,6 +2826,16 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> Text { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class ScmSiteBasicPublishingCredentialsPolicy : Azure.Provisioning.AppService.SiteBasicPublishingCredentialsPolicy
+    {
+        public ScmSiteBasicPublishingCredentialsPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
+        public static new Azure.Provisioning.AppService.ScmSiteBasicPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+    }
+    public partial class ScmSiteSlotBasicPublishingCredentialsPolicy : Azure.Provisioning.AppService.SiteSlotBasicPublishingCredentialsPolicy
+    {
+        public ScmSiteSlotBasicPublishingCredentialsPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
+        public static new Azure.Provisioning.AppService.ScmSiteSlotBasicPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+    }
     public enum ScmType
     {
         None = 0,
@@ -2892,6 +2902,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteBasicPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -4061,6 +4103,38 @@ namespace Azure.Provisioning.AppService
         public static Azure.Provisioning.AppService.SiteSlotBasicPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2014_06_01;
+            public static readonly string V2014_11_01;
+            public static readonly string V2015_01_01;
+            public static readonly string V2015_02_01;
+            public static readonly string V2015_04_01;
+            public static readonly string V2015_05_01;
+            public static readonly string V2015_06_01;
+            public static readonly string V2015_07_01;
+            public static readonly string V2015_08_01;
+            public static readonly string V2015_11_01;
+            public static readonly string V2016_03_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2020_10_01;
+            public static readonly string V2020_12_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2022_03_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2023_01_01;
+            public static readonly string V2023_12_01;
+            public static readonly string V2024_04_01;
+            public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
     }
@@ -6337,6 +6411,11 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2025_03_01;
         }
     }
+    public partial class WebSiteFtpPublishingCredentialsPolicy : Azure.Provisioning.AppService.SiteBasicPublishingCredentialsPolicy
+    {
+        public WebSiteFtpPublishingCredentialsPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
+        public static new Azure.Provisioning.AppService.WebSiteFtpPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+    }
     public partial class WebSiteHybridConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public WebSiteHybridConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -6887,6 +6966,11 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2024_11_01;
             public static readonly string V2025_03_01;
         }
+    }
+    public partial class WebSiteSlotFtpPublishingCredentialsPolicy : Azure.Provisioning.AppService.SiteSlotBasicPublishingCredentialsPolicy
+    {
+        public WebSiteSlotFtpPublishingCredentialsPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(string)) { }
+        public static new Azure.Provisioning.AppService.WebSiteSlotFtpPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
     }
     public partial class WebSiteSlotHybridConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
