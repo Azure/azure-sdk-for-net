@@ -22,6 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     [LiveOnly]
     [Explicit("Requires a fresh filtered Live test host.")]
+    [SyncOnly]
     public class MultiEndpointRoutingLiveTests : BaseLiveTest
     {
         private const string TestServerPort = "9998";
@@ -33,7 +34,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         public MultiEndpointRoutingLiveTests(bool isAsync) : base(isAsync) { }
 
         [Test]
-        [SyncOnly]
         public async Task RoutesTracesAndLogsAcrossResourcesAndEndpoints()
         {
             var resources = MultiEndpointResource.Parse(TestEnvironment.MultiEndpointResources);

@@ -1,0 +1,5 @@
+<RunSettings>
+  <NUnit>
+    <UseNUnitFilter>false</UseNUnitFilter>
+  </NUnit>
+</RunSettings>

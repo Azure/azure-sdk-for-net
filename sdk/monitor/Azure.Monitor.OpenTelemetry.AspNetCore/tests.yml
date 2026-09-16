@@ -10,3 +10,32 @@ extends:
           Path: sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/multi-endpoint-routing-live-matrix.json
           Selection: sparse
           GenerateVMJobs: true
+      PostSteps:
+        - pwsh: |
+            $ErrorActionPreference = 'Stop'
+            $resultsDirectory = Join-Path $env:AGENT_TEMPDIRECTORY 'multi-endpoint-routing-results'
+            $results = @(
+              foreach ($file in Get-ChildItem $resultsDirectory -Filter '*.trx' -Recurse) {
+                [xml]$run = Get-Content $file.FullName -Raw
+                $testIds = @($run.TestRun.TestDefinitions.UnitTest | Where-Object {
+                  $_.TestMethod.className -eq 'Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.MultiEndpointRoutingLiveTests(False)' -and
+                  $_.TestMethod.name -eq 'RoutesTracesAndLogsAcrossResourcesAndEndpoints'
+                } | ForEach-Object { $_.id })
+                $run.TestRun.Results.UnitTestResult | Where-Object { $_.testId -in $testIds }
+              }
+            )
+            if ($results.Count -ne 1 -or $results[0].outcome -ne 'Passed') {
+              throw "Expected one passed multi-endpoint routing test; found $($results.Count) result(s) with outcomes: $($results.outcome -join ', ')."
+            }
+            Write-Host 'Multi-endpoint routing test executed and passed.'
+          displayName: Require multi-endpoint routing test pass
+          condition: and(succeededOrFailed(), eq(variables['ValidateMultiEndpointRouting'], 'true'))
+        - task: PublishTestResults@2
+          displayName: Publish multi-endpoint routing results
+          condition: and(succeededOrFailed(), eq(variables['ValidateMultiEndpointRouting'], 'true'))
+          inputs:
+            testResultsFiles: '$(Agent.TempDirectory)/multi-endpoint-routing-results/**/*.trx'
+            testResultsFormat: VSTest
+            testRunTitle: 'Multi-endpoint routing $(Agent.JobName)'
+            failTaskOnFailedTests: true
+            failTaskOnMissingResultsFile: true
