@@ -8,14 +8,14 @@ dotnet build sdk\websites\Azure.Provisioning.AppService\src\Azure.Provisioning.A
 
 ## Summary
 
-The build failed ApiCompat with **20 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
+The build failed ApiCompat with **18 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
 
 | Category | API changes | ApiCompat diagnostics |
 |---|---:|---:|
-| Removed public properties | 3 properties | 4 |
+| Removed public properties | 1 property | 2 |
 | Changed property types | 15 properties | 15 |
 | Missing enum members | 1 member | 1 |
-| **Total** | **19 changes** | **20** |
+| **Total** | **17 changes** | **18** |
 
 ApiCompat reports property getters and setters independently. Therefore, a removed read/write property normally produces two `CP0002` diagnostics.
 
@@ -23,22 +23,11 @@ ApiCompat reports property getters and setters independently. Therefore, a remov
 
 ### 1. Removed public properties
 
-### Function app models
-
 | Type | Removed read/write property |
 |---|---|
 | `FunctionAppStorage` | `Value` |
 
 This accounts for **1 removed property and 2 diagnostics**.
-
-### Other removed properties
-
-| Type | Removed property | Diagnostics |
-|---|---|---:|
-| `SiteCertificate` | `Thumbprint` (read-only) | 1 |
-| `SiteSlotCertificate` | `Thumbprint` (read-only) | 1 |
-
-The certificate types now expose `ThumbprintString`, so the two `Thumbprint` failures appear to be API renames rather than removal of the underlying service data.
 
 ### 2. Changed property types
 
@@ -73,10 +62,10 @@ Most of this category is scalar semantic drift from URI, resource identifier, lo
 The failures are concentrated rather than spread evenly:
 
 1. Address the 15 scalar/model type changes.
-2. Restore the remaining function app property and evaluate certificate `Thumbprint`.
+2. Restore the remaining function app property.
 3. Restore `AppServiceSupportedTlsVersion.One3`.
 
-The scalar/model type changes account for **15 of 20 diagnostics (75%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
+The scalar/model type changes account for **15 of 18 diagnostics (83%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
 
 ## Resolved issues
 
@@ -153,3 +142,11 @@ The provisioning compatibility implementation follows the same public pattern. A
 `FunctionAppScaleAndConcurrency.ConcurrentHttpPerInstanceConcurrency` has been restored with `CodeGenMember`, replacing the generated `TriggersConcurrentHttpPerInstanceConcurrency` name. The generated `Triggers` prefix exposed the nested wire-model structure rather than describing the public setting, while the legacy name continues to map to `triggers.http.perInstanceConcurrency`.
 
 This restores **1 property and resolves 2 diagnostics**.
+
+### 7. Legacy binary certificate thumbprints
+
+The legacy `BicepValue<BinaryData> Thumbprint` getter has been restored on both `SiteCertificate` and `SiteSlotCertificate` without replacing the current string-typed `ThumbprintString` API. An internal output-only `CertificateProperties.Thumbprint` binding preserves the shared `properties.thumbprint` wire path.
+
+The compatibility properties match the management library by using `EditorBrowsableState.Never` and an obsolete attribute directing callers to `ThumbprintString`. Explanatory notes document why both semantic representations are retained.
+
+This restores **2 properties and resolves 2 diagnostics**.

@@ -3007,6 +3007,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> SubjectName { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
+        public Azure.Provisioning.BicepValue<System.BinaryData> Thumbprint { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ThumbprintString { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.SiteCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -4191,6 +4193,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> SubjectName { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
+        public Azure.Provisioning.BicepValue<System.BinaryData> Thumbprint { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ThumbprintString { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.AppService.SiteSlotCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
