@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.CertificateRegistration
       safeName: AzureResourceManagerCertificateRegistration
+    - name: Azure.Provisioning.CertificateRegistration
+      safeName: AzureProvisioningCertificateRegistration
