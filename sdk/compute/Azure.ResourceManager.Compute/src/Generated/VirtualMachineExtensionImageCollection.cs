@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Gets a list of virtual machine extension image versions.
-        ///             Request Path./subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions.Operation Id.VirtualMachineExtensionImages_ListVersions.Default Api Version.2026-03-01.
+        ///                         Request Path./subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions.Operation Id.VirtualMachineExtensionImages_ListVersions.Default Api Version.2026-03-01.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="filter"> The filter to apply on the operation. </param>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary>
         /// Gets a list of virtual machine extension image versions.
-        ///             Request Path./subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions.Operation Id.VirtualMachineExtensionImages_ListVersions.Default Api Version.2026-03-01.
+        ///                         Request Path./subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions.Operation Id.VirtualMachineExtensionImages_ListVersions.Default Api Version.2026-03-01.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="filter"> The filter to apply on the operation. </param>
