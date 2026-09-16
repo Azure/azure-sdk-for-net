@@ -132,10 +132,13 @@ namespace Azure.Storage.ChangeFeed.Common
             if (!_disableEventTimeFilter && _currentSegment.DateTime >= EffectiveEndTime)
                 return ChangeFeedEventPageBase<TEvent>.Empty();
 
-            int defaultPageSize = _config?.DefaultPageSize ?? 5000;
+int defaultPageSize = _config?.DefaultPageSize ?? 5000;
 
-            if (pageSize > defaultPageSize)
-                pageSize = defaultPageSize;
+if (pageSize <= 0)
+    throw new ArgumentOutOfRangeException(nameof(pageSize));
+
+if (pageSize > defaultPageSize)
+    pageSize = defaultPageSize;
 
             List<TEvent> events = new List<TEvent>();
             int remainingEvents = pageSize;
