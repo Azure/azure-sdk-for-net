@@ -320,6 +320,29 @@ namespace Azure.Storage.Files.Shares.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_03_07)]
+        public async Task GetFileLinksAsync_RootDirectory()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient rootDirectory = InstrumentClient(test.Share.GetRootDirectoryClient());
+            ShareFileClient file = InstrumentClient(
+                await rootDirectory.CreateFileAsync(GetNewFileName(), maxSize: Constants.KB));
+
+            string rootDirectoryId = (await rootDirectory.GetPropertiesAsync()).Value.SmbProperties.FileId;
+            string fileId = (await file.GetPropertiesAsync()).Value.SmbProperties.FileId;
+            ShareFileClient fileIdClient = InstrumentClient(test.Share.GetFileClientByFileId(fileId));
+
+            // Act
+            Response<ShareFileLinks> response = await fileIdClient.GetFileLinksAsync();
+
+            // Assert
+            Assert.AreEqual(1, response.Value.Links.Count);
+            Assert.AreEqual(file.Name, response.Value.Links[0].Name);
+            Assert.AreEqual(rootDirectoryId, response.Value.Links[0].ParentId);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2027_03_07)]
         public async Task GetFileLinksAsync_ContentHeaders()
         {
             // Arrange
@@ -383,7 +406,8 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareFileClient file = InstrumentClient(
                 await directory.CreateFileAsync(specialCharFileName, maxSize: Constants.KB));
 
-            string fileId = (await file.GetPropertiesAsync()).Value.SmbProperties.FileId;
+            Response<ShareFileProperties> pathProperties = await file.GetPropertiesAsync();
+            string fileId = pathProperties.Value.SmbProperties.FileId;
             ShareFileClient fileIdClient = InstrumentClient(test.Share.GetFileClientByFileId(fileId));
 
             // Act
@@ -392,6 +416,7 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.AreEqual(1, response.Value.Links.Count);
             Assert.AreEqual(specialCharFileName, response.Value.Links[0].Name);
+            Assert.AreEqual(pathProperties.Value.SmbProperties.ParentId, response.Value.Links[0].ParentId);
         }
 
         [RecordedTest]
