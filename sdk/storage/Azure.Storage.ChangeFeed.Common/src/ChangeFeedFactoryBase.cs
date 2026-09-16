@@ -108,10 +108,21 @@ namespace Azure.Storage.ChangeFeed.Common
             // Resume path: deserialize the cursor and extract the start/end times from it.
             if (continuation != null)
             {
-                cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuation);
-                ValidateCursor(_containerClient, cursor);
-                startTime = ChangeFeedExtensionsBase.ToDateTimeOffset(cursor.CurrentSegmentCursor.SegmentPath).Value;
-                endTime = cursor.EndTime;
+try
+{
+    cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(continuation);
+}
+catch (JsonException ex)
+{
+    throw ChangeFeedErrors.MalformedContinuationToken(nameof(continuation), ex);
+}
+
+if (cursor?.CurrentSegmentCursor == null || string.IsNullOrEmpty(cursor.CurrentSegmentCursor.SegmentPath))
+    throw ChangeFeedErrors.MalformedContinuationToken(nameof(continuation), null);
+
+ValidateCursor(_containerClient, cursor);
+startTime = ChangeFeedExtensionsBase.ToDateTimeOffset(cursor.CurrentSegmentCursor.SegmentPath).Value;
+endTime = cursor.EndTime;
             }
 
             return BuildChangeFeedCore(cursor, startTime, endTime, async, cancellationToken, disableEventTimeFilter);
