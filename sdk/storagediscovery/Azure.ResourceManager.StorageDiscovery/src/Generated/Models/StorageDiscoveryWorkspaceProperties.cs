@@ -35,14 +35,16 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <summary> Initializes a new instance of <see cref="StorageDiscoveryWorkspaceProperties"/>. </summary>
         /// <param name="sku"> The storage discovery sku. </param>
         /// <param name="description"> The description of the storage discovery workspace. </param>
+        /// <param name="capabilities"> The capabilities configured for the storage discovery workspace. </param>
         /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku, string description, IList<ResourceIdentifier> workspaceRoots, IList<StorageDiscoveryScope> scopes, StorageDiscoveryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku, string description, StorageDiscoveryCapabilities capabilities, IList<ResourceIdentifier> workspaceRoots, IList<StorageDiscoveryScope> scopes, StorageDiscoveryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Description = description;
+            Capabilities = capabilities;
             WorkspaceRoots = workspaceRoots;
             Scopes = scopes;
             ProvisioningState = provisioningState;
@@ -55,6 +57,9 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <summary> The description of the storage discovery workspace. </summary>
         public string Description { get; set; }
 
+        /// <summary> The capabilities configured for the storage discovery workspace. </summary>
+        internal StorageDiscoveryCapabilities Capabilities { get; set; }
+
         /// <summary> The view level storage discovery data estate. </summary>
         public IList<ResourceIdentifier> WorkspaceRoots { get; }
 
@@ -63,5 +68,18 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <summary> The status of the last operation. </summary>
         public StorageDiscoveryProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The Azure Blob Storage capability configuration for the storage discovery workspace. </summary>
+        public AzureBlobStorageCapability CapabilitiesAzureBlobStorage
+        {
+            get
+            {
+                return Capabilities is null ? default : Capabilities.AzureBlobStorage;
+            }
+            set
+            {
+                Capabilities = new StorageDiscoveryCapabilities(value);
+            }
+        }
     }
 }
