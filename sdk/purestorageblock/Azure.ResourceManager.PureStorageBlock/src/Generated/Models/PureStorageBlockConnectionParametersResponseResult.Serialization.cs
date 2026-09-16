@@ -15,63 +15,63 @@ using Azure.ResourceManager.PureStorageBlock;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Connection parameters response. </summary>
-    public partial class ConnectionParametersResponse : IJsonModel<ConnectionParametersResponse>
+    public partial class PureStorageBlockConnectionParametersResponseResult : IJsonModel<PureStorageBlockConnectionParametersResponseResult>
     {
-        /// <summary> Initializes a new instance of <see cref="ConnectionParametersResponse"/> for deserialization. </summary>
-        internal ConnectionParametersResponse()
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockConnectionParametersResponseResult"/> for deserialization. </summary>
+        internal PureStorageBlockConnectionParametersResponseResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConnectionParametersResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockConnectionParametersResponseResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectionParametersResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockConnectionParametersResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConnectionParametersResponse(document.RootElement, options);
+                        return DeserializePureStorageBlockConnectionParametersResponseResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionParametersResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockConnectionParametersResponseResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectionParametersResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockConnectionParametersResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionParametersResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockConnectionParametersResponseResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConnectionParametersResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PureStorageBlockConnectionParametersResponseResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectionParametersResponse IPersistableModel<ConnectionParametersResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PureStorageBlockConnectionParametersResponseResult IPersistableModel<PureStorageBlockConnectionParametersResponseResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConnectionParametersResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PureStorageBlockConnectionParametersResponseResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConnectionParametersResponse"/> from. </param>
-        internal static ConnectionParametersResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PureStorageBlockConnectionParametersResponseResult"/> from. </param>
+        internal static PureStorageBlockConnectionParametersResponseResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConnectionParametersResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializePureStorageBlockConnectionParametersResponseResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConnectionParametersResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PureStorageBlockConnectionParametersResponseResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectionParametersResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockConnectionParametersResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionParametersResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockConnectionParametersResponseResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("iscsi"u8);
             writer.WriteObjectValue(Iscsi, options);
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConnectionParametersResponse IJsonModel<ConnectionParametersResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PureStorageBlockConnectionParametersResponseResult IJsonModel<PureStorageBlockConnectionParametersResponseResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConnectionParametersResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockConnectionParametersResponseResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConnectionParametersResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockConnectionParametersResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionParametersResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockConnectionParametersResponseResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectionParametersResponse(document.RootElement, options);
+            return DeserializePureStorageBlockConnectionParametersResponseResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConnectionParametersResponse DeserializeConnectionParametersResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static PureStorageBlockConnectionParametersResponseResult DeserializePureStorageBlockConnectionParametersResponseResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectionParametersResponse(iscsi, additionalBinaryDataProperties);
+            return new PureStorageBlockConnectionParametersResponseResult(iscsi, additionalBinaryDataProperties);
         }
     }
 }

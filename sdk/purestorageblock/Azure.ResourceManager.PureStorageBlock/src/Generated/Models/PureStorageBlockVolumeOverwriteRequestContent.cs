@@ -12,26 +12,26 @@ using Azure.Core;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Request to overwrite a volume's content from another volume or a snapshot. </summary>
-    public partial class VolumeOverwriteRequest
+    public partial class PureStorageBlockVolumeOverwriteRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VolumeOverwriteRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockVolumeOverwriteRequestContent"/>. </summary>
         /// <param name="sourceType"> Source type for the overwrite operation. </param>
-        public VolumeOverwriteRequest(VolumeSourceType sourceType)
+        public PureStorageBlockVolumeOverwriteRequestContent(VolumeSourceType sourceType)
         {
             SourceType = sourceType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeOverwriteRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockVolumeOverwriteRequestContent"/>. </summary>
         /// <param name="sourceType"> Source type for the overwrite operation. </param>
         /// <param name="sourceVolumeGroupResourceId"> Azure resource ID of the source volume group. Required when sourceType is 'snapshot' or when the source volume belongs to a different volume group than the target. </param>
         /// <param name="sourceVolumeSnapshot"> Source volume group snapshot and volume snapshot name to restore from. Used when sourceType is 'snapshot'. </param>
         /// <param name="sourceSerialNumber"> Serial number of the source volume to overwrite from. Used when sourceType is 'serialNumber'. </param>
         /// <param name="sourceVolumeResourceId"> Azure resource ID of the source volume to clone from. Used when sourceType is 'volume'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeOverwriteRequest(VolumeSourceType sourceType, ResourceIdentifier sourceVolumeGroupResourceId, VolumeSnapshotSource sourceVolumeSnapshot, string sourceSerialNumber, ResourceIdentifier sourceVolumeResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PureStorageBlockVolumeOverwriteRequestContent(VolumeSourceType sourceType, ResourceIdentifier sourceVolumeGroupResourceId, VolumeSnapshotSource sourceVolumeSnapshot, string sourceSerialNumber, ResourceIdentifier sourceVolumeResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceType = sourceType;
             SourceVolumeGroupResourceId = sourceVolumeGroupResourceId;

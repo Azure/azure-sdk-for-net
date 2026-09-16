@@ -15,58 +15,58 @@ using Azure.ResourceManager.PureStorageBlock;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Response of get latest linked SaaS resource operation. </summary>
-    public partial class LatestLinkedSaaSResponse : IJsonModel<LatestLinkedSaaSResponse>
+    public partial class PureStorageBlockLatestLinkedSaaSResponseResult : IJsonModel<PureStorageBlockLatestLinkedSaaSResponseResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LatestLinkedSaaSResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockLatestLinkedSaaSResponseResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockLatestLinkedSaaSResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLatestLinkedSaaSResponse(document.RootElement, options);
+                        return DeserializePureStorageBlockLatestLinkedSaaSResponseResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LatestLinkedSaaSResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockLatestLinkedSaaSResponseResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockLatestLinkedSaaSResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LatestLinkedSaaSResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockLatestLinkedSaaSResponseResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LatestLinkedSaaSResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PureStorageBlockLatestLinkedSaaSResponseResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LatestLinkedSaaSResponse IPersistableModel<LatestLinkedSaaSResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PureStorageBlockLatestLinkedSaaSResponseResult IPersistableModel<PureStorageBlockLatestLinkedSaaSResponseResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LatestLinkedSaaSResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PureStorageBlockLatestLinkedSaaSResponseResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LatestLinkedSaaSResponse"/> from. </param>
-        internal static LatestLinkedSaaSResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PureStorageBlockLatestLinkedSaaSResponseResult"/> from. </param>
+        internal static PureStorageBlockLatestLinkedSaaSResponseResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLatestLinkedSaaSResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializePureStorageBlockLatestLinkedSaaSResponseResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LatestLinkedSaaSResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PureStorageBlockLatestLinkedSaaSResponseResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockLatestLinkedSaaSResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatestLinkedSaaSResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockLatestLinkedSaaSResponseResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(SaaSResourceId))
             {
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LatestLinkedSaaSResponse IJsonModel<LatestLinkedSaaSResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PureStorageBlockLatestLinkedSaaSResponseResult IJsonModel<PureStorageBlockLatestLinkedSaaSResponseResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LatestLinkedSaaSResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockLatestLinkedSaaSResponseResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockLatestLinkedSaaSResponseResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatestLinkedSaaSResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockLatestLinkedSaaSResponseResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLatestLinkedSaaSResponse(document.RootElement, options);
+            return DeserializePureStorageBlockLatestLinkedSaaSResponseResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LatestLinkedSaaSResponse DeserializeLatestLinkedSaaSResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static PureStorageBlockLatestLinkedSaaSResponseResult DeserializePureStorageBlockLatestLinkedSaaSResponseResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LatestLinkedSaaSResponse(saaSResourceId, isHiddenSaaS, additionalBinaryDataProperties);
+            return new PureStorageBlockLatestLinkedSaaSResponseResult(saaSResourceId, isHiddenSaaS, additionalBinaryDataProperties);
         }
     }
 }

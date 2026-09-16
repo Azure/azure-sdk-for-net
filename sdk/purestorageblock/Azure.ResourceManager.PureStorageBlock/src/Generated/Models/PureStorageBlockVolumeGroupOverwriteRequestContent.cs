@@ -13,16 +13,16 @@ using Azure.ResourceManager.PureStorageBlock;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Request to overwrite all volumes in a volume group from a snapshot. </summary>
-    public partial class VolumeGroupOverwriteRequest
+    public partial class PureStorageBlockVolumeGroupOverwriteRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VolumeGroupOverwriteRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockVolumeGroupOverwriteRequestContent"/>. </summary>
         /// <param name="sourceSnapshotResourceId"> Azure resource ID of the volume group snapshot to restore from. </param>
         /// <param name="sourceVolumeGroupResourceId"> Azure resource ID of the source volume group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceSnapshotResourceId"/> or <paramref name="sourceVolumeGroupResourceId"/> is null. </exception>
-        public VolumeGroupOverwriteRequest(ResourceIdentifier sourceSnapshotResourceId, ResourceIdentifier sourceVolumeGroupResourceId)
+        public PureStorageBlockVolumeGroupOverwriteRequestContent(ResourceIdentifier sourceSnapshotResourceId, ResourceIdentifier sourceVolumeGroupResourceId)
         {
             Argument.AssertNotNull(sourceSnapshotResourceId, nameof(sourceSnapshotResourceId));
             Argument.AssertNotNull(sourceVolumeGroupResourceId, nameof(sourceVolumeGroupResourceId));
@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             SourceVolumeGroupResourceId = sourceVolumeGroupResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeGroupOverwriteRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockVolumeGroupOverwriteRequestContent"/>. </summary>
         /// <param name="sourceSnapshotResourceId"> Azure resource ID of the volume group snapshot to restore from. </param>
         /// <param name="sourceVolumeGroupResourceId"> Azure resource ID of the source volume group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeGroupOverwriteRequest(ResourceIdentifier sourceSnapshotResourceId, ResourceIdentifier sourceVolumeGroupResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PureStorageBlockVolumeGroupOverwriteRequestContent(ResourceIdentifier sourceSnapshotResourceId, ResourceIdentifier sourceVolumeGroupResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceSnapshotResourceId = sourceSnapshotResourceId;
             SourceVolumeGroupResourceId = sourceVolumeGroupResourceId;

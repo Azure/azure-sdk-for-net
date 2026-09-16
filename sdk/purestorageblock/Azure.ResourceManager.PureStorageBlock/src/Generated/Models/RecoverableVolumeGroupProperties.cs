@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="space"> Storage space usage of the volume group. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoverableVolumeGroupProperties(DateTimeOffset? createdOn, DestroyedStateProperties softDeletion, PerformanceParameters performanceParameters, ProtectionParameters protectionParameters, PureStorageSpaceUsage space, PureStorageProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoverableVolumeGroupProperties(DateTimeOffset? createdOn, DestroyedStateProperties softDeletion, PureStorageBlockPerformanceParametersContent performanceParameters, PureStorageBlockProtectionParametersContent protectionParameters, PureStorageSpaceUsage space, PureStorageProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             SoftDeletion = softDeletion;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public DestroyedStateProperties SoftDeletion { get; }
 
         /// <summary> Performance parameters of the volume group. </summary>
-        public PerformanceParameters PerformanceParameters { get; }
+        public PureStorageBlockPerformanceParametersContent PerformanceParameters { get; }
 
         /// <summary> Protection parameters of the volume group. </summary>
-        public ProtectionParameters ProtectionParameters { get; }
+        public PureStorageBlockProtectionParametersContent ProtectionParameters { get; }
 
         /// <summary> Storage space usage of the volume group. </summary>
         public PureStorageSpaceUsage Space { get; }

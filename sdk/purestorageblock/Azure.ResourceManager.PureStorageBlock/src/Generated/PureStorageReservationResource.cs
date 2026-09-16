@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LatestLinkedSaaSResponse>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PureStorageBlockLatestLinkedSaaSResponseResult>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.LatestLinkedSaaS");
             scope.Start();
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 };
                 HttpMessage message = _reservationsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LatestLinkedSaaSResponse> response = Response.FromValue(LatestLinkedSaaSResponse.FromResponse(result), result);
+                Response<PureStorageBlockLatestLinkedSaaSResponseResult> response = Response.FromValue(PureStorageBlockLatestLinkedSaaSResponseResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LatestLinkedSaaSResponse> LatestLinkedSaaS(CancellationToken cancellationToken = default)
+        public virtual Response<PureStorageBlockLatestLinkedSaaSResponseResult> LatestLinkedSaaS(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _reservationsClientDiagnostics.CreateScope("PureStorageReservationResource.LatestLinkedSaaS");
             scope.Start();
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 };
                 HttpMessage message = _reservationsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LatestLinkedSaaSResponse> response = Response.FromValue(LatestLinkedSaaSResponse.FromResponse(result), result);
+                Response<PureStorageBlockLatestLinkedSaaSResponseResult> response = Response.FromValue(PureStorageBlockLatestLinkedSaaSResponseResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PureStorageReservationResource>> LinkSaaSAsync(WaitUntil waitUntil, LinkSaaSRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PureStorageReservationResource>> LinkSaaSAsync(WaitUntil waitUntil, PureStorageBlockLinkSaaSRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LinkSaaSRequest.ToRequestContent(content), context);
+                HttpMessage message = _reservationsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PureStorageBlockLinkSaaSRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation<PureStorageReservationResource> operation = new PureStorageBlockArmOperation<PureStorageReservationResource>(
                     new PureStorageReservationResourceOperationSource(Client),
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PureStorageReservationResource> LinkSaaS(WaitUntil waitUntil, LinkSaaSRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PureStorageReservationResource> LinkSaaS(WaitUntil waitUntil, PureStorageBlockLinkSaaSRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _reservationsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, LinkSaaSRequest.ToRequestContent(content), context);
+                HttpMessage message = _reservationsRestClient.CreateLinkSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PureStorageBlockLinkSaaSRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation<PureStorageReservationResource> operation = new PureStorageBlockArmOperation<PureStorageReservationResource>(
                     new PureStorageReservationResourceOperationSource(Client),

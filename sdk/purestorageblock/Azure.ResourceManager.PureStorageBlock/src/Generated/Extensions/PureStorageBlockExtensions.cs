@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Activate the SaaS resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.ActivateResourceAsync(WaitUntil, ActivateSaaSRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.ActivateResourceAsync(WaitUntil, PureStorageBlockActivateSaaSRequestContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation<SaaSResourceDetailsResponse>> ActivateResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSRequest content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<PureStorageBlockSaaSResourceDetailsResponseResult>> ActivateResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, PureStorageBlockActivateSaaSRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// Activate the SaaS resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.ActivateResource(WaitUntil, ActivateSaaSRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePureStorageBlockSubscriptionResource.ActivateResource(WaitUntil, PureStorageBlockActivateSaaSRequestContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation<SaaSResourceDetailsResponse> ActivateResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, ActivateSaaSRequest content, CancellationToken cancellationToken = default)
+        public static ArmOperation<PureStorageBlockSaaSResourceDetailsResponseResult> ActivateResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, PureStorageBlockActivateSaaSRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

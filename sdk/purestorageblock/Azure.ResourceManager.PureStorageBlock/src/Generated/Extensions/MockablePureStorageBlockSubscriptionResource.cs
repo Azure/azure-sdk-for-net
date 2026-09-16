@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SaaSResourceDetailsResponse>> ActivateResourceAsync(WaitUntil waitUntil, ActivateSaaSRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PureStorageBlockSaaSResourceDetailsResponseResult>> ActivateResourceAsync(WaitUntil waitUntil, PureStorageBlockActivateSaaSRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSRequest.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), PureStorageBlockActivateSaaSRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                PureStorageBlockArmOperation<SaaSResourceDetailsResponse> operation = new PureStorageBlockArmOperation<SaaSResourceDetailsResponse>(
-                    new SaaSResourceDetailsResponseOperationSource(),
+                PureStorageBlockArmOperation<PureStorageBlockSaaSResourceDetailsResponseResult> operation = new PureStorageBlockArmOperation<PureStorageBlockSaaSResourceDetailsResponseResult>(
+                    new PureStorageBlockSaaSResourceDetailsResponseResultOperationSource(),
                     SaaSOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SaaSResourceDetailsResponse> ActivateResource(WaitUntil waitUntil, ActivateSaaSRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PureStorageBlockSaaSResourceDetailsResponseResult> ActivateResource(WaitUntil waitUntil, PureStorageBlockActivateSaaSRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -252,10 +252,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSRequest.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), PureStorageBlockActivateSaaSRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                PureStorageBlockArmOperation<SaaSResourceDetailsResponse> operation = new PureStorageBlockArmOperation<SaaSResourceDetailsResponse>(
-                    new SaaSResourceDetailsResponseOperationSource(),
+                PureStorageBlockArmOperation<PureStorageBlockSaaSResourceDetailsResponseResult> operation = new PureStorageBlockArmOperation<PureStorageBlockSaaSResourceDetailsResponseResult>(
+                    new PureStorageBlockSaaSResourceDetailsResponseResultOperationSource(),
                     SaaSOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,

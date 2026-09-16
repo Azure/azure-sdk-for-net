@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (options.Format != "W" && Optional.IsDefined(ManagementIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(ManagementIPAddress))
             {
                 writer.WritePropertyName("managementIpAddress"u8);
-                writer.WriteStringValue(ManagementIpAddress);
+                writer.WriteStringValue(ManagementIPAddress);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ServiceBackendIps))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            string managementIpAddress = default;
+            string managementIPAddress = default;
             IReadOnlyList<string> serviceBackendIps = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (prop.NameEquals("managementIpAddress"u8))
                 {
-                    managementIpAddress = prop.Value.GetString();
+                    managementIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("serviceBackendIps"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PlatformConsoleSubnet(id, managementIpAddress, serviceBackendIps ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new PlatformConsoleSubnet(id, managementIPAddress, serviceBackendIps ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

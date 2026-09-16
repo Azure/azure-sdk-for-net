@@ -12,26 +12,26 @@ using Azure.ResourceManager.PureStorageBlock;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> SaaS guid for Activate SaaS Resource. </summary>
-    public partial class ActivateSaaSRequest
+    public partial class PureStorageBlockActivateSaaSRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActivateSaaSRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockActivateSaaSRequestContent"/>. </summary>
         /// <param name="saasGuid"> SaaS guid for Activate SaaS Resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="saasGuid"/> is null. </exception>
-        public ActivateSaaSRequest(string saasGuid)
+        public PureStorageBlockActivateSaaSRequestContent(string saasGuid)
         {
             Argument.AssertNotNull(saasGuid, nameof(saasGuid));
 
             SaasGuid = saasGuid;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActivateSaaSRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockActivateSaaSRequestContent"/>. </summary>
         /// <param name="saasGuid"> SaaS guid for Activate SaaS Resource. </param>
         /// <param name="publisherId"> Publisher Id for PureStorage resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActivateSaaSRequest(string saasGuid, string publisherId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PureStorageBlockActivateSaaSRequestContent(string saasGuid, string publisherId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaasGuid = saasGuid;
             PublisherId = publisherId;

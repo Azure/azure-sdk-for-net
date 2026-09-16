@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Marketplace SaaS resource details. </summary>
-    public partial class SaaSResourceDetailsResponse : ResourceData
+    public partial class PureStorageBlockSaaSResourceDetailsResponseResult : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SaaSResourceDetailsResponse"/>. </summary>
-        internal SaaSResourceDetailsResponse()
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockSaaSResourceDetailsResponseResult"/>. </summary>
+        internal PureStorageBlockSaaSResourceDetailsResponseResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SaaSResourceDetailsResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockSaaSResourceDetailsResponseResult"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="saasId"> Id of the Marketplace SaaS Resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SaaSResourceDetailsResponse(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string saasId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal PureStorageBlockSaaSResourceDetailsResponseResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string saasId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             SaasId = saasId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

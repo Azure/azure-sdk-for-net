@@ -14,51 +14,51 @@ using Azure.ResourceManager.PureStorageBlock;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Protection parameters for volume group. </summary>
-    public partial class ProtectionParameters : IJsonModel<ProtectionParameters>
+    public partial class PureStorageBlockProtectionParametersContent : IJsonModel<PureStorageBlockProtectionParametersContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProtectionParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockProtectionParametersContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProtectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockProtectionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProtectionParameters(document.RootElement, options);
+                        return DeserializePureStorageBlockProtectionParametersContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtectionParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockProtectionParametersContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProtectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockProtectionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProtectionParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockProtectionParametersContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProtectionParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PureStorageBlockProtectionParametersContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProtectionParameters IPersistableModel<ProtectionParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PureStorageBlockProtectionParametersContent IPersistableModel<PureStorageBlockProtectionParametersContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProtectionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PureStorageBlockProtectionParametersContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProtectionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PureStorageBlockProtectionParametersContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProtectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockProtectionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectionParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockProtectionParametersContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Retention))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProtectionParameters IJsonModel<ProtectionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PureStorageBlockProtectionParametersContent IJsonModel<PureStorageBlockProtectionParametersContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProtectionParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockProtectionParametersContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProtectionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockProtectionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectionParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockProtectionParametersContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProtectionParameters(document.RootElement, options);
+            return DeserializePureStorageBlockProtectionParametersContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProtectionParameters DeserializeProtectionParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static PureStorageBlockProtectionParametersContent DeserializePureStorageBlockProtectionParametersContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProtectionParameters(retention, frequency, additionalBinaryDataProperties);
+            return new PureStorageBlockProtectionParametersContent(retention, frequency, additionalBinaryDataProperties);
         }
     }
 }

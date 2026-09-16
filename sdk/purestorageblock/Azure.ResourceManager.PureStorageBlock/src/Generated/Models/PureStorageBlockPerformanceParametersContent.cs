@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Performance parameters for volume group. </summary>
-    public partial class PerformanceParameters
+    public partial class PureStorageBlockPerformanceParametersContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PerformanceParameters"/>. </summary>
-        public PerformanceParameters()
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockPerformanceParametersContent"/>. </summary>
+        public PureStorageBlockPerformanceParametersContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PerformanceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockPerformanceParametersContent"/>. </summary>
         /// <param name="bandwidthLimitMbPerSec"> Bandwidth limit in MB per second. </param>
         /// <param name="iopsLimit"> IOPS limit. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PerformanceParameters(long? bandwidthLimitMbPerSec, long? iopsLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PureStorageBlockPerformanceParametersContent(long? bandwidthLimitMbPerSec, long? iopsLimit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BandwidthLimitMbPerSec = bandwidthLimitMbPerSec;
             IopsLimit = iopsLimit;

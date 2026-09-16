@@ -14,51 +14,51 @@ using Azure.ResourceManager.PureStorageBlock;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Performance parameters for volume group. </summary>
-    public partial class PerformanceParameters : IJsonModel<PerformanceParameters>
+    public partial class PureStorageBlockPerformanceParametersContent : IJsonModel<PureStorageBlockPerformanceParametersContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PerformanceParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockPerformanceParametersContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PerformanceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockPerformanceParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePerformanceParameters(document.RootElement, options);
+                        return DeserializePureStorageBlockPerformanceParametersContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PerformanceParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockPerformanceParametersContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PerformanceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockPerformanceParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PerformanceParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockPerformanceParametersContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PerformanceParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PureStorageBlockPerformanceParametersContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PerformanceParameters IPersistableModel<PerformanceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PureStorageBlockPerformanceParametersContent IPersistableModel<PureStorageBlockPerformanceParametersContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PerformanceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PureStorageBlockPerformanceParametersContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PerformanceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PureStorageBlockPerformanceParametersContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PerformanceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockPerformanceParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerformanceParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockPerformanceParametersContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(BandwidthLimitMbPerSec))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PerformanceParameters IJsonModel<PerformanceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PureStorageBlockPerformanceParametersContent IJsonModel<PureStorageBlockPerformanceParametersContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PerformanceParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockPerformanceParametersContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PerformanceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockPerformanceParametersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerformanceParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockPerformanceParametersContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePerformanceParameters(document.RootElement, options);
+            return DeserializePureStorageBlockPerformanceParametersContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PerformanceParameters DeserializePerformanceParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static PureStorageBlockPerformanceParametersContent DeserializePureStorageBlockPerformanceParametersContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PerformanceParameters(bandwidthLimitMbPerSec, iopsLimit, additionalBinaryDataProperties);
+            return new PureStorageBlockPerformanceParametersContent(bandwidthLimitMbPerSec, iopsLimit, additionalBinaryDataProperties);
         }
     }
 }

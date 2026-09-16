@@ -15,29 +15,29 @@ using Azure.ResourceManager.PureStorageBlock.Models;
 namespace Azure.ResourceManager.PureStorageBlock
 {
     /// <summary></summary>
-    internal partial class SaaSResourceDetailsResponseOperationSource : IOperationSource<SaaSResourceDetailsResponse>
+    internal partial class PureStorageBlockSaaSResourceDetailsResponseResultOperationSource : IOperationSource<PureStorageBlockSaaSResourceDetailsResponseResult>
     {
         /// <summary></summary>
-        internal SaaSResourceDetailsResponseOperationSource()
+        internal PureStorageBlockSaaSResourceDetailsResponseResultOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        SaaSResourceDetailsResponse IOperationSource<SaaSResourceDetailsResponse>.CreateResult(Response response, CancellationToken cancellationToken)
+        PureStorageBlockSaaSResourceDetailsResponseResult IOperationSource<PureStorageBlockSaaSResourceDetailsResponseResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return SaaSResourceDetailsResponse.DeserializeSaaSResourceDetailsResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return PureStorageBlockSaaSResourceDetailsResponseResult.DeserializePureStorageBlockSaaSResourceDetailsResponseResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<SaaSResourceDetailsResponse> IOperationSource<SaaSResourceDetailsResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<PureStorageBlockSaaSResourceDetailsResponseResult> IOperationSource<PureStorageBlockSaaSResourceDetailsResponseResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return SaaSResourceDetailsResponse.DeserializeSaaSResourceDetailsResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return PureStorageBlockSaaSResourceDetailsResponseResult.DeserializePureStorageBlockSaaSResourceDetailsResponseResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

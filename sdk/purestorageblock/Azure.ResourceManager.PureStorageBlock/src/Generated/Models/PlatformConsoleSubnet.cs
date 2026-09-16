@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <summary> Initializes a new instance of <see cref="PlatformConsoleSubnet"/>. </summary>
         /// <param name="id"> Azure resource ID of the subnet. </param>
-        /// <param name="managementIpAddress"> Management IP address assigned to the subnet (system-populated). </param>
+        /// <param name="managementIPAddress"> Management IP address assigned to the subnet (system-populated). </param>
         /// <param name="serviceBackendIps"> Service backend IP addresses assigned to the subnet (system-populated). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PlatformConsoleSubnet(ResourceIdentifier id, string managementIpAddress, IReadOnlyList<string> serviceBackendIps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PlatformConsoleSubnet(ResourceIdentifier id, string managementIPAddress, IReadOnlyList<string> serviceBackendIps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            ManagementIpAddress = managementIpAddress;
+            ManagementIPAddress = managementIPAddress;
             ServiceBackendIps = serviceBackendIps;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public ResourceIdentifier Id { get; set; }
 
         /// <summary> Management IP address assigned to the subnet (system-populated). </summary>
-        public string ManagementIpAddress { get; }
+        public string ManagementIPAddress { get; }
 
         /// <summary> Service backend IP addresses assigned to the subnet (system-populated). </summary>
         public IReadOnlyList<string> ServiceBackendIps { get; }

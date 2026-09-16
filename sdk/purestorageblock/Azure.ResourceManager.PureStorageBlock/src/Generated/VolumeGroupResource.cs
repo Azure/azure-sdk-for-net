@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ConnectionParametersResponse>> GetConnectionParametersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PureStorageBlockConnectionParametersResponseResult>> GetConnectionParametersAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.GetConnectionParameters");
             scope.Start();
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 };
                 HttpMessage message = _volumeGroupsRestClient.CreateGetConnectionParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectionParametersResponse> response = Response.FromValue(ConnectionParametersResponse.FromResponse(result), result);
+                Response<PureStorageBlockConnectionParametersResponseResult> response = Response.FromValue(PureStorageBlockConnectionParametersResponseResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ConnectionParametersResponse> GetConnectionParameters(CancellationToken cancellationToken = default)
+        public virtual Response<PureStorageBlockConnectionParametersResponseResult> GetConnectionParameters(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _volumeGroupsClientDiagnostics.CreateScope("VolumeGroupResource.GetConnectionParameters");
             scope.Start();
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 };
                 HttpMessage message = _volumeGroupsRestClient.CreateGetConnectionParametersRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectionParametersResponse> response = Response.FromValue(ConnectionParametersResponse.FromResponse(result), result);
+                Response<PureStorageBlockConnectionParametersResponseResult> response = Response.FromValue(PureStorageBlockConnectionParametersResponseResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> OverwriteAsync(WaitUntil waitUntil, VolumeGroupOverwriteRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> OverwriteAsync(WaitUntil waitUntil, PureStorageBlockVolumeGroupOverwriteRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupsRestClient.CreateOverwriteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VolumeGroupOverwriteRequest.ToRequestContent(content), context);
+                HttpMessage message = _volumeGroupsRestClient.CreateOverwriteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageBlockVolumeGroupOverwriteRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_volumeGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation Overwrite(WaitUntil waitUntil, VolumeGroupOverwriteRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Overwrite(WaitUntil waitUntil, PureStorageBlockVolumeGroupOverwriteRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupsRestClient.CreateOverwriteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VolumeGroupOverwriteRequest.ToRequestContent(content), context);
+                HttpMessage message = _volumeGroupsRestClient.CreateOverwriteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageBlockVolumeGroupOverwriteRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_volumeGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="content"> Snapshot list request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<VolumeGroupSnapshotPostListResult>> GetSnapshotsAsync(VolumeGroupSnapshotListRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeGroupSnapshotPostListResult>> GetSnapshotsAsync(PureStorageBlockVolumeGroupSnapshotListRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupSnapshotsRestClient.CreateGetSnapshotsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VolumeGroupSnapshotListRequest.ToRequestContent(content), context);
+                HttpMessage message = _volumeGroupSnapshotsRestClient.CreateGetSnapshotsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageBlockVolumeGroupSnapshotListRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VolumeGroupSnapshotPostListResult> response = Response.FromValue(VolumeGroupSnapshotPostListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="content"> Snapshot list request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<VolumeGroupSnapshotPostListResult> GetSnapshots(VolumeGroupSnapshotListRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<VolumeGroupSnapshotPostListResult> GetSnapshots(PureStorageBlockVolumeGroupSnapshotListRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumeGroupSnapshotsRestClient.CreateGetSnapshotsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VolumeGroupSnapshotListRequest.ToRequestContent(content), context);
+                HttpMessage message = _volumeGroupSnapshotsRestClient.CreateGetSnapshotsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PureStorageBlockVolumeGroupSnapshotListRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VolumeGroupSnapshotPostListResult> response = Response.FromValue(VolumeGroupSnapshotPostListResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -42,6 +42,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PureStorageReservationProperties"/>. </summary>
+        /// <param name="marketplace"> Marketplace details. </param>
+        /// <param name="user"> User details. </param>
+        public PureStorageReservationProperties(PureStorageMarketplaceDetails marketplace, PureStorageUserDetails user) : this(marketplace)
+        {
+            User = user;
+        }
+
         /// <summary> Pure Storage's internal ID for the reservation. </summary>
         public string ReservationInternalId { get; }
 

@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             {
                 return null;
             }
-            PerformanceParameters performanceParameters = default;
-            ProtectionParameters protectionParameters = default;
+            PureStorageBlockPerformanceParametersContent performanceParameters = default;
+            PureStorageBlockProtectionParametersContent protectionParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    performanceParameters = PerformanceParameters.DeserializePerformanceParameters(prop.Value, options);
+                    performanceParameters = PureStorageBlockPerformanceParametersContent.DeserializePureStorageBlockPerformanceParametersContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("protectionParameters"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     {
                         continue;
                     }
-                    protectionParameters = ProtectionParameters.DeserializeProtectionParameters(prop.Value, options);
+                    protectionParameters = PureStorageBlockProtectionParametersContent.DeserializePureStorageBlockProtectionParametersContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

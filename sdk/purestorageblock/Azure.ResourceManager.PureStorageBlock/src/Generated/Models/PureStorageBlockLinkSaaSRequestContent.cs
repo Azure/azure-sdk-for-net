@@ -12,25 +12,25 @@ using Azure.ResourceManager.PureStorageBlock;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> SaaS details for linking to a reservation. </summary>
-    public partial class LinkSaaSRequest
+    public partial class PureStorageBlockLinkSaaSRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LinkSaaSRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockLinkSaaSRequestContent"/>. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="saaSResourceId"/> is null. </exception>
-        public LinkSaaSRequest(string saaSResourceId)
+        public PureStorageBlockLinkSaaSRequestContent(string saaSResourceId)
         {
             Argument.AssertNotNull(saaSResourceId, nameof(saaSResourceId));
 
             SaaSResourceId = saaSResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LinkSaaSRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockLinkSaaSRequestContent"/>. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinkSaaSRequest(string saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PureStorageBlockLinkSaaSRequestContent(string saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSResourceId = saaSResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

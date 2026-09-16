@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="performanceParameters"> Performance parameters for the volume group. </param>
         /// <param name="protectionParameters"> Protection parameters for the volume group. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeGroupUpdateProperties(PerformanceParameters performanceParameters, ProtectionParameters protectionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeGroupUpdateProperties(PureStorageBlockPerformanceParametersContent performanceParameters, PureStorageBlockProtectionParametersContent protectionParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PerformanceParameters = performanceParameters;
             ProtectionParameters = protectionParameters;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         }
 
         /// <summary> Performance parameters for the volume group. </summary>
-        public PerformanceParameters PerformanceParameters { get; set; }
+        public PureStorageBlockPerformanceParametersContent PerformanceParameters { get; set; }
 
         /// <summary> Protection parameters for the volume group. </summary>
-        public ProtectionParameters ProtectionParameters { get; set; }
+        public PureStorageBlockProtectionParametersContent ProtectionParameters { get; set; }
     }
 }

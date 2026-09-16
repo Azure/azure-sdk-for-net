@@ -15,61 +15,61 @@ using Azure.ResourceManager.PureStorageBlock;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Request payload for listing volume group snapshots. </summary>
-    public partial class VolumeGroupSnapshotListRequest : IJsonModel<VolumeGroupSnapshotListRequest>
+    public partial class PureStorageBlockVolumeGroupSnapshotListRequestContent : IJsonModel<PureStorageBlockVolumeGroupSnapshotListRequestContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VolumeGroupSnapshotListRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockVolumeGroupSnapshotListRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeGroupSnapshotListRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockVolumeGroupSnapshotListRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVolumeGroupSnapshotListRequest(document.RootElement, options);
+                        return DeserializePureStorageBlockVolumeGroupSnapshotListRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VolumeGroupSnapshotListRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockVolumeGroupSnapshotListRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeGroupSnapshotListRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockVolumeGroupSnapshotListRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VolumeGroupSnapshotListRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockVolumeGroupSnapshotListRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VolumeGroupSnapshotListRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PureStorageBlockVolumeGroupSnapshotListRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VolumeGroupSnapshotListRequest IPersistableModel<VolumeGroupSnapshotListRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PureStorageBlockVolumeGroupSnapshotListRequestContent IPersistableModel<PureStorageBlockVolumeGroupSnapshotListRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VolumeGroupSnapshotListRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PureStorageBlockVolumeGroupSnapshotListRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="volumeGroupSnapshotListRequest"> The <see cref="VolumeGroupSnapshotListRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(VolumeGroupSnapshotListRequest volumeGroupSnapshotListRequest)
+        /// <param name="pureStorageBlockVolumeGroupSnapshotListRequestContent"> The <see cref="PureStorageBlockVolumeGroupSnapshotListRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PureStorageBlockVolumeGroupSnapshotListRequestContent pureStorageBlockVolumeGroupSnapshotListRequestContent)
         {
-            if (volumeGroupSnapshotListRequest == null)
+            if (pureStorageBlockVolumeGroupSnapshotListRequestContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(volumeGroupSnapshotListRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(pureStorageBlockVolumeGroupSnapshotListRequestContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VolumeGroupSnapshotListRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PureStorageBlockVolumeGroupSnapshotListRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeGroupSnapshotListRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockVolumeGroupSnapshotListRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeGroupSnapshotListRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockVolumeGroupSnapshotListRequestContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Filter))
             {
@@ -124,24 +124,24 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VolumeGroupSnapshotListRequest IJsonModel<VolumeGroupSnapshotListRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PureStorageBlockVolumeGroupSnapshotListRequestContent IJsonModel<PureStorageBlockVolumeGroupSnapshotListRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VolumeGroupSnapshotListRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockVolumeGroupSnapshotListRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeGroupSnapshotListRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockVolumeGroupSnapshotListRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeGroupSnapshotListRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockVolumeGroupSnapshotListRequestContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVolumeGroupSnapshotListRequest(document.RootElement, options);
+            return DeserializePureStorageBlockVolumeGroupSnapshotListRequestContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VolumeGroupSnapshotListRequest DeserializeVolumeGroupSnapshotListRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static PureStorageBlockVolumeGroupSnapshotListRequestContent DeserializePureStorageBlockVolumeGroupSnapshotListRequestContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VolumeGroupSnapshotListRequest(filter, @orderby, top, skip, additionalBinaryDataProperties);
+            return new PureStorageBlockVolumeGroupSnapshotListRequestContent(filter, @orderby, top, skip, additionalBinaryDataProperties);
         }
     }
 }

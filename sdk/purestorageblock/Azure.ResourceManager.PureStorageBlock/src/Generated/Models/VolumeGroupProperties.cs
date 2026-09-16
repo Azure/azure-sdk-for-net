@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="protectionParameters"> Protection parameters for the volume group. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeGroupProperties(string storagePoolInternalId, string volumeGroupInternalId, ResourceIdentifier sourceVolumeGroupResourceId, VolumeGroupSourceType? sourceType, ResourceIdentifier sourceSnapshotResourceId, ResourceIdentifier sourceRecoverableVolumeGroupResourceId, PerformanceParameters performanceParameters, ProtectionParameters protectionParameters, PureStorageProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeGroupProperties(string storagePoolInternalId, string volumeGroupInternalId, ResourceIdentifier sourceVolumeGroupResourceId, VolumeGroupSourceType? sourceType, ResourceIdentifier sourceSnapshotResourceId, ResourceIdentifier sourceRecoverableVolumeGroupResourceId, PureStorageBlockPerformanceParametersContent performanceParameters, PureStorageBlockProtectionParametersContent protectionParameters, PureStorageProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StoragePoolInternalId = storagePoolInternalId;
             VolumeGroupInternalId = volumeGroupInternalId;
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         public ResourceIdentifier SourceRecoverableVolumeGroupResourceId { get; set; }
 
         /// <summary> Performance parameters for the volume group. </summary>
-        public PerformanceParameters PerformanceParameters { get; set; }
+        public PureStorageBlockPerformanceParametersContent PerformanceParameters { get; set; }
 
         /// <summary> Protection parameters for the volume group. </summary>
-        public ProtectionParameters ProtectionParameters { get; set; }
+        public PureStorageBlockProtectionParametersContent ProtectionParameters { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         public PureStorageProvisioningState? ProvisioningState { get; }

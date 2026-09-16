@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> OverwriteAsync(WaitUntil waitUntil, VolumeOverwriteRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> OverwriteAsync(WaitUntil waitUntil, PureStorageBlockVolumeOverwriteRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateOverwriteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VolumeOverwriteRequest.ToRequestContent(content), context);
+                HttpMessage message = _volumesRestClient.CreateOverwriteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PureStorageBlockVolumeOverwriteRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_volumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation Overwrite(WaitUntil waitUntil, VolumeOverwriteRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Overwrite(WaitUntil waitUntil, PureStorageBlockVolumeOverwriteRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _volumesRestClient.CreateOverwriteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, VolumeOverwriteRequest.ToRequestContent(content), context);
+                HttpMessage message = _volumesRestClient.CreateOverwriteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, PureStorageBlockVolumeOverwriteRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation operation = new PureStorageBlockArmOperation(_volumesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)

@@ -15,66 +15,66 @@ using Azure.ResourceManager.PureStorageBlock;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> SaaS details for linking to a reservation. </summary>
-    public partial class LinkSaaSRequest : IJsonModel<LinkSaaSRequest>
+    public partial class PureStorageBlockLinkSaaSRequestContent : IJsonModel<PureStorageBlockLinkSaaSRequestContent>
     {
-        /// <summary> Initializes a new instance of <see cref="LinkSaaSRequest"/> for deserialization. </summary>
-        internal LinkSaaSRequest()
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockLinkSaaSRequestContent"/> for deserialization. </summary>
+        internal PureStorageBlockLinkSaaSRequestContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkSaaSRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockLinkSaaSRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkSaaSRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockLinkSaaSRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLinkSaaSRequest(document.RootElement, options);
+                        return DeserializePureStorageBlockLinkSaaSRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkSaaSRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockLinkSaaSRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkSaaSRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockLinkSaaSRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LinkSaaSRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockLinkSaaSRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LinkSaaSRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PureStorageBlockLinkSaaSRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LinkSaaSRequest IPersistableModel<LinkSaaSRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PureStorageBlockLinkSaaSRequestContent IPersistableModel<PureStorageBlockLinkSaaSRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LinkSaaSRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PureStorageBlockLinkSaaSRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="linkSaaSRequest"> The <see cref="LinkSaaSRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(LinkSaaSRequest linkSaaSRequest)
+        /// <param name="pureStorageBlockLinkSaaSRequestContent"> The <see cref="PureStorageBlockLinkSaaSRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PureStorageBlockLinkSaaSRequestContent pureStorageBlockLinkSaaSRequestContent)
         {
-            if (linkSaaSRequest == null)
+            if (pureStorageBlockLinkSaaSRequestContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(linkSaaSRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(pureStorageBlockLinkSaaSRequestContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LinkSaaSRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PureStorageBlockLinkSaaSRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkSaaSRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockLinkSaaSRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkSaaSRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockLinkSaaSRequestContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("saaSResourceId"u8);
             writer.WriteStringValue(SaaSResourceId);
@@ -111,24 +111,24 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LinkSaaSRequest IJsonModel<LinkSaaSRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PureStorageBlockLinkSaaSRequestContent IJsonModel<PureStorageBlockLinkSaaSRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LinkSaaSRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockLinkSaaSRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LinkSaaSRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockLinkSaaSRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkSaaSRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockLinkSaaSRequestContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLinkSaaSRequest(document.RootElement, options);
+            return DeserializePureStorageBlockLinkSaaSRequestContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LinkSaaSRequest DeserializeLinkSaaSRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static PureStorageBlockLinkSaaSRequestContent DeserializePureStorageBlockLinkSaaSRequestContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LinkSaaSRequest(saaSResourceId, additionalBinaryDataProperties);
+            return new PureStorageBlockLinkSaaSRequestContent(saaSResourceId, additionalBinaryDataProperties);
         }
     }
 }

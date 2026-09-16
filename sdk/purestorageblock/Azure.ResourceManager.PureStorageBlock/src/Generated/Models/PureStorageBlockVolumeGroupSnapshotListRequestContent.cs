@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Request payload for listing volume group snapshots. </summary>
-    public partial class VolumeGroupSnapshotListRequest
+    public partial class PureStorageBlockVolumeGroupSnapshotListRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VolumeGroupSnapshotListRequest"/>. </summary>
-        public VolumeGroupSnapshotListRequest()
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockVolumeGroupSnapshotListRequestContent"/>. </summary>
+        public PureStorageBlockVolumeGroupSnapshotListRequestContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VolumeGroupSnapshotListRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockVolumeGroupSnapshotListRequestContent"/>. </summary>
         /// <param name="filter"> OData filter expression (e.g. filter=substringof('sna', name) and space/unique gt 1000). </param>
         /// <param name="orderby"> OData order-by expression (e.g. orderby=name asc). </param>
         /// <param name="top"> Maximum number of results to return per page. </param>
         /// <param name="skip"> Number of results to skip (page offset). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeGroupSnapshotListRequest(string filter, string @orderby, int? top, int? skip, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PureStorageBlockVolumeGroupSnapshotListRequestContent(string filter, string @orderby, int? top, int? skip, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Filter = filter;
             Orderby = @orderby;

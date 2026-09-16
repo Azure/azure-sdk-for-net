@@ -36,6 +36,13 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PureStorageMarketplaceDetails"/>. </summary>
+        /// <param name="offerDetails"> Offer details of the marketplace subscription. </param>
+        public PureStorageMarketplaceDetails(PureStorageOfferDetails offerDetails) : this()
+        {
+            OfferDetails = offerDetails;
+        }
+
         /// <summary> Marketplace subscription ID. </summary>
         public string SubscriptionId { get; }
 

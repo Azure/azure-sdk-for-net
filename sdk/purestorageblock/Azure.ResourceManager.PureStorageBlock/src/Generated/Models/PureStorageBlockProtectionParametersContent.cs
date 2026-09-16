@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Protection parameters for volume group. </summary>
-    public partial class ProtectionParameters
+    public partial class PureStorageBlockProtectionParametersContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProtectionParameters"/>. </summary>
-        public ProtectionParameters()
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockProtectionParametersContent"/>. </summary>
+        public PureStorageBlockProtectionParametersContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProtectionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockProtectionParametersContent"/>. </summary>
         /// <param name="retention"> Retention period for snapshots in ISO 8601 duration format. </param>
         /// <param name="frequency"> Snapshot frequency in ISO 8601 duration format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectionParameters(TimeSpan? retention, TimeSpan? frequency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PureStorageBlockProtectionParametersContent(TimeSpan? retention, TimeSpan? frequency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Retention = retention;
             Frequency = frequency;

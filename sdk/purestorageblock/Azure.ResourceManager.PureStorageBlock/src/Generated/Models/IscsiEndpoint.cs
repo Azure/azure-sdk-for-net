@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="iqn"> IQN (iSCSI Qualified Name) of the endpoint. </param>
         internal IscsiEndpoint(string ip, int port, string iqn)
         {
-            Ip = ip;
+            IP = ip;
             Port = port;
             Iqn = iqn;
         }
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal IscsiEndpoint(string ip, int port, string iqn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Ip = ip;
+            IP = ip;
             Port = port;
             Iqn = iqn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP address of the endpoint. </summary>
-        public string Ip { get; }
+        public string IP { get; }
 
         /// <summary> Port number of the endpoint. </summary>
         public int Port { get; }

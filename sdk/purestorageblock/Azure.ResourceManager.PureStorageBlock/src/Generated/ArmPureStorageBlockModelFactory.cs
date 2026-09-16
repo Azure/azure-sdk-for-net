@@ -253,18 +253,18 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         }
 
         /// <param name="saaSResourceId"> SaaS resource id. </param>
-        /// <returns> A new <see cref="Models.LinkSaaSRequest"/> instance for mocking. </returns>
-        public static LinkSaaSRequest LinkSaaSRequest(string saaSResourceId = default)
+        /// <returns> A new <see cref="Models.PureStorageBlockLinkSaaSRequestContent"/> instance for mocking. </returns>
+        public static PureStorageBlockLinkSaaSRequestContent PureStorageBlockLinkSaaSRequestContent(string saaSResourceId = default)
         {
-            return new LinkSaaSRequest(saaSResourceId, default);
+            return new PureStorageBlockLinkSaaSRequestContent(saaSResourceId, default);
         }
 
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
-        /// <returns> A new <see cref="Models.LatestLinkedSaaSResponse"/> instance for mocking. </returns>
-        public static LatestLinkedSaaSResponse LatestLinkedSaaSResponse(string saaSResourceId = default, bool? isHiddenSaaS = default)
+        /// <returns> A new <see cref="Models.PureStorageBlockLatestLinkedSaaSResponseResult"/> instance for mocking. </returns>
+        public static PureStorageBlockLatestLinkedSaaSResponseResult PureStorageBlockLatestLinkedSaaSResponseResult(string saaSResourceId = default, bool? isHiddenSaaS = default)
         {
-            return new LatestLinkedSaaSResponse(saaSResourceId, isHiddenSaaS, default);
+            return new PureStorageBlockLatestLinkedSaaSResponseResult(saaSResourceId, isHiddenSaaS, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -357,14 +357,14 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         }
 
         /// <param name="id"> Azure resource ID of the subnet. </param>
-        /// <param name="managementIpAddress"> Management IP address assigned to the subnet (system-populated). </param>
+        /// <param name="managementIPAddress"> Management IP address assigned to the subnet (system-populated). </param>
         /// <param name="serviceBackendIps"> Service backend IP addresses assigned to the subnet (system-populated). </param>
         /// <returns> A new <see cref="Models.PlatformConsoleSubnet"/> instance for mocking. </returns>
-        public static PlatformConsoleSubnet PlatformConsoleSubnet(ResourceIdentifier id = default, string managementIpAddress = default, IEnumerable<string> serviceBackendIps = default)
+        public static PlatformConsoleSubnet PlatformConsoleSubnet(ResourceIdentifier id = default, string managementIPAddress = default, IEnumerable<string> serviceBackendIps = default)
         {
             serviceBackendIps ??= new ChangeTrackingList<string>();
 
-            return new PlatformConsoleSubnet(id, managementIpAddress, (serviceBackendIps ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new PlatformConsoleSubnet(id, managementIPAddress, (serviceBackendIps ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="protectionParameters"> Protection parameters for the volume group. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.VolumeGroupProperties"/> instance for mocking. </returns>
-        public static VolumeGroupProperties VolumeGroupProperties(string storagePoolInternalId = default, string volumeGroupInternalId = default, ResourceIdentifier sourceVolumeGroupResourceId = default, VolumeGroupSourceType? sourceType = default, ResourceIdentifier sourceSnapshotResourceId = default, ResourceIdentifier sourceRecoverableVolumeGroupResourceId = default, PerformanceParameters performanceParameters = default, ProtectionParameters protectionParameters = default, PureStorageProvisioningState? provisioningState = default)
+        public static VolumeGroupProperties VolumeGroupProperties(string storagePoolInternalId = default, string volumeGroupInternalId = default, ResourceIdentifier sourceVolumeGroupResourceId = default, VolumeGroupSourceType? sourceType = default, ResourceIdentifier sourceSnapshotResourceId = default, ResourceIdentifier sourceRecoverableVolumeGroupResourceId = default, PureStorageBlockPerformanceParametersContent performanceParameters = default, PureStorageBlockProtectionParametersContent protectionParameters = default, PureStorageProvisioningState? provisioningState = default)
         {
             return new VolumeGroupProperties(
                 storagePoolInternalId,
@@ -791,18 +791,18 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <param name="bandwidthLimitMbPerSec"> Bandwidth limit in MB per second. </param>
         /// <param name="iopsLimit"> IOPS limit. </param>
-        /// <returns> A new <see cref="Models.PerformanceParameters"/> instance for mocking. </returns>
-        public static PerformanceParameters PerformanceParameters(long? bandwidthLimitMbPerSec = default, long? iopsLimit = default)
+        /// <returns> A new <see cref="Models.PureStorageBlockPerformanceParametersContent"/> instance for mocking. </returns>
+        public static PureStorageBlockPerformanceParametersContent PureStorageBlockPerformanceParametersContent(long? bandwidthLimitMbPerSec = default, long? iopsLimit = default)
         {
-            return new PerformanceParameters(bandwidthLimitMbPerSec, iopsLimit, default);
+            return new PureStorageBlockPerformanceParametersContent(bandwidthLimitMbPerSec, iopsLimit, default);
         }
 
         /// <param name="retention"> Retention period for snapshots in ISO 8601 duration format. </param>
         /// <param name="frequency"> Snapshot frequency in ISO 8601 duration format. </param>
-        /// <returns> A new <see cref="Models.ProtectionParameters"/> instance for mocking. </returns>
-        public static ProtectionParameters ProtectionParameters(TimeSpan? retention = default, TimeSpan? frequency = default)
+        /// <returns> A new <see cref="Models.PureStorageBlockProtectionParametersContent"/> instance for mocking. </returns>
+        public static PureStorageBlockProtectionParametersContent PureStorageBlockProtectionParametersContent(TimeSpan? retention = default, TimeSpan? frequency = default)
         {
-            return new ProtectionParameters(retention, frequency, default);
+            return new PureStorageBlockProtectionParametersContent(retention, frequency, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -818,17 +818,17 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="performanceParameters"> Performance parameters for the volume group. </param>
         /// <param name="protectionParameters"> Protection parameters for the volume group. </param>
         /// <returns> A new <see cref="Models.VolumeGroupUpdateProperties"/> instance for mocking. </returns>
-        public static VolumeGroupUpdateProperties VolumeGroupUpdateProperties(PerformanceParameters performanceParameters = default, ProtectionParameters protectionParameters = default)
+        public static VolumeGroupUpdateProperties VolumeGroupUpdateProperties(PureStorageBlockPerformanceParametersContent performanceParameters = default, PureStorageBlockProtectionParametersContent protectionParameters = default)
         {
             return new VolumeGroupUpdateProperties(performanceParameters, protectionParameters, default);
         }
 
         /// <param name="iscsiEndpoints"> List of ISCSI endpoints for connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiEndpoints"/> is null. </exception>
-        /// <returns> A new <see cref="Models.ConnectionParametersResponse"/> instance for mocking. </returns>
-        public static ConnectionParametersResponse ConnectionParametersResponse(IEnumerable<IscsiEndpoint> iscsiEndpoints = default)
+        /// <returns> A new <see cref="Models.PureStorageBlockConnectionParametersResponseResult"/> instance for mocking. </returns>
+        public static PureStorageBlockConnectionParametersResponseResult PureStorageBlockConnectionParametersResponseResult(IEnumerable<IscsiEndpoint> iscsiEndpoints = default)
         {
-            return new ConnectionParametersResponse(iscsiEndpoints is null ? default : new IscsiConnectionParameters((iscsiEndpoints ?? new ChangeTrackingList<IscsiEndpoint>()).ToList(), default), default);
+            return new PureStorageBlockConnectionParametersResponseResult(iscsiEndpoints is null ? default : new IscsiConnectionParameters((iscsiEndpoints ?? new ChangeTrackingList<IscsiEndpoint>()).ToList(), default), default);
         }
 
         /// <param name="ip"> IP address of the endpoint. </param>
@@ -850,10 +850,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <param name="sourceSnapshotResourceId"> Azure resource ID of the volume group snapshot to restore from. </param>
         /// <param name="sourceVolumeGroupResourceId"> Azure resource ID of the source volume group. </param>
-        /// <returns> A new <see cref="Models.VolumeGroupOverwriteRequest"/> instance for mocking. </returns>
-        public static VolumeGroupOverwriteRequest VolumeGroupOverwriteRequest(ResourceIdentifier sourceSnapshotResourceId = default, ResourceIdentifier sourceVolumeGroupResourceId = default)
+        /// <returns> A new <see cref="Models.PureStorageBlockVolumeGroupOverwriteRequestContent"/> instance for mocking. </returns>
+        public static PureStorageBlockVolumeGroupOverwriteRequestContent PureStorageBlockVolumeGroupOverwriteRequestContent(ResourceIdentifier sourceSnapshotResourceId = default, ResourceIdentifier sourceVolumeGroupResourceId = default)
         {
-            return new VolumeGroupOverwriteRequest(sourceSnapshotResourceId, sourceVolumeGroupResourceId, default);
+            return new PureStorageBlockVolumeGroupOverwriteRequestContent(sourceSnapshotResourceId, sourceVolumeGroupResourceId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -934,10 +934,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="sourceVolumeSnapshot"> Source volume group snapshot and volume snapshot name to restore from. Used when sourceType is 'snapshot'. </param>
         /// <param name="sourceSerialNumber"> Serial number of the source volume to overwrite from. Used when sourceType is 'serialNumber'. </param>
         /// <param name="sourceVolumeResourceId"> Azure resource ID of the source volume to clone from. Used when sourceType is 'volume'. </param>
-        /// <returns> A new <see cref="Models.VolumeOverwriteRequest"/> instance for mocking. </returns>
-        public static VolumeOverwriteRequest VolumeOverwriteRequest(VolumeSourceType sourceType = default, ResourceIdentifier sourceVolumeGroupResourceId = default, VolumeSnapshotSource sourceVolumeSnapshot = default, string sourceSerialNumber = default, ResourceIdentifier sourceVolumeResourceId = default)
+        /// <returns> A new <see cref="Models.PureStorageBlockVolumeOverwriteRequestContent"/> instance for mocking. </returns>
+        public static PureStorageBlockVolumeOverwriteRequestContent PureStorageBlockVolumeOverwriteRequestContent(VolumeSourceType sourceType = default, ResourceIdentifier sourceVolumeGroupResourceId = default, VolumeSnapshotSource sourceVolumeSnapshot = default, string sourceSerialNumber = default, ResourceIdentifier sourceVolumeResourceId = default)
         {
-            return new VolumeOverwriteRequest(
+            return new PureStorageBlockVolumeOverwriteRequestContent(
                 sourceType,
                 sourceVolumeGroupResourceId,
                 sourceVolumeSnapshot,
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="space"> Storage space usage of the volume group. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.RecoverableVolumeGroupProperties"/> instance for mocking. </returns>
-        public static RecoverableVolumeGroupProperties RecoverableVolumeGroupProperties(DateTimeOffset? createdOn = default, DestroyedStateProperties softDeletion = default, PerformanceParameters performanceParameters = default, ProtectionParameters protectionParameters = default, PureStorageSpaceUsage space = default, PureStorageProvisioningState? provisioningState = default)
+        public static RecoverableVolumeGroupProperties RecoverableVolumeGroupProperties(DateTimeOffset? createdOn = default, DestroyedStateProperties softDeletion = default, PureStorageBlockPerformanceParametersContent performanceParameters = default, PureStorageBlockProtectionParametersContent protectionParameters = default, PureStorageSpaceUsage space = default, PureStorageProvisioningState? provisioningState = default)
         {
             return new RecoverableVolumeGroupProperties(
                 createdOn,
@@ -984,10 +984,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <param name="saasGuid"> SaaS guid for Activate SaaS Resource. </param>
         /// <param name="publisherId"> Publisher Id for PureStorage resource. </param>
-        /// <returns> A new <see cref="Models.ActivateSaaSRequest"/> instance for mocking. </returns>
-        public static ActivateSaaSRequest ActivateSaaSRequest(string saasGuid = default, string publisherId = default)
+        /// <returns> A new <see cref="Models.PureStorageBlockActivateSaaSRequestContent"/> instance for mocking. </returns>
+        public static PureStorageBlockActivateSaaSRequestContent PureStorageBlockActivateSaaSRequestContent(string saasGuid = default, string publisherId = default)
         {
-            return new ActivateSaaSRequest(saasGuid, publisherId, default);
+            return new PureStorageBlockActivateSaaSRequestContent(saasGuid, publisherId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -995,10 +995,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="saasId"> Id of the Marketplace SaaS Resource. </param>
-        /// <returns> A new <see cref="Models.SaaSResourceDetailsResponse"/> instance for mocking. </returns>
-        public static SaaSResourceDetailsResponse SaaSResourceDetailsResponse(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saasId = default)
+        /// <returns> A new <see cref="Models.PureStorageBlockSaaSResourceDetailsResponseResult"/> instance for mocking. </returns>
+        public static PureStorageBlockSaaSResourceDetailsResponseResult PureStorageBlockSaaSResourceDetailsResponseResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saasId = default)
         {
-            return new SaaSResourceDetailsResponse(
+            return new PureStorageBlockSaaSResourceDetailsResponseResult(
                 id,
                 name,
                 resourceType,
@@ -1061,10 +1061,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="orderby"> OData order-by expression (e.g. orderby=name asc). </param>
         /// <param name="top"> Maximum number of results to return per page. </param>
         /// <param name="skip"> Number of results to skip (page offset). </param>
-        /// <returns> A new <see cref="Models.VolumeGroupSnapshotListRequest"/> instance for mocking. </returns>
-        public static VolumeGroupSnapshotListRequest VolumeGroupSnapshotListRequest(string filter = default, string @orderby = default, int? top = default, int? skip = default)
+        /// <returns> A new <see cref="Models.PureStorageBlockVolumeGroupSnapshotListRequestContent"/> instance for mocking. </returns>
+        public static PureStorageBlockVolumeGroupSnapshotListRequestContent PureStorageBlockVolumeGroupSnapshotListRequestContent(string filter = default, string @orderby = default, int? top = default, int? skip = default)
         {
-            return new VolumeGroupSnapshotListRequest(filter, @orderby, top, skip, default);
+            return new PureStorageBlockVolumeGroupSnapshotListRequestContent(filter, @orderby, top, skip, default);
         }
 
         /// <param name="value"> Array of volume group snapshots. </param>

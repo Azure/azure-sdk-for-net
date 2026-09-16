@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Connection parameters response. </summary>
-    public partial class ConnectionParametersResponse
+    public partial class PureStorageBlockConnectionParametersResponseResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionParametersResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockConnectionParametersResponseResult"/>. </summary>
         /// <param name="iscsi"> ISCSI connection parameters. </param>
-        internal ConnectionParametersResponse(IscsiConnectionParameters iscsi)
+        internal PureStorageBlockConnectionParametersResponseResult(IscsiConnectionParameters iscsi)
         {
             Iscsi = iscsi;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionParametersResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockConnectionParametersResponseResult"/>. </summary>
         /// <param name="iscsi"> ISCSI connection parameters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionParametersResponse(IscsiConnectionParameters iscsi, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PureStorageBlockConnectionParametersResponseResult(IscsiConnectionParameters iscsi, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Iscsi = iscsi;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

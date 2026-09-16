@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 throw new FormatException($"The model {nameof(IscsiEndpoint)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("ip"u8);
-            writer.WriteStringValue(Ip);
+            writer.WriteStringValue(IP);
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
             writer.WritePropertyName("iqn"u8);

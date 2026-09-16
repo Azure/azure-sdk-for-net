@@ -15,66 +15,66 @@ using Azure.ResourceManager.PureStorageBlock;
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
     /// <summary> Request to overwrite a volume's content from another volume or a snapshot. </summary>
-    public partial class VolumeOverwriteRequest : IJsonModel<VolumeOverwriteRequest>
+    public partial class PureStorageBlockVolumeOverwriteRequestContent : IJsonModel<PureStorageBlockVolumeOverwriteRequestContent>
     {
-        /// <summary> Initializes a new instance of <see cref="VolumeOverwriteRequest"/> for deserialization. </summary>
-        internal VolumeOverwriteRequest()
+        /// <summary> Initializes a new instance of <see cref="PureStorageBlockVolumeOverwriteRequestContent"/> for deserialization. </summary>
+        internal PureStorageBlockVolumeOverwriteRequestContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VolumeOverwriteRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockVolumeOverwriteRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeOverwriteRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockVolumeOverwriteRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVolumeOverwriteRequest(document.RootElement, options);
+                        return DeserializePureStorageBlockVolumeOverwriteRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VolumeOverwriteRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockVolumeOverwriteRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeOverwriteRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockVolumeOverwriteRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPureStorageBlockContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VolumeOverwriteRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PureStorageBlockVolumeOverwriteRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VolumeOverwriteRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PureStorageBlockVolumeOverwriteRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VolumeOverwriteRequest IPersistableModel<VolumeOverwriteRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PureStorageBlockVolumeOverwriteRequestContent IPersistableModel<PureStorageBlockVolumeOverwriteRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VolumeOverwriteRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PureStorageBlockVolumeOverwriteRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="volumeOverwriteRequest"> The <see cref="VolumeOverwriteRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(VolumeOverwriteRequest volumeOverwriteRequest)
+        /// <param name="pureStorageBlockVolumeOverwriteRequestContent"> The <see cref="PureStorageBlockVolumeOverwriteRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(PureStorageBlockVolumeOverwriteRequestContent pureStorageBlockVolumeOverwriteRequestContent)
         {
-            if (volumeOverwriteRequest == null)
+            if (pureStorageBlockVolumeOverwriteRequestContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(volumeOverwriteRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(pureStorageBlockVolumeOverwriteRequestContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VolumeOverwriteRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PureStorageBlockVolumeOverwriteRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeOverwriteRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockVolumeOverwriteRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeOverwriteRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockVolumeOverwriteRequestContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("sourceType"u8);
             writer.WriteStringValue(SourceType.ToString());
@@ -131,24 +131,24 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VolumeOverwriteRequest IJsonModel<VolumeOverwriteRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PureStorageBlockVolumeOverwriteRequestContent IJsonModel<PureStorageBlockVolumeOverwriteRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VolumeOverwriteRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PureStorageBlockVolumeOverwriteRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VolumeOverwriteRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PureStorageBlockVolumeOverwriteRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VolumeOverwriteRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PureStorageBlockVolumeOverwriteRequestContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVolumeOverwriteRequest(document.RootElement, options);
+            return DeserializePureStorageBlockVolumeOverwriteRequestContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VolumeOverwriteRequest DeserializeVolumeOverwriteRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static PureStorageBlockVolumeOverwriteRequestContent DeserializePureStorageBlockVolumeOverwriteRequestContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VolumeOverwriteRequest(
+            return new PureStorageBlockVolumeOverwriteRequestContent(
                 sourceType,
                 sourceVolumeGroupResourceId,
                 sourceVolumeSnapshot,
