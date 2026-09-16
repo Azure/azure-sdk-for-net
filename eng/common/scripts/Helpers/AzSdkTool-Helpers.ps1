@@ -143,7 +143,7 @@ function Install-Standalone-Tool (
         # First attempt: use git ls-remote on repository tags to avoid GitHub REST API rate limits
         try {
             $remoteUrl = "https://github.com/$Repository.git"
-            $rawTags = git ls-remote --tags --refs $remoteUrl "${Package}_*"
+            $rawTags = git ls-remote --tags --refs --sort=-version:refname $remoteUrl "${Package}_*"
             if ($rawTags) {
                 $matchingTags = @()
                 foreach ($line in $rawTags) {
@@ -155,7 +155,7 @@ function Install-Standalone-Tool (
                     }
                 }
                 if ($matchingTags.Count -gt 0) {
-                    $latest = $matchingTags[-1]
+                    $latest = $matchingTags[0]
                     $tag = $latest.Tag
                     $Version = $latest.Version
                     $found = $true
