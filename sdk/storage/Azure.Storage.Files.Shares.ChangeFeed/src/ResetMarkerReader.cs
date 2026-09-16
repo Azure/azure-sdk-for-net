@@ -54,7 +54,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 return null;
             }
 
-            return await ParsePointerAsync(result, async, cancellationToken).ConfigureAwait(false);
+using (result)
+            {
+                return await ParsePointerAsync(result, async, cancellationToken).ConfigureAwait(false);
+            }
         }
 
         /// <summary>
