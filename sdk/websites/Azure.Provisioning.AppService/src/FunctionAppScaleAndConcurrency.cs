@@ -4,7 +4,8 @@
 #nullable enable
 
 using System.ComponentModel;
-using Azure.Provisioning.Primitives;
+using Microsoft.TypeSpec.Generator.Customizations;
+using ProvisionableConstruct = Azure.Provisioning.Primitives.ProvisionableConstruct;
 
 namespace Azure.Provisioning.AppService;
 
@@ -17,7 +18,7 @@ public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
     /// <summary>
     /// The maximum number of concurrent HTTP trigger invocations per instance.
     /// </summary>
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("TriggersConcurrentHttpPerInstanceConcurrency")]
+    [CodeGenMember("TriggersConcurrentHttpPerInstanceConcurrency")]
     public BicepValue<int> ConcurrentHttpPerInstanceConcurrency
     {
         get
