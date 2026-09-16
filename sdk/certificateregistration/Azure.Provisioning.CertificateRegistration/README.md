@@ -24,6 +24,25 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
+### Create an App Service certificate order
+
+This example demonstrates how to create a standard App Service certificate order.
+
+```C# Snippet:CertificateRegistrationBasic
+Infrastructure infra = new();
+
+AppServiceCertificateOrder order =
+    new(nameof(order), AppServiceCertificateOrder.ResourceVersions.V2024_11_01)
+    {
+        DistinguishedName = "CN=example.com",
+        ValidityInYears = 1,
+        KeySize = 2048,
+        CertificateProductType = CertificateProductType.StandardDomainValidatedSsl,
+        IsAutoRenew = true,
+    };
+infra.Add(order);
+```
+
 ## Troubleshooting
 
 - File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
