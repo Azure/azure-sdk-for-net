@@ -12,7 +12,7 @@ using OpenAI.Realtime;
 namespace Azure.AI.Projects.Agents;
 
 [Experimental("AAIP001")]
-[CodeGenType("BetaVoiceAgentsConversations")]
+[CodeGenType("AgentEndpointConversations")]
 [CodeGenSuppress("GetAgentConversations", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgentConversationsAsync", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgentConversations", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]

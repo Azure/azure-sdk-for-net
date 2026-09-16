@@ -65,8 +65,6 @@ public partial class AgentAdministrationClient
     private BetaVoiceAgentsConversations _cachedAgentEndpointConversations;
     [Experimental("AAIP001")]
     private BetaVoiceAgentsTelephony _cachedAgentTelephony;
-    [Experimental("AAIP001")]
-    private BetaAgents _cachedBetaAgents;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
     /// service endpoint and authentication token provider.
@@ -1139,10 +1137,37 @@ public partial class AgentAdministrationClient
         return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new BetaVoiceAgentsTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
     }
 
-    /// <summary> Initializes a new instance of BetaAgents. </summary>
+    /// <summary>
+    /// Generates and creates an agent from kind-specific high-level inputs.
+    /// The generated definition remains fully editable through the standard agent versioning operations.
+    /// </summary>
+    /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual BetaAgents GetBetaAgentsClient()
+    public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
     {
-        return Volatile.Read(ref _cachedBetaAgents) ?? Interlocked.CompareExchange(ref _cachedBetaAgents, new BetaAgents(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedBetaAgents;
+        return GenerateAgent(
+            body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
+            cancellationToken: cancellationToken
+        );
+    }
+
+    /// <summary>
+    /// Generates and creates an agent from kind-specific high-level inputs.
+    /// The generated definition remains fully editable through the standard agent versioning operations.
+    /// </summary>
+    /// <param name="body"> The kind-specific inputs for generating and creating an agent. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("AAIP001")]
+    public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
+    {
+        return await GenerateAgentAsync(
+            body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
+            cancellationToken: cancellationToken
+        ).ConfigureAwait(false);
     }
 }

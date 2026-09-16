@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Azure.AI.Projects.Agents;
 
 [Experimental("AAIP001")]
-[CodeGenType("BetaVoiceAgentsTelephony")]
+[CodeGenType("AgentTelephony")]
 [CodeGenSuppress("GetTelephonyBindings", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyBindingStatus?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetTelephonyBindingsAsync", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyBindingStatus?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetTelephonyBindings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]

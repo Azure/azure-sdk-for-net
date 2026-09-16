@@ -10,7 +10,15 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The BetaVoiceAgentsConversations sub-client. </summary>
+    /// <summary>
+    /// Read-only, endpoint-scoped retrieval of the conversations, responses, transcript items, per-turn
+    /// metrics, and audio recorded by a voice agent. For a `voice` agent, the service is the sole writer of
+    /// responses and items, so only
+    /// reads plus a cascading conversation delete are exposed — there are no response/item create, update, or
+    /// delete routes. All persistence is governed by the definition's `store` flag: when `store = false` (the
+    /// default) nothing is persisted, so these routes return `404`. The merged-recording routes additionally
+    /// require the session to have ended and return `409` while it is still in progress.
+    /// </summary>
     public partial class BetaVoiceAgentsConversations
     {
         private readonly Uri _endpoint;
