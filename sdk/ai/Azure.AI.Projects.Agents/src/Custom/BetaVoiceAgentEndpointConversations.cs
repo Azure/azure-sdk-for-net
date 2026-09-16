@@ -7,13 +7,12 @@ using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
-using OpenAI;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents;
 
 [Experimental("AAIP001")]
-[CodeGenType("AgentEndpointConversations")]
+[CodeGenType("BetaVoiceAgentsConversations")]
 [CodeGenSuppress("GetAgentConversations", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgentConversationsAsync", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgentConversations", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
@@ -30,7 +29,7 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetAgentConversationResponses", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentConversationResponsesAsync", typeof(string), typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgentConversationResponsesAsync", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-public partial class BetaVoiceAgentEndpointConversations
+public partial class BetaVoiceAgentsConversations
 {
     /// <summary>
     /// Returns the conversations persisted for the specified voice agent endpoint.

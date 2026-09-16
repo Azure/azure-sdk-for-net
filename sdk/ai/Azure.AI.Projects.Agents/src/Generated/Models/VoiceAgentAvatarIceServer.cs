@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An ICE server used for avatar WebRTC negotiation. </summary>
+    [Experimental("AAIP001")]
     internal partial class VoiceAgentAvatarIceServer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

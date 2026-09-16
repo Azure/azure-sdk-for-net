@@ -209,7 +209,7 @@ namespace Azure.AI.Projects.Agents
             string agentName = default;
             TelephonyCallJobStatus status = default;
             TelephonyCallJobCancellation cancellation = default;
-            TelephonyOutboundRetryPolicyResult retryPolicy = default;
+            TelephonyOutboundRetryPolicy retryPolicy = default;
             int attemptCount = default;
             DateTimeOffset? nextAttemptOn = default;
             TelephonyCallJobTerminalReason? terminalReason = default;
@@ -300,7 +300,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("retry_policy"u8))
                 {
-                    retryPolicy = TelephonyOutboundRetryPolicyResult.DeserializeTelephonyOutboundRetryPolicyResult(prop.Value, options);
+                    retryPolicy = TelephonyOutboundRetryPolicy.DeserializeTelephonyOutboundRetryPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("attempt_count"u8))
