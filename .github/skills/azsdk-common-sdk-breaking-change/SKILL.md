@@ -34,7 +34,7 @@ Prerequisites: azure-sdk-mcp server must be running.
 - packagePath: The SDK package path
 - customizationRequest: resolve the 'breakingChanges' chosen in step 5
 - tspProjectPath: the typespec project path
-- editScope: Set this according to the repositories available as local clones: `'All'` when both `azure-rest-api-specs` and the target SDK language repository are available; `'SpecInputs'` when only `azure-rest-api-specs` is available; or `'CustomCode'` when only the target SDK language repository is available.
+- editScope: Set this based on the repository where the skill is running. When running in the target SDK language repository, use `'CustomCode'`. When running in `azure-rest-api-specs`, use `'All'` if the target SDK language repository is also available as a local clone; otherwise, use `'SpecInputs'`.
 
 After step 6, begin the next iteration. If the customization modified TypeSpec, first repeat step 2 to regenerate the SDK; otherwise, resume at step 3. Then repeat steps 3 through 6. Run at most three detection-and-mitigation iterations per language, stopping earlier if no breaking changes remain or the user declines further mitigation. After the third mitigation, run step 3 once more to identify and report any remaining breaking changes, then stop without offering a fourth mitigation.
 
