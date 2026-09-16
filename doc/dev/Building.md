@@ -63,3 +63,7 @@ If you're working on engineering system changes for the .NET repo within one of 
       Same as above: common pipelines get included and passed various objects here too.
 
 Any changes to the _eng_ directory outside of the _common_ subdirectory are owned by the Azure SDK for .NET team, but you should still coordinate with the central Engineering Systems team to discuss how your changes will work, go over any problems they might think of, and determine whether the changes should actually be common. Any changes within the _eng/common_ subdirectory should be discussed with the central EngSys team and should be made in the <https://github.com/Azure/azure-sdk-tools/tree/main/eng/common> directory. See [here](https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md) for more information.
+
+### TypeSpec emitter regeneration previews
+
+Manually queued branded TypeSpec emitter pipelines (data plane, management plane, and provisioning) prefix generated PR titles with `[Preview]`, including `[Preview] Failed: ...` when regeneration does not succeed. This applies to all source refs and both prerelease and stable versions. These previews are excluded from stale generator upgrade PR cleanup; scheduled and automatic run titles, draft status, and labels are unchanged. To preserve an older preview PR that was already closed by cleanup, add `[Preview] ` to the beginning of its title **before** reopening it.
