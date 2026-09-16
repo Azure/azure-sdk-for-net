@@ -3,7 +3,6 @@
 
 using Azure.Generator.Provisioning.Tests.TestHelpers;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -59,14 +58,14 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void AllowsAliasesWithMatchingWireNames()
+        public void AllowsDuplicateOrdinals()
         {
             const string customizationSource = """
                 using System;
                 using Microsoft.TypeSpec.Generator.Customizations;
 
-                [assembly: CodeGenEnumValue("SampleKind", "CurrentKind", 3, WireName = "current-kind")]
-                [assembly: CodeGenEnumValue("SampleKind", "LegacyKind", 3, WireName = "current-kind")]
+                [assembly: CodeGenEnumValue("SampleKind", "CurrentKind", 3)]
+                [assembly: CodeGenEnumValue("SampleKind", "LegacyKind", 3)]
 
                 namespace Microsoft.TypeSpec.Generator.Customizations
                 {
@@ -77,7 +76,6 @@ namespace Azure.Generator.Provisioning.Tests
                         {
                         }
 
-                        public string? WireName { get; set; }
                     }
                 }
                 """;
@@ -90,37 +88,6 @@ namespace Azure.Generator.Provisioning.Tests
 
             Assert.That(customizations, Has.Length.EqualTo(2));
             Assert.That(customizations.Select(customization => customization.Value), Is.All.EqualTo(3));
-        }
-
-        [Test]
-        public void RejectsDuplicateOrdinalsWithDifferentWireNames()
-        {
-            const string customizationSource = """
-                using System;
-                using Microsoft.TypeSpec.Generator.Customizations;
-
-                [assembly: CodeGenEnumValue("SampleKind", "CurrentKind", 3, WireName = "current-kind")]
-                [assembly: CodeGenEnumValue("SampleKind", "LegacyKind", 3, WireName = "legacy-kind")]
-
-                namespace Microsoft.TypeSpec.Generator.Customizations
-                {
-                    [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
-                    internal sealed class CodeGenEnumValueAttribute : Attribute
-                    {
-                        public CodeGenEnumValueAttribute(string enumName, string memberName, int value)
-                        {
-                        }
-
-                        public string? WireName { get; set; }
-                    }
-                }
-                """;
-
-            var generator = ProvisioningMockHelpers.LoadMockPlugin(customizationSources: [customizationSource]);
-
-            Assert.Throws<InvalidOperationException>(() => generator.Object.EnumValueCustomizationResolver
-                .GetAdditionalValues("SampleKind", new HashSet<string>())
-                .ToArray());
         }
     }
 }

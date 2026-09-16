@@ -134,7 +134,7 @@ LegacyKind = 4
 
 ### Add a compatibility alias
 
-Two members may share an ordinal when both customizations explicitly use the same wire name. Pin the current member as well as the compatibility alias so generated ordinal allocation remains stable.
+Two members may share an ordinal. Pin the current member as well as the compatibility alias when both should retain the same numeric value.
 
 ```csharp
 [assembly: CodeGenEnumValue("SampleKind", "CurrentKind", 3, WireName = "current-kind")]
@@ -158,4 +158,4 @@ Two members may share an ordinal when both customizations explicitly use the sam
 | `EditorBrowsableNever` | Optional settable property. When `true`, emits `[EditorBrowsable(EditorBrowsableState.Never)]`. |
 | `ObsoleteMessage` | Optional settable property. When provided, emits `[Obsolete("...")]` with the supplied message. |
 
-The generator fails fast if two `CodeGenEnumValue` attributes target the same enum member. Duplicate ordinals are rejected unless both attributes explicitly use the same wire name.
+The generator fails fast if two `CodeGenEnumValue` attributes target the same enum member. Different members may use the same explicit ordinal.
