@@ -78,7 +78,7 @@ Azure SDK clients are intentionally light and minimal. They are network clients 
 
 * Azure does not publish an authoritative list of all service URLs, and some services support caller-owned domains. An Azure SDK client cannot determine whether an arbitrary configured URL belongs to an official Azure service.
 
-* Azure SDK clients require HTTPS by default, but callers can opt out by removing the policies that enforce it. Certificate validation uses the runtime client's built-in behavior, not additional SDK validation. Callers can register callbacks that override this behavior, including accepting untrusted certificates. Removing HTTPS enforcement or overriding certificate validation is the caller's responsibility, and unsafe behavior resulting from those changes is not an SDK vulnerability.
+* Azure SDK clients do not uniformly enforce HTTPS for every authentication mode; for example, key-based policies can send requests to a caller-configured HTTP endpoint. Individual clients or authentication policies may add HTTPS checks, while callers remain responsible for selecting HTTPS endpoints and not overriding certificate validation. Unsafe behavior resulting from caller configuration is not an SDK vulnerability.
 
 * Azure SDK clients run within a host application and cannot guard against tampering by that environment. Their input, output, and behavior should not be trusted if the host environment may have been compromised.
 
