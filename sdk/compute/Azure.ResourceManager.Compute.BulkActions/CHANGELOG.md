@@ -1,14 +1,16 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.3 (2026-09-15)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added `LocationBasedBulkCreateResource`, `LocationBasedBulkCreateData`, and `LocationBasedBulkCreateCollection`, along with the `GetLocationBasedBulkCreate`, `GetLocationBasedBulkCreates`, and `GetLocationBasedBulkCreateResource` accessors.
+- Added `BulkCreateProperties` and `BulkCreateVmSizeProfile` models.
+- Added `GetBulkCreateAsyncOperationStatus` for polling the status of a bulk create operation.
 
 ### Other Changes
+
+- Updated the client to target API version `2026-09-06-preview`.
 
 ## 1.2.0-beta.2 (2026-08-06)
 

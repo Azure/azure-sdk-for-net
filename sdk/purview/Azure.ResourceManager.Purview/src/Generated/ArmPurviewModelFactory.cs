@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Purview.Models
                 location,
                 accountStatus is null && cloudConnectorsAwsExternalId is null && createdOn is null && createdBy is null && createdByObjectId is null && defaultDomain is null && endpoints is null && friendlyName is null && ingestionStorage is null && managedEventHubState is null && managedResourceGroupName is null && managedResources is null && managedResourcesPublicNetworkAccess is null && mergeInfo is null && privateEndpointConnections is null && provisioningState is null && publicNetworkAccess is null && tenantEndpointState is null ? default : new PurviewAccountProperties(
                     accountStatus,
-                    new CloudConnectors(cloudConnectorsAwsExternalId, default),
+                    cloudConnectorsAwsExternalId is null ? default : new CloudConnectors(cloudConnectorsAwsExternalId, default),
                     createdOn,
                     createdBy,
                     createdByObjectId,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Purview.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -471,14 +471,14 @@ namespace Azure.ResourceManager.Purview.Models
                 location,
                 cloudConnectorsAwsExternalId is null && createdOn is null && createdBy is null && createdByObjectId is null && endpoints is null && friendlyName is null && publicNetworkAccess is null && managedResourceGroupName is null && managedResources is null && privateEndpointConnections is null && provisioningState is null && publicNetworkAccess is null ? default : new PurviewAccountProperties(
                     default,
-                    new CloudConnectors(cloudConnectorsAwsExternalId, default),
+                    cloudConnectorsAwsExternalId is null ? default : new CloudConnectors(cloudConnectorsAwsExternalId, default),
                     createdOn,
                     createdBy,
                     createdByObjectId,
                     default,
                     endpoints,
                     friendlyName,
-                    new PurviewIngestionStorage(default, default, publicNetworkAccess, default),
+                    publicNetworkAccess is null ? default : new PurviewIngestionStorage(default, default, publicNetworkAccess, default),
                     default,
                     managedResourceGroupName,
                     managedResources,

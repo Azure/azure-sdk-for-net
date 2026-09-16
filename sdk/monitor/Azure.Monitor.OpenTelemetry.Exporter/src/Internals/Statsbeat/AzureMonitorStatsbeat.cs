@@ -233,7 +233,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 .AddMeter(StatsbeatConstants.DistroFeatureSdkStatsMeterName)
                 .AddMeter(StatsbeatConstants.NetworkSdkStatsMeterName)
                 .AddMeter(StatsbeatConstants.DistroNetworkSdkStatsMeterName)
-                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), _networkExportIntervalMilliseconds)
+                .AddReader(new PeriodicExportingMetricReader(AzureMonitorMetricExporter.CreateForInternalTelemetry(exporterOptions), _networkExportIntervalMilliseconds)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
 

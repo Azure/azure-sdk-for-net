@@ -148,7 +148,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PromptCacheOptionsParam(ttl, mode, additionalBinaryDataProperties);

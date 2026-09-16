@@ -627,7 +627,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         // Guarded in the body: neither parameter list matches a typed WriteEvent overload, so the
         // call allocates an argument array whether or not anything is listening.
-        [Event(71, Message = "Export {0}: collected {1} Activities for {2} ingestion endpoints and dropped {3} that could not be routed.", Level = EventLevel.Informational)]
+        [Event(71, Message = "Export {0}: routed {1} Activities or metric points to {2} ingestion endpoints and dropped {3} that could not be routed. These count routing inputs, not envelopes - one Activity can produce several - so event 72 reports the item count actually sent to each endpoint.", Level = EventLevel.Informational)]
         public void RoutedExportSummary(long exportSequence, int collected, int endpointCount, int rejected)
         {
             if (IsEnabled(EventLevel.Informational))
@@ -644,5 +644,50 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                 WriteEvent(72, exportSequence, itemCount, ingestionEndpoint, outcome, itemsAccepted, statusCode);
             }
         }
+
+        [Event(73, Message = "Standard metrics and performance counters are not collected while multi-endpoint routing is enabled. Routed destinations are not sent standard metrics, and a process-scoped performance counter has no single owner among the destinations a routed process carries.", Level = EventLevel.Warning)]
+        public void StandardMetricsDisabledForMultiEndpointRouting() => WriteEvent(73);
+
+        // A metric point has no trace or span id, so it is identified by the instrument that
+        // produced it. Guarded in the body rather than by a typed wrapper, because an overload
+        // taking the same string parameters would be ambiguous with the event method itself.
+        [Event(74, Message = "Export {0}: collected a metric point for ingestion endpoint '{1}'. Instrumentation Key: {2}. Meter: {3}. Instrument: {4}", Level = EventLevel.Verbose)]
+        public void RoutedMetricCollected(long exportSequence, string ingestionEndpoint, string instrumentationKey, string meterName, string instrumentName)
+        {
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                WriteEvent(74, exportSequence, ingestionEndpoint, instrumentationKey, meterName, instrumentName);
+            }
+        }
+
+        [NonEvent]
+        public void RoutedMetricRejected(long exportSequence, MultiEndpoint.RoutingRejectionReason reason, string meterName, string instrumentName)
+        {
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                RoutedMetricRejected(exportSequence, reason.ToString(), meterName, instrumentName);
+            }
+        }
+
+        [Event(75, Message = "Export {0}: dropped a metric point that could not be routed. Reason: {1}. Meter: {2}. Instrument: {3}. The measurement must carry a valid microsoft.instrumentation_key and microsoft.ingestion_endpoint dimension.", Level = EventLevel.Verbose)]
+        public void RoutedMetricRejected(long exportSequence, string reason, string meterName, string instrumentName) => WriteEvent(75, exportSequence, reason, meterName, instrumentName);
+
+        [NonEvent]
+        public void RoutedInstrumentDropped(string meterName, string instrumentName, MultiEndpoint.RoutingRejectionReason reason)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                RoutedInstrumentDropped(meterName, instrumentName, reason.ToString());
+            }
+        }
+
+        [Event(76, Message = "Measurements from meter '{0}' instrument '{1}' were dropped because they could not be routed. Reason: {2}. Reported once per instrument per export; enable Verbose for the individual points.", Level = EventLevel.Informational)]
+        public void RoutedInstrumentDropped(string meterName, string instrumentName, string reason) => WriteEvent(76, meterName, instrumentName, reason);
+
+        [Event(77, Message = "No connection string was configured. Multi-endpoint routing is enabled, so telemetry carrying valid routing attributes is still sent to the endpoint it names; everything else is dropped, and this process can send nothing of its own. SDK statistics are not collected, because they identify a component this process does not have.", Level = EventLevel.Warning)]
+        public void RoutingWithoutConnectionString() => WriteEvent(77);
+
+        [Event(78, Message = "Telemetry that was not routed has been dropped because no connection string is configured, so there is no destination of this process's own to send it to.", Level = EventLevel.Warning)]
+        public void DroppedUnroutedTelemetryWithoutConnectionString() => WriteEvent(78);
     }
 }

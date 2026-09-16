@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -18,8 +19,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// </summary>
         /// <param name="options">Azure Monitor exporter options</param>
         public static void RegisterCustomerSdkStats(AzureMonitorExporterOptions options)
+            => RegisterCustomerSdkStats(options, DefaultPlatform.Instance);
+
+        /// <summary>
+        /// Overload taking the platform so the connection string can be read from the same source the
+        /// transmitter reads it from.
+        /// </summary>
+        internal static void RegisterCustomerSdkStats(AzureMonitorExporterOptions options, IPlatform platform)
         {
             if (!CustomerSdkStatsHelper.IsEnabled())
+            {
+                return;
+            }
+
+            // These statistics are addressed to the customer's own component. Without a connection
+            // string there is none, and the exporter built below would send them to whatever host
+            // seeded the REST client under an empty instrumentation key.
+            if (!HasConnectionString(options, platform))
             {
                 return;
             }
@@ -32,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                 var meterProvider = Sdk.CreateMeterProviderBuilder()
                     .AddMeter(CustomerSdkStatsMeters.MeterName)
                     .AddReader(new PeriodicExportingMetricReader(
-                        new AzureMonitorMetricExporter(CreateCustomerSdkStatsOptions(options)),
+                        AzureMonitorMetricExporter.CreateForInternalTelemetry(CreateCustomerSdkStatsOptions(options)),
                         exportIntervalMilliseconds: CustomerSdkStatsHelper.GetExportIntervalMilliseconds())
                         {
                             TemporalityPreference = MetricReaderTemporalityPreference.Delta
@@ -77,5 +93,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
 
             return options;
         }
+
+        /// <summary>
+        /// Reads what the transmitter reads. It is deliberately the more permissive of the two: the
+        /// transmitter treats only <see langword="null"/> as absent and would reject an empty or
+        /// whitespace string outright, so anything this rejects would have failed there anyway.
+        /// </summary>
+        internal static bool HasConnectionString(AzureMonitorExporterOptions options, IPlatform platform)
+            => !string.IsNullOrWhiteSpace(options.ConnectionString)
+                || !string.IsNullOrWhiteSpace(platform.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING));
     }
 }
