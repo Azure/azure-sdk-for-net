@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- `MaxSamples` member was removed from `DataGenerationJobOptions`.
 
 ### Bugs Fixed
 

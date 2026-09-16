@@ -13,22 +13,25 @@ namespace Azure.AI.Projects
     public partial class TracesDataGenerationJobOptions : DataGenerationJobOptions
     {
         /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobOptions"/>. </summary>
-        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
-        public TracesDataGenerationJobOptions(int maxSamples) : base(DataGenerationJobKind.Traces, maxSamples)
+        public TracesDataGenerationJobOptions() : base(DataGenerationJobKind.Traces)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobOptions"/>. </summary>
         /// <param name="type"> The data generation job type. </param>
-        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. If omitted, sampling is turned off. </param>
         /// <param name="redactPrivateContent"> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </param>
-        internal TracesDataGenerationJobOptions(DataGenerationJobKind @type, int maxSamples, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? redactPrivateContent) : base(@type, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties)
+        internal TracesDataGenerationJobOptions(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxSamples, bool? redactPrivateContent) : base(@type, trainSplit, modelOptions, additionalBinaryDataProperties)
         {
+            MaxSamples = maxSamples;
             RedactPrivateContent = redactPrivateContent;
         }
+
+        /// <summary> Maximum number of samples to generate, up to service-defined limits. If omitted, sampling is turned off. </summary>
+        public int? MaxSamples { get; set; }
 
         /// <summary> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </summary>
         public bool? RedactPrivateContent { get; set; }
