@@ -71,7 +71,7 @@ frameworks:
 | Diagnostic | Total | Per target framework | Meaning |
 |---|---:|---:|---|
 | `CP0001` | 42 | 14 | Removed public types |
-| `CP0002` | 6,906 | 2,302 | Removed public members |
+| `CP0002` | 1,260 | 420 | Removed public members |
 | `CP0011` | 72 | 24 | Changed public member types |
 
 The standard package-scoped API export succeeded with its normal
@@ -157,11 +157,14 @@ new public types:
 - `VpnSiteLink`
 - `VpnSiteLinkConnection`
 
-## Historical resource versions removed
+## Historical resource versions restored
 
 The TypeSpec emitter generates only `V2025_05_01` for the following existing
-resource classes. The listed count is the number of previously public
-`ResourceVersions` constants removed from each class.
+resource classes. SDK-side partial classes restore every previously public
+`ResourceVersions` constant. Each partial class is kept in its own file under
+`src/Custom`, mirroring the corresponding top-level generated resource file.
+
+The listed count is the number of legacy constants restored for each class.
 
 | Resource class | Historical versions removed |
 |---|---:|
@@ -184,17 +187,23 @@ resource classes. The listed count is the number of previously public
 | `PrivateDnsZoneGroup` | 42 |
 | `PrivateEndpoint` | 42 |
 | `PrivateLinkService` | 46 |
+| `ProbeResource` | 69 |
 | `PublicIPAddress` | 69 |
 | `PublicIPPrefix` | 47 |
+| `RouteResource` | 69 |
 | `RouteTable` | 69 |
 | `SecurityRule` | 69 |
 | `ServiceEndpointPolicy` | 53 |
 | `ServiceEndpointPolicyDefinition` | 53 |
+| `SubnetResource` | 69 |
 | `VirtualNetwork` | 69 |
 | `VirtualNetworkPeering` | 69 |
 | `VirtualNetworkTap` | 46 |
 
-No resource-version compatibility shims were added.
+In total, 1,882 legacy constants were restored. The exported API contains all
+2,000 version fields from the pre-migration API and 15 additional fields from
+the new generation. Restoring these constants removed 5,646 `CP0002` failures
+across the three target frameworks.
 
 ## Generation diagnostics
 

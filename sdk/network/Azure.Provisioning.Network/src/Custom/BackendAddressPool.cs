@@ -3,12 +3,9 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.Provisioning.Network;
 
-[CodeGenType("Route")]
-public partial class RouteResource
+public partial class BackendAddressPool
 {
     /// <summary> Supported API versions retained for compatibility. </summary>
     public static partial class ResourceVersions

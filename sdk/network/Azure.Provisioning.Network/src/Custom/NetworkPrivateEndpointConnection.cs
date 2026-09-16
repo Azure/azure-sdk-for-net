@@ -3,12 +3,9 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.Provisioning.Network;
 
-[CodeGenType("Route")]
-public partial class RouteResource
+public partial class NetworkPrivateEndpointConnection
 {
     /// <summary> Supported API versions retained for compatibility. </summary>
     public static partial class ResourceVersions
@@ -105,51 +102,5 @@ public partial class RouteResource
         public static readonly string V2018_10_01 = "2018-10-01";
         /// <summary> API version "2018-08-01". </summary>
         public static readonly string V2018_08_01 = "2018-08-01";
-        /// <summary> API version "2018-07-01". </summary>
-        public static readonly string V2018_07_01 = "2018-07-01";
-        /// <summary> API version "2018-06-01". </summary>
-        public static readonly string V2018_06_01 = "2018-06-01";
-        /// <summary> API version "2018-05-01". </summary>
-        public static readonly string V2018_05_01 = "2018-05-01";
-        /// <summary> API version "2018-04-01". </summary>
-        public static readonly string V2018_04_01 = "2018-04-01";
-        /// <summary> API version "2018-03-01". </summary>
-        public static readonly string V2018_03_01 = "2018-03-01";
-        /// <summary> API version "2018-02-01". </summary>
-        public static readonly string V2018_02_01 = "2018-02-01";
-        /// <summary> API version "2018-01-01". </summary>
-        public static readonly string V2018_01_01 = "2018-01-01";
-        /// <summary> API version "2017-11-01". </summary>
-        public static readonly string V2017_11_01 = "2017-11-01";
-        /// <summary> API version "2017-10-01". </summary>
-        public static readonly string V2017_10_01 = "2017-10-01";
-        /// <summary> API version "2017-09-01". </summary>
-        public static readonly string V2017_09_01 = "2017-09-01";
-        /// <summary> API version "2017-08-01". </summary>
-        public static readonly string V2017_08_01 = "2017-08-01";
-        /// <summary> API version "2017-06-01". </summary>
-        public static readonly string V2017_06_01 = "2017-06-01";
-        /// <summary> API version "2017-04-01". </summary>
-        public static readonly string V2017_04_01 = "2017-04-01";
-        /// <summary> API version "2017-03-01". </summary>
-        public static readonly string V2017_03_01 = "2017-03-01";
-        /// <summary> API version "2016-12-01". </summary>
-        public static readonly string V2016_12_01 = "2016-12-01";
-        /// <summary> API version "2016-11-01". </summary>
-        public static readonly string V2016_11_01 = "2016-11-01";
-        /// <summary> API version "2016-10-01". </summary>
-        public static readonly string V2016_10_01 = "2016-10-01";
-        /// <summary> API version "2016-09-01". </summary>
-        public static readonly string V2016_09_01 = "2016-09-01";
-        /// <summary> API version "2016-08-01". </summary>
-        public static readonly string V2016_08_01 = "2016-08-01";
-        /// <summary> API version "2016-07-01". </summary>
-        public static readonly string V2016_07_01 = "2016-07-01";
-        /// <summary> API version "2016-06-01". </summary>
-        public static readonly string V2016_06_01 = "2016-06-01";
-        /// <summary> API version "2016-03-30". </summary>
-        public static readonly string V2016_03_30 = "2016-03-30";
-        /// <summary> API version "2015-06-15". </summary>
-        public static readonly string V2015_06_15 = "2015-06-15";
     }
 }
