@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     internal static partial class IotFirmwareDefenseSkuTierExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IotFirmwareDefenseSkuTier value) => value switch
         {
             IotFirmwareDefenseSkuTier.Free => "Free",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotFirmwareDefenseSkuTier value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static IotFirmwareDefenseSkuTier ToIotFirmwareDefenseSkuTier(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free")) return IotFirmwareDefenseSkuTier.Free;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic")) return IotFirmwareDefenseSkuTier.Basic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return IotFirmwareDefenseSkuTier.Standard;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium")) return IotFirmwareDefenseSkuTier.Premium;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Free"))
+            {
+                return IotFirmwareDefenseSkuTier.Free;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Basic"))
+            {
+                return IotFirmwareDefenseSkuTier.Basic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard"))
+            {
+                return IotFirmwareDefenseSkuTier.Standard;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium"))
+            {
+                return IotFirmwareDefenseSkuTier.Premium;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IotFirmwareDefenseSkuTier value.");
         }
     }
