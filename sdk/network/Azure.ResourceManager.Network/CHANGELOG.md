@@ -4,7 +4,12 @@
 
 ### Features Added
 
+- Upgraded api-version to 2026-01-01.
+
 ### Breaking Changes
+
+- `BastionHostResource.Update` and `UpdateAsync` no longer accept `NetworkTagsObject`; use the new strongly-typed `BastionHostPatch` overload instead.
+- `HubVirtualNetworkConnectionData.EnableOnlyIPv6Peering` changed from the extensible enum `EnableOnlyIPv6PeeringState?` to `bool?`. Replace uses of `EnableOnlyIPv6PeeringState.Enabled` / `.Disabled` with `true` / `false`.
 
 ### Bugs Fixed
 
