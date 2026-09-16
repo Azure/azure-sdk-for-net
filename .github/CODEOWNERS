@@ -910,14 +910,14 @@
 # AzureSdkOwners:                                                  @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
-/eng/                                                              @danieljurek @benbp @raych1
+/eng/                                                              @danieljurek @raych1
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
 /eng/common/pipelines/codeowners-linter.yml                        @jsquire
-/eng/pipelines/docindex.yml                                        @danieljurek @raych1 @benbp
+/eng/pipelines/docindex.yml                                        @danieljurek @raych1
 
 # Add owners for overrides and suppressions
 /eng/analyzerallowlist/                                            @Azure/azure-sdk-write-net-core @jsquire
@@ -978,7 +978,6 @@
 
 # Common repository-wide assets and configuration
 /.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
-/.config/1espt/                                                    @benbp
 /.vscode/                                                          @jsquire @m-nash @JoshLove-msft
 /.devcontainer/                                                    @jsquire @m-nash @JoshLove-msft
 /doc/                                                              @jsquire @m-nash @JoshLove-msft

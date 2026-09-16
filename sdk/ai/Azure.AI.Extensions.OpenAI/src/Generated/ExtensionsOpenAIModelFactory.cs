@@ -224,7 +224,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// authentication details for OpenApiFunctionDefinition
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.OpenApiAnonymousAuthenticationDetails"/>, <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.OpenApiAnonymousAuthenticationDetails"/>, <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/>, and <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/>.
         /// </summary>
         /// <param name="kind"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <returns> A new <see cref="OpenAI.OpenApiAuthenticationDetails"/> instance for mocking. </returns>
@@ -340,7 +340,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
         /// <param name="connection"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationToolOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static BrowserAutomationToolOptions BrowserAutomationToolOptions(BrowserAutomationToolConnectionOptions connection = default)
         {
             return new BrowserAutomationToolOptions(connection, additionalBinaryDataProperties: null);
@@ -349,7 +348,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
         /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
         /// <returns> A new <see cref="OpenAI.BrowserAutomationToolConnectionOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static BrowserAutomationToolConnectionOptions BrowserAutomationToolConnectionOptions(string projectConnectionId = default)
         {
             return new BrowserAutomationToolConnectionOptions(projectConnectionId, additionalBinaryDataProperties: null);
@@ -532,6 +530,35 @@ namespace Azure.AI.Extensions.OpenAI
         public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
         {
             return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configuration overrides for GitHub Copilot built-in tools. </summary>
+        /// <param name="defaultConfig"> The default configuration for built-in tools. If omitted, built-in tools are enabled by default. </param>
+        /// <param name="configs"> Per-tool configuration overrides. Duplicate built-in tool names are not allowed. </param>
+        /// <returns> A new <see cref="OpenAI.GitHubCopilotToolsetPreview"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static GitHubCopilotToolsetPreview GitHubCopilotToolsetPreview(GitHubCopilotToolsetDefaultConfig defaultConfig = default, IEnumerable<GitHubCopilotToolsetConfig> configs = default)
+        {
+            configs ??= new ChangeTrackingList<GitHubCopilotToolsetConfig>();
+
+            return new GitHubCopilotToolsetPreview("github_copilot_toolset_preview", defaultConfig, configs.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The default enablement setting for GitHub Copilot built-in tools. </summary>
+        /// <param name="enabled"> Whether built-in tools are enabled by default. Defaults to true. </param>
+        /// <returns> A new <see cref="OpenAI.GitHubCopilotToolsetDefaultConfig"/> instance for mocking. </returns>
+        public static GitHubCopilotToolsetDefaultConfig GitHubCopilotToolsetDefaultConfig(bool? enabled = default)
+        {
+            return new GitHubCopilotToolsetDefaultConfig(enabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An enablement override for a GitHub Copilot built-in tool. </summary>
+        /// <param name="name"> The built-in tool to configure. </param>
+        /// <param name="enabled"> Whether the built-in tool is enabled. If omitted, the toolset default applies. </param>
+        /// <returns> A new <see cref="OpenAI.GitHubCopilotToolsetConfig"/> instance for mocking. </returns>
+        public static GitHubCopilotToolsetConfig GitHubCopilotToolsetConfig(GitHubCopilotBuiltInTool name = default, bool? enabled = default)
+        {
+            return new GitHubCopilotToolsetConfig(name, enabled, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A web search configuration for bing custom search. </summary>
@@ -1070,7 +1097,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary>
         /// A single memory item stored in the memory store, containing content and metadata.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.UserProfileMemoryItem"/>, <see cref="OpenAI.ChatSummaryMemoryItem"/>, and <see cref="OpenAI.ProceduralMemoryItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.ChatSummaryMemoryItem"/>, <see cref="OpenAI.ProceduralMemoryItem"/>, and <see cref="OpenAI.UserProfileMemoryItem"/>.
         /// </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
         /// <param name="updatedOn"> The last update time of the memory item. </param>
