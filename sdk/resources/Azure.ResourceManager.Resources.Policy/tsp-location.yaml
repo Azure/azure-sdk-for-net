@@ -1,4 +1,6 @@
 directory: specification/resources/resource-manager/Microsoft.Authorization/policy
-commit: 6299a048dbae22bada10309e3f045d98b14bac4f
+commit: 710828f4424a112000ac9a81896a8648f87b7548
 repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
