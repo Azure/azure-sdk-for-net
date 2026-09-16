@@ -10577,49 +10577,6 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkProxyResource(id, name, @type, eTag, default);
         }
 
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="policySettings"> The PolicySettings for policy. </param>
-        /// <param name="customRules"> The custom rules inside the policy. </param>
-        /// <param name="applicationGateways"> A collection of references to application gateways. </param>
-        /// <param name="provisioningState"> The provisioning state of the web application firewall policy resource. </param>
-        /// <param name="resourceState"> Resource status of the policy. </param>
-        /// <param name="managedRules"> Describes the managedRules structure. </param>
-        /// <param name="httpListeners"> A collection of references to application gateway http listeners. </param>
-        /// <param name="pathBasedRules"> A collection of references to application gateway path rules. </param>
-        /// <param name="applicationGatewayForContainers"> A collection of references to application gateway for containers. </param>
-        /// <param name="tier"> Tier of a web application firewall policy. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.WebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        public static WebApplicationFirewallPolicyData WebApplicationFirewallPolicyData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, PolicySettings policySettings, IEnumerable<WebApplicationFirewallCustomRule> customRules, IEnumerable<ApplicationGatewayData> applicationGateways, NetworkProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IEnumerable<WritableSubResource> httpListeners, IEnumerable<WritableSubResource> pathBasedRules, IEnumerable<ApplicationGatewayForContainersReferenceDefinition> applicationGatewayForContainers, WebApplicationFirewallPolicyTier? tier, ETag? eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new WebApplicationFirewallPolicyData(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                policySettings is null && customRules is null && applicationGateways is null && provisioningState is null && resourceState is null && managedRules is null && httpListeners is null && pathBasedRules is null && applicationGatewayForContainers is null && tier is null ? default : new WebApplicationFirewallPolicyPropertiesFormat(
-                    policySettings,
-                    (customRules ?? new ChangeTrackingList<WebApplicationFirewallCustomRule>()).ToList(),
-                    (applicationGateways ?? new ChangeTrackingList<ApplicationGatewayData>()).ToList(),
-                    provisioningState,
-                    resourceState,
-                    managedRules,
-                    (httpListeners ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    (pathBasedRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    (applicationGatewayForContainers ?? new ChangeTrackingList<ApplicationGatewayForContainersReferenceDefinition>()).ToList(),
-                    tier,
-                    default),
-                eTag);
-        }
-
         /// <summary> Defines contents of a web application firewall global configuration. </summary>
         /// <param name="state"> The state of the policy. </param>
         /// <param name="mode"> The mode of the policy. </param>
