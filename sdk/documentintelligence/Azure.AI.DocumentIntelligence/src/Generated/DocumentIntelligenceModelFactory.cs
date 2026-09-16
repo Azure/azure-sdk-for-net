@@ -834,7 +834,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary>
         /// Operation info.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/>, <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/>, <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/>, <see cref="DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/>, and <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/>, <see cref="DocumentIntelligence.DocumentClassifierCopyToOperationDetails"/>, <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/>, <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/>, and <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/>.
         /// </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
