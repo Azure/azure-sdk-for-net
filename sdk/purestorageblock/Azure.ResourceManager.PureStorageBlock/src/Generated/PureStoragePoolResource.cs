@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(ResourceType, out string pureStoragePoolApiVersion);
             _storagePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _storagePoolsRestClient = new StoragePools(_storagePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStoragePoolApiVersion ?? "2024-11-01");
+            _storagePoolsRestClient = new StoragePools(_storagePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStoragePoolApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -406,6 +406,110 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
+        /// Configure authentication settings for platform console access to the storage pool
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/configurePlatformConsoleAuth. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_ConfigurePlatformConsoleAuth. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="config"> Platform console authentication configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="config"/> is null. </exception>
+        public virtual async Task<Response<PlatformConsoleAuthResult>> ConfigurePlatformConsoleAuthAsync(PlatformConsoleAuthConfig config, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(config, nameof(config));
+
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.ConfigurePlatformConsoleAuth");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storagePoolsRestClient.CreateConfigurePlatformConsoleAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PlatformConsoleAuthConfig.ToRequestContent(config), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PlatformConsoleAuthResult> response = Response.FromValue(PlatformConsoleAuthResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Configure authentication settings for platform console access to the storage pool
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/configurePlatformConsoleAuth. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_ConfigurePlatformConsoleAuth. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="config"> Platform console authentication configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="config"/> is null. </exception>
+        public virtual Response<PlatformConsoleAuthResult> ConfigurePlatformConsoleAuth(PlatformConsoleAuthConfig config, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(config, nameof(config));
+
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.ConfigurePlatformConsoleAuth");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storagePoolsRestClient.CreateConfigurePlatformConsoleAuthRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PlatformConsoleAuthConfig.ToRequestContent(config), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PlatformConsoleAuthResult> response = Response.FromValue(PlatformConsoleAuthResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Disable the existing AVS connection
         /// <list type="bullet">
         /// <item>
@@ -418,7 +522,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -467,7 +571,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -516,7 +620,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -569,7 +673,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -622,7 +726,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -675,7 +779,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -728,7 +832,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -776,7 +880,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -824,7 +928,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -872,7 +976,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -920,7 +1024,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -968,7 +1072,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1004,6 +1108,102 @@ namespace Azure.ResourceManager.PureStorageBlock
         }
 
         /// <summary>
+        /// Returns a one-time activation code for platform console access to the storage pool
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/listPlatformConsoleActivationCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_ListPlatformConsoleActivationCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<PlatformConsoleActivationCode>> GetPlatformConsoleActivationCodeAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetPlatformConsoleActivationCode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storagePoolsRestClient.CreateGetPlatformConsoleActivationCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PlatformConsoleActivationCode> response = Response.FromValue(PlatformConsoleActivationCode.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Returns a one-time activation code for platform console access to the storage pool
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PureStorage.Block/storagePools/{storagePoolName}/listPlatformConsoleActivationCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StoragePools_ListPlatformConsoleActivationCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="PureStoragePoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<PlatformConsoleActivationCode> GetPlatformConsoleActivationCode(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _storagePoolsClientDiagnostics.CreateScope("PureStoragePoolResource.GetPlatformConsoleActivationCode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storagePoolsRestClient.CreateGetPlatformConsoleActivationCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PlatformConsoleActivationCode> response = Response.FromValue(PlatformConsoleActivationCode.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Test and repair, if needed, all configuration elements of the storage pool connection to the AVS instance
         /// <list type="bullet">
         /// <item>
@@ -1016,7 +1216,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1065,7 +1265,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1439,6 +1639,72 @@ namespace Azure.ResourceManager.PureStorageBlock
             Argument.AssertNotNullOrEmpty(avsVmId, nameof(avsVmId));
 
             return GetPureStorageAvsVms().Get(avsVmId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VolumeGroups in the <see cref="PureStoragePoolResource"/>. </summary>
+        /// <returns> An object representing collection of VolumeGroups and their operations over a VolumeGroupResource. </returns>
+        public virtual VolumeGroupCollection GetVolumeGroups()
+        {
+            return GetCachedClient(client => new VolumeGroupCollection(client, Id));
+        }
+
+        /// <summary> Get a volume group. </summary>
+        /// <param name="volumeGroupName"> Name of the volume group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VolumeGroupResource>> GetVolumeGroupAsync(string volumeGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+
+            return await GetVolumeGroups().GetAsync(volumeGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a volume group. </summary>
+        /// <param name="volumeGroupName"> Name of the volume group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="volumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VolumeGroupResource> GetVolumeGroup(string volumeGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(volumeGroupName, nameof(volumeGroupName));
+
+            return GetVolumeGroups().Get(volumeGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RecoverableVolumeGroups in the <see cref="PureStoragePoolResource"/>. </summary>
+        /// <returns> An object representing collection of RecoverableVolumeGroups and their operations over a RecoverableVolumeGroupResource. </returns>
+        public virtual RecoverableVolumeGroupCollection GetRecoverableVolumeGroups()
+        {
+            return GetCachedClient(client => new RecoverableVolumeGroupCollection(client, Id));
+        }
+
+        /// <summary> Get a recoverable volume group. </summary>
+        /// <param name="recoverableVolumeGroupName"> Name of the recoverable volume group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoverableVolumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoverableVolumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RecoverableVolumeGroupResource>> GetRecoverableVolumeGroupAsync(string recoverableVolumeGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoverableVolumeGroupName, nameof(recoverableVolumeGroupName));
+
+            return await GetRecoverableVolumeGroups().GetAsync(recoverableVolumeGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a recoverable volume group. </summary>
+        /// <param name="recoverableVolumeGroupName"> Name of the recoverable volume group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoverableVolumeGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoverableVolumeGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RecoverableVolumeGroupResource> GetRecoverableVolumeGroup(string recoverableVolumeGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoverableVolumeGroupName, nameof(recoverableVolumeGroupName));
+
+            return GetRecoverableVolumeGroups().Get(recoverableVolumeGroupName, cancellationToken);
         }
     }
 }
