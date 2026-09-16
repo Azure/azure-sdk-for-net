@@ -522,9 +522,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 // If this is a session receiver and we didn't receive all requested messages, we need to drain the credits
                 // to ensure FIFO ordering within each session. We exclude processors that originally requested any available session,
-                // since those receive a single message at a time and close the session when there are no messages.
+                // since those receive a single message at a time and release idle sessions after active processing and
+                // the SessionClosingAsync callback finish.
                 // Use the original selection intent because opening the link assigns the accepted session's ID to SessionId.
-                // The session won't be closed in the case that MaxConcurrentCallsPerSession > 1, but with concurrency, it is not possible to guarantee ordering.
+                // Concurrent processing can delay closure; ordering between concurrent handlers is not guaranteed.
                 if (_isSessionReceiver && (!_isProcessor || _isSpecificSessionReceiver) && messageList.Count < maxMessages)
                 {
                     await SafeDrainLinkAsync(link, cancellationToken).ConfigureAwait(false);

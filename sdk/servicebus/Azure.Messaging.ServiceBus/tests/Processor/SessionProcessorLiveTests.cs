@@ -5,17 +5,119 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
+using Microsoft.Azure.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
     public class SessionProcessorLiveTests : ServiceBusLiveTestBase
     {
+        [Test]
+        [NonParallelizable]
+        public async Task MessagesArrivingDuringSessionClosingPreserveOrder([Values(false, true)] bool nullSessionEntry)
+        {
+            await using var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true);
+            await using var client = CreateClient();
+            await using var sender = client.CreateSender(scope.QueueName);
+            const string sessionId = "closing-session";
+            await sender.SendMessageAsync(new ServiceBusMessage("seed") { SessionId = sessionId });
+            using var listener = new TestEventListener(100000);
+            foreach (var source in EventSource.GetSources().Where(source => source.Name.IndexOf("Amqp", StringComparison.OrdinalIgnoreCase) >= 0))
+            {
+                listener.EnableEvents(source, EventLevel.Verbose);
+            }
+
+            var options = new ServiceBusSessionProcessorOptions
+            {
+                PrefetchCount = 0,
+                MaxConcurrentSessions = 1,
+                MaxConcurrentCallsPerSession = 1,
+                SessionIdleTimeout = TimeSpan.FromMilliseconds(500)
+            };
+            if (nullSessionEntry)
+            {
+                options.SessionIds.Add(null);
+            }
+            await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
+            var closing = new TaskCompletionSource<ReceivingAmqpLink>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var releaseClosing = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var errors = new ConcurrentQueue<Exception>();
+            processor.ProcessMessageAsync += args => Task.CompletedTask;
+            processor.ProcessErrorAsync += args =>
+            {
+                errors.Enqueue(args.Exception);
+                closing.TrySetException(args.Exception);
+                return Task.CompletedTask;
+            };
+            processor.SessionClosingAsync += async args =>
+            {
+                var receiver = (ServiceBusSessionReceiver)typeof(ProcessSessionEventArgs)
+                    .GetField("_sessionReceiver", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(args);
+                var cache = (FaultTolerantAmqpObject<ReceivingAmqpLink>)typeof(AmqpReceiver)
+                    .GetField("_receiveLink", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(receiver.InnerReceiver);
+                Assert.That(cache.TryGetOpenedObject(out var link), Is.True);
+                closing.TrySetResult(link);
+                await releaseClosing.Task.TimeoutAfter(TimeSpan.FromSeconds(30));
+            };
+
+            await processor.StartProcessingAsync();
+            try
+            {
+                var link = await closing.Task.TimeoutAfter(TimeSpan.FromSeconds(30));
+                Assert.That(link.LinkCredit, Is.EqualTo(1));
+                await sender.SendMessageAsync(new ServiceBusMessage("late-1") { SessionId = sessionId });
+
+                // Wait for the actual release rather than a fixed delay, so a slow service cannot move
+                // the late delivery outside the callback window and let this test pass without exercising it.
+                var deadline = DateTime.UtcNow.AddSeconds(30);
+                bool WasReleased() => listener.EventData.Any(entry =>
+                    entry.EventName == "AmqpDispose" &&
+                    entry.Payload[0]?.ToString() == link.ToString() &&
+                    entry.Payload[3]?.ToString() == "released()");
+                while (!WasReleased() && DateTime.UtcNow < deadline)
+                {
+                    await Task.Delay(50);
+                }
+                Assert.That(WasReleased(), Is.True, "The late message must be released while SessionClosingAsync is blocked.");
+                await sender.SendMessagesAsync(new[]
+                {
+                    new ServiceBusMessage("late-2") { SessionId = sessionId },
+                    new ServiceBusMessage("late-3") { SessionId = sessionId }
+                });
+
+                var stopping = processor.StopProcessingAsync();
+                releaseClosing.TrySetResult(true);
+                await stopping;
+
+                await using var receiver = await client.AcceptSessionAsync(scope.QueueName, sessionId);
+                var messages = new List<ServiceBusReceivedMessage>();
+                for (var index = 0; index < 3; index++)
+                {
+                    var message = await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(10));
+                    Assert.That(message, Is.Not.Null);
+                    messages.Add(message);
+                    await receiver.CompleteMessageAsync(message);
+                }
+
+                Assert.That(messages.Select(message => message.Body.ToString()), Is.EqualTo(new[] { "late-1", "late-2", "late-3" }));
+                Assert.That(messages.Select(message => message.DeliveryCount), Is.All.EqualTo(1));
+                Assert.That(errors, Is.Empty);
+            }
+            finally
+            {
+                releaseClosing.TrySetResult(true);
+                await processor.StopProcessingAsync();
+            }
+        }
+
         [Test]
         public async Task CannotRemoveHandlersWhileProcessorIsRunning()
         {

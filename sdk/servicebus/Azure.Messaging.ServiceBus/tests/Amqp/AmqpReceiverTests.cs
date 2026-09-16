@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -201,37 +202,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
-        /// <summary>
-        ///   An any-session processor must retain its drain exemption after accepting a session.
-        /// </summary>
-        [Test]
-        public async Task ReceiveMessagesDoesNotDrainAfterProcessorAcceptsAnySession()
-        {
-            var transport = new ReceiverTransport();
-            var link = CreateReceivingAmqpLink(transport, prefetchCount: 5);
-            var mockScope = new Mock<AmqpConnectionScope>();
-            mockScope.Setup(scope => scope.OpenReceiverLinkAsync(
-                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan>(), It.IsAny<uint>(),
-                    It.IsAny<ServiceBusReceiveMode>(), null, true, true, null, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(link);
-
-            var receiver = new AmqpReceiver(
-                "someQueue", ServiceBusReceiveMode.PeekLock, 5, mockScope.Object,
-                new BasicRetryPolicy(new ServiceBusRetryOptions { MaxRetries = 0 }), "someIdentifier",
-                sessionId: null, isSessionReceiver: true, isProcessor: true,
-                messageConverter: AmqpMessageConverter.Default);
-
-            Assert.That(receiver.SessionId, Is.Null);
-            await receiver.OpenLinkAsync(CancellationToken.None);
-            Assert.That(receiver.SessionId, Is.EqualTo("resolved-session"));
-
-            var messages = await receiver.ReceiveMessagesAsync(1, TimeSpan.FromMilliseconds(50), CancellationToken.None);
-
-            Assert.That(messages, Is.Empty);
-            Assert.That(transport.Flows.Count(flow => flow.Drain == true), Is.Zero);
-            await receiver.CloseAsync(CancellationToken.None);
-        }
-
         private static IEnumerable<TestCaseData> ReceiveDrainTestCases()
         {
             // Whether a partial receive drains is determined by the requested receiver mode.
@@ -264,9 +234,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             }
         }
 
-        /// <summary>
-        ///   Exercises empty, partial, and full receives for each receiver mode, with and without prefetch.
-        /// </summary>
         [TestCaseSource(nameof(ReceiveDrainTestCases))]
         public async Task ReceiveMessagesDrainsAccordingToRequestedSession(
             bool isSessionReceiver,
@@ -277,8 +244,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             int messageCount,
             bool expectDrain)
         {
-            var transport = new ReceiverTransport();
-            var link = CreateReceivingAmqpLink(transport, prefetchCount);
+            using var transport = new ReceiverTransport();
+            var link = CreateReceivingAmqpLink(transport, prefetchCount, requestedSessionId ?? "resolved-session");
             var mockScope = new Mock<AmqpConnectionScope>();
             mockScope.Setup(scope => scope.OpenReceiverLinkAsync(
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan>(), prefetchCount,
@@ -295,14 +262,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             {
                 Assert.That(receiver.SessionId, Is.EqualTo(requestedSessionId));
                 await receiver.OpenLinkAsync(CancellationToken.None);
-                Assert.That(receiver.SessionId, Is.EqualTo(isSessionReceiver ? "resolved-session" : requestedSessionId));
+                Assert.That(receiver.SessionId, Is.EqualTo(isSessionReceiver ? requestedSessionId ?? "resolved-session" : requestedSessionId));
 
-                var receiveTask = receiver.ReceiveMessagesAsync(maxMessages, TimeSpan.FromSeconds(1), CancellationToken.None);
-                for (var index = 0; index < messageCount; index++)
+                // Prepare every transfer before starting the receive. Hold the link's receive lock while
+                // delivering the batch so its 20 ms timer cannot split it when the test thread is descheduled.
+                var frames = Enumerable.Range(0, messageCount).Select(index => CreateMessageFrame((uint)index)).ToArray();
+                IReadOnlyList<ServiceBusReceivedMessage> messages;
+                try
                 {
-                    DeliverMessage(link, (uint)index);
+                    Task<IReadOnlyList<ServiceBusReceivedMessage>> receiveTask;
+                    var syncRoot = typeof(AmqpLink).GetProperty("SyncRoot", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(link);
+                    lock (syncRoot)
+                    {
+                        receiveTask = receiver.ReceiveMessagesAsync(
+                            maxMessages, messageCount == 0 ? TimeSpan.FromMilliseconds(50) : TimeSpan.FromSeconds(1), CancellationToken.None);
+                        foreach (var frame in frames)
+                        {
+                            link.ProcessFrame(frame);
+                        }
+                    }
+                    messages = await receiveTask;
                 }
-                var messages = await receiveTask;
+                finally
+                {
+                    foreach (var frame in frames)
+                    {
+                        frame.Dispose();
+                    }
+                }
 
                 Assert.That(messages.Count, Is.EqualTo(messageCount));
                 Assert.That(messages.Select(message => message.MessageId),
@@ -341,9 +328,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             [Values(null, "resolved-session")] string requestedSessionId,
             [Values(0u, 5u)] uint prefetchCount)
         {
-            var firstTransport = new ReceiverTransport();
+            using var firstTransport = new ReceiverTransport();
             var firstLink = CreateReceivingAmqpLink(firstTransport, prefetchCount);
-            var secondTransport = new ReceiverTransport();
+            using var secondTransport = new ReceiverTransport();
             var secondLink = CreateReceivingAmqpLink(secondTransport, prefetchCount);
             var requestedSessions = new List<string>();
             var mockScope = new Mock<AmqpConnectionScope>();
@@ -364,9 +351,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 await receiver.OpenLinkAsync(CancellationToken.None);
                 Assert.That(receiver.SessionId, Is.EqualTo("resolved-session"));
 
-                // Session link closure normally ends the receiver. Mark only the cached link as unusable without
-                // raising Closed to exercise recreation independently of the session-lock lifecycle.
-                typeof(AmqpObject).GetProperty(nameof(AmqpObject.State)).SetValue(firstLink, AmqpObjectState.End);
+                // Session link closure normally ends the receiver. Invalidate only the cache to exercise
+                // recreation independently of that lifecycle; both transports dispose their owned links.
+                var cache = typeof(AmqpReceiver).GetField("_receiveLink", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(receiver);
+                typeof(Singleton<ReceivingAmqpLink>).GetMethod("Invalidate", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(cache, new object[] { firstLink });
 
                 await receiver.OpenLinkAsync(CancellationToken.None);
                 var messages = await receiver.ReceiveMessagesAsync(1, TimeSpan.FromMilliseconds(50), CancellationToken.None);
@@ -386,11 +375,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         ///   A failed drain still closes a prefetching link to protect ordering and is handled by the receive path.
         /// </summary>
         [Test]
-        public async Task ReceiveMessagesHandlesDrainFailure([Values(0u, 5u)] uint prefetchCount)
+        public async Task ReceiveMessagesHandlesDrainTimeout([Values(0u, 5u)] uint prefetchCount)
         {
-            using var cancellationSource = new CancellationTokenSource();
-            var transport = new ReceiverTransport { OnDrain = cancellationSource.Cancel };
+            using var transport = new ReceiverTransport { AcknowledgeDrain = false };
             var link = CreateReceivingAmqpLink(transport, prefetchCount);
+            link.Settings.OperationTimeout = TimeSpan.FromMilliseconds(50);
             var mockScope = new Mock<AmqpConnectionScope>();
             mockScope.Setup(scope => scope.OpenReceiverLinkAsync(
                     It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan>(), prefetchCount,
@@ -405,7 +394,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             try
             {
                 await receiver.OpenLinkAsync(CancellationToken.None);
-                var messages = await receiver.ReceiveMessagesAsync(1, TimeSpan.FromMilliseconds(50), cancellationSource.Token);
+                var messages = await receiver.ReceiveMessagesAsync(1, TimeSpan.FromMilliseconds(50), CancellationToken.None);
 
                 Assert.That(messages, Is.Empty);
                 Assert.That(transport.Flows.Count(flow => flow.Drain == true), Is.EqualTo(1));
@@ -422,10 +411,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             }
         }
 
-        /// <summary>
-        ///   Delivers a serialized message through the AMQP link's normal transfer path.
-        /// </summary>
-        private static void DeliverMessage(ReceivingAmqpLink link, uint deliveryId)
+        private static Frame CreateMessageFrame(uint deliveryId)
         {
             using var message = AmqpMessage.Create(new AmqpValue { Value = "message" });
             message.Properties.MessageId = deliveryId.ToString();
@@ -441,19 +427,27 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             stream.Write(header.Buffer, header.Offset, header.Length);
             payload.CopyTo(stream);
             var bytes = stream.ToArray();
-            using var frame = new Frame();
+            var frame = new Frame();
             frame.Decode(new ByteBuffer(bytes, 0, bytes.Length));
-            link.ProcessFrame(frame);
+            return frame;
         }
 
         /// <summary>
         ///   Captures outgoing AMQP flow frames and acknowledges drain without a network connection.
         /// </summary>
-        private class ReceiverTransport : TransportBase
+        private class ReceiverTransport : TransportBase, IDisposable
         {
             public ConcurrentQueue<Flow> Flows { get; } = new ConcurrentQueue<Flow>();
             public ReceivingAmqpLink Link { get; set; }
-            public Action OnDrain { get; set; }
+            public bool AcknowledgeDrain { get; set; } = true;
+
+            public void Dispose()
+            {
+                Link?.Abort();
+                Link?.Session.Abort();
+                Link?.Session.Connection.Abort();
+                Abort();
+            }
 
             public ReceiverTransport() : base("Mock") { }
             public override string LocalEndPoint => "local";
@@ -494,6 +488,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                                 LinkName = attach.LinkName,
                                 Handle = 0,
                                 Role = false,
+                                SndSettleMode = attach.SndSettleMode,
+                                RcvSettleMode = attach.RcvSettleMode,
                                 Source = attach.Source,
                                 Target = attach.Target,
                                 InitialDeliveryCount = 0
@@ -504,27 +500,24 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                     {
                         Link.ProcessFrame(new Frame { Command = new Detach { Handle = 0, Closed = true } });
                     }
+                    else if (frame.Command is End)
+                    {
+                        Link.Session.ProcessFrame(new Frame { Command = new End() });
+                    }
                     else if (frame.Command is Flow flow)
                     {
                         Flows.Enqueue(flow);
-                        if (flow.Drain == true)
+                        if (flow.Drain == true && AcknowledgeDrain)
                         {
-                            if (OnDrain != null)
+                            Link.ProcessFrame(new Frame
                             {
-                                OnDrain();
-                            }
-                            else
-                            {
-                                Link.ProcessFrame(new Frame
+                                Command = new Flow
                                 {
-                                    Command = new Flow
-                                    {
-                                        DeliveryCount = flow.DeliveryCount + flow.LinkCredit,
-                                        LinkCredit = 0,
-                                        Drain = true
-                                    }
-                                });
-                            }
+                                    DeliveryCount = flow.DeliveryCount + flow.LinkCredit,
+                                    LinkCredit = 0,
+                                    Drain = true
+                                }
+                            });
                         }
                     }
                 }
@@ -537,7 +530,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         /// <summary>
         ///   Models an accepted receive link with the session filter returned by the service.
         /// </summary>
-        private static ReceivingAmqpLink CreateReceivingAmqpLink(ReceiverTransport transport, uint prefetchCount)
+        private static ReceivingAmqpLink CreateReceivingAmqpLink(ReceiverTransport transport, uint prefetchCount, string sessionId = "resolved-session")
         {
             var amqpSettings = new AmqpSettings();
             var provider = new AmqpTransportProvider();
@@ -553,9 +546,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                         LinkName = "receiver",
                         TotalLinkCredit = prefetchCount,
                         AutoSendFlow = prefetchCount > 0,
+                        SettleType = SettleMode.SettleOnDispose,
                         Source = new Source
                         {
-                            FilterSet = new FilterSet { [AmqpClientConstants.SessionFilterName] = "resolved-session" }
+                            FilterSet = new FilterSet { [AmqpClientConstants.SessionFilterName] = sessionId }
                         },
                         Target = new Target(),
                         Properties = new Fields()
@@ -565,7 +559,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             return link;
         }
 
-        /// <summary>
         /// <summary>
         ///   Verifies functionality of the <see cref="AmqpReceiver.ReceiveAsync" />
         ///   method.

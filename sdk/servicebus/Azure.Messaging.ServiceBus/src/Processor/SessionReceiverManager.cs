@@ -60,7 +60,8 @@ namespace Azure.Messaging.ServiceBus
                 PrefetchCount = sessionProcessor.InnerProcessor.Options.PrefetchCount
             };
             _sessionId = sessionId;
-            _keepOpenOnReceiveTimeout = keepOpenOnReceiveTimeout;
+            // A null entry in SessionIds still accepts any available session and must release it on idle.
+            _keepOpenOnReceiveTimeout = keepOpenOnReceiveTimeout && sessionId != null;
             _sessionProcessor = sessionProcessor;
         }
 
@@ -201,9 +202,8 @@ namespace Azure.Messaging.ServiceBus
                 if (_activeTaskCount == 0)
                 {
                     // Even if there are no current receive tasks, we should leave the
-                    // receiver open if _keepOpenOnReceiveTimeout is true - which happens
-                    // when a list of session Ids is specified and this list is less than the
-                    // MaxConcurrentSessions.
+                    // specific-session receiver open if _keepOpenOnReceiveTimeout is true - which happens
+                    // when the configured session list fits within MaxConcurrentSessions.
                     if ((_receiveTimeout && !_keepOpenOnReceiveTimeout) ||
                         // if the session is cancelled we should still close the receiver
                         // as this means the session lock was lost or the user requested to close the session.
