@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.AppService.Models
     /// identifiers to be marked as sticky to the deployment slot and not moved during a swap operation.
     /// This is valid for all deployment slots in an app.
     /// </summary>
-    internal partial class SlotConfigNames
+    internal partial class SlotConfigNamesProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SlotConfigNames"/>. </summary>
-        public SlotConfigNames()
+        /// <summary> Initializes a new instance of <see cref="SlotConfigNamesProperties"/>. </summary>
+        public SlotConfigNamesProperties()
         {
             ConnectionStringNames = new ChangeTrackingList<string>();
             AppSettingNames = new ChangeTrackingList<string>();
             AzureStorageConfigNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SlotConfigNames"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlotConfigNamesProperties"/>. </summary>
         /// <param name="connectionStringNames"> List of connection string names. </param>
         /// <param name="appSettingNames"> List of application settings names. </param>
         /// <param name="azureStorageConfigNames"> List of external Azure storage account identifiers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SlotConfigNames(IList<string> connectionStringNames, IList<string> appSettingNames, IList<string> azureStorageConfigNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SlotConfigNamesProperties(IList<string> connectionStringNames, IList<string> appSettingNames, IList<string> azureStorageConfigNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionStringNames = connectionStringNames;
             AppSettingNames = appSettingNames;

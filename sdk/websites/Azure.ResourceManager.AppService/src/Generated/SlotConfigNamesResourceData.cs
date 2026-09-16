@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="properties"> Core resource properties. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SlotConfigNamesResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SlotConfigNames properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SlotConfigNamesResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SlotConfigNamesProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Core resource properties. </summary>
         [WirePath("properties")]
-        internal SlotConfigNames Properties { get; set; }
+        internal SlotConfigNamesProperties Properties { get; set; }
 
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
             {
                 if (Properties is null)
                 {
-                    Properties = new SlotConfigNames();
+                    Properties = new SlotConfigNamesProperties();
                 }
                 return Properties.ConnectionStringNames;
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
             {
                 if (Properties is null)
                 {
-                    Properties = new SlotConfigNames();
+                    Properties = new SlotConfigNamesProperties();
                 }
                 return Properties.AppSettingNames;
             }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
             {
                 if (Properties is null)
                 {
-                    Properties = new SlotConfigNames();
+                    Properties = new SlotConfigNamesProperties();
                 }
                 return Properties.AzureStorageConfigNames;
             }
