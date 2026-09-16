@@ -1902,12 +1902,12 @@ namespace Azure.Provisioning.AppService
     {
         public FunctionAppScaleAndConcurrency() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.FunctionAppAlwaysReadyConfig> AlwaysReady { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> ConcurrentHttpPerInstanceConcurrency { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> FunctionAppInstanceMemoryMB { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> FunctionAppMaximumInstanceCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> HttpPerInstanceConcurrency { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> InstanceMemoryMB { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> MaximumInstanceCount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> TriggersConcurrentHttpPerInstanceConcurrency { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class FunctionAppStorage : Azure.Provisioning.Primitives.ProvisionableConstruct

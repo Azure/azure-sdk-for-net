@@ -83,23 +83,6 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the ConcurrentHttpPerInstanceConcurrency. </summary>
-        public BicepValue<int> TriggersConcurrentHttpPerInstanceConcurrency
-        {
-            get
-            {
-                return Triggers is null ? default : Triggers.ConcurrentHttpPerInstanceConcurrency;
-            }
-            set
-            {
-                if (Triggers is null)
-                {
-                    Triggers = new FunctionsScaleAndConcurrencyTriggers();
-                }
-                Triggers.ConcurrentHttpPerInstanceConcurrency = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for FunctionAppScaleAndConcurrency. </summary>
         protected override void DefineProvisionableProperties()
         {

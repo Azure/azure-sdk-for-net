@@ -13,6 +13,27 @@ namespace Azure.Provisioning.AppService;
 /// </summary>
 public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
 {
+    // Preserve the previous public name because the generated "Triggers" prefix exposes the nested wire-model structure.
+    /// <summary>
+    /// The maximum number of concurrent HTTP trigger invocations per instance.
+    /// </summary>
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("TriggersConcurrentHttpPerInstanceConcurrency")]
+    public BicepValue<int> ConcurrentHttpPerInstanceConcurrency
+    {
+        get
+        {
+            return Triggers is null ? default! : Triggers.ConcurrentHttpPerInstanceConcurrency;
+        }
+        set
+        {
+            if (Triggers is null)
+            {
+                Triggers = new FunctionsScaleAndConcurrencyTriggers();
+            }
+            Triggers.ConcurrentHttpPerInstanceConcurrency = value;
+        }
+    }
+
     /// <summary>
     /// The maximum number of instances for the function app.
     /// </summary>

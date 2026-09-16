@@ -8,14 +8,14 @@ dotnet build sdk\websites\Azure.Provisioning.AppService\src\Azure.Provisioning.A
 
 ## Summary
 
-The build failed ApiCompat with **22 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
+The build failed ApiCompat with **20 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
 
 | Category | API changes | ApiCompat diagnostics |
 |---|---:|---:|
-| Removed public properties | 4 properties | 6 |
+| Removed public properties | 3 properties | 4 |
 | Changed property types | 15 properties | 15 |
 | Missing enum members | 1 member | 1 |
-| **Total** | **20 changes** | **22** |
+| **Total** | **19 changes** | **20** |
 
 ApiCompat reports property getters and setters independently. Therefore, a removed read/write property normally produces two `CP0002` diagnostics.
 
@@ -27,10 +27,9 @@ ApiCompat reports property getters and setters independently. Therefore, a remov
 
 | Type | Removed read/write property |
 |---|---|
-| `FunctionAppScaleAndConcurrency` | `ConcurrentHttpPerInstanceConcurrency` |
 | `FunctionAppStorage` | `Value` |
 
-This accounts for **2 removed properties and 4 diagnostics**.
+This accounts for **1 removed property and 2 diagnostics**.
 
 ### Other removed properties
 
@@ -74,10 +73,10 @@ Most of this category is scalar semantic drift from URI, resource identifier, lo
 The failures are concentrated rather than spread evenly:
 
 1. Address the 15 scalar/model type changes.
-2. Restore the function app properties and certificate `Thumbprint`.
+2. Restore the remaining function app property and evaluate certificate `Thumbprint`.
 3. Restore `AppServiceSupportedTlsVersion.One3`.
 
-The scalar/model type changes account for **15 of 22 diagnostics (68%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
+The scalar/model type changes account for **15 of 20 diagnostics (75%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
 
 ## Resolved issues
 
@@ -148,3 +147,9 @@ The URI-typed `ApiDefinitionUri` property has been restored on:
 The current schema still uses `apiDefinition.url`, but the generated API now exposes it as the string-typed `ApiDefinitionUriStringValue` through an internal `AppServiceApiDefinitionInfo` model. The management library preserves the old URI-typed property with `EditorBrowsableState.Never` and no obsolete attribute.
 
 The provisioning compatibility implementation follows the same public pattern. An internal URI-typed property preserves the `url` wire binding, and the three public EBN properties flatten it through the current nested models. This resolves **6 diagnostics**.
+
+### 6. Function app HTTP concurrency property name
+
+`FunctionAppScaleAndConcurrency.ConcurrentHttpPerInstanceConcurrency` has been restored with `CodeGenMember`, replacing the generated `TriggersConcurrentHttpPerInstanceConcurrency` name. The generated `Triggers` prefix exposed the nested wire-model structure rather than describing the public setting, while the legacy name continues to map to `triggers.http.perInstanceConcurrency`.
+
+This restores **1 property and resolves 2 diagnostics**.
