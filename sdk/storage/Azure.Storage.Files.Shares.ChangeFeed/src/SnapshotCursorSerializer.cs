@@ -40,9 +40,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (cursor == null)
                 throw ShareChangeFeedErrors.InvalidSnapshotCursorEnvelope(nameof(continuationToken));
 
-            if (string.IsNullOrEmpty(cursor.BeginSnapshot)
+if (string.IsNullOrEmpty(cursor.BeginSnapshot)
                 || string.IsNullOrEmpty(cursor.EndSnapshot)
-                || string.IsNullOrEmpty(cursor.UrlHost))
+                || string.IsNullOrEmpty(cursor.UrlHost)
+                || cursor.InnerCursor == null)
             {
                 throw ShareChangeFeedErrors.MissingSnapshotContext(nameof(continuationToken));
             }
