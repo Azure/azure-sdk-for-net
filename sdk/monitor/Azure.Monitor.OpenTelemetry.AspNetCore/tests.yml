@@ -5,3 +5,8 @@ extends:
     parameters:
       ServiceDirectory: monitor
       Project: Azure.Monitor.OpenTelemetry.AspNetCore
+      AdditionalMatrixConfigs:
+        - Name: multi_endpoint_routing_live
+          Path: sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/multi-endpoint-routing-live-matrix.json
+          Selection: sparse
+          GenerateVMJobs: true

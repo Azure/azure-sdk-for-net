@@ -1,0 +1,27 @@
+{
+  "matrix": {
+    "Agent": {
+      "Windows2022_NET8.0": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL",
+        "TestTargetFramework": "net8.0"
+      }
+    },
+    "AdditionalTestArguments": [
+      "/p:UseProjectReferenceToAzureClients=true"
+    ],
+    "BuildConfiguration": [
+      "Release"
+    ],
+    "TestFilterConfig": {
+      "MultiEndpointRouting": {
+        "AdditionalTestFilters": "FullyQualifiedName~MultiEndpointRoutingLiveTests"
+      }
+    },
+    "ArmTemplateParameters": "@{ enableMultiEndpointRouting = $true }"
+  },
+  "displayNames": {
+    "MultiEndpointRouting": "MultiEndpointRouting",
+    "@{ enableMultiEndpointRouting = $true }": "MultiEndpointRouting"
+  }
+}
