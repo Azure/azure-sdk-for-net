@@ -272,18 +272,17 @@ internal sealed class ResponseExecution : IDisposable
 
     /// <summary>
     /// Enforces the user ID key for in-flight responses.
-    /// If this execution was created with a user ID key, the caller must
-    /// provide the same key; mismatches are treated as "not found" to prevent
+    /// The caller must provide the same key, including the absence of a key for
+    /// anonymous executions; mismatches are treated as "not found" to prevent
     /// cross-user information leakage.
     /// </summary>
     /// <param name="context">The caller's platform context.</param>
     /// <exception cref="ResourceNotFoundException">
-    /// Thrown when the execution has a user ID key and the caller's key does not match.
+    /// Thrown when the caller's user ID key does not match the execution.
     /// </exception>
     public void EnforceUserIsolation(PlatformContext context)
     {
-        if (UserIdKey is not null
-            && !string.Equals(UserIdKey, context.UserIdKey, StringComparison.Ordinal))
+        if (!string.Equals(UserIdKey, context.UserIdKey, StringComparison.Ordinal))
         {
             throw new ResourceNotFoundException($"Response '{ResponseId}' not found.");
         }
