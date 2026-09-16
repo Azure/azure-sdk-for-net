@@ -1131,57 +1131,91 @@ namespace Azure.Core.Tests.Identity
 
         [NonParallelizable]
         [Test]
-        [TestCaseSource(nameof(ResourceAndClientIds))]
-        public async Task VerifyArcRequestWithResourceIdMockAsync(string clientId, bool includeResourceIdentifier)
+        public async Task VerifyArcSystemAssignedRequestMock()
         {
-            using var environment = new TestEnvVar(
-                new()
-                {
-                    { "MSI_ENDPOINT", null },
-                    { "MSI_SECRET", null },
-                    { "IDENTITY_ENDPOINT", "https://identity.constoso.com" },
-                    { "IMDS_ENDPOINT", "https://imds.constoso.com" },
-                    { "IDENTITY_HEADER", null },
-                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
-                });
-
-            List<string> messages = new();
-            using AzureEventSourceListener listener = new AzureEventSourceListener(
-                (_, message) => messages.Add(message),
-                EventLevel.Warning);
-
-            var response = CreateSuccessResponse(ExpectedToken);
-            var mockTransport = new MockTransport(response);
-
-            ManagedIdentityId miId = (clientId, includeResourceIdentifier) switch
-            {
-                (Item1: null, Item2: true) => ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(_expectedResourceId)),
-                (Item1: not null, Item2: false) => ManagedIdentityId.FromUserAssignedClientId(clientId),
-                _ => ManagedIdentityId.SystemAssigned
-            };
-            var credential = CreateCredentialWithManagedIdentityId(mockTransport, miId);
-
-            if (clientId != null || includeResourceIdentifier)
-            {
-                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
-                Assert.That(ex.Message, Does.Contain(Constants.MiSourceNoUserAssignedIdentityMessage));
-                return;
-            }
+            using var environment = CredentialTestHelpers.CreateArcManagedIdentityEnvironment();
+            var mockTransport = new MockTransport(CredentialTestHelpers.CreateMockArcTokenResponse(ExpectedToken));
+            var credential = CreateCredentialWithManagedIdentityId(mockTransport, ManagedIdentityId.SystemAssigned);
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(1));
+            CredentialTestHelpers.AssertArcManagedIdentityRequest(mockTransport.Requests.Single(), null, null);
+        }
 
-            MockRequest request = mockTransport.Requests.Last();
+        [NonParallelizable]
+        [TestCaseSource(nameof(ArcUserAssignedIdentityIds))]
+        public async Task VerifyArcUserAssignedRequestMock(ManagedIdentityId managedIdentityId, string identityParameter)
+        {
+            using var environment = CredentialTestHelpers.CreateArcManagedIdentityEnvironment();
+            var mockTransport = new MockTransport(CredentialTestHelpers.CreateMockArcTokenResponse(
+                ExpectedToken, identityParameter, managedIdentityId._userAssignedId));
+            var credential = CreateCredentialWithManagedIdentityId(mockTransport, managedIdentityId);
 
-            string query = request.Uri.Query;
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
 
-            Assert.AreEqual(request.Uri.Host, "identity.constoso.com");
-            AssertContainsResourceQuery(query, ScopeUtilities.ScopesToResource(MockScopes.Default));
-            if (includeResourceIdentifier)
+            Assert.AreEqual(ExpectedToken, actualToken.Token);
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(1));
+            CredentialTestHelpers.AssertArcManagedIdentityRequest(
+                mockTransport.Requests.Single(), identityParameter, managedIdentityId._userAssignedId);
+        }
+
+        [NonParallelizable]
+        [TestCaseSource(nameof(ArcUserAssignedIdentityIds))]
+        public void VerifyArcRejectsUnconfirmedUserAssignedIdentity(ManagedIdentityId managedIdentityId, string identityParameter)
+        {
+            using var environment = CredentialTestHelpers.CreateArcManagedIdentityEnvironment();
+            var mockTransport = new MockTransport(CredentialTestHelpers.CreateMockArcTokenResponse(ExpectedToken));
+            var credential = CreateCredentialWithManagedIdentityId(mockTransport, managedIdentityId);
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.IsTrue(ExceptionChainContains(ex, Constants.MiSourceNoUserAssignedIdentityMessage));
+            Assert.That(mockTransport.Requests, Has.Count.EqualTo(1));
+            CredentialTestHelpers.AssertArcManagedIdentityRequest(
+                mockTransport.Requests.Single(), identityParameter, managedIdentityId._userAssignedId);
+        }
+
+        [NonParallelizable]
+        [TestCase("CloudShell")]
+        [TestCase("ServiceFabric")]
+        public void VerifyUnsupportedHostWithObjectId(string host)
+        {
+            bool isServiceFabric = host == "ServiceFabric";
+            using var environment = new TestEnvVar(new()
             {
-                Assert.That(query, Does.Contain($"{Constants.ManagedIdentityResourceId}={_expectedResourceId}"));
-            }
+                { "MSI_ENDPOINT", isServiceFabric ? null : "http://localhost:40342" },
+                { "MSI_SECRET", null },
+                { "IDENTITY_ENDPOINT", isServiceFabric ? "https://localhost:40342" : null },
+                { "IDENTITY_HEADER", isServiceFabric ? "header" : null },
+                { "IDENTITY_SERVER_THUMBPRINT", isServiceFabric ? "thumbprint" : null },
+                { "IMDS_ENDPOINT", null },
+                { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null },
+                { "AZURE_CLIENT_ID", null },
+                { "AZURE_TENANT_ID", null },
+                { "AZURE_FEDERATED_TOKEN_FILE", null }
+            });
+            var mockTransport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken));
+            var credential = CreateCredentialWithManagedIdentityId(
+                mockTransport, ManagedIdentityId.FromUserAssignedObjectId(Guid.NewGuid().ToString()));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+
+            Assert.IsTrue(ExceptionChainContains(ex, isServiceFabric
+                ? Constants.MiSeviceFabricNoUserAssignedIdentityMessage
+                : Constants.MiSourceNoUserAssignedIdentityMessage));
+            Assert.That(mockTransport.Requests, Is.Empty);
+        }
+
+        private static IEnumerable<TestCaseData> ArcUserAssignedIdentityIds()
+        {
+            yield return new TestCaseData(ManagedIdentityId.FromUserAssignedClientId(Guid.NewGuid().ToString()), "client_id");
+            yield return new TestCaseData(ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(
+                $"/subscriptions/{Guid.NewGuid()}/resourceGroups/test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/arc-uami")), "msi_res_id");
+            yield return new TestCaseData(ManagedIdentityId.FromUserAssignedObjectId(Guid.NewGuid().ToString()), "object_id");
         }
 
         [NonParallelizable]

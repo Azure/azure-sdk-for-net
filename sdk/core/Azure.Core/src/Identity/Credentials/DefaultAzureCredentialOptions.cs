@@ -468,6 +468,7 @@ namespace Azure.Identity
         /// <remarks>
         /// If neither the <see cref="ManagedIdentityClientId"/> nor the <see cref="ManagedIdentityResourceId"/> property is set, then a system-assigned managed identity is used.
         /// Defaults to the value of environment variable <c>AZURE_CLIENT_ID</c>.
+        /// Supported on Azure Arc-enabled servers with user-assigned managed identity support.
         /// </remarks>
         public string ManagedIdentityClientId { get; set; } = EnvironmentVariables.ClientId;
 
@@ -476,6 +477,7 @@ namespace Azure.Identity
         /// </summary>
         /// <remarks>
         /// If neither the <see cref="ManagedIdentityClientId"/> nor the <see cref="ManagedIdentityResourceId"/> property is set, then a system-assigned managed identity is used.
+        /// Supported on Azure Arc-enabled servers with user-assigned managed identity support.
         /// </remarks>
         public ResourceIdentifier ManagedIdentityResourceId { get; set; }
 
