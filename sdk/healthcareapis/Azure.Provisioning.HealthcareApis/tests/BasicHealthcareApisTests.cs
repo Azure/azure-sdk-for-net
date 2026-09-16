@@ -30,6 +30,7 @@ public class BasicHealthcareApisTests
     }
 
     [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.healthcareapis/workspaces/create-workspace-with-child-services/main.bicep")]
     public async Task CreateWorkspace()
     {
         await using Trycep test = CreateWorkspaceTest();
