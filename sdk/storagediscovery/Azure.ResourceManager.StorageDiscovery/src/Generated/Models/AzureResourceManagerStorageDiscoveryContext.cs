@@ -16,7 +16,15 @@ namespace Azure.ResourceManager.StorageDiscovery
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AzureBlobStorageCapability))]
+    [ModelReaderWriterBuildable(typeof(AzureBlobStorageCapabilityUpdate))]
+    [ModelReaderWriterBuildable(typeof(CapacityDetails))]
+    [ModelReaderWriterBuildable(typeof(CapacityDetailsUpdate))]
+    [ModelReaderWriterBuildable(typeof(PrefixDefinition))]
+    [ModelReaderWriterBuildable(typeof(PrefixDefinitionUpdate))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(StorageDiscoveryCapabilities))]
+    [ModelReaderWriterBuildable(typeof(StorageDiscoveryCapabilitiesUpdate))]
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryScope))]
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspaceData))]
     [ModelReaderWriterBuildable(typeof(StorageDiscoveryWorkspaceListResult))]
