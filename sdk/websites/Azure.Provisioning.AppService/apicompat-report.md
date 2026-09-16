@@ -8,16 +8,15 @@ dotnet build sdk\websites\Azure.Provisioning.AppService\src\Azure.Provisioning.A
 
 ## Summary
 
-The build failed ApiCompat with **113 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
+The build failed ApiCompat with **109 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
 
 | Category | API changes | ApiCompat diagnostics |
 |---|---:|---:|
-| Missing nested `ResourceVersions` types | 4 types | 4 |
 | Removed public properties | 44 properties | 86 |
 | Changed property types | 15 properties | 15 |
 | Removed public setters | 7 properties | 7 |
 | Missing enum members | 1 member | 1 |
-| **Total** | **71 changes** | **113** |
+| **Total** | **67 changes** | **109** |
 
 ApiCompat reports property getters and setters independently. Therefore, a removed read/write property normally produces two `CP0002` diagnostics.
 
@@ -32,16 +31,7 @@ The four legacy publishing-credential policy resource types have been restored a
 | `WebSiteFtpPublishingCredentialsPolicy` | `SiteBasicPublishingCredentialsPolicy` | `ftp` |
 | `WebSiteSlotFtpPublishingCredentialsPolicy` | `SiteSlotBasicPublishingCredentialsPolicy` | `ftp` |
 
-This resolves the four original missing top-level type diagnostics. Historical API-version fields are exposed on the two generated base types.
-
-ApiCompat still reports four `CP0001` diagnostics for the legacy nested metadata types:
-
-- `ScmSiteBasicPublishingCredentialsPolicy.ResourceVersions`
-- `ScmSiteSlotBasicPublishingCredentialsPolicy.ResourceVersions`
-- `WebSiteFtpPublishingCredentialsPolicy.ResourceVersions`
-- `WebSiteSlotFtpPublishingCredentialsPolicy.ResourceVersions`
-
-Nested types are not inherited as derived-type CLR metadata, so base-type `ResourceVersions` fields do not satisfy these four binary compatibility checks. The total remains 113 unique diagnostics even though the resource classes themselves are restored.
+The four original missing top-level type diagnostics and their nested `ResourceVersions` compatibility diagnostics are resolved. Each compatibility class owns its historical nested API-version metadata because nested types are not inherited as derived-type CLR metadata.
 
 ## 2. Removed public properties
 
@@ -144,8 +134,7 @@ The failures are concentrated rather than spread evenly:
 
 1. Restore the four deployment-extension property sets first: **56 diagnostics**.
 2. Restore the `WebSite` and `WebSiteSlot` VNet flags: **16 diagnostics**.
-3. Decide whether the four legacy publishing-policy nested `ResourceVersions` type identities must also be restored: **4 diagnostics**. The top-level resource identities are already restored.
-4. Address the 15 scalar/model type changes and 7 setter-accessibility changes.
-5. Restore smaller renamed or removed members: `ApiDefinitionUri`, certificate `Thumbprint`, `ValidationMethod`, function app properties, and `One3`.
+3. Address the 15 scalar/model type changes and 7 setter-accessibility changes.
+4. Restore smaller renamed or removed members: `ApiDefinitionUri`, certificate `Thumbprint`, `ValidationMethod`, function app properties, and `One3`.
 
-The first two clusters account for **72 of 113 diagnostics (64%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
+The first two clusters account for **72 of 109 diagnostics (66%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
