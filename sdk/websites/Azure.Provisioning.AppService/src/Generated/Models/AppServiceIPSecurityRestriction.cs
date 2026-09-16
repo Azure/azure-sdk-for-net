@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,7 +16,7 @@ namespace Azure.Provisioning.AppService
     {
         private BicepValue<string> _ipAddressOrCidr;
         private BicepValue<string> _subnetMask;
-        private BicepValue<string> _vnetSubnetResourceId;
+        private BicepValue<ResourceIdentifier> _vnetSubnetResourceId;
         private BicepValue<int> _vnetTrafficTag;
         private BicepValue<int> _subnetTrafficTag;
         private BicepValue<string> _action;
@@ -61,7 +62,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the VnetSubnetResourceId. </summary>
-        public BicepValue<string> VnetSubnetResourceId
+        public BicepValue<ResourceIdentifier> VnetSubnetResourceId
         {
             get
             {
@@ -201,7 +202,7 @@ namespace Azure.Provisioning.AppService
             base.DefineProvisionableProperties();
             _ipAddressOrCidr = DefineProperty<string>(nameof(IPAddressOrCidr), new string[] { "ipAddress" });
             _subnetMask = DefineProperty<string>(nameof(SubnetMask), new string[] { "subnetMask" });
-            _vnetSubnetResourceId = DefineProperty<string>(nameof(VnetSubnetResourceId), new string[] { "vnetSubnetResourceId" });
+            _vnetSubnetResourceId = DefineProperty<ResourceIdentifier>(nameof(VnetSubnetResourceId), new string[] { "vnetSubnetResourceId" });
             _vnetTrafficTag = DefineProperty<int>(nameof(VnetTrafficTag), new string[] { "vnetTrafficTag" });
             _subnetTrafficTag = DefineProperty<int>(nameof(SubnetTrafficTag), new string[] { "subnetTrafficTag" });
             _action = DefineProperty<string>(nameof(Action), new string[] { "action" });

@@ -15,7 +15,7 @@ namespace Azure.Provisioning.AppService
     /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
     public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : ProvisionableConstruct
     {
-        private BicepValue<string> _location;
+        private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
         private AppServiceArmPlan _plan;
         private RemotePrivateEndpointConnection _properties;
@@ -35,7 +35,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets the Location. </summary>
-        public BicepValue<string> Location
+        public BicepValue<AzureLocation> Location
         {
             get
             {
@@ -168,7 +168,7 @@ namespace Azure.Provisioning.AppService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _location = DefineProperty<string>(nameof(Location), new string[] { "location" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _plan = DefineModelProperty<AppServiceArmPlan>(nameof(Plan), new string[] { "plan" });
             _properties = DefineModelProperty<RemotePrivateEndpointConnection>(nameof(Properties), new string[] { "properties" });

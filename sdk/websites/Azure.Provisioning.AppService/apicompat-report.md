@@ -8,14 +8,14 @@ dotnet build sdk\websites\Azure.Provisioning.AppService\src\Azure.Provisioning.A
 
 ## Summary
 
-The build failed ApiCompat with **18 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
+The build failed ApiCompat with **4 unique compatibility diagnostics**. The same diagnostics occur for `netstandard2.0`, `net8.0`, and `net10.0`.
 
 | Category | API changes | ApiCompat diagnostics |
 |---|---:|---:|
 | Removed public properties | 1 property | 2 |
-| Changed property types | 15 properties | 15 |
+| Changed property types | 1 property | 1 |
 | Missing enum members | 1 member | 1 |
-| **Total** | **17 changes** | **18** |
+| **Total** | **3 changes** | **4** |
 
 ApiCompat reports property getters and setters independently. Therefore, a removed read/write property normally produces two `CP0002` diagnostics.
 
@@ -31,27 +31,13 @@ This accounts for **1 removed property and 2 diagnostics**.
 
 ### 2. Changed property types
 
-These properties still exist, but their migrated getter signatures no longer match the previous package:
+This property still exists, but its migrated getter signature no longer matches the previous package:
 
 | Type.property | Previous type | Current type |
 |---|---|---|
-| `AppServiceBlobStorageApplicationLogsConfig.SasUri` | `BicepValue<Uri>` | `BicepValue<string>` |
-| `AppServiceBlobStorageHttpLogsConfig.SasUri` | `BicepValue<Uri>` | `BicepValue<string>` |
-| `AppServiceIPSecurityRestriction.VnetSubnetResourceId` | `BicepValue<ResourceIdentifier>` | `BicepValue<string>` |
-| `AppServiceSkuDescription.Locations` | `BicepList<AzureLocation>` | `BicepList<string>` |
-| `CloningInfo.CorrelationId` | `BicepValue<Guid>` | `BicepValue<string>` |
-| `CloningInfo.SourceWebAppLocation` | `BicepValue<AzureLocation>` | `BicepValue<string>` |
-| `GitHubActionContainerConfiguration.ServerUri` | `BicepValue<Uri>` | `BicepValue<string>` |
-| `OpenIdConnectConfig.CertificationUri` | `BicepValue<Uri>` | `BicepValue<string>` |
-| `PrivateAccessVirtualNetwork.ResourceId` | `BicepValue<ResourceIdentifier>` | `BicepValue<string>` |
-| `RampUpRule.ChangeDecisionCallbackUri` | `BicepValue<Uri>` | `BicepValue<string>` |
 | `ResponseMessageEnvelopeRemotePrivateEndpointConnection.Error` | `BicepValue<Azure.ResponseError>` | `ErrorEntity` |
-| `ResponseMessageEnvelopeRemotePrivateEndpointConnection.Location` | `BicepValue<AzureLocation>` | `BicepValue<string>` |
-| `StaticSiteDatabaseConnectionOverview.ResourceId` | `BicepValue<ResourceIdentifier>` | `BicepValue<string>` |
-| `StaticSiteLinkedBackendInfo.BackendResourceId` | `BicepValue<string>` | `BicepValue<ResourceIdentifier>` |
-| `StaticSiteTemplate.TemplateRepositoryUri` | `BicepValue<Uri>` | `BicepValue<string>` |
 
-Most of this category is scalar semantic drift from URI, resource identifier, location, or GUID types to `string`. `StaticSiteLinkedBackendInfo.BackendResourceId` changed in the opposite direction, from `string` to `ResourceIdentifier`.
+This model-type difference cannot be addressed through a scalar `@@alternateType` customization.
 
 ### 3. Missing enum member
 
@@ -59,13 +45,7 @@ Most of this category is scalar semantic drift from URI, resource identifier, lo
 
 ### Concentration and suggested order
 
-The failures are concentrated rather than spread evenly:
-
-1. Address the 15 scalar/model type changes.
-2. Restore the remaining function app property.
-3. Restore `AppServiceSupportedTlsVersion.One3`.
-
-The scalar/model type changes account for **15 of 18 diagnostics (83%)**. The remaining work consists mainly of deliberate API-shape compatibility customizations.
+The remaining work consists of three deliberate API-shape compatibility customizations: restoring `FunctionAppStorage.Value`, preserving the legacy `Azure.ResponseError` representation, and restoring `AppServiceSupportedTlsVersion.One3`.
 
 ## Resolved issues
 
@@ -150,3 +130,26 @@ The legacy `BicepValue<BinaryData> Thumbprint` getter has been restored on both 
 The compatibility properties match the management library by using `EditorBrowsableState.Never` and an obsolete attribute directing callers to `ThumbprintString`. Explanatory notes document why both semantic representations are retained.
 
 This restores **2 properties and resolves 2 diagnostics**.
+
+### 8. Scalar semantic types
+
+TypeSpec `@@alternateType` customizations now align 14 provisioning properties with the semantic types exposed by the current management library:
+
+| Type.property | Restored type |
+|---|---|
+| `AppServiceBlobStorageApplicationLogsConfig.SasUri` | `BicepValue<Uri>` |
+| `AppServiceBlobStorageHttpLogsConfig.SasUri` | `BicepValue<Uri>` |
+| `AppServiceIPSecurityRestriction.VnetSubnetResourceId` | `BicepValue<ResourceIdentifier>` |
+| `AppServiceSkuDescription.Locations` | `BicepList<AzureLocation>` |
+| `CloningInfo.CorrelationId` | `BicepValue<Guid>` |
+| `CloningInfo.SourceWebAppLocation` | `BicepValue<AzureLocation>` |
+| `GitHubActionContainerConfiguration.ServerUri` | `BicepValue<Uri>` |
+| `OpenIdConnectConfig.CertificationUri` | `BicepValue<Uri>` |
+| `PrivateAccessVirtualNetwork.ResourceId` | `BicepValue<ResourceIdentifier>` |
+| `RampUpRule.ChangeDecisionCallbackUri` | `BicepValue<Uri>` |
+| `ResponseMessageEnvelopeRemotePrivateEndpointConnection.Location` | `BicepValue<AzureLocation>` |
+| `StaticSiteDatabaseConnectionOverview.ResourceId` | `BicepValue<ResourceIdentifier>` |
+| `StaticSiteLinkedBackendInfo.BackendResourceId` | `BicepValue<string>` |
+| `StaticSiteTemplate.TemplateRepositoryUri` | `BicepValue<Uri>` |
+
+The linked-backend resource ID required removing an existing `armResourceIdentifier` override because both the legacy provisioning API and the management API expose it as `string`. These changes resolve **14 diagnostics**.

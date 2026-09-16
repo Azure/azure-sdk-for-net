@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.AppService
     /// <summary> The GitHub action container configuration. </summary>
     public partial class GitHubActionContainerConfiguration : ProvisionableConstruct
     {
-        private BicepValue<string> _serverUri;
+        private BicepValue<Uri> _serverUri;
         private BicepValue<string> _imageName;
         private BicepValue<string> _username;
         private BicepValue<string> _password;
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the ServerUri. </summary>
-        public BicepValue<string> ServerUri
+        public BicepValue<Uri> ServerUri
         {
             get
             {
@@ -87,7 +88,7 @@ namespace Azure.Provisioning.AppService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _serverUri = DefineProperty<string>(nameof(ServerUri), new string[] { "serverUrl" });
+            _serverUri = DefineProperty<Uri>(nameof(ServerUri), new string[] { "serverUrl" });
             _imageName = DefineProperty<string>(nameof(ImageName), new string[] { "imageName" });
             _username = DefineProperty<string>(nameof(Username), new string[] { "username" });
             _password = DefineProperty<string>(nameof(Password), new string[] { "password" });

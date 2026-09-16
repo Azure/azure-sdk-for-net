@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.AppService
     /// <summary> Static Site Database Connection overview. </summary>
     public partial class StaticSiteDatabaseConnectionOverview : ProvisionableConstruct
     {
-        private BicepValue<string> _resourceId;
+        private BicepValue<ResourceIdentifier> _resourceId;
         private BicepValue<string> _connectionIdentity;
         private BicepValue<string> _region;
         private BicepList<StaticSiteDatabaseConnectionConfigurationFileOverview> _configurationFiles;
@@ -25,7 +26,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets the ResourceId. </summary>
-        public BicepValue<string> ResourceId
+        public BicepValue<ResourceIdentifier> ResourceId
         {
             get
             {
@@ -78,7 +79,7 @@ namespace Azure.Provisioning.AppService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resourceId = DefineProperty<string>(nameof(ResourceId), new string[] { "resourceId" }, isOutput: true);
+            _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" }, isOutput: true);
             _connectionIdentity = DefineProperty<string>(nameof(ConnectionIdentity), new string[] { "connectionIdentity" }, isOutput: true);
             _region = DefineProperty<string>(nameof(Region), new string[] { "region" }, isOutput: true);
             _configurationFiles = DefineListProperty<StaticSiteDatabaseConnectionConfigurationFileOverview>(nameof(ConfigurationFiles), new string[] { "configurationFiles" }, isOutput: true);
