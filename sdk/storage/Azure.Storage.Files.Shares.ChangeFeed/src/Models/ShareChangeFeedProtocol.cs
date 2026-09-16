@@ -32,7 +32,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public override bool Equals(object obj) => obj is ShareChangeFeedProtocol other && Equals(other);
         public bool Equals(ShareChangeFeedProtocol other) => string.Equals(_value, other._value, StringComparison.OrdinalIgnoreCase);
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+public override int GetHashCode() => _value == null ? 0 : StringComparer.OrdinalIgnoreCase.GetHashCode(_value);
         public override string ToString() => _value;
         public static bool operator ==(ShareChangeFeedProtocol left, ShareChangeFeedProtocol right) => left.Equals(right);
         public static bool operator !=(ShareChangeFeedProtocol left, ShareChangeFeedProtocol right) => !left.Equals(right);
