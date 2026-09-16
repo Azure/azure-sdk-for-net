@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Specs.Azure.Tcgc.ClientInit.Default client library for developing .NET applications with rich experience.</Description>
+    <Description>The Specs.Azure.Tcgc.ClientInit.Default client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics.</Description>
     <AssemblyTitle>SDK Code Generation Specs.Azure.Tcgc.ClientInit.Default</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Specs.Azure.Tcgc.ClientInit.Default</PackageTags>
