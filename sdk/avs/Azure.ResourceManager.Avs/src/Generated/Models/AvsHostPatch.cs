@@ -32,18 +32,5 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> The properties of a host resource that may be updated. </summary>
         internal HostUpdateProperties Properties { get; set; }
-
-        /// <summary> The licenses assigned to the host. </summary>
-        public IList<HostLicense> HostUpdateLicenses
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new HostUpdateProperties();
-                }
-                return Properties.Licenses;
-            }
-        }
     }
 }

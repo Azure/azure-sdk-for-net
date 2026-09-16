@@ -2211,7 +2211,7 @@ namespace Azure.ResourceManager.Avs.Models
     public partial class AvsHostPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Avs.Models.AvsHostPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Avs.Models.AvsHostPatch>
     {
         public AvsHostPatch() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.HostLicense> HostUpdateLicenses { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Avs.Models.HostLicense> Licenses { get { throw null; } }
         protected virtual Azure.ResourceManager.Avs.Models.AvsHostPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Avs.Models.AvsHostPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
