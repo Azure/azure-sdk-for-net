@@ -57,6 +57,14 @@ internal static class TaskWireKeys
     public const string PayloadSteering = "steering";
     public const string PayloadSchemaVersion = "schema_version";
 
+    // Crash-repair close intent (saved-state reconciliation). Written atomically with the
+    // durable transition that retires an input, it names the raw input id(s) whose file-backed
+    // stream still owes an end-of-stream marker. A crash between the transition and the stream
+    // close leaves this list in the record; startup reconciliation reads it and brings the
+    // orphaned stream to EOF without re-running finished work. It never names a currently
+    // active or queued (live) input.
+    public const string PayloadStreamsPendingClose = "streams_pending_close";
+
     // Current task-document schema version stamped at create (spec §20/§38). Its presence
     // is REQUIRED: a stale in_progress record lacking it is legacy and MUST be deleted
     // (not recovered) by the recovery scan.

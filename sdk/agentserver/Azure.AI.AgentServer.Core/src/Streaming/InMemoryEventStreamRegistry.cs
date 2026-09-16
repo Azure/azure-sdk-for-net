@@ -218,6 +218,27 @@ internal sealed class InMemoryEventStreamRegistry :
         }
     }
 
+    public void RecordPendingDeletion(string taskId, IReadOnlyCollection<string> inputIds)
+    {
+        if (_options.Configuration.StorageDirectory is { } directory)
+        {
+            TaskStreamDeletionJournal.Record(directory, taskId, inputIds);
+        }
+    }
+
+    public void RemovePendingDeletion(string taskId)
+    {
+        if (_options.Configuration.StorageDirectory is { } directory)
+        {
+            TaskStreamDeletionJournal.Remove(directory, taskId);
+        }
+    }
+
+    public IReadOnlyList<PendingStreamDeletion> ListPendingDeletions()
+        => _options.Configuration.StorageDirectory is { } directory
+            ? TaskStreamDeletionJournal.List(directory)
+            : Array.Empty<PendingStreamDeletion>();
+
     public override ValueTask DeleteAsync(string id, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(id))
