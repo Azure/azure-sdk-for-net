@@ -368,7 +368,8 @@ extends:
               BaseRepoOwner: Azure
               TargetRepoName: $(Build.Repository.Name)
               BaseRepoBranch: $(branchName)
-              CommitMsg: Regenerate repository SDK with TypeSpec build $(Build.BuildNumber)
+              # Squash merges include commit messages, so PR title edits cannot remove the CI skip marker.
+              CommitMsg: Regenerate repository SDK with TypeSpec build $(Build.BuildNumber) [skip ci]
               WorkingDirectory: $(Build.SourcesDirectory)
               ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
               # To accomodate scheduled runs and retries, we want to overwrite any existing changes on the branch
@@ -448,7 +449,7 @@ extends:
               BaseRepoOwner: Azure
               TargetRepoName: $(Build.Repository.Name)
               BaseRepoBranch: $(branchName)
-              CommitMsg: Update SDK code $(JobKey)
+              CommitMsg: Update SDK code $(JobKey) [skip ci]
               WorkingDirectory: $(Build.SourcesDirectory)
               ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
               AuthToken: $(GH_TOKEN)
@@ -516,9 +517,6 @@ extends:
                   $prTitle = "Failed: $prTitle"
                 }
               }
-
-              # Preserve PR validation while skipping redundant CI after the regeneration PR is merged.
-              $prTitle = "[skip ci] $prTitle"
 
               # Keep manually requested previews out of stale generator upgrade cleanup.
               if ($reason -eq 'Manual') {
