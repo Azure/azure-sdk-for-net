@@ -24,8 +24,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var result = await SdkStatsConfigFetcher.FetchAsync(TestConfigUrl, handler);
 
             Assert.Equal(SdkStatsConfigStatus.UseUrl, result.Status);
-            Assert.Equal("data.example.invalid", result.Url);
+            Assert.Contains("data.example.invalid", result.ConnectionString);
             Assert.Equal(1, handler.RequestCount);
+        }
+
+        [Fact]
+        public async Task FetchAsync_OneSettingsBoundary_ReturnsConnectionString()
+        {
+            const string connectionString =
+                "InstrumentationKey=11111111-1111-1111-1111-111111111111;IngestionEndpoint=https://eu.stats.example.com/";
+            var payload = "{\"settings\":{"
+                + "\"FEATURE_SDK_STATS\":\"{\\\"default\\\":\\\"enabled\\\"}\","
+                + "\"SUPPORTED_DATA_BOUNDARIES\":\"[\\\"EU\\\"]\","
+                + "\"EU_REGIONS\":\"[\\\"westeurope\\\"]\","
+                + "\"EU_STATS_CONNECTION_STRING\":\"" + connectionString + "\"}}";
+            var handler = new StubHandler(req => OkJson(payload));
+
+            var result = await SdkStatsConfigFetcher.FetchAsync(
+                TestConfigUrl,
+                "https://westeurope.in.applicationinsights.azure.com/",
+                handler);
+
+            Assert.Equal(SdkStatsConfigStatus.UseConnectionString, result.Status);
+            Assert.Equal(connectionString, result.ConnectionString);
         }
 
         [Fact]
@@ -114,7 +135,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var result = await SdkStatsConfigFetcher.FetchAsync(TestConfigUrl, handler);
 
             Assert.Equal(SdkStatsConfigStatus.UseUrl, result.Status);
-            Assert.Equal("data.example.invalid", result.Url);
+            Assert.Contains("data.example.invalid", result.ConnectionString);
             Assert.Equal(2, handler.RequestCount);
         }
 

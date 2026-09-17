@@ -128,10 +128,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 // The only no-emission case is an explicit remote kill switch
                 // (`enabled: false`). The constructor must NOT throw because that would
                 // break the customer's exporter pin path.
-                var configUrl = GetSdkStatsConfigUrl(connectionStringVars.IngestionEndpoint);
                 var ingestionEndpoint = connectionStringVars.IngestionEndpoint;
                 _configInitializationTask = Task.Run(() =>
-                    InitializeFromConfigAsync(configUrl, ingestionEndpoint, sdkStatsConfigHttpHandler));
+                    InitializeFromConfigAsync(ingestionEndpoint, sdkStatsConfigHttpHandler));
                 return;
             }
 
@@ -149,19 +148,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         }
 
         private async Task InitializeFromConfigAsync(
-            string configUrl,
             string ingestionEndpoint,
             System.Net.Http.HttpMessageHandler? httpHandler)
         {
+            const string configUrl = StatsbeatConstants.OneSettingsConfigUrl;
             try
             {
-                var result = await SdkStatsConfigFetcher.FetchAsync(configUrl, httpHandler).ConfigureAwait(false);
+                var result = await SdkStatsConfigFetcher.FetchAsync(configUrl, ingestionEndpoint, httpHandler).ConfigureAwait(false);
 
                 string connectionString;
                 switch (result.Status)
                 {
-                    case SdkStatsConfigStatus.UseUrl:
-                        connectionString = BuildConnectionStringFromHost(result.Url!);
+                    case SdkStatsConfigStatus.UseConnectionString:
+                        connectionString = result.ConnectionString!;
                         break;
                     case SdkStatsConfigStatus.Disabled:
                         // Explicit remote kill switch. Honor it: do not build the
@@ -189,21 +188,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     configUrl,
                     $"MeterProvider build failed: {ex.GetType().Name}");
             }
-        }
-
-        private static string BuildConnectionStringFromHost(string host)
-        {
-            // Build a Breeze-compatible connection string from the config-supplied host.
-            // The transmitter appends the standard /v2.1/track path; the placeholder iKey
-            // is required by ConnectionStringParser but is ignored server-side by the
-            // distro endpoint family.
-            var trimmed = host.TrimEnd('/');
-            if (!trimmed.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                && !trimmed.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
-            {
-                trimmed = "https://" + trimmed;
-            }
-            return "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=" + trimmed + "/";
         }
 
         /// <summary>
@@ -347,16 +331,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal static string GetSdkStatsConfigUrl(string ingestionEndpoint)
         {
-            // Distro path: pick the EU or non-EU configuration endpoint based on the
-            // customer's ingestion region. Unknown regions default to non-EU.
-            var patternMatch = s_endpoint_pattern.Match(ingestionEndpoint);
-            if (patternMatch.Success
-                && StatsbeatConstants.s_EU_Endpoints.Contains(patternMatch.Groups[1].Value))
-            {
-                return StatsbeatConstants.SdkStatsConfigUrl_EU;
-            }
-
-            return StatsbeatConstants.SdkStatsConfigUrl_NonEU;
+            return StatsbeatConstants.OneSettingsConfigUrl;
         }
 
         private IEnumerable<Measurement<int>> GetAttachStatsbeat()
