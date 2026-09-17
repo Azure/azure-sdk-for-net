@@ -1,6 +1,6 @@
 # Release History
 
-## 12.1.0-beta.3 (2026-09-14)
+## 12.1.0-beta.3 (2026-09-18)
 
 ### Breaking Changes
 
@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 - Restored public `SearchIndexerClient` create-or-update parameters for controlling indexer cache reset and reprocessing behavior.
+- Added `TokenCredential` overloads to `SearchClientBuilderExtensions` so clients can be registered with credentials such as `DefaultAzureCredential`. ([#63072](https://github.com/Azure/azure-sdk-for-net/issues/63072))
 
 ## 12.1.0-beta.2 (2026-08-27)
 
