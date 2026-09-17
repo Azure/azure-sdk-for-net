@@ -12,7 +12,6 @@ using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Tests;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
@@ -23,7 +22,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         private const string Tenant = "11111111-1111-1111-1111-111111111111";
         private const string OtherTenant = "22222222-2222-2222-2222-222222222222";
         private const string BearerType = "Bearer";
-        private const string DenialBody = """{"error":"invalid_request","error_codes":[3921996]}""";
+        private const string DenialMessage = "AADSTS3921996: Tenant is not allowed to receive a bound token using attested certificate.";
         private static readonly Uri VaultUri = new("https://test.vault.azure.net");
         private static readonly string Challenge = $"{BearerType} authorization=\"https://login.microsoftonline.com/{Tenant}\", resource=\"https://vault.azure.net\"";
 
@@ -34,16 +33,16 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [SetUp]
         public void SetUp() => ChallengeBasedAuthenticationPolicy.ClearCache();
 
-        [TestCase(400, true)]
-        [TestCase(401, true)]
-        [TestCase(0, false)]
-        [TestCase(200, false)]
-        [TestCase(403, false)]
-        [TestCase(429, false)]
-        [TestCase(500, false)]
-        public void MatchesOnlyCandidateTokenErrorStatus(int status, bool expected)
+        [TestCase("AADSTS3921996")]
+        [TestCase(DenialMessage)]
+        [TestCase("ManagedIdentityCredential authentication failed: AADSTS3921996: Tenant not allowed.")]
+        [TestCase("Original exception:\r\nAADSTS3921996: Tenant not allowed.\r\nTrace ID: test")]
+        [TestCase("(AADSTS3921996)")]
+        [TestCase("AADSTS39219960 is not the code; AADSTS3921996 is.")]
+        [TestCase("""{"error_description":"AADSTS3921996: Tenant not allowed."}""")]
+        public void MatchesExactTenantDenialCode(string message)
         {
-            Assert.AreEqual(expected, TenantTokenBindingCredential.IsTenantNotAllowedForBoundToken(Denial(status)));
+            Assert.IsTrue(TenantTokenBindingCredential.IsTenantNotAllowedForBoundToken(message));
         }
 
         [TestCase(null)]
@@ -63,12 +62,20 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [TestCase("""{"error_codes":[3921996,1000604]}""")]
         [TestCase("""{"error_codes":[3921996],"error_codes":[3921996]}""")]
         [TestCase("""{"error":{"error_codes":[3921996]}}""")]
-        [TestCase("""{"error_description":"AADSTS3921996: Tenant not allowed."}""")]
         [TestCase("""{"error":"MtlsMsiTenantNotAllowedForBoundToken"}""")]
-        public void RejectsUnrecognizedErrorBodies(string body)
+        [TestCase("Tenant is not allowed to receive a bound token using attested certificate.")]
+        [TestCase("AADSTS39219960: Different error.")]
+        [TestCase("AADSTS3921996suffix")]
+        [TestCase("prefixAADSTS3921996")]
+        [TestCase("_AADSTS3921996")]
+        [TestCase("AADSTS3921996_")]
+        [TestCase("AADSTS3921996\u0660")]
+        [TestCase("\u00e9AADSTS3921996")]
+        [TestCase("aadsts3921996")]
+        [TestCase("AADSTS1000604: Invalid request parameters.")]
+        public void RejectsMessagesWithoutExactTenantDenialCode(string message)
         {
-            var error = new MsalServiceException("invalid_request", "AADSTS3921996", 400) { ResponseBody = body };
-            Assert.IsFalse(TenantTokenBindingCredential.IsTenantNotAllowedForBoundToken(error));
+            Assert.IsFalse(TenantTokenBindingCredential.IsTenantNotAllowedForBoundToken(message));
         }
 
         [TestCase("direct")]
@@ -76,6 +83,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [TestCase("selected")]
         [TestCase("probe")]
         [TestCase("aggregate")]
+        [TestCase("opaque-inner-chain")]
+        [TestCase("wrapped-aggregate")]
+        [TestCase("nested-unavailable-aggregate")]
         public async Task RecognizesCredentialExceptionWrappers(string wrapper)
         {
             var inner = DenyingCredential(WrapDenial(wrapper));
@@ -85,6 +95,23 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             Assert.AreEqual("bearer-result", token.Token);
             Assert.That(inner.Contexts.Select(c => c.IsProofOfPossessionEnabled), Is.EqualTo(new[] { true, false }));
+            Assert.IsFalse(credential.GetEffectiveRequestContext(Context()).IsProofOfPossessionEnabled);
+        }
+
+        [TestCase("AADSTS39219960")]
+        [TestCase("Tenant not eligible.")]
+        [TestCase("""{"error_codes":[3921996]}""")]
+        public void UnrecognizedCredentialMessageDoesNotRememberFallback(string message)
+        {
+            var error = new AuthenticationFailedException("Managed identity failed.", new Exception(message));
+            var inner = DenyingCredential(error);
+            var credential = new TenantTokenBindingCredential(inner);
+
+            Exception actual = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await Acquire(credential, Context()));
+
+            Assert.AreSame(error, actual);
+            Assert.AreEqual(1, inner.Contexts.Count);
+            Assert.IsTrue(credential.GetEffectiveRequestContext(Context()).IsProofOfPossessionEnabled);
         }
 
         [Test]
@@ -180,19 +207,60 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         [TestCase("arbitrary-wrapper")]
         [TestCase("mixed-aggregate")]
         [TestCase("unavailable-only")]
+        [TestCase("raw-denial")]
+        [TestCase("network-denial")]
+        [TestCase("request-failed-denial")]
+        [TestCase("wrapped-cancellation")]
+        [TestCase("nested-cancellation")]
+        [TestCase("raw-aggregate")]
+        [TestCase("wrapped-aggregate-denial")]
+        [TestCase("aggregate-summary-denial")]
+        [TestCase("mixed-unavailable-aggregate")]
+        [TestCase("nested-mixed-aggregate")]
+        [TestCase("unavailable-with-diagnostic")]
+        [TestCase("ancestor-summary-denial")]
+        [TestCase("mixed-opaque-terminal")]
+        [TestCase("mixed-nested-terminal-aggregate")]
+        [TestCase("mixed-cancellation-aggregate")]
         public void PreservesUnrelatedFailures(string kind)
         {
             Exception error = kind switch
             {
-                "strength" => new AuthenticationFailedException("Failed.", new MsalClientException(MsalError.MinStrengthNotMet, "Insufficient strength.")),
+                "strength" => new AuthenticationFailedException("Failed.", new Exception("Insufficient strength.")),
                 "network" => new System.IO.IOException("Network failure."),
-                "scope" => new AuthenticationFailedException("Failed.", new MsalServiceException("invalid_scope", "Invalid scope.", 400)),
-                "server" => new AuthenticationFailedException("Failed.", Denial(500)),
+                "scope" => new AuthenticationFailedException("Failed.", new Exception("AADSTS70011: Invalid scope.")),
+                "server" => new AuthenticationFailedException("Failed.", new Exception("Internal server error.")),
                 "mismatch" => new RequestFailedException(401, "[MtlsCnfClaimRequestDataValidationFailed]"),
                 "arbitrary-wrapper" => new Exception("AADSTS3921996", Denial()),
                 "mixed-aggregate" => new CredentialUnavailableException("Failed.", new AggregateException(
                     new CredentialUnavailableException("Denied.", Denial()),
                     new AuthenticationFailedException("Unrelated failure."))),
+                "raw-denial" => Denial(),
+                "network-denial" => new System.IO.IOException(DenialMessage),
+                "request-failed-denial" => new RequestFailedException(401, DenialMessage),
+                "wrapped-cancellation" => new AuthenticationFailedException(DenialMessage, new OperationCanceledException()),
+                "nested-cancellation" => new AuthenticationFailedException("Failed.", new Exception(DenialMessage, new OperationCanceledException())),
+                "raw-aggregate" => new AggregateException(WrapDenial("probe"), new Exception("Unrelated failure.")),
+                "wrapped-aggregate-denial" => new AuthenticationFailedException(DenialMessage, new AggregateException(Denial())),
+                "aggregate-summary-denial" => new CredentialUnavailableException(DenialMessage,
+                    new AggregateException(new CredentialUnavailableException("Unavailable."))),
+                "mixed-unavailable-aggregate" => new CredentialUnavailableException("Failed.", new AggregateException(
+                    WrapDenial("probe"),
+                    new CredentialUnavailableException("Failed.", new AuthenticationFailedException("AADSTS70011: Invalid scope.")))),
+                "nested-mixed-aggregate" => new AuthenticationFailedException(DenialMessage,
+                    new CredentialUnavailableException("Failed.", new AggregateException(WrapDenial("probe"), new AuthenticationFailedException("Unrelated failure.")))),
+                "unavailable-with-diagnostic" => new CredentialUnavailableException("Unavailable.", new System.IO.FileNotFoundException("Provider configuration missing.")),
+                "ancestor-summary-denial" => new AuthenticationFailedException(DenialMessage,
+                    new CredentialUnavailableException("All sources unavailable.", new AggregateException(new CredentialUnavailableException("Unavailable.")))),
+                "mixed-opaque-terminal" => new CredentialUnavailableException("Failed.", new AggregateException(
+                    WrapDenial("probe"),
+                    new CredentialUnavailableException("Unavailable.", new Exception("Diagnostic.", new AuthenticationFailedException("Unrelated failure."))))),
+                "mixed-nested-terminal-aggregate" => new CredentialUnavailableException("Failed.", new AggregateException(
+                    WrapDenial("probe"),
+                    new CredentialUnavailableException("Unavailable.", new AuthenticationFailedException("Unrelated failure.",
+                        new CredentialUnavailableException("Unavailable.", new AggregateException(new CredentialUnavailableException("Unavailable."))))))),
+                "mixed-cancellation-aggregate" => new CredentialUnavailableException("Failed.", new AggregateException(
+                    WrapDenial("probe"), new CredentialUnavailableException("Unavailable.", new OperationCanceledException()))),
                 _ => new CredentialUnavailableException("Unavailable.", new AggregateException(new CredentialUnavailableException("Unavailable.")))
             };
             var inner = new CallbackCredential((_, _) => throw error);
@@ -300,10 +368,27 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.IsFalse(inner.Contexts.Last().IsProofOfPossessionEnabled);
         }
 
-        [Test]
-        public async Task ChainedCredentialCanRecoverFromUnavailableAggregate()
+        [TestCase("none")]
+        [TestCase("file")]
+        [TestCase("json")]
+        [TestCase("process")]
+        [TestCase("opaque")]
+        [TestCase("nested")]
+        [TestCase("opaque-aadsts")]
+        public async Task ChainedCredentialCanRecoverFromUnavailableAggregate(string cause)
         {
-            var unavailable = new CallbackCredential((_, _) => throw new CredentialUnavailableException("Unavailable."));
+            Exception diagnostic = cause switch
+            {
+                "none" => null,
+                "file" => new System.IO.FileNotFoundException("Provider configuration missing."),
+                "json" => new System.Text.Json.JsonException("Provider configuration invalid."),
+                "process" => new System.ComponentModel.Win32Exception("Credential process unavailable."),
+                "opaque" => new Exception("Provider unavailable."),
+                "nested" => new Exception("Provider unavailable.", new InvalidOperationException("Provider not configured.")),
+                "opaque-aadsts" => new Exception("AADSTS70011: Invalid scope."),
+                _ => throw new ArgumentException("Unknown cause.", nameof(cause))
+            };
+            var unavailable = new CallbackCredential((_, _) => throw new CredentialUnavailableException("Unavailable.", diagnostic));
             var managedIdentity = DenyingCredential(WrapDenial("probe"));
             var chain = new ChainedTokenCredential(unavailable, managedIdentity);
             var credential = new TenantTokenBindingCredential(chain);
@@ -312,6 +397,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             Assert.AreEqual("bearer-result", result.Token);
             Assert.That(managedIdentity.Contexts.Select(c => c.IsProofOfPossessionEnabled), Is.EqualTo(new[] { true, false }));
+            Assert.IsFalse(credential.GetEffectiveRequestContext(Context()).IsProofOfPossessionEnabled);
         }
 
         [Test]
@@ -437,6 +523,104 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         }
 
         [Test]
+        public async Task SecretClientKeepsValidBearerTokensCachedAfterFallback()
+        {
+            var inner = new CallbackCredential((context, _) =>
+                context.IsProofOfPossessionEnabled
+                    ? throw WrapDenial("managed")
+                    : new ValueTask<AccessToken>(new AccessToken("bearer-result", DateTimeOffset.UtcNow.AddHours(1))));
+            int requests = 0;
+            var transport = new MockTransport(request =>
+            {
+                if (requests++ == 0)
+                {
+                    return new MockResponse(401).WithHeader("WWW-Authenticate", Challenge);
+                }
+                Assert.IsFalse(request.Headers.Contains("x-ms-tokenboundauth"));
+                Assert.IsTrue(request.Headers.TryGetValue("Authorization", out string authorization));
+                Assert.AreEqual($"{BearerType} bearer-result", authorization);
+                return Success();
+            });
+            var client = new SecretClient(VaultUri, inner, new SecretClientOptions { Transport = transport });
+
+            _ = IsAsync ? await client.GetSecretAsync("secret") : client.GetSecret("secret");
+            _ = IsAsync ? await client.GetSecretAsync("secret") : client.GetSecret("secret");
+            int acquisitions = inner.Contexts.Count;
+
+            _ = IsAsync ? await client.GetSecretAsync("another-secret") : client.GetSecret("another-secret");
+            _ = IsAsync ? await client.GetSecretAsync("secret") : client.GetSecret("secret");
+
+            Assert.AreEqual(acquisitions, inner.Contexts.Count);
+            Assert.That(inner.Contexts.Skip(1).Select(c => c.IsProofOfPossessionEnabled), Is.All.False);
+            Assert.AreEqual(5, requests);
+        }
+
+        [Test]
+        public async Task BackgroundRenewalDenialSwitchesNewRequestsToBearer()
+        {
+            var bearerStarted = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var releaseBearer = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var bearerFinished = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            int popCalls = 0;
+            int bearerCalls = 0;
+            var inner = new CallbackCredential(async (context, _) =>
+            {
+                if (context.IsProofOfPossessionEnabled)
+                {
+                    if (Interlocked.Increment(ref popCalls) > 1)
+                    {
+                        throw WrapDenial("managed");
+                    }
+                    return new AccessToken("bound-result", DateTimeOffset.UtcNow.AddHours(1), DateTimeOffset.UtcNow.AddMinutes(-1), "mtls_pop");
+                }
+
+                if (Interlocked.Increment(ref bearerCalls) == 1)
+                {
+                    bearerStarted.TrySetResult(true);
+                    await releaseBearer.Task;
+                    bearerFinished.TrySetResult(true);
+                }
+                return new AccessToken("bearer-result", DateTimeOffset.UtcNow.AddHours(1));
+            });
+            var authorizations = new ConcurrentQueue<string>();
+            var boundHeaders = new ConcurrentQueue<bool>();
+            int requests = 0;
+            var transport = new MockTransport(request =>
+            {
+                request.Headers.TryGetValue("Authorization", out string authorization);
+                authorizations.Enqueue(authorization);
+                boundHeaders.Enqueue(request.Headers.Contains("x-ms-tokenboundauth"));
+                return requests++ == 0
+                    ? new MockResponse(401).WithHeader("WWW-Authenticate", Challenge)
+                    : Success();
+            });
+            var client = new SecretClient(VaultUri, inner, new SecretClientOptions { Transport = transport });
+
+            try
+            {
+                _ = IsAsync ? await client.GetSecretAsync("secret") : client.GetSecret("secret");
+                _ = IsAsync ? await client.GetSecretAsync("secret") : client.GetSecret("secret");
+                Assert.AreSame(bearerStarted.Task, await Task.WhenAny(bearerStarted.Task, Task.Delay(TimeSpan.FromSeconds(10))));
+
+                // The background bearer acquisition is still pending, but the denial is already remembered.
+                _ = IsAsync ? await client.GetSecretAsync("secret") : client.GetSecret("secret");
+
+                Assert.AreEqual($"{BearerType} bearer-result", authorizations.Last());
+                Assert.IsFalse(boundHeaders.Last());
+                Assert.AreEqual(2, popCalls);
+                Assert.AreEqual(2, bearerCalls);
+            }
+            finally
+            {
+                releaseBearer.TrySetResult(true);
+                if (bearerStarted.Task.IsCompleted)
+                {
+                    Assert.AreSame(bearerFinished.Task, await Task.WhenAny(bearerFinished.Task, Task.Delay(TimeSpan.FromSeconds(10))));
+                }
+            }
+        }
+
+        [Test]
         public void ServiceRejectionOfBearerStillFails()
         {
             var inner = DenyingCredential(WrapDenial("managed"));
@@ -490,18 +674,21 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             ContentStream = new KeyVaultSecret("secret", "value").ToStream()
         };
 
-        private static MsalServiceException Denial(int status = 400) =>
-            new("invalid_request", "Tenant not eligible.", status) { ResponseBody = DenialBody };
+        private static Exception Denial() => new(DenialMessage);
 
         private static Exception WrapDenial(string wrapper) => wrapper switch
         {
-            "direct" => Denial(),
+            "direct" => new AuthenticationFailedException(DenialMessage),
             "managed" => new AuthenticationFailedException("Managed identity failed.", Denial()),
             "selected" => new AuthenticationFailedException("Selected credential failed.", new AuthenticationFailedException("Managed identity failed.", Denial())),
             "probe" => new CredentialUnavailableException("Probe acquisition failed.", Denial()),
             "aggregate" => new CredentialUnavailableException("All sources unavailable.", new AggregateException(
                 new CredentialUnavailableException("Environment unavailable."),
                 new CredentialUnavailableException("Probe acquisition failed.", Denial()))),
+            "opaque-inner-chain" => new AuthenticationFailedException("Failed.", new Exception("Managed identity failed.", Denial())),
+            "wrapped-aggregate" => new AuthenticationFailedException("Selected credential failed.", WrapDenial("aggregate")),
+            "nested-unavailable-aggregate" => new CredentialUnavailableException("All sources unavailable.",
+                new AggregateException(new CredentialUnavailableException("Environment unavailable."), WrapDenial("aggregate"))),
             _ => throw new ArgumentException("Unknown wrapper.", nameof(wrapper))
         };
 

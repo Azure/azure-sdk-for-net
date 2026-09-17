@@ -38,6 +38,8 @@ for help diagnosing various problems across all our Azure SDKs for .NET.
 
 When PoP token acquisition receives the explicit managed-identity tenant eligibility denial `AADSTS3921996`, the Key Vault client requests bearer authentication once through the same configured credential. It preserves scopes, tenant, claims, CAE, correlation, and cancellation while disabling PoP-specific request configuration. Other authentication errors and Key Vault certificate-mismatch responses do not trigger this fallback.
 
+The client recognizes the exact `AADSTS3921996` code in an `AuthenticationFailedException` or `CredentialUnavailableException` message, including its inner-exception messages. This does not require a direct MSAL dependency in Key Vault. If the credential does not preserve the code in the exception-message chain, the error is propagated without fallback. Cancellation and unrelated terminal failures in a credential aggregate are not converted to bearer authentication.
+
 The denial is remembered per Key Vault authentication-policy instance and request tenant context, not globally across credentials or clients. Subsequent operations and renewals use bearer authentication for that context. Recreate the Key Vault client to retry PoP after eligibility changes. Requests already in flight may complete their original acquisition.
 
 Enable Azure SDK logging to observe the transition warning from the package's `-Authentication` event source, for example `Azure-Security-KeyVault-Secrets-Authentication`. The warning does not include tokens or tenant identifiers. Successful bearer fallback does not provide certificate-binding protection, grant additional permissions, or bypass a vault configured to require bound tokens.

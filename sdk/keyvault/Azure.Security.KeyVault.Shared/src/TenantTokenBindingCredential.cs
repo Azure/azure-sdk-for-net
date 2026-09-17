@@ -4,20 +4,19 @@
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.Tracing;
-using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Identity;
-using Microsoft.Identity.Client;
 
 namespace Azure.Security.KeyVault
 {
     internal sealed class TenantTokenBindingCredential : TokenCredential
     {
-        private const int TenantNotAllowedForBoundTokenErrorCode = 3921996;
+        private const string TenantNotAllowedForBoundTokenPattern = @"\bAADSTS3921996\b";
         private readonly TokenCredential _credential;
         private readonly ConcurrentDictionary<string, byte> _bearerOnlyTenants = new(StringComparer.OrdinalIgnoreCase);
 
@@ -74,18 +73,25 @@ namespace Azure.Security.KeyVault
 
         private static FailureKind ClassifyFailure(Exception exception)
         {
-            if (exception is MsalServiceException serviceException)
+            if (exception is not AuthenticationFailedException)
             {
-                return IsTenantNotAllowedForBoundToken(serviceException) ? FailureKind.TenantDenied : FailureKind.Other;
+                return FailureKind.Other;
             }
 
-            if (exception is CredentialUnavailableException unavailable)
+            bool foundDenial = false;
+            bool onlyUnavailable = true;
+            for (Exception current = exception; current != null; current = current.InnerException)
             {
-                // DefaultAzureCredential aggregates unavailable sources when its initial IMDS
-                // probe wraps the MSAL denial. Do not disregard any terminal authentication failure.
-                if (unavailable.InnerException is AggregateException aggregate)
+                if (current is OperationCanceledException or AggregateException)
                 {
-                    bool foundDenial = false;
+                    return FailureKind.Other;
+                }
+
+                // Aggregate messages combine multiple credentials. A denial in one source must
+                // not hide a terminal authentication failure in another.
+                if (current is CredentialUnavailableException && current.InnerException is AggregateException aggregate)
+                {
+                    bool aggregateDenial = false;
                     foreach (Exception inner in aggregate.InnerExceptions)
                     {
                         if (inner is not CredentialUnavailableException)
@@ -98,65 +104,21 @@ namespace Azure.Security.KeyVault
                         {
                             return FailureKind.Other;
                         }
-                        foundDenial |= kind == FailureKind.TenantDenied;
+                        aggregateDenial |= kind == FailureKind.TenantDenied;
                     }
-                    return foundDenial ? FailureKind.TenantDenied : FailureKind.Unavailable;
+                    return aggregateDenial ? FailureKind.TenantDenied : onlyUnavailable ? FailureKind.Unavailable : FailureKind.Other;
                 }
 
-                return unavailable.InnerException is AuthenticationFailedException or MsalException
-                    ? ClassifyFailure(unavailable.InnerException)
-                    : FailureKind.Unavailable;
+                // Core can preserve the service error only in an inner exception's message.
+                foundDenial |= IsTenantNotAllowedForBoundToken(current.Message);
+                onlyUnavailable &= current is not AuthenticationFailedException || current is CredentialUnavailableException;
             }
 
-            return exception is AuthenticationFailedException failure
-                ? ClassifyFailure(failure.InnerException)
-                : FailureKind.Other;
+            return foundDenial ? FailureKind.TenantDenied : onlyUnavailable ? FailureKind.Unavailable : FailureKind.Other;
         }
 
-        internal static bool IsTenantNotAllowedForBoundToken(MsalServiceException exception)
-        {
-            if (exception.StatusCode is not (400 or 401) || string.IsNullOrEmpty(exception.ResponseBody))
-            {
-                return false;
-            }
-
-            try
-            {
-                using JsonDocument document = JsonDocument.Parse(exception.ResponseBody);
-                if (document.RootElement.ValueKind != JsonValueKind.Object)
-                {
-                    return false;
-                }
-
-                bool found = false;
-                foreach (JsonProperty property in document.RootElement.EnumerateObject())
-                {
-                    if (!property.NameEquals("error_codes"))
-                    {
-                        continue;
-                    }
-
-                    if (found || property.Value.ValueKind != JsonValueKind.Array || property.Value.GetArrayLength() != 1)
-                    {
-                        return false;
-                    }
-
-                    JsonElement code = property.Value[0];
-                    if (code.ValueKind != JsonValueKind.Number ||
-                        !code.TryGetInt32(out int value) ||
-                        value != TenantNotAllowedForBoundTokenErrorCode)
-                    {
-                        return false;
-                    }
-                    found = true;
-                }
-                return found;
-            }
-            catch (JsonException)
-            {
-                return false;
-            }
-        }
+        internal static bool IsTenantNotAllowedForBoundToken(string message) =>
+            message != null && Regex.IsMatch(message, TenantNotAllowedForBoundTokenPattern, RegexOptions.CultureInvariant);
 
         private enum FailureKind
         {
