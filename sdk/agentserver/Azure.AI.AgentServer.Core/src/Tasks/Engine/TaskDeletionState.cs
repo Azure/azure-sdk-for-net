@@ -12,10 +12,8 @@ internal sealed class TaskDeletionState
 {
     private readonly object _gate = new();
     private readonly Dictionary<string, InputStreams> _inputs = new(StringComparer.Ordinal);
-    private readonly List<Task> _closing = new();
     private readonly Action<string, Exception> _closeFailed;
     private bool _confirmed;
-    private Exception? _closeError;
 
     public TaskDeletionState(Action<string, Exception> closeFailed)
     {
@@ -69,42 +67,12 @@ internal sealed class TaskDeletionState
         foreach ((InputStreams input, Task producers) in selected)
         {
             Task closing = CloseAfterUnwindAsync(input, producers);
-            lock (_gate)
-            {
-                _closing.Add(closing);
-            }
             if (producers.IsCompleted)
             {
                 ready.Add(closing);
             }
         }
         await Task.WhenAll(ready).ConfigureAwait(false);
-    }
-
-    /// <summary>
-    /// Completes when every arranged closure — including those deferred until a still-running
-    /// producer unwinds — has finished. Faults if any close failed. Used to defer removal of the
-    /// durable deletion journal until the streams are actually sealed, without blocking DeleteAsync.
-    /// </summary>
-    public async Task DrainAsync()
-    {
-        Task[] closing;
-        lock (_gate)
-        {
-            closing = _closing.ToArray();
-        }
-
-        await Task.WhenAll(closing).ConfigureAwait(false);
-
-        lock (_gate)
-        {
-            if (_closeError is not null)
-            {
-                // A close failed in-process; surface it so the durable journal is retained for
-                // restart reconciliation instead of being removed with a stream still open.
-                throw _closeError;
-            }
-        }
     }
 
     private async Task CloseAfterUnwindAsync(InputStreams input, Task producers)
@@ -129,7 +97,6 @@ internal sealed class TaskDeletionState
             lock (_gate)
             {
                 input.Closing = false;
-                _closeError ??= exception;
             }
             _closeFailed(input.InputId, exception);
         }

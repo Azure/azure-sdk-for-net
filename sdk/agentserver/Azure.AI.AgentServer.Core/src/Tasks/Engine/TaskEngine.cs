@@ -11,7 +11,6 @@ using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
-using Azure.AI.AgentServer.Core.Streaming.Backings;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
 using Microsoft.Extensions.DependencyInjection;
@@ -739,10 +738,6 @@ internal sealed partial class TaskEngine : IDisposable
                         {
                             var payload = new JsonObject { [TaskWireKeys.PayloadSteering] = run.Steering.ToPayload() };
                             TaskInputIdentity.PreserveLegacy(record, payload, taskId);
-                            // Crash repair: cancelling a queued input removes it from the durable
-                            // queue and closes its stream right after. Record the close intent
-                            // atomically so a crash in that window is reconciled to EOF on restart.
-                            MarkStreamPendingClose(payload, inputId);
                             return new TaskPatchRequest
                             {
                                 Payload = payload,
@@ -937,14 +932,6 @@ internal sealed partial class TaskEngine : IDisposable
             {
                 var turnPayload = (JsonObject)payload.DeepClone();
                 turnPayload[TaskWireKeys.PayloadSteering] = run.SnapshotSteering();
-                // Crash repair: promotion retires the preceding active input; its stream is closed
-                // right after this drain commits. Record that predecessor's close intent atomically
-                // (never the just-promoted input) so a crash in the window is reconciled on restart.
-                string retired = TaskInputIdentity.Active(record, taskId);
-                if (!string.Equals(retired, queued.InputId, StringComparison.Ordinal))
-                {
-                    MarkStreamPendingClose(turnPayload, retired);
-                }
                 TaskInputIdentity.PreserveLegacy(record, turnPayload, taskId);
                 turnPayload[TaskWireKeys.PayloadActiveInputId] = queued.InputId;
                 return new TaskPatchRequest
@@ -1630,20 +1617,7 @@ internal sealed partial class TaskEngine : IDisposable
     {
         await _serializer.UpdateAsync(
             taskId,
-            record =>
-            {
-                // Crash repair: a completed one-shot deletes its record and closes its stream
-                // right after this write. Record the close intent atomically so a crash between
-                // the completion commit and the stream close is reconciled to EOF on restart.
-                var payload = new JsonObject();
-                MarkStreamPendingClose(payload, TaskInputIdentity.Active(record, taskId));
-                return new TaskPatchRequest
-                {
-                    Status = TaskWireKeys.StatusCompleted,
-                    Payload = payload,
-                    PayloadSupplied = true,
-                };
-            },
+            _ => new TaskPatchRequest { Status = TaskWireKeys.StatusCompleted },
             WriteIntent.Complete,
             cancellationToken).ConfigureAwait(false);
     }
@@ -1680,10 +1654,6 @@ internal sealed partial class TaskEngine : IDisposable
                             payload[TaskWireKeys.PayloadSteering] = steeringPayload.DeepClone();
                         }
                         TaskInputIdentity.PreserveLegacy(record, payload, taskId);
-                        // Crash repair: the finished turn's stream is closed right after this
-                        // suspend commits. Record the close intent atomically so a crash in that
-                        // window is reconciled to EOF on restart (saved-state reconciliation).
-                        MarkStreamPendingClose(payload, TaskInputIdentity.Active(record, taskId));
                         return new TaskPatchRequest
                         {
                             Status = TaskWireKeys.StatusSuspended,
@@ -1772,18 +1742,6 @@ internal sealed partial class TaskEngine : IDisposable
             }
         }
 
-        // Crash repair: a hard delete removes the record that names the streams still owing EOF, so
-        // the close intent is journaled durably before the provider delete. It is drained on restart
-        // only when the record is confirmed gone, and removed on the success path below. A crash
-        // between the committed delete and stream close is therefore reconciled after restart.
-        IReadOnlyCollection<string> journaledInputs = record is not null
-            ? GetDeletedRecordInputIds(record)
-            : Array.Empty<string>();
-        if (journaledInputs.Count > 0 && _streams is ITaskEventStreamRegistry journalRegistry)
-        {
-            journalRegistry.RecordPendingDeletion(taskId, journaledInputs);
-        }
-
         try
         {
             // Framework chains are typically non-terminal (suspended/in_progress),
@@ -1799,32 +1757,6 @@ internal sealed partial class TaskEngine : IDisposable
         _serializer.Remove(taskId);
         await cleanup.ConfirmAsync().ConfigureAwait(false);
         _deletionCleanup.TryRemove(taskId, out _);
-
-        // The delete committed. Remove the durable journal only after the streams are actually sealed
-        // — including closures deferred until a running producer unwinds — so a crash before a
-        // deferred close still finds the journal and reconciles on restart. This never blocks
-        // DeleteAsync on a non-cooperative handler: if the close does not complete in this lifetime
-        // the journal simply persists for the next restart, and a failed close also retains it.
-        if (journaledInputs.Count > 0 && _streams is ITaskEventStreamRegistry cleanupRegistry)
-        {
-            _ = RemovePendingDeletionAfterDrainAsync(cleanup, cleanupRegistry, taskId);
-        }
-    }
-
-    private static async Task RemovePendingDeletionAfterDrainAsync(
-        TaskDeletionState cleanup, ITaskEventStreamRegistry registry, string taskId)
-    {
-        try
-        {
-            await cleanup.DrainAsync().ConfigureAwait(false);
-        }
-        catch
-        {
-            // A close failed or remains pending after a fault; keep the journal for restart repair.
-            return;
-        }
-
-        registry.RemovePendingDeletion(taskId);
     }
 
     private async Task ObserveDeletionCancellationAsync(string taskId, Task cancellation)
@@ -1962,119 +1894,6 @@ internal sealed partial class TaskEngine : IDisposable
                 runState.InputId,
                 closeException.GetType().Name);
         }
-    }
-
-    // Records a crash-repair close intent atomically with a durable transition: the raw input id
-    // whose file-backed stream still owes an end-of-stream marker once the transition commits.
-    private static void MarkStreamPendingClose(JsonObject payload, string inputId)
-        => payload[TaskWireKeys.PayloadStreamsPendingClose] = new JsonArray(JsonValue.Create(inputId));
-
-    // Saved-state reconciliation: closes the streams named by a record's crash-repair close intent,
-    // skipping any input that is still live (the executing input, or a durably queued input). The
-    // stream is opened existing-only and closed idempotently, so an already-closed or absent
-    // backing is a no-op and a reused live input is never sealed.
-    private async Task ReconcilePendingClosesAsync(TaskRecord record, CancellationToken cancellationToken)
-    {
-        if (record.Payload is not JsonObject payload
-            || payload[TaskWireKeys.PayloadStreamsPendingClose] is not JsonArray pending
-            || pending.Count == 0)
-        {
-            return;
-        }
-
-        var live = new HashSet<string>(StringComparer.Ordinal);
-        if (record.Status == TaskWireKeys.StatusInProgress)
-        {
-            live.Add(TaskInputIdentity.Active(record, record.Id));
-        }
-
-        if (payload[TaskWireKeys.PayloadSteering] is JsonObject steering
-            && steering[TaskWireKeys.SteeringPendingInputIds] is JsonArray queuedIds)
-        {
-            foreach (JsonNode? node in queuedIds)
-            {
-                if (node is JsonValue queuedValue && queuedValue.TryGetValue(out string? queuedId) && queuedId is not null)
-                {
-                    live.Add(queuedId);
-                }
-            }
-        }
-
-        foreach (JsonNode? node in pending)
-        {
-            if (node is not JsonValue value || !value.TryGetValue(out string? inputId) || inputId is null)
-            {
-                continue;
-            }
-
-            if (live.Contains(inputId))
-            {
-                continue;
-            }
-
-            try
-            {
-                // Existing-only + idempotent: never creates a missing backing, never re-emits EOF.
-                await new TaskStreamState(_streams, record.Id, inputId).CloseAsync().ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                // Ownership conflict, missing backing, or I/O error must not abort the sweep; the
-                // close intent remains recorded so a later scan retries.
-                _logger.StreamCloseFailure(record.Id, inputId, ex.GetType().Name);
-            }
-        }
-    }
-
-    // Reconciles crash-orphaned streams for records that have durably left in_progress: suspended
-    // chains (a finished turn whose close was interrupted) and completed one-shots (whose ephemeral
-    // record delete was interrupted). Completed records are deleted after their streams are sealed,
-    // finishing the interrupted cleanup. These records are not re-dispatched as work.
-    private async Task ReconcileRetiredRecordsAsync(string status, bool deleteAfter, CancellationToken cancellationToken)
-    {
-        string? after = null;
-        do
-        {
-            TaskListResult listed = await _store.ListAsync(new TaskListQuery
-            {
-                AgentName = _agentName,
-                SessionId = _sessionId,
-                Status = status,
-                After = after,
-            }, cancellationToken).ConfigureAwait(false);
-
-            foreach (TaskRecordRef item in listed.Items)
-            {
-                TaskRecord record = item.Record;
-                if (record.Source?.Type != TaskWireKeys.SourceTypeValue)
-                {
-                    continue;
-                }
-
-                if (record.Lease is not null && !string.Equals(record.Lease.Owner, _owner, StringComparison.Ordinal))
-                {
-                    continue;
-                }
-
-                await ReconcilePendingClosesAsync(record, cancellationToken).ConfigureAwait(false);
-
-                if (deleteAfter)
-                {
-                    try
-                    {
-                        await _store.DeleteAsync(record.Id, force: true, cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
-                    }
-                    catch (TaskStoreException)
-                    {
-                        // Best-effort: a concurrent delete or transient failure is retried next scan.
-                    }
-                }
-            }
-
-            after = listed.NextAfter;
-        }
-        while (after is not null);
     }
 
     private JsonObject BuildSource(string name) => new()
@@ -2595,11 +2414,6 @@ internal sealed partial class TaskEngine : IDisposable
                 continue;
             }
 
-            // Saved-state crash repair: close any stream this record retired (a promoted-away
-            // predecessor or a cancelled queued input) before re-dispatching its live work. The
-            // executing/queued inputs are excluded, so recovery of the live turn is unaffected.
-            await ReconcilePendingClosesAsync(record, cancellationToken).ConfigureAwait(false);
-
             string name = record.Source?.Name ?? string.Empty;
             if (!_registry.TryGet(name, out TaskRegistration registration) || registration.RecoverDispatch is null)
             {
@@ -2623,63 +2437,7 @@ internal sealed partial class TaskEngine : IDisposable
             }
         }
 
-        // Saved-state crash repair for records that durably left in_progress: suspended chains whose
-        // finished turn's stream close was interrupted, and completed one-shots whose ephemeral
-        // delete was interrupted. These are reconciled (and completed records deleted) but never
-        // re-dispatched, so the recovered work count reflects live work only.
-        await ReconcileRetiredRecordsAsync(TaskWireKeys.StatusSuspended, deleteAfter: false, cancellationToken)
-            .ConfigureAwait(false);
-        await ReconcileRetiredRecordsAsync(TaskWireKeys.StatusCompleted, deleteAfter: true, cancellationToken)
-            .ConfigureAwait(false);
-        await ReconcileDeletionJournalAsync(cancellationToken).ConfigureAwait(false);
-
         return dispatched;
-    }
-
-    // Saved-state crash repair for hard deletions: a deleted record cannot carry a close intent, so
-    // the intent was journaled durably before the provider delete. On restart, an entry whose record
-    // is confirmed gone has its streams sealed (existing-only, idempotent); an entry whose record
-    // still exists is discarded without closing, so an uncommitted or reused-id delete never seals a
-    // recoverable stream. An uncertain store read leaves the entry for a later scan.
-    private async Task ReconcileDeletionJournalAsync(CancellationToken cancellationToken)
-    {
-        if (_streams is not ITaskEventStreamRegistry journal)
-        {
-            return;
-        }
-
-        foreach (PendingStreamDeletion pending in journal.ListPendingDeletions())
-        {
-            TaskRecord? record;
-            try
-            {
-                record = await _store.GetAsync(pending.TaskId, cancellationToken).ConfigureAwait(false);
-            }
-            catch (TaskStoreException)
-            {
-                continue;
-            }
-
-            if (record is not null)
-            {
-                journal.RemovePendingDeletion(pending.TaskId);
-                continue;
-            }
-
-            foreach (string inputId in pending.InputIds)
-            {
-                try
-                {
-                    await new TaskStreamState(_streams, pending.TaskId, inputId).CloseAsync().ConfigureAwait(false);
-                }
-                catch (Exception ex)
-                {
-                    _logger.StreamCloseFailure(pending.TaskId, inputId, ex.GetType().Name);
-                }
-            }
-
-            journal.RemovePendingDeletion(pending.TaskId);
-        }
     }
 
     internal CancellationToken ShutdownToken => _shutdownCts.Token;
