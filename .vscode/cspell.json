@@ -1138,14 +1138,6 @@
       ]
     },
     {
-      "filename": "**/sdk/providerhub/**/*.cs",
-      "words": [
-        "checkin",
-        "ploc",
-        "regionality"
-      ]
-    },
-    {
       "filename": "**/sdk/qumulo/**/*",
       "words": [
         "qumulo"

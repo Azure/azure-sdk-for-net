@@ -510,7 +510,9 @@ namespace Azure.ResourceManager.ProviderHub
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.Models.CheckinManifestInfo>> CheckinManifestAsync(Azure.ResourceManager.ProviderHub.Models.CheckinManifestContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Delete(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation DeleteResourcesResourceAction(Azure.WaitUntil waitUntil, string resourceActionName, Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteResourcesResourceActionAsync(Azure.WaitUntil waitUntil, string resourceActionName, Azure.ResourceManager.ProviderHub.Models.ResourceManagementAction properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.Models.ResourceProviderManifest> GenerateManifest(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3541,6 +3543,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         public ResourceTypeRegistrationResourceManagementOptions() { }
         public Azure.ResourceManager.ProviderHub.Models.BatchProvisioningSupport BatchProvisioningSupport { get { throw null; } set { } }
+        public Azure.ResourceManager.ProviderHub.Models.ResourceManagementSupportedOperation? BatchProvisioningSupportSupportedOperations { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationDeleteDependency> DeleteDependencies { get { throw null; } }
         public string NestedProvisioningSupportMinimumApiVersion { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ProviderHub.Models.ResourceTypeRegistrationResourceManagementOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (Unreleased)
+## 1.3.0 (2026-10-06)
 
 ### Features Added
 
@@ -32,20 +32,17 @@ A property removed by the change above was required on the request model shared 
 
 - `ResourceAccessPolicy` is now an extensible enum rather than a closed one, and `NotSpecified` is the only well-known value that remains. Two values naming an internal Microsoft management tool were removed. The type was reopened so that any retired value the service still returns round-trips as a string instead of failing to deserialize.
 
+**Changed: API version rename**
+
+- The resource-deletion-policy enums were renamed in API version `2025-10-01` (the specification records this with `@renamedFrom`). `ManifestResourceDeletionPolicy` is now `ResourceDeletionPolicy`, and the previous `ResourceDeletionPolicy` is now `RPaaSResourceDeletionPolicy`, which gained the `CascadeDeleteAll` and `CascadeDeleteProxyOnlyChildren` values. `ProviderResourceType.ResourceDeletionPolicy` is typed `ResourceDeletionPolicy` and is read-only, and `ResourceTypeRegistrationProperties.ResourceDeletionPolicy` is typed `RPaaSResourceDeletionPolicy`.
+
 **Changed: generator migration**
 
-These changes are unrelated to the removals above and come from regenerating on the current management-plane generator. Because they name no removed internal identifiers, they are also itemized individually in `eng/apicompatbaselines/Azure.ResourceManager.ProviderHub.xml`:
+These changes are unrelated to the removals above and come from regenerating on the current management-plane generator:
 
 - `Models.OperationsPutContent` was removed. The put-content operations are now exposed through `OperationsPutContentResource` and `OperationsPutContentData`, reached via `ProviderRegistrationResource.GetOperationsPutContent()`. This replaces `ProviderRegistrationResource.CreateOrUpdate(OperationsPutContent, ...)` and `ProviderRegistrationResource.GetByProviderRegistration()`.
-- `ProviderRegistrationResource.Delete` now takes a `WaitUntil` argument and returns `ArmOperation`.
-- `ManifestResourceDeletionPolicy` was renamed to `RPaaSResourceDeletionPolicy` and gained the `CascadeDeleteAll` and `CascadeDeleteProxyOnlyChildren` values. `ProviderResourceType.ResourceDeletionPolicy` is now typed `ResourceDeletionPolicy` and is read-only, and `ResourceTypeRegistrationProperties.ResourceDeletionPolicy` is now typed `RPaaSResourceDeletionPolicy`.
-- `ResourceTypeRegistrationResourceManagementOptions.BatchProvisioningSupportSupportedOperations` was replaced by `ResourceTypeRegistrationResourceManagementOptions.BatchProvisioningSupport`.
 - Removed the remaining `ArmProviderHubModelFactory` overloads that existed only to match the shape of the 1.2.x contract. Use the current overload for each model instead.
 - Collection properties on several models, including `ProviderResourceType`, `AsyncOperationPollingRules` and `ResourceProviderCapabilities`, are now typed `IList<T>` rather than `IReadOnlyList<T>`.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.1 (2026-06-28)
 
