@@ -16,18 +16,18 @@
 
 ## Summary
 
-- Total libraries: 463
-- Management Plane (MPG): 271
+- Total libraries: 460
+- Management Plane (MPG): 268
   - Autorest/Swagger: 39
-  - New Emitter (TypeSpec): 232
+  - New Emitter (TypeSpec): 229
   - Old TypeSpec: 0
 - Data Plane (DPG): 126
   - Autorest/Swagger: 30
   - New Emitter (TypeSpec): 55
   - Old TypeSpec: 0
 - Provisioning: 66
-  - Reflection-based generator: 5
-  - TypeSpec-based generator: 60
+  - Reflection-based generator: 6
+  - TypeSpec-based generator: 59
   - No generator: 1
 - No generator: 41
 
@@ -139,7 +139,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 232 / 232 (100%)
+**Migration Status**: 229 / 229 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -271,7 +271,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations | ✅ |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes | ✅ |
 | kusto | Azure.ResourceManager.Kusto | ✅ |
-| lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
 | loadtestservice | Azure.ResourceManager.LoadTesting | ✅ |
 | machinelearningservices | Azure.ResourceManager.MachineLearning | ✅ |
 | maintenance | Azure.ResourceManager.Maintenance | ✅ |
@@ -305,7 +304,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | oracle | Azure.ResourceManager.OracleDatabase | ✅ |
 | paloaltonetworks.ngfw | Azure.ResourceManager.PaloAltoNetworks.Ngfw | ✅ |
 | peering | Azure.ResourceManager.Peering | ✅ |
-| pineconevectordb | Azure.ResourceManager.PineconeVectorDB | ✅ |
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | ✅ |
 | playwright | Azure.ResourceManager.Playwright | ✅ |
 | policyinsights | Azure.ResourceManager.PolicyInsights | ✅ |
@@ -371,7 +369,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | verifiedid | Azure.ResourceManager.VerifiedId | ✅ |
 | webpubsub | Azure.ResourceManager.WebPubSub | ✅ |
 | websites | Azure.ResourceManager.AppService | ✅ |
-| weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
 | workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
 | workloadssapmonitor | Azure.ResourceManager.WorkloadsSapMonitor | ✅ |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | ✅ |
@@ -428,11 +425,11 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 39
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 60 / 66 migrated to TypeSpec-based generator
+**Migration Status**: 59 / 66 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
-| apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement ✅ | TypeSpec ✅ |
+| apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement ✅ | Reflection |
 | appconfiguration | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | TypeSpec ✅ |
 | applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights ✅ | TypeSpec ✅ |
 | attestation | Azure.Provisioning.Attestation | Azure.ResourceManager.Attestation ✅ | TypeSpec ✅ |
