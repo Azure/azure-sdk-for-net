@@ -1525,6 +1525,8 @@ namespace Azure.ResourceManager.Compute
         public string Description { get { throw null; } set { } }
         public string IdentifierUniqueName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Use SoftDeletePolicy instead.", false)]
+        public bool? IsSoftDeleteEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SharingProfile SharingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SharingStatus SharingStatus { get { throw null; } }
@@ -1640,6 +1642,8 @@ namespace Azure.ResourceManager.Compute
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionSafetyProfile SafetyProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageVersionSecurityProfile SecurityProfile { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Use SecurityProfile instead.", false)]
+        public Azure.ResourceManager.Compute.Models.GalleryImageVersionUefiSettings SecurityUefiSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageValidationsProfile ValidationsProfile { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -7261,6 +7265,8 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Restore { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionSafetyProfile SafetyProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ImageVersionSecurityProfile SecurityProfile { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Use SecurityProfile instead.", false)]
+        public Azure.ResourceManager.Compute.Models.GalleryImageVersionUefiSettings SecurityUefiSettings { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionStorageProfile StorageProfile { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageValidationsProfile ValidationsProfile { get { throw null; } }
@@ -7557,6 +7563,8 @@ namespace Azure.ResourceManager.Compute.Models
         public string Description { get { throw null; } set { } }
         public string IdentifierUniqueName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Use SoftDeletePolicy instead.", false)]
+        public bool? IsSoftDeleteEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.SharingProfile SharingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.SharingStatus SharingStatus { get { throw null; } }
