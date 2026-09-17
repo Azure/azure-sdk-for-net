@@ -26,11 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="expiresOn"> The date and time after which the key will be disallowed access. </param>
         /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-<<<<<<< HEAD
-        internal ConsolePatchProperties(ConsoleEnabled? enabled, DateTimeOffset? expireOn, NetworkCloudSshPublicKeyPatch sshPublicKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-=======
-        internal ConsolePatchProperties(ConsoleEnabled? enabled, DateTimeOffset? expiresOn, NetworkCloudSshPublicKey sshPublicKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
->>>>>>> main
+        internal ConsolePatchProperties(ConsoleEnabled? enabled, DateTimeOffset? expiresOn, NetworkCloudSshPublicKeyPatch sshPublicKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             ExpiresOn = expiresOn;

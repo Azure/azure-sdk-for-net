@@ -132,13 +132,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             ConsoleEnabled? enabled = default;
-<<<<<<< HEAD
-            DateTimeOffset? expireOn = default;
-            NetworkCloudSshPublicKeyPatch sshPublicKey = default;
-=======
             DateTimeOffset? expiresOn = default;
-            NetworkCloudSshPublicKey sshPublicKey = default;
->>>>>>> main
+            NetworkCloudSshPublicKeyPatch sshPublicKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
