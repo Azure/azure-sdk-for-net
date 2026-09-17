@@ -866,8 +866,8 @@ namespace Azure.ResourceManager.Relay.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public RelayTlsVersion(string value) { throw null; }
-        public static Azure.ResourceManager.Relay.Models.RelayTlsVersion _12 { get { throw null; } }
-        public static Azure.ResourceManager.Relay.Models.RelayTlsVersion _13 { get { throw null; } }
+        public static Azure.ResourceManager.Relay.Models.RelayTlsVersion Tls1_2 { get { throw null; } }
+        public static Azure.ResourceManager.Relay.Models.RelayTlsVersion Tls1_3 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Relay.Models.RelayTlsVersion other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
