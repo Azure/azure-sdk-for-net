@@ -8,6 +8,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
@@ -30,6 +31,9 @@ namespace Azure.AI.Projects
         private ProjectOpenAIClient _cachedOpenAIClient;
         private AgentAdministrationClient _cachedAgentsClient;
         private readonly TelemetryDetails _telemetryDetails;
+        [Experimental("AAIP002")]
+        private ProjectsRealtimeClient _cachedProjectsRealtimeClient;
+        private static readonly string s_experimentalHeaders = "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview";
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
         protected AIProjectClient()
@@ -92,7 +96,7 @@ namespace Azure.AI.Projects
                 "api-version",
                 _apiVersion,
                 conditionToEvaluate: request => request?.Uri?.AbsolutePath?.ToLowerInvariant()?.Contains("openai/v1") != true);
-            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview");
+            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", s_experimentalHeaders);
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", _telemetryDetails.UserAgent.ToString());
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
             PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
@@ -225,6 +229,36 @@ namespace Azure.AI.Projects
         internal virtual AIProjectRoutines GetAIProjectRoutinesClient()
         {
             return Volatile.Read(ref _cachedAIProjectRoutines) ?? Interlocked.CompareExchange(ref _cachedAIProjectRoutines, new AIProjectRoutines(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectRoutines;
+        }
+
+        [Experimental("AAIP002")]
+        internal virtual ProjectsRealtimeClient GetProjectsRealtimeClient()
+        {
+            return Volatile.Read(ref _cachedProjectsRealtimeClient) ?? Interlocked.CompareExchange(ref _cachedProjectsRealtimeClient, new ProjectsRealtimeClient(_endpoint, _tokenProvider, s_experimentalHeaders), null) ?? _cachedProjectsRealtimeClient;
+        }
+
+        /// <summary>
+        /// Return the new instance of ProjectsRealtimeSessionClient.
+        /// </summary>
+        /// <param name="model">The model to be used by the client.</param>
+        /// <param name="intent">The client intent.</param>
+        /// <returns>The new instance of ProjectsRealtimeSessionClient.</returns>
+        [Experimental("AAIP002")]
+        public virtual ProjectsRealtimeSessionClient GetProjectsRealtimeSessionClient(string model, string intent)
+        {
+            return new ProjectsRealtimeSessionClient(
+                endpoint: _endpoint,
+                tokenProvider: _tokenProvider,
+                new ProjectsRealtimeSessionClientOptions(
+                    parentClient: GetProjectsRealtimeClient(),
+                    tokenProperties: _flows[0],
+                    experimentalHeaders: s_experimentalHeaders
+                )
+                {
+                    Model =model,
+                    Intent = intent
+                }
+            );
         }
 
         /// <summary> Initializes a new instance of AgentInsightMonitors. </summary>
