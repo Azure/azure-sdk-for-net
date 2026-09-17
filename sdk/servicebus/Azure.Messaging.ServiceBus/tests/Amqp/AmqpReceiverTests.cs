@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,6 +16,7 @@ using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
 using Microsoft.Azure.Amqp.Framing;
+using Microsoft.Azure.Amqp.Transport;
 using Moq;
 using NUnit.Framework;
 
@@ -197,7 +202,370 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
                 cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
+        private static IEnumerable<TestCaseData> ReceiveDrainTestCases()
+        {
+            // Whether a partial receive drains is determined by the requested receiver mode.
+            var modes = new (bool IsSession, bool IsProcessor, string SessionId, bool DrainPartial)[]
+            {
+                (true, false, null, true),
+                (true, false, "resolved-session", true),
+                (true, true, null, false),
+                (true, true, "resolved-session", true),
+                (true, true, "", true),
+                (true, true, " ", true),
+                (false, false, null, false),
+                (false, true, null, false)
+            };
+
+            foreach (var mode in modes)
+            {
+                foreach (var prefetchCount in new uint[] { 0, 5 })
+                {
+                    foreach (var maxMessages in new[] { 1, 2 })
+                    {
+                        for (var messageCount = 0; messageCount <= maxMessages; messageCount++)
+                        {
+                            yield return new TestCaseData(
+                                mode.IsSession, mode.IsProcessor, mode.SessionId, prefetchCount,
+                                maxMessages, messageCount, messageCount < maxMessages && mode.DrainPartial);
+                        }
+                    }
+                }
+            }
+        }
+
         /// <summary>
+        ///   Opening a session link replaces a null requested ID with the accepted ID. Exercise the receive path
+        ///   after that assignment to preserve the any-session processor exemption, while checking drain and
+        ///   prefetch credit restoration for the other receiver modes and for empty, partial, and full results.
+        /// </summary>
+        [TestCaseSource(nameof(ReceiveDrainTestCases))]
+        public async Task ReceiveMessagesDrainsAccordingToRequestedSession(
+            bool isSessionReceiver,
+            bool isProcessor,
+            string requestedSessionId,
+            uint prefetchCount,
+            int maxMessages,
+            int messageCount,
+            bool expectDrain)
+        {
+            using var transport = new ReceiverTransport();
+            var link = CreateReceivingAmqpLink(transport, prefetchCount, requestedSessionId ?? "resolved-session");
+            var mockScope = new Mock<AmqpConnectionScope>();
+            mockScope.Setup(scope => scope.OpenReceiverLinkAsync(
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan>(), prefetchCount,
+                    ServiceBusReceiveMode.PeekLock, requestedSessionId, isSessionReceiver, true, null,
+                    It.IsAny<CancellationToken>()))
+                .ReturnsAsync(link);
+
+            var receiver = new AmqpReceiver(
+                "someQueue", ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions { MaxRetries = 0 }), "someIdentifier",
+                requestedSessionId, isSessionReceiver, isProcessor, AmqpMessageConverter.Default);
+
+            try
+            {
+                Assert.That(receiver.SessionId, Is.EqualTo(requestedSessionId));
+                await receiver.OpenLinkAsync(CancellationToken.None);
+                Assert.That(receiver.SessionId, Is.EqualTo(isSessionReceiver ? requestedSessionId ?? "resolved-session" : requestedSessionId));
+
+                // Prepare every transfer before starting the receive. Hold the link's receive lock while
+                // delivering the batch so its 20 ms timer cannot split it when the test thread is descheduled.
+                var frames = Enumerable.Range(0, messageCount).Select(index => CreateMessageFrame((uint)index)).ToArray();
+                IReadOnlyList<ServiceBusReceivedMessage> messages;
+                try
+                {
+                    Task<IReadOnlyList<ServiceBusReceivedMessage>> receiveTask;
+                    var syncRoot = typeof(AmqpLink).GetProperty("SyncRoot", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(link);
+                    lock (syncRoot)
+                    {
+                        receiveTask = receiver.ReceiveMessagesAsync(
+                            maxMessages, messageCount == 0 ? TimeSpan.FromMilliseconds(50) : TimeSpan.FromSeconds(1), CancellationToken.None);
+                        foreach (var frame in frames)
+                        {
+                            link.ProcessFrame(frame);
+                        }
+                    }
+                    messages = await receiveTask;
+                }
+                finally
+                {
+                    foreach (var frame in frames)
+                    {
+                        frame.Dispose();
+                    }
+                }
+
+                Assert.That(messages.Count, Is.EqualTo(messageCount));
+                Assert.That(messages.Select(message => message.MessageId),
+                    Is.EqualTo(Enumerable.Range(0, messageCount).Select(index => index.ToString())));
+                Assert.That(transport.Flows.Count(flow => flow.Drain == true), Is.EqualTo(expectDrain ? 1 : 0));
+                Assert.That(link.TerminalException, Is.Null);
+                Assert.That(link.Settings.AutoSendFlow, Is.EqualTo(prefetchCount > 0));
+                Assert.That(link.Settings.TotalLinkCredit, Is.EqualTo(prefetchCount > 0 ? prefetchCount : (uint)maxMessages));
+
+                if (expectDrain)
+                {
+                    Assert.That(link.LinkCredit, Is.EqualTo(prefetchCount), "Drain should consume outstanding credit and restore prefetch credit.");
+                    if (prefetchCount > 0)
+                    {
+                        Assert.That(transport.Flows.Last().Drain, Is.Not.True);
+                        Assert.That(transport.Flows.Last().LinkCredit, Is.EqualTo(prefetchCount));
+                    }
+                }
+                else
+                {
+                    var issuedCredit = prefetchCount > 0 ? prefetchCount : (uint)maxMessages;
+                    Assert.That(link.LinkCredit, Is.EqualTo(issuedCredit - messageCount), "Exempt and full receives should retain unused credit.");
+                }
+            }
+            finally
+            {
+                await receiver.CloseAsync(CancellationToken.None);
+            }
+        }
+
+        /// <summary>
+        ///   A replacement link opens with the resolved session ID but must retain the original drain intent.
+        ///   This isolates cache recreation from the normal session-lock-loss lifecycle, which ends the receiver.
+        /// </summary>
+        [Test]
+        public async Task ReceiveMessagesPreservesDrainIntentWhenLinkIsRecreated(
+            [Values(null, "resolved-session")] string requestedSessionId,
+            [Values(0u, 5u)] uint prefetchCount)
+        {
+            using var firstTransport = new ReceiverTransport();
+            var firstLink = CreateReceivingAmqpLink(firstTransport, prefetchCount);
+            using var secondTransport = new ReceiverTransport();
+            var secondLink = CreateReceivingAmqpLink(secondTransport, prefetchCount);
+            var requestedSessions = new List<string>();
+            var mockScope = new Mock<AmqpConnectionScope>();
+            mockScope.Setup(scope => scope.OpenReceiverLinkAsync(
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan>(), prefetchCount,
+                    ServiceBusReceiveMode.PeekLock, It.IsAny<string>(), true, true, null,
+                    It.IsAny<CancellationToken>()))
+                .Callback(new InvocationAction(invocation => requestedSessions.Add((string)invocation.Arguments[5])))
+                .ReturnsAsync(() => requestedSessions.Count == 1 ? firstLink : secondLink);
+
+            var receiver = new AmqpReceiver(
+                "someQueue", ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions { MaxRetries = 0 }), "someIdentifier",
+                requestedSessionId, true, true, AmqpMessageConverter.Default);
+
+            try
+            {
+                await receiver.OpenLinkAsync(CancellationToken.None);
+                Assert.That(receiver.SessionId, Is.EqualTo("resolved-session"));
+
+                // Session link closure normally ends the receiver. Invalidate only the cache to exercise
+                // recreation independently of that lifecycle; both transports dispose their owned links.
+                var cache = typeof(AmqpReceiver).GetField("_receiveLink", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(receiver);
+                typeof(Singleton<ReceivingAmqpLink>).GetMethod("Invalidate", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(cache, new object[] { firstLink });
+
+                await receiver.OpenLinkAsync(CancellationToken.None);
+                var messages = await receiver.ReceiveMessagesAsync(1, TimeSpan.FromMilliseconds(50), CancellationToken.None);
+
+                Assert.That(messages, Is.Empty);
+                Assert.That(requestedSessions, Is.EqualTo(new[] { requestedSessionId, "resolved-session" }));
+                Assert.That(receiver.SessionId, Is.EqualTo("resolved-session"));
+                Assert.That(secondTransport.Flows.Count(flow => flow.Drain == true), Is.EqualTo(requestedSessionId == null ? 0 : 1));
+            }
+            finally
+            {
+                await receiver.CloseAsync(CancellationToken.None);
+            }
+        }
+
+        /// <summary>
+        ///   Let an unanswered drain expire through the AMQP timeout path. The receive must handle the failure
+        ///   and close a prefetching link to protect ordering; a link without prefetch remains open.
+        /// </summary>
+        [Test]
+        public async Task ReceiveMessagesHandlesDrainTimeout([Values(0u, 5u)] uint prefetchCount)
+        {
+            using var transport = new ReceiverTransport { AcknowledgeDrain = false };
+            var link = CreateReceivingAmqpLink(transport, prefetchCount);
+            link.Settings.OperationTimeout = TimeSpan.FromMilliseconds(50);
+            var mockScope = new Mock<AmqpConnectionScope>();
+            mockScope.Setup(scope => scope.OpenReceiverLinkAsync(
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<TimeSpan>(), prefetchCount,
+                    ServiceBusReceiveMode.PeekLock, null, true, true, null, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(link);
+
+            var receiver = new AmqpReceiver(
+                "someQueue", ServiceBusReceiveMode.PeekLock, prefetchCount, mockScope.Object,
+                new BasicRetryPolicy(new ServiceBusRetryOptions { MaxRetries = 0 }), "someIdentifier",
+                null, true, false, AmqpMessageConverter.Default);
+
+            try
+            {
+                await receiver.OpenLinkAsync(CancellationToken.None);
+                var messages = await receiver.ReceiveMessagesAsync(1, TimeSpan.FromMilliseconds(50), CancellationToken.None);
+
+                Assert.That(messages, Is.Empty);
+                Assert.That(transport.Flows.Count(flow => flow.Drain == true), Is.EqualTo(1));
+                Assert.That(link.IsClosing(), Is.EqualTo(prefetchCount > 0));
+                Assert.That(link.Settings.AutoSendFlow, Is.EqualTo(prefetchCount > 0));
+                if (prefetchCount > 0)
+                {
+                    Assert.That(link.Settings.TotalLinkCredit, Is.EqualTo(prefetchCount));
+                }
+            }
+            finally
+            {
+                await receiver.CloseAsync(CancellationToken.None);
+            }
+        }
+
+        private static Frame CreateMessageFrame(uint deliveryId)
+        {
+            using var message = AmqpMessage.Create(new AmqpValue { Value = "message" });
+            message.Properties.MessageId = deliveryId.ToString();
+            using var payload = message.ToStream();
+            using var header = Frame.EncodeCommand(FrameType.Amqp, 0, new Transfer
+            {
+                Handle = 0,
+                DeliveryId = deliveryId,
+                DeliveryTag = new ArraySegment<byte>(Guid.NewGuid().ToByteArray()),
+                MessageFormat = 0
+            }, (int)payload.Length);
+            using var stream = new MemoryStream();
+            stream.Write(header.Buffer, header.Offset, header.Length);
+            payload.CopyTo(stream);
+            var bytes = stream.ToArray();
+            var frame = new Frame();
+            frame.Decode(new ByteBuffer(bytes, 0, bytes.Length));
+            return frame;
+        }
+
+        /// <summary>
+        ///   Captures outgoing AMQP flow frames and acknowledges drain without a network connection.
+        /// </summary>
+        private class ReceiverTransport : TransportBase, IDisposable
+        {
+            public ConcurrentQueue<Flow> Flows { get; } = new ConcurrentQueue<Flow>();
+            public ReceivingAmqpLink Link { get; set; }
+            public bool AcknowledgeDrain { get; set; } = true;
+
+            public void Dispose()
+            {
+                Link?.Abort();
+                Link?.Session.Abort();
+                Link?.Session.Connection.Abort();
+                Abort();
+            }
+
+            public ReceiverTransport() : base("Mock") { }
+            public override string LocalEndPoint => "local";
+            public override string RemoteEndPoint => "remote";
+            public override bool ReadAsync(TransportAsyncCallbackArgs args) => throw new NotImplementedException();
+            public override void SetMonitor(ITransportMonitor usageMeter) { }
+            protected override void AbortInternal() { }
+            protected override bool CloseInternal() => true;
+
+            public override bool WriteAsync(TransportAsyncCallbackArgs args)
+            {
+                using var stream = new MemoryStream();
+                if (args.ByteBufferList != null)
+                {
+                    foreach (var buffer in args.ByteBufferList)
+                    {
+                        stream.Write(buffer.Buffer, buffer.Offset, buffer.Length);
+                    }
+                }
+                else
+                {
+                    stream.Write(args.Buffer, args.Offset, args.Count);
+                }
+
+                var bytes = stream.ToArray();
+                var offset = 0;
+                while (offset < bytes.Length)
+                {
+                    using var frame = new Frame();
+                    frame.Decode(new ByteBuffer(bytes, offset, bytes.Length - offset));
+                    offset += frame.Size;
+                    if (frame.Command is Attach attach)
+                    {
+                        Link.ProcessFrame(new Frame
+                        {
+                            Command = new Attach
+                            {
+                                LinkName = attach.LinkName,
+                                Handle = 0,
+                                Role = false,
+                                SndSettleMode = attach.SndSettleMode,
+                                RcvSettleMode = attach.RcvSettleMode,
+                                Source = attach.Source,
+                                Target = attach.Target,
+                                InitialDeliveryCount = 0
+                            }
+                        });
+                    }
+                    else if (frame.Command is Detach)
+                    {
+                        Link.ProcessFrame(new Frame { Command = new Detach { Handle = 0, Closed = true } });
+                    }
+                    else if (frame.Command is End)
+                    {
+                        Link.Session.ProcessFrame(new Frame { Command = new End() });
+                    }
+                    else if (frame.Command is Flow flow)
+                    {
+                        Flows.Enqueue(flow);
+                        if (flow.Drain == true && AcknowledgeDrain)
+                        {
+                            Link.ProcessFrame(new Frame
+                            {
+                                Command = new Flow
+                                {
+                                    DeliveryCount = flow.DeliveryCount + flow.LinkCredit,
+                                    LinkCredit = 0,
+                                    Drain = true
+                                }
+                            });
+                        }
+                    }
+                }
+
+                args.BytesTransfered = args.Count;
+                return false;
+            }
+        }
+
+        /// <summary>
+        ///   Models an accepted receive link with the session filter returned by the service.
+        /// </summary>
+        private static ReceivingAmqpLink CreateReceivingAmqpLink(ReceiverTransport transport, uint prefetchCount, string sessionId = "resolved-session")
+        {
+            var amqpSettings = new AmqpSettings();
+            var provider = new AmqpTransportProvider();
+            provider.Versions.Add(new AmqpVersion(new Version(1, 0, 0, 0)));
+            amqpSettings.TransportProviders.Add(provider);
+            var link = new ReceivingAmqpLink(
+                    new AmqpSession(
+                        new AmqpConnection(transport, amqpSettings, new AmqpConnectionSettings()),
+                        new AmqpSessionSettings(), null),
+                    new AmqpLinkSettings
+                    {
+                        Role = true,
+                        LinkName = "receiver",
+                        TotalLinkCredit = prefetchCount,
+                        AutoSendFlow = prefetchCount > 0,
+                        SettleType = SettleMode.SettleOnDispose,
+                        Source = new Source
+                        {
+                            FilterSet = new FilterSet { [AmqpClientConstants.SessionFilterName] = sessionId }
+                        },
+                        Target = new Target(),
+                        Properties = new Fields()
+                    });
+            transport.Link = link;
+            link.Open(TimeSpan.FromSeconds(5));
+            return link;
+        }
+
         /// <summary>
         ///   Verifies functionality of the <see cref="AmqpReceiver.ReceiveAsync" />
         ///   method.
