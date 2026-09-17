@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(SyncType))
             {
@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.Automation.Models
             string sourceControlSyncJobId = default;
             DateTimeOffset? createdOn = default;
             SourceControlProvisioningState? provisioningState = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             SourceControlSyncType? syncType = default;
             string exception = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -188,20 +188,20 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startOn = null;
+                        startsOn = null;
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endOn = null;
+                        endsOn = null;
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("syncType"u8))
@@ -227,8 +227,8 @@ namespace Azure.ResourceManager.Automation.Models
                 sourceControlSyncJobId,
                 createdOn,
                 provisioningState,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 syncType,
                 exception,
                 additionalBinaryDataProperties);

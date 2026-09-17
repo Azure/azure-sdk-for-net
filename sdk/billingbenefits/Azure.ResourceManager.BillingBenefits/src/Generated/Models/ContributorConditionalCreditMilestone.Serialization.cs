@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             string milestoneId = default;
             string name = default;
             MilestoneStatus? status = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             BillingBenefitsPrice spendTarget = default;
             Award award = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("spendTarget"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 milestoneId,
                 name,
                 status,
-                endOn,
+                endsOn,
                 spendTarget,
                 award,
                 additionalBinaryDataProperties);

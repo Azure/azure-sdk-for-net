@@ -16,6 +16,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     /// </summary>
     public partial class ContainerRegistryTaskStepProperties : ProvisionableConstruct
     {
+        private BicepValue<StepType> _type;
         private BicepList<ContainerRegistryTaskBaseImageDependency> _baseImageDependencies;
         private BicepValue<string> _contextPath;
         private BicepValue<string> _contextAccessToken;
@@ -23,6 +24,16 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         /// <summary> Creates a new ContainerRegistryTaskStepProperties. </summary>
         public ContainerRegistryTaskStepProperties()
         {
+        }
+
+        /// <summary> The type of the step. </summary>
+        internal BicepValue<StepType> Type
+        {
+            get
+            {
+                Initialize();
+                return _type;
+            }
         }
 
         /// <summary> Gets the BaseImageDependencies. </summary>
@@ -69,6 +80,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _type = DefineProperty<StepType>(nameof(Type), new string[] { "type" }, isRequired: true);
             _baseImageDependencies = DefineListProperty<ContainerRegistryTaskBaseImageDependency>(nameof(BaseImageDependencies), new string[] { "baseImageDependencies" }, isOutput: true);
             _contextPath = DefineProperty<string>(nameof(ContextPath), new string[] { "contextPath" });
             _contextAccessToken = DefineProperty<string>(nameof(ContextAccessToken), new string[] { "contextAccessToken" });

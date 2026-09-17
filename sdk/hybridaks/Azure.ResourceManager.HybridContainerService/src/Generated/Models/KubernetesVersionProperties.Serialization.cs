@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class KubernetesVersionProperties : IUtf8JsonSerializable, IJsonModel<KubernetesVersionProperties>
+    /// <summary> Kubernetes version profile for given major.minor release. </summary>
+    public partial class KubernetesVersionProperties : IJsonModel<KubernetesVersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesVersionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KubernetesVersionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeKubernetesVersionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<KubernetesVersionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesVersionProperties IPersistableModel<KubernetesVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KubernetesVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KubernetesVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -55,15 +95,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +112,27 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
         }
 
-        KubernetesVersionProperties IJsonModel<KubernetesVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KubernetesVersionProperties IJsonModel<KubernetesVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual KubernetesVersionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKubernetesVersionProperties(document.RootElement, options);
         }
 
-        internal static KubernetesVersionProperties DeserializeKubernetesVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KubernetesVersionProperties DeserializeKubernetesVersionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,76 +140,43 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             string version = default;
             bool? isPreview = default;
             IReadOnlyDictionary<string, KubernetesPatchVersions> patchVersions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isPreview"u8))
+                if (prop.NameEquals("isPreview"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isPreview = property.Value.GetBoolean();
+                    isPreview = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("patchVersions"u8))
+                if (prop.NameEquals("patchVersions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, KubernetesPatchVersions> dictionary = new Dictionary<string, KubernetesPatchVersions>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KubernetesPatchVersions.DeserializeKubernetesPatchVersions(property0.Value, options));
+                        dictionary.Add(prop0.Name, KubernetesPatchVersions.DeserializeKubernetesPatchVersions(prop0.Value, options));
                     }
                     patchVersions = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new KubernetesVersionProperties(version, isPreview, patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersions>(), serializedAdditionalRawData);
+            return new KubernetesVersionProperties(version, isPreview, patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersions>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<KubernetesVersionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KubernetesVersionProperties IPersistableModel<KubernetesVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKubernetesVersionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KubernetesVersionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KubernetesVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

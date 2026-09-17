@@ -96,7 +96,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.AppService.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.ArizeAIObservabilityEval.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.ArtifactSigning.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.Astro.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Attestation.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Authorization.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Automanage.Tests' or
@@ -198,7 +197,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.Kubernetes.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.Extensions.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Kusto.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LabServices.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LambdaTestHyperExecute.Tests' or

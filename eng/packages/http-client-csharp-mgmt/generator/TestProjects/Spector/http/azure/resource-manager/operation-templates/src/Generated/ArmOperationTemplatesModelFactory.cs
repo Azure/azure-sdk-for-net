@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
     public static partial class ArmOperationTemplatesModelFactory
     {
 
+        /// <summary> The check availability request body. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="type"> The resource type. </param>
         /// <returns> A new <see cref="Models.CheckNameAvailabilityRequest"/> instance for mocking. </returns>
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new CheckNameAvailabilityRequest(name, @type, default);
         }
 
+        /// <summary> The check availability result. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
@@ -35,6 +37,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new CheckNameAvailabilityResponse(nameAvailable, reason, message, default);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -58,6 +61,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 default);
         }
 
+        /// <summary> The OrderProperties. </summary>
         /// <param name="productId"> The product ID of the order. </param>
         /// <param name="amount"> Amount of the product. </param>
         /// <param name="provisioningState"> The provisioning state of the product. </param>
@@ -67,6 +71,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new OrderProperties(productId, amount, provisioningState, default);
         }
 
+        /// <summary> The ExportRequest. </summary>
         /// <param name="format"> Format of the exported order. </param>
         /// <returns> A new <see cref="Models.ExportRequest"/> instance for mocking. </returns>
         public static ExportRequest ExportRequest(string format = default)
@@ -74,6 +79,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new ExportRequest(format, default);
         }
 
+        /// <summary> The ExportResult. </summary>
         /// <param name="content"> Content of the exported order. </param>
         /// <returns> A new <see cref="Models.ExportResult"/> instance for mocking. </returns>
         public static ExportResult ExportResult(string content = default)
@@ -81,6 +87,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new ExportResult(content, default);
         }
 
+        /// <summary> Concrete extension resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -98,6 +105,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 default);
         }
 
+        /// <summary> The CostReportProperties. </summary>
         /// <param name="downloadUri"> The download URL for the cost report. </param>
         /// <param name="provisioningState"> The provisioning state of the cost report. </param>
         /// <returns> A new <see cref="Models.CostReportProperties"/> instance for mocking. </returns>
@@ -106,6 +114,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new CostReportProperties(downloadUri, provisioningState, default);
         }
 
+        /// <summary> The DiagnosticInfo. </summary>
         /// <param name="name"> The diagnostic name. </param>
         /// <param name="status"> The diagnostic status. </param>
         /// <returns> A new <see cref="Models.DiagnosticInfo"/> instance for mocking. </returns>
@@ -114,6 +123,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new DiagnosticInfo(name, status, default);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -137,6 +147,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 default);
         }
 
+        /// <summary> The ConfigurationProperties. </summary>
         /// <param name="configValue"> The configuration value. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="Models.ConfigurationProperties"/> instance for mocking. </returns>
@@ -145,6 +156,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new ConfigurationProperties(configValue, provisioningState, default);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -168,6 +180,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 default);
         }
 
+        /// <summary> The WidgetProperties. </summary>
         /// <param name="name"> The name of the widget. </param>
         /// <param name="description"> The description of the widget. </param>
         /// <param name="provisioningState"> The provisioning state of the widget. </param>
@@ -177,6 +190,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new WidgetProperties(name, description, provisioningState, default);
         }
 
+        /// <summary> The ActionRequest. </summary>
         /// <param name="actionType"> The action type to perform. </param>
         /// <param name="parameters"> Additional action parameters. </param>
         /// <returns> A new <see cref="Models.ActionRequest"/> instance for mocking. </returns>
@@ -185,6 +199,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new ActionRequest(actionType, parameters, default);
         }
 
+        /// <summary> The ActionResult. </summary>
         /// <param name="result"> The result of the action. </param>
         /// <returns> A new <see cref="Models.ActionResult"/> instance for mocking. </returns>
         public static ActionResult ActionResult(string result = default)
@@ -192,6 +207,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new ActionResult(result, default);
         }
 
+        /// <summary> The ChangeAllowanceRequest. </summary>
         /// <param name="totalAllowed"> The new total allowed widgets. </param>
         /// <param name="reason"> The reason for the change. </param>
         /// <returns> A new <see cref="Models.ChangeAllowanceRequest"/> instance for mocking. </returns>
@@ -200,6 +216,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new ChangeAllowanceRequest(totalAllowed, reason, default);
         }
 
+        /// <summary> The ChangeAllowanceResult. </summary>
         /// <param name="totalAllowed"> The new total allowed widgets. </param>
         /// <param name="status"> The status of the change. </param>
         /// <returns> A new <see cref="Models.ChangeAllowanceResult"/> instance for mocking. </returns>
@@ -208,6 +225,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new ChangeAllowanceResult(totalAllowed, status, default);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -231,6 +249,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 default);
         }
 
+        /// <summary> The MonitorProperties. </summary>
         /// <param name="status"> The status of the monitor. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="Models.MonitorProperties"/> instance for mocking. </returns>
@@ -239,6 +258,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new MonitorProperties(status, provisioningState, default);
         }
 
+        /// <summary> The LogStatusRequest. </summary>
         /// <param name="filter"> Filter for the monitored resources. </param>
         /// <returns> A new <see cref="Models.LogStatusRequest"/> instance for mocking. </returns>
         public static LogStatusRequest LogStatusRequest(string filter = default)
@@ -246,6 +266,7 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new LogStatusRequest(filter, default);
         }
 
+        /// <summary> The MonitoredResource. </summary>
         /// <param name="id"> The resource ID. </param>
         /// <param name="sendingMetrics"> Whether metrics are being sent. </param>
         /// <returns> A new <see cref="Models.MonitoredResource"/> instance for mocking. </returns>

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <param name="virtualHubId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="NetworkFunction.AzureTrafficCollectorData"/> instance for mocking. </returns>
-        public static AzureTrafficCollectorData AzureTrafficCollectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<SubResource> collectorPolicies = default, CollectorProvisioningState? provisioningState = default, ResourceIdentifier virtualHubId = default, ETag? eTag = default)
+        public static AzureTrafficCollectorData AzureTrafficCollectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, IEnumerable<SubResource> collectorPolicies = default, CollectorProvisioningState? provisioningState = default, ResourceIdentifier virtualHubId = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -42,11 +42,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), new ResourceReference(virtualHubId, default), provisioningState, default),
+                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), virtualHubId is null ? default : new ResourceReference(virtualHubId, default), provisioningState, default),
                 eTag,
                 default);
         }
 
+        /// <summary> Tags object for patch operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.TagsObject"/> instance for mocking. </returns>
         public static TagsObject TagsObject(IDictionary<string, string> tags = default)
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="NetworkFunction.CollectorPolicyData"/> instance for mocking. </returns>
-        public static CollectorPolicyData CollectorPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IngestionPolicyPropertiesFormat ingestionPolicy = default, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies = default, CollectorProvisioningState? provisioningState = default, ETag? eTag = default)
+        public static CollectorPolicyData CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, IngestionPolicyPropertiesFormat ingestionPolicy = default, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies = default, CollectorProvisioningState? provisioningState = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 default);
         }
 
+        /// <summary> Ingestion Policy properties. </summary>
         /// <param name="ingestionType"> The ingestion type. </param>
         /// <param name="ingestionSources"> Ingestion Sources. </param>
         /// <returns> A new <see cref="Models.IngestionPolicyPropertiesFormat"/> instance for mocking. </returns>
@@ -93,6 +95,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             return new IngestionPolicyPropertiesFormat(ingestionType, (ingestionSources ?? new ChangeTrackingList<IngestionSourcesPropertiesFormat>()).ToList(), default);
         }
 
+        /// <summary> Ingestion policy properties. </summary>
         /// <param name="sourceType"> Ingestion source type. </param>
         /// <param name="resourceId"> Resource ID. </param>
         /// <returns> A new <see cref="Models.IngestionSourcesPropertiesFormat"/> instance for mocking. </returns>
@@ -101,6 +104,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             return new IngestionSourcesPropertiesFormat(sourceType, resourceId, default);
         }
 
+        /// <summary> Emission policy properties. </summary>
         /// <param name="emissionType"> Emission format type. </param>
         /// <param name="emissionDestinations"> Emission policy destinations. </param>
         /// <returns> A new <see cref="Models.EmissionPoliciesPropertiesFormat"/> instance for mocking. </returns>
@@ -111,6 +115,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             return new EmissionPoliciesPropertiesFormat(emissionType, (emissionDestinations ?? new ChangeTrackingList<EmissionPolicyDestination>()).ToList(), default);
         }
 
+        /// <summary> Emission policy destination properties. </summary>
         /// <param name="destinationType"> Emission destination type. </param>
         /// <returns> A new <see cref="Models.EmissionPolicyDestination"/> instance for mocking. </returns>
         public static EmissionPolicyDestination EmissionPolicyDestination(EmissionDestinationType? destinationType = default)
@@ -118,6 +123,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             return new EmissionPolicyDestination(destinationType, default);
         }
 
+        /// <summary> Azure Traffic Collector resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -139,11 +145,12 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), new ResourceReference(virtualHubId, default), provisioningState, default),
+                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), virtualHubId is null ? default : new ResourceReference(virtualHubId, default), provisioningState, default),
                 etag,
                 default);
         }
 
+        /// <summary> Collector policy resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

@@ -132,7 +132,7 @@ namespace Azure.Provisioning.CognitiveServices
             _properties = DefineModelProperty<RaiBlocklistItemProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<RaiBlocklist>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<RaiBlocklist>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

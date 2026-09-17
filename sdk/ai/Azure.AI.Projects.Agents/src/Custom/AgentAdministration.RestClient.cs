@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents.Telemetry;
@@ -586,7 +587,7 @@ public partial class AgentAdministrationClient
     [EditorBrowsable(EditorBrowsableState.Never)]
     public virtual async Task<ClientResult> DeleteAgentAsync(string agentName, RequestOptions options)
     {
-        return await DeleteAgentAsync(agentName:agentName, force: null, options: options).ConfigureAwait(false);
+        return await DeleteAgentAsync(agentName: agentName, force: null, options: options).ConfigureAwait(false);
     }
 
     /// <summary>

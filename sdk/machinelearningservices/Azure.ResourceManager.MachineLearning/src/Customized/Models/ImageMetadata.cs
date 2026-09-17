@@ -11,12 +11,13 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    // Customized: restore GA OS acronym casing alias over generated IsLatestOsImageVersion.
     public partial class ImageMetadata
     {
+        // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11696 is fixed.
         /// <summary> Whether this compute instance is running on the latest operating system image. </summary>
+        [CodeGenMember("IsLatestOsImageVersion")]
         [WirePath("isLatestOsImageVersion")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool? IsLatestOSImageVersion => IsLatestOsImageVersion;
+        public bool? IsLatestOSImageVersion { get; }
     }
 }

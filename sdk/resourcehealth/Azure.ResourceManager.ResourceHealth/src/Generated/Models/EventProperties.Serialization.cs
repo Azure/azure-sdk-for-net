@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ImpactStartOn))
+            if (Optional.IsDefined(ImpactStartsOn))
             {
                 writer.WritePropertyName("impactStartTime"u8);
-                writer.WriteStringValue(ImpactStartOn.Value, "O");
+                writer.WriteStringValue(ImpactStartsOn.Value, "O");
             }
             if (Optional.IsDefined(ImpactMitigationOn))
             {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             string reason = default;
             ResourceHealthEventArticle article = default;
             IList<ResourceHealthEventLink> links = default;
-            DateTimeOffset? impactStartOn = default;
+            DateTimeOffset? impactStartsOn = default;
             DateTimeOffset? impactMitigationOn = default;
             IList<ResourceHealthEventImpact> impact = default;
             ResourceHealthEventRecommendedActions recommendedActions = default;
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    impactStartOn = prop.Value.GetDateTimeOffset("O");
+                    impactStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("impactMitigationTime"u8))
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 reason,
                 article,
                 links ?? new ChangeTrackingList<ResourceHealthEventLink>(),
-                impactStartOn,
+                impactStartsOn,
                 impactMitigationOn,
                 impact ?? new ChangeTrackingList<ResourceHealthEventImpact>(),
                 recommendedActions,

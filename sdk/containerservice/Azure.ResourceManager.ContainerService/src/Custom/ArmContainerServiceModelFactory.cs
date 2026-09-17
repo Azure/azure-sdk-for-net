@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 name,
                 resourceType,
                 systemData,
-                new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), null, (recentlyUsedVersions ?? new List<AgentPoolRecentlyUsedVersion>()).ToList(), latestNodeImageVersion, null),
+                new AgentPoolUpgradeProfileProperties(kubernetesVersion, osType, (upgrades ?? new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(), new List<KubernetesVersionComponents>(), (recentlyUsedVersions ?? new List<AgentPoolRecentlyUsedVersion>()).ToList(), latestNodeImageVersion, null),
                 additionalBinaryDataProperties: null);
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = managedOutboundIPCount.HasValue
                 ? new ManagedClusterManagedOutboundIPProfile { Count = managedOutboundIPCount }
                 : null;
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs?.ToList(), null, null, idleTimeoutInMinutes, null);
+            return new ManagedClusterNatGatewayProfile(null, managedOutboundIPProfile, effectiveOutboundIPs?.ToList(), null, null, idleTimeoutInMinutes, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the
@@ -382,7 +382,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 orchestratorVersion: orchestratorVersion,
                 currentOrchestratorVersion: currentOrchestratorVersion,
                 nodeImageVersion: nodeImageVersion,
+                upgradeStrategy: default,
+                isOSDiskFullCachingEnabled: default,
                 upgradeSettings: upgradeSettings,
+                upgradeSettingsBlueGreen: default,
                 provisioningState: provisioningState,
                 powerStateCode: powerStateCode,
                 availabilityZones: availabilityZones,
@@ -394,6 +397,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 tags: tags,
                 nodeLabels: nodeLabels,
                 nodeTaints: nodeTaints,
+                nodeInitializationTaints: default,
                 proximityPlacementGroupId: proximityPlacementGroupId,
                 kubeletConfig: kubeletConfig,
                 linuxOSConfig: linuxOSConfig,
@@ -407,6 +411,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 networkProfile: networkProfile,
                 isOutboundNatDisabled: isOutboundNatDisabled,
                 securityProfile: securityProfile,
+                gpuProfile: default,
                 gatewayPublicIPPrefixSize: gatewayPublicIPPrefixSize,
                 isArtifactStreamingEnabled: isArtifactStreamingEnabled,
                 virtualMachineNodesStatus: virtualMachineNodesStatus,
@@ -454,7 +459,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 orchestratorVersion: orchestratorVersion,
                 currentOrchestratorVersion: currentOrchestratorVersion,
                 nodeImageVersion: nodeImageVersion,
+                upgradeStrategy: default,
+                isOSDiskFullCachingEnabled: default,
                 upgradeSettings: upgradeSettings,
+                upgradeSettingsBlueGreen: default,
                 provisioningState: provisioningState,
                 powerStateCode: powerStateCode,
                 availabilityZones: availabilityZones,
@@ -466,6 +474,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 tags: tags,
                 nodeLabels: nodeLabels,
                 nodeTaints: nodeTaints,
+                nodeInitializationTaints: default,
                 proximityPlacementGroupId: proximityPlacementGroupId,
                 kubeletConfig: kubeletConfig,
                 linuxOSConfig: linuxOSConfig,
@@ -479,6 +488,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 networkProfile: networkProfile,
                 isOutboundNatDisabled: isOutboundNatDisabled,
                 securityProfile: securityProfile,
+                gpuProfile: default,
                 gatewayPublicIPPrefixSize: gatewayPublicIPPrefixSize,
                 isArtifactStreamingEnabled: isArtifactStreamingEnabled,
                 virtualMachineNodesStatus: virtualMachineNodesStatus,

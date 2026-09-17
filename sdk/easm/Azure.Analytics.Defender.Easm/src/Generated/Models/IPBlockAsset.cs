@@ -56,7 +56,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="startIP"></param>
         /// <param name="endIP"></param>
         /// <param name="reputations"></param>
-        /// <param name="detailedFromWhoisAt"></param>
+        /// <param name="detailedFromWhoisOn"></param>
         /// <param name="sources"></param>
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="technicalPhones"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal IPBlockAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipBlock, IList<ObservedLong> asns, IList<ObservedString> bgpPrefixes, IList<ObservedString> netNames, IList<ObservedString> registrantContacts, IList<ObservedString> registrantOrgs, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedString> netRanges, string startIP, string endIP, IList<ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisAt, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedLocation> location, IList<ObservedLong> registrarExpiresAt, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
+        internal IPBlockAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, string ipBlock, IList<ObservedLong> asns, IList<ObservedString> bgpPrefixes, IList<ObservedString> netNames, IList<ObservedString> registrantContacts, IList<ObservedString> registrantOrgs, IList<ObservedString> adminContacts, IList<ObservedString> technicalContacts, IList<ObservedLong> registrarCreatedAt, IList<ObservedLong> registrarUpdatedAt, IList<ObservedString> netRanges, string startIP, string endIP, IList<ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisOn, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IList<ObservedLocation> location, IList<ObservedLong> registrarExpiresAt, IList<ObservedString> registrantNames, IList<ObservedString> adminNames, IList<ObservedString> technicalNames, IList<ObservedString> adminOrgs, IList<ObservedString> technicalOrgs, IList<ObservedString> registrantPhones, IList<ObservedString> adminPhones, IList<ObservedString> technicalPhones, bool? ipv4, bool? ipv6) : base(additionalBinaryDataProperties)
         {
             IPBlock = ipBlock;
             Asns = asns;
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Defender.Easm
             StartIP = startIP;
             EndIP = endIP;
             Reputations = reputations;
-            DetailedFromWhoisAt = detailedFromWhoisAt;
+            DetailedFromWhoisOn = detailedFromWhoisOn;
             Sources = sources;
             FirstSeen = firstSeen;
             LastSeen = lastSeen;
@@ -150,8 +150,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Reputations. </summary>
         public IList<ReputationDetails> Reputations { get; }
 
-        /// <summary> Gets the DetailedFromWhoisAt. </summary>
-        public DateTimeOffset? DetailedFromWhoisAt { get; }
+        /// <summary> Gets the DetailedFromWhoisOn. </summary>
+        public DateTimeOffset? DetailedFromWhoisOn { get; }
 
         /// <summary> Gets the Sources. </summary>
         public IList<SourceDetails> Sources { get; }

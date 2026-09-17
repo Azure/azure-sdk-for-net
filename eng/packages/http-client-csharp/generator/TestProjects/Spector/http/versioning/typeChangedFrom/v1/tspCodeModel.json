@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "v1"
+      ],
       "crossLanguageDefinitionId": "Versioning.TypeChangedFrom.Versions",
       "valueType": {
         "$id": "2",
@@ -83,6 +86,9 @@
       "$id": "8",
       "kind": "model",
       "name": "TestModel",
+      "apiVersions": [
+        "v1"
+      ],
       "namespace": "Versioning.TypeChangedFrom",
       "crossLanguageDefinitionId": "Versioning.TypeChangedFrom.TestModel",
       "usage": "Input,Output,Json",
@@ -98,6 +104,9 @@
           "$id": "9",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [
+            "v1"
+          ],
           "serializedName": "prop",
           "type": {
             "$id": "10",
@@ -124,6 +133,9 @@
           "$id": "11",
           "kind": "property",
           "name": "changedProp",
+          "apiVersions": [
+            "v1"
+          ],
           "serializedName": "changedProp",
           "type": {
             "$id": "12",

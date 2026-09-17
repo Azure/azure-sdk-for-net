@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string historyDefinitionId, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string historyDefinitionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/accessReviewHistoryDefinitions/", false);
             uri.AppendPath(historyDefinitionId, true);
             uri.AppendPath("/instances", false);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string historyDefinitionId, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string historyDefinitionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

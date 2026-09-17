@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WritePropertyName("severity"u8);
             writer.WriteStringValue(Severity.ToString());
             writer.WritePropertyName("endTimeUtc"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("startTimeUtc"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("timeGenerated"u8);
             writer.WriteStringValue(GeneratedOn, "O");
             writer.WritePropertyName("alertType"u8);
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string description = default;
             string displayName = default;
             SecurityInsightsAlertSeverity severity = default;
-            DateTimeOffset endOn = default;
-            DateTimeOffset startOn = default;
+            DateTimeOffset endsOn = default;
+            DateTimeOffset startsOn = default;
             DateTimeOffset generatedOn = default;
             string alertType = default;
             SecurityInsightsKillChainIntent? intent = default;
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("endTimeUtc"u8))
                 {
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("startTimeUtc"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeGenerated"u8))
@@ -260,8 +260,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 description,
                 displayName,
                 severity,
-                endOn,
-                startOn,
+                endsOn,
+                startsOn,
                 generatedOn,
                 alertType,
                 intent,

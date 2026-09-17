@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Quota.Models
     public static partial class ArmQuotaModelFactory
     {
 
+        /// <summary> The QuotaOperationResult. </summary>
         /// <param name="name"></param>
         /// <param name="display"></param>
         /// <param name="origin"></param>
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaOperationResult(name, display, origin, default);
         }
 
+        /// <summary> The QuotaOperationDisplay. </summary>
         /// <param name="provider"> Provider name. </param>
         /// <param name="resource"> Resource name. </param>
         /// <param name="operation"> Operation name. </param>
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaOperationDisplay(provider, resource, operation, description, default);
         }
 
+        /// <summary> Error details. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <returns> A new <see cref="Models.ServiceErrorDetail"/> instance for mocking. </returns>
@@ -46,6 +49,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new ServiceErrorDetail(code, message, default);
         }
 
+        /// <summary> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -63,6 +67,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> Properties. </summary>
         /// <param name="displayName"> Display name of the GroupQuota entity. </param>
         /// <param name="groupType"> Type of the group. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
@@ -72,6 +77,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotasEntityProperties(displayName, groupType, provisioningState, default);
         }
 
+        /// <summary> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </summary>
         /// <param name="displayName"> Display name of the GroupQuota entity. </param>
         /// <param name="groupType"> Type of the group. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
@@ -81,6 +87,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotaEntityBase(displayName, groupType, provisioningState, default);
         }
 
+        /// <summary> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -98,6 +105,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> Properties. </summary>
         /// <param name="displayName"> Display name of the GroupQuota entity. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
         /// <returns> A new <see cref="Models.GroupQuotasEntityPatchProperties"/> instance for mocking. </returns>
@@ -106,6 +114,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotasEntityPatchProperties(displayName, provisioningState, default);
         }
 
+        /// <summary> Properties and filters for ShareQuota. The request parameter is optional, if there are no filters specified. </summary>
         /// <param name="displayName"> Display name of the GroupQuota entity. </param>
         /// <param name="provisioningState"> Provisioning state of the operation. </param>
         /// <returns> A new <see cref="Models.GroupQuotasEntityBasePatch"/> instance for mocking. </returns>
@@ -114,6 +123,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotasEntityBasePatch(displayName, provisioningState, default);
         }
 
+        /// <summary> Status of a single GroupQuota request. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -131,6 +141,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> The GroupQuotaRequestStatusProperties. </summary>
         /// <param name="requestedResource"> Requested Resource. </param>
         /// <param name="requestSubmittedOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="provisioningState"> Request status. </param>
@@ -141,6 +152,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotaRequestStatusProperties(requestedResource, requestSubmittedOn, provisioningState, faultCode, default);
         }
 
+        /// <summary> Resource details with usages and GroupQuota. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -169,6 +181,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotaUsagesBase(value is null && localizedValue is null ? default : new GroupQuotaUsagesBaseName(value, localizedValue, default), limit, usages, unit, default);
         }
 
+        /// <summary> This represents a Azure subscriptionId that is associated with a GroupQuotasEntity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -186,6 +199,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> The GroupQuotaSubscriptionProperties. </summary>
         /// <param name="subscriptionId"> An Azure subscriptionId. </param>
         /// <param name="provisioningState"> Status of this subscriptionId being associated with the GroupQuotasEntity. </param>
         /// <returns> A new <see cref="Models.GroupQuotaSubscriptionProperties"/> instance for mocking. </returns>
@@ -194,6 +208,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotaSubscriptionProperties(subscriptionId, provisioningState, default);
         }
 
+        /// <summary> The new quota limit request status. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -211,6 +226,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> The GroupQuotaSubscriptionRequestStatusProperties. </summary>
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="requestSubmitOn"> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </param>
         /// <param name="provisioningState"> Status of this subscriptionId being associated with the GroupQuotasEntity. </param>
@@ -220,6 +236,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotaSubscriptionRequestStatusProperties(subscriptionId, requestSubmitOn, provisioningState, default);
         }
 
+        /// <summary> List of Group Quota Limit details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -237,6 +254,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> The GroupQuotaLimitListProperties. </summary>
         /// <param name="provisioningState"> Request status. </param>
         /// <param name="value"> List of Group Quota Limit details. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
@@ -248,6 +266,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotaLimitListProperties(provisioningState, (value ?? new ChangeTrackingList<GroupQuotaLimit>()).ToList(), nextLink, default);
         }
 
+        /// <summary> Group Quota limit. </summary>
         /// <param name="properties"> Group Quota properties for the specified resource. </param>
         /// <returns> A new <see cref="Models.GroupQuotaLimit"/> instance for mocking. </returns>
         public static GroupQuotaLimit GroupQuotaLimit(GroupQuotaLimitProperties properties = default)
@@ -255,6 +274,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotaLimit(properties, default);
         }
 
+        /// <summary> SubscriptionIds and quota allocated to subscriptions from the GroupQuota. </summary>
         /// <param name="subscriptionId"> An Azure subscriptionId. </param>
         /// <param name="quotaAllocated"> The amount of quota allocated to this subscriptionId from the GroupQuotasEntity. </param>
         /// <returns> A new <see cref="Models.SubscriptionAllocatedQuota"/> instance for mocking. </returns>
@@ -263,6 +283,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new SubscriptionAllocatedQuota(subscriptionId, quotaAllocated, default);
         }
 
+        /// <summary> Subscription quota list. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -280,6 +301,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> The SubscriptionQuotaAllocationsListProperties. </summary>
         /// <param name="provisioningState"> Request status. </param>
         /// <param name="value"> Subscription quota list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
@@ -291,6 +313,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new SubscriptionQuotaAllocationsListProperties(provisioningState, (value ?? new ChangeTrackingList<SubscriptionQuotaAllocations>()).ToList(), nextLink, default);
         }
 
+        /// <summary> Quota allocated to a subscription for the specific Resource Provider, Location, ResourceName. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota. </summary>
         /// <param name="properties"> Quota properties for the specified resource. </param>
         /// <returns> A new <see cref="Models.SubscriptionQuotaAllocations"/> instance for mocking. </returns>
         public static SubscriptionQuotaAllocations SubscriptionQuotaAllocations(SubscriptionQuotaAllocationsProperties properties = default)
@@ -340,6 +363,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> The GroupQuota Enforcement status for a Azure Location/Region. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -357,6 +381,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> The GroupQuotasEnforcementStatusProperties. </summary>
         /// <param name="enforcementEnabled"> Is the GroupQuota Enforcement enabled for the Azure region. </param>
         /// <param name="enforcedGroupName"> The name of the group that is enforced. </param>
         /// <param name="provisioningState"> Request status. </param>
@@ -367,6 +392,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotasEnforcementStatusProperties(enforcementEnabled, enforcedGroupName, provisioningState, faultCode, default);
         }
 
+        /// <summary> Resource usage. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -384,6 +410,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> Usage properties for the specified resource. </summary>
         /// <param name="usages"> The quota limit properties for this resource. </param>
         /// <param name="unit"> The units for the quota usage, such as Count and Bytes. When requesting quota, use the <b>unit</b> value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
@@ -411,6 +438,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> The resource usages value. </summary>
         /// <param name="value"> The usages value. </param>
         /// <param name="usagesType"> The quota or usages limit types. </param>
         /// <returns> A new <see cref="Models.QuotaUsagesObject"/> instance for mocking. </returns>
@@ -419,6 +447,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaUsagesObject(value, usagesType, default);
         }
 
+        /// <summary> Name of the resource provided by the resource Provider. When requesting quota, use this property name. </summary>
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display name. </param>
         /// <returns> A new <see cref="Models.QuotaRequestResourceName"/> instance for mocking. </returns>
@@ -427,6 +456,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaRequestResourceName(value, localizedValue, default);
         }
 
+        /// <summary> Quota limit. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -444,6 +474,7 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary> Quota properties for the specified resource. </summary>
         /// <param name="limit"> Resource quota limit properties. </param>
         /// <param name="unit"> The quota units, such as Count and Bytes. When requesting quota, use the <b>unit</b> value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="name"> Resource name provided by the resource provider. Use this property name when requesting quota. </param>
@@ -471,6 +502,10 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <summary>
+        /// LimitJson abstract class.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.QuotaLimitObject"/>.
+        /// </summary>
         /// <param name="limitObjectType"> The limit object type. </param>
         /// <returns> A new <see cref="Models.QuotaLimitJsonObject"/> instance for mocking. </returns>
         public static QuotaLimitJsonObject QuotaLimitJsonObject(string limitObjectType = default)
@@ -478,6 +513,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new UnknownLimitJsonObject(default, default);
         }
 
+        /// <summary> The resource quota limit value. </summary>
         /// <param name="value"> The quota/limit value. </param>
         /// <param name="limitType"> The quota or usages limit types. </param>
         /// <returns> A new <see cref="Models.QuotaLimitObject"/> instance for mocking. </returns>
@@ -486,6 +522,7 @@ namespace Azure.ResourceManager.Quota.Models
             return new QuotaLimitObject(default, default, value, limitType);
         }
 
+        /// <summary> Request property. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceTypeName"> Resource type for which the quota properties were requested. </param>
         /// <param name="unit"> Quota limit units, such as Count and Bytes. When requesting quota, use the <b>unit</b> value returned in the GET response in the request body of your PUT operation. </param>
@@ -507,15 +544,15 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaLimitProperties"/>. </summary>
+        /// <summary> Group Quota properties for the specified resource. </summary>
         /// <param name="resourceName"> The resource name, such as SKU name. </param>
         /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
         /// <param name="comment"> Any comment related to quota request. </param>
-        /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
+        /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the <b>unit</b> value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display name. </param>
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
-        /// <param name="allocatedToSubscriptionsValue"> Quota allocated to subscriptions. </param>
+        /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaLimitProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
@@ -531,15 +568,15 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaDetails"/>. </summary>
+        /// <summary> Group Quota details. </summary>
         /// <param name="resourceName"> The resource name, such as SKU name. </param>
         /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
         /// <param name="comment"> Any comment related to quota request. </param>
-        /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
+        /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the <b>unit</b> value returned in the GET response in the request body of your PUT operation. </param>
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display name. </param>
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
-        /// <param name="allocatedToSubscriptionsValue"> Quota allocated to subscriptions. </param>
+        /// <param name="allocatedToSubscriptionsValue"> List of Group Quota Limit allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GroupQuotaDetails GroupQuotaDetails(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
@@ -555,11 +592,11 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Quota.QuotaRequestDetailData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> List of quota requests with details. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> The quota request status. </param>
         /// <param name="message"> User-friendly status message. </param>
         /// <param name="error"> Error details of the quota request. </param>

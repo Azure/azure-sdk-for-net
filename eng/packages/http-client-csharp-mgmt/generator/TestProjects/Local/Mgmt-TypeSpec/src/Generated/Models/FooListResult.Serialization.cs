@@ -151,7 +151,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     List<FooData> array = new List<FooData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FooData.DeserializeFooData(item, options));
+                        array.Add(FooData.DeserializeFooData(item, item.GetUtf8Bytes(), options));
                     }
                     value = array;
                     continue;

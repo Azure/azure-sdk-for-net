@@ -307,17 +307,17 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(this ArmClient client, ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlDB(scope, targetDbName, migrationOperationId, expand, cancellationToken);
+            return GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlDB(scope, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
         /// <summary>
@@ -329,17 +329,17 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(this ArmClient client, ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlDBAsync(scope, targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlDBAsync(scope, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -387,17 +387,17 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(this ArmClient client, ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlMI(scope, targetDbName, migrationOperationId, expand, cancellationToken);
+            return GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlMI(scope, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
         /// <summary>
@@ -409,17 +409,17 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(this ArmClient client, ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlMIAsync(scope, targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlMIAsync(scope, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -467,17 +467,17 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this ArmClient client, ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlVm(scope, targetDbName, migrationOperationId, expand, cancellationToken);
+            return GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlVm(scope, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
         /// <summary>
@@ -489,17 +489,17 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this ArmClient client, ResourceIdentifier scope, string targetDbName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this ArmClient client, ResourceIdentifier scope, string targetDBName, Guid? migrationOperationId = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlVmAsync(scope, targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlVmAsync(scope, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

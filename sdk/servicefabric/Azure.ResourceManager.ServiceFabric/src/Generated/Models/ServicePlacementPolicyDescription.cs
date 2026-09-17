@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    /// <summary>
-    /// Describes the policy to be used for placement of a Service Fabric service.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
-    /// </summary>
+    /// <summary> Describes the policy to be used for placement of a Service Fabric service. </summary>
     public abstract partial class ServicePlacementPolicyDescription
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

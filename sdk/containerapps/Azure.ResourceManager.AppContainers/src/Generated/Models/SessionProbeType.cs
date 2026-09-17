@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct SessionProbeType : IEquatable<SessionProbeType>
     {
         private readonly string _value;
-        /// <summary> Liveness. </summary>
+        /// <summary> Checks whether the session is still running and healthy. </summary>
         private const string LivenessValue = "Liveness";
-        /// <summary> Startup. </summary>
+        /// <summary> Checks whether the session has started successfully. </summary>
         private const string StartupValue = "Startup";
 
         /// <summary> Initializes a new instance of <see cref="SessionProbeType"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             _value = value;
         }
 
-        /// <summary> Liveness. </summary>
+        /// <summary> Checks whether the session is still running and healthy. </summary>
         public static SessionProbeType Liveness { get; } = new SessionProbeType(LivenessValue);
 
-        /// <summary> Startup. </summary>
+        /// <summary> Checks whether the session has started successfully. </summary>
         public static SessionProbeType Startup { get; } = new SessionProbeType(StartupValue);
 
         /// <summary> Determines if two <see cref="SessionProbeType"/> values are the same. </summary>

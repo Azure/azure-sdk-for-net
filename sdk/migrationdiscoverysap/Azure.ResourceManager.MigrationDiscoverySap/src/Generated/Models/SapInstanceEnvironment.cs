@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MigrationDiscoverySap;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     public readonly partial struct SapInstanceEnvironment : IEquatable<SapInstanceEnvironment>
     {
         private readonly string _value;
+        /// <summary> The type of Sap Instance Environment- Production. </summary>
+        private const string ProductionValue = "Production";
+        /// <summary> The type of Sap Instance Environment- PreProduction. </summary>
+        private const string PreProductionValue = "PreProduction";
+        /// <summary> The type of Sap Instance Environment- Test. </summary>
+        private const string TestValue = "Test";
+        /// <summary> The type of Sap Instance Environment- QualityAssurance. </summary>
+        private const string QualityAssuranceValue = "QualityAssurance";
+        /// <summary> The type of Sap Instance Environment- Development. </summary>
+        private const string DevelopmentValue = "Development";
+        /// <summary> The type of Sap Instance Environment- Sandbox. </summary>
+        private const string SandboxValue = "Sandbox";
+        /// <summary> The type of Sap Instance Environment- DisasterRecovery. </summary>
+        private const string DisasterRecoveryValue = "DisasterRecovery";
+        /// <summary> The type of Sap Instance Environment- Training. </summary>
+        private const string TrainingValue = "Training";
 
         /// <summary> Initializes a new instance of <see cref="SapInstanceEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapInstanceEnvironment(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ProductionValue = "Production";
-        private const string PreProductionValue = "PreProduction";
-        private const string TestValue = "Test";
-        private const string QualityAssuranceValue = "QualityAssurance";
-        private const string DevelopmentValue = "Development";
-        private const string SandboxValue = "Sandbox";
-        private const string DisasterRecoveryValue = "DisasterRecovery";
-        private const string TrainingValue = "Training";
+            _value = value;
+        }
 
         /// <summary> The type of Sap Instance Environment- Production. </summary>
         public static SapInstanceEnvironment Production { get; } = new SapInstanceEnvironment(ProductionValue);
+
         /// <summary> The type of Sap Instance Environment- PreProduction. </summary>
         public static SapInstanceEnvironment PreProduction { get; } = new SapInstanceEnvironment(PreProductionValue);
+
         /// <summary> The type of Sap Instance Environment- Test. </summary>
         public static SapInstanceEnvironment Test { get; } = new SapInstanceEnvironment(TestValue);
+
         /// <summary> The type of Sap Instance Environment- QualityAssurance. </summary>
         public static SapInstanceEnvironment QualityAssurance { get; } = new SapInstanceEnvironment(QualityAssuranceValue);
+
         /// <summary> The type of Sap Instance Environment- Development. </summary>
         public static SapInstanceEnvironment Development { get; } = new SapInstanceEnvironment(DevelopmentValue);
+
         /// <summary> The type of Sap Instance Environment- Sandbox. </summary>
         public static SapInstanceEnvironment Sandbox { get; } = new SapInstanceEnvironment(SandboxValue);
+
         /// <summary> The type of Sap Instance Environment- DisasterRecovery. </summary>
         public static SapInstanceEnvironment DisasterRecovery { get; } = new SapInstanceEnvironment(DisasterRecoveryValue);
+
         /// <summary> The type of Sap Instance Environment- Training. </summary>
         public static SapInstanceEnvironment Training { get; } = new SapInstanceEnvironment(TrainingValue);
+
         /// <summary> Determines if two <see cref="SapInstanceEnvironment"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapInstanceEnvironment left, SapInstanceEnvironment right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapInstanceEnvironment"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapInstanceEnvironment left, SapInstanceEnvironment right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapInstanceEnvironment"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapInstanceEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapInstanceEnvironment(string value) => new SapInstanceEnvironment(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapInstanceEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapInstanceEnvironment?(string value) => value == null ? null : new SapInstanceEnvironment(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapInstanceEnvironment other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapInstanceEnvironment other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

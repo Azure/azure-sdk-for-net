@@ -43,17 +43,17 @@ namespace Azure.AI.Discovery
         /// <param name="status"> The status. </param>
         /// <param name="createdByApiVersion"> The API version used to create this knowledge base. </param>
         /// <param name="lastIndexingRun"> The details of the most recent indexing run. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <param name="createdBy"> The ID of the user who created this resource. </param>
         /// <param name="createdByType"> The type of user who created this resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedOn"> The timestamp when the resource was last updated. </param>
         /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
         /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="description"> The description. </param>
         /// <param name="copilotInstruction"> The copilot instruction. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBase(string name, string id, string bookshelfName, IList<StorageAssetReference> storageAssetReferences, string knowledgeBaseUrl, DiscoveryProvisioningState? provisioningState, ResponseError error, IndexingStatus? status, string createdByApiVersion, LastIndexingRun lastIndexingRun, DateTimeOffset? createdAt, string createdBy, DiscoveryActorType? createdByType, DateTimeOffset? lastModifiedAt, string lastModifiedBy, DiscoveryActorType? lastModifiedByType, IList<DiscoveryTag> tags, string description, string copilotInstruction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBase(string name, string id, string bookshelfName, IList<StorageAssetReference> storageAssetReferences, string knowledgeBaseUrl, DiscoveryProvisioningState? provisioningState, ResponseError error, IndexingStatus? status, string createdByApiVersion, LastIndexingRun lastIndexingRun, DateTimeOffset? createdOn, string createdBy, DiscoveryActorType? createdByType, DateTimeOffset? lastModifiedOn, string lastModifiedBy, DiscoveryActorType? lastModifiedByType, IList<DiscoveryTag> tags, string description, string copilotInstruction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
@@ -65,10 +65,10 @@ namespace Azure.AI.Discovery
             Status = status;
             CreatedByApiVersion = createdByApiVersion;
             LastIndexingRun = lastIndexingRun;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             CreatedBy = createdBy;
             CreatedByType = createdByType;
-            LastModifiedAt = lastModifiedAt;
+            LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             LastModifiedByType = lastModifiedByType;
             Tags = tags;
@@ -108,7 +108,7 @@ namespace Azure.AI.Discovery
         public LastIndexingRun LastIndexingRun { get; }
 
         /// <summary> The timestamp when the resource was created. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The ID of the user who created this resource. </summary>
         public string CreatedBy { get; }
@@ -117,7 +117,7 @@ namespace Azure.AI.Discovery
         public DiscoveryActorType? CreatedByType { get; }
 
         /// <summary> The timestamp when the resource was last updated. </summary>
-        public DateTimeOffset? LastModifiedAt { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The ID of the user who updated this resource. </summary>
         public string LastModifiedBy { get; }
