@@ -1,0 +1,33 @@
+<Project DefaultTargets="ResolveSdkChangeReferences">
+  <PropertyGroup>
+    <ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
+    <ImportDirectoryBuildTargets>false</ImportDirectoryBuildTargets>
+    <ImportDirectoryPackagesProps>false</ImportDirectoryPackagesProps>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <BaseIntermediateOutputPath>$(SdkChangesWorkDirectory)\obj\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(BaseIntermediateOutputPath)</MSBuildProjectExtensionsPath>
+    <BaseOutputPath>$(SdkChangesWorkDirectory)\bin\</BaseOutputPath>
+    <BuildProjectReferences>false</BuildProjectReferences>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
+    <RunAnalyzers>false</RunAnalyzers>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <NuGetAudit>false</NuGetAudit>
+  </PropertyGroup>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+  <Import Project="$(SdkChangesInputFile)" Condition="'$(SdkChangesInputFile)' != ''" />
+  <PropertyGroup>
+    <!-- Only consume compile-time assets. Do not generate package content or resolve analyzers. -->
+    <ResolvePackageDependenciesForBuildDependsOn>ResolveLockFileReferences</ResolvePackageDependenciesForBuildDependsOn>
+  </PropertyGroup>
+
+  <Target Name="RejectSdkCompilation" BeforeTargets="Build;Rebuild;Compile;CoreCompile;RunAnalyzers;RunCodeAnalysis">
+    <Error Text="SDK change extraction must not compile or run analyzers." />
+  </Target>
+
+  <Target Name="ResolveSdkChangeReferences" DependsOnTargets="FindReferenceAssembliesForReferences">
+    <Error Condition="'@(ProjectReference)' != ''" Text="SDK change extraction requires existing assembly references, not project builds." />
+    <Error Condition="'@(ReferencePathWithRefAssemblies)' == ''" Text="No reference assemblies were resolved." />
+    <Error Condition="!Exists('%(ReferencePathWithRefAssemblies.FullPath)')" Text="A required reference assembly is missing: %(ReferencePathWithRefAssemblies.FullPath)" />
+  </Target>
+</Project>

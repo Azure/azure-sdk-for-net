@@ -30,6 +30,10 @@
     "updateMetadataScript": {
       "path": "./eng/scripts/Export-API.ps1"
     },
+    "getSdkChangesScript": {
+      "path": "./eng/scripts/compatibility/Get-SdkChanges.ps1"
+    },
+    "sdkBreakingChangePatternFile": "doc/dev/SDKBreakingChanges.md",
     "buildFailedLabel": "auto-sdk-build-fix"
   }
 }
