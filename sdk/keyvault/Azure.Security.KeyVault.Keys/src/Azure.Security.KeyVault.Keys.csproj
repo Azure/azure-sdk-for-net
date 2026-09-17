@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Microsoft.Identity.Client" />
   </ItemGroup>
 
   <ItemGroup>

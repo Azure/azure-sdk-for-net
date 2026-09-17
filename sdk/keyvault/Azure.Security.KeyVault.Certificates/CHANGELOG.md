@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added a narrowly scoped bearer-token fallback for attested managed-identity tenant eligibility denials, with the decision remembered by the Key Vault client for subsequent token acquisitions.
 - Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
 
 ### Breaking Changes

@@ -20,14 +20,22 @@ namespace Azure.Security.KeyVault
         private const string MtlsPoPTokenTypePrefix = "mtls_pop ";
         private const string TokenBindingValidationFailure = "[MtlsCnfClaimRequestDataValidationFailed]";
         private readonly bool _verifyChallengeResource;
+        private readonly TenantTokenBindingCredential _credential;
 
         /// <summary>
         /// Challenges are cached using the Key Vault or Managed HSM endpoint URI authority as the key.
         /// </summary>
         private static readonly ConcurrentDictionary<string, ChallengeParameters> s_challengeCache = new();
 
-        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool disableChallengeResourceVerification) : base(credential, Array.Empty<string>())
+        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool disableChallengeResourceVerification)
+            : this(new TenantTokenBindingCredential(credential), disableChallengeResourceVerification)
         {
+        }
+
+        private ChallengeBasedAuthenticationPolicy(TenantTokenBindingCredential credential, bool disableChallengeResourceVerification)
+            : base(credential, Array.Empty<string>())
+        {
+            _credential = credential;
             _verifyChallengeResource = !disableChallengeResourceVerification;
         }
 
@@ -63,6 +71,7 @@ namespace Azure.Security.KeyVault
                     isProofOfPossessionEnabled: true,
                     requestUri: message.Request.Uri.ToUri(),
                     requestMethod: message.Request.Method.ToString());
+                context = _credential.GetEffectiveRequestContext(context);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -199,6 +208,7 @@ namespace Azure.Security.KeyVault
                 isProofOfPossessionEnabled: true,
                 requestUri: message.Request.Uri.ToUri(),
                 requestMethod: message.Request.Method.ToString());
+            context = _credential.GetEffectiveRequestContext(context);
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
