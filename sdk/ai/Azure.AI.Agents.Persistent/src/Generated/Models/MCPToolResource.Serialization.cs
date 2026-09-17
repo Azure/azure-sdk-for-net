@@ -181,12 +181,12 @@ namespace Azure.AI.Agents.Persistent
                     {
                         continue;
                     }
-                    requireApprovalInternal = BinaryData.FromString(prop.Value.GetRawText());
+                    requireApprovalInternal = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MCPToolResource(serverLabel, headers, requireApprovalInternal, additionalBinaryDataProperties);

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Base definition for job distribution configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, <see cref="Ray"/>, and <see cref="TensorFlowDistributionConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MpiDistributionConfiguration"/>, <see cref="PyTorchDistributionConfiguration"/>, and <see cref="TensorFlowDistributionConfiguration"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDistributionConfiguration))]
     public abstract partial class MachineLearningDistributionConfiguration : IJsonModel<MachineLearningDistributionConfiguration>
@@ -129,8 +129,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return MpiDistributionConfiguration.DeserializeMpiDistributionConfiguration(element, options);
                     case "PyTorch":
                         return PyTorchDistributionConfiguration.DeserializePyTorchDistributionConfiguration(element, options);
-                    case "Ray":
-                        return Ray.DeserializeRay(element, options);
                     case "TensorFlow":
                         return TensorFlowDistributionConfiguration.DeserializeTensorFlowDistributionConfiguration(element, options);
                 }

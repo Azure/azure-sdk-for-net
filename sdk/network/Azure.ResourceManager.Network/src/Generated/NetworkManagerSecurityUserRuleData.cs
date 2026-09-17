@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (SecurityConfigurationRuleProtocol?)default : Properties.Protocol;
             }
             set
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Direction;
+                return Properties is null ? (SecurityConfigurationRuleDirection?)default : Properties.Direction;
             }
             set
             {

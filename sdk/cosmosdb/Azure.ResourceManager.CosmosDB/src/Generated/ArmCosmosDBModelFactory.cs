@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     defaultIdentity,
                     publicNetworkAccess,
                     isFreeTierEnabled,
-                    new ApiProperties(apiServerVersion, default),
+                    apiServerVersion is null ? default : new ApiProperties(apiServerVersion, default),
                     isAnalyticalStorageEnabled,
-                    new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
+                    analyticalStorageSchemaType is null ? default : new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
                     instanceId,
                     createMode,
                     restoreParameters,
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     networkAclBypass,
                     (networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     disableLocalAuth,
-                    new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
+                    capacityTotalThroughputLimit is null ? default : new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
                     keysMetadata,
                     enablePartitionMerge,
                     enableBurstCapacity,
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && groupId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, default), connectionState, groupId, provisioningState, default),
+                privateEndpointId is null && connectionState is null && groupId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), connectionState, groupId, provisioningState, default),
                 default);
         }
 
@@ -425,41 +425,41 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 location,
                 kind,
                 identity,
-                isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && disableKeyBasedMetadataWriteAccess is null && isFreeTierEnabled is null && apiServerVersion is null && isAnalyticalStorageEnabled is null && analyticalStorageSchemaType is null && disableLocalAuth is null && capacityTotalThroughputLimit is null && enablePartitionMerge is null && enableBurstCapacity is null && enablePriorityBasedExecution is null && enablePerRegionPerPartitionAutoscale is null && isHierarchicalPartitionKeyIdLastLevelEnforced is null ? default : new DatabaseAccountCreateUpdateProperties(
-                    default,
-                    default,
+                new DatabaseAccountCreateUpdateProperties(
+                    consistencyPolicy,
+                    (locations ?? new ChangeTrackingList<CosmosDBAccountLocation>()).ToList(),
                     databaseAccountOfferType,
-                    default,
+                    (ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>()).ToList(),
                     isVirtualNetworkFilterEnabled,
                     enableAutomaticFailover,
-                    default,
-                    default,
+                    (capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>()).ToList(),
+                    (virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>()).ToList(),
                     enableMultipleWriteLocations,
                     enableCassandraConnector,
-                    default,
+                    connectorOffer,
                     disableKeyBasedMetadataWriteAccess,
-                    default,
-                    default,
-                    default,
+                    keyVaultKeyUri,
+                    defaultIdentity,
+                    publicNetworkAccess,
                     isFreeTierEnabled,
-                    new ApiProperties(apiServerVersion, default),
+                    apiServerVersion is null ? default : new ApiProperties(apiServerVersion, default),
                     isAnalyticalStorageEnabled,
-                    new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    analyticalStorageSchemaType is null ? default : new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
+                    createMode,
+                    backupPolicy,
+                    (cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>()).ToList(),
+                    networkAclBypass,
+                    (networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     disableLocalAuth,
-                    default,
-                    new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
-                    default,
+                    restoreParameters,
+                    capacityTotalThroughputLimit is null ? default : new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
+                    keysMetadata,
                     enablePartitionMerge,
                     enableBurstCapacity,
-                    default,
-                    default,
+                    minimalTlsVersion,
+                    customerManagedKeyStatus,
                     enablePriorityBasedExecution,
-                    default,
+                    defaultPriorityLevel,
                     enablePerRegionPerPartitionAutoscale,
                     isHierarchicalPartitionKeyIdLastLevelEnforced,
                     default),
@@ -523,15 +523,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 defaultIdentity,
                 publicNetworkAccess,
                 isFreeTierEnabled,
-                new ApiProperties(apiServerVersion, default),
+                apiServerVersion is null ? default : new ApiProperties(apiServerVersion, default),
                 isAnalyticalStorageEnabled,
-                new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
+                analyticalStorageSchemaType is null ? default : new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
                 backupPolicy,
                 (cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>()).ToList(),
                 networkAclBypass,
                 (networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 disableLocalAuth,
-                new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
+                capacityTotalThroughputLimit is null ? default : new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
                 keysMetadata,
                 enablePartitionMerge,
                 enableBurstCapacity,
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null && options is null ? default : new SqlDatabaseCreateUpdateProperties(resource, options, default),
                 default);
         }
 
@@ -924,7 +924,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null ? default : new ThroughputSettingsUpdateProperties(resource, default),
                 default);
         }
 
@@ -992,7 +992,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent"/> instance for mocking. </returns>
         public static CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(CosmosDBSqlClientEncryptionKeyResourceInfo resource = default)
         {
-            return new CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(default, default);
+            return new CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent(resource is null ? default : new ClientEncryptionKeyCreateUpdateProperties(resource, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1328,7 +1328,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null && options is null ? default : new SqlContainerCreateUpdateProperties(resource, options, default),
                 default);
         }
 
@@ -1418,7 +1418,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null && options is null ? default : new SqlStoredProcedureCreateUpdateProperties(resource, options, default),
                 default);
         }
 
@@ -1493,7 +1493,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null && options is null ? default : new SqlUserDefinedFunctionCreateUpdateProperties(resource, options, default),
                 default);
         }
 
@@ -1574,7 +1574,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null && options is null ? default : new SqlTriggerCreateUpdateProperties(resource, options, default),
                 default);
         }
 
@@ -1732,7 +1732,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null && options is null ? default : new MongoDBDatabaseCreateUpdateProperties(resource, options, default),
                 default);
         }
 
@@ -1858,7 +1858,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null && options is null ? default : new MongoDBCollectionCreateUpdateProperties(resource, options, default),
                 default);
         }
 
@@ -2066,7 +2066,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null && options is null ? default : new TableCreateUpdateProperties(resource, options, default),
                 default);
         }
 
@@ -2189,7 +2189,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                resourceKeyspaceName is null ? default : new CassandraKeyspaceCreateUpdateProperties(new CassandraKeyspaceResourceInfo(resourceKeyspaceName, default), default, default),
+                resourceKeyspaceName is null && options is null ? default : new CassandraKeyspaceCreateUpdateProperties(new CassandraKeyspaceResourceInfo(resourceKeyspaceName, default), options, default),
                 default);
         }
 
@@ -2319,7 +2319,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null && options is null ? default : new CassandraTableCreateUpdateProperties(resource, options, default),
                 default);
         }
 
@@ -2453,7 +2453,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null && options is null ? default : new GremlinDatabaseCreateUpdateProperties(resource, options, default),
                 default);
         }
 
@@ -2567,7 +2567,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                resource is null && options is null ? default : new GremlinGraphCreateUpdateProperties(resource, options, default),
                 default);
         }
 
@@ -4144,9 +4144,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     defaultIdentity,
                     publicNetworkAccess,
                     isFreeTierEnabled,
-                    new ApiProperties(apiServerVersion, default),
+                    apiServerVersion is null ? default : new ApiProperties(apiServerVersion, default),
                     isAnalyticalStorageEnabled,
-                    new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
+                    analyticalStorageSchemaType is null ? default : new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
                     instanceId,
                     createMode,
                     restoreParameters,
@@ -4155,7 +4155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     networkAclBypass,
                     (networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     disableLocalAuth,
-                    new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
+                    capacityTotalThroughputLimit is null ? default : new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
                     keysMetadata,
                     enablePartitionMerge,
                     enableBurstCapacity,
@@ -4190,7 +4190,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && groupId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, default), connectionState, groupId, provisioningState, default),
+                privateEndpointId is null && connectionState is null && groupId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), connectionState, groupId, provisioningState, default),
                 default);
         }
 
@@ -4250,15 +4250,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 defaultIdentity,
                 publicNetworkAccess,
                 isFreeTierEnabled,
-                new ApiProperties(apiServerVersion, default),
+                apiServerVersion is null ? default : new ApiProperties(apiServerVersion, default),
                 isAnalyticalStorageEnabled,
-                new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
+                analyticalStorageSchemaType is null ? default : new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
                 backupPolicy,
                 (cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>()).ToList(),
                 networkAclBypass,
                 (networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 disableLocalAuth,
-                new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
+                capacityTotalThroughputLimit is null ? default : new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
                 keysMetadata,
                 enablePartitionMerge,
                 enableBurstCapacity,
@@ -4328,7 +4328,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 location,
                 kind,
                 identity,
-                consistencyPolicy is null && locations is null && ipRules is null && isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && capabilities is null && virtualNetworkRules is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && connectorOffer is null && disableKeyBasedMetadataWriteAccess is null && keyVaultKeyUri is null && defaultIdentity is null && publicNetworkAccess is null && isFreeTierEnabled is null && apiServerVersion is null && isAnalyticalStorageEnabled is null && analyticalStorageSchemaType is null && createMode is null && backupPolicy is null && cors is null && networkAclBypass is null && networkAclBypassResourceIds is null && disableLocalAuth is null && restoreParameters is null && capacityTotalThroughputLimit is null && keysMetadata is null && enablePartitionMerge is null && enableBurstCapacity is null && minimalTlsVersion is null && customerManagedKeyStatus is null && enablePriorityBasedExecution is null && defaultPriorityLevel is null && enablePerRegionPerPartitionAutoscale is null ? default : new DatabaseAccountCreateUpdateProperties(
+                new DatabaseAccountCreateUpdateProperties(
                     consistencyPolicy,
                     (locations ?? new ChangeTrackingList<CosmosDBAccountLocation>()).ToList(),
                     databaseAccountOfferType,
@@ -4345,9 +4345,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     defaultIdentity,
                     publicNetworkAccess,
                     isFreeTierEnabled,
-                    new ApiProperties(apiServerVersion, default),
+                    apiServerVersion is null ? default : new ApiProperties(apiServerVersion, default),
                     isAnalyticalStorageEnabled,
-                    new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
+                    analyticalStorageSchemaType is null ? default : new AnalyticalStorageConfiguration(analyticalStorageSchemaType, default),
                     createMode,
                     backupPolicy,
                     (cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>()).ToList(),
@@ -4355,7 +4355,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     (networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     disableLocalAuth,
                     restoreParameters,
-                    new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
+                    capacityTotalThroughputLimit is null ? default : new CosmosDBAccountCapacity(capacityTotalThroughputLimit, default),
                     keysMetadata,
                     enablePartitionMerge,
                     enableBurstCapacity,

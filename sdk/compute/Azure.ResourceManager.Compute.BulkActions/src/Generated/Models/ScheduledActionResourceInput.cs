@@ -12,17 +12,14 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Represents the writable fields of a scheduled action resource used in attach and patch requests. </summary>
+    /// <summary> A compute resource to add to or update in a scheduled action. </summary>
     public partial class ScheduledActionResourceInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceInput"/>. </summary>
-        /// <param name="resourceId">
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </param>
+        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public ScheduledActionResourceInput(ResourceIdentifier resourceId)
         {
@@ -33,11 +30,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceInput"/>. </summary>
-        /// <param name="resourceId">
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </param>
-        /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
+        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
+        /// <param name="notificationSettings"> Notification settings that apply only to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ScheduledActionResourceInput(ResourceIdentifier resourceId, IList<NotificationProperties> notificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -46,13 +40,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </summary>
+        /// <summary> The Azure resource ID of the targeted virtual machine. </summary>
         public ResourceIdentifier ResourceId { get; }
 
-        /// <summary> The desired notification settings for the specified resource. </summary>
+        /// <summary> Notification settings that apply only to this resource. </summary>
         public IList<NotificationProperties> NotificationSettings { get; }
     }
 }
