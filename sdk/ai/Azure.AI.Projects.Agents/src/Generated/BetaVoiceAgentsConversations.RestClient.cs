@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public partial class BetaVoiceAgentEndpointConversations
+    public partial class BetaVoiceAgentsConversations
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
@@ -239,7 +239,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetAgentConversationItemAudioRequest(string agentName, string conversationId, string itemId, RequestOptions options)
+        internal PipelineMessage CreateGetAgentConversationAudioItemRequest(string agentName, string conversationId, string itemId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -261,7 +261,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetAgentConversationItemAudioContentRequest(string agentName, string conversationId, string itemId, RequestOptions options)
+        internal PipelineMessage CreateGetAgentConversationAudioItemContentRequest(string agentName, string conversationId, string itemId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -283,7 +283,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetAgentConversationItemGeneratedAudioRequest(string agentName, string conversationId, string itemId, RequestOptions options)
+        internal PipelineMessage CreateGetAgentConversationGeneratedAudioItemRequest(string agentName, string conversationId, string itemId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -305,7 +305,7 @@ namespace Azure.AI.Projects.Agents
             return message;
         }
 
-        internal PipelineMessage CreateGetAgentConversationItemGeneratedAudioContentRequest(string agentName, string conversationId, string itemId, RequestOptions options)
+        internal PipelineMessage CreateGetAgentConversationGeneratedAudioItemContentRequest(string agentName, string conversationId, string itemId, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);

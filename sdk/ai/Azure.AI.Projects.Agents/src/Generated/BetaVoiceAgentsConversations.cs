@@ -19,22 +19,22 @@ namespace Azure.AI.Projects.Agents
     /// default) nothing is persisted, so these routes return `404`. The merged-recording routes additionally
     /// require the session to have ended and return `409` while it is still in progress.
     /// </summary>
-    public partial class BetaVoiceAgentEndpointConversations
+    public partial class BetaVoiceAgentsConversations
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of BetaVoiceAgentEndpointConversations for mocking. </summary>
-        protected BetaVoiceAgentEndpointConversations()
+        /// <summary> Initializes a new instance of BetaVoiceAgentsConversations for mocking. </summary>
+        protected BetaVoiceAgentsConversations()
         {
         }
 
-        /// <summary> Initializes a new instance of BetaVoiceAgentEndpointConversations. </summary>
+        /// <summary> Initializes a new instance of BetaVoiceAgentsConversations. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal BetaVoiceAgentEndpointConversations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal BetaVoiceAgentsConversations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -66,7 +66,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversation(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversation");
             scope.Start();
             try
             {
@@ -101,7 +101,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationAsync(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversation");
             scope.Start();
             try
             {
@@ -174,7 +174,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteAgentConversation(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.DeleteAgentConversation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.DeleteAgentConversation");
             scope.Start();
             try
             {
@@ -209,7 +209,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteAgentConversationAsync(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.DeleteAgentConversation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.DeleteAgentConversation");
             scope.Start();
             try
             {
@@ -281,7 +281,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationResponse(string agentName, string conversationId, string responseId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationResponse");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationResponse");
             scope.Start();
             try
             {
@@ -318,7 +318,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationResponseAsync(string agentName, string conversationId, string responseId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationResponse");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationResponse");
             scope.Start();
             try
             {
@@ -400,7 +400,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationItem(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItem");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationItem");
             scope.Start();
             try
             {
@@ -440,7 +440,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationItemAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItem");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationItem");
             scope.Start();
             try
             {
@@ -479,9 +479,9 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult GetAgentConversationItemAudio(string agentName, string conversationId, string itemId, RequestOptions options)
+        public virtual ClientResult GetAgentConversationAudioItem(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationAudioItem");
             scope.Start();
             try
             {
@@ -489,7 +489,7 @@ namespace Azure.AI.Projects.Agents
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using PipelineMessage message = CreateGetAgentConversationItemAudioRequest(agentName, conversationId, itemId, options);
+                using PipelineMessage message = CreateGetAgentConversationAudioItemRequest(agentName, conversationId, itemId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -520,9 +520,9 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAgentConversationItemAudioAsync(string agentName, string conversationId, string itemId, RequestOptions options)
+        public virtual async Task<ClientResult> GetAgentConversationAudioItemAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationAudioItem");
             scope.Start();
             try
             {
@@ -530,7 +530,7 @@ namespace Azure.AI.Projects.Agents
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using PipelineMessage message = CreateGetAgentConversationItemAudioRequest(agentName, conversationId, itemId, options);
+                using PipelineMessage message = CreateGetAgentConversationAudioItemRequest(agentName, conversationId, itemId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -555,14 +555,14 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<VoiceItemAudioResponse> GetAgentConversationItemAudio(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        public virtual ClientResult<VoiceAudioItem> GetAgentConversationAudioItem(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = GetAgentConversationItemAudio(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((VoiceItemAudioResponse)result, result.GetRawResponse());
+            ClientResult result = GetAgentConversationAudioItem(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((VoiceAudioItem)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -580,14 +580,14 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<VoiceItemAudioResponse>> GetAgentConversationItemAudioAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<VoiceAudioItem>> GetAgentConversationAudioItemAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = await GetAgentConversationItemAudioAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((VoiceItemAudioResponse)result, result.GetRawResponse());
+            ClientResult result = await GetAgentConversationAudioItemAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((VoiceAudioItem)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -610,9 +610,9 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult GetAgentConversationItemAudioContent(string agentName, string conversationId, string itemId, RequestOptions options)
+        public virtual ClientResult GetAgentConversationAudioItemContent(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationAudioItemContent");
             scope.Start();
             try
             {
@@ -620,7 +620,7 @@ namespace Azure.AI.Projects.Agents
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using PipelineMessage message = CreateGetAgentConversationItemAudioContentRequest(agentName, conversationId, itemId, options);
+                using PipelineMessage message = CreateGetAgentConversationAudioItemContentRequest(agentName, conversationId, itemId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -650,9 +650,9 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAgentConversationItemAudioContentAsync(string agentName, string conversationId, string itemId, RequestOptions options)
+        public virtual async Task<ClientResult> GetAgentConversationAudioItemContentAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationAudioItemContent");
             scope.Start();
             try
             {
@@ -660,7 +660,7 @@ namespace Azure.AI.Projects.Agents
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using PipelineMessage message = CreateGetAgentConversationItemAudioContentRequest(agentName, conversationId, itemId, options);
+                using PipelineMessage message = CreateGetAgentConversationAudioItemContentRequest(agentName, conversationId, itemId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -684,13 +684,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<BinaryData> GetAgentConversationItemAudioContent(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        public virtual ClientResult<BinaryData> GetAgentConversationAudioItemContent(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = GetAgentConversationItemAudioContent(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
+            ClientResult result = GetAgentConversationAudioItemContent(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
@@ -708,13 +708,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<BinaryData>> GetAgentConversationItemAudioContentAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<BinaryData>> GetAgentConversationAudioItemContentAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = await GetAgentConversationItemAudioContentAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetAgentConversationAudioItemContentAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
@@ -737,9 +737,9 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult GetAgentConversationItemGeneratedAudio(string agentName, string conversationId, string itemId, RequestOptions options)
+        public virtual ClientResult GetAgentConversationGeneratedAudioItem(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemGeneratedAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationGeneratedAudioItem");
             scope.Start();
             try
             {
@@ -747,7 +747,7 @@ namespace Azure.AI.Projects.Agents
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using PipelineMessage message = CreateGetAgentConversationItemGeneratedAudioRequest(agentName, conversationId, itemId, options);
+                using PipelineMessage message = CreateGetAgentConversationGeneratedAudioItemRequest(agentName, conversationId, itemId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -776,9 +776,9 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAgentConversationItemGeneratedAudioAsync(string agentName, string conversationId, string itemId, RequestOptions options)
+        public virtual async Task<ClientResult> GetAgentConversationGeneratedAudioItemAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemGeneratedAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationGeneratedAudioItem");
             scope.Start();
             try
             {
@@ -786,7 +786,7 @@ namespace Azure.AI.Projects.Agents
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using PipelineMessage message = CreateGetAgentConversationItemGeneratedAudioRequest(agentName, conversationId, itemId, options);
+                using PipelineMessage message = CreateGetAgentConversationGeneratedAudioItemRequest(agentName, conversationId, itemId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -809,14 +809,14 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<VoiceGeneratedItemAudioResponse> GetAgentConversationItemGeneratedAudio(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        public virtual ClientResult<VoiceGeneratedAudioItem> GetAgentConversationGeneratedAudioItem(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = GetAgentConversationItemGeneratedAudio(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((VoiceGeneratedItemAudioResponse)result, result.GetRawResponse());
+            ClientResult result = GetAgentConversationGeneratedAudioItem(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue((VoiceGeneratedAudioItem)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -832,14 +832,14 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<VoiceGeneratedItemAudioResponse>> GetAgentConversationItemGeneratedAudioAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<VoiceGeneratedAudioItem>> GetAgentConversationGeneratedAudioItemAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = await GetAgentConversationItemGeneratedAudioAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((VoiceGeneratedItemAudioResponse)result, result.GetRawResponse());
+            ClientResult result = await GetAgentConversationGeneratedAudioItemAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue((VoiceGeneratedAudioItem)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -863,9 +863,9 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult GetAgentConversationItemGeneratedAudioContent(string agentName, string conversationId, string itemId, RequestOptions options)
+        public virtual ClientResult GetAgentConversationGeneratedAudioItemContent(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemGeneratedAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationGeneratedAudioItemContent");
             scope.Start();
             try
             {
@@ -873,7 +873,7 @@ namespace Azure.AI.Projects.Agents
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using PipelineMessage message = CreateGetAgentConversationItemGeneratedAudioContentRequest(agentName, conversationId, itemId, options);
+                using PipelineMessage message = CreateGetAgentConversationGeneratedAudioItemContentRequest(agentName, conversationId, itemId, options);
                 return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
             }
             catch (Exception e)
@@ -904,9 +904,9 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAgentConversationItemGeneratedAudioContentAsync(string agentName, string conversationId, string itemId, RequestOptions options)
+        public virtual async Task<ClientResult> GetAgentConversationGeneratedAudioItemContentAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemGeneratedAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationGeneratedAudioItemContent");
             scope.Start();
             try
             {
@@ -914,7 +914,7 @@ namespace Azure.AI.Projects.Agents
                 Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
                 Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-                using PipelineMessage message = CreateGetAgentConversationItemGeneratedAudioContentRequest(agentName, conversationId, itemId, options);
+                using PipelineMessage message = CreateGetAgentConversationGeneratedAudioItemContentRequest(agentName, conversationId, itemId, options);
                 return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
             }
             catch (Exception e)
@@ -939,13 +939,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<BinaryData> GetAgentConversationItemGeneratedAudioContent(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        public virtual ClientResult<BinaryData> GetAgentConversationGeneratedAudioItemContent(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = GetAgentConversationItemGeneratedAudioContent(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
+            ClientResult result = GetAgentConversationGeneratedAudioItemContent(agentName, conversationId, itemId, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
@@ -964,13 +964,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="conversationId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<BinaryData>> GetAgentConversationItemGeneratedAudioContentAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<BinaryData>> GetAgentConversationGeneratedAudioItemContentAsync(string agentName, string conversationId, string itemId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            ClientResult result = await GetAgentConversationItemGeneratedAudioContentAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await GetAgentConversationGeneratedAudioItemContentAsync(agentName, conversationId, itemId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
         }
 
@@ -1000,7 +1000,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationAudio(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationAudio");
             scope.Start();
             try
             {
@@ -1043,7 +1043,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationAudioAsync(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationAudio");
             scope.Start();
             try
             {
@@ -1078,13 +1078,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<VoiceRecordingResponse> GetAgentConversationAudio(string agentName, string conversationId, CancellationToken cancellationToken = default)
+        public virtual ClientResult<VoiceRecording> GetAgentConversationAudio(string agentName, string conversationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             ClientResult result = GetAgentConversationAudio(agentName, conversationId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((VoiceRecordingResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((VoiceRecording)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -1105,13 +1105,13 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<VoiceRecordingResponse>> GetAgentConversationAudioAsync(string agentName, string conversationId, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<VoiceRecording>> GetAgentConversationAudioAsync(string agentName, string conversationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             ClientResult result = await GetAgentConversationAudioAsync(agentName, conversationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((VoiceRecordingResponse)result, result.GetRawResponse());
+            return ClientResult.FromValue((VoiceRecording)result, result.GetRawResponse());
         }
 
         /// <summary>
@@ -1139,7 +1139,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationAudioContent(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationAudioContent");
             scope.Start();
             try
             {
@@ -1181,7 +1181,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationAudioContentAsync(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsConversations.GetAgentConversationAudioContent");
             scope.Start();
             try
             {

@@ -28,7 +28,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="revision"> The monotonically increasing optimistic-concurrency revision. </param>
         /// <param name="createdOn"> The Unix timestamp in seconds when the call job was created. </param>
         /// <param name="updatedOn"> The Unix timestamp in seconds when the call job was last updated. </param>
-        internal TelephonyCallJob(TelephonyOutboundDestination destination, string connectionName, string source, string id, string agentName, TelephonyCallJobStatus status, TelephonyOutboundRetryPolicyResult retryPolicy, int attemptCount, long revision, DateTimeOffset createdOn, DateTimeOffset updatedOn)
+        internal TelephonyCallJob(TelephonyOutboundDestination destination, string connectionName, string source, string id, string agentName, TelephonyCallJobStatus status, TelephonyOutboundRetryPolicy retryPolicy, int attemptCount, long revision, DateTimeOffset createdOn, DateTimeOffset updatedOn)
         {
             Destination = destination;
             ConnectionName = connectionName;
@@ -64,7 +64,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="createdOn"> The Unix timestamp in seconds when the call job was created. </param>
         /// <param name="updatedOn"> The Unix timestamp in seconds when the call job was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyCallJob(TelephonyOutboundDestination destination, string connectionName, string source, string purpose, IDictionary<string, BinaryData> structuredInputs, TelephonyCallJobSchedule schedule, string id, string @object, string agentName, TelephonyCallJobStatus status, TelephonyCallJobCancellation cancellation, TelephonyOutboundRetryPolicyResult retryPolicy, int attemptCount, DateTimeOffset? nextAttemptOn, TelephonyCallJobTerminalReason? terminalReason, long revision, DateTimeOffset createdOn, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyCallJob(TelephonyOutboundDestination destination, string connectionName, string source, string purpose, IDictionary<string, BinaryData> structuredInputs, TelephonyCallJobSchedule schedule, string id, string @object, string agentName, TelephonyCallJobStatus status, TelephonyCallJobCancellation cancellation, TelephonyOutboundRetryPolicy retryPolicy, int attemptCount, DateTimeOffset? nextAttemptOn, TelephonyCallJobTerminalReason? terminalReason, long revision, DateTimeOffset createdOn, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Destination = destination;
             ConnectionName = connectionName;
@@ -146,7 +146,7 @@ namespace Azure.AI.Projects.Agents
         public TelephonyCallJobCancellation Cancellation { get; }
 
         /// <summary> The frozen provider-attempt retry policy. </summary>
-        public TelephonyOutboundRetryPolicyResult RetryPolicy { get; }
+        public TelephonyOutboundRetryPolicy RetryPolicy { get; }
 
         /// <summary> The number of provider attempts created so far. </summary>
         public int AttemptCount { get; }

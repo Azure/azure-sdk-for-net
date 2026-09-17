@@ -16,64 +16,64 @@ namespace Azure.AI.Projects.Agents
     /// credentials. For Foundry-managed storage, `blob_uri` is absent and the bytes are streamed through the item's
     /// `/audio/content` route.
     /// </summary>
-    public partial class VoiceItemAudioResponse : IJsonModel<VoiceItemAudioResponse>
+    public partial class VoiceAudioItem : IJsonModel<VoiceAudioItem>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceItemAudioResponse"/> for deserialization. </summary>
-        internal VoiceItemAudioResponse()
+        /// <summary> Initializes a new instance of <see cref="VoiceAudioItem"/> for deserialization. </summary>
+        internal VoiceAudioItem()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceItemAudioResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VoiceAudioItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceItemAudioResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAudioItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceItemAudioResponse(document.RootElement, options);
+                        return DeserializeVoiceAudioItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceItemAudioResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceAudioItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceItemAudioResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAudioItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceItemAudioResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceAudioItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceItemAudioResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VoiceAudioItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceItemAudioResponse IPersistableModel<VoiceItemAudioResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VoiceAudioItem IPersistableModel<VoiceAudioItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceItemAudioResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VoiceAudioItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="VoiceItemAudioResponse"/> from. </param>
-        public static explicit operator VoiceItemAudioResponse(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="VoiceAudioItem"/> from. </param>
+        public static explicit operator VoiceAudioItem(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVoiceItemAudioResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeVoiceAudioItem(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceItemAudioResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VoiceAudioItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceItemAudioResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAudioItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceItemAudioResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceAudioItem)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("conversation_id"u8);
             writer.WriteStringValue(ConversationId);
@@ -152,24 +152,24 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceItemAudioResponse IJsonModel<VoiceItemAudioResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VoiceAudioItem IJsonModel<VoiceAudioItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceItemAudioResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VoiceAudioItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceItemAudioResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceAudioItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceItemAudioResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceAudioItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceItemAudioResponse(document.RootElement, options);
+            return DeserializeVoiceAudioItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceItemAudioResponse DeserializeVoiceItemAudioResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static VoiceAudioItem DeserializeVoiceAudioItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -275,7 +275,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceItemAudioResponse(
+            return new VoiceAudioItem(
                 conversationId,
                 itemId,
                 role,

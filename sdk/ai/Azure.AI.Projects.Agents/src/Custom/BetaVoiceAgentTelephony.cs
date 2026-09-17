@@ -21,21 +21,21 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetTelephonyCallsAsync", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyCallStatus?), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetTelephonyCalls", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetTelephonyCallsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-public partial class BetaVoiceAgentTelephony
+public partial class BetaVoiceAgentsTelephony
 {
     /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
     /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
-    /// <param name="body"> The provider-specific binding to create. </param>
+    /// <param name="telephonyBinding"> The provider-specific binding to create. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="body"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="telephonyBinding"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, CreateTelephonyBindingContent body, CancellationToken cancellationToken = default)
+    public virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, CreateTelephonyBindingContent telephonyBinding, CancellationToken cancellationToken = default)
     {
         return CreateTelephonyBinding(
             agentName: agentName,
-            body: body,
+            telephonyBinding: telephonyBinding,
             foundryFeatures: default,
             cancellationToken: cancellationToken
         );
@@ -43,17 +43,17 @@ public partial class BetaVoiceAgentTelephony
 
     /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
     /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
-    /// <param name="body"> The provider-specific binding to create. </param>
+    /// <param name="telephonyBinding"> The provider-specific binding to create. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="body"/> is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="telephonyBinding"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, CreateTelephonyBindingContent body, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, CreateTelephonyBindingContent telephonyBinding, CancellationToken cancellationToken = default)
     {
         return await CreateTelephonyBindingAsync(
             agentName: agentName,
-            body: body,
+            telephonyBinding: telephonyBinding,
             foundryFeatures: default,
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);
@@ -330,7 +330,7 @@ public partial class BetaVoiceAgentTelephony
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        return new BetaVoiceAgentTelephonyGetTelephonyCallsCollectionResultOfT(
+        return new BetaVoiceAgentsTelephonyGetTelephonyCallsCollectionResultOfT(
             client: this,
             agentName: agentName,
             foundryFeatures: default,
@@ -378,7 +378,7 @@ public partial class BetaVoiceAgentTelephony
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        return new BetaVoiceAgentTelephonyGetTelephonyCallsAsyncCollectionResultOfT(
+        return new BetaVoiceAgentsTelephonyGetTelephonyCallsAsyncCollectionResultOfT(
             client: this,
             agentName: agentName,
             foundryFeatures: default,
@@ -687,388 +687,6 @@ public partial class BetaVoiceAgentTelephony
             agentName: agentName,
             callJobId: callJobId,
             ifMatch: ifMatch,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
-    }
-
-    /// <summary> Creates a draft outbound campaign. Recipients are imported and validated before the campaign can be published. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="body"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="body"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyCampaign> CreateTelephonyCampaign(string agentName, CreateTelephonyCampaignContent body, CancellationToken cancellationToken = default)
-    {
-        return CreateTelephonyCampaign(
-            agentName: agentName,
-            body: body,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary> Creates a draft outbound campaign. Recipients are imported and validated before the campaign can be published. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="body"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="body"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyCampaign>> CreateTelephonyCampaignAsync(string agentName, CreateTelephonyCampaignContent body, CancellationToken cancellationToken = default)
-    {
-        return await CreateTelephonyCampaignAsync(
-            agentName: agentName,
-            body: body,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
-    }
-
-    /// <summary> Retrieves an outbound campaign, including configuration, execution state, and aggregate call-job counts. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyCampaign> GetTelephonyCampaign(string agentName, string campaignId, CancellationToken cancellationToken = default)
-    {
-        return GetTelephonyCampaign(
-            agentName: agentName,
-            campaignId: campaignId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary> Retrieves an outbound campaign, including configuration, execution state, and aggregate call-job counts. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyCampaign>> GetTelephonyCampaignAsync(string agentName, string campaignId, CancellationToken cancellationToken = default)
-    {
-        return await GetTelephonyCampaignAsync(
-            agentName: agentName,
-            campaignId: campaignId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
-    }
-
-    /// <summary> Starts an asynchronous import of campaign recipients from a Dataset CSV, JSON array, or JSONL file. </summary>
-    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="idempotencyKey"></param>
-    /// <param name="body"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/>, <paramref name="idempotencyKey"/> or <paramref name="body"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
-    [Experimental("AAIP001")]
-    public virtual OperationResult ImportTelephonyCampaignRecipients(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, ImportTelephonyCampaignRecipientsContent body, CancellationToken cancellationToken = default)
-    {
-        return ImportTelephonyCampaignRecipients(
-            waitUntilCompleted: waitUntilCompleted,
-            agentName: agentName,
-            campaignId: campaignId,
-            idempotencyKey: idempotencyKey,
-            body: body,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary> Starts an asynchronous import of campaign recipients from a Dataset CSV, JSON array, or JSONL file. </summary>
-    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="idempotencyKey"></param>
-    /// <param name="body"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/>, <paramref name="idempotencyKey"/> or <paramref name="body"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="idempotencyKey"/> is an empty string, and was expected to be non-empty. </exception>
-    [Experimental("AAIP001")]
-    public virtual async Task<OperationResult> ImportTelephonyCampaignRecipientsAsync(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, ImportTelephonyCampaignRecipientsContent body, CancellationToken cancellationToken = default)
-    {
-        return await ImportTelephonyCampaignRecipientsAsync(
-            waitUntilCompleted: waitUntilCompleted,
-            agentName: agentName,
-            campaignId: campaignId,
-            idempotencyKey: idempotencyKey,
-            body: body,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
-    }
-
-    /// <summary> Retrieves the durable status and counters for a campaign recipient import. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="importId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyCampaignRecipientImport> GetTelephonyCampaignRecipientImport(string agentName, string campaignId, string importId, CancellationToken cancellationToken = default)
-    {
-        return GetTelephonyCampaignRecipientImport(
-            agentName: agentName,
-            campaignId: campaignId,
-            importId: importId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary> Retrieves the durable status and counters for a campaign recipient import. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="importId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="importId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyCampaignRecipientImport>> GetTelephonyCampaignRecipientImportAsync(string agentName, string campaignId, string importId, CancellationToken cancellationToken = default)
-    {
-        return await GetTelephonyCampaignRecipientImportAsync(
-            agentName: agentName,
-            campaignId: campaignId,
-            importId: importId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
-    }
-
-    /// <summary> Starts asynchronous validation of the current campaign draft and imported recipient snapshot. </summary>
-    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    [Experimental("SCME0006")]
-    public virtual OperationResult ValidateTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, CancellationToken cancellationToken = default)
-    {
-        return ValidateTelephonyCampaign(
-            waitUntilCompleted: waitUntilCompleted,
-            agentName: agentName,
-            campaignId: campaignId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary> Starts asynchronous validation of the current campaign draft and imported recipient snapshot. </summary>
-    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    [Experimental("SCME0006")]
-    public virtual async Task<OperationResult> ValidateTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, CancellationToken cancellationToken = default)
-    {
-        return await ValidateTelephonyCampaignAsync(
-            waitUntilCompleted: waitUntilCompleted,
-            agentName: agentName,
-            campaignId: campaignId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
-    }
-
-    /// <summary> Permanently locks the validated campaign draft and starts asynchronous call-job materialization. </summary>
-    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="body"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="body"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    [Experimental("AAIP001")]
-    public virtual OperationResult PublishTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, PublishTelephonyCampaignContent body, CancellationToken cancellationToken = default)
-    {
-        return PublishTelephonyCampaign(
-            waitUntilCompleted: waitUntilCompleted,
-            agentName: agentName,
-            campaignId: campaignId,
-            body: body,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary> Permanently locks the validated campaign draft and starts asynchronous call-job materialization. </summary>
-    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="body"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/>, <paramref name="campaignId"/> or <paramref name="body"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    [Experimental("AAIP001")]
-    public virtual async Task<OperationResult> PublishTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, PublishTelephonyCampaignContent body, CancellationToken cancellationToken = default)
-    {
-        return await PublishTelephonyCampaignAsync(
-            waitUntilCompleted: waitUntilCompleted,
-            agentName: agentName,
-            campaignId: campaignId,
-            body: body,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
-    }
-
-    /// <summary> Pauses dispatch of call jobs owned by a published campaign. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyCampaign> PauseTelephonyCampaign(string agentName, string campaignId, CancellationToken cancellationToken = default)
-    {
-        return PauseTelephonyCampaign(
-            agentName: agentName,
-            campaignId: campaignId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary> Pauses dispatch of call jobs owned by a published campaign. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyCampaign>> PauseTelephonyCampaignAsync(string agentName, string campaignId, CancellationToken cancellationToken = default)
-    {
-        return await PauseTelephonyCampaignAsync(
-            agentName: agentName,
-            campaignId: campaignId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
-    }
-
-    /// <summary> Resumes dispatch of call jobs owned by a paused campaign. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyCampaign> ResumeTelephonyCampaign(string agentName, string campaignId, CancellationToken cancellationToken = default)
-    {
-        return ResumeTelephonyCampaign(
-            agentName: agentName,
-            campaignId: campaignId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary> Resumes dispatch of call jobs owned by a paused campaign. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyCampaign>> ResumeTelephonyCampaignAsync(string agentName, string campaignId, CancellationToken cancellationToken = default)
-    {
-        return await ResumeTelephonyCampaignAsync(
-            agentName: agentName,
-            campaignId: campaignId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
-    }
-
-    /// <summary> Cancels a campaign and prevents any further call-job dispatch. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyCampaign> CancelTelephonyCampaign(string agentName, string campaignId, CancellationToken cancellationToken = default)
-    {
-        return CancelTelephonyCampaign(
-            agentName: agentName,
-            campaignId: campaignId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary> Cancels a campaign and prevents any further call-job dispatch. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="campaignId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="campaignId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyCampaign>> CancelTelephonyCampaignAsync(string agentName, string campaignId, CancellationToken cancellationToken = default)
-    {
-        return await CancelTelephonyCampaignAsync(
-            agentName: agentName,
-            campaignId: campaignId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        ).ConfigureAwait(false);
-    }
-
-    /// <summary> Retrieves an asynchronous outbound campaign operation. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="operationId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="operationId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual ClientResult<TelephonyOperation> GetTelephonyOperation(string agentName, string operationId, CancellationToken cancellationToken = default)
-    {
-        return GetTelephonyOperation(
-            agentName: agentName,
-            operationId: operationId,
-            foundryFeatures: default,
-            cancellationToken: cancellationToken
-        );
-    }
-
-    /// <summary> Retrieves an asynchronous outbound campaign operation. </summary>
-    /// <param name="agentName"></param>
-    /// <param name="operationId"></param>
-    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="operationId"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<TelephonyOperation>> GetTelephonyOperationAsync(string agentName, string operationId, CancellationToken cancellationToken = default)
-    {
-        return await GetTelephonyOperationAsync(
-            agentName: agentName,
-            operationId: operationId,
             foundryFeatures: default,
             cancellationToken: cancellationToken
         ).ConfigureAwait(false);

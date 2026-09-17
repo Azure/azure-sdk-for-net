@@ -9,27 +9,27 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary>
-    /// Metadata for a single conversation item's audio segment. For bring-your-own-storage (BYOS), the response includes
+    /// Metadata for a conversation item's generated audio. For bring-your-own-storage (BYOS), the response includes
     /// `blob_uri`, a direct customer-storage URI without a SAS token, that the customer accesses with their own
     /// credentials. For Foundry-managed storage, `blob_uri` is absent and the bytes are streamed through the item's
-    /// `/audio/content` route.
+    /// `/audio/generated/content` route.
     /// </summary>
     [Experimental("AAIP001")]
-    public partial class VoiceItemAudioResponse
+    public partial class VoiceGeneratedAudioItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VoiceItemAudioResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceGeneratedAudioItem"/>. </summary>
         /// <param name="conversationId"> The id of the conversation the item belongs to. </param>
         /// <param name="itemId"> The id of the item this audio belongs to. </param>
-        internal VoiceItemAudioResponse(string conversationId, string itemId)
+        internal VoiceGeneratedAudioItem(string conversationId, string itemId)
         {
             ConversationId = conversationId;
             ItemId = itemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VoiceItemAudioResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VoiceGeneratedAudioItem"/>. </summary>
         /// <param name="conversationId"> The id of the conversation the item belongs to. </param>
         /// <param name="itemId"> The id of the item this audio belongs to. </param>
         /// <param name="role"> The role the audio belongs to. </param>
@@ -39,9 +39,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="channels"> The number of audio channels. </param>
         /// <param name="startOffsetMs"> The offset from the session start at which this segment begins. </param>
         /// <param name="durationMs"> The duration of the audio segment. </param>
-        /// <param name="blobUri"> For bring-your-own-storage (BYOS) recordings only: the URI of the recording in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the item's `/audio/content` route instead. </param>
+        /// <param name="blobUri"> For bring-your-own-storage (BYOS) recordings only: the URI of the generated audio in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the item's `/audio/generated/content` route instead. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceItemAudioResponse(string conversationId, string itemId, VoiceAudioRole? role, VoiceAudioContainerFormat? format, VoiceAudioCodec? codec, int? sampleRate, int? channels, TimeSpan? startOffsetMs, TimeSpan? durationMs, Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceGeneratedAudioItem(string conversationId, string itemId, VoiceAudioRole? role, VoiceAudioContainerFormat? format, VoiceAudioCodec? codec, int? sampleRate, int? channels, TimeSpan? startOffsetMs, TimeSpan? durationMs, Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConversationId = conversationId;
             ItemId = itemId;
@@ -83,7 +83,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The duration of the audio segment. </summary>
         public TimeSpan? DurationMs { get; }
 
-        /// <summary> For bring-your-own-storage (BYOS) recordings only: the URI of the recording in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the item's `/audio/content` route instead. </summary>
+        /// <summary> For bring-your-own-storage (BYOS) recordings only: the URI of the generated audio in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the item's `/audio/generated/content` route instead. </summary>
         public Uri BlobUri { get; }
     }
 }

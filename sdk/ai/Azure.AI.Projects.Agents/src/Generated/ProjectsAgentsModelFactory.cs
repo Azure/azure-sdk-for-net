@@ -745,6 +745,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="referenceSource"> Whether reference audio comes from server playback or a client-provided channel. </param>
         /// <param name="channels"> The number of input channels. Use two interleaved channels when `reference_source` is `client`. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentEchoCancellation"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static VoiceAgentEchoCancellation VoiceAgentEchoCancellation(VoiceAgentEchoCancellationReferenceSource? referenceSource = default, int? channels = default)
         {
             return new VoiceAgentEchoCancellation("server_echo_cancellation", referenceSource, channels, additionalBinaryDataProperties: null);
@@ -848,6 +849,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="triggers"> Conditions that may trigger one interim response. </param>
         /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentInterimResponseConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static VoiceAgentInterimResponseConfig VoiceAgentInterimResponseConfig(string @type = default, IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThresholdMs = default)
         {
             triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
@@ -860,6 +862,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="latencyThresholdMs"> The latency threshold in milliseconds. </param>
         /// <param name="texts"> Candidate text values for the interim response. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentStaticInterimResponseConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static VoiceAgentStaticInterimResponseConfig VoiceAgentStaticInterimResponseConfig(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThresholdMs = default, IEnumerable<string> texts = default)
         {
             triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
@@ -875,6 +878,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="instructions"> Optional instructions for generating interim responses. </param>
         /// <param name="maxCompletionTokens"> The maximum completion-token count for an interim response. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentLlmInterimResponseConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static VoiceAgentLlmInterimResponseConfig VoiceAgentLlmInterimResponseConfig(IEnumerable<VoiceAgentInterimResponseTrigger> triggers = default, TimeSpan? latencyThresholdMs = default, string model = default, string instructions = default, int? maxCompletionTokens = default)
         {
             triggers ??= new ChangeTrackingList<VoiceAgentInterimResponseTrigger>();
@@ -923,6 +927,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="background"></param>
         /// <param name="gopSize"></param>
         /// <returns> A new <see cref="Agents.VoiceAgentAvatarVideoParams"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static VoiceAgentAvatarVideoParams VoiceAgentAvatarVideoParams(int? bitrate = default, VoiceAgentAvatarVideoCrop crop = default, VoiceAgentAvatarVideoResolution resolution = default, VoiceAgentAvatarVideoBackground background = default, int? gopSize = default)
         {
             return new VoiceAgentAvatarVideoParams(
@@ -938,6 +943,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="bottomRight"></param>
         /// <param name="topLeft"></param>
         /// <returns> A new <see cref="Agents.VoiceAgentAvatarVideoCrop"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static VoiceAgentAvatarVideoCrop VoiceAgentAvatarVideoCrop(IEnumerable<object> bottomRight = default, IEnumerable<object> topLeft = default)
         {
             bottomRight ??= new ChangeTrackingList<object>();
@@ -950,6 +956,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns> A new <see cref="Agents.VoiceAgentAvatarVideoResolution"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static VoiceAgentAvatarVideoResolution VoiceAgentAvatarVideoResolution(int width = default, int height = default)
         {
             return new VoiceAgentAvatarVideoResolution(width, height, additionalBinaryDataProperties: null);
@@ -959,6 +966,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="imageUrl"></param>
         /// <param name="color"></param>
         /// <returns> A new <see cref="Agents.VoiceAgentAvatarVideoBackground"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static VoiceAgentAvatarVideoBackground VoiceAgentAvatarVideoBackground(Uri imageUrl = default, string color = default)
         {
             return new VoiceAgentAvatarVideoBackground(imageUrl, color, additionalBinaryDataProperties: null);
@@ -973,6 +981,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="rotationZ"></param>
         /// <param name="amplitude"></param>
         /// <returns> A new <see cref="Agents.VoiceAgentAvatarScene"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static VoiceAgentAvatarScene VoiceAgentAvatarScene(float? zoom = default, float? positionX = default, float? positionY = default, float? rotationX = default, float? rotationY = default, float? rotationZ = default, float? amplitude = default)
         {
             return new VoiceAgentAvatarScene(
@@ -1660,7 +1669,7 @@ namespace Azure.AI.Projects.Agents
         ///   inclusive of tool calls, that was used in this response.
         /// </param>
         /// <returns> A new <see cref="Agents.VoiceResponseBase"/> instance for mocking. </returns>
-        [Experimental("AAIP002")]
+        [Experimental("AAIP001")]
         public static VoiceResponseBase VoiceResponseBase(VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default)
         {
             outputModalities ??= new ChangeTrackingList<VoiceResponseBaseOutputModality>();
@@ -1691,11 +1700,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="startOffsetMs"> The offset from the session start at which this segment begins. </param>
         /// <param name="durationMs"> The duration of the audio segment. </param>
         /// <param name="blobUri"> For bring-your-own-storage (BYOS) recordings only: the URI of the recording in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the item's `/audio/content` route instead. </param>
-        /// <returns> A new <see cref="Agents.VoiceItemAudioResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceAudioItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceItemAudioResponse VoiceItemAudioResponse(string conversationId = default, string itemId = default, VoiceAudioRole? role = default, VoiceAudioContainerFormat? format = default, VoiceAudioCodec? codec = default, int? sampleRate = default, int? channels = default, TimeSpan? startOffsetMs = default, TimeSpan? durationMs = default, Uri blobUri = default)
+        public static VoiceAudioItem VoiceAudioItem(string conversationId = default, string itemId = default, VoiceAudioRole? role = default, VoiceAudioContainerFormat? format = default, VoiceAudioCodec? codec = default, int? sampleRate = default, int? channels = default, TimeSpan? startOffsetMs = default, TimeSpan? durationMs = default, Uri blobUri = default)
         {
-            return new VoiceItemAudioResponse(
+            return new VoiceAudioItem(
                 conversationId,
                 itemId,
                 role,
@@ -1725,11 +1734,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="startOffsetMs"> The offset from the session start at which this segment begins. </param>
         /// <param name="durationMs"> The duration of the audio segment. </param>
         /// <param name="blobUri"> For bring-your-own-storage (BYOS) recordings only: the URI of the generated audio in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the item's `/audio/generated/content` route instead. </param>
-        /// <returns> A new <see cref="Agents.VoiceGeneratedItemAudioResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceGeneratedAudioItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceGeneratedItemAudioResponse VoiceGeneratedItemAudioResponse(string conversationId = default, string itemId = default, VoiceAudioRole? role = default, VoiceAudioContainerFormat? format = default, VoiceAudioCodec? codec = default, int? sampleRate = default, int? channels = default, TimeSpan? startOffsetMs = default, TimeSpan? durationMs = default, Uri blobUri = default)
+        public static VoiceGeneratedAudioItem VoiceGeneratedAudioItem(string conversationId = default, string itemId = default, VoiceAudioRole? role = default, VoiceAudioContainerFormat? format = default, VoiceAudioCodec? codec = default, int? sampleRate = default, int? channels = default, TimeSpan? startOffsetMs = default, TimeSpan? durationMs = default, Uri blobUri = default)
         {
-            return new VoiceGeneratedItemAudioResponse(
+            return new VoiceGeneratedAudioItem(
                 conversationId,
                 itemId,
                 role,
@@ -1759,11 +1768,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="channelLayout"> The role assigned to each stereo channel. </param>
         /// <param name="durationMs"> The total duration of the recording. </param>
         /// <param name="blobUri"> For bring-your-own-storage (BYOS) recordings only: the URI of the recording in the customer's own storage, without a SAS token. The customer downloads it using their own storage credentials. Absent for Foundry-managed storage, where the bytes are streamed via the `/audio/content` route instead. </param>
-        /// <returns> A new <see cref="Agents.VoiceRecordingResponse"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.VoiceRecording"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceRecordingResponse VoiceRecordingResponse(string conversationId = default, VoiceAudioContainerFormat format = default, int sampleRate = default, int channels = default, VoiceRecordingChannelLayout channelLayout = default, TimeSpan durationMs = default, Uri blobUri = default)
+        public static VoiceRecording VoiceRecording(string conversationId = default, VoiceAudioContainerFormat format = default, int sampleRate = default, int channels = default, VoiceRecordingChannelLayout channelLayout = default, TimeSpan durationMs = default, Uri blobUri = default)
         {
-            return new VoiceRecordingResponse(
+            return new VoiceRecording(
                 conversationId,
                 format,
                 sampleRate,
@@ -2260,7 +2269,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// The retry policy for one durable outbound call intent. `max_attempts` includes the first attempt. Strategy-specific settings are defined by the derived policy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.TelephonyOutboundFixedIntervalRetryPolicy"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.TelephonyOutboundFixedIntervalRetryPolicyResult"/>.
         /// </summary>
         /// <param name="type"> The retry strategy. Only fixed-interval retries are currently supported. </param>
         /// <param name="maxAttempts"> The maximum number of provider attempts, including the first attempt. Defaults to 1. </param>
@@ -2271,14 +2280,14 @@ namespace Azure.AI.Projects.Agents
             return new UnknownTelephonyOutboundRetryPolicy(new TelephonyOutboundRetryPolicyType(@type), maxAttempts, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> A retry policy with a fixed interval between outbound call attempts. </summary>
+        /// <summary> The frozen fixed-interval retry policy returned for an outbound call or campaign. </summary>
         /// <param name="maxAttempts"> The maximum number of provider attempts, including the first attempt. Defaults to 1. </param>
-        /// <param name="interval"> The fixed delay in seconds between attempts. It must be 0 when `max_attempts` is 1, and from 60 through 86400 when retries are enabled. </param>
-        /// <returns> A new <see cref="Agents.TelephonyOutboundFixedIntervalRetryPolicy"/> instance for mocking. </returns>
+        /// <param name="interval"> The fixed delay in seconds between attempts. </param>
+        /// <returns> A new <see cref="Agents.TelephonyOutboundFixedIntervalRetryPolicyResult"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyOutboundFixedIntervalRetryPolicy TelephonyOutboundFixedIntervalRetryPolicy(int? maxAttempts = default, TimeSpan? interval = default)
+        public static TelephonyOutboundFixedIntervalRetryPolicyResult TelephonyOutboundFixedIntervalRetryPolicyResult(int? maxAttempts = default, TimeSpan interval = default)
         {
-            return new TelephonyOutboundFixedIntervalRetryPolicy(TelephonyOutboundRetryPolicyType.FixedInterval, maxAttempts, additionalBinaryDataProperties: null, interval);
+            return new TelephonyOutboundFixedIntervalRetryPolicyResult(TelephonyOutboundRetryPolicyType.FixedInterval, maxAttempts, additionalBinaryDataProperties: null, interval);
         }
 
         /// <summary> A durable direct or campaign-created outbound call intent. </summary>
@@ -2301,7 +2310,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="updatedOn"> The Unix timestamp in seconds when the call job was last updated. </param>
         /// <returns> A new <see cref="Agents.TelephonyCallJob"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TelephonyCallJob TelephonyCallJob(TelephonyOutboundDestination destination = default, string connectionName = default, string source = default, string purpose = default, IDictionary<string, BinaryData> structuredInputs = default, TelephonyCallJobSchedule schedule = default, string id = default, string agentName = default, TelephonyCallJobStatus status = default, TelephonyCallJobCancellation cancellation = default, TelephonyOutboundRetryPolicyResult retryPolicy = default, int attemptCount = default, DateTimeOffset? nextAttemptOn = default, TelephonyCallJobTerminalReason? terminalReason = default, long revision = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default)
+        public static TelephonyCallJob TelephonyCallJob(TelephonyOutboundDestination destination = default, string connectionName = default, string source = default, string purpose = default, IDictionary<string, BinaryData> structuredInputs = default, TelephonyCallJobSchedule schedule = default, string id = default, string agentName = default, TelephonyCallJobStatus status = default, TelephonyCallJobCancellation cancellation = default, TelephonyOutboundRetryPolicy retryPolicy = default, int attemptCount = default, DateTimeOffset? nextAttemptOn = default, TelephonyCallJobTerminalReason? terminalReason = default, long revision = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default)
         {
             structuredInputs ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -2337,251 +2346,6 @@ namespace Azure.AI.Projects.Agents
         public static TelephonyCallJobCancellation TelephonyCallJobCancellation(string requestedBy = default, string mode = default, DateTimeOffset requestedOn = default, long revision = default)
         {
             return new TelephonyCallJobCancellation(requestedBy, mode, requestedOn, revision, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// The frozen retry policy returned for an outbound call or campaign.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.TelephonyOutboundFixedIntervalRetryPolicyResult"/>.
-        /// </summary>
-        /// <param name="type"> The retry strategy. </param>
-        /// <param name="maxAttempts"> The maximum number of provider attempts, including the first attempt. </param>
-        /// <returns> A new <see cref="Agents.TelephonyOutboundRetryPolicyResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TelephonyOutboundRetryPolicyResult TelephonyOutboundRetryPolicyResult(string @type = default, int maxAttempts = default)
-        {
-            return new UnknownTelephonyOutboundRetryPolicyResult(new TelephonyOutboundRetryPolicyType(@type), maxAttempts, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The frozen fixed-interval retry policy returned for an outbound call or campaign. </summary>
-        /// <param name="maxAttempts"> The maximum number of provider attempts, including the first attempt. </param>
-        /// <param name="interval"> The fixed delay in seconds between attempts. </param>
-        /// <returns> A new <see cref="Agents.TelephonyOutboundFixedIntervalRetryPolicyResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TelephonyOutboundFixedIntervalRetryPolicyResult TelephonyOutboundFixedIntervalRetryPolicyResult(int maxAttempts = default, TimeSpan interval = default)
-        {
-            return new TelephonyOutboundFixedIntervalRetryPolicyResult(TelephonyOutboundRetryPolicyType.FixedInterval, maxAttempts, additionalBinaryDataProperties: null, interval);
-        }
-
-        /// <summary> A request to create a draft outbound campaign. </summary>
-        /// <param name="displayName"> A customer-visible name for the campaign. </param>
-        /// <param name="connectionName"> The Foundry connection name in the current project used to originate campaign calls. Its category selects Twilio or Azure Communication Services / Teams Phone Extension. No inbound telephony binding is required. </param>
-        /// <param name="source"> The caller identity used to originate campaign calls. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone Extension connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
-        /// <param name="purpose"> An optional customer-declared purpose for campaign calls. </param>
-        /// <param name="schedule"> When the published campaign becomes eligible to dispatch calls. </param>
-        /// <param name="retryPolicy"> The provider-attempt retry policy inherited by every materialized call job. </param>
-        /// <returns> A new <see cref="Agents.CreateTelephonyCampaignContent"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static CreateTelephonyCampaignContent CreateTelephonyCampaignContent(string displayName = default, string connectionName = default, string source = default, string purpose = default, TelephonyCampaignSchedule schedule = default, TelephonyOutboundRetryPolicy retryPolicy = default)
-        {
-            return new CreateTelephonyCampaignContent(
-                displayName,
-                connectionName,
-                source,
-                purpose,
-                schedule,
-                retryPolicy,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The schedule for an outbound campaign. </summary>
-        /// <param name="type"> Whether calls are eligible immediately after publication or at a future instant. </param>
-        /// <param name="startsOn"> The scheduled start instant. Required only when `type` is `scheduled`. </param>
-        /// <returns> A new <see cref="Agents.TelephonyCampaignSchedule"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TelephonyCampaignSchedule TelephonyCampaignSchedule(TelephonyCampaignScheduleType @type = default, DateTimeOffset? startsOn = default)
-        {
-            return new TelephonyCampaignSchedule(@type, startsOn, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A durable outbound campaign owned by a voice agent. </summary>
-        /// <param name="displayName"> A customer-visible name for the campaign. </param>
-        /// <param name="connectionName"> The Foundry connection name in the current project used to originate campaign calls. Its category selects Twilio or Azure Communication Services / Teams Phone Extension. No inbound telephony binding is required. </param>
-        /// <param name="source"> The caller identity used to originate campaign calls. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone Extension connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
-        /// <param name="purpose"> An optional customer-declared purpose for campaign calls. </param>
-        /// <param name="schedule"> When the published campaign becomes eligible to dispatch calls. </param>
-        /// <param name="id"></param>
-        /// <param name="agentName"></param>
-        /// <param name="configurationStatus"></param>
-        /// <param name="executionStatus"></param>
-        /// <param name="retryPolicy"></param>
-        /// <param name="latestSuccessfulValidationId"></param>
-        /// <param name="activeValidationId"></param>
-        /// <param name="activeRecipientImportId"></param>
-        /// <param name="publishedOn"></param>
-        /// <param name="callJobCounts"></param>
-        /// <param name="createdOn"></param>
-        /// <param name="updatedOn"></param>
-        /// <returns> A new <see cref="Agents.TelephonyCampaign"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TelephonyCampaign TelephonyCampaign(string displayName = default, string connectionName = default, string source = default, string purpose = default, TelephonyCampaignSchedule schedule = default, string id = default, string agentName = default, TelephonyCampaignConfigurationStatus configurationStatus = default, TelephonyCampaignExecutionStatus executionStatus = default, TelephonyOutboundRetryPolicyResult retryPolicy = default, string latestSuccessfulValidationId = default, string activeValidationId = default, string activeRecipientImportId = default, DateTimeOffset? publishedOn = default, TelephonyCampaignCallJobCounts callJobCounts = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default)
-        {
-            return new TelephonyCampaign(
-                displayName,
-                connectionName,
-                source,
-                purpose,
-                schedule,
-                id,
-                "telephony.campaign",
-                agentName,
-                configurationStatus,
-                executionStatus,
-                retryPolicy,
-                latestSuccessfulValidationId,
-                activeValidationId,
-                activeRecipientImportId,
-                publishedOn,
-                callJobCounts,
-                createdOn,
-                updatedOn,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Aggregate call-job counts for an outbound campaign. </summary>
-        /// <param name="total"></param>
-        /// <param name="pending"></param>
-        /// <param name="inProgress"></param>
-        /// <param name="completed"></param>
-        /// <param name="failed"></param>
-        /// <param name="blocked"></param>
-        /// <param name="cancelled"></param>
-        /// <param name="expired"></param>
-        /// <returns> A new <see cref="Agents.TelephonyCampaignCallJobCounts"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TelephonyCampaignCallJobCounts TelephonyCampaignCallJobCounts(long total = default, long pending = default, long inProgress = default, long completed = default, long failed = default, long blocked = default, long cancelled = default, long expired = default)
-        {
-            return new TelephonyCampaignCallJobCounts(
-                total,
-                pending,
-                inProgress,
-                completed,
-                failed,
-                blocked,
-                cancelled,
-                expired,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A request to import campaign recipients from a Dataset CSV, JSON array, or JSONL file. Imported Agent-declared structured inputs follow the Agent definition's schema, required, and default-value semantics. </summary>
-        /// <param name="source"></param>
-        /// <param name="mapping"> Mappings from recipient properties to source fields or columns. Omit this property or an individual entry to use same-named source fields. Destination and recipient-key source fields are required. Optional source fields may be absent, except the recipient item key when `duplicate_handling` is `keep_each`. </param>
-        /// <param name="duplicateHandling"></param>
-        /// <returns> A new <see cref="Agents.ImportTelephonyCampaignRecipientsContent"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static ImportTelephonyCampaignRecipientsContent ImportTelephonyCampaignRecipientsContent(TelephonyCampaignRecipientImportSource source = default, TelephonyCampaignRecipientMappingContent mapping = default, TelephonyCampaignDuplicateHandling? duplicateHandling = default)
-        {
-            return new ImportTelephonyCampaignRecipientsContent(source, mapping, duplicateHandling, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A Dataset source for campaign recipient import. </summary>
-        /// <param name="datasetName"></param>
-        /// <param name="datasetVersion"></param>
-        /// <param name="fileName"> A relative path to a CSV, JSON array, or JSONL file in the Dataset version. </param>
-        /// <param name="format"></param>
-        /// <returns> A new <see cref="Agents.TelephonyCampaignRecipientImportSource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TelephonyCampaignRecipientImportSource TelephonyCampaignRecipientImportSource(string datasetName = default, string datasetVersion = default, string fileName = default, TelephonyCampaignRecipientImportFormat format = default)
-        {
-            return new TelephonyCampaignRecipientImportSource(
-                "dataset",
-                datasetName,
-                datasetVersion,
-                fileName,
-                format,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Optional source-field mappings for a recipient import. Each omitted entry uses its same-named source field. </summary>
-        /// <param name="destination"> The source field containing the destination E.164 phone number. Defaults to `destination`. The source field is required for each recipient. </param>
-        /// <param name="recipientKey"> The source field containing the recipient key. Defaults to `recipient_key`. The source field is required for each recipient. </param>
-        /// <param name="recipientItemKey"> The source field containing the recipient item key. Defaults to `recipient_item_key`. The source field is required when `duplicate_handling` is `keep_each`; otherwise it may be absent. </param>
-        /// <param name="notBefore"> The source field containing the earliest dispatch time as a Unix timestamp in seconds. Defaults to `not_before`. If the source field is absent, no per-recipient start bound is applied. </param>
-        /// <param name="expiresAt"> The source field containing the expiry time as a Unix timestamp in seconds. Defaults to `expires_at`. If the source field is absent, no per-recipient expiry bound is applied. </param>
-        /// <returns> A new <see cref="Agents.TelephonyCampaignRecipientMappingContent"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TelephonyCampaignRecipientMappingContent TelephonyCampaignRecipientMappingContent(string destination = default, string recipientKey = default, string recipientItemKey = default, string notBefore = default, string expiresAt = default)
-        {
-            return new TelephonyCampaignRecipientMappingContent(
-                destination,
-                recipientKey,
-                recipientItemKey,
-                notBefore,
-                expiresAt,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A resource produced by a successful outbound telephony operation. </summary>
-        /// <param name="id"></param>
-        /// <param name="type"></param>
-        /// <returns> A new <see cref="Agents.TelephonyOperationResource"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TelephonyOperationResource TelephonyOperationResource(string id = default, string @type = default)
-        {
-            return new TelephonyOperationResource(id, @type, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A durable campaign recipient-import record. </summary>
-        /// <param name="id"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="status"></param>
-        /// <param name="source"></param>
-        /// <param name="mapping"></param>
-        /// <param name="duplicateHandling"></param>
-        /// <param name="rowsProcessed"></param>
-        /// <param name="eligibleRecipientCount"></param>
-        /// <param name="invalidRecipientCount"></param>
-        /// <param name="errorCode"></param>
-        /// <param name="errorMessage"></param>
-        /// <param name="createdOn"></param>
-        /// <param name="updatedOn"></param>
-        /// <returns> A new <see cref="Agents.TelephonyCampaignRecipientImport"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TelephonyCampaignRecipientImport TelephonyCampaignRecipientImport(string id = default, string campaignId = default, TelephonyCampaignRecipientImportStatus status = default, TelephonyCampaignRecipientImportSource source = default, TelephonyCampaignRecipientMapping mapping = default, TelephonyCampaignDuplicateHandling duplicateHandling = default, long rowsProcessed = default, long eligibleRecipientCount = default, long invalidRecipientCount = default, string errorCode = default, string errorMessage = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default)
-        {
-            return new TelephonyCampaignRecipientImport(
-                id,
-                "telephony.campaign.recipient_import",
-                campaignId,
-                status,
-                source,
-                mapping,
-                duplicateHandling,
-                rowsProcessed,
-                eligibleRecipientCount,
-                invalidRecipientCount,
-                errorCode,
-                errorMessage,
-                createdOn,
-                updatedOn,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Source fields or CSV columns mapped into each campaign recipient. Every unmapped CSV column or JSON/JSONL top-level property becomes a same-named structured input. CSV cells are preserved as strings until Agent-declared inputs are parsed according to their schemas; additional inputs remain strings. </summary>
-        /// <param name="destination"> The source field containing the destination E.164 phone number. Defaults to `destination`. The source field is required for each recipient. </param>
-        /// <param name="recipientKey"> The source field containing the recipient key. Defaults to `recipient_key`. The source field is required for each recipient. </param>
-        /// <param name="recipientItemKey"> The source field containing the recipient item key. Defaults to `recipient_item_key`. The source field is required when `duplicate_handling` is `keep_each`; otherwise it may be absent. </param>
-        /// <param name="notBefore"> The source field containing the earliest dispatch time as a Unix timestamp in seconds. Defaults to `not_before`. If the source field is absent, no per-recipient start bound is applied. </param>
-        /// <param name="expiresAt"> The source field containing the expiry time as a Unix timestamp in seconds. Defaults to `expires_at`. If the source field is absent, no per-recipient expiry bound is applied. </param>
-        /// <returns> A new <see cref="Agents.TelephonyCampaignRecipientMapping"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static TelephonyCampaignRecipientMapping TelephonyCampaignRecipientMapping(string destination = default, string recipientKey = default, string recipientItemKey = default, string notBefore = default, string expiresAt = default)
-        {
-            return new TelephonyCampaignRecipientMapping(
-                destination,
-                recipientKey,
-                recipientItemKey,
-                notBefore,
-                expiresAt,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A request to publish a validated outbound campaign draft. </summary>
-        /// <param name="validationId"></param>
-        /// <returns> A new <see cref="Agents.PublishTelephonyCampaignContent"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static PublishTelephonyCampaignContent PublishTelephonyCampaignContent(string validationId = default)
-        {
-            return new PublishTelephonyCampaignContent(validationId, additionalBinaryDataProperties: null);
         }
 
         /// <summary>

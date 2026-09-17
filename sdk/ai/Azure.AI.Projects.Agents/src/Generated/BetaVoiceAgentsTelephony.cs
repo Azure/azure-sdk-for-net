@@ -6,30 +6,29 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The BetaVoiceAgentTelephony sub-client. </summary>
-    public partial class BetaVoiceAgentTelephony
+    /// <summary> The BetaVoiceAgentsTelephony sub-client. </summary>
+    public partial class BetaVoiceAgentsTelephony
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of BetaVoiceAgentTelephony for mocking. </summary>
-        protected BetaVoiceAgentTelephony()
+        /// <summary> Initializes a new instance of BetaVoiceAgentsTelephony for mocking. </summary>
+        protected BetaVoiceAgentsTelephony()
         {
         }
 
-        /// <summary> Initializes a new instance of BetaVoiceAgentTelephony. </summary>
+        /// <summary> Initializes a new instance of BetaVoiceAgentsTelephony. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal BetaVoiceAgentTelephony(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal BetaVoiceAgentsTelephony(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -59,7 +58,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CreateTelephonyBinding(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CreateTelephonyBinding");
             scope.Start();
             try
             {
@@ -89,7 +88,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CreateTelephonyBindingAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CreateTelephonyBinding");
             scope.Start();
             try
             {
@@ -105,25 +104,25 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
-        /// <param name="body"> The provider-specific binding to create. </param>
+        /// <param name="telephonyBinding"> The provider-specific binding to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, CreateTelephonyBindingContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, CreateTelephonyBindingContent telephonyBinding, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = CreateTelephonyBinding(agentName, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = CreateTelephonyBinding(agentName, telephonyBinding, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
         }
 
         /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
         /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
-        /// <param name="body"> The provider-specific binding to create. </param>
+        /// <param name="telephonyBinding"> The provider-specific binding to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, CreateTelephonyBindingContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, CreateTelephonyBindingContent telephonyBinding, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await CreateTelephonyBindingAsync(agentName, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateTelephonyBindingAsync(agentName, telephonyBinding, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
         }
 
@@ -143,7 +142,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetTelephonyBinding(string agentName, string bindingId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyBinding");
             scope.Start();
             try
             {
@@ -173,7 +172,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetTelephonyBindingAsync(string agentName, string bindingId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyBinding");
             scope.Start();
             try
             {
@@ -229,7 +228,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult UpdateTelephonyBinding(string agentName, string bindingId, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.UpdateTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.UpdateTelephonyBinding");
             scope.Start();
             try
             {
@@ -261,7 +260,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> UpdateTelephonyBindingAsync(string agentName, string bindingId, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.UpdateTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.UpdateTelephonyBinding");
             scope.Start();
             try
             {
@@ -292,7 +291,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult DeleteTelephonyBinding(string agentName, string bindingId, string ifMatch, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.DeleteTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.DeleteTelephonyBinding");
             scope.Start();
             try
             {
@@ -323,7 +322,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> DeleteTelephonyBindingAsync(string agentName, string bindingId, string ifMatch, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.DeleteTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.DeleteTelephonyBinding");
             scope.Start();
             try
             {
@@ -398,11 +397,11 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual CollectionResult GetTelephonyCalls(string agentName, string foundryFeatures, string provider, string status, DateTimeOffset? startedAfter, DateTimeOffset? startedBefore, int? limit, string order, string after, string before, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCalls");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyCalls");
             scope.Start();
             try
             {
-                return new BetaVoiceAgentTelephonyGetTelephonyCallsCollectionResult(
+                return new BetaVoiceAgentsTelephonyGetTelephonyCallsCollectionResult(
                     this,
                     agentName,
                     foundryFeatures,
@@ -460,11 +459,11 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncCollectionResult GetTelephonyCallsAsync(string agentName, string foundryFeatures, string provider, string status, DateTimeOffset? startedAfter, DateTimeOffset? startedBefore, int? limit, string order, string after, string before, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCalls");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyCalls");
             scope.Start();
             try
             {
-                return new BetaVoiceAgentTelephonyGetTelephonyCallsAsyncCollectionResult(
+                return new BetaVoiceAgentsTelephonyGetTelephonyCallsAsyncCollectionResult(
                     this,
                     agentName,
                     foundryFeatures,
@@ -514,7 +513,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual CollectionResult<TelephonyCallSummary> GetTelephonyCalls(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, TelephonyProvider? provider = default, TelephonyCallStatus? status = default, DateTimeOffset? startedAfter = default, DateTimeOffset? startedBefore = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
-            return new BetaVoiceAgentTelephonyGetTelephonyCallsCollectionResultOfT(
+            return new BetaVoiceAgentsTelephonyGetTelephonyCallsCollectionResultOfT(
                 this,
                 agentName,
                 foundryFeatures?.ToSerialString(),
@@ -558,7 +557,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual AsyncCollectionResult<TelephonyCallSummary> GetTelephonyCallsAsync(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, TelephonyProvider? provider = default, TelephonyCallStatus? status = default, DateTimeOffset? startedAfter = default, DateTimeOffset? startedBefore = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
-            return new BetaVoiceAgentTelephonyGetTelephonyCallsAsyncCollectionResultOfT(
+            return new BetaVoiceAgentsTelephonyGetTelephonyCallsAsyncCollectionResultOfT(
                 this,
                 agentName,
                 foundryFeatures?.ToSerialString(),
@@ -589,7 +588,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetTelephonyCall(string agentName, string callId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyCall");
             scope.Start();
             try
             {
@@ -619,7 +618,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetTelephonyCallAsync(string agentName, string callId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyCall");
             scope.Start();
             try
             {
@@ -674,7 +673,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult TransferTelephonyCall(string agentName, string callId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.TransferTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.TransferTelephonyCall");
             scope.Start();
             try
             {
@@ -705,7 +704,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> TransferTelephonyCallAsync(string agentName, string callId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.TransferTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.TransferTelephonyCall");
             scope.Start();
             try
             {
@@ -763,7 +762,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult EndTelephonyCall(string agentName, string callId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.EndTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.EndTelephonyCall");
             scope.Start();
             try
             {
@@ -793,7 +792,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> EndTelephonyCallAsync(string agentName, string callId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.EndTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.EndTelephonyCall");
             scope.Start();
             try
             {
@@ -846,7 +845,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetTelephonyTransferTargets(string agentName, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyTransferTargets");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyTransferTargets");
             scope.Start();
             try
             {
@@ -875,7 +874,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetTelephonyTransferTargetsAsync(string agentName, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyTransferTargets");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyTransferTargets");
             scope.Start();
             try
             {
@@ -928,7 +927,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult ReplaceTelephonyTransferTargets(string agentName, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ReplaceTelephonyTransferTargets");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.ReplaceTelephonyTransferTargets");
             scope.Start();
             try
             {
@@ -959,7 +958,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> ReplaceTelephonyTransferTargetsAsync(string agentName, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ReplaceTelephonyTransferTargets");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.ReplaceTelephonyTransferTargets");
             scope.Start();
             try
             {
@@ -1018,7 +1017,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CreateTelephonyCallJob(string agentName, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CreateTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1049,7 +1048,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CreateTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1105,7 +1104,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetTelephonyCallJob(string agentName, string callJobId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1135,7 +1134,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetTelephonyCallJobAsync(string agentName, string callJobId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.GetTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1190,7 +1189,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CancelTelephonyCallJob(string agentName, string callJobId, string ifMatch, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CancelTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CancelTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1221,7 +1220,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CancelTelephonyCallJobAsync(string agentName, string callJobId, string ifMatch, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CancelTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentsTelephony.CancelTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1259,832 +1258,6 @@ namespace Azure.AI.Projects.Agents
         {
             ClientResult result = await CancelTelephonyCallJobAsync(agentName, callJobId, ifMatch, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a draft outbound campaign. Recipients are imported and validated before the campaign can be published.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult CreateTelephonyCampaign(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateCreateTelephonyCampaignRequest(agentName, content, foundryFeatures, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a draft outbound campaign. Recipients are imported and validated before the campaign can be published.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateTelephonyCampaignAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateCreateTelephonyCampaignRequest(agentName, content, foundryFeatures, options);
-                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Creates a draft outbound campaign. Recipients are imported and validated before the campaign can be published. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="body"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyCampaign> CreateTelephonyCampaign(string agentName, CreateTelephonyCampaignContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = CreateTelephonyCampaign(agentName, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
-        }
-
-        /// <summary> Creates a draft outbound campaign. Recipients are imported and validated before the campaign can be published. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="body"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyCampaign>> CreateTelephonyCampaignAsync(string agentName, CreateTelephonyCampaignContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await CreateTelephonyCampaignAsync(agentName, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves an outbound campaign, including configuration, execution state, and aggregate call-job counts.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateGetTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves an outbound campaign, including configuration, execution state, and aggregate call-job counts.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateGetTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
-                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves an outbound campaign, including configuration, execution state, and aggregate call-job counts. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyCampaign> GetTelephonyCampaign(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = GetTelephonyCampaign(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
-        }
-
-        /// <summary> Retrieves an outbound campaign, including configuration, execution state, and aggregate call-job counts. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyCampaign>> GetTelephonyCampaignAsync(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await GetTelephonyCampaignAsync(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
-        }
-
-        /// <summary> Starts an asynchronous import of campaign recipients from a Dataset CSV, JSON array, or JSONL file. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="idempotencyKey"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <returns> The response returned from the service. </returns>
-        [Experimental("SCME0006")]
-        internal virtual OperationResult ImportTelephonyCampaignRecipients(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ImportTelephonyCampaignRecipients");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateImportTelephonyCampaignRecipientsRequest(agentName, campaignId, idempotencyKey, content, foundryFeatures, options);
-                return OperationResultHelpers.ProcessMessage(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Starts an asynchronous import of campaign recipients from a Dataset CSV, JSON array, or JSONL file. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="idempotencyKey"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <returns> The response returned from the service. </returns>
-        [Experimental("SCME0006")]
-        internal virtual async Task<OperationResult> ImportTelephonyCampaignRecipientsAsync(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ImportTelephonyCampaignRecipients");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateImportTelephonyCampaignRecipientsRequest(agentName, campaignId, idempotencyKey, content, foundryFeatures, options);
-                return await OperationResultHelpers.ProcessMessageAsync(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Starts an asynchronous import of campaign recipients from a Dataset CSV, JSON array, or JSONL file. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="idempotencyKey"></param>
-        /// <param name="body"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        [Experimental("SCME0006")]
-        internal virtual OperationResult ImportTelephonyCampaignRecipients(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, ImportTelephonyCampaignRecipientsContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            OperationResult result = ImportTelephonyCampaignRecipients(waitUntilCompleted, agentName, campaignId, idempotencyKey, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return result;
-        }
-
-        /// <summary> Starts an asynchronous import of campaign recipients from a Dataset CSV, JSON array, or JSONL file. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="idempotencyKey"></param>
-        /// <param name="body"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        [Experimental("SCME0006")]
-        internal virtual async Task<OperationResult> ImportTelephonyCampaignRecipientsAsync(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, ImportTelephonyCampaignRecipientsContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            OperationResult result = await ImportTelephonyCampaignRecipientsAsync(waitUntilCompleted, agentName, campaignId, idempotencyKey, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return result;
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves the durable status and counters for a campaign recipient import.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="importId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetTelephonyCampaignRecipientImport(string agentName, string campaignId, string importId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCampaignRecipientImport");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateGetTelephonyCampaignRecipientImportRequest(agentName, campaignId, importId, foundryFeatures, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves the durable status and counters for a campaign recipient import.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="importId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetTelephonyCampaignRecipientImportAsync(string agentName, string campaignId, string importId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCampaignRecipientImport");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateGetTelephonyCampaignRecipientImportRequest(agentName, campaignId, importId, foundryFeatures, options);
-                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves the durable status and counters for a campaign recipient import. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="importId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyCampaignRecipientImport> GetTelephonyCampaignRecipientImport(string agentName, string campaignId, string importId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = GetTelephonyCampaignRecipientImport(agentName, campaignId, importId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((TelephonyCampaignRecipientImport)result, result.GetRawResponse());
-        }
-
-        /// <summary> Retrieves the durable status and counters for a campaign recipient import. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="importId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyCampaignRecipientImport>> GetTelephonyCampaignRecipientImportAsync(string agentName, string campaignId, string importId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await GetTelephonyCampaignRecipientImportAsync(agentName, campaignId, importId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((TelephonyCampaignRecipientImport)result, result.GetRawResponse());
-        }
-
-        /// <summary> Starts asynchronous validation of the current campaign draft and imported recipient snapshot. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <returns> The response returned from the service. </returns>
-        [Experimental("SCME0006")]
-        internal virtual OperationResult ValidateTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ValidateTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateValidateTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
-                return OperationResultHelpers.ProcessMessage(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Starts asynchronous validation of the current campaign draft and imported recipient snapshot. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <returns> The response returned from the service. </returns>
-        [Experimental("SCME0006")]
-        internal virtual async Task<OperationResult> ValidateTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ValidateTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateValidateTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
-                return await OperationResultHelpers.ProcessMessageAsync(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Starts asynchronous validation of the current campaign draft and imported recipient snapshot. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        [Experimental("SCME0006")]
-        internal virtual OperationResult ValidateTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            OperationResult result = ValidateTelephonyCampaign(waitUntilCompleted, agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return result;
-        }
-
-        /// <summary> Starts asynchronous validation of the current campaign draft and imported recipient snapshot. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        [Experimental("SCME0006")]
-        internal virtual async Task<OperationResult> ValidateTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            OperationResult result = await ValidateTelephonyCampaignAsync(waitUntilCompleted, agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return result;
-        }
-
-        /// <summary> Permanently locks the validated campaign draft and starts asynchronous call-job materialization. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <returns> The response returned from the service. </returns>
-        [Experimental("SCME0006")]
-        internal virtual OperationResult PublishTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.PublishTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreatePublishTelephonyCampaignRequest(agentName, campaignId, content, foundryFeatures, options);
-                return OperationResultHelpers.ProcessMessage(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Permanently locks the validated campaign draft and starts asynchronous call-job materialization. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <returns> The response returned from the service. </returns>
-        [Experimental("SCME0006")]
-        internal virtual async Task<OperationResult> PublishTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.PublishTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreatePublishTelephonyCampaignRequest(agentName, campaignId, content, foundryFeatures, options);
-                return await OperationResultHelpers.ProcessMessageAsync(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Permanently locks the validated campaign draft and starts asynchronous call-job materialization. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="body"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        [Experimental("SCME0006")]
-        internal virtual OperationResult PublishTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, PublishTelephonyCampaignContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            OperationResult result = PublishTelephonyCampaign(waitUntilCompleted, agentName, campaignId, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return result;
-        }
-
-        /// <summary> Permanently locks the validated campaign draft and starts asynchronous call-job materialization. </summary>
-        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="body"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        [Experimental("SCME0006")]
-        internal virtual async Task<OperationResult> PublishTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, PublishTelephonyCampaignContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            OperationResult result = await PublishTelephonyCampaignAsync(waitUntilCompleted, agentName, campaignId, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return result;
-        }
-
-        /// <summary>
-        /// [Protocol Method] Pauses dispatch of call jobs owned by a published campaign.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult PauseTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.PauseTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreatePauseTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Pauses dispatch of call jobs owned by a published campaign.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> PauseTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.PauseTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreatePauseTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
-                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Pauses dispatch of call jobs owned by a published campaign. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyCampaign> PauseTelephonyCampaign(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = PauseTelephonyCampaign(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
-        }
-
-        /// <summary> Pauses dispatch of call jobs owned by a published campaign. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyCampaign>> PauseTelephonyCampaignAsync(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await PauseTelephonyCampaignAsync(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Resumes dispatch of call jobs owned by a paused campaign.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult ResumeTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ResumeTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateResumeTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Resumes dispatch of call jobs owned by a paused campaign.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> ResumeTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ResumeTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateResumeTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
-                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Resumes dispatch of call jobs owned by a paused campaign. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyCampaign> ResumeTelephonyCampaign(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = ResumeTelephonyCampaign(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
-        }
-
-        /// <summary> Resumes dispatch of call jobs owned by a paused campaign. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyCampaign>> ResumeTelephonyCampaignAsync(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await ResumeTelephonyCampaignAsync(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Cancels a campaign and prevents any further call-job dispatch.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult CancelTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CancelTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateCancelTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Cancels a campaign and prevents any further call-job dispatch.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CancelTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CancelTelephonyCampaign");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateCancelTelephonyCampaignRequest(agentName, campaignId, foundryFeatures, options);
-                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Cancels a campaign and prevents any further call-job dispatch. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyCampaign> CancelTelephonyCampaign(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = CancelTelephonyCampaign(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
-        }
-
-        /// <summary> Cancels a campaign and prevents any further call-job dispatch. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="campaignId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyCampaign>> CancelTelephonyCampaignAsync(string agentName, string campaignId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await CancelTelephonyCampaignAsync(agentName, campaignId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((TelephonyCampaign)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves an asynchronous outbound campaign operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="operationId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult GetTelephonyOperation(string agentName, string operationId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyOperation");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateGetTelephonyOperationRequest(agentName, operationId, foundryFeatures, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Retrieves an asynchronous outbound campaign operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName"></param>
-        /// <param name="operationId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> GetTelephonyOperationAsync(string agentName, string operationId, string foundryFeatures, RequestOptions options)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyOperation");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateGetTelephonyOperationRequest(agentName, operationId, foundryFeatures, options);
-                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Retrieves an asynchronous outbound campaign operation. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="operationId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyOperation> GetTelephonyOperation(string agentName, string operationId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = GetTelephonyOperation(agentName, operationId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((TelephonyOperation)result, result.GetRawResponse());
-        }
-
-        /// <summary> Retrieves an asynchronous outbound campaign operation. </summary>
-        /// <param name="agentName"></param>
-        /// <param name="operationId"></param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyOperation>> GetTelephonyOperationAsync(string agentName, string operationId, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
-        {
-            ClientResult result = await GetTelephonyOperationAsync(agentName, operationId, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((TelephonyOperation)result, result.GetRawResponse());
         }
     }
 }

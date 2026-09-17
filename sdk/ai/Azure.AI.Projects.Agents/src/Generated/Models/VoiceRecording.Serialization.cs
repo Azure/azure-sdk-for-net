@@ -19,64 +19,64 @@ namespace Azure.AI.Projects.Agents
     /// own storage credentials. For Foundry-managed storage `blob_uri` is absent and the bytes are streamed via the
     /// `/audio/content` route instead.
     /// </summary>
-    public partial class VoiceRecordingResponse : IJsonModel<VoiceRecordingResponse>
+    public partial class VoiceRecording : IJsonModel<VoiceRecording>
     {
-        /// <summary> Initializes a new instance of <see cref="VoiceRecordingResponse"/> for deserialization. </summary>
-        internal VoiceRecordingResponse()
+        /// <summary> Initializes a new instance of <see cref="VoiceRecording"/> for deserialization. </summary>
+        internal VoiceRecording()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceRecordingResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual VoiceRecording PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecordingResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecording>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeVoiceRecordingResponse(document.RootElement, options);
+                        return DeserializeVoiceRecording(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VoiceRecordingResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceRecording)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecordingResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecording>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VoiceRecordingResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VoiceRecording)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VoiceRecordingResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<VoiceRecording>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceRecordingResponse IPersistableModel<VoiceRecordingResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        VoiceRecording IPersistableModel<VoiceRecording>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VoiceRecordingResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VoiceRecording>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="VoiceRecordingResponse"/> from. </param>
-        public static explicit operator VoiceRecordingResponse(ClientResult result)
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="VoiceRecording"/> from. </param>
+        public static explicit operator VoiceRecording(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeVoiceRecordingResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeVoiceRecording(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VoiceRecordingResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VoiceRecording>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -87,10 +87,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecordingResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecording>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceRecordingResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceRecording)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("conversation_id"u8);
             writer.WriteStringValue(ConversationId);
@@ -128,24 +128,24 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VoiceRecordingResponse IJsonModel<VoiceRecordingResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        VoiceRecording IJsonModel<VoiceRecording>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual VoiceRecordingResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual VoiceRecording JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecordingResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VoiceRecording>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VoiceRecordingResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VoiceRecording)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVoiceRecordingResponse(document.RootElement, options);
+            return DeserializeVoiceRecording(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static VoiceRecordingResponse DeserializeVoiceRecordingResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static VoiceRecording DeserializeVoiceRecording(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -205,7 +205,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VoiceRecordingResponse(
+            return new VoiceRecording(
                 conversationId,
                 format,
                 sampleRate,
