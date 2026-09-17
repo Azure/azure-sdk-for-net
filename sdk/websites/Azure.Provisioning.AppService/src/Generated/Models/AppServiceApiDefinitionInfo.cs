@@ -10,7 +10,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService
 {
-    /// <summary> Information about the formal API definition for the app. </summary>
     internal partial class AppServiceApiDefinitionInfo : ProvisionableConstruct
     {
         private BicepValue<string> _apiDefinitionUriStringValue;

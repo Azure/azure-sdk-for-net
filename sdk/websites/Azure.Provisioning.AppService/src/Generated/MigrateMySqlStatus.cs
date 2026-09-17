@@ -99,7 +99,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.MigrationOperationStatus;
+                return Properties is null ? default : Properties.MigrationOperationStatus;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.OperationId;
+                return Properties is null ? default : Properties.OperationId;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IsLocalMySqlEnabled;
+                return Properties is null ? default : Properties.IsLocalMySqlEnabled;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MigrateMySqlStatusProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSiteSlot>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSiteSlot>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

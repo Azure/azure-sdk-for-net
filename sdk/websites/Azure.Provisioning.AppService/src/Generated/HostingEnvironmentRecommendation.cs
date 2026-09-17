@@ -105,7 +105,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.RecommendationName;
+                return Properties is null ? default : Properties.RecommendationName;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Message;
+                return Properties is null ? default : Properties.Message;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.RecommendationId;
+                return Properties is null ? default : Properties.RecommendationId;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ActionName;
+                return Properties is null ? default : Properties.ActionName;
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Level;
+                return Properties is null ? default : Properties.Level;
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Channels;
+                return Properties is null ? default : Properties.Channels;
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.CategoryTags;
+                return Properties is null ? default : Properties.CategoryTags;
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IsDynamic;
+                return Properties is null ? default : Properties.IsDynamic;
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ExtensionName;
+                return Properties is null ? default : Properties.ExtensionName;
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.BladeName;
+                return Properties is null ? default : Properties.BladeName;
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ForwardLink;
+                return Properties is null ? default : Properties.ForwardLink;
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RecommendationRuleProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<AppServiceEnvironment>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<AppServiceEnvironment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

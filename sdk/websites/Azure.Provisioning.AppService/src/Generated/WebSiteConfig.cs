@@ -275,12 +275,12 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the RequestTracingExpirationOn. </summary>
-        public BicepValue<DateTimeOffset> RequestTracingExpirationOn
+        /// <summary> Gets or sets the RequestTracingExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> RequestTracingExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.RequestTracingExpirationOn;
+                return Properties is null ? default : Properties.RequestTracingExpiresOn;
             }
             set
             {
@@ -288,7 +288,7 @@ namespace Azure.Provisioning.AppService
                 {
                     Properties = new SiteConfigProperties();
                 }
-                Properties.RequestTracingExpirationOn = value;
+                Properties.RequestTracingExpiresOn = value;
             }
         }
 
@@ -1347,7 +1347,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SiteConfigProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSite>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSite>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

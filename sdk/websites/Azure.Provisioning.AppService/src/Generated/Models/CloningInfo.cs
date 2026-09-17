@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -15,12 +14,12 @@ namespace Azure.Provisioning.AppService
     /// <summary> Information needed for cloning operation. </summary>
     public partial class CloningInfo : ProvisionableConstruct
     {
-        private BicepValue<Guid> _correlationId;
+        private BicepValue<string> _correlationId;
         private BicepValue<bool> _canOverwrite;
         private BicepValue<bool> _cloneCustomHostNames;
         private BicepValue<bool> _cloneSourceControl;
         private BicepValue<ResourceIdentifier> _sourceWebAppId;
-        private BicepValue<AzureLocation> _sourceWebAppLocation;
+        private BicepValue<string> _sourceWebAppLocation;
         private BicepValue<string> _hostingEnvironment;
         private BicepDictionary<string> _appSettingsOverrides;
         private BicepValue<bool> _configureLoadBalancing;
@@ -33,7 +32,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the CorrelationId. </summary>
-        public BicepValue<Guid> CorrelationId
+        public BicepValue<string> CorrelationId
         {
             get
             {
@@ -108,7 +107,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the SourceWebAppLocation. </summary>
-        public BicepValue<AzureLocation> SourceWebAppLocation
+        public BicepValue<string> SourceWebAppLocation
         {
             get
             {
@@ -201,12 +200,12 @@ namespace Azure.Provisioning.AppService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _correlationId = DefineProperty<Guid>(nameof(CorrelationId), new string[] { "correlationId" });
+            _correlationId = DefineProperty<string>(nameof(CorrelationId), new string[] { "correlationId" });
             _canOverwrite = DefineProperty<bool>(nameof(CanOverwrite), new string[] { "overwrite" });
             _cloneCustomHostNames = DefineProperty<bool>(nameof(CloneCustomHostNames), new string[] { "cloneCustomHostNames" });
             _cloneSourceControl = DefineProperty<bool>(nameof(CloneSourceControl), new string[] { "cloneSourceControl" });
             _sourceWebAppId = DefineProperty<ResourceIdentifier>(nameof(SourceWebAppId), new string[] { "sourceWebAppId" }, isRequired: true);
-            _sourceWebAppLocation = DefineProperty<AzureLocation>(nameof(SourceWebAppLocation), new string[] { "sourceWebAppLocation" });
+            _sourceWebAppLocation = DefineProperty<string>(nameof(SourceWebAppLocation), new string[] { "sourceWebAppLocation" });
             _hostingEnvironment = DefineProperty<string>(nameof(HostingEnvironment), new string[] { "hostingEnvironment" });
             _appSettingsOverrides = DefineDictionaryProperty<string>(nameof(AppSettingsOverrides), new string[] { "appSettingsOverrides" });
             _configureLoadBalancing = DefineProperty<bool>(nameof(ConfigureLoadBalancing), new string[] { "configureLoadBalancing" });

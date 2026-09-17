@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.AppService
     /// <summary> Static Site Linked Backend ARM resource. </summary>
     public partial class StaticSiteLinkedBackendInfo : ProvisionableConstruct
     {
-        private BicepValue<string> _backendResourceId;
+        private BicepValue<ResourceIdentifier> _backendResourceId;
         private BicepValue<string> _region;
         private BicepValue<DateTimeOffset> _createdOn;
         private BicepValue<string> _provisioningState;
@@ -25,7 +26,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets the BackendResourceId. </summary>
-        public BicepValue<string> BackendResourceId
+        public BicepValue<ResourceIdentifier> BackendResourceId
         {
             get
             {
@@ -68,7 +69,7 @@ namespace Azure.Provisioning.AppService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _backendResourceId = DefineProperty<string>(nameof(BackendResourceId), new string[] { "backendResourceId" });
+            _backendResourceId = DefineProperty<ResourceIdentifier>(nameof(BackendResourceId), new string[] { "backendResourceId" });
             _region = DefineProperty<string>(nameof(Region), new string[] { "region" });
             _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdOn" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);

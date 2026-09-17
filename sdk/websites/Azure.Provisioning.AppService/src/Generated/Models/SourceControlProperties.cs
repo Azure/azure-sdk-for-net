@@ -17,7 +17,7 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _token;
         private BicepValue<string> _tokenSecret;
         private BicepValue<string> _refreshToken;
-        private BicepValue<DateTimeOffset> _expireOn;
+        private BicepValue<DateTimeOffset> _expiresOn;
 
         /// <summary> Creates a new SourceControlProperties. </summary>
         public SourceControlProperties()
@@ -69,18 +69,18 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets or sets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expireOn;
+                return _expiresOn;
             }
             set
             {
                 Initialize();
-                _expireOn.Assign(value);
+                _expiresOn.Assign(value);
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.Provisioning.AppService
             _token = DefineProperty<string>(nameof(Token), new string[] { "token" });
             _tokenSecret = DefineProperty<string>(nameof(TokenSecret), new string[] { "tokenSecret" });
             _refreshToken = DefineProperty<string>(nameof(RefreshToken), new string[] { "refreshToken" });
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expirationTime" }, format: "O");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationTime" }, format: "O");
             DefineAdditionalProperties();
         }
 

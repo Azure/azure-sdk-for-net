@@ -101,12 +101,22 @@ namespace Azure.Provisioning.AppService
             }
         }
 
+        /// <summary> Parent process. </summary>
+        [CodeGenMember("Parent")]
+        public BicepValue<string> ParentProcess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ParentProcess;
+            }
+        }
+
         /// <summary> Gets the Identifier. </summary>
         public BicepValue<int> Identifier
         {
             get
             {
-                return Properties.Identifier;
+                return Properties is null ? default : Properties.Identifier;
             }
         }
 
@@ -115,7 +125,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.DeploymentName;
+                return Properties is null ? default : Properties.DeploymentName;
             }
         }
 
@@ -124,7 +134,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Href;
+                return Properties is null ? default : Properties.Href;
             }
         }
 
@@ -133,7 +143,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Minidump;
+                return Properties is null ? default : Properties.Minidump;
             }
         }
 
@@ -142,7 +152,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IsProfileRunning;
+                return Properties is null ? default : Properties.IsProfileRunning;
             }
         }
 
@@ -151,7 +161,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IsIisProfileRunning;
+                return Properties is null ? default : Properties.IsIisProfileRunning;
             }
         }
 
@@ -160,7 +170,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IisProfileTimeoutInSeconds;
+                return Properties is null ? default : Properties.IisProfileTimeoutInSeconds;
             }
         }
 
@@ -169,7 +179,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Children;
+                return Properties is null ? default : Properties.Children;
             }
         }
 
@@ -178,7 +188,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ProcessThreads;
+                return Properties is null ? default : Properties.ProcessThreads;
             }
         }
 
@@ -187,7 +197,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.OpenFileHandles;
+                return Properties is null ? default : Properties.OpenFileHandles;
             }
         }
 
@@ -196,7 +206,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Modules;
+                return Properties is null ? default : Properties.Modules;
             }
         }
 
@@ -205,7 +215,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.FileName;
+                return Properties is null ? default : Properties.FileName;
             }
         }
 
@@ -214,7 +224,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.CommandLine;
+                return Properties is null ? default : Properties.CommandLine;
             }
         }
 
@@ -223,7 +233,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.UserName;
+                return Properties is null ? default : Properties.UserName;
             }
         }
 
@@ -232,7 +242,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.HandleCount;
+                return Properties is null ? default : Properties.HandleCount;
             }
         }
 
@@ -241,7 +251,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ModuleCount;
+                return Properties is null ? default : Properties.ModuleCount;
             }
         }
 
@@ -250,16 +260,16 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ThreadCount;
+                return Properties is null ? default : Properties.ThreadCount;
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
@@ -268,7 +278,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.TotalCpuTime;
+                return Properties is null ? default : Properties.TotalCpuTime;
             }
         }
 
@@ -277,7 +287,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.UserCpuTime;
+                return Properties is null ? default : Properties.UserCpuTime;
             }
         }
 
@@ -286,7 +296,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.PrivilegedCpuTime;
+                return Properties is null ? default : Properties.PrivilegedCpuTime;
             }
         }
 
@@ -295,7 +305,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.WorkingSet;
+                return Properties is null ? default : Properties.WorkingSet;
             }
         }
 
@@ -304,7 +314,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.PeakWorkingSet;
+                return Properties is null ? default : Properties.PeakWorkingSet;
             }
         }
 
@@ -313,7 +323,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.PrivateMemory;
+                return Properties is null ? default : Properties.PrivateMemory;
             }
         }
 
@@ -322,7 +332,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.VirtualMemory;
+                return Properties is null ? default : Properties.VirtualMemory;
             }
         }
 
@@ -331,7 +341,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.PeakVirtualMemory;
+                return Properties is null ? default : Properties.PeakVirtualMemory;
             }
         }
 
@@ -340,7 +350,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.PagedSystemMemory;
+                return Properties is null ? default : Properties.PagedSystemMemory;
             }
         }
 
@@ -349,7 +359,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.NonPagedSystemMemory;
+                return Properties is null ? default : Properties.NonPagedSystemMemory;
             }
         }
 
@@ -358,7 +368,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.PagedMemory;
+                return Properties is null ? default : Properties.PagedMemory;
             }
         }
 
@@ -367,7 +377,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.PeakPagedMemory;
+                return Properties is null ? default : Properties.PeakPagedMemory;
             }
         }
 
@@ -376,7 +386,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.TimeStamp;
+                return Properties is null ? default : Properties.TimeStamp;
             }
         }
 
@@ -385,7 +395,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.EnvironmentVariables;
+                return Properties is null ? default : Properties.EnvironmentVariables;
             }
         }
 
@@ -394,7 +404,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IsScmSite;
+                return Properties is null ? default : Properties.IsScmSite;
             }
         }
 
@@ -403,7 +413,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IsWebjob;
+                return Properties is null ? default : Properties.IsWebjob;
             }
         }
 
@@ -412,17 +422,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Description;
-            }
-        }
-
-        /// <summary> Gets the ParentProcess. </summary>
-        [CodeGenMember("Parent")]
-        public BicepValue<string> ParentProcess
-        {
-            get
-            {
-                return Properties.ParentProcess;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -435,7 +435,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ProcessInfoProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSite>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSite>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

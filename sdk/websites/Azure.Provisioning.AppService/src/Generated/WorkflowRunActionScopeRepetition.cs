@@ -111,21 +111,21 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties.StartsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
-                return Properties.EndOn;
+                return Properties.EndsOn;
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.Provisioning.AppService
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _properties = DefineModelProperty<WorkflowRunActionRepetitionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<WorkflowRunAction>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WorkflowRunAction>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

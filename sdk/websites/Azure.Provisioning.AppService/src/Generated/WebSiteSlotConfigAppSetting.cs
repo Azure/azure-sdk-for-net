@@ -88,7 +88,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Reference;
+                return Properties is null ? default : Properties.Reference;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.VaultName;
+                return Properties is null ? default : Properties.VaultName;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.SecretName;
+                return Properties is null ? default : Properties.SecretName;
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.SecretVersion;
+                return Properties is null ? default : Properties.SecretVersion;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Identity;
+                return Properties is null ? default : Properties.Identity;
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Details;
+                return Properties is null ? default : Properties.Details;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Source;
+                return Properties is null ? default : Properties.Source;
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ActiveVersion;
+                return Properties is null ? default : Properties.ActiveVersion;
             }
         }
 

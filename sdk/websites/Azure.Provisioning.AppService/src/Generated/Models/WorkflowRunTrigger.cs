@@ -20,8 +20,8 @@ namespace Azure.Provisioning.AppService
         private BicepValue<BinaryData> _outputs;
         private WebAppContentLink _outputsLink;
         private BicepValue<DateTimeOffset> _scheduledOn;
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<string> _trackingId;
         private Correlation _correlation;
         private BicepValue<string> _code;
@@ -94,23 +94,23 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Correlation.ClientTrackingId;
+                return Correlation is null ? default : Correlation.ClientTrackingId;
             }
         }
 
@@ -193,8 +193,8 @@ namespace Azure.Provisioning.AppService
             _outputs = DefineProperty<BinaryData>(nameof(Outputs), new string[] { "outputs" }, isOutput: true);
             _outputsLink = DefineModelProperty<WebAppContentLink>(nameof(OutputsLink), new string[] { "outputsLink" }, isOutput: true);
             _scheduledOn = DefineProperty<DateTimeOffset>(nameof(ScheduledOn), new string[] { "scheduledTime" }, isOutput: true, format: "O");
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true, format: "O");
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" }, isOutput: true, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, isOutput: true, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endTime" }, isOutput: true, format: "O");
             _trackingId = DefineProperty<string>(nameof(TrackingId), new string[] { "trackingId" }, isOutput: true);
             _correlation = DefineModelProperty<Correlation>(nameof(Correlation), new string[] { "correlation" });
             _code = DefineProperty<string>(nameof(Code), new string[] { "code" }, isOutput: true);

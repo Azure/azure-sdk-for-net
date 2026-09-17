@@ -30,7 +30,7 @@ namespace Azure.Provisioning.AppService
         private BicepValue<int> _handleCount;
         private BicepValue<int> _moduleCount;
         private BicepValue<int> _threadCount;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<string> _totalCpuTime;
         private BicepValue<string> _userCpuTime;
         private BicepValue<string> _privilegedCpuTime;
@@ -224,13 +224,13 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
@@ -425,7 +425,7 @@ namespace Azure.Provisioning.AppService
             _handleCount = DefineProperty<int>(nameof(HandleCount), new string[] { "handle_count" });
             _moduleCount = DefineProperty<int>(nameof(ModuleCount), new string[] { "module_count" });
             _threadCount = DefineProperty<int>(nameof(ThreadCount), new string[] { "thread_count" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "start_time" }, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "start_time" }, format: "O");
             _totalCpuTime = DefineProperty<string>(nameof(TotalCpuTime), new string[] { "total_cpu_time" });
             _userCpuTime = DefineProperty<string>(nameof(UserCpuTime), new string[] { "user_cpu_time" });
             _privilegedCpuTime = DefineProperty<string>(nameof(PrivilegedCpuTime), new string[] { "privileged_cpu_time" });

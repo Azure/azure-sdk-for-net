@@ -99,7 +99,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Current;
+                return Properties is null ? default : Properties.Current;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Maximum;
+                return Properties is null ? default : Properties.Maximum;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<HybridConnectionLimitProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<AppServicePlan>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<AppServicePlan>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

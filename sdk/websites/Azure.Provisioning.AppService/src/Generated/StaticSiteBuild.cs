@@ -106,7 +106,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.BuildId;
+                return Properties is null ? default : Properties.BuildId;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.SourceBranch;
+                return Properties is null ? default : Properties.SourceBranch;
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.PullRequestTitle;
+                return Properties is null ? default : Properties.PullRequestTitle;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Hostname;
+                return Properties is null ? default : Properties.Hostname;
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.LastUpdatedOn;
+                return Properties is null ? default : Properties.LastUpdatedOn;
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.UserProvidedFunctionApps;
+                return Properties is null ? default : Properties.UserProvidedFunctionApps;
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.LinkedBackends;
+                return Properties is null ? default : Properties.LinkedBackends;
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.DatabaseConnections;
+                return Properties is null ? default : Properties.DatabaseConnections;
             }
         }
 
@@ -200,7 +200,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<StaticSiteBuildARMResourceProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<StaticSite>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<StaticSite>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

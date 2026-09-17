@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -20,7 +19,7 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _family;
         private BicepValue<int> _capacity;
         private AppServiceSkuCapacity _skuCapacity;
-        private BicepList<AzureLocation> _locations;
+        private BicepList<string> _locations;
         private BicepList<AppServiceSkuCapability> _capabilities;
 
         /// <summary> Creates a new AppServiceSkuDescription. </summary>
@@ -119,7 +118,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the Locations. </summary>
-        public BicepList<AzureLocation> Locations
+        public BicepList<string> Locations
         {
             get
             {
@@ -158,7 +157,7 @@ namespace Azure.Provisioning.AppService
             _family = DefineProperty<string>(nameof(Family), new string[] { "family" });
             _capacity = DefineProperty<int>(nameof(Capacity), new string[] { "capacity" });
             _skuCapacity = DefineModelProperty<AppServiceSkuCapacity>(nameof(SkuCapacity), new string[] { "skuCapacity" });
-            _locations = DefineListProperty<AzureLocation>(nameof(Locations), new string[] { "locations" });
+            _locations = DefineListProperty<string>(nameof(Locations), new string[] { "locations" });
             _capabilities = DefineListProperty<AppServiceSkuCapability>(nameof(Capabilities), new string[] { "capabilities" });
             DefineAdditionalProperties();
         }

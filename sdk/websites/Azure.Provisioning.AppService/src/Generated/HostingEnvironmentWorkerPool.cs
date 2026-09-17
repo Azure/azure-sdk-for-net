@@ -216,7 +216,7 @@ namespace Azure.Provisioning.AppService
             _properties = DefineModelProperty<WorkerPool>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<AppServiceSkuDescription>(nameof(Sku), new string[] { "sku" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<AppServiceEnvironment>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<AppServiceEnvironment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

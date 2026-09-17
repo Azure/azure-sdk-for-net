@@ -26,8 +26,8 @@ namespace Azure.Provisioning.AppService
         private BicepValue<int> _maximumElasticWorkerCount;
         private BicepValue<int> _numberOfSites;
         private BicepValue<bool> _isSpot;
-        private BicepValue<DateTimeOffset> _spotExpireOn;
-        private BicepValue<DateTimeOffset> _freeOfferExpireOn;
+        private BicepValue<DateTimeOffset> _spotExpiresOn;
+        private BicepValue<DateTimeOffset> _freeOfferExpiresOn;
         private BicepValue<string> _resourceGroup;
         private BicepValue<bool> _isReserved;
         private BicepValue<bool> _isXenon;
@@ -201,33 +201,33 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the SpotExpireOn. </summary>
-        public BicepValue<DateTimeOffset> SpotExpireOn
+        /// <summary> Gets or sets the SpotExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> SpotExpiresOn
         {
             get
             {
                 Initialize();
-                return _spotExpireOn;
+                return _spotExpiresOn;
             }
             set
             {
                 Initialize();
-                _spotExpireOn.Assign(value);
+                _spotExpiresOn.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the FreeOfferExpireOn. </summary>
-        public BicepValue<DateTimeOffset> FreeOfferExpireOn
+        /// <summary> Gets or sets the FreeOfferExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> FreeOfferExpiresOn
         {
             get
             {
                 Initialize();
-                return _freeOfferExpireOn;
+                return _freeOfferExpiresOn;
             }
             set
             {
                 Initialize();
-                _freeOfferExpireOn.Assign(value);
+                _freeOfferExpiresOn.Assign(value);
             }
         }
 
@@ -509,8 +509,8 @@ namespace Azure.Provisioning.AppService
             _maximumElasticWorkerCount = DefineProperty<int>(nameof(MaximumElasticWorkerCount), new string[] { "maximumElasticWorkerCount" });
             _numberOfSites = DefineProperty<int>(nameof(NumberOfSites), new string[] { "numberOfSites" }, isOutput: true);
             _isSpot = DefineProperty<bool>(nameof(IsSpot), new string[] { "isSpot" });
-            _spotExpireOn = DefineProperty<DateTimeOffset>(nameof(SpotExpireOn), new string[] { "spotExpirationTime" }, format: "O");
-            _freeOfferExpireOn = DefineProperty<DateTimeOffset>(nameof(FreeOfferExpireOn), new string[] { "freeOfferExpirationTime" }, format: "O");
+            _spotExpiresOn = DefineProperty<DateTimeOffset>(nameof(SpotExpiresOn), new string[] { "spotExpirationTime" }, format: "O");
+            _freeOfferExpiresOn = DefineProperty<DateTimeOffset>(nameof(FreeOfferExpiresOn), new string[] { "freeOfferExpirationTime" }, format: "O");
             _resourceGroup = DefineProperty<string>(nameof(ResourceGroup), new string[] { "resourceGroup" }, isOutput: true);
             _isReserved = DefineProperty<bool>(nameof(IsReserved), new string[] { "reserved" });
             _isXenon = DefineProperty<bool>(nameof(IsXenon), new string[] { "isXenon" });

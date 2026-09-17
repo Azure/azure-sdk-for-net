@@ -121,7 +121,7 @@ namespace Azure.Provisioning.AppService
             _properties = DefineModelProperty<WorkflowEnvelopeProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<WebSite>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSite>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

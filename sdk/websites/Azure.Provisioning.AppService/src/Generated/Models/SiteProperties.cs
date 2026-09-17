@@ -12,7 +12,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService
 {
-    /// <summary> Site resource specific properties. </summary>
     internal partial class SiteProperties : ProvisionableConstruct
     {
         private BicepValue<string> _state;

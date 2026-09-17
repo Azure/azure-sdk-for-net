@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,7 +14,6 @@ namespace Azure.Provisioning.AppService
     public partial class FunctionAppStorage : ProvisionableConstruct
     {
         private BicepValue<FunctionAppStorageType> _storageType;
-        private BicepValue<Uri> _azureStorageUriStringValue;
         private FunctionAppStorageAuthentication _authentication;
 
         /// <summary> Creates a new FunctionAppStorage. </summary>
@@ -35,21 +33,6 @@ namespace Azure.Provisioning.AppService
             {
                 Initialize();
                 _storageType.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the AzureStorageUriStringValue. </summary>
-        public BicepValue<Uri> AzureStorageUriStringValue
-        {
-            get
-            {
-                Initialize();
-                return _azureStorageUriStringValue;
-            }
-            set
-            {
-                Initialize();
-                _azureStorageUriStringValue.Assign(value);
             }
         }
 
@@ -73,7 +56,6 @@ namespace Azure.Provisioning.AppService
         {
             base.DefineProvisionableProperties();
             _storageType = DefineProperty<FunctionAppStorageType>(nameof(StorageType), new string[] { "type" });
-            _azureStorageUriStringValue = DefineProperty<Uri>(nameof(AzureStorageUriStringValue), new string[] { "value" });
             _authentication = DefineModelProperty<FunctionAppStorageAuthentication>(nameof(Authentication), new string[] { "authentication" });
             DefineAdditionalProperties();
         }

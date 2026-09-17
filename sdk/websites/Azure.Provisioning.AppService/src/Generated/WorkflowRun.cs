@@ -73,30 +73,30 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the WaitEndOn. </summary>
-        public BicepValue<DateTimeOffset> WaitEndOn
+        /// <summary> Gets the WaitEndsOn. </summary>
+        public BicepValue<DateTimeOffset> WaitEndsOn
         {
             get
             {
-                return Properties.WaitEndOn;
+                return Properties is null ? default : Properties.WaitEndsOn;
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Code;
+                return Properties is null ? default : Properties.Code;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Error;
+                return Properties is null ? default : Properties.Error;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.CorrelationId;
+                return Properties is null ? default : Properties.CorrelationId;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Workflow;
+                return Properties is null ? default : Properties.Workflow;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Trigger;
+                return Properties is null ? default : Properties.Trigger;
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Outputs;
+                return Properties is null ? default : Properties.Outputs;
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Response;
+                return Properties is null ? default : Properties.Response;
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.CorrelationClientTrackingId;
+                return Properties is null ? default : Properties.CorrelationClientTrackingId;
             }
         }
 

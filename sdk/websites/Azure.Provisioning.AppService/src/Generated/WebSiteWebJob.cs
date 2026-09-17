@@ -105,7 +105,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.RunCommand;
+                return Properties is null ? default : Properties.RunCommand;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Uri;
+                return Properties is null ? default : Properties.Uri;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ExtraInfoUri;
+                return Properties is null ? default : Properties.ExtraInfoUri;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.WebJobType;
+                return Properties is null ? default : Properties.WebJobType;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Error;
+                return Properties is null ? default : Properties.Error;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IsUsingSdk;
+                return Properties is null ? default : Properties.IsUsingSdk;
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Settings;
+                return Properties is null ? default : Properties.Settings;
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<WebJobProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSite>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSite>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

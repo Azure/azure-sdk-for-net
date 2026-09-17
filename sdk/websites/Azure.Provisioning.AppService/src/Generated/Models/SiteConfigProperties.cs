@@ -24,7 +24,7 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _linuxFxVersion;
         private BicepValue<string> _windowsFxVersion;
         private BicepValue<bool> _isRequestTracingEnabled;
-        private BicepValue<DateTimeOffset> _requestTracingExpirationOn;
+        private BicepValue<DateTimeOffset> _requestTracingExpiresOn;
         private BicepValue<bool> _isRemoteDebuggingEnabled;
         private BicepValue<string> _remoteDebuggingVersion;
         private BicepValue<bool> _isHttpLoggingEnabled;
@@ -243,18 +243,18 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the RequestTracingExpirationOn. </summary>
-        public BicepValue<DateTimeOffset> RequestTracingExpirationOn
+        /// <summary> Gets or sets the RequestTracingExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> RequestTracingExpiresOn
         {
             get
             {
                 Initialize();
-                return _requestTracingExpirationOn;
+                return _requestTracingExpiresOn;
             }
             set
             {
                 Initialize();
-                _requestTracingExpirationOn.Assign(value);
+                _requestTracingExpiresOn.Assign(value);
             }
         }
 
@@ -1248,7 +1248,7 @@ namespace Azure.Provisioning.AppService
             _linuxFxVersion = DefineProperty<string>(nameof(LinuxFxVersion), new string[] { "linuxFxVersion" });
             _windowsFxVersion = DefineProperty<string>(nameof(WindowsFxVersion), new string[] { "windowsFxVersion" });
             _isRequestTracingEnabled = DefineProperty<bool>(nameof(IsRequestTracingEnabled), new string[] { "requestTracingEnabled" });
-            _requestTracingExpirationOn = DefineProperty<DateTimeOffset>(nameof(RequestTracingExpirationOn), new string[] { "requestTracingExpirationTime" }, format: "O");
+            _requestTracingExpiresOn = DefineProperty<DateTimeOffset>(nameof(RequestTracingExpiresOn), new string[] { "requestTracingExpirationTime" }, format: "O");
             _isRemoteDebuggingEnabled = DefineProperty<bool>(nameof(IsRemoteDebuggingEnabled), new string[] { "remoteDebuggingEnabled" });
             _remoteDebuggingVersion = DefineProperty<string>(nameof(RemoteDebuggingVersion), new string[] { "remoteDebuggingVersion" });
             _isHttpLoggingEnabled = DefineProperty<bool>(nameof(IsHttpLoggingEnabled), new string[] { "httpLoggingEnabled" });

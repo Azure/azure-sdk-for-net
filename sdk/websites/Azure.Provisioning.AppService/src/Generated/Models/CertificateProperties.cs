@@ -12,7 +12,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService
 {
-    /// <summary> Certificate resource specific properties. </summary>
     internal partial class CertificateProperties : ProvisionableConstruct
     {
         private BicepValue<string> _password;
@@ -24,7 +23,7 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _selfLink;
         private BicepValue<string> _issuer;
         private BicepValue<DateTimeOffset> _issueOn;
-        private BicepValue<DateTimeOffset> _expireOn;
+        private BicepValue<DateTimeOffset> _expiresOn;
         private BicepValue<string> _thumbprintString;
         private BicepValue<bool> _isValid;
         private BicepValue<BinaryData> _cerBlob;
@@ -147,13 +146,13 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expireOn;
+                return _expiresOn;
             }
         }
 
@@ -305,7 +304,7 @@ namespace Azure.Provisioning.AppService
             _selfLink = DefineProperty<string>(nameof(SelfLink), new string[] { "selfLink" }, isOutput: true);
             _issuer = DefineProperty<string>(nameof(Issuer), new string[] { "issuer" }, isOutput: true);
             _issueOn = DefineProperty<DateTimeOffset>(nameof(IssueOn), new string[] { "issueDate" }, isOutput: true, format: "O");
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expirationDate" }, isOutput: true, format: "O");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationDate" }, isOutput: true, format: "O");
             _thumbprintString = DefineProperty<string>(nameof(ThumbprintString), new string[] { "thumbprint" }, isOutput: true);
             _isValid = DefineProperty<bool>(nameof(IsValid), new string[] { "valid" }, isOutput: true);
             _cerBlob = DefineProperty<BinaryData>(nameof(CerBlob), new string[] { "cerBlob" }, isOutput: true, format: "base64");

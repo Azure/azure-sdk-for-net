@@ -89,21 +89,21 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ScheduledOn;
+                return Properties is null ? default : Properties.ScheduledOn;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Code;
+                return Properties is null ? default : Properties.Code;
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Error;
+                return Properties is null ? default : Properties.Error;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.TrackingId;
+                return Properties is null ? default : Properties.TrackingId;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.InputsLink;
+                return Properties is null ? default : Properties.InputsLink;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.OutputsLink;
+                return Properties is null ? default : Properties.OutputsLink;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IsFired;
+                return Properties is null ? default : Properties.IsFired;
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Run;
+                return Properties is null ? default : Properties.Run;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.CorrelationClientTrackingId;
+                return Properties is null ? default : Properties.CorrelationClientTrackingId;
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.Provisioning.AppService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<WorkflowTriggerHistoryProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<WorkflowTrigger>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WorkflowTrigger>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

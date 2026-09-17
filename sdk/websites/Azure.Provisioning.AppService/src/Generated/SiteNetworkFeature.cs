@@ -104,7 +104,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.VirtualNetworkName;
+                return Properties is null ? default : Properties.VirtualNetworkName;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.VirtualNetworkConnection;
+                return Properties is null ? default : Properties.VirtualNetworkConnection;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.HybridConnections;
+                return Properties is null ? default : Properties.HybridConnections;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.HybridConnectionsV2;
+                return Properties is null ? default : Properties.HybridConnectionsV2;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<NetworkFeatureProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSite>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSite>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

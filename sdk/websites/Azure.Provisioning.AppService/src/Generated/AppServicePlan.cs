@@ -357,12 +357,12 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the SpotExpireOn. </summary>
-        public BicepValue<DateTimeOffset> SpotExpireOn
+        /// <summary> Gets or sets the SpotExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> SpotExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.SpotExpireOn;
+                return Properties is null ? default : Properties.SpotExpiresOn;
             }
             set
             {
@@ -370,16 +370,16 @@ namespace Azure.Provisioning.AppService
                 {
                     Properties = new AppServicePlanProperties();
                 }
-                Properties.SpotExpireOn = value;
+                Properties.SpotExpiresOn = value;
             }
         }
 
-        /// <summary> Gets or sets the FreeOfferExpireOn. </summary>
-        public BicepValue<DateTimeOffset> FreeOfferExpireOn
+        /// <summary> Gets or sets the FreeOfferExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> FreeOfferExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.FreeOfferExpireOn;
+                return Properties is null ? default : Properties.FreeOfferExpiresOn;
             }
             set
             {
@@ -387,7 +387,7 @@ namespace Azure.Provisioning.AppService
                 {
                     Properties = new AppServicePlanProperties();
                 }
-                Properties.FreeOfferExpireOn = value;
+                Properties.FreeOfferExpiresOn = value;
             }
         }
 

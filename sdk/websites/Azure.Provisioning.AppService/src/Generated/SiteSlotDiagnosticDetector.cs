@@ -104,7 +104,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Rank;
+                return Properties is null ? default : Properties.Rank;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IsEnabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DetectorDefinition>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<SiteSlotDiagnostic>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SiteSlotDiagnostic>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

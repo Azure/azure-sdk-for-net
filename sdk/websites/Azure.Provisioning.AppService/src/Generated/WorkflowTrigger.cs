@@ -78,7 +78,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ChangedOn;
+                return Properties is null ? default : Properties.ChangedOn;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.State;
+                return Properties is null ? default : Properties.State;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.LastExecutionOn;
+                return Properties is null ? default : Properties.LastExecutionOn;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.NextExecutionOn;
+                return Properties is null ? default : Properties.NextExecutionOn;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Recurrence;
+                return Properties is null ? default : Properties.Recurrence;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Workflow;
+                return Properties is null ? default : Properties.Workflow;
             }
         }
 

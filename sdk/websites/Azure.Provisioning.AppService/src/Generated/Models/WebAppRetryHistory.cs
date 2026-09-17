@@ -14,8 +14,8 @@ namespace Azure.Provisioning.AppService
     /// <summary> The retry history. </summary>
     public partial class WebAppRetryHistory : ProvisionableConstruct
     {
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<string> _code;
         private BicepValue<string> _clientRequestId;
         private BicepValue<string> _serviceRequestId;
@@ -26,23 +26,23 @@ namespace Azure.Provisioning.AppService
         {
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Error.ErrorInfo;
+                return Error is null ? default : Error.ErrorInfo;
             }
         }
 
@@ -99,8 +99,8 @@ namespace Azure.Provisioning.AppService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" }, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endTime" }, format: "O");
             _code = DefineProperty<string>(nameof(Code), new string[] { "code" });
             _clientRequestId = DefineProperty<string>(nameof(ClientRequestId), new string[] { "clientRequestId" });
             _serviceRequestId = DefineProperty<string>(nameof(ServiceRequestId), new string[] { "serviceRequestId" });

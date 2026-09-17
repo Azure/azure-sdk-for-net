@@ -100,7 +100,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ChangedOn;
+                return Properties is null ? default : Properties.ChangedOn;
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.State;
+                return Properties is null ? default : Properties.State;
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Version;
+                return Properties is null ? default : Properties.Version;
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.AccessEndpoint;
+                return Properties is null ? default : Properties.AccessEndpoint;
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.EndpointsConfiguration;
+                return Properties is null ? default : Properties.EndpointsConfiguration;
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.AccessControl;
+                return Properties is null ? default : Properties.AccessControl;
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Sku;
+                return Properties is null ? default : Properties.Sku;
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IntegrationAccount;
+                return Properties is null ? default : Properties.IntegrationAccount;
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Definition;
+                return Properties is null ? default : Properties.Definition;
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Parameters;
+                return Properties is null ? default : Properties.Parameters;
             }
         }
 

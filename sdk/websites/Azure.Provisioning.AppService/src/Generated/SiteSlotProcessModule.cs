@@ -104,7 +104,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.BaseAddress;
+                return Properties is null ? default : Properties.BaseAddress;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.FileName;
+                return Properties is null ? default : Properties.FileName;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Href;
+                return Properties is null ? default : Properties.Href;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.FilePath;
+                return Properties is null ? default : Properties.FilePath;
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ModuleMemorySize;
+                return Properties is null ? default : Properties.ModuleMemorySize;
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.FileVersion;
+                return Properties is null ? default : Properties.FileVersion;
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.FileDescription;
+                return Properties is null ? default : Properties.FileDescription;
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Product;
+                return Properties is null ? default : Properties.Product;
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ProductVersion;
+                return Properties is null ? default : Properties.ProductVersion;
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IsDebug;
+                return Properties is null ? default : Properties.IsDebug;
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Language;
+                return Properties is null ? default : Properties.Language;
             }
         }
 
@@ -207,7 +207,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ProcessModuleInfoProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<SiteSlotProcess>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SiteSlotProcess>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

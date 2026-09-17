@@ -1062,7 +1062,7 @@ namespace Azure.Provisioning.AppService
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _extendedLocation = DefineModelProperty<ExtendedAzureLocation>(nameof(ExtendedLocation), new string[] { "extendedLocation" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSite>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSite>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

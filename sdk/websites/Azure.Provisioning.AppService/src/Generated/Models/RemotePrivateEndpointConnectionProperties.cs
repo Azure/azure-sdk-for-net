@@ -12,7 +12,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService
 {
-    /// <summary> RemotePrivateEndpointConnection resource specific properties. </summary>
     internal partial class RemotePrivateEndpointConnectionProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningState;
@@ -70,7 +69,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return PrivateEndpoint.Id;
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             }
         }
 

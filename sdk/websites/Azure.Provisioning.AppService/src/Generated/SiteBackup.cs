@@ -105,7 +105,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.BackupId;
+                return Properties is null ? default : Properties.BackupId;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.StorageAccountUri;
+                return Properties is null ? default : Properties.StorageAccountUri;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.BlobName;
+                return Properties is null ? default : Properties.BlobName;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.BackupName;
+                return Properties is null ? default : Properties.BackupName;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.SizeInBytes;
+                return Properties is null ? default : Properties.SizeInBytes;
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Log;
+                return Properties is null ? default : Properties.Log;
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Databases;
+                return Properties is null ? default : Properties.Databases;
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.IsScheduled;
+                return Properties is null ? default : Properties.IsScheduled;
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.LastRestoreOn;
+                return Properties is null ? default : Properties.LastRestoreOn;
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.FinishedOn;
+                return Properties is null ? default : Properties.FinishedOn;
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.CorrelationId;
+                return Properties is null ? default : Properties.CorrelationId;
             }
         }
 
@@ -222,7 +222,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.WebsiteSizeInBytes;
+                return Properties is null ? default : Properties.WebsiteSizeInBytes;
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<BackupItemProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSite>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSite>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

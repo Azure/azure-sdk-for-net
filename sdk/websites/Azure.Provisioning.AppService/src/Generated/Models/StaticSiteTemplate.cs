@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +13,7 @@ namespace Azure.Provisioning.AppService
     /// <summary> Template Options for the static site. </summary>
     public partial class StaticSiteTemplate : ProvisionableConstruct
     {
-        private BicepValue<Uri> _templateRepositoryUri;
+        private BicepValue<string> _templateRepositoryUri;
         private BicepValue<string> _owner;
         private BicepValue<string> _repositoryName;
         private BicepValue<string> _description;
@@ -26,7 +25,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the TemplateRepositoryUri. </summary>
-        public BicepValue<Uri> TemplateRepositoryUri
+        public BicepValue<string> TemplateRepositoryUri
         {
             get
             {
@@ -104,7 +103,7 @@ namespace Azure.Provisioning.AppService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _templateRepositoryUri = DefineProperty<Uri>(nameof(TemplateRepositoryUri), new string[] { "templateRepositoryUrl" });
+            _templateRepositoryUri = DefineProperty<string>(nameof(TemplateRepositoryUri), new string[] { "templateRepositoryUrl" });
             _owner = DefineProperty<string>(nameof(Owner), new string[] { "owner" });
             _repositoryName = DefineProperty<string>(nameof(RepositoryName), new string[] { "repositoryName" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });

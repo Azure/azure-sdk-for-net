@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +13,7 @@ namespace Azure.Provisioning.AppService
     /// <summary> Http logs to azure blob storage configuration. </summary>
     public partial class AppServiceBlobStorageHttpLogsConfig : ProvisionableConstruct
     {
-        private BicepValue<Uri> _sasUri;
+        private BicepValue<string> _sasUri;
         private BicepValue<int> _retentionInDays;
         private BicepValue<bool> _isEnabled;
 
@@ -24,7 +23,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the SasUri. </summary>
-        public BicepValue<Uri> SasUri
+        public BicepValue<string> SasUri
         {
             get
             {
@@ -72,7 +71,7 @@ namespace Azure.Provisioning.AppService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _sasUri = DefineProperty<Uri>(nameof(SasUri), new string[] { "sasUrl" });
+            _sasUri = DefineProperty<string>(nameof(SasUri), new string[] { "sasUrl" });
             _retentionInDays = DefineProperty<int>(nameof(RetentionInDays), new string[] { "retentionInDays" });
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" });
             DefineAdditionalProperties();

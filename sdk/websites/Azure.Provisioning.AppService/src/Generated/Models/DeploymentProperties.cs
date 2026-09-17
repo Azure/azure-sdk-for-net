@@ -19,8 +19,8 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _author;
         private BicepValue<string> _deployer;
         private BicepValue<string> _authorEmail;
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<bool> _isActive;
         private BicepValue<string> _details;
 
@@ -104,33 +104,33 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets or sets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
             set
             {
                 Initialize();
-                _startOn.Assign(value);
+                _startsOn.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets or sets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
             set
             {
                 Initialize();
-                _endOn.Assign(value);
+                _endsOn.Assign(value);
             }
         }
 
@@ -173,8 +173,8 @@ namespace Azure.Provisioning.AppService
             _author = DefineProperty<string>(nameof(Author), new string[] { "author" });
             _deployer = DefineProperty<string>(nameof(Deployer), new string[] { "deployer" });
             _authorEmail = DefineProperty<string>(nameof(AuthorEmail), new string[] { "author_email" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "start_time" }, format: "O");
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "end_time" }, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "start_time" }, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "end_time" }, format: "O");
             _isActive = DefineProperty<bool>(nameof(IsActive), new string[] { "active" });
             _details = DefineProperty<string>(nameof(Details), new string[] { "details" });
             DefineAdditionalProperties();

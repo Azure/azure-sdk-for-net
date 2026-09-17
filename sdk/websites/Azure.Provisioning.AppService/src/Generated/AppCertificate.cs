@@ -255,8 +255,8 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
@@ -264,7 +264,7 @@ namespace Azure.Provisioning.AppService
                 {
                     Properties = new CertificateProperties();
                 }
-                return Properties.ExpireOn;
+                return Properties.ExpiresOn;
             }
         }
 

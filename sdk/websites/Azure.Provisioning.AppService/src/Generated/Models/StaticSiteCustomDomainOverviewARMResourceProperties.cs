@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService
 {
-    /// <summary> StaticSiteCustomDomainOverviewARMResource resource specific properties. </summary>
     internal partial class StaticSiteCustomDomainOverviewARMResourceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _domainName;

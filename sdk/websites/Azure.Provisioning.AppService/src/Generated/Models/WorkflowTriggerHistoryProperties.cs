@@ -14,8 +14,8 @@ namespace Azure.Provisioning.AppService
     /// <summary> The workflow trigger history properties. </summary>
     internal partial class WorkflowTriggerHistoryProperties : ProvisionableConstruct
     {
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<DateTimeOffset> _scheduledOn;
         private BicepValue<WorkflowStatus> _status;
         private BicepValue<string> _code;
@@ -32,23 +32,23 @@ namespace Azure.Provisioning.AppService
         {
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Correlation.ClientTrackingId;
+                return Correlation is null ? default : Correlation.ClientTrackingId;
             }
         }
 
@@ -165,8 +165,8 @@ namespace Azure.Provisioning.AppService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true, format: "O");
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" }, isOutput: true, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, isOutput: true, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endTime" }, isOutput: true, format: "O");
             _scheduledOn = DefineProperty<DateTimeOffset>(nameof(ScheduledOn), new string[] { "scheduledTime" }, isOutput: true, format: "O");
             _status = DefineProperty<WorkflowStatus>(nameof(Status), new string[] { "status" }, isOutput: true);
             _code = DefineProperty<string>(nameof(Code), new string[] { "code" }, isOutput: true);

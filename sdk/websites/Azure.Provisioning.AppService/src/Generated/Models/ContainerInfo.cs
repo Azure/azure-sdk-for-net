@@ -14,8 +14,8 @@ namespace Azure.Provisioning.AppService
     /// <summary> The ContainerInfo. </summary>
     public partial class ContainerInfo : ProvisionableConstruct
     {
-        private BicepValue<DateTimeOffset> _currentTimeStamp;
-        private BicepValue<DateTimeOffset> _previousTimeStamp;
+        private BicepValue<DateTimeOffset> _currentOn;
+        private BicepValue<DateTimeOffset> _previousOn;
         private ContainerCpuStatistics _currentCpuStats;
         private ContainerCpuStatistics _previousCpuStats;
         private ContainerMemoryStatistics _memoryStats;
@@ -28,23 +28,23 @@ namespace Azure.Provisioning.AppService
         {
         }
 
-        /// <summary> Gets the CurrentTimeStamp. </summary>
-        public BicepValue<DateTimeOffset> CurrentTimeStamp
+        /// <summary> Gets the CurrentOn. </summary>
+        public BicepValue<DateTimeOffset> CurrentOn
         {
             get
             {
                 Initialize();
-                return _currentTimeStamp;
+                return _currentOn;
             }
         }
 
-        /// <summary> Gets the PreviousTimeStamp. </summary>
-        public BicepValue<DateTimeOffset> PreviousTimeStamp
+        /// <summary> Gets the PreviousOn. </summary>
+        public BicepValue<DateTimeOffset> PreviousOn
         {
             get
             {
                 Initialize();
-                return _previousTimeStamp;
+                return _previousOn;
             }
         }
 
@@ -112,8 +112,8 @@ namespace Azure.Provisioning.AppService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _currentTimeStamp = DefineProperty<DateTimeOffset>(nameof(CurrentTimeStamp), new string[] { "currentTimeStamp" }, format: "O");
-            _previousTimeStamp = DefineProperty<DateTimeOffset>(nameof(PreviousTimeStamp), new string[] { "previousTimeStamp" }, format: "O");
+            _currentOn = DefineProperty<DateTimeOffset>(nameof(CurrentOn), new string[] { "currentTimeStamp" }, format: "O");
+            _previousOn = DefineProperty<DateTimeOffset>(nameof(PreviousOn), new string[] { "previousTimeStamp" }, format: "O");
             _currentCpuStats = DefineModelProperty<ContainerCpuStatistics>(nameof(CurrentCpuStats), new string[] { "currentCpuStats" });
             _previousCpuStats = DefineModelProperty<ContainerCpuStatistics>(nameof(PreviousCpuStats), new string[] { "previousCpuStats" });
             _memoryStats = DefineModelProperty<ContainerMemoryStatistics>(nameof(MemoryStats), new string[] { "memoryStats" });

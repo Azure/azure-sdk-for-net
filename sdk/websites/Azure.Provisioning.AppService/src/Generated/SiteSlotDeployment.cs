@@ -195,12 +195,12 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets or sets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -208,16 +208,16 @@ namespace Azure.Provisioning.AppService
                 {
                     Properties = new DeploymentProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets or sets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -225,7 +225,7 @@ namespace Azure.Provisioning.AppService
                 {
                     Properties = new DeploymentProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 
@@ -272,7 +272,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DeploymentProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSiteSlot>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSiteSlot>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

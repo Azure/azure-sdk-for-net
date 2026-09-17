@@ -10,7 +10,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService
 {
-    /// <summary> Scale and concurrency settings for the HTTP trigger. </summary>
     internal partial class FunctionsScaleAndConcurrencyTriggersHttp : ProvisionableConstruct
     {
         private BicepValue<int> _concurrentHttpPerInstanceConcurrency;

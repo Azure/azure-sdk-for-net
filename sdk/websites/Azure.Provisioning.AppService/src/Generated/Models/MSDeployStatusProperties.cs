@@ -11,13 +11,12 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppService
 {
-    /// <summary> MSDeployStatus resource specific properties. </summary>
     internal partial class MSDeployStatusProperties : ProvisionableConstruct
     {
         private BicepValue<string> _deployer;
         private BicepValue<MSDeployProvisioningState> _provisioningState;
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<bool> _isComplete;
 
         /// <summary> Creates a new MSDeployStatusProperties. </summary>
@@ -45,23 +44,23 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
         }
 
@@ -81,8 +80,8 @@ namespace Azure.Provisioning.AppService
             base.DefineProvisionableProperties();
             _deployer = DefineProperty<string>(nameof(Deployer), new string[] { "deployer" }, isOutput: true);
             _provisioningState = DefineProperty<MSDeployProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true, format: "O");
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" }, isOutput: true, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, isOutput: true, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endTime" }, isOutput: true, format: "O");
             _isComplete = DefineProperty<bool>(nameof(IsComplete), new string[] { "complete" }, isOutput: true);
             DefineAdditionalProperties();
         }

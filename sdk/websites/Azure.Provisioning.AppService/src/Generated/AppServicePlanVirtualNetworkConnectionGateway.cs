@@ -153,7 +153,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<VnetGatewayProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<AppServicePlanVirtualNetworkConnection>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<AppServicePlanVirtualNetworkConnection>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

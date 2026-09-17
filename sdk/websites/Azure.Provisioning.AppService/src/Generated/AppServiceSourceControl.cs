@@ -145,12 +145,12 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets or sets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets or sets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -158,7 +158,7 @@ namespace Azure.Provisioning.AppService
                 {
                     Properties = new SourceControlProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 

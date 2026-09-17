@@ -105,7 +105,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.State;
+                return Properties is null ? default : Properties.State;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.StatusUri;
+                return Properties is null ? default : Properties.StatusUri;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.DetectorUri;
+                return Properties is null ? default : Properties.DetectorUri;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ConsoleUri;
+                return Properties is null ? default : Properties.ConsoleUri;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.HealthCheckUrlString;
+                return Properties is null ? default : Properties.HealthCheckUrlString;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Containers;
+                return Properties is null ? default : Properties.Containers;
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.PhysicalZone;
+                return Properties is null ? default : Properties.PhysicalZone;
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<WebSiteInstanceStatusProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSiteSlot>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSiteSlot>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

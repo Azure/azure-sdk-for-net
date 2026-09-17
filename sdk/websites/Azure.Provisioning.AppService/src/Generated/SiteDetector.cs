@@ -104,7 +104,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Metadata;
+                return Properties is null ? default : Properties.Metadata;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Dataset;
+                return Properties is null ? default : Properties.Dataset;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.DataProvidersMetadata;
+                return Properties is null ? default : Properties.DataProvidersMetadata;
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.SuggestedUtterances;
+                return Properties is null ? default : Properties.SuggestedUtterances;
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DetectorResponseProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSite>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSite>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

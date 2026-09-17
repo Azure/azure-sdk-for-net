@@ -237,7 +237,7 @@ namespace Azure.Provisioning.AppService
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<PremierAddOnProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSiteSlot>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSiteSlot>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

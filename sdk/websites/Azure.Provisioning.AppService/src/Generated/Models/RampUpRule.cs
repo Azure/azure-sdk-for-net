@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -20,7 +19,7 @@ namespace Azure.Provisioning.AppService
         private BicepValue<int> _changeIntervalInMinutes;
         private BicepValue<double> _minReroutePercentage;
         private BicepValue<double> _maxReroutePercentage;
-        private BicepValue<Uri> _changeDecisionCallbackUri;
+        private BicepValue<string> _changeDecisionCallbackUri;
         private BicepValue<string> _name;
 
         /// <summary> Creates a new RampUpRule. </summary>
@@ -119,7 +118,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the ChangeDecisionCallbackUri. </summary>
-        public BicepValue<Uri> ChangeDecisionCallbackUri
+        public BicepValue<string> ChangeDecisionCallbackUri
         {
             get
             {
@@ -158,7 +157,7 @@ namespace Azure.Provisioning.AppService
             _changeIntervalInMinutes = DefineProperty<int>(nameof(ChangeIntervalInMinutes), new string[] { "changeIntervalInMinutes" });
             _minReroutePercentage = DefineProperty<double>(nameof(MinReroutePercentage), new string[] { "minReroutePercentage" });
             _maxReroutePercentage = DefineProperty<double>(nameof(MaxReroutePercentage), new string[] { "maxReroutePercentage" });
-            _changeDecisionCallbackUri = DefineProperty<Uri>(nameof(ChangeDecisionCallbackUri), new string[] { "changeDecisionCallbackUrl" });
+            _changeDecisionCallbackUri = DefineProperty<string>(nameof(ChangeDecisionCallbackUri), new string[] { "changeDecisionCallbackUrl" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             DefineAdditionalProperties();
         }

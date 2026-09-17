@@ -17,8 +17,8 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _webJobId;
         private BicepValue<string> _webJobName;
         private BicepValue<TriggeredWebJobStatus> _status;
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<TimeSpan> _duration;
         private BicepValue<string> _outputUri;
         private BicepValue<string> _errorUri;
@@ -61,23 +61,23 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
         }
 
@@ -148,8 +148,8 @@ namespace Azure.Provisioning.AppService
             _webJobId = DefineProperty<string>(nameof(WebJobId), new string[] { "web_job_id" });
             _webJobName = DefineProperty<string>(nameof(WebJobName), new string[] { "web_job_name" });
             _status = DefineProperty<TriggeredWebJobStatus>(nameof(Status), new string[] { "status" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "start_time" }, format: "O");
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "end_time" }, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "start_time" }, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "end_time" }, format: "O");
             _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _outputUri = DefineProperty<string>(nameof(OutputUri), new string[] { "output_url" });
             _errorUri = DefineProperty<string>(nameof(ErrorUri), new string[] { "error_url" });

@@ -271,8 +271,8 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
@@ -280,7 +280,7 @@ namespace Azure.Provisioning.AppService
                 {
                     Properties = new CertificateProperties();
                 }
-                return Properties.ExpireOn;
+                return Properties.ExpiresOn;
             }
         }
 
@@ -454,7 +454,7 @@ namespace Azure.Provisioning.AppService
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<CertificateProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSite>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSite>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -88,7 +88,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.DeletedSiteId;
+                return Properties is null ? default : Properties.DeletedSiteId;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.DeletedTimestamp;
+                return Properties is null ? default : Properties.DeletedTimestamp;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Subscription;
+                return Properties is null ? default : Properties.Subscription;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ResourceGroup;
+                return Properties is null ? default : Properties.ResourceGroup;
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.DeletedSiteName;
+                return Properties is null ? default : Properties.DeletedSiteName;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Slot;
+                return Properties is null ? default : Properties.Slot;
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.KindPropertiesKind;
+                return Properties is null ? default : Properties.KindPropertiesKind;
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.GeoRegionName;
+                return Properties is null ? default : Properties.GeoRegionName;
             }
         }
 

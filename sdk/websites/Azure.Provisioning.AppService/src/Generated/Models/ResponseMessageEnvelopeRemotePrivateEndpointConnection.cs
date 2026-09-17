@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -16,13 +15,13 @@ namespace Azure.Provisioning.AppService
     /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
     public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : ProvisionableConstruct
     {
-        private BicepValue<AzureLocation> _location;
+        private BicepValue<string> _location;
         private BicepDictionary<string> _tags;
         private AppServiceArmPlan _plan;
         private RemotePrivateEndpointConnection _properties;
         private AppServiceSkuDescription _sku;
         private BicepValue<string> _status;
-        private BicepValue<ResponseError> _error;
+        private ErrorEntity _error;
         private ManagedServiceIdentity _identity;
         private BicepList<string> _zones;
         private BicepValue<ResourceIdentifier> _id;
@@ -36,7 +35,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets the Location. </summary>
-        public BicepValue<AzureLocation> Location
+        public BicepValue<string> Location
         {
             get
             {
@@ -96,7 +95,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets the Error. </summary>
-        public BicepValue<ResponseError> Error
+        public ErrorEntity Error
         {
             get
             {
@@ -169,13 +168,13 @@ namespace Azure.Provisioning.AppService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            _location = DefineProperty<string>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _plan = DefineModelProperty<AppServiceArmPlan>(nameof(Plan), new string[] { "plan" });
             _properties = DefineModelProperty<RemotePrivateEndpointConnection>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<AppServiceSkuDescription>(nameof(Sku), new string[] { "sku" });
             _status = DefineProperty<string>(nameof(Status), new string[] { "status" });
-            _error = DefineProperty<ResponseError>(nameof(Error), new string[] { "error" });
+            _error = DefineModelProperty<ErrorEntity>(nameof(Error), new string[] { "error" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);

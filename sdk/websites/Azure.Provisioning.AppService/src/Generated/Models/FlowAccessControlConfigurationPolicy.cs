@@ -46,7 +46,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return OpenAuthenticationPolicies.OpenAuthenticationPolicyList;
+                return OpenAuthenticationPolicies is null ? default : OpenAuthenticationPolicies.OpenAuthenticationPolicyList;
             }
         }
 

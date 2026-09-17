@@ -104,7 +104,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.DeploymentId;
+                return Properties is null ? default : Properties.DeploymentId;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.NumberOfInstancesInProgress;
+                return Properties is null ? default : Properties.NumberOfInstancesInProgress;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.NumberOfInstancesSuccessful;
+                return Properties is null ? default : Properties.NumberOfInstancesSuccessful;
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.NumberOfInstancesFailed;
+                return Properties is null ? default : Properties.NumberOfInstancesFailed;
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.FailedInstancesLogs;
+                return Properties is null ? default : Properties.FailedInstancesLogs;
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.Errors;
+                return Properties is null ? default : Properties.Errors;
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<CsmDeploymentStatusProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSiteSlot>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<WebSiteSlot>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

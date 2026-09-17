@@ -100,7 +100,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.ServiceIPAddress;
+                return Properties is null ? default : Properties.ServiceIPAddress;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.InternalIPAddress;
+                return Properties is null ? default : Properties.InternalIPAddress;
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.OutboundIPAddresses;
+                return Properties is null ? default : Properties.OutboundIPAddresses;
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.Provisioning.AppService
         {
             get
             {
-                return Properties.VirtualIPMappings;
+                return Properties is null ? default : Properties.VirtualIPMappings;
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AddressResponseProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<AppServiceEnvironment>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<AppServiceEnvironment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

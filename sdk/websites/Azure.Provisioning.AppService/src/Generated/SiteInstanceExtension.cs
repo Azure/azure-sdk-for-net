@@ -131,8 +131,8 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
@@ -140,12 +140,12 @@ namespace Azure.Provisioning.AppService
                 {
                     Properties = new MSDeployStatusProperties();
                 }
-                return Properties.StartOn;
+                return Properties.StartsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
@@ -153,7 +153,7 @@ namespace Azure.Provisioning.AppService
                 {
                     Properties = new MSDeployStatusProperties();
                 }
-                return Properties.EndOn;
+                return Properties.EndsOn;
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MSDeployStatusProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<SiteInstance>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SiteInstance>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
