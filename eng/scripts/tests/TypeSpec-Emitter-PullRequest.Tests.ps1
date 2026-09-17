@@ -140,9 +140,9 @@ BeforeAll {
 }
 
 Describe "TypeSpec emitter regeneration commits" -Tag "UnitTest" {
-    It "marks the <Job> commit to skip push CI independently of the PR title" -ForEach @(
+    It "uses the expected commit message for <Job>" -ForEach @(
         @{ Job = "Initialize"; ExpectedMessage = 'Regenerate repository SDK with TypeSpec build $(Build.BuildNumber) [skip ci]' },
-        @{ Job = "Generate"; ExpectedMessage = 'Update SDK code $(JobKey) [skip ci]' }
+        @{ Job = "Generate"; ExpectedMessage = 'Update SDK code $(JobKey)' }
     ) {
         $jobs = @(Find-PipelineNode $pipeline "job" $Job)
         $jobs.Count | Should -Be 1
@@ -151,6 +151,16 @@ Describe "TypeSpec emitter regeneration commits" -Tag "UnitTest" {
 
         $pushSteps[0].parameters.CommitMsg | Should -BeExactly $ExpectedMessage
         $pushSteps[0].parameters.BaseRepoBranch | Should -BeExactly '$(branchName)'
+    }
+
+    It "runs <Job> after <Dependency>" -ForEach @(
+        @{ Job = "Generate"; Dependency = "Initialize" },
+        @{ Job = "Create_PR"; Dependency = "Generate" }
+    ) {
+        $jobs = @(Find-PipelineNode $pipeline "job" $Job)
+        $jobs.Count | Should -Be 1
+
+        @($jobs[0].dependsOn) | Should -Contain $Dependency
     }
 }
 

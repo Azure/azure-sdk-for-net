@@ -449,7 +449,7 @@ extends:
               BaseRepoOwner: Azure
               TargetRepoName: $(Build.Repository.Name)
               BaseRepoBranch: $(branchName)
-              CommitMsg: Update SDK code $(JobKey) [skip ci]
+              CommitMsg: Update SDK code $(JobKey)
               WorkingDirectory: $(Build.SourcesDirectory)
               ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
               AuthToken: $(GH_TOKEN)
