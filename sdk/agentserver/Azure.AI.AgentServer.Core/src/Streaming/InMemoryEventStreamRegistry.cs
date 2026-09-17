@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming.Backings;
@@ -215,6 +217,77 @@ internal sealed class InMemoryEventStreamRegistry :
             _streams[inputId] = created;
             _taskOwners[inputId] = taskId;
             return new ValueTask<AgentEventStream?>(created);
+        }
+    }
+
+    public async Task CloseOrphanTaskStreamsAsync(
+        Func<string, string, ValueTask<bool>> shouldClose,
+        CancellationToken cancellationToken = default)
+    {
+        string? directory = _options.Configuration.StorageDirectory;
+        if (directory is null || !Directory.Exists(directory))
+        {
+            // Non-persistent backing: streams do not survive a restart, so there are no orphans.
+            return;
+        }
+
+        foreach (string jsonl in Directory.EnumerateFiles(directory, "*.jsonl"))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            try
+            {
+                string stem = Path.GetFileNameWithoutExtension(jsonl);
+
+                // Only a verbatim (self-mapping) stem is the original input id; a hash-encoded stem
+                // cannot be inverted, so it is left untouched.
+                if (!FileBackedReplayEventStream.IsSelfMappingStem(stem))
+                {
+                    continue;
+                }
+
+                // Skip streams that are already closed: only genuinely orphaned (unterminated) files
+                // are opened, so the sweep never bursts open every historical retired stream.
+                if (FileBackedReplayEventStream.IsFileTerminated(jsonl))
+                {
+                    continue;
+                }
+
+                string ownerPath = Path.Combine(directory, stem + ".owner");
+                if (!File.Exists(ownerPath))
+                {
+                    // No owner sidecar: a custom/standalone stream, never swept as task-owned.
+                    continue;
+                }
+
+                string taskId = File.ReadAllText(ownerPath, Encoding.UTF8).Trim();
+                if (taskId.Length == 0)
+                {
+                    continue;
+                }
+
+                string inputId = stem;
+                if (!await shouldClose(taskId, inputId).ConfigureAwait(false))
+                {
+                    continue;
+                }
+
+                AgentEventStream? stream = await GetTaskStreamAsync(taskId, inputId, cancellationToken).ConfigureAwait(false);
+                if (stream is not null)
+                {
+                    await stream.CloseAsync(cancellationToken).ConfigureAwait(false);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                // A live writer still holding the lock, an unreadable entry, or a transient error must
+                // not abort the rest of the sweep; skip this file and continue.
+                _logger.LogWarning(ex, "Orphan-stream sweep skipped {File}.", jsonl);
+            }
         }
     }
 

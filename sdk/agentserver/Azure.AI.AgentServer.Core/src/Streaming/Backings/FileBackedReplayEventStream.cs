@@ -148,6 +148,51 @@ internal sealed class FileBackedReplayEventStream :
     internal static bool Exists(string id, string storageDirectory)
         => File.Exists(Path.Combine(storageDirectory, ToSafeFileStem(id) + ".jsonl"));
 
+    // True when a filename stem is a well-formed id that maps to itself (i.e. the id was used
+    // verbatim, not hash-encoded). For such a stem the on-disk name IS the original input id, so the
+    // orphan sweep can reopen it existing-only; hash-encoded stems cannot be inverted and are skipped.
+    internal static bool IsSelfMappingStem(string stem)
+        => ToSafeFileStem(stem) == stem;
+
+    // Cheap peek used by the orphan sweep to skip streams that were already closed: true when the
+    // file's FINAL complete record is the terminal sentinel (a torn trailing partial line is ignored,
+    // matching rehydrate). Avoids opening/rehydrating/holding handles for non-orphaned streams.
+    internal static bool IsFileTerminated(string filePath)
+    {
+        byte[] data;
+        try
+        {
+            data = File.ReadAllBytes(filePath);
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            return false;
+        }
+
+        if (data.Length == 0)
+        {
+            return false;
+        }
+
+        string[] lines = Encoding.UTF8.GetString(data).Split('\n');
+        // A non-empty final element is a torn partial line (no trailing newline) and is ignored.
+        int last = lines.Length > 0 && lines[^1].Length == 0 ? lines.Length - 1 : lines.Length - 2;
+        for (int i = last; i >= 0; i--)
+        {
+            if (lines[i].Length == 0)
+            {
+                continue;
+            }
+
+            return TryParse(lines[i]) is JsonObject obj
+                && obj[TerminalKey] is JsonValue value
+                && value.TryGetValue(out bool terminal)
+                && terminal;
+        }
+
+        return false;
+    }
+
     public string? TaskId => _taskId;
 
     public void ValidateOrClaimTask(string taskId)

@@ -341,6 +341,8 @@ public class TaskStreamInitializationRegressionTests
         public override ValueTask<AgentEventStream> GetAsync(string id, CancellationToken cancellationToken = default)
             => throw new InvalidOperationException("Must use task-aware lookup.");
         public override ValueTask DeleteAsync(string id, CancellationToken cancellationToken = default) => ValueTask.CompletedTask;
+        public Task CloseOrphanTaskStreamsAsync(Func<string, string, ValueTask<bool>> shouldClose, CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 
     private sealed class CustomRegistry : AgentEventStreamRegistry
