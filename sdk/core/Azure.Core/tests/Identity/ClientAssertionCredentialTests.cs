@@ -114,15 +114,19 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
-        public async Task FallsBackToBearerWhenBindingCertificateIsUnavailable()
+        public void DoesNotFallBackToBearerWhenProofOfPossessionExplicitlyRequested()
         {
-            var bearerClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create("bearer-token"));
+            int bearerCalls = 0;
+            var bearerClient = new MockMsalConfidentialClient().WithClientFactory((_, _, _, _) =>
+            {
+                bearerCalls++;
+                return AuthenticationResultFactory.Create("bearer-token");
+            });
             var popClient = new MockMsalConfidentialClient(new MsalClientException(MsalError.MtlsCertificateNotProvided, "No binding certificate."));
             var credential = CreatePopCredential(bearerClient, popClient);
 
-            AccessToken token = await GetTokenAsync(credential, isProofOfPossessionEnabled: true);
-
-            Assert.AreEqual("bearer-token", token.Token);
+            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await GetTokenAsync(credential, isProofOfPossessionEnabled: true));
+            Assert.AreEqual(0, bearerCalls, "Bearer client must not be invoked when proof-of-possession is explicitly requested.");
         }
 
         [Test]

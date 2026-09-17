@@ -575,6 +575,7 @@ namespace Azure.Identity
             }));
 
             var assertionOptions = Options.Clone<ClientAssertionCredentialOptions>();
+            assertionOptions.DisableMtlsProofOfPossession = managedIdentityOptions.DisableMtlsProofOfPossession;
 
             if (Options.AdditionallyAllowedTenants?.Count > 0)
             {

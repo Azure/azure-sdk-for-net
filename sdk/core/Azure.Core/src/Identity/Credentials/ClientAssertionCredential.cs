@@ -33,6 +33,12 @@ namespace Azure.Identity
         internal CredentialPipeline Pipeline { get; }
         internal TenantIdResolverBase TenantIdResolver { get; }
 
+        private const string MtlsPopUnavailableError =
+            "Proof-of-possession (mTLS PoP) was requested, but no binding certificate was available to bind the token. " +
+            "This usually means the host does not support managed identity mTLS proof-of-possession. " +
+            "Bearer fallback is intentionally not performed for an explicit proof-of-possession request. " +
+            "To use bearer tokens instead, set DisableMtlsProofOfPossession, or run on a host that supports mTLS proof-of-possession.";
+
         /// <summary>
         /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
@@ -67,7 +73,12 @@ namespace Azure.Identity
             ClientAssertionCredentialOptions options = default)
             : this(tenantId, clientId, assertionCallback, options)
         {
-            PopClient = options?.PopMsalClient ?? new MsalConfidentialClient(Pipeline, tenantId, clientId, popAssertionCallback, options);
+            // Only create the proof-of-possession client when mTLS PoP is not explicitly disabled. When disabled,
+            // the credential is bearer-only and a proof-of-possession request is served by the bearer client.
+            if (options?.DisableMtlsProofOfPossession != true)
+            {
+                PopClient = options?.PopMsalClient ?? new MsalConfidentialClient(Pipeline, tenantId, clientId, popAssertionCallback, options);
+            }
         }
 
         internal ClientAssertionCredential(
@@ -154,7 +165,8 @@ namespace Azure.Identity
                 }
                 catch (MsalClientException e) when (client == PopClient && e.ErrorCode == MsalError.MtlsCertificateNotProvided)
                 {
-                    result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
+                    // Proof-of-possession was explicitly requested but could not be satisfied. Do not silently downgrade to a bearer token.
+                    throw new AuthenticationFailedException(MtlsPopUnavailableError, e);
                 }
 
                 return scope.Succeeded(result.ToAccessToken());
@@ -188,7 +200,8 @@ namespace Azure.Identity
                 }
                 catch (MsalClientException e) when (client == PopClient && e.ErrorCode == MsalError.MtlsCertificateNotProvided)
                 {
-                    result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken).ConfigureAwait(false);
+                    // Proof-of-possession was explicitly requested but could not be satisfied. Do not silently downgrade to a bearer token.
+                    throw new AuthenticationFailedException(MtlsPopUnavailableError, e);
                 }
 
                 return scope.Succeeded(result.ToAccessToken());

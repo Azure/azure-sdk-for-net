@@ -25,6 +25,12 @@ namespace Azure.Identity
         internal MsalConfidentialClient PopMsalClient { get; set; }
 
         /// <summary>
+        /// When set, the credential does not attempt mTLS proof-of-possession and does not create a proof-of-possession client.
+        /// Used by the managed-identity-as-federated-identity flow to honor <c>DisableMtlsProofOfPossession</c>.
+        /// </summary>
+        internal bool DisableMtlsProofOfPossession { get; set; }
+
+        /// <summary>
         /// For multi-tenant applications, specifies additional tenants for which the credential may acquire tokens. Add the wildcard value "*" to allow the credential to acquire tokens for any tenant in which the application is installed.
         /// </summary>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();
