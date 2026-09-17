@@ -23,11 +23,32 @@ The standard package-scoped API export succeeded with its normal
 `RunApiCompat=false` setting, producing updated API listings for all three target
 frameworks.
 
-## Baseline public types no longer generated
+## Resource compatibility
 
-A comparison of the previous and freshly exported
-`api/Azure.Provisioning.Network.net10.0.cs` listings found these 14 baseline
-public types missing:
+Resource identity was compared by the ARM resource type passed to each
+`ProvisionableResource` constructor, rather than by C# class name.
+
+- The baseline has 118 public resource classes representing 117 ARM resource
+  types.
+- The new generation has 133 public resource classes representing 133 ARM
+  resource types.
+- **No baseline ARM resource type is missing.**
+- One baseline resource class is no longer generated because two classes that
+  shared the same ARM resource type were consolidated:
+
+| Missing baseline resource class | Current resource class | ARM resource type |
+|---|---|---|
+| `ManagementGroupNetworkManagerConnection` | `SubscriptionNetworkManagerConnection` | `Microsoft.Network/networkManagerConnections` |
+
+Restoring or otherwise resolving `ManagementGroupNetworkManagerConnection` is
+the highest-priority resource compatibility issue. Although its ARM resource
+type remains represented, the management-group-scoped public resource class is
+missing.
+
+## Missing non-resource models
+
+After separating resources, 13 baseline public non-resource types remain
+missing:
 
 - `ConnectionMonitorType`
 - `DdosCustomPolicyTriggerSensitivityOverride`
@@ -35,7 +56,6 @@ public types missing:
 - `DdosTrafficType`
 - `ExpressRouteLinkData`
 - `FlowLogProperties`
-- `ManagementGroupNetworkManagerConnection`
 - `PeerExpressRouteCircuitConnectionData`
 - `PropagatedRouteTable`
 - `ProtocolCustomSettings`
@@ -44,63 +64,19 @@ public types missing:
 - `VpnSiteLinkConnectionData`
 - `VpnSiteLinkData`
 
-Several are apparent renames:
+Five have likely replacements. Four former data models now correspond to newly
+generated resources, while one model appears renamed:
 
-| Baseline type | Fresh generated type |
-|---|---|
-| `ExpressRouteLinkData` | `ExpressRouteLink` |
-| `FlowLogProperties` | `FlowLogPropertiesFormat` |
-| `PeerExpressRouteCircuitConnectionData` | `PeerExpressRouteCircuitConnection` |
-| `VpnSiteLinkConnectionData` | `VpnSiteLinkConnection` |
-| `VpnSiteLinkData` | `VpnSiteLink` |
+| Baseline non-resource model | Likely current replacement | Change |
+|---|---|---|
+| `ExpressRouteLinkData` | `ExpressRouteLink` | Promoted to resource `Microsoft.Network/ExpressRoutePorts/links` |
+| `FlowLogProperties` | `FlowLogPropertiesFormat` | Model rename |
+| `PeerExpressRouteCircuitConnectionData` | `PeerExpressRouteCircuitConnection` | Promoted to resource `Microsoft.Network/expressRouteCircuits/peerings/peerConnections` |
+| `VpnSiteLinkConnectionData` | `VpnSiteLinkConnection` | Promoted to resource `Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections` |
+| `VpnSiteLinkData` | `VpnSiteLink` | Promoted to resource `Microsoft.Network/vpnSites/vpnSiteLinks` |
 
-The other missing types have no confirmed one-to-one replacement at the
-generation stage.
-
-## New public types
-
-A comparison of the previous and freshly exported API listings found these 40
-new public types:
-
-- `ApplicationGatewayAvailableSslOptionsInfo`
-- `ApplicationGatewayFirewallManifestRuleSet`
-- `ApplicationGatewayFirewallRule`
-- `ApplicationGatewayFirewallRuleGroup`
-- `ApplicationGatewayForContainersReferenceDefinition`
-- `ApplicationGatewayRuleSetStatusOption`
-- `ApplicationGatewayTierType`
-- `ApplicationGatewayWafDynamicManifest`
-- `ApplicationGatewayWafRuleActionType`
-- `ApplicationGatewayWafRuleSensitivityType`
-- `ApplicationGatewayWafRuleStateType`
-- `AzureWebCategory`
-- `CloudServiceSwap`
-- `ConnectionMonitorCreateOrUpdateContent`
-- `DefaultSecurityRule`
-- `EndpointType`
-- `ExpressRouteLink`
-- `ExpressRoutePortsLocation`
-- `ExpressRoutePortsLocationBandwidths`
-- `ExpressRouteProviderPort`
-- `FlowLogFormatParameters`
-- `FlowLogPropertiesFormat`
-- `InternetIngressPublicIpsProperties`
-- `ManagedServiceIdentityUserAssignedIdentities`
-- `NetworkManagedServiceIdentity`
-- `NetworkSecurityPerimeterLinkReference`
-- `NetworkSubResource`
-- `NetworkVirtualApplianceSku`
-- `NetworkVirtualApplianceSkuInstances`
-- `PacketCaptureCreateOrUpdateContent`
-- `PeerExpressRouteCircuitConnection`
-- `ReferencedPublicIPAddress`
-- `ResourceIdentityType`
-- `SwapSlotType`
-- `VirtualMachineScaleSetNetworkInterface`
-- `VirtualMachineScaleSetNetworkInterfaceIPConfiguration`
-- `VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddress`
-- `VpnSiteLink`
-- `VpnSiteLinkConnection`
+These replacements are not yet confirmed to be API-compatible. The other eight
+missing models have no confirmed one-to-one replacement.
 
 ## Work intentionally not performed
 
@@ -111,6 +87,58 @@ Per the requested stopping point, the following remain pending:
 - Changelog updates
 
 # Reference details
+
+## Added resources
+
+The new generation adds 16 ARM resource types:
+
+| Public resource class | ARM resource type |
+|---|---|
+| `VirtualMachineScaleSetNetworkInterface` | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces` |
+| `VirtualMachineScaleSetNetworkInterfaceIPConfiguration` | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces/ipConfigurations` |
+| `VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddress` | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces/ipconfigurations/publicipaddresses` |
+| `ApplicationGatewayAvailableSslOptionsInfo` | `Microsoft.Network/applicationGatewayAvailableSslOptions` |
+| `AzureWebCategory` | `Microsoft.Network/azureWebCategories` |
+| `CloudServiceSwap` | `Microsoft.Network/cloudServiceSlots` |
+| `PeerExpressRouteCircuitConnection` | `Microsoft.Network/expressRouteCircuits/peerings/peerConnections` |
+| `ExpressRouteLink` | `Microsoft.Network/ExpressRoutePorts/links` |
+| `ExpressRoutePortsLocation` | `Microsoft.Network/ExpressRoutePortsLocations` |
+| `ExpressRouteProviderPort` | `Microsoft.Network/expressRouteProviderPorts` |
+| `ApplicationGatewayWafDynamicManifest` | `Microsoft.Network/locations/applicationGatewayWafDynamicManifests` |
+| `DefaultSecurityRule` | `Microsoft.Network/networkSecurityGroups/defaultSecurityRules` |
+| `NetworkSecurityPerimeterLinkReference` | `Microsoft.Network/networkSecurityPerimeters/linkReferences` |
+| `NetworkVirtualApplianceSku` | `Microsoft.Network/networkVirtualApplianceSkus` |
+| `VpnSiteLinkConnection` | `Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections` |
+| `VpnSiteLink` | `Microsoft.Network/vpnSites/vpnSiteLinks` |
+
+## Added non-resource models
+
+The new generation adds 24 public non-resource types:
+
+- `ApplicationGatewayFirewallManifestRuleSet`
+- `ApplicationGatewayFirewallRule`
+- `ApplicationGatewayFirewallRuleGroup`
+- `ApplicationGatewayForContainersReferenceDefinition`
+- `ApplicationGatewayRuleSetStatusOption`
+- `ApplicationGatewayTierType`
+- `ApplicationGatewayWafRuleActionType`
+- `ApplicationGatewayWafRuleSensitivityType`
+- `ApplicationGatewayWafRuleStateType`
+- `ConnectionMonitorCreateOrUpdateContent`
+- `EndpointType`
+- `ExpressRoutePortsLocationBandwidths`
+- `FlowLogFormatParameters`
+- `FlowLogPropertiesFormat`
+- `InternetIngressPublicIpsProperties`
+- `ManagedServiceIdentityUserAssignedIdentities`
+- `NetworkManagedServiceIdentity`
+- `NetworkSubResource`
+- `NetworkVirtualApplianceSkuInstances`
+- `PacketCaptureCreateOrUpdateContent`
+- `ReferencedPublicIPAddress`
+- `ResourceIdentityType`
+- `SwapSlotType`
+- `NetworkWritableResourceData`
 
 ## Scope
 
