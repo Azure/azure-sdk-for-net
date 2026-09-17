@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,7 +16,7 @@ namespace Azure.Provisioning.AppService
     {
         private BicepValue<string> _name;
         private BicepValue<int> _key;
-        private BicepValue<string> _resourceId;
+        private BicepValue<ResourceIdentifier> _resourceId;
         private BicepList<PrivateAccessSubnet> _subnets;
 
         /// <summary> Creates a new PrivateAccessVirtualNetwork. </summary>
@@ -54,7 +55,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
-        public BicepValue<string> ResourceId
+        public BicepValue<ResourceIdentifier> ResourceId
         {
             get
             {
@@ -89,7 +90,7 @@ namespace Azure.Provisioning.AppService
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _key = DefineProperty<int>(nameof(Key), new string[] { "key" });
-            _resourceId = DefineProperty<string>(nameof(ResourceId), new string[] { "resourceId" });
+            _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
             _subnets = DefineListProperty<PrivateAccessSubnet>(nameof(Subnets), new string[] { "subnets" });
             DefineAdditionalProperties();
         }
