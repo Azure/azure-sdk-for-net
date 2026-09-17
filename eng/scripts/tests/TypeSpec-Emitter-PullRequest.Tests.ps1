@@ -25,7 +25,6 @@ BeforeDiscovery {
                     $title = "Update $emitter version to $versionDescription"
                     if ($result -ne "Succeeded") { $title = "Failed: $title" }
                     if ($reason -eq "Schedule") { $title = "Scheduled code regeneration test" }
-                    $title = "[skip ci] $title"
                     if ($reason -eq "Manual") { $title = "[Preview] $title" }
                     @{
                         Emitter = $emitter
@@ -48,7 +47,7 @@ BeforeDiscovery {
             @{
                 Reason = $reason
                 Result = $result
-                ExpectedPrefix = if ($result -eq "Succeeded") { "[skip ci] " } else { "[skip ci] Failed: " }
+                ExpectedPrefix = if ($result -eq "Succeeded") { "" } else { "Failed: " }
             }
         }
     }
@@ -69,7 +68,7 @@ BeforeDiscovery {
                     Reason = $reason
                     Result = $result
                     ExpectedDraft = $reason -ne "IndividualCI" -or $result -ne "Succeeded" -or $source.Ref -ne "refs/heads/main"
-                    ExpectedPrefix = "$(if ($reason -eq 'Manual') { '[Preview] ' })[skip ci] $(if ($result -ne 'Succeeded') { 'Failed: ' })"
+                    ExpectedPrefix = "$(if ($reason -eq 'Manual') { '[Preview] ' })$(if ($result -ne 'Succeeded') { 'Failed: ' })"
                 }
             }
         }
@@ -79,23 +78,23 @@ BeforeDiscovery {
 BeforeAll {
     $repoRoot = Join-Path $PSScriptRoot ".." ".." ".."
 
-    function Find-TitleStep($Node) {
+    function Find-PipelineNode($Node, [string]$PropertyName, [string]$PropertyValue) {
         if ($Node -is [System.Collections.IDictionary]) {
-            if ($Node["displayName"] -eq "Get PR title and body") {
+            if ($Node[$PropertyName] -eq $PropertyValue) {
                 $Node
             }
-            foreach ($value in $Node.Values) {
-                Find-TitleStep $value
+            foreach ($child in $Node.Values) {
+                Find-PipelineNode $child $PropertyName $PropertyValue
             }
         } elseif ($Node -is [System.Collections.IEnumerable] -and $Node -isnot [string]) {
-            foreach ($value in $Node) {
-                Find-TitleStep $value
+            foreach ($child in $Node) {
+                Find-PipelineNode $child $PropertyName $PropertyValue
             }
         }
     }
 
     $pipeline = Get-Content (Join-Path $repoRoot "eng" "pipelines" "templates" "archetype-typespec-emitter.yml") -Raw | ConvertFrom-Yaml
-    $titleSteps = @(Find-TitleStep $pipeline)
+    $titleSteps = @(Find-PipelineNode $pipeline "displayName" "Get PR title and body")
     $titleSteps.Count | Should -Be 1
     $titleScript = $titleSteps[0].pwsh
 
@@ -140,6 +139,31 @@ BeforeAll {
     }
 }
 
+Describe "TypeSpec emitter regeneration commits" -Tag "UnitTest" {
+    It "uses the expected commit message for <Job>" -ForEach @(
+        @{ Job = "Initialize"; ExpectedMessage = 'Regenerate repository SDK with TypeSpec build $(Build.BuildNumber) [skip ci]' },
+        @{ Job = "Generate"; ExpectedMessage = 'Update SDK code $(JobKey)' }
+    ) {
+        $jobs = @(Find-PipelineNode $pipeline "job" $Job)
+        $jobs.Count | Should -Be 1
+        $pushSteps = @(Find-PipelineNode $jobs[0] "template" "/eng/common/pipelines/templates/steps/git-push-changes.yml")
+        $pushSteps.Count | Should -Be 1
+
+        $pushSteps[0].parameters.CommitMsg | Should -BeExactly $ExpectedMessage
+        $pushSteps[0].parameters.BaseRepoBranch | Should -BeExactly '$(branchName)'
+    }
+
+    It "runs <Job> after <Dependency>" -ForEach @(
+        @{ Job = "Generate"; Dependency = "Initialize" },
+        @{ Job = "Create_PR"; Dependency = "Generate" }
+    ) {
+        $jobs = @(Find-PipelineNode $pipeline "job" $Job)
+        $jobs.Count | Should -Be 1
+
+        @($jobs[0].dependsOn) | Should -Contain $Dependency
+    }
+}
+
 Describe "TypeSpec emitter regeneration PR metadata" -Tag "UnitTest" {
     It "preserves metadata for <Reason>, <Emitter>, <Version>, <Result>" -ForEach $titleCases {
         $actual = Invoke-TitleStep -Reason $Reason -Result $Result -EmitterIdentifier "-$Emitter" -Prerelease $Prerelease -Version $Version
@@ -174,12 +198,12 @@ Describe "TypeSpec emitter regeneration PR metadata" -Tag "UnitTest" {
     ) {
         $actual = Invoke-TitleStep -EmitterIdentifier $Identifier
 
-        $actual.PullRequestTitle | Should -BeExactly "[Preview] [skip ci] Update $ExpectedName version to prerelease 1.0.0-alpha.20260911.1"
+        $actual.PullRequestTitle | Should -BeExactly "[Preview] Update $ExpectedName version to prerelease 1.0.0-alpha.20260911.1"
     }
 }
 
 Describe "Stale generator upgrade workflow compatibility" -Tag "UnitTest" {
-    It "excludes previews and preserves cleanup eligibility for current and legacy automatic titles" {
+    It "cleans up automatic titles while excluding previews and legacy skip-ci titles" {
         $workflow = Get-Content (Join-Path $repoRoot ".github" "workflows" "close-stale-generator-upgrade-prs.yml") -Raw | ConvertFrom-Yaml
         $steps = @($workflow.jobs.'close-stale-prs'.steps | Where-Object name -eq "Find and close stale generator upgrade PRs")
         $steps.Count | Should -Be 1
@@ -192,11 +216,11 @@ Describe "Stale generator upgrade workflow compatibility" -Tag "UnitTest" {
                     $number = $pulls.Count + 1
                     $pulls += @{ number = $number; title = $metadata.PullRequestTitle; user = @{ login = "azure-sdk-automation[bot]" } }
                     if ($reason -eq "IndividualCI") {
-                        # The current workflow recognizes legacy titles, but not main's new [skip ci] prefix.
-                        $number = $pulls.Count + 1
-                        $legacyTitle = $metadata.PullRequestTitle -replace '^\[skip ci\] ', ''
-                        $pulls += @{ number = $number; title = $legacyTitle; user = @{ login = "azure-sdk-automation[bot]" } }
                         $expectedStaleNumbers += $number
+                        # Older [skip ci] titles remain outside the workflow's existing matching rules.
+                        $number = $pulls.Count + 1
+                        $legacyTitle = "[skip ci] $($metadata.PullRequestTitle)"
+                        $pulls += @{ number = $number; title = $legacyTitle; user = @{ login = "azure-sdk-automation[bot]" } }
                     }
                 }
             }
