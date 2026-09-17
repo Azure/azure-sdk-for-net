@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using System;
 using System.ClientModel;
@@ -298,7 +298,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "mcp-tool",
                 Description = "Test mcp tool",
                 ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-                ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+                ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
             },
             ToolType.OpenAPI => new OpenApiToolboxTool(new OpenApiFunctionDefinition(
                 name: "get_weather",
@@ -332,7 +332,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "fabric-iq",
                 Description = "Test Fabric IQ",
-                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+                RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             ToolType.ReminderPreview => new ReminderPreviewToolboxTool()
             {
@@ -343,7 +343,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "web-iq",
                 Description = "Test Web IQ",
-                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+                RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };

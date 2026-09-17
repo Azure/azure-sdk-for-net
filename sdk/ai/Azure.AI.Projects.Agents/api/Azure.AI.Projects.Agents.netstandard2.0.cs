@@ -2963,6 +2963,10 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.RaiSseTextSelector>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.RaiSseTextSelector>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public static partial class RealtimeServerUpdateExtensions
+    {
+        public static T AsFoundryServerUpdate<T>(this OpenAI.Realtime.RealtimeServerUpdate update) where T : OpenAI.Realtime.RealtimeServerUpdate { throw null; }
+    }
     public partial class ReminderPreviewToolboxTool : Azure.AI.Projects.Agents.ToolboxTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.ReminderPreviewToolboxTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.ReminderPreviewToolboxTool>
     {
         public ReminderPreviewToolboxTool() { }
@@ -4925,6 +4929,18 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentAzureSemanticVadTurnDetection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class VoiceAgentClientCommandRtcCallSdpCreate : OpenAI.Realtime.RealtimeClientCommand
+    {
+        public VoiceAgentClientCommandRtcCallSdpCreate(string sdpOffer, System.BinaryData session = null) : base (default(OpenAI.Realtime.RealtimeClientCommandKind)) { }
+        public string SdpOffer { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+    }
+    public partial class VoiceAgentClientCommandSessionAvatarConnect : OpenAI.Realtime.RealtimeClientCommand
+    {
+        public VoiceAgentClientCommandSessionAvatarConnect(string clientSdp) : base (default(OpenAI.Realtime.RealtimeClientCommandKind)) { }
+        public string ClientSdp { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+    }
     public partial class VoiceAgentConnectionOptions
     {
         public VoiceAgentConnectionOptions() { }
@@ -5260,6 +5276,94 @@ namespace Azure.AI.Projects.Agents
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentSemanticVadTurnDetection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public abstract partial class VoiceAgentServerUpdateBase<TSelf> : OpenAI.Realtime.RealtimeServerUpdate, System.ClientModel.Primitives.IJsonModel<TSelf>, System.ClientModel.Primitives.IPersistableModel<TSelf> where TSelf : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<TSelf>, new()
+    {
+        protected VoiceAgentServerUpdateBase(OpenAI.Realtime.RealtimeServerUpdateKind kind) : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        TSelf System.ClientModel.Primitives.IJsonModel<TSelf>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<TSelf>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        TSelf System.ClientModel.Primitives.IPersistableModel<TSelf>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<TSelf>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<TSelf>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public sealed partial class VoiceAgentServerUpdateResponseAnimationBlendshapesDelta : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateResponseAnimationBlendshapesDelta>
+    {
+        public VoiceAgentServerUpdateResponseAnimationBlendshapesDelta() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateResponseAnimationBlendshapesDone : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateResponseAnimationBlendshapesDone>
+    {
+        public VoiceAgentServerUpdateResponseAnimationBlendshapesDone() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateResponseAnimationVisemeDelta : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateResponseAnimationVisemeDelta>
+    {
+        public VoiceAgentServerUpdateResponseAnimationVisemeDelta() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateResponseAnimationVisemeDone : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateResponseAnimationVisemeDone>
+    {
+        public VoiceAgentServerUpdateResponseAnimationVisemeDone() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateResponseAudioTimestampDelta : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateResponseAudioTimestampDelta>
+    {
+        public VoiceAgentServerUpdateResponseAudioTimestampDelta() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateResponseAudioTimestampDone : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateResponseAudioTimestampDone>
+    {
+        public VoiceAgentServerUpdateResponseAudioTimestampDone() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateResponseVideoDelta : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateResponseVideoDelta>
+    {
+        public VoiceAgentServerUpdateResponseVideoDelta() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateRtcCallError : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateRtcCallError>
+    {
+        public VoiceAgentServerUpdateRtcCallError() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateRtcCallSdpCreated : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateRtcCallSdpCreated>
+    {
+        public VoiceAgentServerUpdateRtcCallSdpCreated() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+        public string RtcCallId { get { throw null; } }
+        public string SdpAnswer { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateSessionAvatarConnecting : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateSessionAvatarConnecting>
+    {
+        public VoiceAgentServerUpdateSessionAvatarConnecting() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+        public string ServerSdp { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateSessionAvatarSwitchToIdle : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateSessionAvatarSwitchToIdle>
+    {
+        public VoiceAgentServerUpdateSessionAvatarSwitchToIdle() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateSessionAvatarSwitchToSpeaking : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateSessionAvatarSwitchToSpeaking>
+    {
+        public VoiceAgentServerUpdateSessionAvatarSwitchToSpeaking() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateSessionSubagentAborted : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateSessionSubagentAborted>
+    {
+        public VoiceAgentServerUpdateSessionSubagentAborted() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateSessionSubagentCompleted : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateSessionSubagentCompleted>
+    {
+        public VoiceAgentServerUpdateSessionSubagentCompleted() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
+    public sealed partial class VoiceAgentServerUpdateSessionSubagentStarted : Azure.AI.Projects.Agents.VoiceAgentServerUpdateBase<Azure.AI.Projects.Agents.VoiceAgentServerUpdateSessionSubagentStarted>
+    {
+        public VoiceAgentServerUpdateSessionSubagentStarted() : base (default(OpenAI.Realtime.RealtimeServerUpdateKind)) { }
+        public string EventId { get { throw null; } }
+    }
     public partial class VoiceAgentServerVadTurnDetection : Azure.AI.Projects.Agents.VoiceAgentTurnDetectionConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentServerVadTurnDetection>
     {
         public VoiceAgentServerVadTurnDetection() { }
@@ -5312,6 +5416,7 @@ namespace Azure.AI.Projects.Agents
         public System.BinaryData Data { get { throw null; } }
         public OpenAI.RealtimeServerEventType? EventType { get { throw null; } }
         public System.Net.WebSockets.WebSocketMessageType MessageType { get { throw null; } }
+        public T As<T>() where T : OpenAI.Realtime.RealtimeServerUpdate { throw null; }
     }
     public partial class VoiceAgentStaticInterimResponseConfig : Azure.AI.Projects.Agents.VoiceAgentInterimResponseConfig, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.VoiceAgentStaticInterimResponseConfig>
     {

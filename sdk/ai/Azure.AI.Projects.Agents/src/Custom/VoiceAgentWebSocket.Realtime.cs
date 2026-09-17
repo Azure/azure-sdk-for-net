@@ -352,29 +352,14 @@ public class VoiceAgentSession : RealtimeSessionClient, IAsyncDisposable
     /// <param name="clientSdp"> The client's SDP offer for avatar media negotiation. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     public virtual Task ConnectAvatarAsync(string clientSdp, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(clientSdp, nameof(clientSdp));
-        BinaryData command = BuildEvent(RealtimeClientEventType.SessionAvatarConnect, writer => writer.WriteString("client_sdp", clientSdp));
-        return SendCommandAsync(command, cancellationToken);
-    }
+        => SendCommandAsync(new VoiceAgentClientCommandSessionAvatarConnect(clientSdp), cancellationToken);
 
     /// <summary> Sends a <c>rtc.call.sdp.create</c> event to begin WebRTC call signaling with an SDP offer. </summary>
     /// <param name="sdpOffer"> The client's SDP offer for the WebRTC connection. </param>
     /// <param name="session"> Optional raw session configuration; for an <c>/agents</c> endpoint the service rebuilds it authoritatively from the persisted agent definition. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
     public virtual Task CreateRtcCallSdpAsync(string sdpOffer, BinaryData session = null, CancellationToken cancellationToken = default)
-    {
-        Argument.AssertNotNullOrEmpty(sdpOffer, nameof(sdpOffer));
-        BinaryData command = BuildEvent(RealtimeClientEventType.RtcCallSdpCreate, writer =>
-        {
-            writer.WriteString("sdp_offer", sdpOffer);
-            if (session is not null)
-            {
-                WriteRawProperty(writer, "session", session);
-            }
-        });
-        return SendCommandAsync(command, cancellationToken);
-    }
+        => SendCommandAsync(new VoiceAgentClientCommandRtcCallSdpCreate(sdpOffer, session), cancellationToken);
 
     private static BinaryData BuildEvent(RealtimeClientEventType type, Action<Utf8JsonWriter> writeAdditionalProperties = null)
     {
@@ -487,4 +472,13 @@ public class VoiceAgentSessionMessage
             return null;
         }
     }
+
+    /// <summary>
+    /// Deserializes this message's payload as a strongly-typed realtime server update (for
+    /// example <see cref="VoiceAgentServerUpdateSessionAvatarConnecting"/>). Check
+    /// <see cref="EventType"/> first to determine which <typeparamref name="T"/> to use.
+    /// </summary>
+    /// <typeparam name="T"> The target realtime server update type, matching this message's <see cref="EventType"/>. </typeparam>
+    public T As<T>() where T : RealtimeServerUpdate
+        => ModelReaderWriter.Read<T>(Data, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default);
 }

@@ -69,7 +69,7 @@ public class VoiceAgentConversationTests : VoiceAgentLiveTestBase
                 {
                     Input = new VoiceAgentAudioInputConfig
                     {
-                        Format = CreatePcmAudioFormat(24000),
+                        Format = new RealtimePcmAudioFormat { Rate = 24000 },
                     },
                 },
             };
@@ -79,18 +79,6 @@ public class VoiceAgentConversationTests : VoiceAgentLiveTestBase
                 new ProjectsAgentVersionCreationOptions(definition),
                 cancellationToken: cancellationToken);
         }
-    }
-
-    /// <summary>
-    /// Builds a PCM audio format at the given sample rate. <see cref="RealtimePcmAudioFormat.Rate"/> is
-    /// read-only in the current OpenAI SDK "patch model" shape, so the rate must be set through the
-    /// underlying <see cref="System.ClientModel.Primitives.JsonPatch"/> instead of an object initializer.
-    /// </summary>
-    private static RealtimePcmAudioFormat CreatePcmAudioFormat(int rate)
-    {
-        RealtimePcmAudioFormat format = new();
-        format.Patch.Set("$.rate"u8, rate);
-        return format;
     }
 
     // -----------------------------------------------------------------------
