@@ -50,7 +50,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Extended location of the VM recovery point,
         /// should be null if VM is in public cloud
         /// </param>
-        internal IaasVmRecoveryPoint(string objectType, BackupThreatStatus? threatStatus, IList<BackupThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVmStorageType, bool? isSourceVmEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, string securityType, RecoveryPointProperties recoveryPointProperties, bool? isPrivateAccessEnabledOnAnyDisk, ExtendedLocation extendedLocation) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
+        /// <param name="dataDiskMetadata"> Data disk metadata for the VM recovery point. </param>
+        internal IaasVmRecoveryPoint(string objectType, BackupThreatStatus? threatStatus, IList<BackupThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVmStorageType, bool? isSourceVmEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, string securityType, RecoveryPointProperties recoveryPointProperties, bool? isPrivateAccessEnabledOnAnyDisk, ExtendedLocation extendedLocation, DataDiskDetails dataDiskMetadata) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointProperties = recoveryPointProperties;
             IsPrivateAccessEnabledOnAnyDisk = isPrivateAccessEnabledOnAnyDisk;
             ExtendedLocation = extendedLocation;
+            DataDiskMetadata = dataDiskMetadata;
         }
 
         /// <summary> Type of the backup copy. </summary>
@@ -132,5 +134,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// should be null if VM is in public cloud
         /// </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary> Data disk metadata for the VM recovery point. </summary>
+        internal DataDiskDetails DataDiskMetadata { get; set; }
+
+        /// <summary> List of data disks in the VM which are encrypted at the time of backup. This will be used to provide Disk Encryption Set Id for each data disk. </summary>
+        public IList<DiskDetails> EncryptedDataDisks
+        {
+            get
+            {
+                if (DataDiskMetadata is null)
+                {
+                    DataDiskMetadata = new DataDiskDetails();
+                }
+                return DataDiskMetadata.EncryptedDataDisks;
+            }
+        }
     }
 }

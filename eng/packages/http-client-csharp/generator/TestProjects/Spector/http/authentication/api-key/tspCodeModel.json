@@ -8,6 +8,7 @@
       "$id": "1",
       "kind": "model",
       "name": "InvalidAuth",
+      "apiVersions": [],
       "namespace": "Authentication.ApiKey",
       "crossLanguageDefinitionId": "Authentication.ApiKey.InvalidAuth",
       "usage": "Json,Exception",
@@ -23,6 +24,7 @@
           "$id": "2",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "type": {
             "$id": "3",

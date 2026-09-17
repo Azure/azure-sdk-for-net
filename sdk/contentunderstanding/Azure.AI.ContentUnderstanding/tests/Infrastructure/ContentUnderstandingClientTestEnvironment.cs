@@ -9,7 +9,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.ContentUnderstanding;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.ContentUnderstanding.Tests
 {
@@ -28,10 +30,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// </summary>
         /// <remarks>
         /// This value is read from the environment variable: CONTENTUNDERSTANDING_ENDPOINT
-        /// In Playback mode, a fake endpoint is used: https://fake_contentunderstanding_endpoint.services.ai.azure.com/
+        /// In Playback mode, a sanitized placeholder endpoint is used: https://sanitized.services.ai.azure.com/
         /// The endpoint is sanitized in recordings via URI sanitizers to prevent exposing real service endpoints.
         /// </remarks>
-        public string Endpoint => GetRecordedVariable("CONTENTUNDERSTANDING_ENDPOINT");
+        public string Endpoint => GetRecordedVariable(
+            "CONTENTUNDERSTANDING_ENDPOINT",
+            options => options.IsSecret("https://sanitized.services.ai.azure.com/"));
 
         /// <summary>
         /// Gets the API key for authenticating with the Content Understanding service.
@@ -42,19 +46,50 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string ApiKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_KEY", options => options.IsSecret());
 
         /// <summary>
-        /// Gets the gpt-4.1 deployment name (optional).
+        /// Gets the completion model name (optional).
         /// </summary>
-        public string? Gpt41Deployment => GetRecordedOptionalVariable("GPT_4_1_DEPLOYMENT");
+        public string CompletionModel => GetRecordedOptionalVariable("CU_COMPLETION_MODEL") ?? "gpt-5.2";
 
         /// <summary>
-        /// Gets the gpt-4.1-mini deployment name (optional).
+        /// Gets the completion model deployment name (optional).
         /// </summary>
-        public string? Gpt41MiniDeployment => GetRecordedOptionalVariable("GPT_4_1_MINI_DEPLOYMENT");
+        public string? CompletionModelDeployment => GetRecordedOptionalVariable("CU_COMPLETION_MODEL_DEPLOYMENT");
 
         /// <summary>
-        /// Gets the text-embedding-3-large deployment name (optional).
+        /// Gets the mini completion model deployment name (optional).
         /// </summary>
-        public string? TextEmbedding3LargeDeployment => GetRecordedOptionalVariable("TEXT_EMBEDDING_3_LARGE_DEPLOYMENT");
+        public string? CompletionMiniDeployment => GetRecordedOptionalVariable("CU_COMPLETION_MINI_DEPLOYMENT");
+
+        /// <summary>
+        /// Gets the embedding model deployment name (optional).
+        /// </summary>
+        public string? EmbeddingDeployment => GetRecordedOptionalVariable("CU_EMBEDDING_DEPLOYMENT");
+
+        internal ContentUnderstandingModelProfile GetModelProfile(ContentUnderstandingClientOptions.ServiceVersion serviceVersion)
+        {
+            // Prefer env/recorded variables; fall back to values used in current V2025_11_01 SessionRecords
+            // so playback matches today and future re-records can override via env.
+            return serviceVersion switch
+            {
+                ContentUnderstandingClientOptions.ServiceVersion.V2025_11_01 => new ContentUnderstandingModelProfile(
+                    GetRecordedOptionalVariable("CU_COMPLETION_MODEL") ?? "gpt-4.1", // completion model name
+                    GetRecordedOptionalVariable("GPT_4_1_DEPLOYMENT") ?? CompletionModelDeployment ?? "gpt-4.1", // completion deployment name
+                    "gpt-4.1-mini", // mini completion model name
+                    GetRecordedOptionalVariable("GPT_4_1_MINI_DEPLOYMENT") ?? CompletionMiniDeployment ?? "foundrythreiscae/gpt-4.1-mini", // mini completion deployment name
+                    "text-embedding-3-large", // embedding model name
+                    GetRecordedOptionalVariable("TEXT_EMBEDDING_3_LARGE_DEPLOYMENT") ?? EmbeddingDeployment ?? "text-embedding-3-large", // embedding deployment name
+                    includesPrebuiltAliases: false),
+                ContentUnderstandingClientOptions.ServiceVersion.V2026_06_01_Preview => new ContentUnderstandingModelProfile(
+                    CompletionModel, // completion model name
+                    CompletionModelDeployment, // completion deployment name
+                    "gpt-5.2", // mini completion model name
+                    CompletionMiniDeployment, // mini completion deployment name
+                    "text-embedding-3-large", // embedding model name
+                    EmbeddingDeployment, // embedding deployment name
+                    includesPrebuiltAliases: true),
+                _ => throw new ArgumentOutOfRangeException(nameof(serviceVersion), serviceVersion, "Unsupported service version.")
+            };
+        }
 
         /// <summary>
         /// Gets the source resource ID for cross-resource copying (optional).
@@ -69,7 +104,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <summary>
         /// Gets the target endpoint for cross-resource copying (optional).
         /// </summary>
-        public string TargetEndpoint => GetRecordedVariable("CONTENTUNDERSTANDING_TARGET_ENDPOINT");
+        public string TargetEndpoint => GetRecordedVariable(
+            "CONTENTUNDERSTANDING_TARGET_ENDPOINT",
+            options => options.IsSecret("https://sanitized.services.ai.azure.com/"));
 
         /// <summary>
         /// Gets the target resource ID for cross-resource copying (optional).
@@ -119,11 +156,18 @@ namespace Azure.AI.ContentUnderstanding.Tests
             return BinaryData.FromBytes(bytes);
         }
 
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            // The base developer credential (Azure.Core.TestFramework, PR #57407) leads with an
+            // interactive broker credential that hangs in headless hosts (e.g. Linux dotnet test)
+            // and targets the Azure SDK test tenant. Use AzureCliCredential for local developer runs.
+            return new AzureCliCredential();
+        }
+
         protected override async ValueTask<bool> IsEnvironmentReadyAsync()
         {
             var endpoint = new Uri(Endpoint);
-            var credential = Credential;
-            var client = new ContentUnderstandingClient(endpoint, credential);
+            var client = new ContentUnderstandingClient(endpoint, Credential);
 
             try
             {

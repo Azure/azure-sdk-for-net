@@ -116,7 +116,7 @@ namespace Azure.Provisioning.Kubernetes
         public Azure.Provisioning.BicepValue<bool> IsGatewayEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KubernetesVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastConnectivityOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ManagedIdentityCertificateExpirationOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ManagedIdentityCertificateExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> MiscellaneousProperties { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Offering { get { throw null; } }
         public Azure.Provisioning.Kubernetes.ConnectedClusterOidcIssuerProfile OidcIssuerProfile { get { throw null; } set { } }

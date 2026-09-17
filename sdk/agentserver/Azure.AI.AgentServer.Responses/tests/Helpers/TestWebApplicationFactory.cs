@@ -23,7 +23,8 @@ public sealed class TestWebApplicationFactory : IDisposable
         Action<ResponsesServerOptions>? configureOptions = null,
         string? routePrefix = null,
         Action<IServiceCollection>? configureTestServices = null,
-        Action<AgentHostOptions>? configureHostOptions = null)
+        Action<AgentHostOptions>? configureHostOptions = null,
+        Action<IServiceCollection>? configureAfterResponsesServices = null)
     {
         var testHandler = handler ?? new TestHandler();
 
@@ -42,6 +43,7 @@ public sealed class TestWebApplicationFactory : IDisposable
                     services.AddSingleton<ResponseHandler>(testHandler);
                     configureTestServices?.Invoke(services);
                     services.AddResponsesServer(configureOptions);
+                    configureAfterResponsesServices?.Invoke(services);
                 });
                 webHost.Configure(app =>
                 {
@@ -62,6 +64,8 @@ public sealed class TestWebApplicationFactory : IDisposable
     {
         return _host.GetTestClient();
     }
+
+    public IServiceProvider Services => _host.Services;
 
     /// <summary>
     /// Triggers graceful host shutdown, firing <see cref="IHostedService.StopAsync"/>

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputeBulkActionsOSDisk(ComputeBulkActionsOperatingSystemType? osType, ComputeBulkActionsDiskEncryptionSettings encryptionSettings, string name, VirtualHardDisk vhd, VirtualHardDisk image, ComputeBulkActionsCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeBulkActionsDiffDiskSettings diffDiskSettings, ComputeBulkActionsDiskCreateOptionType createOption, int? diskSizeGB, ComputeBulkActionsManagedDiskInfo managedDisk, ComputeBulkActionsDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsType = osType;
+            OSType = osType;
             EncryptionSettings = encryptionSettings;
             Name = name;
             Vhd = vhd;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         }
 
         /// <summary> This property allows you to specify the type of the OS that is included in the disk if creating a VM from user-image or a specialized VHD. Possible values are: Windows, Linux. </summary>
-        public ComputeBulkActionsOperatingSystemType? OsType { get; set; }
+        public ComputeBulkActionsOperatingSystemType? OSType { get; set; }
 
         /// <summary> Specifies the encryption settings for the OS Disk. Minimum compute api-version: 2015-06-15. </summary>
         public ComputeBulkActionsDiskEncryptionSettings EncryptionSettings { get; set; }

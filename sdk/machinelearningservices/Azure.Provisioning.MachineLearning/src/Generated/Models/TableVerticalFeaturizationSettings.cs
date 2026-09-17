@@ -6,19 +6,17 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Featurization Configuration. </summary>
-    public partial class TableVerticalFeaturizationSettings : ProvisionableConstruct
+    public partial class TableVerticalFeaturizationSettings : MachineLearningFeaturizationSettings
     {
         private BicepList<BlockedTransformer> _blockedTransformers;
         private BicepDictionary<string> _columnNameAndTypes;
         private BicepValue<bool> _enableDnnFeaturization;
         private BicepValue<MachineLearningFeaturizationMode> _mode;
         private BicepDictionary<BicepList<ColumnTransformer>> _transformerParams;
-        private BicepValue<string> _datasetLanguage;
 
         /// <summary> Creates a new TableVerticalFeaturizationSettings. </summary>
         public TableVerticalFeaturizationSettings()
@@ -100,21 +98,6 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the DatasetLanguage. </summary>
-        public BicepValue<string> DatasetLanguage
-        {
-            get
-            {
-                Initialize();
-                return _datasetLanguage;
-            }
-            set
-            {
-                Initialize();
-                _datasetLanguage.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for TableVerticalFeaturizationSettings. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -124,7 +107,6 @@ namespace Azure.Provisioning.MachineLearning
             _enableDnnFeaturization = DefineProperty<bool>(nameof(EnableDnnFeaturization), new string[] { "enableDnnFeaturization" });
             _mode = DefineProperty<MachineLearningFeaturizationMode>(nameof(Mode), new string[] { "mode" });
             _transformerParams = DefineDictionaryProperty<BicepList<ColumnTransformer>>(nameof(TransformerParams), new string[] { "transformerParams" });
-            _datasetLanguage = DefineProperty<string>(nameof(DatasetLanguage), new string[] { "datasetLanguage" });
             DefineAdditionalProperties();
         }
 

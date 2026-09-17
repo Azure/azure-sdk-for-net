@@ -201,17 +201,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
 
                 dropCodeString ??= dropCode.ToString();
 
-                if (telemetrySchemaTypeCounter._requestCount != 0)
-                {
-                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.Request, dropCodeString, dropReason);
-                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._requestCount, tags);
-                }
+                TrackDroppedBySuccess(
+                    TelemetryType.Request,
+                    telemetrySchemaTypeCounter._requestCount,
+                    telemetrySchemaTypeCounter._requestSuccessCount,
+                    telemetrySchemaTypeCounter._requestFailureCount,
+                    dropCodeString,
+                    dropReason);
 
-                if (telemetrySchemaTypeCounter._dependencyCount != 0)
-                {
-                    var tags = CustomerSdkStatsDimensions.GetDroppedTags(TelemetryType.Dependency, dropCodeString, dropReason);
-                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._dependencyCount, tags);
-                }
+                TrackDroppedBySuccess(
+                    TelemetryType.Dependency,
+                    telemetrySchemaTypeCounter._dependencyCount,
+                    telemetrySchemaTypeCounter._dependencySuccessCount,
+                    telemetrySchemaTypeCounter._dependencyFailureCount,
+                    dropCodeString,
+                    dropReason);
 
                 if (telemetrySchemaTypeCounter._exceptionCount != 0)
                 {
@@ -241,6 +245,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
             {
                 AzureMonitorExporterEventSource.Log.CustomerSdkStatsTrackingFailed("dropped", ex);
             }
+        }
+
+        private static void TrackDroppedBySuccess(
+            TelemetryType telemetryType,
+            int totalCount,
+            int successCount,
+            int failureCount,
+            string dropCode,
+            string? dropReason)
+        {
+            TrackDroppedCount(telemetryType, successCount, dropCode, dropReason, telemetrySuccess: true);
+            TrackDroppedCount(telemetryType, failureCount, dropCode, dropReason, telemetrySuccess: false);
+            TrackDroppedCount(telemetryType, Math.Max(0, totalCount - successCount - failureCount), dropCode, dropReason, telemetrySuccess: null);
+        }
+
+        private static void TrackDroppedCount(
+            TelemetryType telemetryType,
+            int count,
+            string dropCode,
+            string? dropReason,
+            bool? telemetrySuccess)
+        {
+            if (count == 0)
+            {
+                return;
+            }
+
+            var tags = CustomerSdkStatsDimensions.GetDroppedTags(telemetryType, dropCode, dropReason, telemetrySuccess);
+            CustomerSdkStatsMeters.ItemDroppedCount.Add(count, tags);
         }
 
         /// <summary>

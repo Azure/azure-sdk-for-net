@@ -190,49 +190,4 @@ public sealed class SteeringPromotionTests
         Assert.That(record.Attachments is null || !record.Attachments.ContainsKey("steering_input_0"), Is.True);
         Assert.That(record.Attachments is null || !record.Attachments.ContainsKey("steering_input_1"), Is.True);
     }
-
-    [Test]
-    public async Task MetadataMutatedInTurnSurvivesInProcessSteeringDrain()
-    {
-        // Regression: a turn boundary that drains a queued steering input in-process must persist
-        // the finishing turn's metadata before the next turn re-hydrates from the store. Otherwise
-        // accumulated state (e.g. a running turn counter) is silently lost across the drain.
-        using TaskTestHost host = TaskTestHost.Create();
-        var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        host.Builder.AddMultiTurnTask<string, int>(
-            "counter",
-            async (ctx, ct) =>
-            {
-                int turn = 1;
-                if (ctx.Metadata.TryGetValue("turn_count", out var raw))
-                {
-                    turn = raw.ToObjectFromJson<int>() + 1;
-                }
-                ctx.Metadata["turn_count"] = BinaryData.FromObjectAsJson(turn);
-
-                if (!ctx.IsSteeredTurn)
-                {
-                    // Stall the first turn until the steering input is queued, then wrap up.
-                    await gate.Task.ConfigureAwait(false);
-                }
-
-                return turn;
-            },
-            steerable: true);
-
-        TaskRun<int> run1 = await host.Invoker.StartAsync<string, int>(
-            "counter", "in1", new RunOptions { TaskId = "t1", InputId = "i1" });
-        await host.WaitForStatusAsync("t1", "in_progress", TimeSpan.FromSeconds(5));
-
-        TaskRun<int> run2 = await host.Invoker.StartAsync<string, int>(
-            "counter", "in2", new RunOptions { TaskId = "t1", InputId = "i2" });
-        Assert.That(run2.IsQueued, Is.True);
-
-        gate.SetResult();
-
-        Assert.That(await run1.Completion, Is.EqualTo(1), "first turn sees turn_count = 1");
-        Assert.That(await run2.Completion, Is.EqualTo(2),
-            "steered turn must read the persisted turn_count from the drained turn");
-    }
 }

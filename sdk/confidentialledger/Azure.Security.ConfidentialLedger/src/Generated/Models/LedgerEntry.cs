@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
     /// <summary> An entry in the ledger. </summary>
     public partial class LedgerEntry
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LedgerEntry"/>. </summary>
         /// <param name="contents"> Contents of the ledger entry. </param>
@@ -72,36 +44,35 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// List of user defined function hooks to be executed after the ledger entry is
         /// written.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LedgerEntry(string contents, string collectionId, string transactionId, IList<UserDefinedFunctionHook> preHooks, IList<UserDefinedFunctionHook> postHooks, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LedgerEntry(string contents, string collectionId, string transactionId, IList<UserDefinedFunctionHook> preHooks, IList<UserDefinedFunctionHook> postHooks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Contents = contents;
             CollectionId = collectionId;
             TransactionId = transactionId;
             PreHooks = preHooks;
             PostHooks = postHooks;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LedgerEntry"/> for deserialization. </summary>
-        internal LedgerEntry()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Contents of the ledger entry. </summary>
         public string Contents { get; set; }
+
         /// <summary> The collection identifier for this ledger entry. </summary>
         public string CollectionId { get; }
+
         /// <summary>
         /// A unique identifier for the state of the ledger. If returned as part of a
         /// LedgerEntry, it indicates the state from which the entry was read.
         /// </summary>
         public string TransactionId { get; }
+
         /// <summary>
         /// List of user defined function hooks to be executed before the ledger entry is
         /// written.
         /// </summary>
         public IList<UserDefinedFunctionHook> PreHooks { get; }
+
         /// <summary>
         /// List of user defined function hooks to be executed after the ledger entry is
         /// written.

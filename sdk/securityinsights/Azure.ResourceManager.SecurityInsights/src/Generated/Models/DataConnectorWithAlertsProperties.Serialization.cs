@@ -13,7 +13,6 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Data connector properties. </summary>
     internal partial class DataConnectorWithAlertsProperties : IJsonModel<DataConnectorWithAlertsProperties>
     {
         /// <param name="data"> The data to parse. </param>

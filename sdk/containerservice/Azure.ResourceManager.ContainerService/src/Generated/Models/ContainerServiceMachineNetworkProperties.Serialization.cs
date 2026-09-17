@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("podSubnetID"u8);
                 writer.WriteStringValue(PodSubnetId);
             }
-            if (Optional.IsDefined(IsNodePublicIpEnabled))
+            if (Optional.IsDefined(IsNodePublicIPEnabled))
             {
                 writer.WritePropertyName("enableNodePublicIP"u8);
-                writer.WriteBooleanValue(IsNodePublicIpEnabled.Value);
+                writer.WriteBooleanValue(IsNodePublicIPEnabled.Value);
             }
-            if (Optional.IsDefined(NodePublicIpPrefixId))
+            if (Optional.IsDefined(NodePublicIPPrefixId))
             {
                 writer.WritePropertyName("nodePublicIPPrefixID"u8);
-                writer.WriteStringValue(NodePublicIpPrefixId);
+                writer.WriteStringValue(NodePublicIPPrefixId);
             }
             if (Optional.IsCollectionDefined(NodePublicIPTags))
             {
@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             IReadOnlyList<ContainerServiceMachineIPAddress> ipAddresses = default;
             ResourceIdentifier vnetSubnetId = default;
             ResourceIdentifier podSubnetId = default;
-            bool? isNodePublicIpEnabled = default;
-            ResourceIdentifier nodePublicIpPrefixId = default;
+            bool? isNodePublicIPEnabled = default;
+            ResourceIdentifier nodePublicIPPrefixId = default;
             IList<ContainerServiceIPTag> nodePublicIPTags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    isNodePublicIpEnabled = prop.Value.GetBoolean();
+                    isNodePublicIPEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("nodePublicIPPrefixID"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    nodePublicIpPrefixId = new ResourceIdentifier(prop.Value.GetString());
+                    nodePublicIPPrefixId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("nodePublicIPTags"u8))
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 ipAddresses ?? new ChangeTrackingList<ContainerServiceMachineIPAddress>(),
                 vnetSubnetId,
                 podSubnetId,
-                isNodePublicIpEnabled,
-                nodePublicIpPrefixId,
+                isNodePublicIPEnabled,
+                nodePublicIPPrefixId,
                 nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(),
                 additionalBinaryDataProperties);
         }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 throw new FormatException($"The model {nameof(PartnerTransferProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(TransferStatus))
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             PartnerTransferStatus? transferStatus = default;
             string recipientEmailId = default;
             InitiatorCustomerType? initiatorCustomerType = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("transferStatus"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             return new PartnerTransferProperties(
-                expireOn,
+                expiresOn,
                 transferStatus,
                 recipientEmailId,
                 initiatorCustomerType,

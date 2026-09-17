@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
             writer.WritePropertyName("sourceIpAddress"u8);
-            writer.WriteStringValue(SourceIpAddress);
+            writer.WriteStringValue(SourceIPAddress);
             if (Optional.IsDefined(SourcePort))
             {
                 writer.WritePropertyName("sourcePort"u8);
                 writer.WriteNumberValue(SourcePort.Value);
             }
             writer.WritePropertyName("destinationIpAddress"u8);
-            writer.WriteStringValue(DestinationIpAddress);
+            writer.WriteStringValue(DestinationIPAddress);
             writer.WritePropertyName("destinationPort"u8);
             writer.WriteNumberValue(DestinationPort);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -135,9 +135,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             CustomCaptureConfigurationsProtocol protocol = default;
-            string sourceIpAddress = default;
+            string sourceIPAddress = default;
             int? sourcePort = default;
-            string destinationIpAddress = default;
+            string destinationIPAddress = default;
             int destinationPort = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (prop.NameEquals("sourceIpAddress"u8))
                 {
-                    sourceIpAddress = prop.Value.GetString();
+                    sourceIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("sourcePort"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (prop.NameEquals("destinationIpAddress"u8))
                 {
-                    destinationIpAddress = prop.Value.GetString();
+                    destinationIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("destinationPort"u8))
@@ -178,9 +178,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             return new CustomCaptureConfigurationsFilter(
                 protocol,
-                sourceIpAddress,
+                sourceIPAddress,
                 sourcePort,
-                destinationIpAddress,
+                destinationIPAddress,
                 destinationPort,
                 additionalBinaryDataProperties);
         }

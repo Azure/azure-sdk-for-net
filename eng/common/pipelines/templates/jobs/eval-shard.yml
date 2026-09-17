@@ -74,6 +74,9 @@ jobs:
           npmrcPath: $(Build.SourcesDirectory)/.npmrc
           registryUrl: https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-tools/npm/registry/
 
+      - script: npm install --global npm@11.11.1 --userconfig $(Build.SourcesDirectory)/.npmrc
+        displayName: 'Use npm 11.11.1'
+
       # Installs vally-cli + its pinned copilot-sdk executor into node_modules.
       - script: npm ci --userconfig $(Build.SourcesDirectory)/.npmrc
         displayName: 'Install Vally CLI + copilot-sdk (pinned)'

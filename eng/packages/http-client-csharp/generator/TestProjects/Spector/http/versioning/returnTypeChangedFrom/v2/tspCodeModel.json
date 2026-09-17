@@ -9,6 +9,10 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "v1",
+        "v2"
+      ],
       "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.Versions",
       "valueType": {
         "$id": "2",

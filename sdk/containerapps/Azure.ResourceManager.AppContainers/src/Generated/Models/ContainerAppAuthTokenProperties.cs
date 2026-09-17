@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppAuthTokenProperties"/>. </summary>
         /// <param name="token"> Auth token value. </param>
-        /// <param name="expireOn"> Token expiration date. </param>
+        /// <param name="expiresOn"> Token expiration date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppAuthTokenProperties(string token, DateTimeOffset? expireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppAuthTokenProperties(string token, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Token expiration date. </summary>
         [WirePath("expires")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

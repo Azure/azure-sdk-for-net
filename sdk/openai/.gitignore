@@ -1,5 +1,4 @@
 package-lock.json
-TempTypeSpecFiles/
 tests/SessionRecords
 external/
 **/Generated/cadl.json

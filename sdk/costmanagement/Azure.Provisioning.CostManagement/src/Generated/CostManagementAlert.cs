@@ -90,7 +90,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.Definition;
+                return Properties is null ? default : Properties.Definition;
             }
         }
 
@@ -99,7 +99,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.Source;
+                return Properties is null ? default : Properties.Source;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.Details;
+                return Properties is null ? default : Properties.Details;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.CostEntityId;
+                return Properties is null ? default : Properties.CostEntityId;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.CloseOn;
+                return Properties is null ? default : Properties.CloseOn;
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.ModifiedOn;
+                return Properties is null ? default : Properties.ModifiedOn;
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.StatusModificationUserName;
+                return Properties is null ? default : Properties.StatusModificationUserName;
             }
         }
 
@@ -180,7 +180,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.StatusModifiedOn;
+                return Properties is null ? default : Properties.StatusModifiedOn;
             }
         }
 

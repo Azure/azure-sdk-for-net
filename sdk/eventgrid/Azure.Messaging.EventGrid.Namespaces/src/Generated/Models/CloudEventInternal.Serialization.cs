@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             if (Optional.IsDefined(DataBase64))
             {
                 writer.WritePropertyName("data_base64"u8);
-                writer.WriteBase64StringValue(DataBase64.ToArray(), "D");
+                writer.WriteBase64StringValue(DataBase64, "D");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -204,7 +204,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                     {
                         continue;
                     }
-                    data = BinaryData.FromString(prop.Value.GetRawText());
+                    data = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("data_base64"u8))
@@ -252,7 +252,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CloudEventInternal(

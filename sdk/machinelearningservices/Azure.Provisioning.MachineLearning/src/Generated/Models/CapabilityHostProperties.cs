@@ -6,12 +6,11 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> The CapabilityHostProperties. </summary>
-    public partial class CapabilityHostProperties : ProvisionableConstruct
+    public partial class CapabilityHostProperties : MachineLearningResourceBase
     {
         private BicepList<string> _acaEnvironmentConnections;
         private BicepList<string> _aiServicesConnections;
@@ -22,9 +21,6 @@ namespace Azure.Provisioning.MachineLearning
         private BicepList<string> _threadStorageConnections;
         private BicepList<string> _vectorStoreConnections;
         private BicepList<string> _messages;
-        private BicepValue<string> _description;
-        private BicepDictionary<string> _properties;
-        private BicepDictionary<string> _tags;
 
         /// <summary> Creates a new CapabilityHostProperties. </summary>
         public CapabilityHostProperties()
@@ -156,51 +152,6 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
-        {
-            get
-            {
-                Initialize();
-                return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        public BicepDictionary<string> Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                _properties.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Tags. </summary>
-        public BicepDictionary<string> Tags
-        {
-            get
-            {
-                Initialize();
-                return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CapabilityHostProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -214,9 +165,6 @@ namespace Azure.Provisioning.MachineLearning
             _threadStorageConnections = DefineListProperty<string>(nameof(ThreadStorageConnections), new string[] { "threadStorageConnections" });
             _vectorStoreConnections = DefineListProperty<string>(nameof(VectorStoreConnections), new string[] { "vectorStoreConnections" });
             _messages = DefineListProperty<string>(nameof(Messages), new string[] { "messages" }, isOutput: true);
-            _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _properties = DefineDictionaryProperty<string>(nameof(Properties), new string[] { "properties" });
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             DefineAdditionalProperties();
         }
 

@@ -1,6 +1,16 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/compute/Azure.ResourceManager.Compute
+    - sdk/compute/Azure.Provisioning.Compute
+    - sdk/compute/Azure.ResourceManager.Compute.BulkActions
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

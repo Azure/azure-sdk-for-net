@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
 
@@ -347,6 +348,7 @@ namespace Azure.ResourceManager.CosmosDB
     [ModelReaderWriterBuildable(typeof(PrivateEndpointProperty))]
     [ModelReaderWriterBuildable(typeof(RegionForOnlineOffline))]
     [ModelReaderWriterBuildable(typeof(ResourceRestoreParameters))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestorableCosmosDBAccountData))]
     [ModelReaderWriterBuildable(typeof(RestorableCosmosDBAccountResource))]
     [ModelReaderWriterBuildable(typeof(RestorableDatabaseAccountProperties))]

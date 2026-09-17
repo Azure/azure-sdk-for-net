@@ -12,9 +12,13 @@ on:
 
 permissions:
   actions: write
-  checks: write
+  checks: read
   contents: read
   pull-requests: read
+
+concurrency:
+  group: mgmt-review-dispatch-${{ github.event.check_run.head_sha || inputs.pr_number }}
+  queue: max
 
 jobs:
   dispatch-mgmt-review:
@@ -49,30 +53,26 @@ jobs:
               sed -n '1s/^[^\t]*\t//p'
           }
 
-          has_active_management_review_check() {
+          has_active_management_review() {
             local head_sha="$1"
+            local pr_number="$2"
             local review_check_ids
             review_check_ids="$(gh api --paginate "repos/$REPOSITORY/commits/$head_sha/check-runs?per_page=100" \
-              --jq '.check_runs[] | select(.name == "Azure .NET Management SDK PR Review" and (.status == "queued" or .status == "in_progress")) | .id')"
-            [ -n "$review_check_ids" ]
-          }
-
-          create_management_review_check() {
-            local head_sha="$1"
-            local details_url="${GITHUB_SERVER_URL:-https://github.com}/$REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-
-            if has_active_management_review_check "$head_sha"; then
-              echo "Management review check is already active for $head_sha."
+              --jq '.check_runs[] | select(.name == "Azure .NET Management SDK PR Review" and (.status == "queued" or .status == "in_progress")) | .id')" || return 2
+            if [ -n "$review_check_ids" ]; then
               return 0
             fi
 
-            gh api --method POST "repos/$REPOSITORY/check-runs" \
-              -f name='Azure .NET Management SDK PR Review' \
-              -f head_sha="$head_sha" \
-              -f status='in_progress' \
-              -f details_url="$details_url" \
-              -f 'output[title]=Azure .NET Management SDK PR Review' \
-              -f "output[summary]=Management SDK PR review is running. See $details_url" >/dev/null
+            local expected_title="Review PR #$pr_number at $head_sha"
+            local status run_ids
+            for status in queued in_progress waiting pending requested; do
+              run_ids="$(gh api --paginate "repos/$REPOSITORY/actions/workflows/mgmt-review.lock.yml/runs?event=workflow_dispatch&status=$status&per_page=100" \
+                --jq ".workflow_runs[] | select(.display_title == \"$expected_title\") | .id")" || return 2
+              if [ -n "$run_ids" ]; then
+                return 0
+              fi
+            done
+            return 1
           }
 
           get_terminal_net_pullrequest_check() {
@@ -95,6 +95,11 @@ jobs:
               return 0
             fi
 
+            if [[ ! "$pr_number" =~ ^[1-9][0-9]*$ ]] || [[ ! "$check_run_head_sha" =~ ^[a-fA-F0-9]{40}$ ]]; then
+              echo "Invalid pull request number or head SHA." >&2
+              return 1
+            fi
+
             if [ "$(gh pr view "$pr_number" --repo "$REPOSITORY" --json isDraft --jq '.isDraft')" = "true" ]; then
               echo "Skipping draft PR #$pr_number."
               return 0
@@ -114,9 +119,14 @@ jobs:
               return 0
             fi
 
-            if has_active_management_review_check "$check_run_head_sha"; then
+            local active_status=0
+            has_active_management_review "$check_run_head_sha" "$pr_number" || active_status=$?
+            if [ "$active_status" -eq 0 ]; then
               echo "Skipping PR #$pr_number; management review check is already active for $check_run_head_sha."
               return 0
+            elif [ "$active_status" -ne 1 ]; then
+              echo "Unable to determine whether a management review is active." >&2
+              return 1
             fi
 
             AW_CONTEXT=$(printf '{"item_type":"pull_request","item_number":%s}' "$pr_number")
@@ -130,7 +140,6 @@ jobs:
               -f check_run_head_sha="$check_run_head_sha" \
               -f check_run_url="$check_run_url"
 
-            create_management_review_check "$check_run_head_sha"
             echo "Dispatched management review for PR #$pr_number."
           }
 

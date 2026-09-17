@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="serialNumber"> The serial number of the bare metal machine. </param>
         /// <param name="actionStates"> The current state of any in progress or completed actions. The most recent known instance of each action type is shown. </param>
         /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
-        /// <param name="bmcIpv4Address"> The IPv4 address of the BMC interface for the bare metal machine. </param>
-        /// <param name="bmcIpv6Address"> The IPv6 address of the BMC interface for the bare metal machine. </param>
+        /// <param name="bmcIPv4Address"> The IPv4 address of the BMC interface for the bare metal machine. </param>
+        /// <param name="bmcIPv6Address"> The IPv6 address of the BMC interface for the bare metal machine. </param>
         /// <param name="caCertificate"> The CA certificate information issued by the platform for connecting to TLS interfaces for the bare metal machine. Callers add this certificate to the trusted CA store on the Kubernetes control plane nodes to allow secure communication with the bare metal machine. </param>
         /// <param name="clusterId"> The resource ID of the cluster this bare metal machine is associated with. </param>
         /// <param name="cordonStatus"> The cordon status of the bare metal machine. </param>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of the resource IDs for the VirtualMachines that are hosted on this bare metal machine. </param>
         /// <param name="provisioningState"> The provisioning state of the bare metal machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BareMetalMachineProperties(string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ResourceIdentifier> associatedResourceIds, string bmcIpv4Address, string bmcIpv6Address, NetworkCloudCertificateInfo caCertificate, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IReadOnlyList<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, IReadOnlyList<string> machineRoles, BareMetalMachineMonitoringConfigurationStatus monitoringConfigurationStatus, IPAddress oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineReadyState? readyState, RuntimeProtectionStatus runtimeProtectionStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serviceTag, IReadOnlyList<string> virtualMachinesAssociatedIds, BareMetalMachineProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BareMetalMachineProperties(string bmcConnectionString, AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, ResourceIdentifier rackId, long rackSlot, string serialNumber, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ResourceIdentifier> associatedResourceIds, string bmcIPv4Address, string bmcIPv6Address, NetworkCloudCertificateInfo caCertificate, ResourceIdentifier clusterId, BareMetalMachineCordonStatus? cordonStatus, BareMetalMachineDetailedStatus? detailedStatus, string detailedStatusMessage, HardwareInventory hardwareInventory, HardwareValidationStatus hardwareValidationStatus, IReadOnlyList<string> hybridAksClustersAssociatedIds, string kubernetesNodeName, string kubernetesVersion, string machineClusterVersion, IReadOnlyList<string> machineRoles, BareMetalMachineMonitoringConfigurationStatus monitoringConfigurationStatus, IPAddress oamIPv4Address, string oamIPv6Address, string osImage, BareMetalMachinePowerState? powerState, BareMetalMachineReadyState? readyState, RuntimeProtectionStatus runtimeProtectionStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serviceTag, IReadOnlyList<string> virtualMachinesAssociatedIds, BareMetalMachineProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BmcConnectionString = bmcConnectionString;
             BmcCredentials = bmcCredentials;
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             SerialNumber = serialNumber;
             ActionStates = actionStates;
             AssociatedResourceIds = associatedResourceIds;
-            BmcIpv4Address = bmcIpv4Address;
-            BmcIpv6Address = bmcIpv6Address;
+            BmcIPv4Address = bmcIPv4Address;
+            BmcIPv6Address = bmcIPv6Address;
             CACertificate = caCertificate;
             ClusterId = clusterId;
             CordonStatus = cordonStatus;
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public IReadOnlyList<ResourceIdentifier> AssociatedResourceIds { get; } = new ChangeTrackingList<ResourceIdentifier>();
 
         /// <summary> The IPv4 address of the BMC interface for the bare metal machine. </summary>
-        public string BmcIpv4Address { get; }
+        public string BmcIPv4Address { get; }
 
         /// <summary> The IPv6 address of the BMC interface for the bare metal machine. </summary>
-        public string BmcIpv6Address { get; }
+        public string BmcIPv6Address { get; }
 
         /// <summary> The CA certificate information issued by the platform for connecting to TLS interfaces for the bare metal machine. Callers add this certificate to the trusted CA store on the Kubernetes control plane nodes to allow secure communication with the bare metal machine. </summary>
         public NetworkCloudCertificateInfo CACertificate { get; }

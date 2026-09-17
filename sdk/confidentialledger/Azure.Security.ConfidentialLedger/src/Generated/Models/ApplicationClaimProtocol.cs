@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
@@ -17,35 +18,52 @@ namespace Azure.Security.ConfidentialLedger.Models
     public readonly partial struct ApplicationClaimProtocol : IEquatable<ApplicationClaimProtocol>
     {
         private readonly string _value;
+        /// <summary> Ledger Entry V1 protocol. </summary>
+        private const string LedgerEntryV1Value = "LedgerEntryV1";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationClaimProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationClaimProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LedgerEntryV1Value = "LedgerEntryV1";
+            _value = value;
+        }
 
         /// <summary> Ledger Entry V1 protocol. </summary>
         public static ApplicationClaimProtocol LedgerEntryV1 { get; } = new ApplicationClaimProtocol(LedgerEntryV1Value);
+
         /// <summary> Determines if two <see cref="ApplicationClaimProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationClaimProtocol left, ApplicationClaimProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationClaimProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationClaimProtocol left, ApplicationClaimProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationClaimProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationClaimProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationClaimProtocol(string value) => new ApplicationClaimProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationClaimProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationClaimProtocol?(string value) => value == null ? null : new ApplicationClaimProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationClaimProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationClaimProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

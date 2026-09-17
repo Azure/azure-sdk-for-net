@@ -5,19 +5,14 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.FrontDoor
 {
     /// <summary> The JSON object that contains the properties required to create a Backend Pool. </summary>
-    internal partial class BackendPoolProperties : ProvisionableConstruct
+    internal partial class BackendPoolProperties : BackendPoolUpdateParameters
     {
         private BicepValue<FrontDoorResourceState> _resourceState;
-        private BicepList<FrontDoorBackend> _backends;
-        private FrontDoorSubResource _loadBalancingSettings;
-        private FrontDoorSubResource _healthProbeSettings;
 
         /// <summary> Creates a new BackendPoolProperties. </summary>
         public BackendPoolProperties()
@@ -34,93 +29,11 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets or sets the Backends. </summary>
-        public BicepList<FrontDoorBackend> Backends
-        {
-            get
-            {
-                Initialize();
-                return _backends;
-            }
-            set
-            {
-                Initialize();
-                _backends.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the LoadBalancingSettings. </summary>
-        internal FrontDoorSubResource LoadBalancingSettings
-        {
-            get
-            {
-                Initialize();
-                return _loadBalancingSettings;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _loadBalancingSettings, value);
-            }
-        }
-
-        /// <summary> Gets or sets the HealthProbeSettings. </summary>
-        internal FrontDoorSubResource HealthProbeSettings
-        {
-            get
-            {
-                Initialize();
-                return _healthProbeSettings;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _healthProbeSettings, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> LoadBalancingSettingsId
-        {
-            get
-            {
-                return LoadBalancingSettings is null ? default : LoadBalancingSettings.Id;
-            }
-            set
-            {
-                if (LoadBalancingSettings is null)
-                {
-                    LoadBalancingSettings = new FrontDoorSubResource();
-                }
-                LoadBalancingSettings.Id = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> HealthProbeSettingsId
-        {
-            get
-            {
-                return HealthProbeSettings is null ? default : HealthProbeSettings.Id;
-            }
-            set
-            {
-                if (HealthProbeSettings is null)
-                {
-                    HealthProbeSettings = new FrontDoorSubResource();
-                }
-                HealthProbeSettings.Id = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for BackendPoolProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _resourceState = DefineProperty<FrontDoorResourceState>(nameof(ResourceState), new string[] { "resourceState" }, isOutput: true);
-            _backends = DefineListProperty<FrontDoorBackend>(nameof(Backends), new string[] { "backends" });
-            _loadBalancingSettings = DefineModelProperty<FrontDoorSubResource>(nameof(LoadBalancingSettings), new string[] { "loadBalancingSettings" });
-            _healthProbeSettings = DefineModelProperty<FrontDoorSubResource>(nameof(HealthProbeSettings), new string[] { "healthProbeSettings" });
             DefineAdditionalProperties();
         }
 

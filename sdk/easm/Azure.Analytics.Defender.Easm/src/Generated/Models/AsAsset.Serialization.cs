@@ -294,10 +294,10 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DetailedFromWhoisAt))
+            if (Optional.IsDefined(DetailedFromWhoisOn))
             {
                 writer.WritePropertyName("detailedFromWhoisAt"u8);
-                writer.WriteStringValue(DetailedFromWhoisAt.Value, "O");
+                writer.WriteStringValue(DetailedFromWhoisOn.Value, "O");
             }
         }
 
@@ -351,7 +351,7 @@ namespace Azure.Analytics.Defender.Easm
             IList<ObservedString> registrantPhones = default;
             IList<ObservedString> adminPhones = default;
             IList<ObservedString> technicalPhones = default;
-            DateTimeOffset? detailedFromWhoisAt = default;
+            DateTimeOffset? detailedFromWhoisOn = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("asn"u8))
@@ -676,12 +676,12 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    detailedFromWhoisAt = prop.Value.GetDateTimeOffset("O");
+                    detailedFromWhoisOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AsAsset(
@@ -710,7 +710,7 @@ namespace Azure.Analytics.Defender.Easm
                 registrantPhones ?? new ChangeTrackingList<ObservedString>(),
                 adminPhones ?? new ChangeTrackingList<ObservedString>(),
                 technicalPhones ?? new ChangeTrackingList<ObservedString>(),
-                detailedFromWhoisAt);
+                detailedFromWhoisOn);
         }
     }
 }

@@ -195,7 +195,7 @@ ReleasePackage -PackageName <package-name> -Language dotnet
 
 ### Required Tools
 
-- **.NET 10.0.103 SDK** (or higher within 10.0.* band)
+- **.NET 10.0.400 SDK** (or higher within 10.0.* band)
 - **PowerShell 7+** for scripts and code generation
 - **Node.js 22.x.x** for TypeSpec and code generation
 - **Git** with proper line ending configuration (see Configuration section below)

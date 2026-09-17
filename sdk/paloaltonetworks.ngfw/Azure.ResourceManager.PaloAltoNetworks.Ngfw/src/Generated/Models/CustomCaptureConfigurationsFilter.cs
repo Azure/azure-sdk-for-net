@@ -19,34 +19,34 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <summary> Initializes a new instance of <see cref="CustomCaptureConfigurationsFilter"/>. </summary>
         /// <param name="protocol"> Network protocol — TCP or UDP. </param>
-        /// <param name="sourceIpAddress"> Source IPv4 address in dotted format (e.g., 10.0.0.5). </param>
-        /// <param name="destinationIpAddress"> Destination IPv4 address in dotted format (e.g., 52.39.204.87). </param>
+        /// <param name="sourceIPAddress"> Source IPv4 address in dotted format (e.g., 10.0.0.5). </param>
+        /// <param name="destinationIPAddress"> Destination IPv4 address in dotted format (e.g., 52.39.204.87). </param>
         /// <param name="destinationPort"> Destination port number (1-65535). Required. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceIpAddress"/> or <paramref name="destinationIpAddress"/> is null. </exception>
-        public CustomCaptureConfigurationsFilter(CustomCaptureConfigurationsProtocol protocol, string sourceIpAddress, string destinationIpAddress, int destinationPort)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceIPAddress"/> or <paramref name="destinationIPAddress"/> is null. </exception>
+        public CustomCaptureConfigurationsFilter(CustomCaptureConfigurationsProtocol protocol, string sourceIPAddress, string destinationIPAddress, int destinationPort)
         {
-            Argument.AssertNotNull(sourceIpAddress, nameof(sourceIpAddress));
-            Argument.AssertNotNull(destinationIpAddress, nameof(destinationIpAddress));
+            Argument.AssertNotNull(sourceIPAddress, nameof(sourceIPAddress));
+            Argument.AssertNotNull(destinationIPAddress, nameof(destinationIPAddress));
 
             Protocol = protocol;
-            SourceIpAddress = sourceIpAddress;
-            DestinationIpAddress = destinationIpAddress;
+            SourceIPAddress = sourceIPAddress;
+            DestinationIPAddress = destinationIPAddress;
             DestinationPort = destinationPort;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomCaptureConfigurationsFilter"/>. </summary>
         /// <param name="protocol"> Network protocol — TCP or UDP. </param>
-        /// <param name="sourceIpAddress"> Source IPv4 address in dotted format (e.g., 10.0.0.5). </param>
+        /// <param name="sourceIPAddress"> Source IPv4 address in dotted format (e.g., 10.0.0.5). </param>
         /// <param name="sourcePort"> Source port number (1-65535). Optional — omit to match any source port. </param>
-        /// <param name="destinationIpAddress"> Destination IPv4 address in dotted format (e.g., 52.39.204.87). </param>
+        /// <param name="destinationIPAddress"> Destination IPv4 address in dotted format (e.g., 52.39.204.87). </param>
         /// <param name="destinationPort"> Destination port number (1-65535). Required. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomCaptureConfigurationsFilter(CustomCaptureConfigurationsProtocol protocol, string sourceIpAddress, int? sourcePort, string destinationIpAddress, int destinationPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomCaptureConfigurationsFilter(CustomCaptureConfigurationsProtocol protocol, string sourceIPAddress, int? sourcePort, string destinationIPAddress, int destinationPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
-            SourceIpAddress = sourceIpAddress;
+            SourceIPAddress = sourceIPAddress;
             SourcePort = sourcePort;
-            DestinationIpAddress = destinationIpAddress;
+            DestinationIPAddress = destinationIPAddress;
             DestinationPort = destinationPort;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public CustomCaptureConfigurationsProtocol Protocol { get; set; }
 
         /// <summary> Source IPv4 address in dotted format (e.g., 10.0.0.5). </summary>
-        public string SourceIpAddress { get; set; }
+        public string SourceIPAddress { get; set; }
 
         /// <summary> Source port number (1-65535). Optional — omit to match any source port. </summary>
         public int? SourcePort { get; set; }
 
         /// <summary> Destination IPv4 address in dotted format (e.g., 52.39.204.87). </summary>
-        public string DestinationIpAddress { get; set; }
+        public string DestinationIPAddress { get; set; }
 
         /// <summary> Destination port number (1-65535). Required. </summary>
         public int DestinationPort { get; set; }
