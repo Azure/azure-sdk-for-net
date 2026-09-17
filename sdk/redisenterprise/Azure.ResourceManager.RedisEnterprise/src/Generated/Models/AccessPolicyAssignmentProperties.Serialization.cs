@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Properties of Redis Enterprise database access policy assignment. </summary>
     internal partial class AccessPolicyAssignmentProperties : IJsonModel<AccessPolicyAssignmentProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentProperties"/> for deserialization. </summary>
-        internal AccessPolicyAssignmentProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AccessPolicyAssignmentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -84,8 +79,21 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            writer.WritePropertyName("accessPolicyName"u8);
-            writer.WriteStringValue(AccessPolicyName);
+            if (Optional.IsDefined(AccessPolicyName))
+            {
+                writer.WritePropertyName("accessPolicyName"u8);
+                writer.WriteStringValue(AccessPolicyName);
+            }
+            if (Optional.IsDefined(AccessString))
+            {
+                writer.WritePropertyName("accessString"u8);
+                writer.WriteStringValue(AccessString);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningError))
+            {
+                writer.WritePropertyName("provisioningError"u8);
+                writer.WriteObjectValue(ProvisioningError, options);
+            }
             writer.WritePropertyName("user"u8);
             writer.WriteObjectValue(User, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -132,6 +140,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
             RedisEnterpriseProvisioningStatus? provisioningState = default;
             string accessPolicyName = default;
+            string accessString = default;
+            AccessPolicyAssignmentProvisioningError provisioningError = default;
             AccessPolicyAssignmentPropertiesUser user = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,6 +160,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     accessPolicyName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("accessString"u8))
+                {
+                    accessString = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("provisioningError"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningError = AccessPolicyAssignmentProvisioningError.DeserializeAccessPolicyAssignmentProvisioningError(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("user"u8))
                 {
                     user = AccessPolicyAssignmentPropertiesUser.DeserializeAccessPolicyAssignmentPropertiesUser(prop.Value, options);
@@ -160,7 +184,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccessPolicyAssignmentProperties(provisioningState, accessPolicyName, user, additionalBinaryDataProperties);
+            return new AccessPolicyAssignmentProperties(
+                provisioningState,
+                accessPolicyName,
+                accessString,
+                provisioningError,
+                user,
+                additionalBinaryDataProperties);
         }
     }
 }

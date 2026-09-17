@@ -26,6 +26,7 @@
       "$id": "3",
       "kind": "model",
       "name": "Blob",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.Blob",
       "usage": "Output,Json",
@@ -41,6 +42,7 @@
           "$id": "4",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "id",
           "type": {
             "$id": "5",
@@ -67,6 +69,7 @@
           "$id": "6",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "7",
@@ -93,6 +96,7 @@
           "$id": "8",
           "kind": "property",
           "name": "size",
+          "apiVersions": [],
           "serializedName": "size",
           "type": {
             "$id": "9",
@@ -119,6 +123,7 @@
           "$id": "10",
           "kind": "property",
           "name": "path",
+          "apiVersions": [],
           "serializedName": "path",
           "type": {
             "$id": "11",

@@ -96,6 +96,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(UsedReservedCountBySubscription))
+            {
+                writer.WritePropertyName("usedReservedCountBySubscription"u8);
+                writer.WriteStartObject();
+                foreach (var item in UsedReservedCountBySubscription)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? currentCapacity = default;
             IReadOnlyList<SubResource> virtualMachinesAllocated = default;
+            IReadOnlyDictionary<string, int> usedReservedCountBySubscription = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,12 +185,26 @@ namespace Azure.ResourceManager.Compute.Models
                     virtualMachinesAllocated = array;
                     continue;
                 }
+                if (prop.NameEquals("usedReservedCountBySubscription"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, prop0.Value.GetInt32());
+                    }
+                    usedReservedCountBySubscription = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CapacityReservationUtilization(currentCapacity, virtualMachinesAllocated ?? new ChangeTrackingList<SubResource>(), additionalBinaryDataProperties);
+            return new CapacityReservationUtilization(currentCapacity, virtualMachinesAllocated ?? new ChangeTrackingList<SubResource>(), usedReservedCountBySubscription ?? new ChangeTrackingDictionary<string, int>(), additionalBinaryDataProperties);
         }
     }
 }

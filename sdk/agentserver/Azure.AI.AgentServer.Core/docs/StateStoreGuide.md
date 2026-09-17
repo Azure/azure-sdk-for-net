@@ -28,7 +28,7 @@ TokenCredential credential = new DefaultAzureCredential();
 
 // GetOrCreateAsync fetches the store, or creates it if it does not exist,
 // in a single call — so you can read and write items right away.
-// Outside Foundry hosting, the local file-backed fallback is always used.
+// Outside Foundry hosting, omitting endpoint uses the local file-backed fallback.
 // In Foundry hosting, endpoint is resolved from FOUNDRY_PROJECT_ENDPOINT.
 FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
     "checkpoints/thread-abc",
@@ -190,7 +190,7 @@ await store.SetItemAsync(
         ["phase"] = BinaryData.FromObjectAsJson("complete"),
     },
     tags: null,
-    ifMatch: null,
+    ifMatch: default,
     requireExists: false,
     callId: persistedCallId);
 ```
@@ -213,7 +213,11 @@ TTL is **store-level**, not per-item — set it once via `itemTtlSeconds` at sto
 
 ## Optimistic concurrency
 
-Use `ifMatch` for a guarded update or delete. When the etag no longer matches, the call throws `FoundryStoragePreconditionException`, whose `CurrentETag` reports the server's current value. Use `requireExists: true` for a strict update that only succeeds when the item already exists.
+State-store models expose optimistic-concurrency values as `Azure.ETag`. Pass an
+`ETag` through `ifMatch` for a guarded update or delete. When the ETag no longer
+matches, the call throws `FoundryStoragePreconditionException`, whose `CurrentETag`
+reports the server's current value. Use `requireExists: true` for a strict update
+that only succeeds when the item already exists.
 
 ```C# Snippet:Core_Sample3_Concurrency
 StateStoreItem? current = await store.GetItemAsync("counter");
@@ -290,7 +294,7 @@ try
     await store.SetItemAsync(
         "step-1",
         new Dictionary<string, BinaryData> { ["done"] = BinaryData.FromObjectAsJson(true) },
-        ifMatch: "\"stale-etag\"");
+        ifMatch: new ETag("\"stale-etag\""));
 }
 catch (FoundryStoragePreconditionException ex)   // 412
 {

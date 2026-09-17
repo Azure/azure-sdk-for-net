@@ -1,14 +1,17 @@
 # Release History
 
-## 3.0.0-beta.2 (Unreleased)
+## 3.0.0-beta.3 (2026-09-16)
 
 ### Features Added
+- Added `GitHubCopilotToolsetPreview`.
 
-### Breaking Changes
+### Sample Updates
+- Added sample for `WebIQPreviewTool`.
 
-### Bugs Fixed
+## 3.0.0-beta.2 (2026-09-03)
 
 ### Other Changes
+- No user-facing changes
 
 ## 3.0.0-beta.1 (2026-08-24)
 

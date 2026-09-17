@@ -49,11 +49,11 @@ public class BasicKubernetesTests
             resource cluster 'Microsoft.Kubernetes/connectedClusters@2025-12-01-preview' = {
               name: take('cluster${uniqueString(resourceGroup().id)}', 24)
               location: location
-              properties: {
-                agentPublicKeyCertificate: 'base64cert'
-              }
               identity: {
                 type: 'SystemAssigned'
+              }
+              properties: {
+                agentPublicKeyCertificate: 'base64cert'
               }
             }
             """);

@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("inVMAccessControlProfileReferenceId"u8);
                 writer.WriteStringValue(InVmAccessControlProfileReferenceId);
             }
+            if (Optional.IsDefined(UseLocalFileRules))
+            {
+                writer.WritePropertyName("useLocalFileRules"u8);
+                writer.WriteBooleanValue(UseLocalFileRules.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             HostEndpointSettingsMode? mode = default;
             string inVmAccessControlProfileReferenceId = default;
+            bool? useLocalFileRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,12 +151,21 @@ namespace Azure.ResourceManager.Compute.Models
                     inVmAccessControlProfileReferenceId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("useLocalFileRules"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    useLocalFileRules = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HostEndpointSettings(mode, inVmAccessControlProfileReferenceId, additionalBinaryDataProperties);
+            return new HostEndpointSettings(mode, inVmAccessControlProfileReferenceId, useLocalFileRules, additionalBinaryDataProperties);
         }
     }
 }

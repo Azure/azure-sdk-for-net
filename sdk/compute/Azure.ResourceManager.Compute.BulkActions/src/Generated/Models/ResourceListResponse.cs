@@ -11,21 +11,21 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Paged collection of ScheduledActionResource items. </summary>
+    /// <summary> A paged list of compute resources associated with a scheduled action. </summary>
     internal partial class ResourceListResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceListResponse"/>. </summary>
-        /// <param name="value"> The ScheduledActionResource items on this page. </param>
+        /// <param name="value"> The compute resources associated with the scheduled action. </param>
         internal ResourceListResponse(IEnumerable<ScheduledActionResourceMetadata> value)
         {
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceListResponse"/>. </summary>
-        /// <param name="value"> The ScheduledActionResource items on this page. </param>
+        /// <param name="value"> The compute resources associated with the scheduled action. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ResourceListResponse(IList<ScheduledActionResourceMetadata> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The ScheduledActionResource items on this page. </summary>
+        /// <summary> The compute resources associated with the scheduled action. </summary>
         public IList<ScheduledActionResourceMetadata> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>

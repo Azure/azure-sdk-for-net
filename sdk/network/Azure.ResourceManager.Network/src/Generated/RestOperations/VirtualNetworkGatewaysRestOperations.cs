@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetVpnProfilePackageUriRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, RequestContext context)
+        internal HttpMessage CreateGetVpnProfilePackageUrlRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

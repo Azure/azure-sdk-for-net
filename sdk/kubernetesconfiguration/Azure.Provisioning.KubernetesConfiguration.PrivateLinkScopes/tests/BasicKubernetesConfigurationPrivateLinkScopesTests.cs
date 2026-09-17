@@ -47,13 +47,13 @@ public class BasicKubernetesConfigurationPrivateLinkScopesTests
 
             resource scope 'Microsoft.KubernetesConfiguration/privateLinkScopes@2024-11-01-preview' = {
               name: take('scope${uniqueString(resourceGroup().id)}', 24)
-              tags: {
-                environment: 'test'
-              }
               location: location
               properties: {
-                publicNetworkAccess: 'Disabled'
                 clusterResourceId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/example'
+                publicNetworkAccess: 'Disabled'
+              }
+              tags: {
+                environment: 'test'
               }
             }
             """);

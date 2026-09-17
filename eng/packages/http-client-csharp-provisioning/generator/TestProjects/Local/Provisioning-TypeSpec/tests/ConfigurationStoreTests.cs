@@ -30,7 +30,7 @@ public class ConfigurationStoreTests
                         RetentionPeriod = new TimeSpan(1, 2, 3, 4),
                         LastModified = timestamp,
                         AuditTimestamps = { timestamp },
-                        ExpirationTimestamp = timestamp,
+                        ExpiresOn = timestamp,
                         ActivationOn = timestamp,
                         ActivationTime = new TimeSpan(0, 2, 3, 4, 5),
                         RetryAfter = TimeSpan.FromMilliseconds(1500),
@@ -51,23 +51,23 @@ public class ConfigurationStoreTests
               name: take('store-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
-                sku: {
-                  name: 'Standard'
-                }
-                publicNetworkAccess: 'Disabled'
-                skuTier: 'Standard_S1'
-                createMode: 'recover'
-                retentionPeriod: 'P1DT2H3M4S'
-                lastModified: 'Wed, 29 Jul 2026 09:30:00 GMT'
+                activationDate: '2026-07-29'
+                activationTime: '02:03:04.0050000'
                 auditTimestamps: [
                   '2026-07-29T09:30:00.0000000Z'
                 ]
-                expirationTimestamp: 1785317400
-                activationDate: '2026-07-29'
-                activationTime: '02:03:04.0050000'
-                retryAfter: 2
-                pollingInterval: 1500
+                createMode: 'recover'
                 encodedInteger: '42'
+                expirationTimestamp: 1785317400
+                lastModified: 'Wed, 29 Jul 2026 09:30:00 GMT'
+                pollingInterval: 1500
+                publicNetworkAccess: 'Disabled'
+                retentionPeriod: 'P1DT2H3M4S'
+                retryAfter: 2
+                sku: {
+                  name: 'Standard'
+                }
+                skuTier: 'Standard_S1'
               }
             }
             """);

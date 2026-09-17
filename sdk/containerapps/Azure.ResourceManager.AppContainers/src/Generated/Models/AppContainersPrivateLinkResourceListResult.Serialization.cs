@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The response of a PrivateLinkResource list operation. </summary>
+    /// <summary> List of private link resources for a managed environment. </summary>
     internal partial class AppContainersPrivateLinkResourceListResult : IJsonModel<AppContainersPrivateLinkResourceListResult>
     {
         /// <summary> Initializes a new instance of <see cref="AppContainersPrivateLinkResourceListResult"/> for deserialization. </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             IList<ContainerAppPrivateLink> value = default;
-            Uri nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,11 +158,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (prop.NameEquals("nextLink"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    nextLink = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

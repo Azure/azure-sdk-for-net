@@ -105,15 +105,15 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(MemberType))
             {
@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.Authorization.Models
             RoleManagementPrincipalType? principalType = default;
             ResourceIdentifier roleEligibilityScheduleId = default;
             RoleManagementScheduleStatus? status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             RoleManagementScheduleMemberType? memberType = default;
             string condition = default;
             string conditionVersion = default;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDateTime"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("memberType"u8))
@@ -315,8 +315,8 @@ namespace Azure.ResourceManager.Authorization.Models
                 principalType,
                 roleEligibilityScheduleId,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 memberType,
                 condition,
                 conditionVersion,

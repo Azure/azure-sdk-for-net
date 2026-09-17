@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Kusto
         {
             get
             {
-                return Properties is null ? default : Properties.Language;
+                return Properties is null ? (SandboxCustomImageLanguage?)default : Properties.Language;
             }
             set
             {

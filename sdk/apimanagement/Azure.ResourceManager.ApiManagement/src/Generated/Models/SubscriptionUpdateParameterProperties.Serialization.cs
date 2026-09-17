@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string ownerId = default;
             string scope = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             string displayName = default;
             string primaryKey = default;
             string secondaryKey = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new SubscriptionUpdateParameterProperties(
                 ownerId,
                 scope,
-                expireOn,
+                expiresOn,
                 displayName,
                 primaryKey,
                 secondaryKey,

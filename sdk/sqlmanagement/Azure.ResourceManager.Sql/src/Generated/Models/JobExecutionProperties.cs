@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="lifecycle"> The detailed state of the job execution. </param>
         /// <param name="provisioningState"> The ARM provisioning state of the job execution. </param>
         /// <param name="createOn"> The time that the job execution was created. </param>
-        /// <param name="startOn"> The time that the job execution started. </param>
-        /// <param name="endOn"> The time that the job execution completed. </param>
+        /// <param name="startsOn"> The time that the job execution started. </param>
+        /// <param name="endsOn"> The time that the job execution completed. </param>
         /// <param name="currentAttempts"> Number of times the job execution has been attempted. </param>
-        /// <param name="currentAttemptStartOn"> Start time of the current attempt. </param>
+        /// <param name="currentAttemptStartsOn"> Start time of the current attempt. </param>
         /// <param name="lastMessage"> The last status or error message. </param>
         /// <param name="target"> The target that this execution is executed on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobExecutionProperties(int? jobVersion, string stepName, int? stepId, Guid? jobExecutionId, JobExecutionLifecycle? lifecycle, JobExecutionProvisioningState? provisioningState, DateTimeOffset? createOn, DateTimeOffset? startOn, DateTimeOffset? endOn, int? currentAttempts, DateTimeOffset? currentAttemptStartOn, string lastMessage, JobExecutionTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobExecutionProperties(int? jobVersion, string stepName, int? stepId, Guid? jobExecutionId, JobExecutionLifecycle? lifecycle, JobExecutionProvisioningState? provisioningState, DateTimeOffset? createOn, DateTimeOffset? startsOn, DateTimeOffset? endsOn, int? currentAttempts, DateTimeOffset? currentAttemptStartsOn, string lastMessage, JobExecutionTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobVersion = jobVersion;
             StepName = stepName;
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Sql.Models
             Lifecycle = lifecycle;
             ProvisioningState = provisioningState;
             CreateOn = createOn;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             CurrentAttempts = currentAttempts;
-            CurrentAttemptStartOn = currentAttemptStartOn;
+            CurrentAttemptStartsOn = currentAttemptStartsOn;
             LastMessage = lastMessage;
             Target = target;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The time that the job execution started. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The time that the job execution completed. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Number of times the job execution has been attempted. </summary>
         [WirePath("currentAttempts")]
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Start time of the current attempt. </summary>
         [WirePath("currentAttemptStartTime")]
-        public DateTimeOffset? CurrentAttemptStartOn { get; }
+        public DateTimeOffset? CurrentAttemptStartsOn { get; }
 
         /// <summary> The last status or error message. </summary>
         [WirePath("lastMessage")]
