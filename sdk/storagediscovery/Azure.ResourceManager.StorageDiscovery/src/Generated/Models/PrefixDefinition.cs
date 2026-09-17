@@ -12,7 +12,9 @@ using Azure.ResourceManager.StorageDiscovery;
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
     /// <summary> A prefix definition that scopes capacity details to a specific storage account, container, and prefix. </summary>
+#pragma warning disable AZC0031 // Temporary: 'Definition' suffix flagged pending a rename of this model in TypeSpec.
     public partial class PrefixDefinition
+#pragma warning restore AZC0031
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
