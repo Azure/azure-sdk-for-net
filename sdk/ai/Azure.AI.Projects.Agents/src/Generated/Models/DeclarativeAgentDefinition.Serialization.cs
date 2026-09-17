@@ -77,12 +77,27 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(DeclarativeAgentDefinition)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Harness))
+            {
+                writer.WritePropertyName("harness"u8);
+                writer.WriteObjectValue(Harness, options);
+            }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
             if (Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);
+            }
+            if (Optional.IsCollectionDefined(Skills))
+            {
+                writer.WritePropertyName("skills"u8);
+                writer.WriteStartArray();
+                foreach (SkillReference item in Skills)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(Temperature))
             {
@@ -167,8 +182,10 @@ namespace Azure.AI.Projects.Agents
             ProjectsAgentKind kind = default;
             ContentFilterConfiguration contentFilterConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AgentHarness harness = default;
             string model = default;
             string instructions = default;
+            IList<SkillReference> skills = default;
             float? temperature = default;
             float? topP = default;
             ResponseReasoningOptions reasoningOptions = default;
@@ -192,6 +209,15 @@ namespace Azure.AI.Projects.Agents
                     contentFilterConfiguration = ContentFilterConfiguration.DeserializeContentFilterConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("harness"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    harness = AgentHarness.DeserializeAgentHarness(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("model"u8))
                 {
                     model = prop.Value.GetString();
@@ -205,6 +231,20 @@ namespace Azure.AI.Projects.Agents
                         continue;
                     }
                     instructions = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("skills"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SkillReference> array = new List<SkillReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SkillReference.DeserializeSkillReference(item, options));
+                    }
+                    skills = array;
                     continue;
                 }
                 if (prop.NameEquals("temperature"u8))
@@ -274,8 +314,10 @@ namespace Azure.AI.Projects.Agents
                 kind,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties,
+                harness,
                 model,
                 instructions,
+                skills ?? new ChangeTrackingList<SkillReference>(),
                 temperature,
                 topP,
                 reasoningOptions,
