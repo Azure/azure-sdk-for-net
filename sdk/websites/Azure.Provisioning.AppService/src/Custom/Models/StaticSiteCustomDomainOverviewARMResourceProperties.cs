@@ -7,6 +7,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.AppService;
 
+// Restore the create-body validation method omitted from the response model (https://github.com/Azure/azure-sdk-for-net/issues/61011) within the generated properties object.
 internal partial class StaticSiteCustomDomainOverviewARMResourceProperties
 {
     internal BicepValue<string> ValidationMethod

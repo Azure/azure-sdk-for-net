@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.AppService;
 
+// Preserve the historical enum emitted by the reflection-based provisioning generator for API compatibility.
 /// <summary>
 /// The StaticSiteBasicAuthName.
 /// </summary>

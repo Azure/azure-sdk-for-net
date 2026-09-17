@@ -11,6 +11,7 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.AppService;
 
+// Preserve the historical data-model type replaced by CustomDnsSuffixConfiguration in the TypeSpec-generated API.
 /// <summary>
 /// A class representing the CustomDnsSuffixConfiguration data model.
 /// Full view of the custom domain suffix configuration for ASEv3.

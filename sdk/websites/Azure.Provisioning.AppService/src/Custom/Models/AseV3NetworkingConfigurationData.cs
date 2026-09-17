@@ -11,6 +11,7 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.AppService;
 
+// Preserve the historical data-model type replaced by AseV3NetworkingConfiguration in the TypeSpec-generated API.
 /// <summary>
 /// A class representing the AseV3NetworkingConfiguration data model.
 /// Full view of networking configuration for an ASE.

@@ -5,6 +5,7 @@
 
 namespace Azure.Provisioning.AppService;
 
+// Preserve the historical slot SCM-specific resource type and its fixed singleton name; TypeSpec generates only the shared publishing-credentials policy resource.
 /// <summary> The SCM basic publishing credentials policy for a web site slot. </summary>
 public partial class ScmSiteSlotBasicPublishingCredentialsPolicy : SiteSlotBasicPublishingCredentialsPolicy
 {

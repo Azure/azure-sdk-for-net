@@ -11,6 +11,7 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.AppService;
 
+// Preserve the historical data-model type replaced by StaticSiteUserProvidedFunctionApp in the TypeSpec-generated API.
 /// <summary>
 /// A class representing the StaticSiteUserProvidedFunctionApp data model.
 /// Static Site User Provided Function App ARM resource.

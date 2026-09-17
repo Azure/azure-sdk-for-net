@@ -5,6 +5,7 @@
 
 namespace Azure.Provisioning.AppService;
 
+// Preserve the historical FTP-specific resource type and its fixed singleton name; TypeSpec generates only the shared publishing-credentials policy resource.
 /// <summary> The FTP basic publishing credentials policy for a web site. </summary>
 public partial class WebSiteFtpPublishingCredentialsPolicy : SiteBasicPublishingCredentialsPolicy
 {

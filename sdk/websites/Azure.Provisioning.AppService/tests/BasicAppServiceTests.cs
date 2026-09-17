@@ -144,7 +144,7 @@ public class BasicAppServiceTests
             }
 
             resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
-              name: take('hostingPlan-${uniqueString(resourceGroup().id)}', 60)
+              name: take('hostingplan${uniqueString(resourceGroup().id)}', 24)
               location: location
               sku: {
                 name: 'Y1'

@@ -8,6 +8,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.AppService;
 
+// Restore create-body properties omitted from the response model (https://github.com/Azure/azure-sdk-for-net/issues/61011) and bind them within the generated properties object.
 internal partial class MSDeployStatusProperties
 {
     internal BicepValue<string> ConnectionString { get { Initialize(); return _connectionString; } set { Initialize(); _connectionString.Assign(value); } }

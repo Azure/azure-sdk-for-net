@@ -7,6 +7,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.AppService;
 
+// Preserve the historical float-typed compatibility property while binding it within the generated nested HTTP model to avoid overwriting sibling trigger settings.
 internal partial class FunctionsScaleAndConcurrencyTriggersHttp
 {
     internal BicepValue<float> HttpPerInstanceConcurrency

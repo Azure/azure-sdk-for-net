@@ -5,6 +5,7 @@
 
 namespace Azure.Provisioning.AppService;
 
+// Support the obsolete AppServiceEnvironment compatibility properties whose historical data types are no longer generated from TypeSpec.
 internal partial class AppServiceEnvironmentProperties
 {
     private CustomDnsSuffixConfigurationData _customDnsSuffixConfigurationData;
