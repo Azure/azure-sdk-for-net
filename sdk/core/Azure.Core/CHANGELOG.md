@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added a managed identity bearer-token fallback for an explicit attested-token tenant-eligibility denial. The credential remembers the denial for that tenant context until the credential is recreated, avoiding repeated PoP attempts during token renewal. Other authentication failures do not trigger this fallback.
 - The mTLS proof-of-possession APIs on `BearerTokenAuthenticationPolicy` and `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` are no longer experimental and no longer require `AZID0004` suppression.
 
 ### Breaking Changes

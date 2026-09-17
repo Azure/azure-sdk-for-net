@@ -101,7 +101,7 @@ namespace Azure.Core.Tests.Identity
             return application.AcquireTokenForManagedIdentity("https://vault.azure.net/.default");
         }
 
-        private static T GetCommonParameter<T>(AcquireTokenForManagedIdentityParameterBuilder builder, string propertyName)
+        internal static T GetCommonParameter<T>(AcquireTokenForManagedIdentityParameterBuilder builder, string propertyName)
         {
             Type type = builder.GetType();
             PropertyInfo commonParametersProperty = null;

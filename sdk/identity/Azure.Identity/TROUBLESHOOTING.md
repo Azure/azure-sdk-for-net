@@ -195,6 +195,14 @@ The `ManagedIdentityCredential` is designed to work on various Azure hosts that 
 |Azure Service Fabric|[Configuration](https://learn.microsoft.com/azure/service-fabric/concepts-managed-identity)||
 |Azure Virtual Machines and Scale Sets|[Configuration](https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/qs-configure-portal-windows-vm)|[Troubleshooting](#azure-virtual-machine-managed-identity)|
 
+### Attested token eligibility fallback
+
+If an mTLS proof-of-possession token acquisition receives the explicit tenant-eligibility denial `AADSTS3921996`, the credential attempts bearer authentication once instead. A warning is emitted through Azure Identity logging. Other authentication failures, including an unmet KeyGuard minimum strength, do not activate this fallback.
+
+The decision is remembered in memory by the credential instance and request tenant context, including the default context when no tenant is specified. Subsequent token acquisitions for that context skip PoP capability discovery and use bearer authentication. Recreate the credential to retry PoP after eligibility changes. An already in-flight PoP acquisition is not cancelled by another request's eligibility denial.
+
+Fallback does not grant additional permissions or provide certificate-binding protection for the resulting bearer token. Services configured to require bound tokens may reject bearer authentication. A successful service call alone is not evidence that token binding was used.
+
 ### Azure Virtual Machine managed identity
 
 `CredentialUnavailableException`
