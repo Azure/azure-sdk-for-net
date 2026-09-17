@@ -22,12 +22,11 @@ internal interface ITaskEventStreamRegistry
 
     // Durable deletion-close journal. A hard task deletion removes the record that would otherwise
     // name the streams still owing an EOF, so the intent is recorded here (before the provider
-    // delete) and drained on restart. Entries carry a per-operation identity so removal is scoped to
-    // the exact delete operation. These are no-ops / empty for non-file-backed backings, whose
+    // delete) and drained on restart. These are no-ops / empty for non-file-backed backings, whose
     // streams do not survive a process crash.
-    void RecordPendingDeletion(string taskId, string operationId, IReadOnlyCollection<string> inputIds);
+    void RecordPendingDeletion(string taskId, IReadOnlyCollection<string> inputIds);
 
-    void RemovePendingDeletion(string taskId, string operationId);
+    void RemovePendingDeletion(string taskId);
 
     IReadOnlyList<PendingStreamDeletion> ListPendingDeletions();
 }

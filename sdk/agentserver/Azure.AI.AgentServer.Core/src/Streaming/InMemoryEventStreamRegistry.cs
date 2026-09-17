@@ -218,19 +218,19 @@ internal sealed class InMemoryEventStreamRegistry :
         }
     }
 
-    public void RecordPendingDeletion(string taskId, string operationId, IReadOnlyCollection<string> inputIds)
+    public void RecordPendingDeletion(string taskId, IReadOnlyCollection<string> inputIds)
     {
         if (_options.Configuration.StorageDirectory is { } directory)
         {
-            TaskStreamDeletionJournal.Record(directory, taskId, operationId, inputIds);
+            TaskStreamDeletionJournal.Record(directory, taskId, inputIds);
         }
     }
 
-    public void RemovePendingDeletion(string taskId, string operationId)
+    public void RemovePendingDeletion(string taskId)
     {
         if (_options.Configuration.StorageDirectory is { } directory)
         {
-            TaskStreamDeletionJournal.Remove(directory, taskId, operationId);
+            TaskStreamDeletionJournal.Remove(directory, taskId);
         }
     }
 
