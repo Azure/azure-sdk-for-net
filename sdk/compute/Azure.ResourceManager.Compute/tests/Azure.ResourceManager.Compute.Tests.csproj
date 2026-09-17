@@ -2,6 +2,9 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Compute.csproj" />
     <PackageReference Include="Azure.ResourceManager.Network" />
+    <PackageReference Include="BenchmarkDotNet" />
+    <Compile Remove="Unit\ModelReaderWriterBenchmarksProgram.cs" />
+    <None Remove="Unit\ModelReaderWriterBenchmarks.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
