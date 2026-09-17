@@ -9,7 +9,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MOD
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. Create Agent with the `MCPTool`. Note that in this scenario we are using `GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval`, which means that any calls to the MCP server need to be approved.
+2. Create Agent with the `MCPTool`. Note that in this scenario we are using `DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval`, which means that any calls to the MCP server need to be approved.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_MCPTool_Sync

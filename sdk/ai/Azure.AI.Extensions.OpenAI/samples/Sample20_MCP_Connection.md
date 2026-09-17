@@ -11,7 +11,7 @@ var mcpProjectConnectionName = System.Environment.GetEnvironmentVariable("MCP_PR
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. Create Agent with the `MCPTool`. Note that in this scenario we are using `GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval`, which means that any calls to the MCP server need to be approved. We then set the `ProjectConnectionId` property at on the `McpTool` so that agent will be able to authenticate in the GitHub.
+2. Create Agent with the `MCPTool`. Note that in this scenario we are using `DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval`, which means that any calls to the MCP server need to be approved. We then set the `ProjectConnectionId` property at on the `McpTool` so that agent will be able to authenticate in the GitHub.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_MCPTool_ProjectConnection_Sync

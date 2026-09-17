@@ -1325,7 +1325,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
     options: new(agentDefinition));
 ```
 
-Note that in this scenario we are using `GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval`, which means that any calls to the MCP server need to be approved.
+Note that in this scenario we are using `DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval`, which means that any calls to the MCP server need to be approved.
 Because of this setup we will need to get the response and check if we need to approve the call. If no calls were made, we are safe to output the Agent result.
 
 ```C# Snippet:Sample_CreateResponse_MCPTool_Async
