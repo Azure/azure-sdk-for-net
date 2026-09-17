@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ManagementGroup
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagementGroupChildResourceData, ManagementGroupChildResource>(new ManagementGroupChildResourcesGetByManagementGroupAsyncCollectionResultOfT(_managementGroupChildResourcesRestClient, Id.Name, context, "ManagementGroupChildResourceCollection.GetAll"), data => new ManagementGroupChildResource(Client, data));
+            return new AsyncPageableWrapper<ManagementGroupChildResourceData, ManagementGroupChildResource>(new ManagementGroupChildrenAsyncCollectionResultOfT(_managementGroupChildResourcesRestClient, Id.Name, context, "ManagementGroupChildResourceCollection.GetAll"), data => new ManagementGroupChildResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ManagementGroup
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagementGroupChildResourceData, ManagementGroupChildResource>(new ManagementGroupChildResourcesGetByManagementGroupCollectionResultOfT(_managementGroupChildResourcesRestClient, Id.Name, context, "ManagementGroupChildResourceCollection.GetAll"), data => new ManagementGroupChildResource(Client, data));
+            return new PageableWrapper<ManagementGroupChildResourceData, ManagementGroupChildResource>(new ManagementGroupChildrenCollectionResultOfT(_managementGroupChildResourcesRestClient, Id.Name, context, "ManagementGroupChildResourceCollection.GetAll"), data => new ManagementGroupChildResource(Client, data));
         }
 
         /// <summary>
