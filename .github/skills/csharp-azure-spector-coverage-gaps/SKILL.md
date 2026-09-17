@@ -90,7 +90,7 @@ The file `{PKG}/eng/scripts/Spector-Helper.psm1` defines which specs are include
 
 Current exclusions fall into three categories:
 
-1. **Standard spec issues**: `streaming/jsonl`, `response/status-code-range` (namespace conflict with `Azure.Response`), `type/file`
+1. **Standard spec issues**: `streaming/jsonl`, `type/file`
 2. **Azure specs not yet buildable**: `azure/client-generator-core/alternate-type`, `azure/client-generator-core/deserialize-empty-string-as-null`
 3. **Delegated to management generator**: All `azure/resource-manager/*` specs (common-properties, non-resource, operation-templates, resources, large-header, method-subscription-id, multi-service variants)
 
@@ -175,6 +175,7 @@ The naive approach of matching spec paths to test directory names can produce fa
 - C# reserved words get underscore-prefixed in test dirs (e.g., `type/` → `_Type/`, `array` → `_Array`, `enum` → `_Enum`)
 - kebab-case gets converted to PascalCase (e.g., `content-negotiation` → `ContentNegotiation`)
 - Some test files cover a parent spec but not sub-specs (e.g., `UnionTests.cs` covers `type/union` but NOT `type/union/discriminated`)
+- Response specs use `_Response/` test namespaces and aliased project references to avoid conflicts with `Azure.Response`.
 
 **To find real gaps**, verify each candidate by checking whether a test _directory_ exists for the spec's exact path, including sub-paths. A test file at a parent level does NOT cover child specs.
 
