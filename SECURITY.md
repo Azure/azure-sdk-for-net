@@ -4,7 +4,7 @@
 
 Microsoft takes the security of our software products and services seriously, which includes all source code repositories managed through [our GitHub organizations](https://opensource.microsoft.com/), which include [Microsoft](https://github.com/Microsoft), [Azure](https://github.com/Azure), [DotNet](https://github.com/dotnet), and [AspNet](https://github.com/aspnet).  
 
-If you believe you have found a security vulnerability in any Microsoft-owned repository that meets [Microsoft's definition of a security vulnerability](https://learn.microsoft.com/previous-versions/tn-archive/cc751383(v=technet.10)), please report it to us as described below.
+If you believe you have found a security vulnerability in any Microsoft-owned repository that meets [Microsoft's definition of a security vulnerability](https://learn.microsoft.com/previous-versions/tn-archive/cc751383(v=technet.10)), please report it to us as described in [Reporting Security Issues](#reporting-security-issues).
 
 ## Policy
 
@@ -12,11 +12,12 @@ Microsoft follows the principle of [Coordinated Vulnerability Disclosure](https:
 
 ## Reporting Security Issues
 
-**Please do not report security vulnerabilities through public GitHub issues.**
+> [!IMPORTANT]
+> **Please do not report security vulnerabilities through public GitHub issues.**
 
 Instead, please report them to the Microsoft Security Response Center (MSRC) at [https://msrc.microsoft.com/report/vulnerability/new](https://msrc.microsoft.com/report/vulnerability/new).
 
-If you prefer to submit without logging in, send email to [secure@microsoft.com](mailto:secure@microsoft.com).  If possible, encrypt your message with our PGP key; please download it from the [Microsoft Security Response Center PGP Key page](https://www.microsoft.com/msrc/pgp-key-msrc).
+If you are unable to sign in, follow the alternative submission instructions on the [MSRC reporting page](https://msrc.microsoft.com/report/vulnerability/new).
 
 You should receive a response within 24 hours. If for some reason you do not, please follow up via email to ensure we received your original message. Additional information can be found at [microsoft.com/msrc](https://www.microsoft.com/msrc).
 
@@ -52,7 +53,7 @@ Azure SDK clients are intentionally light and minimal. They are network clients 
 
 ### Scope of Reports
 
-* An in-scope vulnerability report must demonstrate that an untrusted party can violate a security responsibility owned by an Azure SDK client or Azure SDK development infrastructure in their intended environments. The responsibilities below identify the protections the SDK owns and those owned by services and callers.
+* An in-scope vulnerability report must demonstrate that an untrusted party can violate a security responsibility owned by an Azure SDK client or Azure SDK development infrastructure in their intended environments. The sections below, starting with [Service Requests and Responses](#service-requests-and-responses), identify the protections the SDK owns and those owned by services and callers.
 
 * Do not report vulnerabilities or defense-in-depth enhancements that require first compromising the host environment, the network, or an Azure service. These preconditions already cross the relevant trust boundary.
 
@@ -88,9 +89,9 @@ For example, a demonstration in which the caller deliberately configures a clien
 
 * Azure SDK clients are responsible for ensuring that their default configuration does not perform unsafe actions. For example, clients do not follow redirects by default.
 
-* An individual Azure SDK client may enable redirects when required by its service and is responsible for handling those redirects safely. Reports for redirect issues must identify the client that enables redirects and demonstrate a failure of its redirect protections. Scope the report to that client, not the presence of redirect support in shared pipeline infrastructure.
+  * An individual Azure SDK client may enable redirects when required by its service and is responsible for handling those redirects safely. Reports for redirect issues must identify the client that enables redirects and demonstrate a failure of its redirect protections. Scope the report to that client, not the presence of redirect support in shared pipeline infrastructure.
 
-* Before reporting a cross-host redirect issue, authoritatively confirm that the associated Azure service actually returns cross-host redirects and the associated client opts into them without the required local safety adjustments needed. Reports for cross-host redirect issues must identify the client that enables redirects and demonstrate a failure of its redirect protections. Scope the report to that client, not the presence of redirect support in shared pipeline infrastructure.
+  * Before reporting a cross-host redirect issue, authoritatively confirm that the associated Azure service actually returns cross-host redirects and the associated client opts into them without the required local safety adjustments needed. Reports for cross-host redirect issues must identify the client that enables redirects and demonstrate a failure of its redirect protections. Scope the report to that client, not the presence of redirect support in shared pipeline infrastructure.
 
 * Retry policies have safe defaults and can be disabled or tuned by the host application. Callers are responsible for choosing settings appropriate for their application's resource and availability requirements. Expected retry behavior, including delays caused by the configured policy, is not evidence of a denial-of-service vulnerability.
 
@@ -136,6 +137,6 @@ Reporters are responsible for reviewing and validating generated findings before
 
 * Remove unsupported claims and state any remaining uncertainty. Do not present assumptions or model-generated conclusions as verified facts.
 
-* Submit a concise report using the shared evidence requirements, rather than forwarding unreviewed scanner output.
+* Submit a concise report using the shared [evidence requirements](#evidence-required-for-a-report), rather than forwarding unreviewed scanner output.
 
 <!-- END MICROSOFT SECURITY.MD BLOCK -->
