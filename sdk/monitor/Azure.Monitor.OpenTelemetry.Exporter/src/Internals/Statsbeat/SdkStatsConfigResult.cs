@@ -4,8 +4,8 @@
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 {
     /// <summary>
-    /// Outcome of an <see cref="SdkStatsConfigFetcher.FetchAsync"/> call. Tells the caller
-    /// whether to honor the remote control plane (<see cref="UseUrl"/>), respect a remote
+    /// Outcome of an SDKStats configuration fetch. Tells the caller
+    /// whether to honor the remote control plane (<see cref="UseConnectionString"/>), respect a remote
     /// kill switch (<see cref="Disabled"/>), or fall back to the legacy region-derived
     /// Statsbeat ingestion endpoint (<see cref="Fallback"/>).
     /// </summary>
@@ -13,9 +13,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
     {
         /// <summary>
         /// Configuration was retrieved successfully and instructs the client to send SDK
-        /// statistics to <see cref="SdkStatsConfigResult.Url"/>.
+        /// statistics to <see cref="SdkStatsConfigResult.ConnectionString"/>.
         /// </summary>
-        UseUrl,
+        UseConnectionString,
+        UseUrl = UseConnectionString,
 
         /// <summary>
         /// Configuration was retrieved successfully and explicitly disables SDK statistics
@@ -33,23 +34,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
     }
 
     /// <summary>
-    /// Result of an <see cref="SdkStatsConfigFetcher.FetchAsync"/> call.
-    /// <see cref="Url"/> is only meaningful when <see cref="Status"/> is
-    /// <see cref="SdkStatsConfigStatus.UseUrl"/>.
+    /// Result of an SDKStats configuration fetch.
+    /// <see cref="ConnectionString"/> is only meaningful when <see cref="Status"/> is
+    /// <see cref="SdkStatsConfigStatus.UseConnectionString"/>.
     /// </summary>
     internal readonly struct SdkStatsConfigResult
     {
-        public SdkStatsConfigResult(SdkStatsConfigStatus status, string? url)
+        public SdkStatsConfigResult(SdkStatsConfigStatus status, string? connectionString)
         {
             Status = status;
-            Url = url;
+            ConnectionString = connectionString;
         }
 
         public SdkStatsConfigStatus Status { get; }
 
-        public string? Url { get; }
+        public string? ConnectionString { get; }
+        public string? Url => ConnectionString;
 
-        internal static SdkStatsConfigResult UseUrl(string url) => new SdkStatsConfigResult(SdkStatsConfigStatus.UseUrl, url);
+        internal static SdkStatsConfigResult UseConnectionString(string connectionString) =>
+            new SdkStatsConfigResult(SdkStatsConfigStatus.UseConnectionString, connectionString);
 
         internal static SdkStatsConfigResult Disabled() => new SdkStatsConfigResult(SdkStatsConfigStatus.Disabled, null);
 
