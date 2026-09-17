@@ -368,7 +368,7 @@ extends:
               BaseRepoOwner: Azure
               TargetRepoName: $(Build.Repository.Name)
               BaseRepoBranch: $(branchName)
-              # Squash merges include commit messages, so PR title edits cannot remove the CI skip marker.
+              # Squash merges include commit messages, so the marker skips post-merge CI.
               CommitMsg: Regenerate repository SDK with TypeSpec build $(Build.BuildNumber) [skip ci]
               WorkingDirectory: $(Build.SourcesDirectory)
               ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
