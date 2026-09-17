@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A class representing a CustomCaptureConfigurationsFirewallResource along with the instance operations that can be performed on it.
+    /// A class representing a CustomCaptureConfigurationsFirewall along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CustomCaptureConfigurationsFirewallResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PaloAltoNetworksFirewallResource"/> using the GetCustomCaptureConfigurationsFirewallResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PaloAltoNetworksFirewallResource"/> using the GetCustomCaptureConfigurationsFirewall method.
     /// </summary>
     public partial class CustomCaptureConfigurationsFirewallResource : ArmResource
     {
         private readonly ClientDiagnostics _customCaptureConfigurationsFirewallResourcesClientDiagnostics;
         private readonly CustomCaptureConfigurationsFirewallResources _customCaptureConfigurationsFirewallResourcesRestClient;
-        private readonly CustomCaptureConfigurationsFirewallResourceData _data;
+        private readonly CustomCaptureConfigurationsFirewallData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls/customCaptureConfigurations";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <summary> Initializes a new instance of <see cref="CustomCaptureConfigurationsFirewallResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CustomCaptureConfigurationsFirewallResource(ArmClient client, CustomCaptureConfigurationsFirewallResourceData data) : this(client, data.Id)
+        internal CustomCaptureConfigurationsFirewallResource(ArmClient client, CustomCaptureConfigurationsFirewallData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CustomCaptureConfigurationsFirewallResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string customCaptureConfigurationsFirewallResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string customCaptureConfigurationsFirewallApiVersion);
             _customCaptureConfigurationsFirewallResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _customCaptureConfigurationsFirewallResourcesRestClient = new CustomCaptureConfigurationsFirewallResources(_customCaptureConfigurationsFirewallResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customCaptureConfigurationsFirewallResourceApiVersion ?? "2026-07-29-preview");
+            _customCaptureConfigurationsFirewallResourcesRestClient = new CustomCaptureConfigurationsFirewallResources(_customCaptureConfigurationsFirewallResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customCaptureConfigurationsFirewallApiVersion ?? "2026-07-29-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual CustomCaptureConfigurationsFirewallResourceData Data
+        public virtual CustomCaptureConfigurationsFirewallData Data
         {
             get
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CustomCaptureConfigurationsFirewallResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CustomCaptureConfigurationsFirewallResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CustomCaptureConfigurationsFirewallResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CustomCaptureConfigurationsFirewallData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customCaptureConfigurationsFirewallResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, CustomCaptureConfigurationsFirewallResourceData.ToRequestContent(data), context);
+                HttpMessage message = _customCaptureConfigurationsFirewallResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, CustomCaptureConfigurationsFirewallData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CustomCaptureConfigurationsFirewallResourceData> response = Response.FromValue(CustomCaptureConfigurationsFirewallResourceData.FromResponse(result), result);
+                Response<CustomCaptureConfigurationsFirewallData> response = Response.FromValue(CustomCaptureConfigurationsFirewallData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 NgfwArmOperation<CustomCaptureConfigurationsFirewallResource> operation = new NgfwArmOperation<CustomCaptureConfigurationsFirewallResource>(Response.FromValue(new CustomCaptureConfigurationsFirewallResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CustomCaptureConfigurationsFirewallResource> CreateOrUpdate(WaitUntil waitUntil, CustomCaptureConfigurationsFirewallResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CustomCaptureConfigurationsFirewallResource> CreateOrUpdate(WaitUntil waitUntil, CustomCaptureConfigurationsFirewallData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customCaptureConfigurationsFirewallResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, CustomCaptureConfigurationsFirewallResourceData.ToRequestContent(data), context);
+                HttpMessage message = _customCaptureConfigurationsFirewallResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, CustomCaptureConfigurationsFirewallData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CustomCaptureConfigurationsFirewallResourceData> response = Response.FromValue(CustomCaptureConfigurationsFirewallResourceData.FromResponse(result), result);
+                Response<CustomCaptureConfigurationsFirewallData> response = Response.FromValue(CustomCaptureConfigurationsFirewallData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 NgfwArmOperation<CustomCaptureConfigurationsFirewallResource> operation = new NgfwArmOperation<CustomCaptureConfigurationsFirewallResource>(Response.FromValue(new CustomCaptureConfigurationsFirewallResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 };
                 HttpMessage message = _customCaptureConfigurationsFirewallResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CustomCaptureConfigurationsFirewallResourceData> response = Response.FromValue(CustomCaptureConfigurationsFirewallResourceData.FromResponse(result), result);
+                Response<CustomCaptureConfigurationsFirewallData> response = Response.FromValue(CustomCaptureConfigurationsFirewallData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 };
                 HttpMessage message = _customCaptureConfigurationsFirewallResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CustomCaptureConfigurationsFirewallResourceData> response = Response.FromValue(CustomCaptureConfigurationsFirewallResourceData.FromResponse(result), result);
+                Response<CustomCaptureConfigurationsFirewallData> response = Response.FromValue(CustomCaptureConfigurationsFirewallData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

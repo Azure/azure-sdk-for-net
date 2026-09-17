@@ -17,11 +17,11 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    /// <summary> Custom Capture Configuration on a firewall (singleton). Sync child resource — caller polls GET to track pcapStatus until terminal (Success / Failed). </summary>
-    public partial class CustomCaptureConfigurationsFirewallResourceData : ResourceData, IJsonModel<CustomCaptureConfigurationsFirewallResourceData>
+    /// <summary> Log Ingestion Settings on a firewall (singleton — the name is always 'default'). This is the modern Azure Monitor Log Ingestion (Data Collection Rule based) surface that supersedes the legacy getLogProfile/saveLogProfile actions. Sync child resource — PUT/GET/DELETE forward to the partner synchronously; the caller does not poll a long-running operation. </summary>
+    public partial class LogIngestionSettingsData : ResourceData, IJsonModel<LogIngestionSettingsData>
     {
-        /// <summary> Initializes a new instance of <see cref="CustomCaptureConfigurationsFirewallResourceData"/> for deserialization. </summary>
-        internal CustomCaptureConfigurationsFirewallResourceData()
+        /// <summary> Initializes a new instance of <see cref="LogIngestionSettingsData"/> for deserialization. </summary>
+        internal LogIngestionSettingsData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomCaptureConfigurationsFirewallResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LogIngestionSettingsData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCustomCaptureConfigurationsFirewallResourceData(document.RootElement, options);
+                        return DeserializeLogIngestionSettingsData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomCaptureConfigurationsFirewallResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogIngestionSettingsData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomCaptureConfigurationsFirewallResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LogIngestionSettingsData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CustomCaptureConfigurationsFirewallResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogIngestionSettingsData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomCaptureConfigurationsFirewallResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LogIngestionSettingsData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomCaptureConfigurationsFirewallResourceData IPersistableModel<CustomCaptureConfigurationsFirewallResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (CustomCaptureConfigurationsFirewallResourceData)PersistableModelCreateCore(data, options);
+        LogIngestionSettingsData IPersistableModel<LogIngestionSettingsData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LogIngestionSettingsData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomCaptureConfigurationsFirewallResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LogIngestionSettingsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="customCaptureConfigurationsFirewallResourceData"> The <see cref="CustomCaptureConfigurationsFirewallResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CustomCaptureConfigurationsFirewallResourceData customCaptureConfigurationsFirewallResourceData)
+        /// <param name="logIngestionSettingsData"> The <see cref="LogIngestionSettingsData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LogIngestionSettingsData logIngestionSettingsData)
         {
-            if (customCaptureConfigurationsFirewallResourceData == null)
+            if (logIngestionSettingsData == null)
             {
                 return null;
             }
-            return RequestContent.Create(customCaptureConfigurationsFirewallResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(logIngestionSettingsData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CustomCaptureConfigurationsFirewallResourceData"/> from. </param>
-        internal static CustomCaptureConfigurationsFirewallResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LogIngestionSettingsData"/> from. </param>
+        internal static LogIngestionSettingsData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCustomCaptureConfigurationsFirewallResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeLogIngestionSettingsData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CustomCaptureConfigurationsFirewallResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LogIngestionSettingsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomCaptureConfigurationsFirewallResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LogIngestionSettingsData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomCaptureConfigurationsFirewallResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LogIngestionSettingsData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -122,24 +122,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomCaptureConfigurationsFirewallResourceData IJsonModel<CustomCaptureConfigurationsFirewallResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CustomCaptureConfigurationsFirewallResourceData)JsonModelCreateCore(ref reader, options);
+        LogIngestionSettingsData IJsonModel<LogIngestionSettingsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LogIngestionSettingsData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CustomCaptureConfigurationsFirewallResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LogIngestionSettingsData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomCaptureConfigurationsFirewallResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LogIngestionSettingsData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomCaptureConfigurationsFirewallResourceData(document.RootElement, options);
+            return DeserializeLogIngestionSettingsData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CustomCaptureConfigurationsFirewallResourceData DeserializeCustomCaptureConfigurationsFirewallResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static LogIngestionSettingsData DeserializeLogIngestionSettingsData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            CustomCaptureConfigurationsProperties properties = default;
+            LogIngestionSettingsProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = CustomCaptureConfigurationsProperties.DeserializeCustomCaptureConfigurationsProperties(prop.Value, options);
+                    properties = LogIngestionSettingsProperties.DeserializeLogIngestionSettingsProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomCaptureConfigurationsFirewallResourceData(
+            return new LogIngestionSettingsData(
                 id,
                 name,
                 resourceType,

@@ -1045,14 +1045,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> Gets an object representing a <see cref="CustomCaptureConfigurationsFirewallResource"/> along with the instance operations that can be performed on it in the <see cref="PaloAltoNetworksFirewallResource"/>. </summary>
         /// <returns> Returns a <see cref="CustomCaptureConfigurationsFirewallResource"/> object. </returns>
-        public virtual CustomCaptureConfigurationsFirewallResource GetCustomCaptureConfigurationsFirewallResource()
+        public virtual CustomCaptureConfigurationsFirewallResource GetCustomCaptureConfigurationsFirewall()
         {
             return new CustomCaptureConfigurationsFirewallResource(Client, Id.AppendChildResource("customCaptureConfigurations", "default"));
         }
 
         /// <summary> Gets an object representing a <see cref="LogIngestionSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="PaloAltoNetworksFirewallResource"/>. </summary>
         /// <returns> Returns a <see cref="LogIngestionSettingsResource"/> object. </returns>
-        public virtual LogIngestionSettingsResource GetLogIngestionSettingsResource()
+        public virtual LogIngestionSettingsResource GetLogIngestionSettings()
         {
             return new LogIngestionSettingsResource(Client, Id.AppendChildResource("logIngestionSettings", "default"));
         }

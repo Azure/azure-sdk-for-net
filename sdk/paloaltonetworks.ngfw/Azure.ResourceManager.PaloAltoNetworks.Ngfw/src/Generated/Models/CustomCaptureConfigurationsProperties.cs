@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="nextCheckInSeconds"> Polling-cadence hint in seconds. Set on non-terminal responses (pcapStatus = InProgress) so clients know how long to wait before the next GET. Omitted on terminal responses (Success / Failed). Read-only. </param>
         /// <param name="message"> Human-readable status message for display in client UIs (Portal blade, CLI output, etc.). English only. Read-only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomCaptureConfigurationsProperties(IList<CustomCaptureConfigurationsFilter> pcapFilter, IList<CustomCaptureConfigurationsStage> pcapStages, int? durationInSec, string storageAccountResourceId, CustomCaptureConfigurationsStatus? pcapStatus, string pcapDetailReason, int? nextCheckInSeconds, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomCaptureConfigurationsProperties(IList<CustomCaptureConfigurationsFilter> pcapFilter, IList<CustomCaptureConfigurationsStage> pcapStages, int? durationInSec, ResourceIdentifier storageAccountResourceId, CustomCaptureConfigurationsStatus? pcapStatus, string pcapDetailReason, int? nextCheckInSeconds, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PcapFilter = pcapFilter;
             PcapStages = pcapStages;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public int? DurationInSec { get; set; }
 
         /// <summary> ARM resource ID of the customer's storage account where the capture file will be written. Required on PUT (input). May be omitted in GET responses while pcapStatus is InProgress because the backend has not finalized echo-back yet; echoed in terminal Success responses. </summary>
-        public string StorageAccountResourceId { get; set; }
+        public ResourceIdentifier StorageAccountResourceId { get; set; }
 
         /// <summary> Current capture status. Read-only. Clients should poll GET until this is Success or Failed. </summary>
         public CustomCaptureConfigurationsStatus? PcapStatus { get; }

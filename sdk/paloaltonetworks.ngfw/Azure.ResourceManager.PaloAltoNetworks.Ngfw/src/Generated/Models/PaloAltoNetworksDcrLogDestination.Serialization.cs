@@ -14,51 +14,51 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Log Destination for the Azure Monitor Log Ingestion (Data Collection Rule) method. Carries the DCR-based `monitorConfigurationsV2`. </summary>
-    public partial class LogDestinationV2 : IJsonModel<LogDestinationV2>
+    public partial class PaloAltoNetworksDcrLogDestination : IJsonModel<PaloAltoNetworksDcrLogDestination>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LogDestinationV2 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PaloAltoNetworksDcrLogDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogDestinationV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PaloAltoNetworksDcrLogDestination>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLogDestinationV2(document.RootElement, options);
+                        return DeserializePaloAltoNetworksDcrLogDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogDestinationV2)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaloAltoNetworksDcrLogDestination)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogDestinationV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PaloAltoNetworksDcrLogDestination>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LogDestinationV2)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaloAltoNetworksDcrLogDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LogDestinationV2>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PaloAltoNetworksDcrLogDestination>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogDestinationV2 IPersistableModel<LogDestinationV2>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PaloAltoNetworksDcrLogDestination IPersistableModel<PaloAltoNetworksDcrLogDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LogDestinationV2>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PaloAltoNetworksDcrLogDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LogDestinationV2>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PaloAltoNetworksDcrLogDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogDestinationV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PaloAltoNetworksDcrLogDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogDestinationV2)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PaloAltoNetworksDcrLogDestination)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(StorageConfigurations))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogDestinationV2 IJsonModel<LogDestinationV2>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PaloAltoNetworksDcrLogDestination IJsonModel<PaloAltoNetworksDcrLogDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LogDestinationV2 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PaloAltoNetworksDcrLogDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LogDestinationV2>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PaloAltoNetworksDcrLogDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogDestinationV2)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PaloAltoNetworksDcrLogDestination)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLogDestinationV2(document.RootElement, options);
+            return DeserializePaloAltoNetworksDcrLogDestination(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LogDestinationV2 DeserializeLogDestinationV2(JsonElement element, ModelReaderWriterOptions options)
+        internal static PaloAltoNetworksDcrLogDestination DeserializePaloAltoNetworksDcrLogDestination(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             StorageAccountConfiguration storageConfigurations = default;
             EventHubConfiguration eventHubConfigurations = default;
-            MonitorLogV2 monitorConfigurationsV2 = default;
+            PaloAltoNetworksMonitorDcrLog monitorConfigurationsV2 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    monitorConfigurationsV2 = MonitorLogV2.DeserializeMonitorLogV2(prop.Value, options);
+                    monitorConfigurationsV2 = PaloAltoNetworksMonitorDcrLog.DeserializePaloAltoNetworksMonitorDcrLog(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LogDestinationV2(storageConfigurations, eventHubConfigurations, monitorConfigurationsV2, additionalBinaryDataProperties);
+            return new PaloAltoNetworksDcrLogDestination(storageConfigurations, eventHubConfigurations, monitorConfigurationsV2, additionalBinaryDataProperties);
         }
     }
 }

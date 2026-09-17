@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Ngfw.CustomCaptureConfigurationsFirewallResourceData"/> instance for mocking. </returns>
-        public static CustomCaptureConfigurationsFirewallResourceData CustomCaptureConfigurationsFirewallResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CustomCaptureConfigurationsProperties properties = default)
+        /// <returns> A new <see cref="Ngfw.CustomCaptureConfigurationsFirewallData"/> instance for mocking. </returns>
+        public static CustomCaptureConfigurationsFirewallData CustomCaptureConfigurationsFirewallData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CustomCaptureConfigurationsProperties properties = default)
         {
-            return new CustomCaptureConfigurationsFirewallResourceData(
+            return new CustomCaptureConfigurationsFirewallData(
                 id,
                 name,
                 resourceType,
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="nextCheckInSeconds"> Polling-cadence hint in seconds. Set on non-terminal responses (pcapStatus = InProgress) so clients know how long to wait before the next GET. Omitted on terminal responses (Success / Failed). Read-only. </param>
         /// <param name="message"> Human-readable status message for display in client UIs (Portal blade, CLI output, etc.). English only. Read-only. </param>
         /// <returns> A new <see cref="Models.CustomCaptureConfigurationsProperties"/> instance for mocking. </returns>
-        public static CustomCaptureConfigurationsProperties CustomCaptureConfigurationsProperties(IEnumerable<CustomCaptureConfigurationsFilter> pcapFilter = default, IEnumerable<CustomCaptureConfigurationsStage> pcapStages = default, int? durationInSec = default, string storageAccountResourceId = default, CustomCaptureConfigurationsStatus? pcapStatus = default, string pcapDetailReason = default, int? nextCheckInSeconds = default, string message = default)
+        public static CustomCaptureConfigurationsProperties CustomCaptureConfigurationsProperties(IEnumerable<CustomCaptureConfigurationsFilter> pcapFilter = default, IEnumerable<CustomCaptureConfigurationsStage> pcapStages = default, int? durationInSec = default, ResourceIdentifier storageAccountResourceId = default, CustomCaptureConfigurationsStatus? pcapStatus = default, string pcapDetailReason = default, int? nextCheckInSeconds = default, string message = default)
         {
             pcapFilter ??= new ChangeTrackingList<CustomCaptureConfigurationsFilter>();
             pcapStages ??= new ChangeTrackingList<CustomCaptureConfigurationsStage>();
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Ngfw.LogIngestionSettingsResourceData"/> instance for mocking. </returns>
-        public static LogIngestionSettingsResourceData LogIngestionSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LogIngestionSettingsProperties properties = default)
+        /// <returns> A new <see cref="Ngfw.LogIngestionSettingsData"/> instance for mocking. </returns>
+        public static LogIngestionSettingsData LogIngestionSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LogIngestionSettingsProperties properties = default)
         {
-            return new LogIngestionSettingsResourceData(
+            return new LogIngestionSettingsData(
                 id,
                 name,
                 resourceType,
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="threatLogDestination"> Threat destination configurations. </param>
         /// <param name="decryptLogDestination"> Decrypt destination configurations. </param>
         /// <returns> A new <see cref="Models.LogIngestionSettingsProperties"/> instance for mocking. </returns>
-        public static LogIngestionSettingsProperties LogIngestionSettingsProperties(FirewallLogType? logType = default, FirewallLogOption? logOption = default, FirewallApplicationInsights applicationInsights = default, LogDestinationV2 commonDestination = default, LogDestinationV2 trafficLogDestination = default, LogDestinationV2 threatLogDestination = default, LogDestinationV2 decryptLogDestination = default)
+        public static LogIngestionSettingsProperties LogIngestionSettingsProperties(FirewallLogType? logType = default, FirewallLogOption? logOption = default, FirewallApplicationInsights applicationInsights = default, PaloAltoNetworksDcrLogDestination commonDestination = default, PaloAltoNetworksDcrLogDestination trafficLogDestination = default, PaloAltoNetworksDcrLogDestination threatLogDestination = default, PaloAltoNetworksDcrLogDestination decryptLogDestination = default)
         {
             return new LogIngestionSettingsProperties(
                 logType,
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="storageConfigurations"> Storage account configurations. </param>
         /// <param name="eventHubConfigurations"> Event Hub configurations. </param>
         /// <param name="monitorConfigurationsV2"> Azure Monitor Log Ingestion (Data Collection Rule) configuration for this destination. </param>
-        /// <returns> A new <see cref="Models.LogDestinationV2"/> instance for mocking. </returns>
-        public static LogDestinationV2 LogDestinationV2(StorageAccountConfiguration storageConfigurations = default, EventHubConfiguration eventHubConfigurations = default, MonitorLogV2 monitorConfigurationsV2 = default)
+        /// <returns> A new <see cref="Models.PaloAltoNetworksDcrLogDestination"/> instance for mocking. </returns>
+        public static PaloAltoNetworksDcrLogDestination PaloAltoNetworksDcrLogDestination(StorageAccountConfiguration storageConfigurations = default, EventHubConfiguration eventHubConfigurations = default, PaloAltoNetworksMonitorDcrLog monitorConfigurationsV2 = default)
         {
-            return new LogDestinationV2(storageConfigurations, eventHubConfigurations, monitorConfigurationsV2, default);
+            return new PaloAltoNetworksDcrLogDestination(storageConfigurations, eventHubConfigurations, monitorConfigurationsV2, default);
         }
 
         /// <summary> Storage Account configurations. </summary>
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="logIngestionEndpoint"> HTTPS logs ingestion endpoint that receives the data (the DCR's logs ingestion endpoint or its Data Collection Endpoint). </param>
         /// <param name="dcrImmutableId"> Immutable ID of the Data Collection Rule (the value that begins with `dcr-`). </param>
         /// <param name="streamName"> DCR input stream that receives the data. For a custom table this is typically `Custom-&lt;TableName&gt;`. </param>
-        /// <returns> A new <see cref="Models.MonitorLogV2"/> instance for mocking. </returns>
-        public static MonitorLogV2 MonitorLogV2(ResourceIdentifier dcrId = default, Uri logIngestionEndpoint = default, string dcrImmutableId = default, string streamName = default)
+        /// <returns> A new <see cref="Models.PaloAltoNetworksMonitorDcrLog"/> instance for mocking. </returns>
+        public static PaloAltoNetworksMonitorDcrLog PaloAltoNetworksMonitorDcrLog(ResourceIdentifier dcrId = default, Uri logIngestionEndpoint = default, string dcrImmutableId = default, string streamName = default)
         {
-            return new MonitorLogV2(dcrId, logIngestionEndpoint, dcrImmutableId, streamName, default);
+            return new PaloAltoNetworksMonitorDcrLog(dcrId, logIngestionEndpoint, dcrImmutableId, streamName, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

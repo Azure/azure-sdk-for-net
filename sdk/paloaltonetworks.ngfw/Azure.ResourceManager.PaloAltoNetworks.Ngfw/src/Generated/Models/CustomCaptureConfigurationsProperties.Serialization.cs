@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             IList<CustomCaptureConfigurationsFilter> pcapFilter = default;
             IList<CustomCaptureConfigurationsStage> pcapStages = default;
             int? durationInSec = default;
-            string storageAccountResourceId = default;
+            ResourceIdentifier storageAccountResourceId = default;
             CustomCaptureConfigurationsStatus? pcapStatus = default;
             string pcapDetailReason = default;
             int? nextCheckInSeconds = default;
@@ -216,7 +217,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 if (prop.NameEquals("storageAccountResourceId"u8))
                 {
-                    storageAccountResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("pcapStatus"u8))

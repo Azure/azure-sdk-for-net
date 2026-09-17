@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> Log Destination for the Azure Monitor Log Ingestion (Data Collection Rule) method. Carries the DCR-based `monitorConfigurationsV2`. </summary>
-    public partial class LogDestinationV2
+    public partial class PaloAltoNetworksDcrLogDestination
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LogDestinationV2"/>. </summary>
-        public LogDestinationV2()
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksDcrLogDestination"/>. </summary>
+        public PaloAltoNetworksDcrLogDestination()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LogDestinationV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaloAltoNetworksDcrLogDestination"/>. </summary>
         /// <param name="storageConfigurations"> Storage account configurations. </param>
         /// <param name="eventHubConfigurations"> Event Hub configurations. </param>
         /// <param name="monitorConfigurationsV2"> Azure Monitor Log Ingestion (Data Collection Rule) configuration for this destination. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogDestinationV2(StorageAccountConfiguration storageConfigurations, EventHubConfiguration eventHubConfigurations, MonitorLogV2 monitorConfigurationsV2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PaloAltoNetworksDcrLogDestination(StorageAccountConfiguration storageConfigurations, EventHubConfiguration eventHubConfigurations, PaloAltoNetworksMonitorDcrLog monitorConfigurationsV2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageConfigurations = storageConfigurations;
             EventHubConfigurations = eventHubConfigurations;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public EventHubConfiguration EventHubConfigurations { get; set; }
 
         /// <summary> Azure Monitor Log Ingestion (Data Collection Rule) configuration for this destination. </summary>
-        public MonitorLogV2 MonitorConfigurationsV2 { get; set; }
+        public PaloAltoNetworksMonitorDcrLog MonitorConfigurationsV2 { get; set; }
     }
 }

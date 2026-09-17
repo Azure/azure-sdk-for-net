@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A class representing a LogIngestionSettingsResource along with the instance operations that can be performed on it.
+    /// A class representing a LogIngestionSettings along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogIngestionSettingsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PaloAltoNetworksFirewallResource"/> using the GetLogIngestionSettingsResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PaloAltoNetworksFirewallResource"/> using the GetLogIngestionSettings method.
     /// </summary>
     public partial class LogIngestionSettingsResource : ArmResource
     {
         private readonly ClientDiagnostics _logIngestionSettingsResourcesClientDiagnostics;
         private readonly LogIngestionSettingsResources _logIngestionSettingsResourcesRestClient;
-        private readonly LogIngestionSettingsResourceData _data;
+        private readonly LogIngestionSettingsData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls/logIngestionSettings";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <summary> Initializes a new instance of <see cref="LogIngestionSettingsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LogIngestionSettingsResource(ArmClient client, LogIngestionSettingsResourceData data) : this(client, data.Id)
+        internal LogIngestionSettingsResource(ArmClient client, LogIngestionSettingsData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LogIngestionSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string logIngestionSettingsResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string logIngestionSettingsApiVersion);
             _logIngestionSettingsResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _logIngestionSettingsResourcesRestClient = new LogIngestionSettingsResources(_logIngestionSettingsResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, logIngestionSettingsResourceApiVersion ?? "2026-07-29-preview");
+            _logIngestionSettingsResourcesRestClient = new LogIngestionSettingsResources(_logIngestionSettingsResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, logIngestionSettingsApiVersion ?? "2026-07-29-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual LogIngestionSettingsResourceData Data
+        public virtual LogIngestionSettingsData Data
         {
             get
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<LogIngestionSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, LogIngestionSettingsResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogIngestionSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, LogIngestionSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, LogIngestionSettingsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, LogIngestionSettingsData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LogIngestionSettingsResourceData> response = Response.FromValue(LogIngestionSettingsResourceData.FromResponse(result), result);
+                Response<LogIngestionSettingsData> response = Response.FromValue(LogIngestionSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 NgfwArmOperation<LogIngestionSettingsResource> operation = new NgfwArmOperation<LogIngestionSettingsResource>(Response.FromValue(new LogIngestionSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<LogIngestionSettingsResource> CreateOrUpdate(WaitUntil waitUntil, LogIngestionSettingsResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogIngestionSettingsResource> CreateOrUpdate(WaitUntil waitUntil, LogIngestionSettingsData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, LogIngestionSettingsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, LogIngestionSettingsData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LogIngestionSettingsResourceData> response = Response.FromValue(LogIngestionSettingsResourceData.FromResponse(result), result);
+                Response<LogIngestionSettingsData> response = Response.FromValue(LogIngestionSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 NgfwArmOperation<LogIngestionSettingsResource> operation = new NgfwArmOperation<LogIngestionSettingsResource>(Response.FromValue(new LogIngestionSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 };
                 HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LogIngestionSettingsResourceData> response = Response.FromValue(LogIngestionSettingsResourceData.FromResponse(result), result);
+                Response<LogIngestionSettingsData> response = Response.FromValue(LogIngestionSettingsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 };
                 HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LogIngestionSettingsResourceData> response = Response.FromValue(LogIngestionSettingsResourceData.FromResponse(result), result);
+                Response<LogIngestionSettingsData> response = Response.FromValue(LogIngestionSettingsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

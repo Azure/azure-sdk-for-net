@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="threatLogDestination"> Threat destination configurations. </param>
         /// <param name="decryptLogDestination"> Decrypt destination configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogIngestionSettingsProperties(FirewallLogType? logType, FirewallLogOption? logOption, FirewallApplicationInsights applicationInsights, LogDestinationV2 commonDestination, LogDestinationV2 trafficLogDestination, LogDestinationV2 threatLogDestination, LogDestinationV2 decryptLogDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogIngestionSettingsProperties(FirewallLogType? logType, FirewallLogOption? logOption, FirewallApplicationInsights applicationInsights, PaloAltoNetworksDcrLogDestination commonDestination, PaloAltoNetworksDcrLogDestination trafficLogDestination, PaloAltoNetworksDcrLogDestination threatLogDestination, PaloAltoNetworksDcrLogDestination decryptLogDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogType = logType;
             LogOption = logOption;
@@ -52,15 +52,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public FirewallApplicationInsights ApplicationInsights { get; set; }
 
         /// <summary> Common destination configurations. </summary>
-        public LogDestinationV2 CommonDestination { get; set; }
+        public PaloAltoNetworksDcrLogDestination CommonDestination { get; set; }
 
         /// <summary> Traffic destination configurations. </summary>
-        public LogDestinationV2 TrafficLogDestination { get; set; }
+        public PaloAltoNetworksDcrLogDestination TrafficLogDestination { get; set; }
 
         /// <summary> Threat destination configurations. </summary>
-        public LogDestinationV2 ThreatLogDestination { get; set; }
+        public PaloAltoNetworksDcrLogDestination ThreatLogDestination { get; set; }
 
         /// <summary> Decrypt destination configurations. </summary>
-        public LogDestinationV2 DecryptLogDestination { get; set; }
+        public PaloAltoNetworksDcrLogDestination DecryptLogDestination { get; set; }
     }
 }

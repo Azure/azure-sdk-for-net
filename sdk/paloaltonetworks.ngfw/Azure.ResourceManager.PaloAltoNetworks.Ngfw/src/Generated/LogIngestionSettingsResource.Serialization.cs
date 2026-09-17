@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary></summary>
-    public partial class LogIngestionSettingsResource : IJsonModel<LogIngestionSettingsResourceData>
+    public partial class LogIngestionSettingsResource : IJsonModel<LogIngestionSettingsData>
     {
-        private static IJsonModel<LogIngestionSettingsResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<LogIngestionSettingsData> s_dataDeserializationInstance;
 
-        private static IJsonModel<LogIngestionSettingsResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LogIngestionSettingsResourceData();
+        private static IJsonModel<LogIngestionSettingsData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LogIngestionSettingsData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LogIngestionSettingsResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogIngestionSettingsResourceData>)Data).Write(writer, options);
+        void IJsonModel<LogIngestionSettingsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogIngestionSettingsData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogIngestionSettingsResourceData IJsonModel<LogIngestionSettingsResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        LogIngestionSettingsData IJsonModel<LogIngestionSettingsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LogIngestionSettingsResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogIngestionSettingsResourceData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+        BinaryData IPersistableModel<LogIngestionSettingsData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogIngestionSettingsData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LogIngestionSettingsResourceData IPersistableModel<LogIngestionSettingsResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogIngestionSettingsResourceData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+        LogIngestionSettingsData IPersistableModel<LogIngestionSettingsData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogIngestionSettingsData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LogIngestionSettingsResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<LogIngestionSettingsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

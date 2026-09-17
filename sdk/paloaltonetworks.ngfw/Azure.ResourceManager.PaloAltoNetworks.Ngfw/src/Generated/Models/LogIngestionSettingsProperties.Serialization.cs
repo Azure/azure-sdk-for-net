@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             FirewallLogType? logType = default;
             FirewallLogOption? logOption = default;
             FirewallApplicationInsights applicationInsights = default;
-            LogDestinationV2 commonDestination = default;
-            LogDestinationV2 trafficLogDestination = default;
-            LogDestinationV2 threatLogDestination = default;
-            LogDestinationV2 decryptLogDestination = default;
+            PaloAltoNetworksDcrLogDestination commonDestination = default;
+            PaloAltoNetworksDcrLogDestination trafficLogDestination = default;
+            PaloAltoNetworksDcrLogDestination threatLogDestination = default;
+            PaloAltoNetworksDcrLogDestination decryptLogDestination = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    commonDestination = LogDestinationV2.DeserializeLogDestinationV2(prop.Value, options);
+                    commonDestination = PaloAltoNetworksDcrLogDestination.DeserializePaloAltoNetworksDcrLogDestination(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("trafficLogDestination"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    trafficLogDestination = LogDestinationV2.DeserializeLogDestinationV2(prop.Value, options);
+                    trafficLogDestination = PaloAltoNetworksDcrLogDestination.DeserializePaloAltoNetworksDcrLogDestination(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("threatLogDestination"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    threatLogDestination = LogDestinationV2.DeserializeLogDestinationV2(prop.Value, options);
+                    threatLogDestination = PaloAltoNetworksDcrLogDestination.DeserializePaloAltoNetworksDcrLogDestination(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("decryptLogDestination"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    decryptLogDestination = LogDestinationV2.DeserializeLogDestinationV2(prop.Value, options);
+                    decryptLogDestination = PaloAltoNetworksDcrLogDestination.DeserializePaloAltoNetworksDcrLogDestination(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

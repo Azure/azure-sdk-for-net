@@ -30,12 +30,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             _value = value;
         }
 
-        /// <summary> Transmission Control Protocol. </summary>
-        public static CustomCaptureConfigurationsProtocol TCP { get; } = new CustomCaptureConfigurationsProtocol(TCPValue);
-
-        /// <summary> User Datagram Protocol. </summary>
-        public static CustomCaptureConfigurationsProtocol UDP { get; } = new CustomCaptureConfigurationsProtocol(UDPValue);
-
         /// <summary> Determines if two <see cref="CustomCaptureConfigurationsProtocol"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added custom packet capture and Azure Monitor Data Collection Rule-based log ingestion resources using API version `2026-07-29-preview`.
+
 ### Breaking Changes
 
 ### Bugs Fixed

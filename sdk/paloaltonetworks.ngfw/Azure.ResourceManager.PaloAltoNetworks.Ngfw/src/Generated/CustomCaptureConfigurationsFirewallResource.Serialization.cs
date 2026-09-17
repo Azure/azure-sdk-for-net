@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary></summary>
-    public partial class CustomCaptureConfigurationsFirewallResource : IJsonModel<CustomCaptureConfigurationsFirewallResourceData>
+    public partial class CustomCaptureConfigurationsFirewallResource : IJsonModel<CustomCaptureConfigurationsFirewallData>
     {
-        private static IJsonModel<CustomCaptureConfigurationsFirewallResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<CustomCaptureConfigurationsFirewallData> s_dataDeserializationInstance;
 
-        private static IJsonModel<CustomCaptureConfigurationsFirewallResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CustomCaptureConfigurationsFirewallResourceData();
+        private static IJsonModel<CustomCaptureConfigurationsFirewallData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CustomCaptureConfigurationsFirewallData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CustomCaptureConfigurationsFirewallResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CustomCaptureConfigurationsFirewallResourceData>)Data).Write(writer, options);
+        void IJsonModel<CustomCaptureConfigurationsFirewallData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CustomCaptureConfigurationsFirewallData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomCaptureConfigurationsFirewallResourceData IJsonModel<CustomCaptureConfigurationsFirewallResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        CustomCaptureConfigurationsFirewallData IJsonModel<CustomCaptureConfigurationsFirewallData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomCaptureConfigurationsFirewallResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomCaptureConfigurationsFirewallResourceData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+        BinaryData IPersistableModel<CustomCaptureConfigurationsFirewallData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomCaptureConfigurationsFirewallData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomCaptureConfigurationsFirewallResourceData IPersistableModel<CustomCaptureConfigurationsFirewallResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomCaptureConfigurationsFirewallResourceData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+        CustomCaptureConfigurationsFirewallData IPersistableModel<CustomCaptureConfigurationsFirewallData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomCaptureConfigurationsFirewallData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CustomCaptureConfigurationsFirewallResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<CustomCaptureConfigurationsFirewallData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

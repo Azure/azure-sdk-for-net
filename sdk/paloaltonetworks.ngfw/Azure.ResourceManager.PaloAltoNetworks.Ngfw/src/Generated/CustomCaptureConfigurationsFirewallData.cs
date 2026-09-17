@@ -14,29 +14,29 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary> Custom Capture Configuration on a firewall (singleton). Sync child resource — caller polls GET to track pcapStatus until terminal (Success / Failed). </summary>
-    public partial class CustomCaptureConfigurationsFirewallResourceData : ResourceData
+    public partial class CustomCaptureConfigurationsFirewallData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomCaptureConfigurationsFirewallResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomCaptureConfigurationsFirewallData"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public CustomCaptureConfigurationsFirewallResourceData(CustomCaptureConfigurationsProperties properties)
+        public CustomCaptureConfigurationsFirewallData(CustomCaptureConfigurationsProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomCaptureConfigurationsFirewallResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomCaptureConfigurationsFirewallData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomCaptureConfigurationsFirewallResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomCaptureConfigurationsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal CustomCaptureConfigurationsFirewallData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomCaptureConfigurationsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
