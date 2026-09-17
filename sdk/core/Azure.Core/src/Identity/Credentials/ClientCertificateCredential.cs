@@ -248,7 +248,7 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
-                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled ? PopClient : Client;
+                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled && !AppContextSwitches.DisableClientCertificateMtlsProofOfPossession ? PopClient : Client;
                 AuthenticationResult result = client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(result.ToAccessToken());
@@ -276,7 +276,7 @@ namespace Azure.Identity
             try
             {
                 var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
-                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled ? PopClient : Client;
+                MsalConfidentialClient client = requestContext.IsProofOfPossessionEnabled && !AppContextSwitches.DisableClientCertificateMtlsProofOfPossession ? PopClient : Client;
                 AuthenticationResult result = await client
                     .AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.Claims, requestContext.IsCaeEnabled, true, cancellationToken)
                     .ConfigureAwait(false);

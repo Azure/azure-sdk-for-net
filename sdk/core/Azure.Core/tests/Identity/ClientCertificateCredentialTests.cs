@@ -313,6 +313,43 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
+        [NonParallelizable]
+        public async Task DisableSwitchForcesBearerTokenWhenProofOfPossessionRequested()
+        {
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            using var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            using var mockCert = new X509Certificate2(certificatePath);
+#endif
+            var bearerClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create("bearer-token"));
+            AuthenticationResult popResult = AuthenticationResultFactory.Create("pop-token");
+            popResult.BindingCertificate = mockCert;
+            var popClient = new MockMsalConfidentialClient(popResult);
+            var options = new ClientCertificateCredentialOptions { SendCertificateChain = true };
+            var credential = new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, bearerClient, popClient);
+            var requestContext = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            string switchName = AppContextSwitches.DisableClientCertificateMtlsProofOfPossessionSwitchName;
+            bool hadSwitch = AppContext.TryGetSwitch(switchName, out bool previous);
+            AppContext.SetSwitch(switchName, true);
+            try
+            {
+                AccessToken token = IsAsync
+                    ? await credential.GetTokenAsync(requestContext)
+                    : credential.GetToken(requestContext);
+
+                // The first-party disable switch forces a bearer token even though proof-of-possession was requested.
+                Assert.AreEqual("bearer-token", token.Token);
+                Assert.IsNull(token.BindingCertificate);
+            }
+            finally
+            {
+                AppContext.SetSwitch(switchName, hadSwitch && previous);
+            }
+        }
+
+        [Test]
         public void CreatesSeparateMtlsClientForSniAuthentication()
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
