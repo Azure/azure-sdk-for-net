@@ -179,11 +179,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("storedCompletionsDisabled"u8);
                 writer.WriteBooleanValue(IsStoredCompletionsDisabled.Value);
             }
-            if (Optional.IsDefined(IsA365LoggingEnabled))
-            {
-                writer.WritePropertyName("a365LoggingEnabled"u8);
-                writer.WriteBooleanValue(IsA365LoggingEnabled.Value);
-            }
             if (options.Format != "W" && Optional.IsDefined(QuotaLimit))
             {
                 writer.WritePropertyName("quotaLimit"u8);
@@ -280,11 +275,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FoundryAutoUpgrade))
-            {
-                writer.WritePropertyName("foundryAutoUpgrade"u8);
-                writer.WriteObjectValue(FoundryAutoUpgrade, options);
-            }
             if (Optional.IsDefined(AllowProjectManagement))
             {
                 writer.WritePropertyName("allowProjectManagement"u8);
@@ -307,21 +297,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         continue;
                     }
                     writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(CapabilitySettings))
-            {
-                writer.WritePropertyName("capabilitySettings"u8);
-                writer.WriteObjectValue(CapabilitySettings, options);
-            }
-            if (Optional.IsCollectionDefined(AgentHostingConfigurations))
-            {
-                writer.WritePropertyName("agentHostingConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (AgentHostingConfiguration item in AgentHostingConfigurations)
-                {
-                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -385,7 +360,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ServiceAccountCallRateLimit callRateLimit = default;
             bool? enableDynamicThrottling = default;
             bool? isStoredCompletionsDisabled = default;
-            bool? isA365LoggingEnabled = default;
             ServiceAccountQuotaLimit quotaLimit = default;
             bool? restrictOutboundNetworkAccess = default;
             IList<string> allowedFqdnList = default;
@@ -399,12 +373,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             AbusePenalty abusePenalty = default;
             RaiMonitorConfig raiMonitorConfig = default;
             IList<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default;
-            FoundryAutoUpgrade foundryAutoUpgrade = default;
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
-            CapabilitySettings capabilitySettings = default;
-            IList<AgentHostingConfiguration> agentHostingConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -573,15 +544,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     isStoredCompletionsDisabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("a365LoggingEnabled"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isA365LoggingEnabled = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("quotaLimit"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -729,15 +691,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     aiFoundryNetworkInjections = array;
                     continue;
                 }
-                if (prop.NameEquals("foundryAutoUpgrade"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    foundryAutoUpgrade = FoundryAutoUpgrade.DeserializeFoundryAutoUpgrade(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("allowProjectManagement"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -773,29 +726,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     associatedProjects = array;
                     continue;
                 }
-                if (prop.NameEquals("capabilitySettings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    capabilitySettings = CapabilitySettings.DeserializeCapabilitySettings(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("agentHostingConfigurations"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AgentHostingConfiguration> array = new List<AgentHostingConfiguration>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(AgentHostingConfiguration.DeserializeAgentHostingConfiguration(item, options));
-                    }
-                    agentHostingConfigurations = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -820,7 +750,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 callRateLimit,
                 enableDynamicThrottling,
                 isStoredCompletionsDisabled,
-                isA365LoggingEnabled,
                 quotaLimit,
                 restrictOutboundNetworkAccess,
                 allowedFqdnList ?? new ChangeTrackingList<string>(),
@@ -834,12 +763,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 abusePenalty,
                 raiMonitorConfig,
                 aiFoundryNetworkInjections ?? new ChangeTrackingList<AIFoundryNetworkInjection>(),
-                foundryAutoUpgrade,
                 allowProjectManagement,
                 defaultProject,
                 associatedProjects ?? new ChangeTrackingList<string>(),
-                capabilitySettings,
-                agentHostingConfigurations ?? new ChangeTrackingList<AgentHostingConfiguration>(),
                 additionalBinaryDataProperties);
         }
     }
