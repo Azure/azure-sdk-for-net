@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// <param name="client"> The Occurrences client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="occurrenceId"> The occurrence ID in UUID format. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
         public OccurrencesGetResourcesCollectionResultOfT(Occurrences client, Guid subscriptionId, string resourceGroupName, string scheduledActionName, string occurrenceId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)

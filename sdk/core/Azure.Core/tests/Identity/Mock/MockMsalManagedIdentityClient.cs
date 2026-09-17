@@ -30,6 +30,7 @@ namespace Azure.Core.Tests.Identity.Mock
         /// failing — for example, when the IMDS endpoint is unreachable on a developer machine.
         /// </summary>
         public Func<TokenRequestContext, CancellationToken, ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesFactory { get; set; }
+        public Func<TokenRequestContext, CancellationToken, ValueTask<ManagedIdentityCapabilities>> GetManagedIdentityCapabilitiesAsyncFactory { get; set; }
 
         private Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource _detectedSource;
         private ManagedIdentityId _azureManagedIdentityId;
@@ -74,9 +75,15 @@ namespace Azure.Core.Tests.Identity.Mock
             // Non-IMDS sources (AppService, CloudShell, etc.) are detected from env vars
             // without HTTP probing, so MSAL handles them safely.
 #pragma warning disable CS0618 // DefaultToImds is obsolete
+            if (_detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None)
+            {
+                _detectedSource = ManagedIdentityApplication.GetManagedIdentitySource();
+            }
+
             if (Pipeline != null &&
                 (_detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.DefaultToImds ||
-                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds))
+                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds ||
+                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None))
 #pragma warning restore CS0618
             {
                 return new ValueTask<AuthenticationResult>(SendDirectImdsRequest(requestContext, cancellationToken));
@@ -90,6 +97,11 @@ namespace Azure.Core.Tests.Identity.Mock
             TokenRequestContext context,
             CancellationToken cancellationToken)
         {
+            if (GetManagedIdentityCapabilitiesAsyncFactory != null)
+            {
+                return GetManagedIdentityCapabilitiesFromFactoryAsync(context, cancellationToken);
+            }
+
             if (GetManagedIdentityCapabilitiesFactory != null)
             {
                 // Allows tests to simulate the MSAL source/capability probe (which throws when IMDS is
@@ -104,6 +116,13 @@ namespace Azure.Core.Tests.Identity.Mock
             _detectedSource = ManagedIdentityApplication.GetManagedIdentitySource();
 #pragma warning restore CS0618
             return new ValueTask<ManagedIdentityCapabilities>(CreateManagedIdentityCapabilities(_detectedSource));
+        }
+
+        private async ValueTask<ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesFromFactoryAsync(TokenRequestContext context, CancellationToken cancellationToken)
+        {
+            ManagedIdentityCapabilities capabilities = await GetManagedIdentityCapabilitiesAsyncFactory(context, cancellationToken).ConfigureAwait(false);
+            _detectedSource = capabilities.Source;
+            return capabilities;
         }
 
         protected override Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> ResolveAttestationSupport() =>

@@ -11,15 +11,15 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The response from scheduled action resource requests, which contains the status of each resource. </summary>
+    /// <summary> Results of a scheduled action operation for targeted resources. </summary>
     public partial class ResourceOperationResponseResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceOperationResponseResult"/>. </summary>
-        /// <param name="totalResources"> The total number of resources operated on. </param>
-        /// <param name="resourcesStatuses"> The resource status of for each resource. </param>
+        /// <param name="totalResources"> The number of resources included in the operation. </param>
+        /// <param name="resourcesStatuses"> The operation result for each resource. </param>
         internal ResourceOperationResponseResult(int totalResources, IEnumerable<ResourceStatus> resourcesStatuses)
         {
             TotalResources = totalResources;
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceOperationResponseResult"/>. </summary>
-        /// <param name="totalResources"> The total number of resources operated on. </param>
-        /// <param name="resourcesStatuses"> The resource status of for each resource. </param>
+        /// <param name="totalResources"> The number of resources included in the operation. </param>
+        /// <param name="resourcesStatuses"> The operation result for each resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ResourceOperationResponseResult(int totalResources, IList<ResourceStatus> resourcesStatuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The total number of resources operated on. </summary>
+        /// <summary> The number of resources included in the operation. </summary>
         public int TotalResources { get; }
 
-        /// <summary> The resource status of for each resource. </summary>
+        /// <summary> The operation result for each resource. </summary>
         public IList<ResourceStatus> ResourcesStatuses { get; }
     }
 }
