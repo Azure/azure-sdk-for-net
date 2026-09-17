@@ -134,7 +134,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
                 new MockResponse(200)
                 {
-                    ContentStream = new KeyVaultSecret("test-secret2", "secret-value").ToStream(),
+                    ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
                 },
             });
 
@@ -147,7 +147,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 });
 
             _ = client.GetSecret("test-secret");
-            _ = client.GetSecret("test-secret2");
+            // Keep the PoP request target unchanged so only the CAE claims challenge invalidates the token.
+            _ = client.GetSecret("test-secret");
 
             Assert.IsTrue(transport.Requests[2].Headers.TryGetValue("Authorization", out string authorizationValue));
             Assert.AreEqual("Bearer TOKEN_1", authorizationValue);
