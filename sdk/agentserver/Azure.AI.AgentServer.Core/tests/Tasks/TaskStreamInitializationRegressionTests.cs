@@ -341,8 +341,8 @@ public class TaskStreamInitializationRegressionTests
         public override ValueTask<AgentEventStream> GetAsync(string id, CancellationToken cancellationToken = default)
             => throw new InvalidOperationException("Must use task-aware lookup.");
         public override ValueTask DeleteAsync(string id, CancellationToken cancellationToken = default) => ValueTask.CompletedTask;
-        public void RecordPendingDeletion(string taskId, IReadOnlyCollection<string> inputIds) { }
-        public void RemovePendingDeletion(string taskId) { }
+        public void RecordPendingDeletion(string taskId, string operationId, IReadOnlyCollection<string> inputIds) { }
+        public void RemovePendingDeletion(string taskId, string operationId) { }
         public IReadOnlyList<Azure.AI.AgentServer.Core.Streaming.Backings.PendingStreamDeletion> ListPendingDeletions()
             => Array.Empty<Azure.AI.AgentServer.Core.Streaming.Backings.PendingStreamDeletion>();
     }

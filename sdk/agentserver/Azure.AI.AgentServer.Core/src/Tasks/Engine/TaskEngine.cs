@@ -42,6 +42,10 @@ internal sealed partial class TaskEngine : IDisposable
     private readonly ConcurrentDictionary<string, TaskCompletionSource> _pendingStarts = new(StringComparer.Ordinal);
     private readonly ConcurrentDictionary<string, byte> _pendingDeletes = new(StringComparer.Ordinal);
     private readonly ConcurrentDictionary<string, TaskDeletionState> _deletionCleanup = new(StringComparer.Ordinal);
+    // Delete operations this process is still handling (journaled but not yet drained/closed). The
+    // periodic recovery sweep skips these so it never closes a stream whose producer is still
+    // unwinding in-process; only crash-orphaned entries (absent from this set) are reconciled.
+    private readonly ConcurrentDictionary<string, byte> _liveDeletions = new(StringComparer.Ordinal);
     private readonly ConcurrentDictionary<string, IActiveRun> _activeRuns = new(StringComparer.Ordinal);
     private readonly ConcurrentDictionary<string, long> _terminatedOneShot = new(StringComparer.Ordinal);
     private readonly CancellationTokenSource _shutdownCts = new();
@@ -742,7 +746,7 @@ internal sealed partial class TaskEngine : IDisposable
                             // Crash repair: cancelling a queued input removes it from the durable
                             // queue and closes its stream right after. Record the close intent
                             // atomically so a crash in that window is reconciled to EOF on restart.
-                            MarkStreamPendingClose(payload, inputId);
+                            MarkStreamPendingClose(record, payload, inputId);
                             return new TaskPatchRequest
                             {
                                 Payload = payload,
@@ -943,7 +947,7 @@ internal sealed partial class TaskEngine : IDisposable
                 string retired = TaskInputIdentity.Active(record, taskId);
                 if (!string.Equals(retired, queued.InputId, StringComparison.Ordinal))
                 {
-                    MarkStreamPendingClose(turnPayload, retired);
+                    MarkStreamPendingClose(record, turnPayload, retired);
                 }
                 TaskInputIdentity.PreserveLegacy(record, turnPayload, taskId);
                 turnPayload[TaskWireKeys.PayloadActiveInputId] = queued.InputId;
@@ -1636,7 +1640,7 @@ internal sealed partial class TaskEngine : IDisposable
                 // right after this write. Record the close intent atomically so a crash between
                 // the completion commit and the stream close is reconciled to EOF on restart.
                 var payload = new JsonObject();
-                MarkStreamPendingClose(payload, TaskInputIdentity.Active(record, taskId));
+                MarkStreamPendingClose(record, payload, TaskInputIdentity.Active(record, taskId));
                 return new TaskPatchRequest
                 {
                     Status = TaskWireKeys.StatusCompleted,
@@ -1683,7 +1687,7 @@ internal sealed partial class TaskEngine : IDisposable
                         // Crash repair: the finished turn's stream is closed right after this
                         // suspend commits. Record the close intent atomically so a crash in that
                         // window is reconciled to EOF on restart (saved-state reconciliation).
-                        MarkStreamPendingClose(payload, TaskInputIdentity.Active(record, taskId));
+                        MarkStreamPendingClose(record, payload, TaskInputIdentity.Active(record, taskId));
                         return new TaskPatchRequest
                         {
                             Status = TaskWireKeys.StatusSuspended,
@@ -1773,15 +1777,17 @@ internal sealed partial class TaskEngine : IDisposable
         }
 
         // Crash repair: a hard delete removes the record that names the streams still owing EOF, so
-        // the close intent is journaled durably before the provider delete. It is drained on restart
-        // only when the record is confirmed gone, and removed on the success path below. A crash
-        // between the committed delete and stream close is therefore reconciled after restart.
-        IReadOnlyCollection<string> journaledInputs = record is not null
-            ? GetDeletedRecordInputIds(record)
-            : Array.Empty<string>();
-        if (journaledInputs.Count > 0 && _streams is ITaskEventStreamRegistry journalRegistry)
+        // the close intent is journaled durably before the provider delete. The journal names the
+        // inputs the deletion actually captured (including any appended concurrently after the record
+        // was read), carries a per-operation identity, and is registered as a live in-process
+        // operation so the periodic sweep never reconciles a deletion this process is still handling.
+        string operationId = Guid.NewGuid().ToString("N");
+        IReadOnlyCollection<string> journaledInputs = cleanup.TrackedInputIds;
+        bool journaled = journaledInputs.Count > 0 && _streams is ITaskEventStreamRegistry journalRegistry;
+        if (journaled)
         {
-            journalRegistry.RecordPendingDeletion(taskId, journaledInputs);
+            _liveDeletions.TryAdd(operationId, 0);
+            ((ITaskEventStreamRegistry)_streams).RecordPendingDeletion(taskId, operationId, journaledInputs);
         }
 
         try
@@ -1802,17 +1808,20 @@ internal sealed partial class TaskEngine : IDisposable
 
         // The delete committed. Remove the durable journal only after the streams are actually sealed
         // — including closures deferred until a running producer unwinds — so a crash before a
-        // deferred close still finds the journal and reconciles on restart. This never blocks
+        // deferred close still finds the journal and reconciles on restart. Removal is scoped to this
+        // operation id so a later delete reusing the same task id is untouched. This never blocks
         // DeleteAsync on a non-cooperative handler: if the close does not complete in this lifetime
-        // the journal simply persists for the next restart, and a failed close also retains it.
-        if (journaledInputs.Count > 0 && _streams is ITaskEventStreamRegistry cleanupRegistry)
+        // the operation stays live and the journal persists for the next restart; a failed close
+        // retains the journal but releases the live guard so the sweep can retry once the producer
+        // has unwound.
+        if (journaled)
         {
-            _ = RemovePendingDeletionAfterDrainAsync(cleanup, cleanupRegistry, taskId);
+            _ = RemovePendingDeletionAfterDrainAsync(cleanup, (ITaskEventStreamRegistry)_streams, taskId, operationId);
         }
     }
 
-    private static async Task RemovePendingDeletionAfterDrainAsync(
-        TaskDeletionState cleanup, ITaskEventStreamRegistry registry, string taskId)
+    private async Task RemovePendingDeletionAfterDrainAsync(
+        TaskDeletionState cleanup, ITaskEventStreamRegistry registry, string taskId, string operationId)
     {
         try
         {
@@ -1820,11 +1829,26 @@ internal sealed partial class TaskEngine : IDisposable
         }
         catch
         {
-            // A close failed or remains pending after a fault; keep the journal for restart repair.
+            // The producer unwound but a close failed; keep the journal for retry and release the
+            // live guard so a later sweep (or restart) can reconcile the still-open stream.
+            _liveDeletions.TryRemove(operationId, out _);
             return;
         }
 
-        registry.RemovePendingDeletion(taskId);
+        try
+        {
+            registry.RemovePendingDeletion(taskId, operationId);
+        }
+        catch (Exception ex)
+        {
+            // A transient failure removing the journal file is harmless: the stream is already
+            // sealed, and a later scan (or restart) removes the now-stale entry idempotently.
+            _logger.StreamCloseFailure(taskId, operationId, ex.GetType().Name);
+        }
+        finally
+        {
+            _liveDeletions.TryRemove(operationId, out _);
+        }
     }
 
     private async Task ObserveDeletionCancellationAsync(string taskId, Task cancellation)
@@ -1949,7 +1973,7 @@ internal sealed partial class TaskEngine : IDisposable
         }
     }
 
-    private async Task CloseStreamAsync<TOutput>(TaskRunState<TOutput> runState)
+    private async Task<bool> CloseStreamAsync<TOutput>(TaskRunState<TOutput> runState)
     {
         try
         {
@@ -1961,25 +1985,106 @@ internal sealed partial class TaskEngine : IDisposable
                 runState.TaskId,
                 runState.InputId,
                 closeException.GetType().Name);
+            return false;
         }
+
+        // The stream is durably closed; drop its close intent so the saved marker shrinks (best
+        // effort — a stale marker is idempotently re-closed by reconciliation).
+        await ClearStreamPendingCloseAsync(runState.TaskId, runState.InputId).ConfigureAwait(false);
+        return true;
     }
 
     // Records a crash-repair close intent atomically with a durable transition: the raw input id
-    // whose file-backed stream still owes an end-of-stream marker once the transition commits.
-    private static void MarkStreamPendingClose(JsonObject payload, string inputId)
-        => payload[TaskWireKeys.PayloadStreamsPendingClose] = new JsonArray(JsonValue.Create(inputId));
+    // whose file-backed stream still owes an end-of-stream marker once the transition commits. The
+    // id is merged with any intents still outstanding on the record so a delayed/failed earlier close
+    // is never dropped by a later retirement (each id is cleared only after its own close succeeds).
+    private static void MarkStreamPendingClose(TaskRecord record, JsonObject payload, string inputId)
+    {
+        var merged = new JsonArray();
+        var seen = new HashSet<string>(StringComparer.Ordinal);
+        if (record.Payload?[TaskWireKeys.PayloadStreamsPendingClose] is JsonArray existing)
+        {
+            foreach (JsonNode? node in existing)
+            {
+                if (node is JsonValue value && value.TryGetValue(out string? id) && id is not null && seen.Add(id))
+                {
+                    merged.Add(JsonValue.Create(id));
+                }
+            }
+        }
+
+        if (seen.Add(inputId))
+        {
+            merged.Add(JsonValue.Create(inputId));
+        }
+
+        payload[TaskWireKeys.PayloadStreamsPendingClose] = merged;
+    }
+
+    // Removes a single input id from a record's outstanding close intents after its stream is
+    // durably closed. Best effort: a missing record or transient failure leaves a stale intent that
+    // reconciliation later re-closes idempotently.
+    private async Task ClearStreamPendingCloseAsync(string taskId, string inputId)
+    {
+        try
+        {
+            await _serializer.UpdateAsync(
+                taskId,
+                record =>
+                {
+                    if (record.Payload is not JsonObject payload
+                        || payload[TaskWireKeys.PayloadStreamsPendingClose] is not JsonArray pending
+                        || pending.Count == 0)
+                    {
+                        return null;
+                    }
+
+                    var remaining = new JsonArray();
+                    bool removed = false;
+                    foreach (JsonNode? node in pending)
+                    {
+                        if (node is JsonValue value && value.TryGetValue(out string? id)
+                            && string.Equals(id, inputId, StringComparison.Ordinal))
+                        {
+                            removed = true;
+                            continue;
+                        }
+
+                        remaining.Add(node?.DeepClone());
+                    }
+
+                    if (!removed)
+                    {
+                        return null;
+                    }
+
+                    return new TaskPatchRequest
+                    {
+                        Payload = new JsonObject { [TaskWireKeys.PayloadStreamsPendingClose] = remaining },
+                        PayloadSupplied = true,
+                    };
+                },
+                WriteIntent.Generic,
+                CancellationToken.None).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            _logger.StreamCloseFailure(taskId, inputId, ex.GetType().Name);
+        }
+    }
 
     // Saved-state reconciliation: closes the streams named by a record's crash-repair close intent,
     // skipping any input that is still live (the executing input, or a durably queued input). The
     // stream is opened existing-only and closed idempotently, so an already-closed or absent
-    // backing is a no-op and a reused live input is never sealed.
-    private async Task ReconcilePendingClosesAsync(TaskRecord record, CancellationToken cancellationToken)
+    // backing is a no-op and a reused live input is never sealed. Returns true only if every
+    // eligible stream closed; a successfully closed intent is cleared from the record.
+    private async Task<bool> ReconcilePendingClosesAsync(TaskRecord record, CancellationToken cancellationToken)
     {
         if (record.Payload is not JsonObject payload
             || payload[TaskWireKeys.PayloadStreamsPendingClose] is not JsonArray pending
             || pending.Count == 0)
         {
-            return;
+            return true;
         }
 
         var live = new HashSet<string>(StringComparer.Ordinal);
@@ -2000,6 +2105,7 @@ internal sealed partial class TaskEngine : IDisposable
             }
         }
 
+        bool allClosed = true;
         foreach (JsonNode? node in pending)
         {
             if (node is not JsonValue value || !value.TryGetValue(out string? inputId) || inputId is null)
@@ -2019,11 +2125,17 @@ internal sealed partial class TaskEngine : IDisposable
             }
             catch (Exception ex)
             {
-                // Ownership conflict, missing backing, or I/O error must not abort the sweep; the
-                // close intent remains recorded so a later scan retries.
+                // Ownership conflict, missing backing, or I/O error must not abort the sweep; retain
+                // the close intent so a later scan retries rather than reporting a false success.
+                allClosed = false;
                 _logger.StreamCloseFailure(record.Id, inputId, ex.GetType().Name);
+                continue;
             }
+
+            await ClearStreamPendingCloseAsync(record.Id, inputId).ConfigureAwait(false);
         }
+
+        return allClosed;
     }
 
     // Reconciles crash-orphaned streams for records that have durably left in_progress: suspended
@@ -2056,9 +2168,18 @@ internal sealed partial class TaskEngine : IDisposable
                     continue;
                 }
 
-                await ReconcilePendingClosesAsync(record, cancellationToken).ConfigureAwait(false);
+                // A task this process is actively running owns its own close lifecycle; leave its
+                // streams to the live run rather than reconciling them from a periodic sweep.
+                if (_activeRuns.ContainsKey(record.Id))
+                {
+                    continue;
+                }
 
-                if (deleteAfter)
+                bool allClosed = await ReconcilePendingClosesAsync(record, cancellationToken).ConfigureAwait(false);
+
+                // Finish the interrupted ephemeral cleanup only once every stream is durably closed;
+                // deleting the record while a close still owes EOF would discard its last reference.
+                if (deleteAfter && allClosed)
                 {
                     try
                     {
@@ -2597,8 +2718,12 @@ internal sealed partial class TaskEngine : IDisposable
 
             // Saved-state crash repair: close any stream this record retired (a promoted-away
             // predecessor or a cancelled queued input) before re-dispatching its live work. The
-            // executing/queued inputs are excluded, so recovery of the live turn is unaffected.
-            await ReconcilePendingClosesAsync(record, cancellationToken).ConfigureAwait(false);
+            // executing/queued inputs are excluded, so recovery of the live turn is unaffected. Skip
+            // a task this process is already running: its live run owns its own close lifecycle.
+            if (!_activeRuns.ContainsKey(record.Id))
+            {
+                await ReconcilePendingClosesAsync(record, cancellationToken).ConfigureAwait(false);
+            }
 
             string name = record.Source?.Name ?? string.Empty;
             if (!_registry.TryGet(name, out TaskRegistration registration) || registration.RecoverDispatch is null)
@@ -2637,10 +2762,13 @@ internal sealed partial class TaskEngine : IDisposable
     }
 
     // Saved-state crash repair for hard deletions: a deleted record cannot carry a close intent, so
-    // the intent was journaled durably before the provider delete. On restart, an entry whose record
-    // is confirmed gone has its streams sealed (existing-only, idempotent); an entry whose record
-    // still exists is discarded without closing, so an uncommitted or reused-id delete never seals a
-    // recoverable stream. An uncertain store read leaves the entry for a later scan.
+    // the intent was journaled durably before the provider delete. Entries this process is still
+    // handling (live operations) are left to their in-process confirmed-delete/producer-unwind
+    // coordination and never reconciled here. For a crash-orphaned entry, a confirmed-gone record has
+    // its streams sealed (existing-only, idempotent) and the entry removed only when every close
+    // succeeded; a still-present record is discarded without closing (uncommitted or reused-id delete
+    // never seals a recoverable stream); an uncertain store read or a failed close leaves the entry
+    // for a later scan.
     private async Task ReconcileDeletionJournalAsync(CancellationToken cancellationToken)
     {
         if (_streams is not ITaskEventStreamRegistry journal)
@@ -2650,6 +2778,13 @@ internal sealed partial class TaskEngine : IDisposable
 
         foreach (PendingStreamDeletion pending in journal.ListPendingDeletions())
         {
+            // A deletion this process is still handling owns its own close lifecycle; the sweep must
+            // not close a stream whose producer is still unwinding, nor discard a live journal entry.
+            if (_liveDeletions.ContainsKey(pending.OperationId))
+            {
+                continue;
+            }
+
             TaskRecord? record;
             try
             {
@@ -2662,10 +2797,11 @@ internal sealed partial class TaskEngine : IDisposable
 
             if (record is not null)
             {
-                journal.RemovePendingDeletion(pending.TaskId);
+                journal.RemovePendingDeletion(pending.TaskId, pending.OperationId);
                 continue;
             }
 
+            bool allClosed = true;
             foreach (string inputId in pending.InputIds)
             {
                 try
@@ -2674,11 +2810,17 @@ internal sealed partial class TaskEngine : IDisposable
                 }
                 catch (Exception ex)
                 {
+                    // The journal is the only durable reference to this orphan; retain it and retry
+                    // on a later scan rather than removing it with a stream still open.
+                    allClosed = false;
                     _logger.StreamCloseFailure(pending.TaskId, inputId, ex.GetType().Name);
                 }
             }
 
-            journal.RemovePendingDeletion(pending.TaskId);
+            if (allClosed)
+            {
+                journal.RemovePendingDeletion(pending.TaskId, pending.OperationId);
+            }
         }
     }
 

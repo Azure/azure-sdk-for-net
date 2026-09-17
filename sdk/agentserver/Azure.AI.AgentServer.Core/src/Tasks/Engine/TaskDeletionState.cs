@@ -36,6 +36,18 @@ internal sealed class TaskDeletionState
         }
     }
 
+    /// <summary>The input ids captured for deletion (including any appended after the record was read).</summary>
+    public IReadOnlyCollection<string> TrackedInputIds
+    {
+        get
+        {
+            lock (_gate)
+            {
+                return _inputs.Keys.ToArray();
+            }
+        }
+    }
+
     public Task ConfirmAsync()
     {
         lock (_gate)

@@ -25,7 +25,11 @@ internal static class TaskStreamDeletionJournal
 {
     private const string JournalDirectoryName = ".pending-deletes";
 
-    public static void Record(string storageDirectory, string taskId, IReadOnlyCollection<string> inputIds)
+    public static void Record(
+        string storageDirectory,
+        string taskId,
+        string operationId,
+        IReadOnlyCollection<string> inputIds)
     {
         if (inputIds.Count == 0)
         {
@@ -43,18 +47,23 @@ internal static class TaskStreamDeletionJournal
         string journalDirectory = Path.Combine(storageDirectory, JournalDirectoryName);
         Directory.CreateDirectory(journalDirectory);
 
-        var entry = new JournalEntry { TaskId = taskId, InputIds = new List<string>(inputIds) };
+        var entry = new JournalEntry
+        {
+            TaskId = taskId,
+            OperationId = operationId,
+            InputIds = new List<string>(inputIds),
+        };
         byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(entry, JournalContext.Default.JournalEntry);
 
-        string path = EntryPath(journalDirectory, taskId);
+        string path = EntryPath(journalDirectory, taskId, operationId);
         string temp = path + ".tmp";
         File.WriteAllBytes(temp, bytes);
         File.Move(temp, path, overwrite: true);
     }
 
-    public static void Remove(string storageDirectory, string taskId)
+    public static void Remove(string storageDirectory, string taskId, string operationId)
     {
-        string path = EntryPath(Path.Combine(storageDirectory, JournalDirectoryName), taskId);
+        string path = EntryPath(Path.Combine(storageDirectory, JournalDirectoryName), taskId, operationId);
         try
         {
             File.Delete(path);
@@ -87,27 +96,30 @@ internal static class TaskStreamDeletionJournal
                 continue;
             }
 
-            if (entry is null || string.IsNullOrEmpty(entry.TaskId) || entry.InputIds is not { Count: > 0 })
+            if (entry is null
+                || string.IsNullOrEmpty(entry.TaskId)
+                || string.IsNullOrEmpty(entry.OperationId)
+                || entry.InputIds is not { Count: > 0 })
             {
                 continue;
             }
 
-            pending.Add(new PendingStreamDeletion(entry.TaskId, entry.InputIds));
+            pending.Add(new PendingStreamDeletion(entry.TaskId, entry.OperationId, entry.InputIds));
         }
 
         return pending;
     }
 
-    private static string EntryPath(string journalDirectory, string taskId)
-        => Path.Combine(journalDirectory, HashKey(taskId) + ".json");
+    private static string EntryPath(string journalDirectory, string taskId, string operationId)
+        => Path.Combine(journalDirectory, HashKey(taskId + "\0" + operationId) + ".json");
 
-    private static string HashKey(string taskId)
+    private static string HashKey(string value)
     {
-        byte[] hash = SHA256.HashData(Encoding.UTF8.GetBytes(taskId));
+        byte[] hash = SHA256.HashData(Encoding.UTF8.GetBytes(value));
         var builder = new StringBuilder(hash.Length * 2);
-        foreach (byte value in hash)
+        foreach (byte b in hash)
         {
-            builder.Append(value.ToString("x2", System.Globalization.CultureInfo.InvariantCulture));
+            builder.Append(b.ToString("x2", System.Globalization.CultureInfo.InvariantCulture));
         }
 
         return builder.ToString();
@@ -116,12 +128,16 @@ internal static class TaskStreamDeletionJournal
     internal sealed class JournalEntry
     {
         public string TaskId { get; set; } = string.Empty;
+        public string OperationId { get; set; } = string.Empty;
         public List<string> InputIds { get; set; } = new();
     }
 }
 
 /// <summary>A task deletion's still-owed stream closures, discovered on restart.</summary>
-internal readonly record struct PendingStreamDeletion(string TaskId, IReadOnlyList<string> InputIds);
+internal readonly record struct PendingStreamDeletion(
+    string TaskId,
+    string OperationId,
+    IReadOnlyList<string> InputIds);
 
 [System.Text.Json.Serialization.JsonSerializable(typeof(TaskStreamDeletionJournal.JournalEntry))]
 [System.Text.Json.Serialization.JsonSourceGenerationOptions(PropertyNamingPolicy = System.Text.Json.Serialization.JsonKnownNamingPolicy.CamelCase)]
