@@ -38,20 +38,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
 
         private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-06-preview");
+        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
 
         private ClientDiagnostics OccurrenceExtensionClientDiagnostics => _occurrenceExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OccurrenceExtension OccurrenceExtensionRestClient => _occurrenceExtensionRestClient ??= new OccurrenceExtension(OccurrenceExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-06-preview");
-
-        /// <summary> Gets an object representing a <see cref="LocationBasedLaunchBulkInstancesOperationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LocationBasedLaunchBulkInstancesOperationResource"/> object. </returns>
-        public virtual LocationBasedLaunchBulkInstancesOperationResource GetLocationBasedLaunchBulkInstancesOperationResource(ResourceIdentifier id)
-        {
-            LocationBasedLaunchBulkInstancesOperationResource.ValidateResourceId(id);
-            return new LocationBasedLaunchBulkInstancesOperationResource(Client, id);
-        }
+        private OccurrenceExtension OccurrenceExtensionRestClient => _occurrenceExtensionRestClient ??= new OccurrenceExtension(OccurrenceExtensionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
 
         /// <summary> Gets an object representing a <see cref="LocationBasedBulkCreateCustomResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -60,6 +51,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         {
             LocationBasedBulkCreateCustomResource.ValidateResourceId(id);
             return new LocationBasedBulkCreateCustomResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LocationBasedBulkCreateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LocationBasedBulkCreateResource"/> object. </returns>
+        public virtual LocationBasedBulkCreateResource GetLocationBasedBulkCreateResource(ResourceIdentifier id)
+        {
+            LocationBasedBulkCreateResource.ValidateResourceId(id);
+            return new LocationBasedBulkCreateResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ScheduledActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// List ScheduledActionResources resources by parent
+        /// Lists scheduled actions associated with the specified VM.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// List ScheduledActionResources resources by parent
+        /// Lists scheduled actions associated with the specified VM.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// List OccurrenceExtensionResource resources by parent
+        /// Lists scheduled action occurrences associated with the specified VM.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// List OccurrenceExtensionResource resources by parent
+        /// Lists scheduled action occurrences associated with the specified VM.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

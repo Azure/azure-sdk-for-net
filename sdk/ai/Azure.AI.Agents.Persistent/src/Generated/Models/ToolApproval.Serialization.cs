@@ -179,7 +179,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ToolApproval(toolCallId, approve, headers ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);

@@ -1,14 +1,11 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.7.0 (2026-09-17)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded the service API version to `2026-03-01`.
+- Added host licensing and maintenance scheduling support.
 
 ## 1.6.1 (2026-06-02)
 
