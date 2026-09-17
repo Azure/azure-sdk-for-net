@@ -50,9 +50,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
                     .AddReader(new PeriodicExportingMetricReader(
                         AzureMonitorMetricExporter.CreateForInternalTelemetry(CreateCustomerSdkStatsOptions(options)),
                         exportIntervalMilliseconds: CustomerSdkStatsHelper.GetExportIntervalMilliseconds())
-                        {
-                            TemporalityPreference = MetricReaderTemporalityPreference.Delta
-                        })
+                    {
+                        TemporalityPreference = MetricReaderTemporalityPreference.Delta
+                    })
                     .Build();
 
                 // Deliberately not registered for disposal. This runs from a

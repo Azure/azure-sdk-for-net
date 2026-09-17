@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     internal static partial class VoiceAgentEchoCancellationReferenceSourceExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this VoiceAgentEchoCancellationReferenceSource value) => value switch
         {
             VoiceAgentEchoCancellationReferenceSource.Server => "server",
@@ -17,6 +19,7 @@ namespace Azure.AI.Projects.Agents
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static VoiceAgentEchoCancellationReferenceSource ToVoiceAgentEchoCancellationReferenceSource(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "server"))

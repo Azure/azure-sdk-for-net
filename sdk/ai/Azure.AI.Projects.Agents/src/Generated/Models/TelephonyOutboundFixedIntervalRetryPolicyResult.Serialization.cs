@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The frozen fixed-interval retry policy returned for an outbound call or campaign. </summary>
-    public partial class TelephonyOutboundFixedIntervalRetryPolicyResult : TelephonyOutboundRetryPolicyResult, IJsonModel<TelephonyOutboundFixedIntervalRetryPolicyResult>
+    public partial class TelephonyOutboundFixedIntervalRetryPolicyResult : TelephonyOutboundRetryPolicy, IJsonModel<TelephonyOutboundFixedIntervalRetryPolicyResult>
     {
         /// <summary> Initializes a new instance of <see cref="TelephonyOutboundFixedIntervalRetryPolicyResult"/> for deserialization. </summary>
         internal TelephonyOutboundFixedIntervalRetryPolicyResult()
@@ -19,7 +19,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TelephonyOutboundRetryPolicyResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override TelephonyOutboundRetryPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TelephonyOutboundFixedIntervalRetryPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -86,7 +86,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override TelephonyOutboundRetryPolicyResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override TelephonyOutboundRetryPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<TelephonyOutboundFixedIntervalRetryPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -106,7 +106,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             TelephonyOutboundRetryPolicyType @type = default;
-            int maxAttempts = default;
+            int? maxAttempts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             TimeSpan interval = default;
             foreach (var prop in element.EnumerateObject())
@@ -118,6 +118,10 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("max_attempts"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     maxAttempts = prop.Value.GetInt32();
                     continue;
                 }
