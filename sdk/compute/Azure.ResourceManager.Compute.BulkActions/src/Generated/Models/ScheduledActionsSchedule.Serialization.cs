@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Specify the schedule in which the scheduled action is supposed to follow. </summary>
+    /// <summary> The recurring schedule for a scheduled action. </summary>
     public partial class ScheduledActionsSchedule : IJsonModel<ScheduledActionsSchedule>
     {
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsSchedule"/> for deserialization. </summary>

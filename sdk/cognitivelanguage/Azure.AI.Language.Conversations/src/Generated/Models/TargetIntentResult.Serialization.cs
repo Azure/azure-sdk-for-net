@@ -14,7 +14,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// This is the base class of an intent prediction
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LuisTargetIntentResult"/>, <see cref="QuestionAnsweringTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/>, and <see cref="ConversationTargetIntentResult"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationTargetIntentResult"/>, <see cref="LuisTargetIntentResult"/>, <see cref="NoneLinkedTargetIntentResult"/>, and <see cref="QuestionAnsweringTargetIntentResult"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTargetIntentResult))]
     public abstract partial class TargetIntentResult : IJsonModel<TargetIntentResult>
@@ -137,14 +137,14 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Luis":
-                        return LuisTargetIntentResult.DeserializeLuisTargetIntentResult(element, options);
-                    case "QuestionAnswering":
-                        return QuestionAnsweringTargetIntentResult.DeserializeQuestionAnsweringTargetIntentResult(element, options);
-                    case "NonLinked":
-                        return NoneLinkedTargetIntentResult.DeserializeNoneLinkedTargetIntentResult(element, options);
                     case "Conversation":
                         return ConversationTargetIntentResult.DeserializeConversationTargetIntentResult(element, options);
+                    case "Luis":
+                        return LuisTargetIntentResult.DeserializeLuisTargetIntentResult(element, options);
+                    case "NonLinked":
+                        return NoneLinkedTargetIntentResult.DeserializeNoneLinkedTargetIntentResult(element, options);
+                    case "QuestionAnswering":
+                        return QuestionAnsweringTargetIntentResult.DeserializeQuestionAnsweringTargetIntentResult(element, options);
                 }
             }
             return UnknownTargetIntentResult.DeserializeUnknownTargetIntentResult(element, options);

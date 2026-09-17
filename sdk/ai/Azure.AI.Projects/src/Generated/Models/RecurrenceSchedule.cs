@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Evaluation
 {
     /// <summary>
     /// Recurrence schedule model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HourlyRecurrenceSchedule"/>, <see cref="DailyRecurrenceSchedule"/>, <see cref="WeeklyRecurrenceSchedule"/>, and <see cref="MonthlyRecurrenceSchedule"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrenceSchedule"/>, <see cref="HourlyRecurrenceSchedule"/>, <see cref="MonthlyRecurrenceSchedule"/>, and <see cref="WeeklyRecurrenceSchedule"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class RecurrenceSchedule

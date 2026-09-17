@@ -1,14 +1,9 @@
 # Release History
 
-## 3.0.0-beta.3 (Unreleased)
-
-### Features Added
+## 3.0.0-beta.3 (2026-09-16)
 
 ### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- `MaxSamples` member was removed from `DataGenerationJobOptions`.
 
 ## 3.0.0-beta.2 (2026-09-03)
 
