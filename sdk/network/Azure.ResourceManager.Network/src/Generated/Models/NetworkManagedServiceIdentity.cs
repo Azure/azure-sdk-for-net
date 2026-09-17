@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </param>
         /// <param name="userAssignedIdentities"> The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkManagedServiceIdentity(string principalId, string tenantId, ResourceIdentityType? @type, IDictionary<string, ManagedServiceIdentityUserAssignedIdentities> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkManagedServiceIdentity(string principalId, string tenantId, ManagedServiceIdentityType? @type, IDictionary<string, ManagedServiceIdentityUserAssignedIdentities> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             TenantId = tenantId;
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </summary>
         [WirePath("type")]
-        public ResourceIdentityType? Type { get; set; }
+        public ManagedServiceIdentityType? Type { get; set; }
 
         /// <summary> The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
         [WirePath("userAssignedIdentities")]

@@ -1180,7 +1180,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </param>
         /// <param name="userAssignedIdentities"> The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <returns> A new <see cref="Models.NetworkManagedServiceIdentity"/> instance for mocking. </returns>
-        public static NetworkManagedServiceIdentity NetworkManagedServiceIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, ManagedServiceIdentityUserAssignedIdentities> userAssignedIdentities = default)
+        public static NetworkManagedServiceIdentity NetworkManagedServiceIdentity(string principalId = default, string tenantId = default, ManagedServiceIdentityType? @type = default, IDictionary<string, ManagedServiceIdentityUserAssignedIdentities> userAssignedIdentities = default)
         {
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, ManagedServiceIdentityUserAssignedIdentities>();
 
@@ -4231,20 +4231,20 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetPeeringLocation"> The target peering location for circuit migration. </param>
         /// <param name="targetPortMapping"> The source-to-target port mappings for circuit migration. </param>
         /// <returns> A new <see cref="Models.MigrateExpressRouteCircuitValidateAndHealthCheckContent"/> instance for mocking. </returns>
-        public static MigrateExpressRouteCircuitValidateAndHealthCheckContent MigrateExpressRouteCircuitValidateAndHealthCheckContent(string targetPeeringLocation = default, IEnumerable<PortMapping> targetPortMapping = default)
+        public static MigrateExpressRouteCircuitValidateAndHealthCheckContent MigrateExpressRouteCircuitValidateAndHealthCheckContent(string targetPeeringLocation = default, IEnumerable<ExpressRouteCircuitPortMapping> targetPortMapping = default)
         {
-            targetPortMapping ??= new ChangeTrackingList<PortMapping>();
+            targetPortMapping ??= new ChangeTrackingList<ExpressRouteCircuitPortMapping>();
 
-            return new MigrateExpressRouteCircuitValidateAndHealthCheckContent(targetPeeringLocation, (targetPortMapping ?? new ChangeTrackingList<PortMapping>()).ToList(), default);
+            return new MigrateExpressRouteCircuitValidateAndHealthCheckContent(targetPeeringLocation, (targetPortMapping ?? new ChangeTrackingList<ExpressRouteCircuitPortMapping>()).ToList(), default);
         }
 
         /// <summary> A mapping between source and target ports for migration. </summary>
         /// <param name="sourcePortId"> The source port identifier. </param>
         /// <param name="targetPortId"> The target port identifier. </param>
-        /// <returns> A new <see cref="Models.PortMapping"/> instance for mocking. </returns>
-        public static PortMapping PortMapping(string sourcePortId = default, string targetPortId = default)
+        /// <returns> A new <see cref="Models.ExpressRouteCircuitPortMapping"/> instance for mocking. </returns>
+        public static ExpressRouteCircuitPortMapping ExpressRouteCircuitPortMapping(string sourcePortId = default, string targetPortId = default)
         {
-            return new PortMapping(sourcePortId, targetPortId, default);
+            return new ExpressRouteCircuitPortMapping(sourcePortId, targetPortId, default);
         }
 
         /// <summary> Response for express route circuit migration validation operation. </summary>
@@ -4314,24 +4314,24 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Statistical information for a peering connection. </summary>
-        /// <param name="timestamp"> The timestamp when these statistics were captured. </param>
+        /// <param name="capturedOn"> The timestamp when these statistics were captured. </param>
         /// <param name="metrics"> The collection of peering metrics. </param>
         /// <returns> A new <see cref="Models.PeeringStats"/> instance for mocking. </returns>
-        public static PeeringStats PeeringStats(DateTimeOffset? timestamp = default, IEnumerable<Metric> metrics = default)
+        public static PeeringStats PeeringStats(DateTimeOffset? capturedOn = default, IEnumerable<ExpressRoutePeeringMetric> metrics = default)
         {
-            metrics ??= new ChangeTrackingList<Metric>();
+            metrics ??= new ChangeTrackingList<ExpressRoutePeeringMetric>();
 
-            return new PeeringStats(timestamp, (metrics ?? new ChangeTrackingList<Metric>()).ToList(), default);
+            return new PeeringStats(capturedOn, (metrics ?? new ChangeTrackingList<ExpressRoutePeeringMetric>()).ToList(), default);
         }
 
         /// <summary> Metric entry for migration peering statistics. </summary>
         /// <param name="name"> The metric name. </param>
         /// <param name="value"> The metric value. </param>
         /// <param name="unit"> The metric unit. </param>
-        /// <returns> A new <see cref="Models.Metric"/> instance for mocking. </returns>
-        public static Metric Metric(string name = default, double? value = default, string unit = default)
+        /// <returns> A new <see cref="Models.ExpressRoutePeeringMetric"/> instance for mocking. </returns>
+        public static ExpressRoutePeeringMetric ExpressRoutePeeringMetric(string name = default, double? value = default, string unit = default)
         {
-            return new Metric(name, value, unit, default);
+            return new ExpressRoutePeeringMetric(name, value, unit, default);
         }
 
         /// <summary> Request model for express route circuit migration operations. </summary>
@@ -4339,11 +4339,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetPortMapping"> The source-to-target port mappings for circuit migration. </param>
         /// <param name="portId"> The port identifier used for shutDownBgp, migrate, restoreBgp, and rollback operations. </param>
         /// <returns> A new <see cref="Models.MigrateExpressRouteCircuitContent"/> instance for mocking. </returns>
-        public static MigrateExpressRouteCircuitContent MigrateExpressRouteCircuitContent(string targetPeeringLocation = default, IEnumerable<PortMapping> targetPortMapping = default, string portId = default)
+        public static MigrateExpressRouteCircuitContent MigrateExpressRouteCircuitContent(string targetPeeringLocation = default, IEnumerable<ExpressRouteCircuitPortMapping> targetPortMapping = default, string portId = default)
         {
-            targetPortMapping ??= new ChangeTrackingList<PortMapping>();
+            targetPortMapping ??= new ChangeTrackingList<ExpressRouteCircuitPortMapping>();
 
-            return new MigrateExpressRouteCircuitContent(targetPeeringLocation, (targetPortMapping ?? new ChangeTrackingList<PortMapping>()).ToList(), portId, default);
+            return new MigrateExpressRouteCircuitContent(targetPeeringLocation, (targetPortMapping ?? new ChangeTrackingList<ExpressRouteCircuitPortMapping>()).ToList(), portId, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -12491,7 +12491,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionPolicyId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.HubVirtualNetworkConnectionData"/> instance for mocking. </returns>
-        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, string @type, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration, bool? enableOnlyIPv6Peering, NetworkProvisioningState? provisioningState, ResourceIdentifier remoteVirtualNetworkId, ResourceIdentifier connectionPolicyId, ETag? eTag)
+        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
         {
             return new HubVirtualNetworkConnectionData(
                 id,
@@ -13724,41 +13724,6 @@ namespace Azure.ResourceManager.Network.Models
                 (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
                 notes,
                 default), default);
-        }
-
-        /// <summary> HubVirtualNetworkConnection Resource. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="allowHubToRemoteVnetTransit"> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </param>
-        /// <param name="allowRemoteVnetToUseHubVnetGateways"> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </param>
-        /// <param name="enableInternetSecurity"> Enable internet security. </param>
-        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        /// <param name="enableOnlyIPv6Peering"></param>
-        /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
-        /// <param name="remoteVirtualNetworkId"> Resource ID. </param>
-        /// <param name="connectionPolicyId"> Resource ID. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.HubVirtualNetworkConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, Models.EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
-        {
-            return new HubVirtualNetworkConnectionData(
-                id,
-                default,
-                name,
-                @type,
-                remoteVirtualNetworkId is null && allowHubToRemoteVnetTransit is null && allowRemoteVnetToUseHubVnetGateways is null && connectionPolicyId is null && enableInternetSecurity is null && routingConfiguration is null && provisioningState is null ? default : new HubVirtualNetworkConnectionProperties(
-                    remoteVirtualNetworkId is null ? default : new NetworkSubResource(remoteVirtualNetworkId, default),
-                    allowHubToRemoteVnetTransit,
-                    allowRemoteVnetToUseHubVnetGateways,
-                    connectionPolicyId is null ? default : new NetworkSubResource(connectionPolicyId, default),
-                    enableInternetSecurity,
-                    routingConfiguration,
-                    default,
-                    provisioningState,
-                    default),
-                eTag);
         }
 
         /// <summary> Frontend IP address of the load balancer. </summary>

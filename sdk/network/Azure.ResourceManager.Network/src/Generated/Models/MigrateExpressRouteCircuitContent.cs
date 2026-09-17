@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="MigrateExpressRouteCircuitContent"/>. </summary>
         public MigrateExpressRouteCircuitContent()
         {
-            TargetPortMapping = new ChangeTrackingList<PortMapping>();
+            TargetPortMapping = new ChangeTrackingList<ExpressRouteCircuitPortMapping>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateExpressRouteCircuitContent"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetPortMapping"> The source-to-target port mappings for circuit migration. </param>
         /// <param name="portId"> The port identifier used for shutDownBgp, migrate, restoreBgp, and rollback operations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateExpressRouteCircuitContent(string targetPeeringLocation, IList<PortMapping> targetPortMapping, string portId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrateExpressRouteCircuitContent(string targetPeeringLocation, IList<ExpressRouteCircuitPortMapping> targetPortMapping, string portId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetPeeringLocation = targetPeeringLocation;
             TargetPortMapping = targetPortMapping;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The source-to-target port mappings for circuit migration. </summary>
         [WirePath("targetPortMapping")]
-        public IList<PortMapping> TargetPortMapping { get; }
+        public IList<ExpressRouteCircuitPortMapping> TargetPortMapping { get; }
 
         /// <summary> The port identifier used for shutDownBgp, migrate, restoreBgp, and rollback operations. </summary>
         [WirePath("portId")]

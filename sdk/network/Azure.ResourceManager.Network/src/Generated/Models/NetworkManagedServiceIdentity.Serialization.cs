@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string principalId = default;
             string tenantId = default;
-            ResourceIdentityType? @type = default;
+            ManagedServiceIdentityType? @type = default;
             IDictionary<string, ManagedServiceIdentityUserAssignedIdentities> userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToResourceIdentityType();
+                    @type = new ManagedServiceIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentities"u8))

@@ -14,56 +14,56 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A mapping between source and target ports for migration. </summary>
-    public partial class PortMapping : IJsonModel<PortMapping>
+    public partial class ExpressRouteCircuitPortMapping : IJsonModel<ExpressRouteCircuitPortMapping>
     {
-        /// <summary> Initializes a new instance of <see cref="PortMapping"/> for deserialization. </summary>
-        internal PortMapping()
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPortMapping"/> for deserialization. </summary>
+        internal ExpressRouteCircuitPortMapping()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PortMapping PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ExpressRouteCircuitPortMapping PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PortMapping>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPortMapping>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePortMapping(document.RootElement, options);
+                        return DeserializeExpressRouteCircuitPortMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PortMapping)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitPortMapping)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PortMapping>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPortMapping>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PortMapping)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitPortMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PortMapping>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ExpressRouteCircuitPortMapping>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PortMapping IPersistableModel<PortMapping>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExpressRouteCircuitPortMapping IPersistableModel<ExpressRouteCircuitPortMapping>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PortMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExpressRouteCircuitPortMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PortMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExpressRouteCircuitPortMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PortMapping>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPortMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PortMapping)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitPortMapping)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("sourcePortId"u8);
             writer.WriteStringValue(SourcePortId);
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PortMapping IJsonModel<PortMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExpressRouteCircuitPortMapping IJsonModel<ExpressRouteCircuitPortMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PortMapping JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ExpressRouteCircuitPortMapping JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PortMapping>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPortMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PortMapping)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitPortMapping)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePortMapping(document.RootElement, options);
+            return DeserializeExpressRouteCircuitPortMapping(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PortMapping DeserializePortMapping(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExpressRouteCircuitPortMapping DeserializeExpressRouteCircuitPortMapping(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PortMapping(sourcePortId, targetPortId, additionalBinaryDataProperties);
+            return new ExpressRouteCircuitPortMapping(sourcePortId, targetPortId, additionalBinaryDataProperties);
         }
     }
 }

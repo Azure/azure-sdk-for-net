@@ -14,51 +14,51 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Metric entry for migration peering statistics. </summary>
-    public partial class Metric : IJsonModel<Metric>
+    public partial class ExpressRoutePeeringMetric : IJsonModel<ExpressRoutePeeringMetric>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Metric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ExpressRoutePeeringMetric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Metric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRoutePeeringMetric>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMetric(document.RootElement, options);
+                        return DeserializeExpressRoutePeeringMetric(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Metric)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRoutePeeringMetric)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Metric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRoutePeeringMetric>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Metric)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRoutePeeringMetric)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Metric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ExpressRoutePeeringMetric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Metric IPersistableModel<Metric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ExpressRoutePeeringMetric IPersistableModel<ExpressRoutePeeringMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Metric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExpressRoutePeeringMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Metric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExpressRoutePeeringMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Metric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRoutePeeringMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Metric)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRoutePeeringMetric)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Metric IJsonModel<Metric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ExpressRoutePeeringMetric IJsonModel<ExpressRoutePeeringMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Metric JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ExpressRoutePeeringMetric JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Metric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRoutePeeringMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Metric)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRoutePeeringMetric)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMetric(document.RootElement, options);
+            return DeserializeExpressRoutePeeringMetric(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Metric DeserializeMetric(JsonElement element, ModelReaderWriterOptions options)
+        internal static ExpressRoutePeeringMetric DeserializeExpressRoutePeeringMetric(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Metric(name, value, unit, additionalBinaryDataProperties);
+            return new ExpressRoutePeeringMetric(name, value, unit, additionalBinaryDataProperties);
         }
     }
 }

@@ -1,19 +1,14 @@
 # Release History
 
-## 1.18.0-beta.1 (Unreleased)
+## 1.18.0 (2026-09-17)
 
 ### Features Added
 
 - Upgraded api-version to 2026-01-01.
 
-### Breaking Changes
-
-- `BastionHostResource.Update` and `UpdateAsync` no longer accept `NetworkTagsObject`; use the new strongly-typed `BastionHostPatch` overload instead.
-- `HubVirtualNetworkConnectionData.EnableOnlyIPv6Peering` changed from the extensible enum `EnableOnlyIPv6PeeringState?` to `bool?`. Replace uses of `EnableOnlyIPv6PeeringState.Enabled` / `.Disabled` with `true` / `false`.
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Added strongly-typed `BastionHostPatch` overloads to `BastionHostResource.Update` and `UpdateAsync`.
 
 ## 1.17.0 (2026-08-21)
 

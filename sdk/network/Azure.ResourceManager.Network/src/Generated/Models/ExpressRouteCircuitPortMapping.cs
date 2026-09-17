@@ -12,16 +12,16 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A mapping between source and target ports for migration. </summary>
-    public partial class PortMapping
+    public partial class ExpressRouteCircuitPortMapping
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PortMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPortMapping"/>. </summary>
         /// <param name="sourcePortId"> The source port identifier. </param>
         /// <param name="targetPortId"> The target port identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourcePortId"/> or <paramref name="targetPortId"/> is null. </exception>
-        public PortMapping(string sourcePortId, string targetPortId)
+        public ExpressRouteCircuitPortMapping(string sourcePortId, string targetPortId)
         {
             Argument.AssertNotNull(sourcePortId, nameof(sourcePortId));
             Argument.AssertNotNull(targetPortId, nameof(targetPortId));
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Network.Models
             TargetPortId = targetPortId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PortMapping"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPortMapping"/>. </summary>
         /// <param name="sourcePortId"> The source port identifier. </param>
         /// <param name="targetPortId"> The target port identifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PortMapping(string sourcePortId, string targetPortId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteCircuitPortMapping(string sourcePortId, string targetPortId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourcePortId = sourcePortId;
             TargetPortId = targetPortId;

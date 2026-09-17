@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetPeeringLocation"> The target peering location for circuit migration. </param>
         /// <param name="targetPortMapping"> The source-to-target port mappings for circuit migration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetPeeringLocation"/> or <paramref name="targetPortMapping"/> is null. </exception>
-        public MigrateExpressRouteCircuitValidateAndHealthCheckContent(string targetPeeringLocation, IEnumerable<PortMapping> targetPortMapping)
+        public MigrateExpressRouteCircuitValidateAndHealthCheckContent(string targetPeeringLocation, IEnumerable<ExpressRouteCircuitPortMapping> targetPortMapping)
         {
             Argument.AssertNotNull(targetPeeringLocation, nameof(targetPeeringLocation));
             Argument.AssertNotNull(targetPortMapping, nameof(targetPortMapping));
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetPeeringLocation"> The target peering location for circuit migration. </param>
         /// <param name="targetPortMapping"> The source-to-target port mappings for circuit migration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateExpressRouteCircuitValidateAndHealthCheckContent(string targetPeeringLocation, IList<PortMapping> targetPortMapping, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrateExpressRouteCircuitValidateAndHealthCheckContent(string targetPeeringLocation, IList<ExpressRouteCircuitPortMapping> targetPortMapping, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetPeeringLocation = targetPeeringLocation;
             TargetPortMapping = targetPortMapping;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The source-to-target port mappings for circuit migration. </summary>
         [WirePath("targetPortMapping")]
-        public IList<PortMapping> TargetPortMapping { get; }
+        public IList<ExpressRouteCircuitPortMapping> TargetPortMapping { get; }
     }
 }

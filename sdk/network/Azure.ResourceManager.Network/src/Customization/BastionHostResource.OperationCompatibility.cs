@@ -25,5 +25,31 @@ namespace Azure.ResourceManager.Network
         /// <summary> Invokes the Update compatibility operation. </summary>
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `BastionHostCollection.CreateOrUpdate` instead.", false)]
         public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+
+        /// <summary> Updates tags for this Bastion Host resource. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait until the operation completes; <see cref="WaitUntil.Started"/> otherwise. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update Bastion Host tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+            var patch = new BastionHostPatch();
+            patch.Tags.ReplaceWith(networkTagsObject.Tags);
+            return UpdateAsync(waitUntil, patch, cancellationToken);
+        }
+
+        /// <summary> Updates tags for this Bastion Host resource. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait until the operation completes; <see cref="WaitUntil.Started"/> otherwise. </param>
+        /// <param name="networkTagsObject"> Parameters supplied to update Bastion Host tags. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="System.ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+            var patch = new BastionHostPatch();
+            patch.Tags.ReplaceWith(networkTagsObject.Tags);
+            return Update(waitUntil, patch, cancellationToken);
+        }
     }
 }

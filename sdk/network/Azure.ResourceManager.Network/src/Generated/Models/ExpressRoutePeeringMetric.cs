@@ -12,22 +12,22 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Metric entry for migration peering statistics. </summary>
-    public partial class Metric
+    public partial class ExpressRoutePeeringMetric
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Metric"/>. </summary>
-        internal Metric()
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePeeringMetric"/>. </summary>
+        internal ExpressRoutePeeringMetric()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Metric"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRoutePeeringMetric"/>. </summary>
         /// <param name="name"> The metric name. </param>
         /// <param name="value"> The metric value. </param>
         /// <param name="unit"> The metric unit. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Metric(string name, double? value, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRoutePeeringMetric(string name, double? value, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;

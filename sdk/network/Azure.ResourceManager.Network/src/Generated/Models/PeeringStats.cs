@@ -20,26 +20,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="PeeringStats"/>. </summary>
         internal PeeringStats()
         {
-            Metrics = new ChangeTrackingList<Metric>();
+            Metrics = new ChangeTrackingList<ExpressRoutePeeringMetric>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringStats"/>. </summary>
-        /// <param name="timestamp"> The timestamp when these statistics were captured. </param>
+        /// <param name="capturedOn"> The timestamp when these statistics were captured. </param>
         /// <param name="metrics"> The collection of peering metrics. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringStats(DateTimeOffset? timestamp, IList<Metric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PeeringStats(DateTimeOffset? capturedOn, IList<ExpressRoutePeeringMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Timestamp = timestamp;
+            CapturedOn = capturedOn;
             Metrics = metrics;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The timestamp when these statistics were captured. </summary>
         [WirePath("timestamp")]
-        public DateTimeOffset? Timestamp { get; }
+        public DateTimeOffset? CapturedOn { get; }
 
         /// <summary> The collection of peering metrics. </summary>
         [WirePath("metrics")]
-        public IList<Metric> Metrics { get; }
+        public IList<ExpressRoutePeeringMetric> Metrics { get; }
     }
 }

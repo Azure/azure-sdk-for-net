@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(EnableOnlyIPv6Peering))
             {
                 writer.WritePropertyName("enableOnlyIPv6Peering"u8);
-                writer.WriteBooleanValue(EnableOnlyIPv6Peering.Value);
+                writer.WriteStringValue(EnableOnlyIPv6Peering.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource connectionPolicy = default;
             bool? enableInternetSecurity = default;
             RoutingConfigurationNfv routingConfiguration = default;
-            bool? enableOnlyIPv6Peering = default;
+            EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    enableOnlyIPv6Peering = prop.Value.GetBoolean();
+                    enableOnlyIPv6Peering = new EnableOnlyIPv6PeeringState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

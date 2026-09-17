@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 throw new FormatException($"The model {nameof(PeeringStats)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Optional.IsDefined(CapturedOn))
             {
                 writer.WritePropertyName("timestamp"u8);
-                writer.WriteStringValue(Timestamp.Value, "O");
+                writer.WriteStringValue(CapturedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
-                foreach (Metric item in Metrics)
+                foreach (ExpressRoutePeeringMetric item in Metrics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            DateTimeOffset? timestamp = default;
-            IList<Metric> metrics = default;
+            DateTimeOffset? capturedOn = default;
+            IList<ExpressRoutePeeringMetric> metrics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
+                    capturedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("metrics"u8))
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<Metric> array = new List<Metric>();
+                    List<ExpressRoutePeeringMetric> array = new List<ExpressRoutePeeringMetric>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Metric.DeserializeMetric(item, options));
+                        array.Add(ExpressRoutePeeringMetric.DeserializeExpressRoutePeeringMetric(item, options));
                     }
                     metrics = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PeeringStats(timestamp, metrics ?? new ChangeTrackingList<Metric>(), additionalBinaryDataProperties);
+            return new PeeringStats(capturedOn, metrics ?? new ChangeTrackingList<ExpressRoutePeeringMetric>(), additionalBinaryDataProperties);
         }
     }
 }
