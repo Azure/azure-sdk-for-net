@@ -1,5 +1,5 @@
 directory: specification/storagemover/resource-manager/Microsoft.StorageMover/StorageMover
-commit: 1ae634ce21bc317c85309e18173b331c3a48801c
+commit: c1d28eb4136ce4f9df569e66b0468dffd0ebd4b5
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
