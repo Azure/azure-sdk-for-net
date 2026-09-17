@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Enable Only IPv6 Peering for this connection. </summary>
-        [WirePath("properties.enableOnlyIpv6Peering")]
-        public EnableOnlyIPv6PeeringState? EnableOnlyIPv6Peering
+        [WirePath("properties.enableOnlyIPv6Peering")]
+        public bool? EnableOnlyIPv6PeeringValue
         {
             get
             {
-                return Properties is null ? default : Properties.EnableOnlyIPv6Peering;
+                return Properties is null ? default : Properties.EnableOnlyIPv6PeeringValue;
             }
             set
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new HubVirtualNetworkConnectionProperties();
                 }
-                Properties.EnableOnlyIPv6Peering = value;
+                Properties.EnableOnlyIPv6PeeringValue = value;
             }
         }
 

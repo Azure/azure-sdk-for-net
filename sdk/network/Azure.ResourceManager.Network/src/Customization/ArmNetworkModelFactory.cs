@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -14,6 +15,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the ArmNetworkModelFactory type. </summary>
+#pragma warning disable CS0618 // The legacy type is intentionally referenced to suppress and replace its generated overload.
     [CodeGenSuppress("EffectiveBaseSecurityAdminRule", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(IEnumerable<NetworkManagerSecurityGroupItem>), typeof(IEnumerable<NetworkConfigurationGroup>), typeof(string))]
     [CodeGenSuppress("PeerRouteList", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?))]
     [CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(ResourceIdentifier), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IEnumerable<EffectiveNetworkSecurityRule>), typeof(string))]
@@ -21,9 +23,35 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(NetworkSubResource), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IEnumerable<EffectiveNetworkSecurityRule>), typeof(string))]
     // The generated factory signature includes the internal ApplicationGatewayForContainersReferenceDefinition helper type,
     // which would make a public method less accessible than one of its parameters.
-    [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(ETag?))]
+    [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
+    [CodeGenSuppress("HubVirtualNetworkConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(bool?), typeof(RoutingConfigurationNfv), typeof(EnableOnlyIPv6PeeringState?), typeof(NetworkProvisioningState?), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
+#pragma warning restore CS0618
+        /// <summary> Initializes a legacy hub virtual network connection resource model. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is deprecated and is no longer supported by the service.")]
+        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
+        {
+            bool? enableOnlyIPv6PeeringValue = enableOnlyIPv6Peering.HasValue
+                ? enableOnlyIPv6Peering.Value == EnableOnlyIPv6PeeringState.Enabled
+                : default;
+
+            return HubVirtualNetworkConnectionData(
+                id,
+                name,
+                @type,
+                allowHubToRemoteVnetTransit,
+                allowRemoteVnetToUseHubVnetGateways,
+                enableInternetSecurity,
+                routingConfiguration,
+                enableOnlyIPv6PeeringValue,
+                provisioningState,
+                remoteVirtualNetworkId,
+                connectionPolicyId,
+                eTag);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.EffectiveBaseSecurityAdminRule"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>
