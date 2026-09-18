@@ -8,57 +8,105 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableApplicationInsightsArmClient : ArmResource
     {
         private ClientDiagnostics _liveTokenClientDiagnostics;
-        private LiveTokenRestOperations _liveTokenRestClient;
+        private LiveToken _liveTokenRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableApplicationInsightsArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableApplicationInsightsArmClient for mocking. </summary>
         protected MockableApplicationInsightsArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableApplicationInsightsArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableApplicationInsightsArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableApplicationInsightsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableApplicationInsightsArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
+        private ClientDiagnostics LiveTokenClientDiagnostics => _liveTokenClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private LiveToken LiveTokenRestClient => _liveTokenRestClient ??= new LiveToken(LiveTokenClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-10-14");
+
+        /// <summary> Gets an object representing a <see cref="ApplicationInsightsWebTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApplicationInsightsWebTestResource"/> object. </returns>
+        public virtual ApplicationInsightsWebTestResource GetApplicationInsightsWebTestResource(ResourceIdentifier id)
         {
+            ApplicationInsightsWebTestResource.ValidateResourceId(id);
+            return new ApplicationInsightsWebTestResource(Client, id);
         }
 
-        private ClientDiagnostics LiveTokenClientDiagnostics => _liveTokenClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private LiveTokenRestOperations LiveTokenRestClient => _liveTokenRestClient ??= new LiveTokenRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets an object representing a <see cref="ApplicationInsightsWorkbookResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApplicationInsightsWorkbookResource"/> object. </returns>
+        public virtual ApplicationInsightsWorkbookResource GetApplicationInsightsWorkbookResource(ResourceIdentifier id)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            ApplicationInsightsWorkbookResource.ValidateResourceId(id);
+            return new ApplicationInsightsWorkbookResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ApplicationInsightsWorkbookRevisionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApplicationInsightsWorkbookRevisionResource"/> object. </returns>
+        public virtual ApplicationInsightsWorkbookRevisionResource GetApplicationInsightsWorkbookRevisionResource(ResourceIdentifier id)
+        {
+            ApplicationInsightsWorkbookRevisionResource.ValidateResourceId(id);
+            return new ApplicationInsightsWorkbookRevisionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ApplicationInsightsWorkbookTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApplicationInsightsWorkbookTemplateResource"/> object. </returns>
+        public virtual ApplicationInsightsWorkbookTemplateResource GetApplicationInsightsWorkbookTemplateResource(ResourceIdentifier id)
+        {
+            ApplicationInsightsWorkbookTemplateResource.ValidateResourceId(id);
+            return new ApplicationInsightsWorkbookTemplateResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ComponentLinkedStorageAccountsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ComponentLinkedStorageAccountsResource"/> object. </returns>
+        public virtual ComponentLinkedStorageAccountsResource GetComponentLinkedStorageAccountsResource(ResourceIdentifier id)
+        {
+            ComponentLinkedStorageAccountsResource.ValidateResourceId(id);
+            return new ComponentLinkedStorageAccountsResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ApplicationInsightsComponentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ApplicationInsightsComponentResource"/> object. </returns>
+        public virtual ApplicationInsightsComponentResource GetApplicationInsightsComponentResource(ResourceIdentifier id)
+        {
+            ApplicationInsightsComponentResource.ValidateResourceId(id);
+            return new ApplicationInsightsComponentResource(Client, id);
         }
 
         /// <summary>
-        /// **Gets an access token for live metrics stream data.**
+        /// <b>Gets an access token for live metrics stream data.</b>
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/generatelivetoken</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/generatelivetoken. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LiveToken_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LiveTokenOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-14</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-10-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -69,11 +117,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.GetLiveToken");
+            using DiagnosticScope scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.GetLiveToken");
             scope0.Start();
             try
             {
-                var response = await LiveTokenRestClient.GetAsync(scope, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LiveTokenRestClient.CreateGetLiveTokenRequest(scope.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LiveTokenResult> response = Response.FromValue(LiveTokenResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -84,19 +142,19 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         }
 
         /// <summary>
-        /// **Gets an access token for live metrics stream data.**
+        /// <b>Gets an access token for live metrics stream data.</b>
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/generatelivetoken</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/generatelivetoken. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LiveToken_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LiveTokenOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-10-14</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-10-14. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,11 +165,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using var scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.GetLiveToken");
+            using DiagnosticScope scope0 = LiveTokenClientDiagnostics.CreateScope("MockableApplicationInsightsArmClient.GetLiveToken");
             scope0.Start();
             try
             {
-                var response = LiveTokenRestClient.Get(scope, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = LiveTokenRestClient.CreateGetLiveTokenRequest(scope.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LiveTokenResult> response = Response.FromValue(LiveTokenResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -119,65 +187,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
                 scope0.Failed(e);
                 throw;
             }
-        }
-        /// <summary>
-        /// Gets an object representing an <see cref="ApplicationInsightsComponentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationInsightsComponentResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationInsightsComponentResource"/> object. </returns>
-        public virtual ApplicationInsightsComponentResource GetApplicationInsightsComponentResource(ResourceIdentifier id)
-        {
-            ApplicationInsightsComponentResource.ValidateResourceId(id);
-            return new ApplicationInsightsComponentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ApplicationInsightsWebTestResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationInsightsWebTestResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsWebTestResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationInsightsWebTestResource"/> object. </returns>
-        public virtual ApplicationInsightsWebTestResource GetApplicationInsightsWebTestResource(ResourceIdentifier id)
-        {
-            ApplicationInsightsWebTestResource.ValidateResourceId(id);
-            return new ApplicationInsightsWebTestResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ApplicationInsightsWorkbookTemplateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationInsightsWorkbookTemplateResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsWorkbookTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationInsightsWorkbookTemplateResource"/> object. </returns>
-        public virtual ApplicationInsightsWorkbookTemplateResource GetApplicationInsightsWorkbookTemplateResource(ResourceIdentifier id)
-        {
-            ApplicationInsightsWorkbookTemplateResource.ValidateResourceId(id);
-            return new ApplicationInsightsWorkbookTemplateResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ApplicationInsightsWorkbookResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationInsightsWorkbookResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsWorkbookResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationInsightsWorkbookResource"/> object. </returns>
-        public virtual ApplicationInsightsWorkbookResource GetApplicationInsightsWorkbookResource(ResourceIdentifier id)
-        {
-            ApplicationInsightsWorkbookResource.ValidateResourceId(id);
-            return new ApplicationInsightsWorkbookResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ApplicationInsightsWorkbookRevisionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApplicationInsightsWorkbookRevisionResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsWorkbookRevisionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationInsightsWorkbookRevisionResource"/> object. </returns>
-        public virtual ApplicationInsightsWorkbookRevisionResource GetApplicationInsightsWorkbookRevisionResource(ResourceIdentifier id)
-        {
-            ApplicationInsightsWorkbookRevisionResource.ValidateResourceId(id);
-            return new ApplicationInsightsWorkbookRevisionResource(Client, id);
         }
     }
 }

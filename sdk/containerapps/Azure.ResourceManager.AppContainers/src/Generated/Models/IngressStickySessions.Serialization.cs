@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 throw new FormatException($"The model {nameof(IngressStickySessions)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Affinity))
+            if (Optional.IsDefined(StickySessionAffinity))
             {
                 writer.WritePropertyName("affinity"u8);
-                writer.WriteStringValue(Affinity.Value.ToString());
+                writer.WriteStringValue(StickySessionAffinity.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Affinity? affinity = default;
+            StickySessionAffinity? stickySessionAffinity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    affinity = new Affinity(prop.Value.GetString());
+                    stickySessionAffinity = new StickySessionAffinity(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IngressStickySessions(affinity, additionalBinaryDataProperties);
+            return new IngressStickySessions(stickySessionAffinity, additionalBinaryDataProperties);
         }
     }
 }

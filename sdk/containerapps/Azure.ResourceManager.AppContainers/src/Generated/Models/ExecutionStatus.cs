@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ExecutionStatus"/>. </summary>
         internal ExecutionStatus()
         {
-            Replicas = new ChangeTrackingList<ReplicaExecutionStatus>();
+            Replicas = new ChangeTrackingList<ContainerAppJobExecutionReplicaStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecutionStatus"/>. </summary>
         /// <param name="replicas"> Replicas in the execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutionStatus(IList<ReplicaExecutionStatus> replicas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExecutionStatus(IList<ContainerAppJobExecutionReplicaStatus> replicas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Replicas = replicas;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Replicas in the execution. </summary>
         [WirePath("replicas")]
-        public IList<ReplicaExecutionStatus> Replicas { get; } = new ChangeTrackingList<ReplicaExecutionStatus>();
+        public IList<ContainerAppJobExecutionReplicaStatus> Replicas { get; } = new ChangeTrackingList<ContainerAppJobExecutionReplicaStatus>();
     }
 }

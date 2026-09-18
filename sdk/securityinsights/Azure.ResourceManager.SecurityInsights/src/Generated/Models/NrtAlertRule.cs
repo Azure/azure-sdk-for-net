@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.IsEnabled;
+                return Properties is null ? (bool?)default : Properties.IsEnabled;
             }
             set
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.SuppressionDuration;
+                return Properties is null ? (TimeSpan?)default : Properties.SuppressionDuration;
             }
             set
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.IsSuppressionEnabled;
+                return Properties is null ? (bool?)default : Properties.IsSuppressionEnabled;
             }
             set
             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Severity;
+                return Properties is null ? (SecurityInsightsAlertSeverity?)default : Properties.Severity;
             }
             set
             {

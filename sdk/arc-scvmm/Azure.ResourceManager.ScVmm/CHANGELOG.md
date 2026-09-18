@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated the SDK to TypeSpec-based code generation.
+
 ## 1.0.0 (2026-04-29)
 
 This is the first stable release of this library.

@@ -5,21 +5,16 @@
 
 #nullable disable
 
-using System;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> The MachineLearningJobResourceConfiguration. </summary>
-    public partial class MachineLearningJobResourceConfiguration : ProvisionableConstruct
+    public partial class MachineLearningJobResourceConfiguration : MachineLearningResourceConfiguration
     {
         private BicepValue<string> _dockerArgs;
         private BicepList<string> _dockerArgsList;
         private BicepValue<string> _shmSize;
-        private BicepValue<int> _instanceCount;
-        private BicepValue<string> _instanceType;
-        private BicepDictionary<BinaryData> _properties;
 
         /// <summary> Creates a new MachineLearningJobResourceConfiguration. </summary>
         public MachineLearningJobResourceConfiguration()
@@ -71,51 +66,6 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the InstanceCount. </summary>
-        public BicepValue<int> InstanceCount
-        {
-            get
-            {
-                Initialize();
-                return _instanceCount;
-            }
-            set
-            {
-                Initialize();
-                _instanceCount.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the InstanceType. </summary>
-        public BicepValue<string> InstanceType
-        {
-            get
-            {
-                Initialize();
-                return _instanceType;
-            }
-            set
-            {
-                Initialize();
-                _instanceType.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        public BicepDictionary<BinaryData> Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                _properties.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for MachineLearningJobResourceConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -123,9 +73,6 @@ namespace Azure.Provisioning.MachineLearning
             _dockerArgs = DefineProperty<string>(nameof(DockerArgs), new string[] { "dockerArgs" });
             _dockerArgsList = DefineListProperty<string>(nameof(DockerArgsList), new string[] { "dockerArgsList" });
             _shmSize = DefineProperty<string>(nameof(ShmSize), new string[] { "shmSize" });
-            _instanceCount = DefineProperty<int>(nameof(InstanceCount), new string[] { "instanceCount" });
-            _instanceType = DefineProperty<string>(nameof(InstanceType), new string[] { "instanceType" });
-            _properties = DefineDictionaryProperty<BinaryData>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }
 

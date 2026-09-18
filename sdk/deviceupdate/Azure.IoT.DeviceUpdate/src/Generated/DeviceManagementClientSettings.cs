@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,7 @@ namespace Azure.IoT.DeviceUpdate
     public partial class DeviceManagementClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
-        public string Endpoint { get; set; }
+        public Uri Endpoint { get; set; }
 
         /// <summary> Gets or sets the InstanceId. </summary>
         public string InstanceId { get; set; }
@@ -28,8 +29,7 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="section"> The configuration section. </param>
         protected override void BindCore(IConfigurationSection section)
         {
-            string endpoint = section["Endpoint"];
-            if (!string.IsNullOrEmpty(endpoint))
+            if (Uri.TryCreate(section["Endpoint"], UriKind.Absolute, out Uri endpoint))
             {
                 Endpoint = endpoint;
             }

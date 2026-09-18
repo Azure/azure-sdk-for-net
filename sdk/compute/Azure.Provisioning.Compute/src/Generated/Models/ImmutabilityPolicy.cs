@@ -16,8 +16,8 @@ namespace Azure.Provisioning.Compute
     {
         private BicepValue<int> _immutabilityDurationDays;
         private BicepValue<ImmutabilityPolicyType> _type;
-        private BicepValue<DateTimeOffset> _policyStartOn;
-        private BicepValue<DateTimeOffset> _policyExpirationOn;
+        private BicepValue<DateTimeOffset> _policyStartsOn;
+        private BicepValue<DateTimeOffset> _policyExpiresOn;
         private BicepValue<bool> _isPolicyExpired;
 
         /// <summary> Creates a new ImmutabilityPolicy. </summary>
@@ -45,23 +45,23 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the PolicyStartOn. </summary>
-        public BicepValue<DateTimeOffset> PolicyStartOn
+        /// <summary> Gets the PolicyStartsOn. </summary>
+        public BicepValue<DateTimeOffset> PolicyStartsOn
         {
             get
             {
                 Initialize();
-                return _policyStartOn;
+                return _policyStartsOn;
             }
         }
 
-        /// <summary> Gets the PolicyExpirationOn. </summary>
-        public BicepValue<DateTimeOffset> PolicyExpirationOn
+        /// <summary> Gets the PolicyExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> PolicyExpiresOn
         {
             get
             {
                 Initialize();
-                return _policyExpirationOn;
+                return _policyExpiresOn;
             }
         }
 
@@ -81,8 +81,8 @@ namespace Azure.Provisioning.Compute
             base.DefineProvisionableProperties();
             _immutabilityDurationDays = DefineProperty<int>(nameof(ImmutabilityDurationDays), new string[] { "immutabilityDurationDays" }, isOutput: true);
             _type = DefineProperty<ImmutabilityPolicyType>(nameof(Type), new string[] { "type" }, isOutput: true);
-            _policyStartOn = DefineProperty<DateTimeOffset>(nameof(PolicyStartOn), new string[] { "policyStartTime" }, isOutput: true, format: "O");
-            _policyExpirationOn = DefineProperty<DateTimeOffset>(nameof(PolicyExpirationOn), new string[] { "policyExpirationTime" }, isOutput: true, format: "O");
+            _policyStartsOn = DefineProperty<DateTimeOffset>(nameof(PolicyStartsOn), new string[] { "policyStartTime" }, isOutput: true, format: "O");
+            _policyExpiresOn = DefineProperty<DateTimeOffset>(nameof(PolicyExpiresOn), new string[] { "policyExpirationTime" }, isOutput: true, format: "O");
             _isPolicyExpired = DefineProperty<bool>(nameof(IsPolicyExpired), new string[] { "isPolicyExpired" }, isOutput: true);
             DefineAdditionalProperties();
         }

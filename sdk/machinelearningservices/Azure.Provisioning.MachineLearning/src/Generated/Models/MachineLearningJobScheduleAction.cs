@@ -15,6 +15,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningJobScheduleAction. </summary>
         public MachineLearningJobScheduleAction()
         {
+            ActionType.Assign(ScheduleActionType.CreateJob);
         }
 
         /// <summary> Gets or sets the JobDefinition. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("actionType", new string[] { "actionType" }, defaultValue: "CreateJob");
             _jobDefinition = DefineModelProperty<MachineLearningJobProperties>(nameof(JobDefinition), new string[] { "jobDefinition" }, isRequired: true);
             DefineAdditionalProperties();
         }

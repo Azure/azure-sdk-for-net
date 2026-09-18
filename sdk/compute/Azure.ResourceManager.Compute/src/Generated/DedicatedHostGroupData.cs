@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute
         {
             get
             {
-                return Properties is null ? default : Properties.PlatformFaultDomainCount;
+                return Properties is null ? (int?)default : Properties.PlatformFaultDomainCount;
             }
             set
             {

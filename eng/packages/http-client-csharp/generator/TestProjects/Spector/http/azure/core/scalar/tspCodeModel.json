@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.Versions",
       "valueType": {
         "$id": "2",
@@ -168,6 +171,9 @@
       "$id": "18",
       "kind": "model",
       "name": "AzureLocationModel",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Scalar",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationModel",
       "usage": "Input,Output,Json",
@@ -183,6 +189,9 @@
           "$id": "19",
           "kind": "property",
           "name": "location",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "location",
           "type": {
             "$id": "20",

@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new BayesianSamplingAlgorithm. </summary>
         public BayesianSamplingAlgorithm()
         {
+            SamplingAlgorithmType.Assign(MachineLearning.SamplingAlgorithmType.Bayesian);
         }
 
         /// <summary> Define all the provisionable properties for BayesianSamplingAlgorithm. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("samplingAlgorithmType", new string[] { "samplingAlgorithmType" }, defaultValue: "Bayesian");
             DefineAdditionalProperties();
         }
 

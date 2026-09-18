@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.Security.ConfidentialLedger.Models
     public readonly partial struct TransactionState : IEquatable<TransactionState>
     {
         private readonly string _value;
+        /// <summary> The transaction is committed. </summary>
+        private const string CommittedValue = "Committed";
+        /// <summary> The transaction is pending. </summary>
+        private const string PendingValue = "Pending";
 
         /// <summary> Initializes a new instance of <see cref="TransactionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TransactionState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CommittedValue = "Committed";
-        private const string PendingValue = "Pending";
+            _value = value;
+        }
 
         /// <summary> The transaction is committed. </summary>
         public static TransactionState Committed { get; } = new TransactionState(CommittedValue);
+
         /// <summary> The transaction is pending. </summary>
         public static TransactionState Pending { get; } = new TransactionState(PendingValue);
+
         /// <summary> Determines if two <see cref="TransactionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TransactionState left, TransactionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TransactionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TransactionState left, TransactionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TransactionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TransactionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TransactionState(string value) => new TransactionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TransactionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TransactionState?(string value) => value == null ? null : new TransactionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TransactionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TransactionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

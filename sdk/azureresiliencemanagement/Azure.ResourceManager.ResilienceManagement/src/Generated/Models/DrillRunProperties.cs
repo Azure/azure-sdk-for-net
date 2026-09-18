@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="DrillRunProperties"/>. </summary>
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="notes"> Notes for this Drill. </param>
         /// <param name="supportedVerbsForStage"> Matrix of Actions supported on Operations. </param>
         /// <param name="currentActiveOperationId"> The currently active operationID on this Drill Run. There can be only one active. </param>
-        internal DrillRunProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier drillId, DrillMode? drillMode, DrillAttestation? attestation, IReadOnlyList<string> notes, IReadOnlyList<SupportedVerbsForStage> supportedVerbsForStage, string currentActiveOperationId) : base(status, startOn, endOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType, executionConfigurations, triggeredBy, additionalBinaryDataProperties)
+        internal DrillRunProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier drillId, DrillMode? drillMode, DrillAttestation? attestation, IReadOnlyList<string> notes, IReadOnlyList<SupportedVerbsForStage> supportedVerbsForStage, string currentActiveOperationId) : base(status, startsOn, endsOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType, executionConfigurations, triggeredBy, additionalBinaryDataProperties)
         {
             DrillId = drillId;
             DrillMode = drillMode;

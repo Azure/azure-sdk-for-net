@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string daprComponentResiliencyPolicyApiVersion);
             _daprComponentResiliencyPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _daprComponentResiliencyPoliciesRestClient = new DaprComponentResiliencyPolicies(_daprComponentResiliencyPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, daprComponentResiliencyPolicyApiVersion ?? "2025-10-02-preview");
+            _daprComponentResiliencyPoliciesRestClient = new DaprComponentResiliencyPolicies(_daprComponentResiliencyPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, daprComponentResiliencyPolicyApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a Dapr component resiliency policy.
+        /// Gets the details of a resiliency policy for a Dapr component.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a Dapr component resiliency policy.
+        /// Gets the details of a resiliency policy for a Dapr component.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

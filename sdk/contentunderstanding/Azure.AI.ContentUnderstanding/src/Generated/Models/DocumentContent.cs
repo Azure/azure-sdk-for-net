@@ -27,8 +27,10 @@ namespace Azure.AI.ContentUnderstanding
             Tables = new ChangeTrackingList<DocumentTable>();
             Figures = new ChangeTrackingList<DocumentFigure>();
             Annotations = new ChangeTrackingList<DocumentAnnotation>();
+            Signatures = new ChangeTrackingList<DocumentSignature>();
             Hyperlinks = new ChangeTrackingList<DocumentHyperlink>();
             Segments = new ChangeTrackingList<DocumentContentSegment>();
+            Chunks = new ChangeTrackingList<DocumentChunk>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentContent"/>. </summary>
@@ -39,6 +41,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="path"> The path of the content in the input. </param>
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
+        /// <param name="metadata"> Metadata extracted from the input as string key/value pairs, such as author, title, creation date, or media properties. Keys and values are strings. Only keys with extracted values are present. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="startPageNumber"> Start page number (1-indexed) of the content. </param>
         /// <param name="endPageNumber"> End page number (1-indexed) of the content. </param>
@@ -52,9 +55,11 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="tables"> List of tables in the document.  Only if enableLayout and returnDetails are true. </param>
         /// <param name="figures"> List of figures in the document.  Only if enableLayout and returnDetails are true. </param>
         /// <param name="annotations"> List of annotations in the document.  Only if enableAnnotations and returnDetails are true. </param>
+        /// <param name="signatures"> List of signatures in the document.  Only if enableLayout and returnDetails are true. </param>
         /// <param name="hyperlinks"> List of hyperlinks in the document.  Only if returnDetails are true. </param>
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
-        internal DocumentContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties, int startPageNumber, int endPageNumber, LengthUnit? unit, IList<DocumentPage> pages, IList<DocumentParagraph> paragraphs, IList<DocumentSection> sections, IList<DocumentTable> tables, IList<DocumentFigure> figures, IList<DocumentAnnotation> annotations, IList<DocumentHyperlink> hyperlinks, IList<DocumentContentSegment> segments) : base(kind, mimeType, analyzerId, category, path, markdown, fields, additionalBinaryDataProperties)
+        /// <param name="chunks"> List of document chunks.  Only if chunkingStrategy is configured on the analyzer. </param>
+        internal DocumentContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties, int startPageNumber, int endPageNumber, LengthUnit? unit, IList<DocumentPage> pages, IList<DocumentParagraph> paragraphs, IList<DocumentSection> sections, IList<DocumentTable> tables, IList<DocumentFigure> figures, IList<DocumentAnnotation> annotations, IList<DocumentSignature> signatures, IList<DocumentHyperlink> hyperlinks, IList<DocumentContentSegment> segments, IList<DocumentChunk> chunks) : base(kind, mimeType, analyzerId, category, path, markdown, fields, metadata, additionalBinaryDataProperties)
         {
             StartPageNumber = startPageNumber;
             EndPageNumber = endPageNumber;
@@ -65,8 +70,10 @@ namespace Azure.AI.ContentUnderstanding
             Tables = tables;
             Figures = figures;
             Annotations = annotations;
+            Signatures = signatures;
             Hyperlinks = hyperlinks;
             Segments = segments;
+            Chunks = chunks;
         }
 
         /// <summary> Start page number (1-indexed) of the content. </summary>
@@ -99,10 +106,16 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> List of annotations in the document.  Only if enableAnnotations and returnDetails are true. </summary>
         public IList<DocumentAnnotation> Annotations { get; }
 
+        /// <summary> List of signatures in the document.  Only if enableLayout and returnDetails are true. </summary>
+        public IList<DocumentSignature> Signatures { get; }
+
         /// <summary> List of hyperlinks in the document.  Only if returnDetails are true. </summary>
         public IList<DocumentHyperlink> Hyperlinks { get; }
 
         /// <summary> List of detected content segments.  Only if enableSegment is true. </summary>
         public IList<DocumentContentSegment> Segments { get; }
+
+        /// <summary> List of document chunks.  Only if chunkingStrategy is configured on the analyzer. </summary>
+        public IList<DocumentChunk> Chunks { get; }
     }
 }

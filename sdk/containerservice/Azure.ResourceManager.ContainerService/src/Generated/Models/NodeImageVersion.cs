@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NodeImageVersion(string os, string sku, string version, string fullName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Os = os;
+            OS = os;
             Sku = sku;
             Version = version;
             FullName = fullName;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The operating system of the node image. Example: AKSUbuntu. </summary>
         [WirePath("os")]
-        public string Os { get; }
+        public string OS { get; }
 
         /// <summary> The SKU or flavor of the node image. Example: 2004gen2containerd. </summary>
         [WirePath("sku")]

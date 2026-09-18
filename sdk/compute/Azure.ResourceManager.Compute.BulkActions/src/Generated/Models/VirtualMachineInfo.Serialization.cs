@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     /// <summary> Information about a virtual machine. </summary>
     public partial class VirtualMachineInfo : IJsonModel<VirtualMachineInfo>
     {
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineInfo"/> for deserialization. </summary>
+        internal VirtualMachineInfo()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VirtualMachineInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -84,6 +89,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("zone"u8);
                 writer.WriteStringValue(Zone);
             }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +135,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             string vmSize = default;
             string zone = default;
+            string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,12 +149,17 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     zone = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineInfo(vmSize, zone, additionalBinaryDataProperties);
+            return new VirtualMachineInfo(vmSize, zone, name, additionalBinaryDataProperties);
         }
     }
 }

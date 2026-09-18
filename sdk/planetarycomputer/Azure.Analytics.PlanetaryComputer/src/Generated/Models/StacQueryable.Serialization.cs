@@ -124,10 +124,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("create_index"u8);
                 writer.WriteBooleanValue(CreateIndex.Value);
             }
-            if (Optional.IsDefined(DataType))
+            if (Optional.IsDefined(DataKind))
             {
                 writer.WritePropertyName("data_type"u8);
-                writer.WriteStringValue(DataType.Value.ToString());
+                writer.WriteStringValue(DataKind.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -174,7 +174,7 @@ namespace Azure.Analytics.PlanetaryComputer
             string name = default;
             IDictionary<string, BinaryData> definition = default;
             bool? createIndex = default;
-            StacQueryableDefinitionDataType? dataType = default;
+            StacQueryableDefinitionDataKind? dataKind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,7 +194,7 @@ namespace Azure.Analytics.PlanetaryComputer
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, prop0.Value.GetUtf8Bytes());
                         }
                     }
                     definition = dictionary;
@@ -215,15 +215,15 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    dataType = new StacQueryableDefinitionDataType(prop.Value.GetString());
+                    dataKind = new StacQueryableDefinitionDataKind(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StacQueryable(name, definition, createIndex, dataType, additionalBinaryDataProperties);
+            return new StacQueryable(name, definition, createIndex, dataKind, additionalBinaryDataProperties);
         }
     }
 }

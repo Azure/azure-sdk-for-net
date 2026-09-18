@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -47,7 +49,7 @@ public class AgentsTests : AgentsTestBase
     public async Task TestAgentCRUD(bool useExternalAgent)
     {
         AgentAdministrationClient agentsClient = GetTestClient();
-        ProjectsAgentDefinition emptyAgentDefinition = useExternalAgent ? new ExternalAgentDefinition() { OtelAgentId = "foo"} :  new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
+        ProjectsAgentDefinition emptyAgentDefinition = useExternalAgent ? new ExternalAgentDefinition() { OtelAgentId = "foo" } : new DeclarativeAgentDefinition(TestEnvironment.FOUNDRY_MODEL_NAME);
 
         ProjectsAgentVersion newAgentVersion = await agentsClient.CreateAgentVersionAsync(
             AGENT_NAME2,
@@ -339,9 +341,12 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.A2A)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.BrowserAutomation)]
+    // The GA-ed version of Browser Automation tool is not supported yet.
+    // [TestCase(ToolType.BrowserAutomationGA)]
     [TestCase(ToolType.WorkIQ)]
     [TestCase(ToolType.FabricIQ)]
     [TestCase(ToolType.ReminderPreview)]
+    [TestCase(ToolType.WebIQ)]
     public async Task TestToolsetVariety(ToolType toolType)
     {
         AgentAdministrationClient agentsClient = GetTestClient();
@@ -364,13 +369,13 @@ public class AgentsTests : AgentsTestBase
         // Use the tool to create an Agent
         DeclarativeAgentDefinition definition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
-            Tools = { ProjectsAgentTool.AsProjectTool(toolBox.Tools[0]) }
+            Tools = { ToResponseTool(toolBox.Tools[0]) }
         };
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(definition));
         if (agentVersion.Definition is DeclarativeAgentDefinition declarativeDefinition)
         {
             Assert.That(declarativeDefinition.Tools, Has.Count.EqualTo(1));
-            Assert.That(declarativeDefinition.Tools[0].GetType(), Is.EqualTo(((ResponseTool)ProjectsAgentTool.AsProjectTool(toolBox.Tools[0])).GetType()));
+            Assert.That(declarativeDefinition.Tools[0].ToToolboxTool().GetType(), Is.EqualTo((toolBox.Tools[0]).GetType()));
         }
         else
         {
@@ -423,7 +428,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
         // Two limits.
-        backwards = await toolboxClient.GetAllAsync(order: AgentListOrder.Descending, after: records[records.Count -1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
+        backwards = await toolboxClient.GetAllAsync(order: AgentListOrder.Descending, after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));
@@ -571,7 +576,7 @@ public class AgentsTests : AgentsTestBase
         session = await agentsClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         Assert.That(session.Status, Is.EqualTo(AgentSessionStatus.Idle));
         // List
-        HashSet<string> sessions = [..await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
+        HashSet<string> sessions = [.. await agentsClient.GetSessionsAsync(agentName: agentVersion.Name).Select(x => x.AgentSessionId).ToListAsync()];
         Assert.That(sessions, Has.Count.EqualTo(2));
         Assert.That(sessions, Does.Contain(session1.AgentSessionId));
         Assert.That(sessions, Does.Contain(session2.AgentSessionId));
@@ -1005,7 +1010,7 @@ public class AgentsTests : AgentsTestBase
             });
         Assert.That(newAgentVersion?.Id, Is.Not.Null.And.Not.Empty);
         string opId = IsAsync ? "eaf06a53-682e-5d1e-943b-44a9e6ccfeea" : "9fd7f680-7299-44c6-81cb-a7a25a733438";
-        OptimizationJob submittedJob1 = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: opId, cancellationToken: default);
+        AgentOptimizationJob submittedJob1 = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: opId, cancellationToken: default);
         Assert.That(submittedJob1?.Id, Is.Not.Null.And.Not.Empty);
         string prevID = submittedJob1.Id;
         // Attempt to create job with the same operationId should not cause an error and ID should remain the same.
@@ -1021,16 +1026,16 @@ public class AgentsTests : AgentsTestBase
         Assert.That(submittedJob1.Status, Is.EqualTo(AgentsJobStatus.Succeeded), submittedJob1.Error?.Message);
         Assert.That(submittedJob1.Result.Candidates.Count, Is.GreaterThanOrEqualTo(1));
         // Cancel
-        OptimizationJob submittedJob2 = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: default, cancellationToken: default);
+        AgentOptimizationJob submittedJob2 = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: default, cancellationToken: default);
         Assert.That(submittedJob2.Id, Is.Not.EqualTo(submittedJob1.Id));
-        OptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: submittedJob2.Id, cancellationToken: default);
+        AgentOptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: submittedJob2.Id, cancellationToken: default);
         while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
         {
             cancelledJob = await jobsClient.GetAsync(cancelledJob.Id, cancellationToken: default);
         }
         Assert.That(cancelledJob.Status, Is.EqualTo(AgentsJobStatus.Cancelled));
         // List
-        HashSet<string> jobIds = [..await jobsClient.GetAllAsync().Select(x => x.Id).ToListAsync()];
+        HashSet<string> jobIds = [.. await jobsClient.GetAllAsync().Select(x => x.Id).ToListAsync()];
         Assert.That(jobIds, Does.Contain(submittedJob1.Id));
         Assert.That(jobIds, Does.Contain(submittedJob2.Id));
         // Delete
@@ -1053,13 +1058,13 @@ public class AgentsTests : AgentsTestBase
             });
         for (int i = 0; i < PAGE_SIZE + 1; i++)
         {
-            OptimizationJob submittedJob = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: default, cancellationToken: default);
+            AgentOptimizationJob submittedJob = await jobsClient.CreateAsync(job: GetOptimizationJob(newAgentVersion), operationId: default, cancellationToken: default);
             await jobsClient.CancelAsync(jobId: submittedJob.Id, cancellationToken: default);
         }
-        List<OptimizationJobListItem> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).ToListAsync();
+        List<AgentOptimizationJobListItem> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
-        List<OptimizationJobListItem> forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        List<AgentOptimizationJobListItem> forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
@@ -1069,7 +1074,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         //// Go backwards.
-        List<OptimizationJobListItem> backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        List<AgentOptimizationJobListItem> backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
@@ -1141,7 +1146,7 @@ public class AgentsTests : AgentsTestBase
         ZipFile.ExtractToDirectory(temporaryFile, directoryPath);
     }
 
-    private async Task<ProjectsAgentVersion> CreateHostedAgent(AgentAdministrationClient agentsClient, string suffix=default)
+    private async Task<ProjectsAgentVersion> CreateHostedAgent(AgentAdministrationClient agentsClient, string suffix = default)
     {
         Uri uriEndpoint = new Uri(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         string accountId = uriEndpoint.Authority.Substring(0, uriEndpoint.Authority.IndexOf('.'));
@@ -1171,9 +1176,9 @@ public class AgentsTests : AgentsTestBase
         return agent;
     }
 
-    private static OptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
+    private static AgentOptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
     {
-        OptimizationDatasetCriterion criterion = new(
+        AgentOptimizationDatasetCriterion criterion = new(
             name: "Groundedness",
             instruction: """
             You are a Groundedness Evaluator.
@@ -1212,10 +1217,10 @@ public class AgentsTests : AgentsTestBase
             }
             """.Replace("\r\n", "\n")
         );
-        List <OptimizationDatasetItem> items = [];
+        List<AgentOptimizationDatasetItem> items = [];
         for (int i = start; i < start + itemNumber; i++)
         {
-            items.Add(new OptimizationDatasetItem()
+            items.Add(new AgentOptimizationDatasetItem()
             {
                 Query = $"What is 42 plus {i * 2}? Please save the result as text: The answer is ... For example: Q: What is 42 plus 12? A: The answer is 56.",
                 GroundTruth = $"The answer is {(42 + i * 2)}",
@@ -1225,23 +1230,23 @@ public class AgentsTests : AgentsTestBase
         return new(items);
     }
 
-    private OptimizationJob GetOptimizationJob(ProjectsAgentVersion agentVersion)
+    private AgentOptimizationJob GetOptimizationJob(ProjectsAgentVersion agentVersion)
     {
-        OptimizationJob job = new()
+        AgentOptimizationJob job = new()
         {
             Inputs = new(
-                agent: new OptimizationAgentIdentifier(agentName: agentVersion.Name)
+                agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
                 {
                     AgentVersion = agentVersion.Version
                 },
                 trainDataset: GetDataset(0, 7),
-                evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score") {
+                evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score") {
                     Version="2"
                 }]
             )
             {
                 ValidationDataset = GetDataset(7, 3),
-                Options = new OptimizationOptions()
+                Options = new AgentOptimizationOptions()
                 {
                     OptimizationModel = TestEnvironment.FOUNDRY_MODEL_NAME,
                     EvalModel = TestEnvironment.FOUNDRY_MODEL_NAME,
@@ -1295,6 +1300,20 @@ public class AgentsTests : AgentsTestBase
             }
         };
         return job;
+    }
+
+    /// <summary>
+    /// Converts a toolbox tool to an OpenAI response tool by round-tripping through the wire format.
+    /// </summary>
+    /// <param name="tool">The source tool instance.</param>
+    private static ResponseTool ToResponseTool(ToolboxTool tool)
+    {
+        Argument.AssertNotNull(tool, nameof(tool));
+
+        BinaryData serializedResponseItem = ModelReaderWriter.Write(tool, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+
+        // The extensions context recognizes Azure-specific tool discriminators and delegates standard tools to OpenAI.
+        return ModelReaderWriter.Read<ResponseTool>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
     }
     #endregion
 }

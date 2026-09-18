@@ -1,16 +1,34 @@
 # Release History
 
-## 1.62.0-beta.1 (Unreleased)
+## 1.63.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- The mTLS proof-of-possession APIs on `BearerTokenAuthenticationPolicy` and `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` are no longer experimental and no longer require `AZID0004` suppression.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed `DefaultAzureCredential` taking up to a minute to continue past managed identity on hosts where IMDS is unavailable. Ordinary chained requests use the short Azure.Core IMDS probe, while proof-of-possession capability discovery passes the same initial IMDS timeout to MSAL so discovery retry delays are canceled and timed-out discovery results are not cached.
+- Fixed chained managed identity aborting the credential chain when MSAL reports all sources unavailable immediately after a successful initial IMDS probe.
+- Managed identity mTLS proof-of-possession now requires a KeyGuard-backed host capability and enforces KeyGuard as the minimum binding strength during token acquisition. ([#62585](https://github.com/Azure/azure-sdk-for-net/issues/62585))
+
 ### Other Changes
 
-## 1.61.0 (2026-07-30)
+## 1.62.0 (2026-08-20)
+
+### Features Added
+
+- Added experimental (`SCME0002`) `AzureCredentialResolver.Default` public static property so standalone callers can share the process-wide credential cache used by DI-resolved paths.
+- `AzureCredentialResolver` now resolves every `ChainedTokenCredential` `Sources[]` entry through the active resolver chain, so any registered `CredentialResolver` (built-in, broker, or third-party) can claim or override an entry. Entries are constructed as chained, so transient failures surface as `CredentialUnavailableException` and the chain falls through.
+
+### Breaking Changes
+
+- `AzureCredentialResolver` now resolves a top-level single source (e.g. `CredentialSource: AzureCliCredential`) to the concrete credential type (`AzureCliCredential`) rather than a `DefaultAzureCredential` wrapper. Construction is unchanged (it uses the same `DefaultAzureCredentialFactory` helpers) — only the returned type differs; callers using `CredentialSettings.TokenProvider` as a `TokenCredential` are unaffected.
+- `AzureCredentialResolver` no longer claims top-level `BrokerCredential` sections (canonical name or `broker` alias); they now require `BrokerCredentialResolver` from `Azure.Identity.Broker` 1.7.0+ (e.g. via `AddBrokerCredentialResolver()`). `BrokerCredential` entries nested inside a `ChainedTokenCredential` continue to resolve. Note: if `BrokerCredentialResolver` from `Azure.Identity.Broker` 1.7.0 is registered ahead of `AzureCredentialResolver`, a nested `BrokerCredential` entry is currently built as non-chained, so it may surface `AuthenticationFailedException` and abort the chain instead of falling through to the next entry. Without a broker resolver registered, the built-in chain path builds the broker entry as chained (correct fall-through). A future `Azure.Identity.Broker` release will make its resolver honor chained semantics for nested entries.
+
+## 1.61.0 (2026-08-04)
 
 ### Features Added
 

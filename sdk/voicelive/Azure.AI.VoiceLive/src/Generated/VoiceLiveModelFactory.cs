@@ -131,7 +131,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for Azure voice configurations.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.AzureCustomVoice"/>, <see cref="VoiceLive.AzureStandardVoice"/>, <see cref="VoiceLive.AzurePersonalVoice"/>, and <see cref="VoiceLive.AzureAvatarSyncVoice"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.AzureAvatarSyncVoice"/>, <see cref="VoiceLive.AzureCustomVoice"/>, <see cref="VoiceLive.AzurePersonalVoice"/>, and <see cref="VoiceLive.AzureStandardVoice"/>.
         /// </summary>
         /// <param name="type"> The type of the Azure voice. </param>
         /// <returns> A new <see cref="VoiceLive.AzureVoice"/> instance for mocking. </returns>
@@ -388,7 +388,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Top-level union for turn detection configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.ServerVadTurnDetection"/>, <see cref="VoiceLive.AzureSemanticVadTurnDetection"/>, <see cref="VoiceLive.AzureSemanticVadTurnDetectionEn"/>, and <see cref="VoiceLive.AzureSemanticVadTurnDetectionMultilingual"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.AzureSemanticVadTurnDetection"/>, <see cref="VoiceLive.AzureSemanticVadTurnDetectionEn"/>, <see cref="VoiceLive.AzureSemanticVadTurnDetectionMultilingual"/>, and <see cref="VoiceLive.ServerVadTurnDetection"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="VoiceLive.TurnDetection"/> instance for mocking. </returns>
@@ -716,7 +716,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base model for interim response configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.StaticInterimResponseConfig"/> and <see cref="VoiceLive.LlmInterimResponseConfig"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.LlmInterimResponseConfig"/> and <see cref="VoiceLive.StaticInterimResponseConfig"/>.
         /// </summary>
         /// <param name="type"> The type of interim response configuration. </param>
         /// <param name="triggers">
@@ -826,7 +826,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for any response item; discriminated by `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.MessageItem"/>, <see cref="VoiceLive.FunctionCallItem"/>, and <see cref="VoiceLive.FunctionCallOutputItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.FunctionCallItem"/>, <see cref="VoiceLive.FunctionCallOutputItem"/>, and <see cref="VoiceLive.MessageItem"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
@@ -856,7 +856,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for any message content part; discriminated by `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.InputTextContentPart"/>, <see cref="VoiceLive.InputAudioContentPart"/>, and <see cref="VoiceLive.OutputTextContentPart"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.InputAudioContentPart"/>, <see cref="VoiceLive.InputTextContentPart"/>, and <see cref="VoiceLive.OutputTextContentPart"/>.
         /// </summary>
         /// <param name="type"> The type of the content part. </param>
         /// <returns> A new <see cref="VoiceLive.MessageContentPart"/> instance for mocking. </returns>
@@ -990,7 +990,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for all non-success response details.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.ResponseCancelledDetails"/>, <see cref="VoiceLive.ResponseIncompleteDetails"/>, and <see cref="VoiceLive.ResponseFailedDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.ResponseCancelledDetails"/>, <see cref="VoiceLive.ResponseFailedDetails"/>, and <see cref="VoiceLive.ResponseIncompleteDetails"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="VoiceLive.ResponseStatusDetails"/> instance for mocking. </returns>
@@ -1026,7 +1026,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for any content part; discriminated by `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.RequestImageContentPart"/>, <see cref="VoiceLive.RequestTextContentPart"/>, <see cref="VoiceLive.RequestAudioContentPart"/>, <see cref="VoiceLive.ResponseTextContentPart"/>, and <see cref="VoiceLive.ResponseAudioContentPart"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.RequestAudioContentPart"/>, <see cref="VoiceLive.RequestImageContentPart"/>, <see cref="VoiceLive.RequestTextContentPart"/>, <see cref="VoiceLive.ResponseAudioContentPart"/>, and <see cref="VoiceLive.ResponseTextContentPart"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveContentPart"/> instance for mocking. </returns>
@@ -1091,7 +1091,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Base for any response item; discriminated by `type`.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionResponseMessageItem"/>, <see cref="VoiceLive.ResponseFunctionCallItem"/>, <see cref="VoiceLive.ResponseFunctionCallOutputItem"/>, <see cref="VoiceLive.SessionResponseMcpListToolItem"/>, <see cref="VoiceLive.SessionResponseMcpCallItem"/>, <see cref="VoiceLive.SessionResponseMcpApprovalRequestItem"/>, <see cref="VoiceLive.SessionResponseMcpApprovalResponseItem"/>, <see cref="VoiceLive.ResponseWebSearchCallItem"/>, and <see cref="VoiceLive.ResponseFileSearchCallItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.ResponseFileSearchCallItem"/>, <see cref="VoiceLive.ResponseFunctionCallItem"/>, <see cref="VoiceLive.ResponseFunctionCallOutputItem"/>, <see cref="VoiceLive.ResponseWebSearchCallItem"/>, <see cref="VoiceLive.SessionResponseMcpApprovalRequestItem"/>, <see cref="VoiceLive.SessionResponseMcpApprovalResponseItem"/>, <see cref="VoiceLive.SessionResponseMcpCallItem"/>, <see cref="VoiceLive.SessionResponseMcpListToolItem"/>, and <see cref="VoiceLive.SessionResponseMessageItem"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
@@ -1439,7 +1439,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// A voicelive server event.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.ServerEventWarning"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, <see cref="VoiceLive.SessionUpdateSessionUpdated"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsInProgress"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsCompleted"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsFailed"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallCompleted"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallFailed"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToSpeaking"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToIdle"/>, <see cref="VoiceLive.ServerEventResponseVideoDelta"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallSearching"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallSearching"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventOutputAudioBufferCleared"/>, <see cref="VoiceLive.ServerEventResponseAudioTranscriptAnnotationAdded"/>, and <see cref="VoiceLive.ServerEventResponseInvocationDelta"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.ServerEventOutputAudioBufferCleared"/>, <see cref="VoiceLive.ServerEventResponseAudioTranscriptAnnotationAdded"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseFileSearchCallSearching"/>, <see cref="VoiceLive.ServerEventResponseInvocationDelta"/>, <see cref="VoiceLive.ServerEventResponseVideoDelta"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallCompleted"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallInProgress"/>, <see cref="VoiceLive.ServerEventResponseWebSearchCallSearching"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToIdle"/>, <see cref="VoiceLive.ServerEventSessionAvatarSwitchToSpeaking"/>, <see cref="VoiceLive.ServerEventWarning"/>, <see cref="VoiceLive.SessionUpdateAvatarConnecting"/>, <see cref="VoiceLive.SessionUpdateConversationItemCreated"/>, <see cref="VoiceLive.SessionUpdateConversationItemDeleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="VoiceLive.SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="VoiceLive.SessionUpdateConversationItemRetrieved"/>, <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/>, <see cref="VoiceLive.SessionUpdateError"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCleared"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferCommitted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="VoiceLive.SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsCompleted"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsFailed"/>, <see cref="VoiceLive.SessionUpdateMcpListToolsInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAnimationVisemeDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTimestampDone"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="VoiceLive.SessionUpdateResponseAudioTranscriptDone"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartAdded"/>, <see cref="VoiceLive.SessionUpdateResponseContentPartDone"/>, <see cref="VoiceLive.SessionUpdateResponseCreated"/>, <see cref="VoiceLive.SessionUpdateResponseDone"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallCompleted"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallFailed"/>, <see cref="VoiceLive.SessionUpdateResponseMcpCallInProgress"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemAdded"/>, <see cref="VoiceLive.SessionUpdateResponseOutputItemDone"/>, <see cref="VoiceLive.SessionUpdateResponseTextDelta"/>, <see cref="VoiceLive.SessionUpdateResponseTextDone"/>, <see cref="VoiceLive.SessionUpdateSessionCreated"/>, and <see cref="VoiceLive.SessionUpdateSessionUpdated"/>.
         /// </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
@@ -2449,7 +2449,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
         /// <param name="inputAudioSamplingRate">
         /// Input audio sampling rate in Hz. Available values:
-        ///             For pcm16: 8000, 16000, 24000For g711_alaw/g711_ulaw: 8000
+        ///                         For pcm16: 8000, 16000, 24000For g711_alaw/g711_ulaw: 8000
         /// </param>
         /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
         /// <param name="outputAudioFormat"> Output audio format. Default is 'pcm16'. </param>
@@ -2464,16 +2464,16 @@ namespace Azure.AI.VoiceLive
         /// <param name="maxResponseOutputTokens"> Maximum number of tokens to generate in the response. Default is unlimited. </param>
         /// <param name="reasoningEffort">
         /// Constrains effort on reasoning for reasoning models. Check model documentation for supported values for each model.
-        ///             Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
+        ///                         Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
         /// </param>
         /// <param name="interimResponse"> Configuration for interim response generation during latency or tool calls. </param>
         /// <param name="include"> List of include options for the session (e.g., logprobs, phrases, file search results). </param>
         /// <param name="metadata">
         /// Set of up to 16 key-value pairs that can be attached to the session. This is useful for
-        ///             storing additional information about the session in a structured format, such as tracking IDs,
-        ///             user context, or application-specific labels. These key-value pairs are also included in
-        ///             Foundry resource logs for tracing and diagnostics. Keys can be a maximum of 64 characters
-        ///             long and values can be a maximum of 512 characters long.
+        ///                         storing additional information about the session in a structured format, such as tracking IDs,
+        ///                         user context, or application-specific labels. These key-value pairs are also included in
+        ///                         Foundry resource logs for tracing and diagnostics. Keys can be a maximum of 64 characters
+        ///                         long and values can be a maximum of 512 characters long.
         /// </param>
         /// <param name="turnDetection"> Type of turn detection to use. </param>
         /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionOptions"/> instance for mocking. </returns>
@@ -2491,10 +2491,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
         /// <param name="inputAudioSamplingRate">
         /// Input audio sampling rate in Hz. Available values:
-        ///                         
-        ///                         - For pcm16: 8000, 16000, 24000
-        ///                         
-        ///                         - For g711_alaw/g711_ulaw: 8000
+        ///                                     
+        ///                                     - For pcm16: 8000, 16000, 24000
+        ///                                     
+        ///                                     - For g711_alaw/g711_ulaw: 8000
         /// </param>
         /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
         /// <param name="outputAudioFormat"> Output audio format. Default is 'pcm16'. </param>
@@ -2517,9 +2517,9 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// OpenAI voice configuration with explicit type field.
-        ///                         
-        ///                         This provides a unified interface for OpenAI voices, complementing the
-        ///                         existing string-based OAIVoice for backward compatibility.
+        ///                                     
+        ///                                     This provides a unified interface for OpenAI voices, complementing the
+        ///                                     existing string-based OAIVoice for backward compatibility.
         /// </summary>
         /// <param name="type"> The type of the voice. </param>
         /// <param name="name"> The name of the OpenAI voice. </param>
@@ -2603,37 +2603,37 @@ namespace Azure.AI.VoiceLive
         /// <param name="object"></param>
         /// <param name="status">
         /// The final status of the response.
-        ///                         
-        ///                         One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
+        ///                                     
+        ///                                     One of: `completed`, `cancelled`, `failed`, `incomplete`, or `in_progress`.
         /// </param>
         /// <param name="statusDetails"> Additional details about the status. </param>
         /// <param name="output"> The list of output items generated by the response. </param>
         /// <param name="usage">
         /// Usage statistics for the Response, this will correspond to billing. A
-        ///                         VoiceLive API session will maintain a conversation context and append new
-        ///                         Items to the Conversation, thus output from previous turns (text and
-        ///                         audio tokens) will become the input for later turns.
+        ///                                     VoiceLive API session will maintain a conversation context and append new
+        ///                                     Items to the Conversation, thus output from previous turns (text and
+        ///                                     audio tokens) will become the input for later turns.
         /// </param>
         /// <param name="conversationId">
         /// Which conversation the response is added to, determined by the `conversation`
-        ///                         field in the `response.create` event. If `auto`, the response will be added to
-        ///                         the default conversation and the value of `conversation_id` will be an id like
-        ///                         `conv_1234`. If `none`, the response will not be added to any conversation and
-        ///                         the value of `conversation_id` will be `null`. If responses are being triggered
-        ///                         by server VAD, the response will be added to the default conversation, thus
-        ///                         the `conversation_id` will be an id like `conv_1234`.
+        ///                                     field in the `response.create` event. If `auto`, the response will be added to
+        ///                                     the default conversation and the value of `conversation_id` will be an id like
+        ///                                     `conv_1234`. If `none`, the response will not be added to any conversation and
+        ///                                     the value of `conversation_id` will be `null`. If responses are being triggered
+        ///                                     by server VAD, the response will be added to the default conversation, thus
+        ///                                     the `conversation_id` will be an id like `conv_1234`.
         /// </param>
         /// <param name="voice"> supported voice identifiers and configurations. </param>
         /// <param name="modalities">
         /// The set of modalities the model used to respond. If there are multiple modalities,
-        ///                         the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
-        ///                         could be responding in either text or audio.
+        ///                                     the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
+        ///                                     could be responding in either text or audio.
         /// </param>
         /// <param name="outputAudioFormat"> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </param>
         /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
         /// <param name="maxOutputTokens">
         /// Maximum number of output tokens for a single assistant response,
-        ///                             inclusive of tool calls, that was used in this response.
+        ///                                         inclusive of tool calls, that was used in this response.
         /// </param>
         /// <returns> A new <see cref="VoiceLive.SessionResponse"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -2685,14 +2685,14 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// This event is the output of audio transcription for user audio written to the
-        ///                         user audio buffer. Transcription begins when the input audio buffer is
-        ///                         committed by the client or server (in `server_vad` mode). Transcription runs
-        ///                         asynchronously with Response creation, so this event may come before or after
-        ///                         the Response events.
-        ///                         VoiceLive API models accept audio natively, and thus input transcription is a
-        ///                         separate process run on a separate ASR (Automatic Speech Recognition) model.
-        ///                         The transcript may diverge somewhat from the model's interpretation, and
-        ///                         should be treated as a rough guide.
+        ///                                     user audio buffer. Transcription begins when the input audio buffer is
+        ///                                     committed by the client or server (in `server_vad` mode). Transcription runs
+        ///                                     asynchronously with Response creation, so this event may come before or after
+        ///                                     the Response events.
+        ///                                     VoiceLive API models accept audio natively, and thus input transcription is a
+        ///                                     separate process run on a separate ASR (Automatic Speech Recognition) model.
+        ///                                     The transcript may diverge somewhat from the model's interpretation, and
+        ///                                     should be treated as a rough guide.
         /// </summary>
         /// <param name="eventId"></param>
         /// <param name="itemId"> The ID of the user message item containing the audio. </param>
@@ -2707,10 +2707,10 @@ namespace Azure.AI.VoiceLive
 
         /// <summary>
         /// Returned when an earlier assistant audio message item is truncated by the
-        ///                         client with a `conversation.item.truncate` event. This event is used to
-        ///                         synchronize the server's understanding of the audio with the client's playback.
-        ///                         This action will truncate the audio and remove the server-side text transcript
-        ///                         to ensure there is no text in the context that hasn't been heard by the user.
+        ///                                     client with a `conversation.item.truncate` event. This event is used to
+        ///                                     synchronize the server's understanding of the audio with the client's playback.
+        ///                                     This action will truncate the audio and remove the server-side text transcript
+        ///                                     to ensure there is no text in the context that hasn't been heard by the user.
         /// </summary>
         /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
         /// <param name="contentIndex"> The index of the content part that was truncated. </param>

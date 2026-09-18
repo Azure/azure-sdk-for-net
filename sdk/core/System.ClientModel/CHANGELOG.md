@@ -1,16 +1,17 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+## 1.16.0 (2026-09-16)
 
 ### Features Added
 
+- `AsyncStreamingResult` and `AsyncStreamingResult<T>` are now generally available and no longer require suppressing the `SCME0005` experimental diagnostic.
+- Added automatic reconnection for eligible non-buffered server-sent event responses after abrupt connection loss, honoring server-provided retry intervals and `Last-Event-ID` when available.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Renamed the experimental `AsyncStreamingClientResult` and `AsyncStreamingClientResult<T>` types to `AsyncStreamingResult` and `AsyncStreamingResult<T>`, respectively.
 
-### Other Changes
-
-## 1.15.0 (2026-07-30)
+## 1.15.0 (2026-08-04)
 
 ### Features Added
 

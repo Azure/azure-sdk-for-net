@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Abstract Nodes definition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="JobAllNodes"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="JobAllNodes"/>.
     /// </summary>
     public partial class JobNodes : ProvisionableConstruct
     {
+        private BicepValue<NodesValueType> _nodesValueType;
+
         /// <summary> Creates a new JobNodes. </summary>
         public JobNodes()
         {
+        }
+
+        /// <summary> [Required] Type of the Nodes value. </summary>
+        internal BicepValue<NodesValueType> NodesValueType
+        {
+            get
+            {
+                Initialize();
+                return _nodesValueType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for JobNodes. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _nodesValueType = DefineProperty<NodesValueType>(nameof(NodesValueType), new string[] { "nodesValueType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

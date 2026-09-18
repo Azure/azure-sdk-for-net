@@ -18,19 +18,19 @@ namespace Azure.ResourceManager.AppService
     internal partial class ProviderOperationGroupGetWebAppStacksProvidersAsyncCollectionResultOfT : AsyncPageable<WebAppStack>
     {
         private readonly ProviderOperationGroup _client;
-        private readonly string _stackOsType;
+        private readonly string _stackOSType;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of ProviderOperationGroupGetWebAppStacksProvidersAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ProviderOperationGroup client used to send requests. </param>
-        /// <param name="stackOsType"> Stack OS Type. </param>
+        /// <param name="stackOSType"> Stack OS Type. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ProviderOperationGroupGetWebAppStacksProvidersAsyncCollectionResultOfT(ProviderOperationGroup client, string stackOsType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ProviderOperationGroupGetWebAppStacksProvidersAsyncCollectionResultOfT(ProviderOperationGroup client, string stackOSType, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _stackOsType = stackOsType;
+            _stackOSType = stackOSType;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetWebAppStacksProvidersRequest(nextLink, _stackOsType, _context) : _client.CreateGetWebAppStacksProvidersRequest(_stackOsType, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetWebAppStacksProvidersRequest(nextLink, _stackOSType, _context) : _client.CreateGetWebAppStacksProvidersRequest(_stackOSType, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
