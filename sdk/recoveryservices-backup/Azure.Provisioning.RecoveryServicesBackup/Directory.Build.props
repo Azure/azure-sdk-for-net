@@ -10,7 +10,6 @@
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsMgmtLibrary>true</IsMgmtLibrary>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <!--
