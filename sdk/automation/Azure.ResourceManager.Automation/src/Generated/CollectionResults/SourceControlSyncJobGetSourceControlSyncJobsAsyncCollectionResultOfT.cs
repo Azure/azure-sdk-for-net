@@ -15,9 +15,9 @@ using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    internal partial class SourceControlSyncJobOperationsGetSourceControlSyncJobsAsyncCollectionResultOfT : AsyncPageable<SourceControlSyncJob>
+    internal partial class SourceControlSyncJobGetSourceControlSyncJobsAsyncCollectionResultOfT : AsyncPageable<Models.SourceControlSyncJob>
     {
-        private readonly SourceControlSyncJobOperations _client;
+        private readonly SourceControlSyncJob _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _automationAccountName;
@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Automation
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobOperationsGetSourceControlSyncJobsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The SourceControlSyncJobOperations client used to send requests. </param>
+        /// <summary> Initializes a new instance of SourceControlSyncJobGetSourceControlSyncJobsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The SourceControlSyncJob client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SourceControlSyncJobOperationsGetSourceControlSyncJobsAsyncCollectionResultOfT(SourceControlSyncJobOperations client, Guid subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SourceControlSyncJobGetSourceControlSyncJobsAsyncCollectionResultOfT(SourceControlSyncJob client, Guid subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Automation
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of SourceControlSyncJobOperationsGetSourceControlSyncJobsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SourceControlSyncJobGetSourceControlSyncJobsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of SourceControlSyncJobOperationsGetSourceControlSyncJobsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SourceControlSyncJob>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of SourceControlSyncJobGetSourceControlSyncJobsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<Models.SourceControlSyncJob>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Automation
                 }
                 SourceControlSyncJobListResult result = SourceControlSyncJobListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<SourceControlSyncJob>.FromValues((IReadOnlyList<SourceControlSyncJob>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<Models.SourceControlSyncJob>.FromValues((IReadOnlyList<Models.SourceControlSyncJob>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

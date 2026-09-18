@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Automation
     {
         private readonly ClientDiagnostics _sourceControlClientDiagnostics;
         private readonly SourceControl _sourceControlRestClient;
-        private readonly ClientDiagnostics _sourceControlSyncJobOperationsClientDiagnostics;
-        private readonly SourceControlSyncJobOperations _sourceControlSyncJobOperationsRestClient;
+        private readonly ClientDiagnostics _sourceControlSyncJobClientDiagnostics;
+        private readonly SourceControlSyncJob _sourceControlSyncJobRestClient;
         private readonly ClientDiagnostics _sourceControlSyncJobStreamsClientDiagnostics;
         private readonly SourceControlSyncJobStreams _sourceControlSyncJobStreamsRestClient;
         private readonly AutomationSourceControlData _data;
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Automation
             TryGetApiVersion(ResourceType, out string automationSourceControlApiVersion);
             _sourceControlClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
             _sourceControlRestClient = new SourceControl(_sourceControlClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
-            _sourceControlSyncJobOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
-            _sourceControlSyncJobOperationsRestClient = new SourceControlSyncJobOperations(_sourceControlSyncJobOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
+            _sourceControlSyncJobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _sourceControlSyncJobRestClient = new SourceControlSyncJob(_sourceControlSyncJobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
             _sourceControlSyncJobStreamsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
             _sourceControlSyncJobStreamsRestClient = new SourceControlSyncJobStreams(_sourceControlSyncJobStreamsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, automationSourceControlApiVersion ?? "2024-10-23");
             ValidateResourceId(id);
@@ -427,11 +427,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="content"> The parameters supplied to the create source control sync job operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SourceControlSyncJob>> CreateSourceControlSyncJobAsync(Guid sourceControlSyncJobId, SourceControlSyncJobCreateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.SourceControlSyncJob>> CreateSourceControlSyncJobAsync(Guid sourceControlSyncJobId, SourceControlSyncJobCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _sourceControlSyncJobOperationsClientDiagnostics.CreateScope("AutomationSourceControlResource.CreateSourceControlSyncJob");
+            using DiagnosticScope scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.CreateSourceControlSyncJob");
             scope.Start();
             try
             {
@@ -439,9 +439,9 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateCreateSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, SourceControlSyncJobCreateContent.ToRequestContent(content), context);
+                HttpMessage message = _sourceControlSyncJobRestClient.CreateCreateSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, SourceControlSyncJobCreateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SourceControlSyncJob> response = Response.FromValue(SourceControlSyncJob.FromResponse(result), result);
+                Response<Models.SourceControlSyncJob> response = Response.FromValue(Models.SourceControlSyncJob.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -480,11 +480,11 @@ namespace Azure.ResourceManager.Automation
         /// <param name="content"> The parameters supplied to the create source control sync job operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SourceControlSyncJob> CreateSourceControlSyncJob(Guid sourceControlSyncJobId, SourceControlSyncJobCreateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<Models.SourceControlSyncJob> CreateSourceControlSyncJob(Guid sourceControlSyncJobId, SourceControlSyncJobCreateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _sourceControlSyncJobOperationsClientDiagnostics.CreateScope("AutomationSourceControlResource.CreateSourceControlSyncJob");
+            using DiagnosticScope scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.CreateSourceControlSyncJob");
             scope.Start();
             try
             {
@@ -492,9 +492,9 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateCreateSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, SourceControlSyncJobCreateContent.ToRequestContent(content), context);
+                HttpMessage message = _sourceControlSyncJobRestClient.CreateCreateSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, SourceControlSyncJobCreateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SourceControlSyncJob> response = Response.FromValue(SourceControlSyncJob.FromResponse(result), result);
+                Response<Models.SourceControlSyncJob> response = Response.FromValue(Models.SourceControlSyncJob.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SourceControlSyncJobResult>> GetSourceControlSyncJobAsync(Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _sourceControlSyncJobOperationsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJob");
+            using DiagnosticScope scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJob");
             scope.Start();
             try
             {
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateGetSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, context);
+                HttpMessage message = _sourceControlSyncJobRestClient.CreateGetSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SourceControlSyncJobResult> response = Response.FromValue(SourceControlSyncJobResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SourceControlSyncJobResult> GetSourceControlSyncJob(Guid sourceControlSyncJobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _sourceControlSyncJobOperationsClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJob");
+            using DiagnosticScope scope = _sourceControlSyncJobClientDiagnostics.CreateScope("AutomationSourceControlResource.GetSourceControlSyncJob");
             scope.Start();
             try
             {
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sourceControlSyncJobOperationsRestClient.CreateGetSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, context);
+                HttpMessage message = _sourceControlSyncJobRestClient.CreateGetSourceControlSyncJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SourceControlSyncJobResult> response = Response.FromValue(SourceControlSyncJobResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -715,15 +715,15 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SourceControlSyncJob"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SourceControlSyncJob> GetSourceControlSyncJobsAsync(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Models.SourceControlSyncJob"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Models.SourceControlSyncJob> GetSourceControlSyncJobsAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SourceControlSyncJobOperationsGetSourceControlSyncJobsAsyncCollectionResultOfT(
-                _sourceControlSyncJobOperationsRestClient,
+            return new SourceControlSyncJobGetSourceControlSyncJobsAsyncCollectionResultOfT(
+                _sourceControlSyncJobRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -756,15 +756,15 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SourceControlSyncJob"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SourceControlSyncJob> GetSourceControlSyncJobs(string filter = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Models.SourceControlSyncJob"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Models.SourceControlSyncJob> GetSourceControlSyncJobs(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SourceControlSyncJobOperationsGetSourceControlSyncJobsCollectionResultOfT(
-                _sourceControlSyncJobOperationsRestClient,
+            return new SourceControlSyncJobGetSourceControlSyncJobsCollectionResultOfT(
+                _sourceControlSyncJobRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
