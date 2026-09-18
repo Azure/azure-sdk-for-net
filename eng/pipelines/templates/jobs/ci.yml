@@ -40,8 +40,9 @@ parameters:
 jobs:
   - job: Build
     pool:
-      name: azsdk-pool-mms-win-2019-general
-      vmImage: MMS2019
+      name: azsdk-pool
+      image: windows-2022
+      os: windows
     steps:
       - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
         parameters:
@@ -100,8 +101,9 @@ jobs:
   - job: "Analyze"
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     pool:
-      name: azsdk-pool-mms-ubuntu-1804-general
-      vmImage: MMSUbuntu18.04
+      name: azsdk-pool
+      image: ubuntu-24.04
+      os: linux
     steps:
       - task: UsePythonVersion@0
         displayName: "Use Python 3.6"
