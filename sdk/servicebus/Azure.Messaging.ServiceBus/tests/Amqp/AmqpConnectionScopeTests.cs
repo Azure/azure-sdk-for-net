@@ -503,11 +503,23 @@ namespace Azure.Messaging.ServiceBus.Tests
                         ((Microsoft.Azure.Amqp.Framing.Source)openedLink.Settings.Source).FilterSet[AmqpClientConstants.NonExclusiveSessionFilterName] =
                             new AmqpNonExclusiveSessionFilterCodec { SessionId = "sessionId", LockToken = assignedSessionLockToken.Value };
                     }
+
+                    typeof(AmqpObject)
+                        .GetProperty(nameof(AmqpObject.State), BindingFlags.Instance | BindingFlags.Public)
+                        .GetSetMethod(true)
+                        .Invoke(invocation.Arguments[0], new object[] { AmqpObjectState.Opened });
                 }))
                 .Returns(Task.CompletedTask)
                 .Verifiable();
 
             return mockScope;
+        }
+
+        internal static RequestResponseAmqpLink CreateRequestResponseLink()
+        {
+            var mockConnection = new AmqpConnection(new MockTransport(), CreateMockAmqpSettings(), new AmqpConnectionSettings());
+            var mockSession = new AmqpSession(mockConnection, new AmqpSessionSettings(), Mock.Of<ILinkFactory>());
+            return new RequestResponseAmqpLink("request-response-link", mockSession, "address", null);
         }
 
         /// <summary>
