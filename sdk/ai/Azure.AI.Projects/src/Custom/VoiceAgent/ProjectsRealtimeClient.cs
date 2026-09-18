@@ -2,21 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects;
+#pragma warning disable OPENAI002
 
 /// <summary>
 /// The extended real time client.
 /// </summary>
-[Experimental("AAIP002")]
-public class ProjectsRealtimeClient : RealtimeClient
+internal class ProjectsRealtimeClient : RealtimeClient
 {
     private static string s_defaultAuthorizationScope = "https://ai.azure.com/.default";
-    private readonly string _experimentalHeaders;
     private AuthenticationTokenProvider _tokenProvider;
-    private readonly Uri _uri;
     /// <summary>
     /// Internal empty constructor for mocking.
     /// </summary>
@@ -25,11 +22,15 @@ public class ProjectsRealtimeClient : RealtimeClient
     /// <summary>
     /// Create a new instance of ProjectsRealtimeClient
     /// </summary>
-    public ProjectsRealtimeClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, string experimentalHeaders=default, RealtimeClientOptions options = null)
-        :base(RealtimeClientHelper.CreatePipeline(endpoint, tokenProvider, RealtimeClientHelper.ExperimentalHeaders(experimentalHeaders), s_defaultAuthorizationScope, options), options)
+    internal ProjectsRealtimeClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, string experimentalHeaders = default, RealtimeClientOptions options = null)
+        : base(RealtimeClientHelper.CreatePipeline(endpoint, tokenProvider, RealtimeClientHelper.ExperimentalHeaders(experimentalHeaders), s_defaultAuthorizationScope, options), options)
     {
         _tokenProvider = tokenProvider;
-        _uri = RealtimeClientHelper.GetWebSocketEndpoint(endpoint, options);
-        _experimentalHeaders = RealtimeClientHelper.ExperimentalHeaders(experimentalHeaders);
+        ExperimentalHeaders = RealtimeClientHelper.ExperimentalHeaders(experimentalHeaders);
     }
+
+    // Read by ProjectsRealtimeSessionClient (via its internal ParentClient reference) so the same
+    // Foundry-Features header value isn't computed/stored a second time for the session's own
+    // independent WebSocket handshake.
+    internal string ExperimentalHeaders { get; }
 }
