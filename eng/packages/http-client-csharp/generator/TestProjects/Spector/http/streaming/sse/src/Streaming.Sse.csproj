@@ -23,6 +23,5 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 </Project>
