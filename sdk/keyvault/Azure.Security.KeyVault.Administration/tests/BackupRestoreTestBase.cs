@@ -5,7 +5,8 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
-using Azure.Storage;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 
@@ -69,27 +70,23 @@ namespace Azure.Security.KeyVault.Administration.Tests
             {
                 return SanitizeValue;
             }
-            // Create a service level SAS that only allows reading from service
-            // level APIs
-            AccountSasBuilder sas = new AccountSasBuilder
+
+            // The storage account disallows shared-key access, so sign the SAS with a user delegation
+            // key (Azure AD) obtained via the same credential used for Key Vault instead of an account key.
+            var serviceClient = new BlobServiceClient(new Uri(TestEnvironment.StorageUri), TestEnvironment.Credential);
+            DateTimeOffset expiresOn = DateTimeOffset.UtcNow.AddHours(1);
+            UserDelegationKey delegationKey = serviceClient.GetUserDelegationKey(DateTimeOffset.UtcNow.AddMinutes(-5), expiresOn);
+
+            BlobSasBuilder sas = new BlobSasBuilder
             {
-                // Allow access to blobs.
-                Services = AccountSasServices.Blobs,
-
-                // Allow access to the service level APIs.
-                ResourceTypes = AccountSasResourceTypes.All,
-
-                // Access expires in 1 hour.
-                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1)
+                BlobContainerName = BlobContainerName,
+                Resource = "c",
+                ExpiresOn = expiresOn
             };
-            // Allow All access
-            sas.SetPermissions(AccountSasPermissions.All);
-
-            // Create a SharedKeyCredential that we can use to sign the SAS token
-            StorageSharedKeyCredential credential = new StorageSharedKeyCredential(TestEnvironment.AccountName, TestEnvironment.PrimaryStorageAccountKey);
+            sas.SetPermissions(BlobSasPermissions.All);
 
             // return a SAS token
-            return sas.ToSasQueryParameters(credential).ToString();
+            return sas.ToSasQueryParameters(delegationKey, TestEnvironment.AccountName).ToString();
         }
     }
 }

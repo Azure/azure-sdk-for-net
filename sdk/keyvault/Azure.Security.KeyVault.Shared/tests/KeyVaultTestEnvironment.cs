@@ -105,6 +105,12 @@ namespace Azure.Security.KeyVault.Tests
         public string EkmServerCaCertBase64 => GetOptionalVariable("EKM_SERVER_CA_CERTIFICATE");
 
         /// <summary>
+        /// Alias of the Private Link Service that fronts an EKM proxy, used to create EKM proxy private
+        /// endpoints. Required for EKM private endpoint live tests; tests should skip themselves when this is null.
+        /// </summary>
+        public string EkmPrivateLinkServiceId => GetRecordedOptionalVariable("EKM_PRIVATE_LINK_SERVICE_ID", options => options.IsSecret("fake-private-link-service-id"));
+
+        /// <summary>
         /// Gets the value of the "AZURE_KEYVAULT_ATTESTATION_URL" variable.
         /// </summary>
         public Uri AttestationUri => Uri.TryCreate(GetRecordedOptionalVariable("AZURE_KEYVAULT_ATTESTATION_URL"), UriKind.Absolute, out Uri attestationUri)
