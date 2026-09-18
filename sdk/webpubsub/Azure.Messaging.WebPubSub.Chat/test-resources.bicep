@@ -124,5 +124,5 @@ resource ownerRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01
 }
 
 output WPS_CHAT_ENDPOINT string = 'https://${webPubSub.properties.hostName}'
-output WPS_CHAT_CONNECTION_STRING string = listKeys(webPubSub.id, webPubSubApiVersion).primaryConnectionString
+output WPS_CHAT_CONNECTION_STRING string = supportsSafeSecretStandard ? '' : listKeys(webPubSub.id, webPubSubApiVersion).primaryConnectionString
 output WPS_CHAT_DISABLE_LOCAL_AUTH string = string(supportsSafeSecretStandard)
