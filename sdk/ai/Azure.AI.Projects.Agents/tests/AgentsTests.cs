@@ -145,7 +145,7 @@ public class AgentsTests : AgentsTestBase
             Name = "mcp-tool",
             Description = "Test mcp tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         // Create
         ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
@@ -213,7 +213,7 @@ public class AgentsTests : AgentsTestBase
             Name = "mcp-tool",
             Description = "Test mcp tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         // Create
         ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
@@ -395,7 +395,7 @@ public class AgentsTests : AgentsTestBase
             Name = "mcp-tool",
             Description = "Test MCP tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         while (records.Count + created <= PAGE_SIZE)
         {
@@ -446,7 +446,7 @@ public class AgentsTests : AgentsTestBase
             Name = "mcp-tool",
             Description = "Test MCP tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         while (records.Count + created <= PAGE_SIZE)
         {
