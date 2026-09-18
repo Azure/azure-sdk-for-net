@@ -1,16 +1,10 @@
 # Release History
 
-## 2.0.0-beta.4 (Unreleased)
+## 2.0.0-beta.4 (2026-09-18)
 
 ### Features Added
 
 - Added `ConfidentialLedgerClientOptions.ServiceVersion.V2026_02_23` for the "2026-02-23" API version. This is now the default service version used by `ConfidentialLedgerClientOptions()` and by configuration-based (`ConfidentialLedgerClientSettings`) construction, replacing `V2024_12_09_Preview`. Transaction writes (`PostLedgerEntry`/`PostLedgerEntryAsync`, `CreateLedgerEntry`/`CreateLedgerEntryAsync`) and `GetReceipt`/`GetReceiptAsync` now send `api-version=2026-02-23` unless an earlier `ServiceVersion` is explicitly selected.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 2.0.0-beta.3 (2026-08-17)
 
