@@ -163,7 +163,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WebPubSubChatConversation(id, parentRoom, etag, additionalBinaryDataProperties);
