@@ -75,16 +75,18 @@ try {
 
     $failedDir = Join-Path $tmp 'failed'; New-Item -ItemType Directory -Path $failedDir | Out-Null
     $nl = [char]10
-    [ordered]@{ success = $false; attemptsUsed = 3; buildResult = "Custom.cs(1,1): error CS0117: bad$nl@evil https://x.test fixes #9"; errorCode = 'maxIterations'; specChangeRequired = @('AZC0012: rename') } |
+    [ordered]@{ success = $false; operation_status = 'Failed'; attemptsUsed = 0; buildResult = "Custom.cs(1,1): error CS0117: bad$nl@evil https://x.test fixes #9"; errorCode = 'SpecChangeRequired'; specChangeRequired = @('AZC0012: rename') } |
         ConvertTo-Json -Depth 6 | Set-Content (Join-Path $failedDir 'result.json')
 
     $failedProgressDir = Join-Path $tmp 'failed-progress'; New-Item -ItemType Directory -Path $failedProgressDir | Out-Null
     [ordered]@{
         success = $false
+        operation_status = 'Failed'
         attemptsUsed = 3
         buildResult = 'Custom.cs(1,1): error CS0111: duplicate member'
-        errorCode = 'maxIterations'
-        appliedPatches = @(@{ filePath = 'sdk/foo/Azure.Foo/src/Custom.cs'; description = 'attempted fix'; replacementCount = 1 })
+        errorCode = 'BuildAfterPatchesFailed'
+        response_error = 'Repair stopped after 3 attempts: final build failed with CS0111: duplicate member.'
+        appliedPatches = @(@{ FilePath = 'sdk/foo/Azure.Foo/src/Custom.cs'; Description = 'attempted fix'; ReplacementCount = 1 })
     } | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $failedProgressDir 'result.json')
 
     $cases = @(
@@ -147,10 +149,13 @@ try {
         if ($c.name -eq 'failed') {
             Assert ($body -match 'Requires a spec-repo change') "failed(spec-change): reports the out-of-scope spec change"
             Assert ($body -match 'Request a separate spec-repository change; do not edit pinned spec inputs') "failed(spec-change): actionable next step without editing spec"
+            Assert ($body.Contains('| **Iterations used** | 0 of 3 |')) "failed(spec-change): early stop consumes zero patch attempts"
         }
         if ($c.name -eq 'failed_with_progress') {
             Assert ($body -match 'Custom\.cs') "failed(progress): reports the attempted file change"
-            Assert ($body -match '\| \*\*Stop reason\*\* \| `maxIterations` \|') "failed(progress): reports the iteration-limit stop reason"
+            Assert ($body -match '\| \*\*Stop reason\*\* \| `BuildAfterPatchesFailed` \|') "failed(progress): preserves the exhausted-build error code"
+            Assert ($body -match 'Repair stopped after 3 attempts: final build failed with CS0111') "failed(progress): explains the exhausted limit and actual final diagnostic"
+            Assert ($body -match 'attempted fix \(1 replacement\)') "failed(progress): preserves legacy CLI PascalCase patch description/count"
         }
         if ($c.expect -eq 'skipped_already_green') {
             # Already-green runs commit nothing; the invariant line must not claim a fix.
@@ -208,7 +213,7 @@ try {
     } finally { Pop-Location }
     $gr = Join-Path $g1 'results'; New-Item -ItemType Directory -Path $gr | Out-Null
     [ordered]@{ success = $true; attemptsUsed = 2; appliedPatches = @(
-        @{ filePath = 'src/Customizations/Foo.cs'; description = 'fix Foo'; replacementCount = 2 },
+        @{ FilePath = 'src/Customizations/Foo.cs'; Description = 'fix Foo'; ReplacementCount = 2 },
         @{ filePath = 'src/Customizations/Bar.cs'; description = 'fix Bar'; replacementCount = 1 }
     ) } | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $gr 'result.json')
     $gout = Join-Path $tmp 'grouped.md'
@@ -362,7 +367,8 @@ try {
         @{ name = 'over-limit'; json = '{"success":true,"attemptsUsed":4}'; reason = 'InvalidAttemptsUsed' },
         @{ name = 'failed-operation'; json = '{"success":true,"attemptsUsed":1,"operation_status":"Failed"}'; reason = 'EngineFailed' },
         @{ name = 'response-error'; json = '{"success":true,"attemptsUsed":1,"response_error":"Final build failed."}'; reason = 'EngineFailed' },
-        @{ name = 'limit'; json = '{"success":false,"attemptsUsed":3}'; reason = 'maxIterations' }
+        @{ name = 'limit'; json = '{"success":false,"attemptsUsed":3}'; reason = 'maxIterations' },
+        @{ name = 'manual-stop'; json = '{"success":false,"operation_status":"Failed","attemptsUsed":0,"response_error":"Manual intervention required before patching.","next_steps":["Review the unsupported customization manually."]}'; reason = 'EngineFailed' }
     )) {
         $finalPath = Join-Path $sr 'result.json'
         if ($null -eq $case.json) { Remove-Item -LiteralPath $finalPath }
@@ -374,21 +380,28 @@ try {
         Assert (($json | ConvertFrom-Json).repaired_at -eq $null) "$($case.name): no repair timestamp"
         Assert ($body.Contains($case.reason) -and $body.Contains('### Next action')) "$($case.name): explicit cause and next action"
         Assert ($body -notmatch 'Fix committed|Invariants Confirmed|Build remains red') "$($case.name): no unsupported source, publication, or red-build claim"
+        if ($case.reason -in @('NoEngineResult', 'MalformedEngineResult', 'InvalidAttemptsUsed')) {
+            Assert ($body.Contains('| **Iterations used** | Unknown of 3 (no valid attemptsUsed) |')) "$($case.name): missing/invalid count is unknown, not counted from files"
+        }
+        if ($case.name -eq 'manual-stop') {
+            Assert ($body.Contains('| **Iterations used** | 0 of 3 |') -and $body.Contains('Review the unsupported customization manually.')) 'manual stop reports zero proposals and the engine next step'
+        }
     }
 
     Set-Content (Join-Path $sr 'result.json') '{'
     & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -ForcedStatus skipped_already_green -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
     Assert ((Get-TelemetryObject (Get-Content -Raw $sout) | ConvertFrom-Json).status -eq 'failed') 'malformed final cannot be overridden by a forced already-green status'
 
-    foreach ($count in @(0, 3)) {
+    foreach ($case in @(@{ count = 0; max = 3 }, @{ count = 1; max = 1 }, @{ count = 3; max = 3 }, @{ count = 10; max = 10 })) {
+        $count = $case.count
         @{ success = $true; attemptsUsed = $count; operation_status = 'Succeeded' } | ConvertTo-Json | Set-Content (Join-Path $sr 'result.json')
-        & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
+        & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -MaxIterations $case.max -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
         $body = Get-Content -Raw $sout
-        Assert ($body.Contains("| **Iterations used** | $count of 3 |")) "engine scalar $count is displayed without counting files"
+        Assert ($body.Contains("| **Iterations used** | $count of $($case.max) |")) "engine scalar $count is displayed against the configured bound without counting files"
         Assert ((Get-TelemetryObject $body | ConvertFrom-Json).status -eq 'repaired') "valid scalar $count with Boolean success reports repaired"
     }
 
-    $stderrFile = Join-Path $sr 'engine.stderr'
+    $stderrFile = Join-Path $sr 'engine-errors.txt'
     Set-Content -LiteralPath $stderrFile -Value 'tsp-client update: failed to resolve pinned TypeSpec dependency'
     @{
         success = $false; attemptsUsed = 2; operation_status = 'Failed'
@@ -414,6 +427,26 @@ try {
     & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
     $body = Get-Content -Raw $sout
     Assert ($body -match 'NoEngineResult' -and $body -match 'does not advertise --max-attempts') 'capability failure without JSON reports actual cause, not generic exit1'
+
+    Set-Content (Join-Path $sr 'result.json') '{'
+    Set-Content -LiteralPath $stderrFile -Value ("CLI failed: unexpected authentication response.`n" + '```json' + "`n{}`n" + '```' + "`n" + ('x' * 8100) + 'stderr-tail')
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
+    $body = Get-Content -Raw $sout
+    Assert ($body -match 'MalformedEngineResult' -and $body -match 'CLI failed: unexpected authentication response') 'malformed final JSON preserves captured CLI failure cause'
+    Assert ((Get-TelemetryObject $body | ConvertFrom-Json).status -eq 'failed') 'malformed JSON with stderr remains failed'
+    Assert ($body.Contains('` ` `json') -and ([regex]::Matches($body, '```json')).Count -eq 1) 'captured stderr fences are escaped without injecting another telemetry block'
+    $details = [regex]::Match($body, '(?s)<details><summary>Final build/generation and engine error output</summary>\s*```\n(.*?)\n```')
+    Assert ($details.Success -and $details.Groups[1].Value.Length -le 8020 -and $body.Contains('...(truncated)') -and -not $body.Contains('stderr-tail')) 'captured stderr uses the existing bounded diagnostic details'
+
+    Set-Content (Join-Path $sr 'result.json') '{"success":true,"operation_status":"Succeeded","attemptsUsed":1}'
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -EngineErrorsFile $stderrFile -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
+    $body = Get-Content -Raw $sout
+    Assert ((Get-TelemetryObject $body | ConvertFrom-Json).status -eq 'repaired' -and $body -notmatch 'unexpected authentication response|Final build/generation and engine error output') 'successful report does not include stale captured stderr'
+
+    Remove-Item -LiteralPath (Join-Path $sr 'result.json')
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $sr -EngineErrorsFile (Join-Path $sr 'absent-errors.txt') -PackagePath $pkg -RepoRoot $g5 -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $sout | Out-Null
+    $body = Get-Content -Raw $sout
+    Assert ($body -match 'NoEngineResult' -and $body -notmatch 'Final build/generation and engine error output') 'missing optional stderr file still renders the actual missing-result failure'
 
     # =========================================================================
     # repaired_at determinism: the timestamp must be the write time of the
