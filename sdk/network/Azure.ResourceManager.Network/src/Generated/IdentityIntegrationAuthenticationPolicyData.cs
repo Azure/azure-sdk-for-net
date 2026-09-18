@@ -14,14 +14,14 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Authentication policy resource for identity integration. </summary>
-    public partial class AuthenticationPolicyData : NetworkTrackedResourceData
+    public partial class IdentityIntegrationAuthenticationPolicyData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="AuthenticationPolicyData"/>. </summary>
-        public AuthenticationPolicyData()
+        /// <summary> Initializes a new instance of <see cref="IdentityIntegrationAuthenticationPolicyData"/>. </summary>
+        public IdentityIntegrationAuthenticationPolicyData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthenticationPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityIntegrationAuthenticationPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The user-assigned identity used by a user sign-in policy to access its Key Vault client secret. </param>
         /// <param name="systemData"> The system metadata related to this resource. </param>
-        internal AuthenticationPolicyData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, AuthenticationPolicyPropertiesFormat properties, string eTag, NetworkManagedServiceIdentity identity, SystemData systemData) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal IdentityIntegrationAuthenticationPolicyData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, AuthenticationPolicyPropertiesFormat properties, string eTag, ManagedServiceIdentity identity, SystemData systemData) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The user-assigned identity used by a user sign-in policy to access its Key Vault client secret. </summary>
         [WirePath("identity")]
-        public NetworkManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The system metadata related to this resource. </summary>
         [WirePath("systemData")]

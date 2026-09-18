@@ -18,68 +18,68 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Authentication policy resource for identity integration. </summary>
-    public partial class AuthenticationPolicyData : NetworkTrackedResourceData, IJsonModel<AuthenticationPolicyData>
+    public partial class IdentityIntegrationAuthenticationPolicyData : NetworkTrackedResourceData, IJsonModel<IdentityIntegrationAuthenticationPolicyData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkTrackedResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AuthenticationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IdentityIntegrationAuthenticationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAuthenticationPolicyData(document.RootElement, options);
+                        return DeserializeIdentityIntegrationAuthenticationPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationPolicyData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdentityIntegrationAuthenticationPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AuthenticationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IdentityIntegrationAuthenticationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationPolicyData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdentityIntegrationAuthenticationPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AuthenticationPolicyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IdentityIntegrationAuthenticationPolicyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AuthenticationPolicyData IPersistableModel<AuthenticationPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AuthenticationPolicyData)PersistableModelCreateCore(data, options);
+        IdentityIntegrationAuthenticationPolicyData IPersistableModel<IdentityIntegrationAuthenticationPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (IdentityIntegrationAuthenticationPolicyData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AuthenticationPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IdentityIntegrationAuthenticationPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="authenticationPolicyData"> The <see cref="AuthenticationPolicyData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AuthenticationPolicyData authenticationPolicyData)
+        /// <param name="identityIntegrationAuthenticationPolicyData"> The <see cref="IdentityIntegrationAuthenticationPolicyData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(IdentityIntegrationAuthenticationPolicyData identityIntegrationAuthenticationPolicyData)
         {
-            if (authenticationPolicyData == null)
+            if (identityIntegrationAuthenticationPolicyData == null)
             {
                 return null;
             }
-            return RequestContent.Create(authenticationPolicyData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(identityIntegrationAuthenticationPolicyData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AuthenticationPolicyData"/> from. </param>
-        internal static AuthenticationPolicyData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IdentityIntegrationAuthenticationPolicyData"/> from. </param>
+        internal static IdentityIntegrationAuthenticationPolicyData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAuthenticationPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeIdentityIntegrationAuthenticationPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AuthenticationPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IdentityIntegrationAuthenticationPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AuthenticationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IdentityIntegrationAuthenticationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationPolicyData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IdentityIntegrationAuthenticationPolicyData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AuthenticationPolicyData IJsonModel<AuthenticationPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AuthenticationPolicyData)JsonModelCreateCore(ref reader, options);
+        IdentityIntegrationAuthenticationPolicyData IJsonModel<IdentityIntegrationAuthenticationPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IdentityIntegrationAuthenticationPolicyData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override NetworkTrackedResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AuthenticationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IdentityIntegrationAuthenticationPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationPolicyData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IdentityIntegrationAuthenticationPolicyData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAuthenticationPolicyData(document.RootElement, options);
+            return DeserializeIdentityIntegrationAuthenticationPolicyData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AuthenticationPolicyData DeserializeAuthenticationPolicyData(JsonElement element, ModelReaderWriterOptions options)
+        internal static IdentityIntegrationAuthenticationPolicyData DeserializeIdentityIntegrationAuthenticationPolicyData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AuthenticationPolicyPropertiesFormat properties = default;
             string eTag = default;
-            NetworkManagedServiceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             SystemData systemData = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    identity = NetworkManagedServiceIdentity.DeserializeNetworkManagedServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Network
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AuthenticationPolicyData(
+            return new IdentityIntegrationAuthenticationPolicyData(
                 id,
                 name,
                 @type,

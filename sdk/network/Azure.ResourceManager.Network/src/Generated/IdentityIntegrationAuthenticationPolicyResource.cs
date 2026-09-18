@@ -20,40 +20,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a AuthenticationPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AuthenticationPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAuthenticationPolicies method.
+    /// A class representing a IdentityIntegrationAuthenticationPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IdentityIntegrationAuthenticationPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetIdentityIntegrationAuthenticationPolicies method.
     /// </summary>
-    public partial class AuthenticationPolicyResource : ArmResource
+    public partial class IdentityIntegrationAuthenticationPolicyResource : ArmResource
     {
         private readonly ClientDiagnostics _authenticationPoliciesClientDiagnostics;
         private readonly AuthenticationPolicies _authenticationPoliciesRestClient;
-        private readonly AuthenticationPolicyData _data;
+        private readonly IdentityIntegrationAuthenticationPolicyData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/authenticationPolicies";
 
-        /// <summary> Initializes a new instance of AuthenticationPolicyResource for mocking. </summary>
-        protected AuthenticationPolicyResource()
+        /// <summary> Initializes a new instance of IdentityIntegrationAuthenticationPolicyResource for mocking. </summary>
+        protected IdentityIntegrationAuthenticationPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthenticationPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AuthenticationPolicyResource(ArmClient client, AuthenticationPolicyData data) : this(client, data.Id)
+        internal IdentityIntegrationAuthenticationPolicyResource(ArmClient client, IdentityIntegrationAuthenticationPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthenticationPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AuthenticationPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal IdentityIntegrationAuthenticationPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string authenticationPolicyApiVersion);
+            TryGetApiVersion(ResourceType, out string identityIntegrationAuthenticationPolicyApiVersion);
             _authenticationPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _authenticationPoliciesRestClient = new AuthenticationPolicies(_authenticationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, authenticationPolicyApiVersion ?? "2026-01-01");
+            _authenticationPoliciesRestClient = new AuthenticationPolicies(_authenticationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, identityIntegrationAuthenticationPolicyApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AuthenticationPolicyData Data
+        public virtual IdentityIntegrationAuthenticationPolicyData Data
         {
             get
             {
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AuthenticationPolicyResource"/>. </description>
+        /// <description> <see cref="IdentityIntegrationAuthenticationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AuthenticationPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IdentityIntegrationAuthenticationPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.Get");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
+                Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,14 +158,14 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AuthenticationPolicyResource"/>. </description>
+        /// <description> <see cref="IdentityIntegrationAuthenticationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AuthenticationPolicyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<IdentityIntegrationAuthenticationPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.Get");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.Get");
             scope.Start();
             try
             {
@@ -175,12 +175,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
+                Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -206,18 +206,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AuthenticationPolicyResource"/>. </description>
+        /// <description> <see cref="IdentityIntegrationAuthenticationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to update the authentication policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<AuthenticationPolicyResource>> UpdateAsync(AuthenticationPolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IdentityIntegrationAuthenticationPolicyResource>> UpdateAsync(IdentityIntegrationAuthenticationPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.Update");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.Update");
             scope.Start();
             try
             {
@@ -225,14 +225,14 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authenticationPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AuthenticationPolicyPatch.ToRequestContent(patch), context);
+                HttpMessage message = _authenticationPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IdentityIntegrationAuthenticationPolicyPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
+                Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,18 +258,18 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AuthenticationPolicyResource"/>. </description>
+        /// <description> <see cref="IdentityIntegrationAuthenticationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to update the authentication policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<AuthenticationPolicyResource> Update(AuthenticationPolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<IdentityIntegrationAuthenticationPolicyResource> Update(IdentityIntegrationAuthenticationPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.Update");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.Update");
             scope.Start();
             try
             {
@@ -277,14 +277,14 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authenticationPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AuthenticationPolicyPatch.ToRequestContent(patch), context);
+                HttpMessage message = _authenticationPoliciesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IdentityIntegrationAuthenticationPolicyPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
+                Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AuthenticationPolicyResource"/>. </description>
+        /// <description> <see cref="IdentityIntegrationAuthenticationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.Delete");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.Delete");
             scope.Start();
             try
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AuthenticationPolicyResource"/>. </description>
+        /// <description> <see cref="IdentityIntegrationAuthenticationPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.Delete");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.Delete");
             scope.Start();
             try
             {
@@ -400,12 +400,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<AuthenticationPolicyResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IdentityIntegrationAuthenticationPolicyResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.AddTag");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.AddTag");
             scope.Start();
             try
             {
@@ -420,19 +420,19 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
+                    return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AuthenticationPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AuthenticationPolicyPatch patch = new AuthenticationPolicyPatch();
+                    IdentityIntegrationAuthenticationPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    IdentityIntegrationAuthenticationPolicyPatch patch = new IdentityIntegrationAuthenticationPolicyPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<AuthenticationPolicyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<IdentityIntegrationAuthenticationPolicyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -448,12 +448,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<AuthenticationPolicyResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<IdentityIntegrationAuthenticationPolicyResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.AddTag");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.AddTag");
             scope.Start();
             try
             {
@@ -468,19 +468,19 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
+                    return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AuthenticationPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AuthenticationPolicyPatch patch = new AuthenticationPolicyPatch();
+                    IdentityIntegrationAuthenticationPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    IdentityIntegrationAuthenticationPolicyPatch patch = new IdentityIntegrationAuthenticationPolicyPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<AuthenticationPolicyResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<IdentityIntegrationAuthenticationPolicyResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -495,11 +495,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<AuthenticationPolicyResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IdentityIntegrationAuthenticationPolicyResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.SetTags");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.SetTags");
             scope.Start();
             try
             {
@@ -515,15 +515,15 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
+                    return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AuthenticationPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AuthenticationPolicyPatch patch = new AuthenticationPolicyPatch();
+                    IdentityIntegrationAuthenticationPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    IdentityIntegrationAuthenticationPolicyPatch patch = new IdentityIntegrationAuthenticationPolicyPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<AuthenticationPolicyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<IdentityIntegrationAuthenticationPolicyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -538,11 +538,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<AuthenticationPolicyResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<IdentityIntegrationAuthenticationPolicyResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.SetTags");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.SetTags");
             scope.Start();
             try
             {
@@ -558,15 +558,15 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
+                    return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AuthenticationPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AuthenticationPolicyPatch patch = new AuthenticationPolicyPatch();
+                    IdentityIntegrationAuthenticationPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    IdentityIntegrationAuthenticationPolicyPatch patch = new IdentityIntegrationAuthenticationPolicyPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<AuthenticationPolicyResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<IdentityIntegrationAuthenticationPolicyResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -581,11 +581,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<AuthenticationPolicyResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IdentityIntegrationAuthenticationPolicyResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.RemoveTag");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.RemoveTag");
             scope.Start();
             try
             {
@@ -600,19 +600,19 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
+                    return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AuthenticationPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AuthenticationPolicyPatch patch = new AuthenticationPolicyPatch();
+                    IdentityIntegrationAuthenticationPolicyData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    IdentityIntegrationAuthenticationPolicyPatch patch = new IdentityIntegrationAuthenticationPolicyPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<AuthenticationPolicyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<IdentityIntegrationAuthenticationPolicyResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -627,11 +627,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<AuthenticationPolicyResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<IdentityIntegrationAuthenticationPolicyResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyResource.RemoveTag");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyResource.RemoveTag");
             scope.Start();
             try
             {
@@ -646,19 +646,19 @@ namespace Azure.ResourceManager.Network
                     };
                     HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
-                    return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                    Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
+                    return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AuthenticationPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AuthenticationPolicyPatch patch = new AuthenticationPolicyPatch();
+                    IdentityIntegrationAuthenticationPolicyData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    IdentityIntegrationAuthenticationPolicyPatch patch = new IdentityIntegrationAuthenticationPolicyPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<AuthenticationPolicyResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<IdentityIntegrationAuthenticationPolicyResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

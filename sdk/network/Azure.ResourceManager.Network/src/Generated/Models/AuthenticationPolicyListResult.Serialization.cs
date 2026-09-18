@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AuthenticationPolicyData item in Value)
+            foreach (IdentityIntegrationAuthenticationPolicyData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<AuthenticationPolicyData> value = default;
+            IList<IdentityIntegrationAuthenticationPolicyData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AuthenticationPolicyData> array = new List<AuthenticationPolicyData>();
+                    List<IdentityIntegrationAuthenticationPolicyData> array = new List<IdentityIntegrationAuthenticationPolicyData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AuthenticationPolicyData.DeserializeAuthenticationPolicyData(item, options));
+                        array.Add(IdentityIntegrationAuthenticationPolicyData.DeserializeIdentityIntegrationAuthenticationPolicyData(item, options));
                     }
                     value = array;
                     continue;

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The sku of this Bastion Host. </param>
         /// <param name="identity"> The identity assigned to the Bastion Host resource. </param>
-        internal BastionHostData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, BastionHostPropertiesFormat properties, IList<string> zones, ETag? eTag, NetworkSku sku, NetworkManagedServiceIdentity identity) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal BastionHostData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, BastionHostPropertiesFormat properties, IList<string> zones, ETag? eTag, NetworkSku sku, ManagedServiceIdentity identity) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Zones = zones;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The identity assigned to the Bastion Host resource. </summary>
         [WirePath("identity")]
-        public NetworkManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> IP configuration of the Bastion Host resource. </summary>
         [WirePath("properties.ipConfigurations")]

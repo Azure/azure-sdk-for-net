@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AuthenticationPolicyResource"/> and their operations.
-    /// Each <see cref="AuthenticationPolicyResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="AuthenticationPolicyCollection"/> instance call the GetAuthenticationPolicies method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> and their operations.
+    /// Each <see cref="IdentityIntegrationAuthenticationPolicyResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="IdentityIntegrationAuthenticationPolicyCollection"/> instance call the GetIdentityIntegrationAuthenticationPolicies method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class AuthenticationPolicyCollection : ArmCollection, IEnumerable<AuthenticationPolicyResource>, IAsyncEnumerable<AuthenticationPolicyResource>
+    public partial class IdentityIntegrationAuthenticationPolicyCollection : ArmCollection, IEnumerable<IdentityIntegrationAuthenticationPolicyResource>, IAsyncEnumerable<IdentityIntegrationAuthenticationPolicyResource>
     {
         private readonly ClientDiagnostics _authenticationPoliciesClientDiagnostics;
         private readonly AuthenticationPolicies _authenticationPoliciesRestClient;
 
-        /// <summary> Initializes a new instance of AuthenticationPolicyCollection for mocking. </summary>
-        protected AuthenticationPolicyCollection()
+        /// <summary> Initializes a new instance of IdentityIntegrationAuthenticationPolicyCollection for mocking. </summary>
+        protected IdentityIntegrationAuthenticationPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthenticationPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityIntegrationAuthenticationPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AuthenticationPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal IdentityIntegrationAuthenticationPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AuthenticationPolicyResource.ResourceType, out string authenticationPolicyApiVersion);
-            _authenticationPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AuthenticationPolicyResource.ResourceType.Namespace, Diagnostics);
-            _authenticationPoliciesRestClient = new AuthenticationPolicies(_authenticationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, authenticationPolicyApiVersion ?? "2026-01-01");
+            TryGetApiVersion(IdentityIntegrationAuthenticationPolicyResource.ResourceType, out string identityIntegrationAuthenticationPolicyApiVersion);
+            _authenticationPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", IdentityIntegrationAuthenticationPolicyResource.ResourceType.Namespace, Diagnostics);
+            _authenticationPoliciesRestClient = new AuthenticationPolicies(_authenticationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, identityIntegrationAuthenticationPolicyApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authenticationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<AuthenticationPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authenticationPolicyName, AuthenticationPolicyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IdentityIntegrationAuthenticationPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authenticationPolicyName, IdentityIntegrationAuthenticationPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationPolicyName, nameof(authenticationPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authenticationPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authenticationPolicyName, AuthenticationPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _authenticationPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authenticationPolicyName, IdentityIntegrationAuthenticationPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkArmOperation<AuthenticationPolicyResource> operation = new NetworkArmOperation<AuthenticationPolicyResource>(
-                    new AuthenticationPolicyResourceOperationSource(Client),
+                NetworkArmOperation<IdentityIntegrationAuthenticationPolicyResource> operation = new NetworkArmOperation<IdentityIntegrationAuthenticationPolicyResource>(
+                    new IdentityIntegrationAuthenticationPolicyResourceOperationSource(Client),
                     _authenticationPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authenticationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<AuthenticationPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string authenticationPolicyName, AuthenticationPolicyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IdentityIntegrationAuthenticationPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string authenticationPolicyName, IdentityIntegrationAuthenticationPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationPolicyName, nameof(authenticationPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _authenticationPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authenticationPolicyName, AuthenticationPolicyData.ToRequestContent(data), context);
+                HttpMessage message = _authenticationPoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authenticationPolicyName, IdentityIntegrationAuthenticationPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetworkArmOperation<AuthenticationPolicyResource> operation = new NetworkArmOperation<AuthenticationPolicyResource>(
-                    new AuthenticationPolicyResourceOperationSource(Client),
+                NetworkArmOperation<IdentityIntegrationAuthenticationPolicyResource> operation = new NetworkArmOperation<IdentityIntegrationAuthenticationPolicyResource>(
+                    new IdentityIntegrationAuthenticationPolicyResourceOperationSource(Client),
                     _authenticationPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authenticationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AuthenticationPolicyResource>> GetAsync(string authenticationPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IdentityIntegrationAuthenticationPolicyResource>> GetAsync(string authenticationPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationPolicyName, nameof(authenticationPolicyName));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyCollection.Get");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyCollection.Get");
             scope.Start();
             try
             {
@@ -206,12 +206,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authenticationPolicyName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
+                Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authenticationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AuthenticationPolicyResource> Get(string authenticationPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<IdentityIntegrationAuthenticationPolicyResource> Get(string authenticationPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationPolicyName, nameof(authenticationPolicyName));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyCollection.Get");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyCollection.Get");
             scope.Start();
             try
             {
@@ -255,12 +255,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authenticationPolicyName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AuthenticationPolicyData> response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
+                Response<IdentityIntegrationAuthenticationPolicyData> response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -287,14 +287,14 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AuthenticationPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IdentityIntegrationAuthenticationPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AuthenticationPolicyData, AuthenticationPolicyResource>(new AuthenticationPoliciesListAsyncCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AuthenticationPolicyCollection.GetAll"), data => new AuthenticationPolicyResource(Client, data));
+            return new AsyncPageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new AuthenticationPoliciesListAsyncCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IdentityIntegrationAuthenticationPolicyCollection.GetAll"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -315,14 +315,14 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AuthenticationPolicyResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IdentityIntegrationAuthenticationPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AuthenticationPolicyData, AuthenticationPolicyResource>(new AuthenticationPoliciesListCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AuthenticationPolicyCollection.GetAll"), data => new AuthenticationPolicyResource(Client, data));
+            return new PageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new AuthenticationPoliciesListCollectionResultOfT(_authenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "IdentityIntegrationAuthenticationPolicyCollection.GetAll"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(authenticationPolicyName, nameof(authenticationPolicyName));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyCollection.Exists");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -361,14 +361,14 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authenticationPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AuthenticationPolicyData> response = default;
+                Response<IdentityIntegrationAuthenticationPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AuthenticationPolicyData)null, result);
+                        response = Response.FromValue((IdentityIntegrationAuthenticationPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(authenticationPolicyName, nameof(authenticationPolicyName));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyCollection.Exists");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyCollection.Exists");
             scope.Start();
             try
             {
@@ -418,14 +418,14 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authenticationPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AuthenticationPolicyData> response = default;
+                Response<IdentityIntegrationAuthenticationPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AuthenticationPolicyData)null, result);
+                        response = Response.FromValue((IdentityIntegrationAuthenticationPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -460,11 +460,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authenticationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AuthenticationPolicyResource>> GetIfExistsAsync(string authenticationPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<IdentityIntegrationAuthenticationPolicyResource>> GetIfExistsAsync(string authenticationPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationPolicyName, nameof(authenticationPolicyName));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -475,23 +475,23 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authenticationPolicyName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AuthenticationPolicyData> response = default;
+                Response<IdentityIntegrationAuthenticationPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AuthenticationPolicyData)null, result);
+                        response = Response.FromValue((IdentityIntegrationAuthenticationPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AuthenticationPolicyResource>(response.GetRawResponse());
+                    return new NoValueResponse<IdentityIntegrationAuthenticationPolicyResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -521,11 +521,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authenticationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AuthenticationPolicyResource> GetIfExists(string authenticationPolicyName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<IdentityIntegrationAuthenticationPolicyResource> GetIfExists(string authenticationPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationPolicyName, nameof(authenticationPolicyName));
 
-            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("AuthenticationPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _authenticationPoliciesClientDiagnostics.CreateScope("IdentityIntegrationAuthenticationPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -536,23 +536,23 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _authenticationPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, authenticationPolicyName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AuthenticationPolicyData> response = default;
+                Response<IdentityIntegrationAuthenticationPolicyData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AuthenticationPolicyData.FromResponse(result), result);
+                        response = Response.FromValue(IdentityIntegrationAuthenticationPolicyData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AuthenticationPolicyData)null, result);
+                        response = Response.FromValue((IdentityIntegrationAuthenticationPolicyData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AuthenticationPolicyResource>(response.GetRawResponse());
+                    return new NoValueResponse<IdentityIntegrationAuthenticationPolicyResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new IdentityIntegrationAuthenticationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<AuthenticationPolicyResource> IEnumerable<AuthenticationPolicyResource>.GetEnumerator()
+        IEnumerator<IdentityIntegrationAuthenticationPolicyResource> IEnumerable<IdentityIntegrationAuthenticationPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AuthenticationPolicyResource> IAsyncEnumerable<AuthenticationPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<IdentityIntegrationAuthenticationPolicyResource> IAsyncEnumerable<IdentityIntegrationAuthenticationPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

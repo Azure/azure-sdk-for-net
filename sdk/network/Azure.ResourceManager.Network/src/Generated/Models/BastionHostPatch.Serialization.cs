@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -148,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            NetworkManagedServiceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    identity = NetworkManagedServiceIdentity.DeserializeNetworkManagedServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

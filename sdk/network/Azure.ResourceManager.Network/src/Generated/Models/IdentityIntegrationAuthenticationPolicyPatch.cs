@@ -7,27 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Parameters supplied to update an authentication policy. </summary>
-    public partial class AuthenticationPolicyPatch
+    public partial class IdentityIntegrationAuthenticationPolicyPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AuthenticationPolicyPatch"/>. </summary>
-        public AuthenticationPolicyPatch()
+        /// <summary> Initializes a new instance of <see cref="IdentityIntegrationAuthenticationPolicyPatch"/>. </summary>
+        public IdentityIntegrationAuthenticationPolicyPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthenticationPolicyPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IdentityIntegrationAuthenticationPolicyPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The user-assigned identity used by a user sign-in policy to access its Key Vault client secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthenticationPolicyPatch(IDictionary<string, string> tags, NetworkManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IdentityIntegrationAuthenticationPolicyPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
@@ -40,6 +41,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The user-assigned identity used by a user sign-in policy to access its Key Vault client secret. </summary>
         [WirePath("identity")]
-        public NetworkManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("afcConfiguration"u8);
                 writer.WriteObjectValue(AfcConfiguration, options);
             }
-            if (Optional.IsDefined(AiSecurityAddOn))
+            if (Optional.IsDefined(EnableAISecurityAddOn))
             {
                 writer.WritePropertyName("aiSecurityAddOn"u8);
-                writer.WriteBooleanValue(AiSecurityAddOn.Value);
+                writer.WriteBooleanValue(EnableAISecurityAddOn.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Network.Models
             IDictionary<string, string> additionalProperties = default;
             AzureFirewallAutoscaleConfiguration autoscaleConfiguration = default;
             AfcConfiguration afcConfiguration = default;
-            bool? aiSecurityAddOn = default;
+            bool? enableAISecurityAddOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    aiSecurityAddOn = prop.Value.GetBoolean();
+                    enableAISecurityAddOn = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Network.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
                 autoscaleConfiguration,
                 afcConfiguration,
-                aiSecurityAddOn,
+                enableAISecurityAddOn,
                 additionalBinaryDataProperties);
         }
     }

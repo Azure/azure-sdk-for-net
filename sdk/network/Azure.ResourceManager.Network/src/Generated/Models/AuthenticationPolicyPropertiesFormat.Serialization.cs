@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             UserTrustProviderType userTrustProviderType = default;
-            OnUnauthenticatedRequest? onUnauthenticatedRequest = default;
+            UnauthenticatedRequestAction? onUnauthenticatedRequest = default;
             AuthenticationProviderProperties authenticationProperties = default;
             IReadOnlyList<string> associatedResources = default;
             NetworkProvisioningState? provisioningState = default;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    onUnauthenticatedRequest = new OnUnauthenticatedRequest(prop.Value.GetString());
+                    onUnauthenticatedRequest = new UnauthenticatedRequestAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("authenticationProperties"u8))

@@ -925,14 +925,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AuthenticationPolicyResource> GetAuthenticationPoliciesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IdentityIntegrationAuthenticationPolicyResource> GetIdentityIntegrationAuthenticationPoliciesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AuthenticationPolicyData, AuthenticationPolicyResource>(new AuthenticationPoliciesListAllAsyncCollectionResultOfT(AuthenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAuthenticationPolicies"), data => new AuthenticationPolicyResource(Client, data));
+            return new AsyncPageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new AuthenticationPoliciesListAllAsyncCollectionResultOfT(AuthenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIdentityIntegrationAuthenticationPolicies"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
         }
 
         /// <summary>
@@ -953,14 +953,14 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AuthenticationPolicyResource> GetAuthenticationPolicies(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IdentityIntegrationAuthenticationPolicyResource> GetIdentityIntegrationAuthenticationPolicies(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AuthenticationPolicyData, AuthenticationPolicyResource>(new AuthenticationPoliciesListAllCollectionResultOfT(AuthenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAuthenticationPolicies"), data => new AuthenticationPolicyResource(Client, data));
+            return new PageableWrapper<IdentityIntegrationAuthenticationPolicyData, IdentityIntegrationAuthenticationPolicyResource>(new AuthenticationPoliciesListAllCollectionResultOfT(AuthenticationPoliciesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetIdentityIntegrationAuthenticationPolicies"), data => new IdentityIntegrationAuthenticationPolicyResource(Client, data));
         }
 
         /// <summary>

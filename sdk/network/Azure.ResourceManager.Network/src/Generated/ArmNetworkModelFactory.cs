@@ -1174,28 +1174,6 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
-        /// <summary> Identity for the resource. </summary>
-        /// <param name="principalId"> The principal id of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant id of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of identity used for the resource. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the virtual machine. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
-        /// <returns> A new <see cref="Models.NetworkManagedServiceIdentity"/> instance for mocking. </returns>
-        public static NetworkManagedServiceIdentity NetworkManagedServiceIdentity(string principalId = default, string tenantId = default, ManagedServiceIdentityType? @type = default, IDictionary<string, ManagedServiceIdentityUserAssignedIdentities> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, ManagedServiceIdentityUserAssignedIdentities>();
-
-            return new NetworkManagedServiceIdentity(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, ManagedServiceIdentityUserAssignedIdentities>(), default);
-        }
-
-        /// <summary> The ManagedServiceIdentityUserAssignedIdentities. </summary>
-        /// <param name="principalId"> The principal id of user assigned identity. </param>
-        /// <param name="clientId"> The client id of user assigned identity. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceIdentityUserAssignedIdentities"/> instance for mocking. </returns>
-        public static ManagedServiceIdentityUserAssignedIdentities ManagedServiceIdentityUserAssignedIdentities(string principalId = default, string clientId = default)
-        {
-            return new ManagedServiceIdentityUserAssignedIdentities(principalId, clientId, default);
-        }
-
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -2756,12 +2734,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The user-assigned identity used by a user sign-in policy to access its Key Vault client secret. </param>
         /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <returns> A new <see cref="Network.AuthenticationPolicyData"/> instance for mocking. </returns>
-        public static AuthenticationPolicyData AuthenticationPolicyData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, AuthenticationPolicyPropertiesFormat properties = default, string eTag = default, NetworkManagedServiceIdentity identity = default, SystemData systemData = default)
+        /// <returns> A new <see cref="Network.IdentityIntegrationAuthenticationPolicyData"/> instance for mocking. </returns>
+        public static IdentityIntegrationAuthenticationPolicyData IdentityIntegrationAuthenticationPolicyData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, AuthenticationPolicyPropertiesFormat properties = default, string eTag = default, ManagedServiceIdentity identity = default, SystemData systemData = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AuthenticationPolicyData(
+            return new IdentityIntegrationAuthenticationPolicyData(
                 id,
                 name,
                 @type,
@@ -2782,7 +2760,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the authentication policy resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the authentication policy resource. </param>
         /// <returns> A new <see cref="Models.AuthenticationPolicyPropertiesFormat"/> instance for mocking. </returns>
-        public static AuthenticationPolicyPropertiesFormat AuthenticationPolicyPropertiesFormat(UserTrustProviderType userTrustProviderType = default, OnUnauthenticatedRequest? onUnauthenticatedRequest = default, AuthenticationProviderProperties authenticationProperties = default, IEnumerable<string> associatedResources = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default)
+        public static AuthenticationPolicyPropertiesFormat AuthenticationPolicyPropertiesFormat(UserTrustProviderType userTrustProviderType = default, UnauthenticatedRequestAction? onUnauthenticatedRequest = default, AuthenticationProviderProperties authenticationProperties = default, IEnumerable<string> associatedResources = default, NetworkProvisioningState? provisioningState = default, string resourceGuid = default)
         {
             associatedResources ??= new ChangeTrackingList<string>();
 
@@ -2825,12 +2803,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Parameters supplied to update an authentication policy. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The user-assigned identity used by a user sign-in policy to access its Key Vault client secret. </param>
-        /// <returns> A new <see cref="Models.AuthenticationPolicyPatch"/> instance for mocking. </returns>
-        public static AuthenticationPolicyPatch AuthenticationPolicyPatch(IDictionary<string, string> tags = default, NetworkManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Models.IdentityIntegrationAuthenticationPolicyPatch"/> instance for mocking. </returns>
+        public static IdentityIntegrationAuthenticationPolicyPatch IdentityIntegrationAuthenticationPolicyPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AuthenticationPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+            return new IdentityIntegrationAuthenticationPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -2850,7 +2828,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sku"> The Azure Firewall Resource SKU. </param>
         /// <param name="additionalProperties"> The additional properties used to further config this azure firewall. </param>
         /// <param name="autoscaleConfiguration"> Properties to provide a custom autoscale configuration to this azure firewall. </param>
-        /// <param name="aiSecurityAddOn"> Indicates whether the AI security add-on is enabled for the Azure Firewall. </param>
+        /// <param name="enableAISecurityAddOn"> Indicates whether the AI security add-on is enabled for the Azure Firewall. </param>
         /// <param name="virtualHubId"> Resource ID. </param>
         /// <param name="firewallPolicyId"> Resource ID. </param>
         /// <param name="afcServiceEndpoint"> The endpoint URL of the AFC control plane associated with this Azure Firewall. </param>
@@ -2858,7 +2836,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.AzureFirewallData"/> instance for mocking. </returns>
-        public static AzureFirewallData AzureFirewallData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IEnumerable<AzureFirewallNatRuleCollectionData> natRuleCollections, IEnumerable<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IEnumerable<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, HubIPAddresses hubIPAddresses, IEnumerable<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration, bool? aiSecurityAddOn, ResourceIdentifier virtualHubId, ResourceIdentifier firewallPolicyId, string afcServiceEndpoint, ExtendedLocation extendedLocation, IEnumerable<string> zones, ETag? eTag)
+        public static AzureFirewallData AzureFirewallData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<AzureFirewallApplicationRuleCollectionData> applicationRuleCollections, IEnumerable<AzureFirewallNatRuleCollectionData> natRuleCollections, IEnumerable<AzureFirewallNetworkRuleCollectionData> networkRuleCollections, IEnumerable<AzureFirewallIPConfiguration> ipConfigurations, AzureFirewallIPConfiguration managementIPConfiguration, NetworkProvisioningState? provisioningState, AzureFirewallThreatIntelMode? threatIntelMode, HubIPAddresses hubIPAddresses, IEnumerable<AzureFirewallIPGroups> ipGroups, AzureFirewallSku sku, IDictionary<string, string> additionalProperties, AzureFirewallAutoscaleConfiguration autoscaleConfiguration, bool? enableAISecurityAddOn, ResourceIdentifier virtualHubId, ResourceIdentifier firewallPolicyId, string afcServiceEndpoint, ExtendedLocation extendedLocation, IEnumerable<string> zones, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -2870,7 +2848,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                applicationRuleCollections is null && natRuleCollections is null && networkRuleCollections is null && ipConfigurations is null && managementIPConfiguration is null && provisioningState is null && threatIntelMode is null && virtualHubId is null && firewallPolicyId is null && hubIPAddresses is null && ipGroups is null && sku is null && additionalProperties is null && autoscaleConfiguration is null && afcServiceEndpoint is null && aiSecurityAddOn is null ? default : new AzureFirewallPropertiesFormat(
+                applicationRuleCollections is null && natRuleCollections is null && networkRuleCollections is null && ipConfigurations is null && managementIPConfiguration is null && provisioningState is null && threatIntelMode is null && virtualHubId is null && firewallPolicyId is null && hubIPAddresses is null && ipGroups is null && sku is null && additionalProperties is null && autoscaleConfiguration is null && afcServiceEndpoint is null && enableAISecurityAddOn is null ? default : new AzureFirewallPropertiesFormat(
                     (applicationRuleCollections ?? new ChangeTrackingList<AzureFirewallApplicationRuleCollectionData>()).ToList(),
                     (natRuleCollections ?? new ChangeTrackingList<AzureFirewallNatRuleCollectionData>()).ToList(),
                     (networkRuleCollections ?? new ChangeTrackingList<AzureFirewallNetworkRuleCollectionData>()).ToList(),
@@ -2886,7 +2864,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
                     autoscaleConfiguration,
                     afcServiceEndpoint is null ? default : new AfcConfiguration(afcServiceEndpoint, default),
-                    aiSecurityAddOn,
+                    enableAISecurityAddOn,
                     default),
                 extendedLocation,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
@@ -3225,7 +3203,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="skuName"> The name of the sku of this Bastion Host. </param>
         /// <param name="identity"> The identity assigned to the Bastion Host resource. </param>
         /// <returns> A new <see cref="Network.BastionHostData"/> instance for mocking. </returns>
-        public static BastionHostData BastionHostData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion, BastionSessionRecordingConfiguration sessionRecordingConfiguration, ResourceIdentifier virtualNetworkId, IEnumerable<BastionHostIPRule> networkAclsIPRules, IEnumerable<string> zones, ETag? eTag, BastionHostSkuName? skuName, NetworkManagedServiceIdentity identity = default)
+        public static BastionHostData BastionHostData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<BastionHostIPConfiguration> ipConfigurations, string dnsName, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos, bool? enableSessionRecording, bool? enablePrivateOnlyBastion, BastionSessionRecordingConfiguration sessionRecordingConfiguration, ResourceIdentifier virtualNetworkId, IEnumerable<BastionHostIPRule> networkAclsIPRules, IEnumerable<string> zones, ETag? eTag, BastionHostSkuName? skuName, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -3310,7 +3288,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="identity"> The identity of the BastionHost, if configured. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.BastionHostPatch"/> instance for mocking. </returns>
-        public static BastionHostPatch BastionHostPatch(NetworkManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
+        public static BastionHostPatch BastionHostPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

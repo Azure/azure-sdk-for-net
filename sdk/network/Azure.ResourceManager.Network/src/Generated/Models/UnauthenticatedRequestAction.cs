@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Action to take when a request is unauthenticated. </summary>
-    public readonly partial struct OnUnauthenticatedRequest : IEquatable<OnUnauthenticatedRequest>
+    public readonly partial struct UnauthenticatedRequestAction : IEquatable<UnauthenticatedRequestAction>
     {
         private readonly string _value;
         /// <summary> Allow the request to pass through without authentication. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Deny the request when no credential is presented. </summary>
         private const string DenyValue = "deny";
 
-        /// <summary> Initializes a new instance of <see cref="OnUnauthenticatedRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnauthenticatedRequestAction"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OnUnauthenticatedRequest(string value)
+        public UnauthenticatedRequestAction(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Allow the request to pass through without authentication. </summary>
-        public static OnUnauthenticatedRequest Allow { get; } = new OnUnauthenticatedRequest(AllowValue);
+        public static UnauthenticatedRequestAction Allow { get; } = new UnauthenticatedRequestAction(AllowValue);
 
         /// <summary> Redirect the request to the authentication provider. Only valid for the user authentication capability. </summary>
-        public static OnUnauthenticatedRequest Authenticate { get; } = new OnUnauthenticatedRequest(AuthenticateValue);
+        public static UnauthenticatedRequestAction Authenticate { get; } = new UnauthenticatedRequestAction(AuthenticateValue);
 
         /// <summary> Deny the request when no credential is presented. </summary>
-        public static OnUnauthenticatedRequest Deny { get; } = new OnUnauthenticatedRequest(DenyValue);
+        public static UnauthenticatedRequestAction Deny { get; } = new UnauthenticatedRequestAction(DenyValue);
 
-        /// <summary> Determines if two <see cref="OnUnauthenticatedRequest"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="UnauthenticatedRequestAction"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(OnUnauthenticatedRequest left, OnUnauthenticatedRequest right) => left.Equals(right);
+        public static bool operator ==(UnauthenticatedRequestAction left, UnauthenticatedRequestAction right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OnUnauthenticatedRequest"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="UnauthenticatedRequestAction"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(OnUnauthenticatedRequest left, OnUnauthenticatedRequest right) => !left.Equals(right);
+        public static bool operator !=(UnauthenticatedRequestAction left, UnauthenticatedRequestAction right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OnUnauthenticatedRequest"/>. </summary>
+        /// <summary> Converts a string to a <see cref="UnauthenticatedRequestAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OnUnauthenticatedRequest(string value) => new OnUnauthenticatedRequest(value);
+        public static implicit operator UnauthenticatedRequestAction(string value) => new UnauthenticatedRequestAction(value);
 
-        /// <summary> Converts a string to a <see cref="OnUnauthenticatedRequest"/>. </summary>
+        /// <summary> Converts a string to a <see cref="UnauthenticatedRequestAction"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OnUnauthenticatedRequest?(string value) => value == null ? null : new OnUnauthenticatedRequest(value);
+        public static implicit operator UnauthenticatedRequestAction?(string value) => value == null ? null : new UnauthenticatedRequestAction(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OnUnauthenticatedRequest other && Equals(other);
+        public override bool Equals(object obj) => obj is UnauthenticatedRequestAction other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(OnUnauthenticatedRequest other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(UnauthenticatedRequestAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
