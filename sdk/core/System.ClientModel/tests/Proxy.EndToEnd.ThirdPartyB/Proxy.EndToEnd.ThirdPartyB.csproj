@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Mock third-party library #2. Adds a BingGroundingTool subtype and a conditional proxy that intercepts the "bing_grounding" discriminator, proving multiple independent libraries extend the same base.</Description>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IsTestSupportProject>true</IsTestSupportProject>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\System.ClientModel.csproj" />
+    <ProjectReference Include="..\Proxy.EndToEnd.OpenAILike\Proxy.EndToEnd.OpenAILike.csproj" />
+  </ItemGroup>
+
+</Project>

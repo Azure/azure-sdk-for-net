@@ -141,12 +141,12 @@ public class CredentialSectionHasherTests
     // refactors of ComputeKey can't silently change the cache key for a
     // given input. If you intentionally change the canonical form,
     // re-capture these values and bump cache compatibility expectations.
-    [TestCase("empty-section",         "",           "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=")]
-    [TestCase("single-leaf",           "single",     "RgUCz7JlTE2PQViot+0NfCxoP39QwEQC9i0RNOwExlk=")]
-    [TestCase("two-leaves",            "two",        "1OkjHUXH7QWZhlDIOWJFNy2zcC0WdHBLijz/RsGYCnI=")]
-    [TestCase("nested-section",        "nested",     "Ybg8rkMdCUNWbCgSO/FIP3FIGsTrJHgIEd7v7A48E80=")]
+    [TestCase("empty-section", "", "47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=")]
+    [TestCase("single-leaf", "single", "RgUCz7JlTE2PQViot+0NfCxoP39QwEQC9i0RNOwExlk=")]
+    [TestCase("two-leaves", "two", "1OkjHUXH7QWZhlDIOWJFNy2zcC0WdHBLijz/RsGYCnI=")]
+    [TestCase("nested-section", "nested", "Ybg8rkMdCUNWbCgSO/FIP3FIGsTrJHgIEd7v7A48E80=")]
     [TestCase("value-with-delimiters", "delimiters", "2XXzrdoYvlBSf0TLCk7+pu/q6F0nrlneJ4M5yaBVlyw=")]
-    [TestCase("uppercase-key",         "upperkey",   "1OkjHUXH7QWZhlDIOWJFNy2zcC0WdHBLijz/RsGYCnI=")]
+    [TestCase("uppercase-key", "upperkey", "1OkjHUXH7QWZhlDIOWJFNy2zcC0WdHBLijz/RsGYCnI=")]
     public void ComputeKey_GoldenHash_StableAcrossRefactors(string scenario, string variant, string expected)
     {
         var data = scenario switch
