@@ -19,6 +19,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new SqlProtectedItem. </summary>
         public SqlProtectedItem()
         {
+            ProtectedItemType.Assign("Microsoft.Sql/servers/databases");
         }
 
         /// <summary> Gets or sets the ProtectedItemDataId. </summary>
@@ -70,7 +71,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectedItemType", new string[] { "protectedItemType" }, defaultValue: "Microsoft.Sql/servers/databases");
             _protectedItemDataId = DefineProperty<string>(nameof(ProtectedItemDataId), new string[] { "protectedItemDataId" });
             _protectionState = DefineProperty<ProtectedItemState>(nameof(ProtectionState), new string[] { "protectionState" });
             _extendedInfo = DefineModelProperty<SqlProtectedItemExtendedInfo>(nameof(ExtendedInfo), new string[] { "extendedInfo" });

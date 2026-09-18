@@ -20,6 +20,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningUriFolderJobOutput. </summary>
         public MachineLearningUriFolderJobOutput()
         {
+            JobOutputType.Assign(MachineLearning.JobOutputType.UriFolder);
         }
 
         /// <summary> Gets or sets the AssetName. </summary>
@@ -71,7 +72,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobOutputType", new string[] { "jobOutputType" }, defaultValue: "uri_folder");
             _assetName = DefineProperty<string>(nameof(AssetName), new string[] { "assetName" });
             _mode = DefineProperty<MachineLearningOutputDeliveryMode>(nameof(Mode), new string[] { "mode" });
             _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "uri" });

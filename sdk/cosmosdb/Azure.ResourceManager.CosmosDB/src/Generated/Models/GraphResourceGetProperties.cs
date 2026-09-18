@@ -11,7 +11,7 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The properties of an Azure Cosmos DB SQL database. </summary>
+    /// <summary> The properties of an Azure Cosmos DB graph. </summary>
     internal partial class GraphResourceGetProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

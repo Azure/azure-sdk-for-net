@@ -438,8 +438,10 @@ public class VoiceRelayEndToEndTests
         var builder = WebApplication.CreateBuilder();
         builder.WebHost.UseTestServer();
         builder.Services.AddAgentServerCore();
+        VoiceTracingRegistration.Add(builder.Services);
         builder.Services.AddInvocationsServer();
         builder.Services.AddSingleton<InvocationHandler>(handler);
+        builder.Services.AddSingleton(new VoiceRegistrationMarker(handler.GetType()));
         if (loggerProvider is not null)
         {
             builder.Logging.AddProvider(loggerProvider);

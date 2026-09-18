@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="source"> Source Mongo (RU) collection. </param>
         /// <param name="destination"> Destination Mongo (RU) collection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="destination"/> is null. </exception>
-        public MongoRUToMongoRUCopyJobTask(CosmosDBMongoCollection source, CosmosDBMongoCollection destination)
+        public MongoRUToMongoRUCopyJobTask(CosmosDBMongoCollectionInfo source, CosmosDBMongoCollectionInfo destination)
         {
             Argument.AssertNotNull(source, nameof(source));
             Argument.AssertNotNull(destination, nameof(destination));
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> Source Mongo (RU) collection. </param>
         /// <param name="destination"> Destination Mongo (RU) collection. </param>
-        internal MongoRUToMongoRUCopyJobTask(long? totalCount, long? processedCount, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDBMongoCollection source, CosmosDBMongoCollection destination) : base(totalCount, processedCount, additionalBinaryDataProperties)
+        internal MongoRUToMongoRUCopyJobTask(long? totalCount, long? processedCount, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDBMongoCollectionInfo source, CosmosDBMongoCollectionInfo destination) : base(totalCount, processedCount, additionalBinaryDataProperties)
         {
             Source = source;
             Destination = destination;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Source Mongo (RU) collection. </summary>
         [WirePath("source")]
-        public CosmosDBMongoCollection Source { get; set; }
+        public CosmosDBMongoCollectionInfo Source { get; set; }
 
         /// <summary> Destination Mongo (RU) collection. </summary>
         [WirePath("destination")]
-        public CosmosDBMongoCollection Destination { get; set; }
+        public CosmosDBMongoCollectionInfo Destination { get; set; }
     }
 }

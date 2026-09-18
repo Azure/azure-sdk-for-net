@@ -1,11 +1,11 @@
 ---
 name: bump-mgmt-base-version
-description: Bump the http-client-csharp base dependency version in http-client-csharp-mgmt. Updates emitter (npm) and generator (NuGet) references, rebuilds, and regenerates test projects.
+description: Bump the http-client-csharp base dependency versions in http-client-csharp-mgmt. Updates Azure and unbranded emitter (npm) dependencies and the Azure generator (NuGet) reference, rebuilds, and regenerates test projects.
 ---
 
 # Skill: bump-mgmt-base-version
 
-Bump the base `http-client-csharp` dependency used by the management-plane generator (`http-client-csharp-mgmt`). This updates both the npm emitter dependency and the NuGet generator dependency, then rebuilds and regenerates test projects.
+Bump the base `http-client-csharp` dependencies used by the management-plane generator (`http-client-csharp-mgmt`). This updates the Azure and compatible unbranded npm emitter dependencies and the Azure NuGet generator dependency, then rebuilds and regenerates test projects.
 
 ## When Invoked
 
@@ -21,7 +21,15 @@ Read the latest version of `@azure-typespec/http-client-csharp` from:
 eng/azure-typespec-http-client-csharp-emitter-package.json
 ```
 
-Look at the `dependencies["@azure-typespec/http-client-csharp"]` value. This is the **target version**.
+Look at the `dependencies["@azure-typespec/http-client-csharp"]` value. This is the **Azure target version**.
+
+Determine the **unbranded target version** required by that exact Azure package version:
+
+```shell
+npm view "@azure-typespec/http-client-csharp@<azure-target-version>" dependencies --json
+```
+
+Use the returned `@typespec/http-client-csharp` dependency version. The management emitter imports the unbranded package directly, so its pin must match the Azure package's dependency to avoid loading incompatible copies of the TypeSpec library.
 
 ### 2. Identify current versions
 
@@ -29,17 +37,20 @@ Check the current versions in these two files:
 
 | File | Field | Purpose |
 |------|-------|---------|
-| `eng/packages/http-client-csharp-mgmt/package.json` | `dependencies["@azure-typespec/http-client-csharp"]` | Emitter npm dependency |
+| `eng/packages/http-client-csharp-mgmt/package.json` | `dependencies["@azure-typespec/http-client-csharp"]` | Azure emitter npm dependency |
+| `eng/packages/http-client-csharp-mgmt/package.json` | `dependencies["@typespec/http-client-csharp"]` | Compatible unbranded emitter npm dependency |
 | `eng/centralpackagemanagement/Directory.Generation.Packages.props` | `<AzureGeneratorVersion>` | Generator NuGet dependency (used by `Azure.Generator.Management.csproj` via `<PackageReference Include="Azure.Generator" />`) |
 
-If both already match the target version, no update is needed — inform the user and stop.
+If all three already match their respective target versions, no update is needed — inform the user and stop.
 
 ### 3. Update version references
 
-Update **both** files to the target version:
+Update the version references:
 
-1. **`eng/packages/http-client-csharp-mgmt/package.json`**: Change the `@azure-typespec/http-client-csharp` version in `dependencies`.
-2. **`eng/centralpackagemanagement/Directory.Generation.Packages.props`**: Change the `<AzureGeneratorVersion>` value.
+1. **`eng/packages/http-client-csharp-mgmt/package.json`**:
+   - Change `@azure-typespec/http-client-csharp` in `dependencies` to the Azure target version.
+   - Change `@typespec/http-client-csharp` in `dependencies` to the unbranded target version required by the Azure package.
+2. **`eng/centralpackagemanagement/Directory.Generation.Packages.props`**: Change `<AzureGeneratorVersion>` to the Azure target version.
 
 ### 4. Run npm install
 
@@ -111,6 +122,7 @@ This regenerates `doc/GeneratorVersions/Emitter_Version_Dashboard.md` so the doc
 ### 10. Verify
 
 - Run `git status` to see all modified files
+- Ensure both base dependencies in `package.json` match the Azure package's compatible dependency chain
 - Ensure `package.json`, `package-lock.json`, `Directory.Generation.Packages.props`, `Emitter_Version_Dashboard.md`, and any regenerated test project files are included
 - All changes should be committed together
 

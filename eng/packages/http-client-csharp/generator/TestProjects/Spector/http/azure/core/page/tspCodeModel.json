@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "ListItemInputExtensibleEnum",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.ListItemInputExtensibleEnum",
       "valueType": {
         "$id": "2",
@@ -60,6 +63,9 @@
       "$id": "5",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.Versions",
       "valueType": {
         "$id": "6",
@@ -237,6 +243,7 @@
       "$id": "24",
       "kind": "model",
       "name": "PagedUser",
+      "apiVersions": [],
       "namespace": "Azure.Core",
       "crossLanguageDefinitionId": "Azure.Core.Page",
       "usage": "Output,Json",
@@ -253,6 +260,7 @@
           "$id": "25",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "doc": "The User items on this page",
           "type": {
@@ -263,6 +271,9 @@
               "$id": "27",
               "kind": "model",
               "name": "User",
+              "apiVersions": [
+                "2022-12-01-preview"
+              ],
               "namespace": "_Specs_.Azure.Core.Page",
               "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.User",
               "usage": "Output,Json",
@@ -279,6 +290,9 @@
                   "$id": "28",
                   "kind": "property",
                   "name": "id",
+                  "apiVersions": [
+                    "2022-12-01-preview"
+                  ],
                   "serializedName": "id",
                   "doc": "The user's id.",
                   "type": {
@@ -306,6 +320,9 @@
                   "$id": "30",
                   "kind": "property",
                   "name": "name",
+                  "apiVersions": [
+                    "2022-12-01-preview"
+                  ],
                   "serializedName": "name",
                   "doc": "The user's name.",
                   "type": {
@@ -333,6 +350,9 @@
                   "$id": "32",
                   "kind": "property",
                   "name": "orders",
+                  "apiVersions": [
+                    "2022-12-01-preview"
+                  ],
                   "serializedName": "orders",
                   "doc": "The user's order list",
                   "type": {
@@ -343,6 +363,9 @@
                       "$id": "34",
                       "kind": "model",
                       "name": "UserOrder",
+                      "apiVersions": [
+                        "2022-12-01-preview"
+                      ],
                       "namespace": "_Specs_.Azure.Core.Page",
                       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.UserOrder",
                       "usage": "Output,Json",
@@ -359,6 +382,9 @@
                           "$id": "35",
                           "kind": "property",
                           "name": "id",
+                          "apiVersions": [
+                            "2022-12-01-preview"
+                          ],
                           "serializedName": "id",
                           "doc": "The user's id.",
                           "type": {
@@ -386,6 +412,9 @@
                           "$id": "37",
                           "kind": "property",
                           "name": "userId",
+                          "apiVersions": [
+                            "2022-12-01-preview"
+                          ],
                           "serializedName": "userId",
                           "doc": "The user's id.",
                           "type": {
@@ -413,6 +442,9 @@
                           "$id": "39",
                           "kind": "property",
                           "name": "detail",
+                          "apiVersions": [
+                            "2022-12-01-preview"
+                          ],
                           "serializedName": "detail",
                           "doc": "The user's order detail",
                           "type": {
@@ -459,6 +491,7 @@
                   "$id": "41",
                   "kind": "property",
                   "name": "etag",
+                  "apiVersions": [],
                   "serializedName": "etag",
                   "doc": "The entity tag for this resource.",
                   "type": {
@@ -512,6 +545,7 @@
           "$id": "44",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [],
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
@@ -554,6 +588,7 @@
       "$id": "47",
       "kind": "model",
       "name": "ErrorResponse",
+      "apiVersions": [],
       "namespace": "Azure.Core.Foundations",
       "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse",
       "usage": "Json,Exception",
@@ -570,12 +605,14 @@
           "$id": "48",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
             "$id": "49",
             "kind": "model",
             "name": "Error",
+            "apiVersions": [],
             "namespace": "Azure.Core.Foundations",
             "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
             "usage": "Json,Exception",
@@ -592,6 +629,7 @@
                 "$id": "50",
                 "kind": "property",
                 "name": "code",
+                "apiVersions": [],
                 "serializedName": "code",
                 "doc": "One of a server-defined set of error codes.",
                 "type": {
@@ -619,6 +657,7 @@
                 "$id": "52",
                 "kind": "property",
                 "name": "message",
+                "apiVersions": [],
                 "serializedName": "message",
                 "doc": "A human-readable representation of the error.",
                 "type": {
@@ -646,6 +685,7 @@
                 "$id": "54",
                 "kind": "property",
                 "name": "target",
+                "apiVersions": [],
                 "serializedName": "target",
                 "doc": "The target of the error.",
                 "type": {
@@ -673,6 +713,7 @@
                 "$id": "56",
                 "kind": "property",
                 "name": "details",
+                "apiVersions": [],
                 "serializedName": "details",
                 "doc": "An array of details about specific errors that led to this reported error.",
                 "type": {
@@ -703,12 +744,14 @@
                 "$id": "58",
                 "kind": "property",
                 "name": "innererror",
+                "apiVersions": [],
                 "serializedName": "innererror",
                 "doc": "An object containing more specific information than the current object about the error.",
                 "type": {
                   "$id": "59",
                   "kind": "model",
                   "name": "InnerError",
+                  "apiVersions": [],
                   "namespace": "Azure.Core.Foundations",
                   "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
                   "usage": "Json,Exception",
@@ -725,6 +768,7 @@
                       "$id": "60",
                       "kind": "property",
                       "name": "code",
+                      "apiVersions": [],
                       "serializedName": "code",
                       "doc": "One of a server-defined set of error codes.",
                       "type": {
@@ -752,6 +796,7 @@
                       "$id": "62",
                       "kind": "property",
                       "name": "innererror",
+                      "apiVersions": [],
                       "serializedName": "innererror",
                       "doc": "Inner error.",
                       "type": {
@@ -807,6 +852,7 @@
           "$id": "63",
           "kind": "property",
           "name": "errorCode",
+          "apiVersions": [],
           "serializedName": "errorCode",
           "doc": "String error code indicating what went wrong.",
           "type": {
@@ -842,6 +888,9 @@
       "$id": "65",
       "kind": "model",
       "name": "ListItemInputBody",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Page",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.ListItemInputBody",
       "usage": "Input,Json",
@@ -858,6 +907,9 @@
           "$id": "66",
           "kind": "property",
           "name": "inputName",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "inputName",
           "doc": "The name of the input.",
           "type": {
@@ -887,6 +939,9 @@
       "$id": "68",
       "kind": "model",
       "name": "UserListResults",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Page",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.CustomPageModel",
       "usage": "Output,Json",
@@ -902,6 +957,9 @@
           "$id": "69",
           "kind": "property",
           "name": "items",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "items",
           "doc": "List of items.",
           "type": {
@@ -925,6 +983,9 @@
           "$id": "70",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "nextLink",
           "doc": "Link to fetch more items.",
           "type": {
@@ -954,6 +1015,9 @@
       "$id": "72",
       "kind": "model",
       "name": "ParameterizedNextLinkPagingResult",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Page",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.ParameterizedNextLinkPagingResult",
       "usage": "Output,Json",
@@ -969,6 +1033,9 @@
           "$id": "73",
           "kind": "property",
           "name": "values",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "values",
           "type": {
             "$ref": "26"
@@ -991,6 +1058,9 @@
           "$id": "74",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "nextLink",
           "type": {
             "$id": "75",
@@ -1026,6 +1096,7 @@
       "$id": "77",
       "kind": "model",
       "name": "PagedFirstItem",
+      "apiVersions": [],
       "namespace": "Azure.Core",
       "crossLanguageDefinitionId": "Azure.Core.Page",
       "usage": "Output,Json",
@@ -1042,6 +1113,7 @@
           "$id": "78",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "doc": "The FirstItem items on this page",
           "type": {
@@ -1052,6 +1124,9 @@
               "$id": "80",
               "kind": "model",
               "name": "FirstItem",
+              "apiVersions": [
+                "2022-12-01-preview"
+              ],
               "namespace": "_Specs_.Azure.Core.Page",
               "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.FirstItem",
               "usage": "Output,Json",
@@ -1068,6 +1143,9 @@
                   "$id": "81",
                   "kind": "property",
                   "name": "id",
+                  "apiVersions": [
+                    "2022-12-01-preview"
+                  ],
                   "serializedName": "id",
                   "doc": "The id of the item.",
                   "type": {
@@ -1114,6 +1192,7 @@
           "$id": "83",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [],
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
@@ -1153,6 +1232,7 @@
       "$id": "86",
       "kind": "model",
       "name": "PagedSecondItem",
+      "apiVersions": [],
       "namespace": "Azure.Core",
       "crossLanguageDefinitionId": "Azure.Core.Page",
       "usage": "Output,Json",
@@ -1169,6 +1249,7 @@
           "$id": "87",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "doc": "The SecondItem items on this page",
           "type": {
@@ -1179,6 +1260,9 @@
               "$id": "89",
               "kind": "model",
               "name": "SecondItem",
+              "apiVersions": [
+                "2022-12-01-preview"
+              ],
               "namespace": "_Specs_.Azure.Core.Page",
               "crossLanguageDefinitionId": "_Specs_.Azure.Core.Page.SecondItem",
               "usage": "Output,Json",
@@ -1195,6 +1279,9 @@
                   "$id": "90",
                   "kind": "property",
                   "name": "name",
+                  "apiVersions": [
+                    "2022-12-01-preview"
+                  ],
                   "serializedName": "name",
                   "doc": "The name of the item.",
                   "type": {
@@ -1241,6 +1328,7 @@
           "$id": "92",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [],
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {

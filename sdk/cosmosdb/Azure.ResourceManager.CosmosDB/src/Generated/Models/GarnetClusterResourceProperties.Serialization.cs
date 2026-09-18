@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("authenticationMethod"u8);
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());
             }
-            if (Optional.IsDefined(Persistence))
+            if (Optional.IsDefined(IsPersistenceEnabled))
             {
                 writer.WritePropertyName("persistence"u8);
-                writer.WriteBooleanValue(Persistence.Value);
+                writer.WriteBooleanValue(IsPersistenceEnabled.Value);
             }
             if (Optional.IsDefined(AllocationState))
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string nodeSku = default;
             bool? isAvailabilityZoneEnabled = default;
             GarnetAuthenticationType? authenticationMethod = default;
-            bool? persistence = default;
+            bool? isPersistenceEnabled = default;
             AllocationState? allocationState = default;
             CassandraClusterType? clusterType = default;
             ResponseError provisionError = default;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    persistence = prop.Value.GetBoolean();
+                    isPersistenceEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("allocationState"u8))
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 nodeSku,
                 isAvailabilityZoneEnabled,
                 authenticationMethod,
-                persistence,
+                isPersistenceEnabled,
                 allocationState,
                 clusterType,
                 provisionError,

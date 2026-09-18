@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Access;
+                return Properties is null ? (NetworkAccess?)default : Properties.Access;
             }
             set
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.RouteFilterRuleType;
+                return Properties is null ? (RouteFilterRuleType?)default : Properties.RouteFilterRuleType;
             }
             set
             {

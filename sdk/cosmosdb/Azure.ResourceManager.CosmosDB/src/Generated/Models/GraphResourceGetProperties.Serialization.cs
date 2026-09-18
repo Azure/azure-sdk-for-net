@@ -13,7 +13,7 @@ using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> The properties of an Azure Cosmos DB SQL database. </summary>
+    /// <summary> The properties of an Azure Cosmos DB graph. </summary>
     internal partial class GraphResourceGetProperties : IJsonModel<GraphResourceGetProperties>
     {
         /// <param name="data"> The data to parse. </param>

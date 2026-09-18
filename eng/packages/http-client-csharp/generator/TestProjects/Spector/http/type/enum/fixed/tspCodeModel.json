@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "DaysOfWeekEnum",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Enum.Fixed.DaysOfWeekEnum",
       "valueType": {
         "$id": "2",

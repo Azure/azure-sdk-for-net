@@ -21,7 +21,6 @@ namespace Azure.Provisioning.ContainerRegistry
         private BicepValue<string> _name;
         private SystemData _systemData;
         private ConnectedRegistryProperties _properties;
-        private ResourceReference<ContainerRegistryService> _parent;
 
         /// <summary> Creates a new ConnectedRegistry. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -77,21 +76,6 @@ namespace Azure.Provisioning.ContainerRegistry
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Parent. </summary>
-        public ContainerRegistryService Parent
-        {
-            get
-            {
-                Initialize();
-                return _parent.Value;
-            }
-            set
-            {
-                Initialize();
-                _parent.Value = value;
             }
         }
 
@@ -161,23 +145,6 @@ namespace Azure.Provisioning.ContainerRegistry
                     Properties = new ConnectedRegistryProperties();
                 }
                 return Properties.LastActivityOn;
-            }
-        }
-
-        /// <summary> Gets or sets the ConnectedRegistryParent. </summary>
-        public ConnectedRegistryParent ConnectedRegistryParent
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConnectedRegistryParent;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ConnectedRegistryProperties();
-                }
-                Properties.ConnectedRegistryParent = value;
             }
         }
 
@@ -300,7 +267,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ConnectedRegistryProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerRegistryService>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerRegistryService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

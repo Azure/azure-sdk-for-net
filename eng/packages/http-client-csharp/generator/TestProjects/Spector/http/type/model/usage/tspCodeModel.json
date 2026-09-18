@@ -77,6 +77,7 @@
       "$id": "9",
       "kind": "model",
       "name": "InputRecord",
+      "apiVersions": [],
       "namespace": "Type.Model.Usage",
       "crossLanguageDefinitionId": "Type.Model.Usage.InputRecord",
       "usage": "Input,Json",
@@ -93,6 +94,7 @@
           "$id": "10",
           "kind": "property",
           "name": "requiredProp",
+          "apiVersions": [],
           "serializedName": "requiredProp",
           "type": {
             "$id": "11",
@@ -121,6 +123,7 @@
       "$id": "12",
       "kind": "model",
       "name": "OutputRecord",
+      "apiVersions": [],
       "namespace": "Type.Model.Usage",
       "crossLanguageDefinitionId": "Type.Model.Usage.OutputRecord",
       "usage": "Output,Json",
@@ -137,6 +140,7 @@
           "$id": "13",
           "kind": "property",
           "name": "requiredProp",
+          "apiVersions": [],
           "serializedName": "requiredProp",
           "type": {
             "$id": "14",
@@ -165,6 +169,7 @@
       "$id": "15",
       "kind": "model",
       "name": "InputOutputRecord",
+      "apiVersions": [],
       "namespace": "Type.Model.Usage",
       "crossLanguageDefinitionId": "Type.Model.Usage.InputOutputRecord",
       "usage": "Input,Output,Json",
@@ -181,6 +186,7 @@
           "$id": "16",
           "kind": "property",
           "name": "requiredProp",
+          "apiVersions": [],
           "serializedName": "requiredProp",
           "type": {
             "$id": "17",

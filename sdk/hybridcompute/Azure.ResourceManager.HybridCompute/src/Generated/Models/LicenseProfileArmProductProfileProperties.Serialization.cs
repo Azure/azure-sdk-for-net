@@ -91,20 +91,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("enrollmentDate"u8);
                 writer.WriteStringValue(EnrollmentOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingStartOn))
+            if (options.Format != "W" && Optional.IsDefined(BillingStartsOn))
             {
                 writer.WritePropertyName("billingStartDate"u8);
-                writer.WriteStringValue(BillingStartOn.Value, "O");
+                writer.WriteStringValue(BillingStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(DisenrollmentOn))
             {
                 writer.WritePropertyName("disenrollmentDate"u8);
                 writer.WriteStringValue(DisenrollmentOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingEndOn))
+            if (options.Format != "W" && Optional.IsDefined(BillingEndsOn))
             {
                 writer.WritePropertyName("billingEndDate"u8);
-                writer.WriteStringValue(BillingEndOn.Value, "O");
+                writer.WriteStringValue(BillingEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             LicenseProfileSubscriptionStatus? subscriptionStatus = default;
             LicenseProfileProductType? productType = default;
             DateTimeOffset? enrollmentOn = default;
-            DateTimeOffset? billingStartOn = default;
+            DateTimeOffset? billingStartsOn = default;
             DateTimeOffset? disenrollmentOn = default;
-            DateTimeOffset? billingEndOn = default;
+            DateTimeOffset? billingEndsOn = default;
             ResponseError error = default;
             IList<HybridComputeProductFeature> productFeatures = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    billingStartOn = prop.Value.GetDateTimeOffset("O");
+                    billingStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("disenrollmentDate"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    billingEndOn = prop.Value.GetDateTimeOffset("O");
+                    billingEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -260,9 +260,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 subscriptionStatus,
                 productType,
                 enrollmentOn,
-                billingStartOn,
+                billingStartsOn,
                 disenrollmentOn,
-                billingEndOn,
+                billingEndsOn,
                 error,
                 productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>(),
                 additionalBinaryDataProperties);

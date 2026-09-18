@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("targetResourceName"u8);
             writer.WriteStringValue(TargetResourceName);
-            if (options.Format != "W" && Optional.IsDefined(LastJobEndOn))
+            if (options.Format != "W" && Optional.IsDefined(LastJobEndsOn))
             {
                 writer.WritePropertyName("lastJobEndTime"u8);
-                writer.WriteStringValue(LastJobEndOn.Value, "O");
+                writer.WriteStringValue(LastJobEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastJobProvisioningState))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             string targetResourceName = default;
-            DateTimeOffset? lastJobEndOn = default;
+            DateTimeOffset? lastJobEndsOn = default;
             JobProvisioningState? lastJobProvisioningState = default;
             IList<WorkspaceManagerAssignmentItem> items = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    lastJobEndOn = prop.Value.GetDateTimeOffset("O");
+                    lastJobEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastJobProvisioningState"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkspaceManagerAssignmentProperties(targetResourceName, lastJobEndOn, lastJobProvisioningState, items, additionalBinaryDataProperties);
+            return new WorkspaceManagerAssignmentProperties(targetResourceName, lastJobEndsOn, lastJobProvisioningState, items, additionalBinaryDataProperties);
         }
     }
 }

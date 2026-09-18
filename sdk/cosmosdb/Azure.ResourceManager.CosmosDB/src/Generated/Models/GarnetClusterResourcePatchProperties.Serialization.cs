@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("authenticationMethod"u8);
                 writer.WriteStringValue(AuthenticationMethod.Value.ToString());
             }
-            if (Optional.IsDefined(Persistence))
+            if (Optional.IsDefined(IsPersistenceEnabled))
             {
                 writer.WritePropertyName("persistence"u8);
-                writer.WriteBooleanValue(Persistence.Value);
+                writer.WriteBooleanValue(IsPersistenceEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CassandraClusterType? clusterType = default;
             IList<string> extensions = default;
             GarnetAuthenticationType? authenticationMethod = default;
-            bool? persistence = default;
+            bool? isPersistenceEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    persistence = prop.Value.GetBoolean();
+                    isPersistenceEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GarnetClusterResourcePatchProperties(clusterType, extensions ?? new ChangeTrackingList<string>(), authenticationMethod, persistence, additionalBinaryDataProperties);
+            return new GarnetClusterResourcePatchProperties(clusterType, extensions ?? new ChangeTrackingList<string>(), authenticationMethod, isPersistenceEnabled, additionalBinaryDataProperties);
         }
     }
 }

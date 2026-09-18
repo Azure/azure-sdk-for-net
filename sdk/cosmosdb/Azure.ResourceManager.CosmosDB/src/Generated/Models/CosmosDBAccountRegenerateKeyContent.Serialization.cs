@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("keyKind"u8);
             writer.WriteStringValue(KeyKind.ToString());
-            if (Optional.IsDefined(SkipAccountKeysLastUsageCheck))
+            if (Optional.IsDefined(IsAccountKeysLastUsageCheckSkipped))
             {
                 writer.WritePropertyName("skipAccountKeysLastUsageCheck"u8);
-                writer.WriteBooleanValue(SkipAccountKeysLastUsageCheck.Value);
+                writer.WriteBooleanValue(IsAccountKeysLastUsageCheckSkipped.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             CosmosDBAccountKeyKind keyKind = default;
-            bool? skipAccountKeysLastUsageCheck = default;
+            bool? isAccountKeysLastUsageCheckSkipped = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    skipAccountKeysLastUsageCheck = prop.Value.GetBoolean();
+                    isAccountKeysLastUsageCheckSkipped = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CosmosDBAccountRegenerateKeyContent(keyKind, skipAccountKeysLastUsageCheck, additionalBinaryDataProperties);
+            return new CosmosDBAccountRegenerateKeyContent(keyKind, isAccountKeysLastUsageCheckSkipped, additionalBinaryDataProperties);
         }
     }
 }

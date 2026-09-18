@@ -37,7 +37,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFooProperties(document.RootElement, options);
+                        return DeserializeFooProperties(document.RootElement, data, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FooProperties)} does not support reading '{options.Format}' format.");
@@ -71,6 +71,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FooProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -85,92 +93,116 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 throw new FormatException($"The model {nameof(FooProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ServiceUri))
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Optional.IsDefined(ServiceUri) && !Patch.Contains("$.serviceUrl"u8))
             {
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            writer.WritePropertyName("something"u8);
-            ((IJsonModel<ManagedServiceIdentity>)Something).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
-            if (Optional.IsDefined(BoolValue))
+            if (!Patch.Contains("$.something"u8))
+            {
+                writer.WritePropertyName("something"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Something).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
+            }
+            if (Optional.IsDefined(BoolValue) && !Patch.Contains("$.boolValue"u8))
             {
                 writer.WritePropertyName("boolValue"u8);
                 writer.WriteBooleanValue(BoolValue.Value);
             }
-            if (Optional.IsDefined(FloatValue))
+            if (Optional.IsDefined(FloatValue) && !Patch.Contains("$.floatValue"u8))
             {
                 writer.WritePropertyName("floatValue"u8);
                 writer.WriteNumberValue(FloatValue.Value);
             }
-            if (Optional.IsDefined(DoubleValue))
+            if (Optional.IsDefined(DoubleValue) && !Patch.Contains("$.doubleValue"u8))
             {
                 writer.WritePropertyName("doubleValue"u8);
                 writer.WriteNumberValue(DoubleValue.Value);
             }
-            writer.WritePropertyName("prop1"u8);
-            writer.WriteStartArray();
-            foreach (string item in Prop1)
+            if (Patch.Contains("$.prop1"u8))
             {
-                if (item == null)
+                if (!Patch.IsRemoved("$.prop1"u8))
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    writer.WritePropertyName("prop1"u8);
+                    Patch.WriteTo(writer, "$.prop1"u8);
                 }
-                writer.WriteStringValue(item);
             }
-            writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Prop2))
+            else
+            {
+                writer.WritePropertyName("prop1"u8);
+                writer.WriteStartArray();
+                for (int i = 0; i < Prop1.Count; i++)
+                {
+                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop1[{i}]")))
+                    {
+                        continue;
+                    }
+                    if (Prop1[i] == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(Prop1[i]);
+                }
+                Patch.WriteTo(writer, "$.prop1"u8);
+                writer.WriteEndArray();
+            }
+            if (Patch.Contains("$.prop2"u8))
+            {
+                if (!Patch.IsRemoved("$.prop2"u8))
+                {
+                    writer.WritePropertyName("prop2"u8);
+                    Patch.WriteTo(writer, "$.prop2"u8);
+                }
+            }
+            else if (Optional.IsCollectionDefined(Prop2))
             {
                 writer.WritePropertyName("prop2"u8);
                 writer.WriteStartArray();
-                foreach (int item in Prop2)
+                for (int i = 0; i < Prop2.Count; i++)
                 {
-                    writer.WriteNumberValue(item);
+                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop2[{i}]")))
+                    {
+                        continue;
+                    }
+                    writer.WriteNumberValue(Prop2[i]);
                 }
+                Patch.WriteTo(writer, "$.prop2"u8);
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("nestedProperty"u8);
-            writer.WriteObjectValue(NestedProperty, options);
-            if (Optional.IsDefined(OptionalProperty))
+            if (!Patch.Contains("$.nestedProperty"u8))
+            {
+                writer.WritePropertyName("nestedProperty"u8);
+                writer.WriteObjectValue(NestedProperty, options);
+            }
+            if (Optional.IsDefined(OptionalProperty) && !Patch.Contains("$.optionalProperty"u8))
             {
                 writer.WritePropertyName("optionalProperty"u8);
                 writer.WriteObjectValue(OptionalProperty, options);
             }
-            if (Optional.IsDefined(VmProfile))
+            if (Optional.IsDefined(VmProfile) && !Patch.Contains("$.vmProfile"u8))
             {
                 writer.WritePropertyName("vmProfile"u8);
                 writer.WriteObjectValue(VmProfile, options);
             }
-            if (Optional.IsDefined(ETag))
+            if (Optional.IsDefined(ETag) && !Patch.Contains("$.etag"u8))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(WritableSubResourceProp))
+            if (Optional.IsDefined(WritableSubResourceProp) && !Patch.Contains("$.writableSubResourceProp"u8))
             {
                 writer.WritePropertyName("writableSubResourceProp"u8);
                 ((IJsonModel<WritableSubResource>)WritableSubResourceProp).Write(writer, options);
             }
-            if (Optional.IsDefined(ComputeFleetVmProfile))
+            if (Optional.IsDefined(ComputeFleetVmProfile) && !Patch.Contains("$.computeFleetVmProfile"u8))
             {
                 writer.WritePropertyName("computeFleetVmProfile"u8);
                 writer.WriteObjectValue(ComputeFleetVmProfile, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -187,12 +219,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 throw new FormatException($"The model {nameof(FooProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFooProperties(document.RootElement, options);
+            return DeserializeFooProperties(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FooProperties DeserializeFooProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static FooProperties DeserializeFooProperties(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -211,7 +244,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             ETag? eTag = default;
             WritableSubResource writableSubResourceProp = default;
             ComputeFleetVmProfile computeFleetVmProfile = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("serviceUrl"u8))
@@ -288,7 +323,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 }
                 if (prop.NameEquals("nestedProperty"u8))
                 {
-                    nestedProperty = NestedFooModel.DeserializeNestedFooModel(prop.Value, options);
+                    nestedProperty = NestedFooModel.DeserializeNestedFooModel(prop.Value, prop.Value.GetUtf8Bytes(), options);
                     continue;
                 }
                 if (prop.NameEquals("optionalProperty"u8))
@@ -297,7 +332,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    optionalProperty = SafeFlattenModel.DeserializeSafeFlattenModel(prop.Value, options);
+                    optionalProperty = SafeFlattenModel.DeserializeSafeFlattenModel(prop.Value, prop.Value.GetUtf8Bytes(), options);
                     continue;
                 }
                 if (prop.NameEquals("vmProfile"u8))
@@ -306,7 +341,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    vmProfile = VmProfile.DeserializeVmProfile(prop.Value, options);
+                    vmProfile = VmProfile.DeserializeVmProfile(prop.Value, prop.Value.GetUtf8Bytes(), options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -333,13 +368,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    computeFleetVmProfile = ComputeFleetVmProfile.DeserializeComputeFleetVmProfile(prop.Value, options);
+                    computeFleetVmProfile = ComputeFleetVmProfile.DeserializeComputeFleetVmProfile(prop.Value, prop.Value.GetUtf8Bytes(), options);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
             return new FooProperties(
                 serviceUri,
@@ -355,8 +387,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 eTag,
                 writableSubResourceProp,
                 computeFleetVmProfile,
-                additionalBinaryDataProperties);
+                patch);
         }
+
+        /// <summary></summary>
+        /// <param name="jsonPath"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out JsonPatch.EncodedValue value)
+        {
+            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
+            value = default;
+
+            if (local.StartsWith("nestedProperty"u8))
+            {
+                return NestedProperty.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("nestedProperty"u8.Length)], out value);
+            }
+            if (local.StartsWith("optionalProperty"u8))
+            {
+                return OptionalProperty.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("optionalProperty"u8.Length)], out value);
+            }
+            if (local.StartsWith("vmProfile"u8))
+            {
+                return VmProfile.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("vmProfile"u8.Length)], out value);
+            }
+            if (local.StartsWith("computeFleetVmProfile"u8))
+            {
+                return ComputeFleetVmProfile.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("computeFleetVmProfile"u8.Length)], out value);
+            }
+            return false;
+        }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary></summary>
+        /// <param name="jsonPath"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
+        {
+            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
+
+            if (local.StartsWith("nestedProperty"u8))
+            {
+                NestedProperty.Patch.Set([.. "$"u8, .. local.Slice("nestedProperty"u8.Length)], value);
+                return true;
+            }
+            if (local.StartsWith("optionalProperty"u8))
+            {
+                OptionalProperty.Patch.Set([.. "$"u8, .. local.Slice("optionalProperty"u8.Length)], value);
+                return true;
+            }
+            if (local.StartsWith("vmProfile"u8))
+            {
+                VmProfile.Patch.Set([.. "$"u8, .. local.Slice("vmProfile"u8.Length)], value);
+                return true;
+            }
+            if (local.StartsWith("computeFleetVmProfile"u8))
+            {
+                ComputeFleetVmProfile.Patch.Set([.. "$"u8, .. local.Slice("computeFleetVmProfile"u8.Length)], value);
+                return true;
+            }
+            return false;
+        }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         internal partial class FooPropertiesConverter : JsonConverter<FooProperties>
         {
@@ -376,7 +471,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             public override FooProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeFooProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+                return DeserializeFooProperties(document.RootElement, document.RootElement.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions);
             }
         }
     }

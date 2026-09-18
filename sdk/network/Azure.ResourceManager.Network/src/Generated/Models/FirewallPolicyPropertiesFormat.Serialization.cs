@@ -96,6 +96,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(KubeSelectorGroups))
+            {
+                writer.WritePropertyName("kubeSelectorGroups"u8);
+                writer.WriteStartArray();
+                foreach (NetworkSubResource item in KubeSelectorGroups)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -186,6 +196,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsAfcManaged))
+            {
+                writer.WritePropertyName("afcManaged"u8);
+                writer.WriteBooleanValue(IsAfcManaged.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -230,6 +245,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             string size = default;
             IReadOnlyList<WritableSubResource> ruleCollectionGroups = default;
+            IReadOnlyList<NetworkSubResource> kubeSelectorGroups = default;
             NetworkProvisioningState? provisioningState = default;
             NetworkSubResource basePolicy = default;
             IReadOnlyList<WritableSubResource> firewalls = default;
@@ -244,6 +260,7 @@ namespace Azure.ResourceManager.Network.Models
             FirewallPolicyIntrusionDetection intrusionDetection = default;
             FirewallPolicyTransportSecurity transportSecurity = default;
             FirewallPolicySku sku = default;
+            bool? isAfcManaged = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -271,6 +288,20 @@ namespace Azure.ResourceManager.Network.Models
                         }
                     }
                     ruleCollectionGroups = array;
+                    continue;
+                }
+                if (prop.NameEquals("kubeSelectorGroups"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                    }
+                    kubeSelectorGroups = array;
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -423,6 +454,15 @@ namespace Azure.ResourceManager.Network.Models
                     sku = FirewallPolicySku.DeserializeFirewallPolicySku(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("afcManaged"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isAfcManaged = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -431,6 +471,7 @@ namespace Azure.ResourceManager.Network.Models
             return new FirewallPolicyPropertiesFormat(
                 size,
                 ruleCollectionGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                kubeSelectorGroups ?? new ChangeTrackingList<NetworkSubResource>(),
                 provisioningState,
                 basePolicy,
                 firewalls ?? new ChangeTrackingList<WritableSubResource>(),
@@ -445,6 +486,7 @@ namespace Azure.ResourceManager.Network.Models
                 intrusionDetection,
                 transportSecurity,
                 sku,
+                isAfcManaged,
                 additionalBinaryDataProperties);
         }
     }

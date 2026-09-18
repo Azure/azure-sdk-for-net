@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A Azure Cosmos DB soft-deleted database account. </summary>
+    /// <summary> An Azure Cosmos DB soft-deleted database account. </summary>
     public partial class SoftDeletedDatabaseAccountGetResultData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

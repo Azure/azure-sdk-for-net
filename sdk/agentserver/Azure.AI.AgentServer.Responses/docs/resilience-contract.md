@@ -72,7 +72,7 @@ Three boolean flags on the request select the resilience shape:
 
 The Responses layer **composes** the Core task/streaming primitives; it does
 **not** re-implement recovery, steering, or stream replay. A resilient
-background response runs *inside* a Core task via `ITaskInvoker`:
+background response runs *inside* a Core task via a keyed `TaskDefinition<TInput, TOutput>`:
 
 - **One-shot** (`responses_resilient_one_shot`, a Core `@task`) — a
   non-conversational resilient background turn. Auto-deleted on terminal exit.
@@ -454,7 +454,7 @@ response still exists in the store:
   against an unread snapshot.
 
 This precondition is evaluated **before** dispatch selection so a dropped entry
-never reaches `ITaskInvoker`.
+never reaches Core task dispatch.
 
 ### R6 — Conversation chain identity (`chain id`)
 

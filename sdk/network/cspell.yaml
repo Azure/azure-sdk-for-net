@@ -12,6 +12,7 @@ overrides:
       - quic
   - filename: '**/sdk/network/Azure.ResourceManager.Network/api/*.cs'
     words:
+      - lacp
       - TLSDHEDSSWITH
       - TLSDHEDSSWITHAES
       - TLSDHERSAWITHAES

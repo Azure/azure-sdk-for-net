@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 throw new FormatException($"The model {nameof(SoftDeleteConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SoftDeletionEnabled))
+            if (Optional.IsDefined(IsSoftDeletionEnabled))
             {
                 writer.WritePropertyName("softDeletionEnabled"u8);
-                writer.WriteBooleanValue(SoftDeletionEnabled.Value);
+                writer.WriteBooleanValue(IsSoftDeletionEnabled.Value);
             }
             if (Optional.IsDefined(MinMinutesBeforePermanentDeletionAllowed))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            bool? softDeletionEnabled = default;
+            bool? isSoftDeletionEnabled = default;
             int? minMinutesBeforePermanentDeletionAllowed = default;
             int? softDeleteRetentionPeriodInMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    softDeletionEnabled = prop.Value.GetBoolean();
+                    isSoftDeletionEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("minMinutesBeforePermanentDeletionAllowed"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SoftDeleteConfiguration(softDeletionEnabled, minMinutesBeforePermanentDeletionAllowed, softDeleteRetentionPeriodInMinutes, additionalBinaryDataProperties);
+            return new SoftDeleteConfiguration(isSoftDeletionEnabled, minMinutesBeforePermanentDeletionAllowed, softDeleteRetentionPeriodInMinutes, additionalBinaryDataProperties);
         }
     }
 }

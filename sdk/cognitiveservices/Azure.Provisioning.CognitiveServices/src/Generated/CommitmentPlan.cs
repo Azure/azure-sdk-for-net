@@ -182,7 +182,7 @@ namespace Azure.Provisioning.CognitiveServices
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _sku = DefineModelProperty<CognitiveServicesSku>(nameof(Sku), new string[] { "sku" });
-            _parent = DefineResource<CognitiveServicesAccount>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CognitiveServicesAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

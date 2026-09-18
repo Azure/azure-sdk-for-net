@@ -31,10 +31,10 @@ namespace Azure.Storage.Blobs.Models
         /// <param name="hasLegalHold"> Whether the container has a legal hold. </param>
         /// <param name="defaultEncryptionScope"> The default encryption scope of the container. </param>
         /// <param name="preventEncryptionScopeOverride"> Whether to prevent encryption scope override. </param>
-        /// <param name="deletedTime"> The date-time the container was deleted. </param>
+        /// <param name="deletedOn"> The date-time the container was deleted. </param>
         /// <param name="remainingRetentionDays"> The remaining retention days of the container. </param>
         /// <param name="isImmutableStorageWithVersioningEnabled"> Whether immutable storage with versioning is enabled. </param>
-        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string eTag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedTime, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled)
+        internal ContainerPropertiesInternal(DateTimeOffset lastModified, string eTag, LeaseStatus? leaseStatus, LeaseState? leaseState, LeaseDurationType? leaseDuration, PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, DateTimeOffset? deletedOn, int? remainingRetentionDays, bool? isImmutableStorageWithVersioningEnabled)
         {
             LastModified = lastModified;
             ETag = eTag;
@@ -46,7 +46,7 @@ namespace Azure.Storage.Blobs.Models
             HasLegalHold = hasLegalHold;
             DefaultEncryptionScope = defaultEncryptionScope;
             PreventEncryptionScopeOverride = preventEncryptionScopeOverride;
-            DeletedTime = deletedTime;
+            DeletedOn = deletedOn;
             RemainingRetentionDays = remainingRetentionDays;
             IsImmutableStorageWithVersioningEnabled = isImmutableStorageWithVersioningEnabled;
         }
@@ -82,7 +82,7 @@ namespace Azure.Storage.Blobs.Models
         public bool? PreventEncryptionScopeOverride { get; }
 
         /// <summary> The date-time the container was deleted. </summary>
-        public DateTimeOffset? DeletedTime { get; }
+        public DateTimeOffset? DeletedOn { get; }
 
         /// <summary> The remaining retention days of the container. </summary>
         public int? RemainingRetentionDays { get; }
