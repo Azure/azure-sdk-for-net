@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> StorageApplianceConfigurationDataPatch represents configuration for the storage application for patch operations. </summary>
-    public partial class StorageApplianceConfigurationPatch : IJsonModel<StorageApplianceConfigurationPatch>
+    internal partial class StorageApplianceConfigurationPatch : IJsonModel<StorageApplianceConfigurationPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

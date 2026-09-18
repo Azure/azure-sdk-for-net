@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                     ["key2"] = "myvalue2",
                 },
-                UpdateStrategy = new ClusterUpdateStrategyPatch
+                UpdateStrategy = new ClusterUpdateStrategy
                 {
                     StrategyType = ClusterUpdateStrategyType.PauseAfterRack,
                     ThresholdType = ValidationThresholdType.PercentSuccess,

@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ClusterUpdateStrategyPatch represents the strategy for updating the cluster for patch operations. </summary>
-    public partial class ClusterUpdateStrategyPatch : IJsonModel<ClusterUpdateStrategyPatch>
+    internal partial class ClusterUpdateStrategyPatch : IJsonModel<ClusterUpdateStrategyPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

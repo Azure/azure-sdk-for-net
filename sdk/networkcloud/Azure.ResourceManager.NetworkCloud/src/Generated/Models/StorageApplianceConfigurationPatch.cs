@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> StorageApplianceConfigurationDataPatch represents configuration for the storage application for patch operations. </summary>
-    public partial class StorageApplianceConfigurationPatch
+    internal partial class StorageApplianceConfigurationPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

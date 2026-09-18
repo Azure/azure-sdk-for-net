@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key1"] = "myvalue1",
 ["key2"] = "myvalue2"
 },
-                AggregatorOrSingleRackDefinition = new NetworkCloudRackDefinitionPatch
+                AggregatorOrSingleRackDefinition = new NetworkCloudRackDefinition
                 {
                     NetworkRackId = new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/networkRacks/networkRackName"),
                     RackSerialNumber = "newSerialNumber",
                     RackSkuId = new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/providers/Microsoft.NetworkCloud/rackSkus/rackSkuName"),
-                    BareMetalMachineConfigurationData = {new BareMetalMachineConfigurationPatch
+                    BareMetalMachineConfigurationData = {new BareMetalMachineConfiguration
 {
-BmcCredentials = new AdministrativeCredentialsPatch
+BmcCredentials = new AdministrativeCredentials
 {
 Username = "username",
 Password = "{password}",
@@ -91,9 +91,9 @@ RackSlot = 1L,
 SerialNumber = "BM1219XXX",
 MachineDetails = "extraDetails",
 MachineName = "bmmName1",
-}, new BareMetalMachineConfigurationPatch
+}, new BareMetalMachineConfiguration
 {
-BmcCredentials = new AdministrativeCredentialsPatch
+BmcCredentials = new AdministrativeCredentials
 {
 Username = "username",
 Password = "{password}",
@@ -106,9 +106,9 @@ MachineDetails = "extraDetails",
 MachineName = "bmmName2",
 }},
                     RackLocation = "Foo Datacenter, Floor 3, Aisle 9, Rack 2",
-                    StorageApplianceConfigurationData = {new StorageApplianceConfigurationPatch
+                    StorageApplianceConfigurationData = {new StorageApplianceConfiguration
 {
-AdminCredentials = new AdministrativeCredentialsPatch
+AdminCredentials = new AdministrativeCredentials
 {
 Username = "username",
 Password = "{password}",
@@ -118,7 +118,7 @@ SerialNumber = "BM1219XXX",
 StorageApplianceName = "vmName",
 }},
                 },
-                ComputeDeploymentThreshold = new ValidationThresholdPatch
+                ComputeDeploymentThreshold = new ValidationThreshold
                 {
                     Grouping = ValidationThresholdGrouping.PerCluster,
                     ThresholdType = ValidationThresholdType.PercentSuccess,
@@ -413,7 +413,7 @@ ContainerUri = new Uri("https://myaccount.blob.core.windows.net/myContainer2?res
 ["key1"] = "myvalue1",
 ["key2"] = "myvalue2"
 },
-                UpdateStrategy = new ClusterUpdateStrategyPatch
+                UpdateStrategy = new ClusterUpdateStrategy
                 {
                     StrategyType = ClusterUpdateStrategyType.Rack,
                     ThresholdType = ValidationThresholdType.CountSuccess,

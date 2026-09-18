@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ServicePrincipalInformationPatch represents the details of the service principal to be used by the cluster during Arc Appliance installation for patch operations. </summary>
-    public partial class ServicePrincipalInformationPatch : IJsonModel<ServicePrincipalInformationPatch>
+    internal partial class ServicePrincipalInformationPatch : IJsonModel<ServicePrincipalInformationPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

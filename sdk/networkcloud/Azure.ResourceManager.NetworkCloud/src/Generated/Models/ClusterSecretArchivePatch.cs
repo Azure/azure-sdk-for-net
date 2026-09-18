@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ClusterSecretArchivePatch configures the key vault to archive the secrets of the cluster for later retrieval for patch operations. </summary>
-    public partial class ClusterSecretArchivePatch
+    internal partial class ClusterSecretArchivePatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

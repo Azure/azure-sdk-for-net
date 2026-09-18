@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> BareMetalMachineConfigurationDataPatch represents configuration for the bare metal machine for patch operations. </summary>
-    public partial class BareMetalMachineConfigurationPatch
+    internal partial class BareMetalMachineConfigurationPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
