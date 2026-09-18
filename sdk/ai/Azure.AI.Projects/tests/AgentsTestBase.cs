@@ -363,7 +363,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         McpTool tool = ResponseTool.CreateMcpTool(
             serverLabel: "api-specs",
             serverUri: new Uri("https://api.githubcopilot.com/mcp"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
         ));
         tool.ProjectConnectionId = TestEnvironment.MCP_PROJECT_CONNECTION_NAME;
         return tool;
@@ -416,7 +416,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         global::Azure.AI.Extensions.OpenAI.FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
         {
-            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+            RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         return fabricIQTool;
     }
@@ -493,7 +493,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         MCPToolboxTool mcp = new(serverLabel: "api-specs")
         {
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         CodeInterpreterToolboxTool codeInterpreter = new()
         {
@@ -617,7 +617,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.MCP => ResponseTool.CreateMcpTool(
                 serverLabel: "api-specs",
                 serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
             )),
             ToolType.MCPConnection => GetProjectConnectedMCPTool(),
             ToolType.OpenAPI => GetOpenAPITool(projectClient, false),
@@ -641,7 +641,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.MCPToolboxWithPreview => await GetToolBoxAsync(projectClient, true),
             ToolType.WebIQ => new global::Azure.AI.Extensions.OpenAI.WebIQPreviewTool(projectConnectionId: TestEnvironment.WEBIQ_CONNECTION_ID)
             {
-                RequireApproval = new WebIQPreviewToolRequireApprovalChoice(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+                RequireApproval = new WebIQPreviewToolRequireApprovalChoice(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             ToolType.WorkIQTool => new global::Azure.AI.Extensions.OpenAI.WorkIQPreviewTool(TestEnvironment.WORKIQ_CONNECTION_ID),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")

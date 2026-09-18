@@ -18,6 +18,7 @@
     <ProjectReference Include="..\Spector\http\azure\resource-manager\management-group\src\Azure.ResourceManager.ManagementGroup.csproj" />
     <ProjectReference Include="..\Spector\http\azure\resource-manager\non-resource\src\Azure.ResourceManager.NonResource.csproj" />
     <ProjectReference Include="..\Spector\http\azure\resource-manager\operation-templates\src\Azure.ResourceManager.OperationTemplates.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\resource-manager\service-group\src\Azure.ResourceManager.ServiceGroupExtension.csproj" />
   </ItemGroup>
 
   <ItemGroup>
