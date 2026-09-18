@@ -44,7 +44,6 @@
 ### Other Changes
 
 - Added `azure-deprecating` to the default list of allowed (non-redacted) headers in `DiagnosticsOptions` to support [deprecating behavior notification](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#deprecating-behavior-notification).
-- Updated `Microsoft.Identity.Client` dependency to `4.87.0`.
 
 ## 1.60.0 (2026-06-30)
 
