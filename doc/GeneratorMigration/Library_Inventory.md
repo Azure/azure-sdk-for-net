@@ -16,18 +16,18 @@
 
 ## Summary
 
-- Total libraries: 460
-- Management Plane (MPG): 268
+- Total libraries: 461
+- Management Plane (MPG): 269
   - Autorest/Swagger: 39
-  - New Emitter (TypeSpec): 229
+  - New Emitter (TypeSpec): 230
   - Old TypeSpec: 0
 - Data Plane (DPG): 126
   - Autorest/Swagger: 30
   - New Emitter (TypeSpec): 55
   - Old TypeSpec: 0
 - Provisioning: 66
-  - Reflection-based generator: 6
-  - TypeSpec-based generator: 59
+  - Reflection-based generator: 5
+  - TypeSpec-based generator: 60
   - No generator: 1
 - No generator: 41
 
@@ -139,7 +139,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 229 / 229 (100%)
+**Migration Status**: 230 / 230 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -201,6 +201,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | containerregistry | Azure.ResourceManager.ContainerRegistry | ✅ |
 | containerregistry | Azure.ResourceManager.ContainerRegistry.Tasks | ✅ |
 | containerservice | Azure.ResourceManager.ContainerService | ✅ |
+| containerservice | Azure.ResourceManager.ContainerServiceNodeCustomization | ✅ |
 | containerservicepreparedimgspec | Azure.ResourceManager.ContainerServicePreparedImgSpec | ✅ |
 | containerservicesafeguards | Azure.ResourceManager.ContainerServiceSafeguards | ✅ |
 | cosmosdb | Azure.ResourceManager.CosmosDB | ✅ |
@@ -425,11 +426,11 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 39
 
 Libraries that provide infrastructure-as-code capabilities for Azure services. These libraries allow you to declaratively specify Azure infrastructure natively in .NET and generate Bicep templates for deployment.
 
-**Migration Status**: 59 / 66 migrated to TypeSpec-based generator
+**Migration Status**: 60 / 66 migrated to TypeSpec-based generator
 
 | Service | Library | Mgmt Peer Library | Generator |
 | ------- | ------- | ----------------- | --------- |
-| apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement ✅ | Reflection |
+| apimanagement | Azure.Provisioning.ApiManagement | Azure.ResourceManager.ApiManagement ✅ | TypeSpec ✅ |
 | appconfiguration | Azure.Provisioning.AppConfiguration | Azure.ResourceManager.AppConfiguration ✅ | TypeSpec ✅ |
 | applicationinsights | Azure.Provisioning.ApplicationInsights | Azure.ResourceManager.ApplicationInsights ✅ | TypeSpec ✅ |
 | attestation | Azure.Provisioning.Attestation | Azure.ResourceManager.Attestation ✅ | TypeSpec ✅ |
