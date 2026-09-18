@@ -5,7 +5,7 @@
 
 .DESCRIPTION
   Produces the ENTIRE PR summary comment from code-accessible sources only
-  (per-attempt engine result JSON, `git diff`, and $GITHUB_* env) so the
+  (the final engine result JSON, `git diff`, and $GITHUB_* env) so the
   content never depends on the LLM. The agent's only job is to run this script
   and pass the rendered file's contents verbatim to the gh-aw `add_comment`
   safe-output tool.
@@ -23,13 +23,13 @@
 .NOTES
   Engine contract (Azure/azure-sdk-tools CustomizedCodeUpdateResponse), emitted
   by `azsdk -o json tsp client customized-update ...`:
-    success (bool), appliedPatches[]{filePath,description,replacementCount},
+    success (bool), attemptsUsed (int), appliedPatches[]{filePath,description,replacementCount},
     buildResult (string, only when !success), errorCode (KnownErrorCodes),
     specChangeRequired[], customCodeChangeRequired[], message, typeSpecChangesSummary[]
 #>
 [CmdletBinding()]
 param(
-    # Directory containing the per-attempt engine result files (result-1.json, result-2.json, ...).
+    # Directory containing the single final engine response, result.json.
     # Empty/absent is valid for the no-engine-run terminal states (ineligible / skipped_already_green).
     [string]$ResultsDir = $env:AZSDK_REPAIR_RESULTS_DIR,
 
@@ -50,13 +50,16 @@ param(
     # union of appliedPatches (custom files only).
     [string]$PreRepairSha = '',
 
-    # Max iterations the loop was allowed (from repair-config.yml), for "N / max" display.
+    # Maximum engine patch attempts (from repair-config.yml), for "N / max" display.
     [int]$MaxIterations = 3,
 
     # Path to the captured pre-repair build output (raw `dotnet build` text). On a first-try
     # success the engine result carries no `buildResult`, so this is the only deterministic
     # source for the "errors fixed" list. Mechanical capture (redirect), not LLM-authored.
     [string]$PreRepairErrorsFile = $env:AZSDK_REPAIR_PRE_ERRORS_FILE,
+
+    # Captured CLI stderr/capability errors, including failures without a JSON response.
+    [string]$EngineErrorsFile = $env:AZSDK_REPAIR_ENGINE_ERRORS_FILE,
 
     # Identity fields (default to GitHub Actions env; overridable for tests).
     [string]$Repo = $env:GITHUB_REPOSITORY,
@@ -84,65 +87,66 @@ if (-not $HeadSha) { $HeadSha = $env:AZSDK_REPAIR_HEAD_SHA }
 if (-not $Repo) { $Repo = 'unknown/unknown' }
 if (-not $HeadSha) { $HeadSha = '0000000' }
 
-# ---- load per-attempt engine results -------------------------------------------
-# Only files whose name is exactly result-<n>.json are attempts; a stray file like
-# result-final.json is ignored (and, defensively, the sort key never [int]-parses a
-# non-numeric group, so an unexpected name can never throw and suppress the comment).
-$attempts = @()
-$finalFile = $null
-if ($ResultsDir -and (Test-Path $ResultsDir)) {
-    $attemptFiles = Get-ChildItem -Path $ResultsDir -Filter 'result-*.json' -File |
-        Where-Object { $_.Name -match '^result-\d+\.json$' } |
-        Sort-Object {
-            $m = [regex]::Match($_.Name, '^result-(\d+)\.json$')
-            if ($m.Success) { [int]$m.Groups[1].Value } else { [int]::MaxValue }
-        }
-    foreach ($f in $attemptFiles) {
-        try { $parsed = Get-Content -Raw -LiteralPath $f.FullName | ConvertFrom-Json }
-        catch { Write-Warning "Skipping unparseable result file: $($f.Name)"; continue }
-        $attempts += $parsed
-        $finalFile = $f   # last successfully-parsed attempt file (matches $attempts[-1])
-    }
-    $attempts = @($attempts)
-}
-$iterations = $attempts.Count
-$final = if ($iterations -gt 0) { $attempts[-1] } else { $null }
-
-# ---- derive terminal status ----------------------------------------------------
 function Get-Prop($obj, $name) {
-    if ($null -ne $obj -and $obj.PSObject.Properties[$name]) { return $obj.$name }
+    if ($null -ne $obj -and $obj.PSObject.Properties[$name]) { return ,$obj.$name }
     return $null
 }
 
+# Never recover an older successful response when the final response is missing or bad.
+$final = $null
+$finalFile = $null
+$resultIssue = 'NoEngineResult'
+$iterations = $null
+if ($ResultsDir -and (Test-Path -LiteralPath (Join-Path $ResultsDir 'result.json') -PathType Leaf)) {
+    $finalFile = Get-Item -LiteralPath (Join-Path $ResultsDir 'result.json')
+    try {
+        $final = Get-Content -Raw -LiteralPath $finalFile.FullName | ConvertFrom-Json -NoEnumerate
+        # The [pscustomobject] accelerator also matches wrapped JSON arrays.
+        if ($null -eq $final -or $final.GetType() -ne [System.Management.Automation.PSCustomObject]) {
+            throw 'Expected a single JSON object.'
+        }
+        $resultIssue = $null
+    }
+    catch { $final = $null; $resultIssue = 'MalformedEngineResult' }
+}
+if ($final) {
+    $count = Get-Prop $final 'attemptsUsed'
+    if (($count -is [int] -or $count -is [long]) -and $count -ge 0 -and $count -le $MaxIterations) {
+        $iterations = $count
+    }
+    else { $resultIssue = 'InvalidAttemptsUsed' }
+    if ((Get-Prop $final 'success') -isnot [bool]) { $resultIssue = 'InvalidEngineSuccess' }
+}
+
+# ---- derive terminal status ----------------------------------------------------
 $status = 'failed'
 $stopReason = $null
 if (-not $Eligible -or $ForcedStatus -eq 'ineligible') {
-    $status = 'ineligible'
+    $status = 'ineligible'; $iterations = 0
 }
-elseif ($ForcedStatus -eq 'skipped_already_green') {
-    $status = 'skipped_already_green'
+elseif ($ForcedStatus -eq 'skipped_already_green' -and $null -eq $finalFile) {
+    $status = 'skipped_already_green'; $iterations = 0
 }
-elseif ($null -eq $final) {
-    # Eligible but no engine result recorded: treat as failed with an explicit reason.
-    $status = 'failed'; $stopReason = 'NoEngineResult'
+elseif ($resultIssue) {
+    $stopReason = $resultIssue
 }
-elseif ([bool](Get-Prop $final 'success')) {
+elseif ((Get-Prop $final 'success') -eq $true -and
+        -not (Get-Prop $final 'response_error') -and
+        ((Get-Prop $final 'operation_status') -in @($null, 'Succeeded'))) {
     $status = 'repaired'
 }
 else {
-    $status = 'failed'
     $ec = Get-Prop $final 'errorCode'
-    $stopReason = if ($ec) { [string]$ec } elseif ($iterations -ge $MaxIterations) { 'maxIterations' } else { 'BuildFailed' }
+    $stopReason = if ($ec) { [string]$ec } elseif ($iterations -ge $MaxIterations) { 'maxIterations' } else { 'EngineFailed' }
 }
 
 # repaired_at anchors the time-to-green / subsequent-correction metrics, so it must be
 # stable across re-runs of the emitter. Use the write time of the successful engine result
 # file (when the green result was recorded) rather than render-time Get-Date, which would
-# drift on every re-emit. Fall back to now only if the file is somehow unavailable.
+# drift on every re-emit.
 $repairedAt = $null
 if ($status -eq 'repaired') {
-    $repairedAt = if ($finalFile) { $finalFile.LastWriteTimeUtc.ToString('yyyy-MM-ddTHH:mm:ssZ') }
-                  else { (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ') }
+    $repairedAt = $finalFile.LastWriteTimeUtc.ToString('yyyy-MM-ddTHH:mm:ssZ')
 }
 
 # ---- classified build diagnostics (deterministic parse over build output) ------
@@ -202,24 +206,20 @@ if ($PreRepairErrorsFile -and (Test-Path $PreRepairErrorsFile)) {
     $preRepairText = Get-Content -Raw -LiteralPath $PreRepairErrorsFile
 }
 
-# Errors fixed across the run = pre-repair errors + any failing attempts' buildResult.
+# The single final response does not expose diagnostics for individual attempts.
 $fixedCounts = Get-ErrorCounts $preRepairText
-$fixedDiagText = $preRepairText
-foreach ($a in $attempts) {
-    if (-not [bool](Get-Prop $a 'success')) {
-        $br = [string](Get-Prop $a 'buildResult')
-        $fixedDiagText += "`n$br"
-        foreach ($kv in (Get-ErrorCounts $br).GetEnumerator()) {
-            if ($fixedCounts.Contains($kv.Key)) { $fixedCounts[$kv.Key] += $kv.Value } else { $fixedCounts[$kv.Key] = $kv.Value }
-        }
-    }
-}
-$fixedDiags = Get-Diagnostics $fixedDiagText
+$fixedDiags = Get-Diagnostics $preRepairText
 
 # Remaining (failed state) = diagnostics on the final failing attempt.
 $remainingText = if ($status -eq 'failed' -and $final) { [string](Get-Prop $final 'buildResult') } else { '' }
 $remainingCounts = Get-ErrorCounts $remainingText
 $remainingDiags = Get-Diagnostics $remainingText
+$engineErrors = ''
+if ($EngineErrorsFile) {
+    $engineErrors = if (Test-Path -LiteralPath $EngineErrorsFile -PathType Leaf) {
+        Get-Content -Raw -LiteralPath $EngineErrorsFile
+    } else { 'The requested captured engine error file was not found. Consult the workflow logs.' }
+}
 
 # ---- files changed (git diff, Generated/ vs custom) ----------------------------
 function Test-IsGenerated([string]$path) {
@@ -260,38 +260,26 @@ try {
 if ($changedFiles.Count -eq 0) {
     # Fallback: custom files the engine reported patching (won't include regenerated Generated/).
     $fileSource = 'appliedPatches'
-    $paths = foreach ($a in $attempts) {
-        $ap = Get-Prop $a 'appliedPatches'
-        if ($ap) { foreach ($p in $ap) { Get-Prop $p 'filePath' } }
-    }
+    $paths = foreach ($p in (Get-Prop $final 'appliedPatches')) { Get-Prop $p 'filePath' }
     $changedFiles = @($paths | Where-Object { $_ } | Select-Object -Unique)
 }
 $genFiles = @($changedFiles | Where-Object { Test-IsGenerated $_ })
 $customFiles = @($changedFiles | Where-Object { -not (Test-IsGenerated $_) })
 
-# Per-iteration applied patches: attribute each custom-code edit to the engine call
-# (result-<n>.json) that made it, so the Files Changed section can group by iteration.
-# A file edited in more than one iteration appears under each iteration that touched it.
-$iterationPatches = [System.Collections.Generic.List[object]]::new()
-for ($i = 0; $i -lt $attempts.Count; $i++) {
-    $ap = Get-Prop $attempts[$i] 'appliedPatches'
-    $rows = [System.Collections.Generic.List[object]]::new()
-    if ($ap) {
-        foreach ($p in $ap) {
-            $fp = Get-Prop $p 'filePath'; if (-not $fp) { continue }
-            $rows.Add([pscustomobject]@{
-                File         = (Get-RelPath $fp)
-                Description  = [string](Get-Prop $p 'description')
-                Replacements = Get-Prop $p 'replacementCount'
-            })
-        }
-    }
-    $iterationPatches.Add([pscustomobject]@{ Iteration = $i + 1; Rows = $rows })
+# The legacy response reports cumulative patches, not per-attempt attribution.
+$patchRows = [System.Collections.Generic.List[object]]::new()
+foreach ($p in (Get-Prop $final 'appliedPatches')) {
+    $fp = Get-Prop $p 'filePath'; if (-not $fp) { continue }
+    $patchRows.Add([pscustomobject]@{
+        File         = (Get-RelPath $fp)
+        Description  = [string](Get-Prop $p 'description')
+        Replacements = Get-Prop $p 'replacementCount'
+    })
 }
-# Set of custom files the engine reported patching (normalized), used to detect any
-# diff-only custom changes not attributable to a specific attempt.
+# Set of custom files the engine reported patching (normalized), used to detect
+# diff-only custom changes absent from the cumulative response.
 $patchedCustom = [System.Collections.Generic.HashSet[string]]::new()
-foreach ($grp in $iterationPatches) { foreach ($r in $grp.Rows) { [void]$patchedCustom.Add($r.File) } }
+foreach ($r in $patchRows) { [void]$patchedCustom.Add($r.File) }
 # True when a changed file (repo-relative) matches an applied-patch path by suffix (the
 # engine may report either repo-relative or package-relative paths).
 function Test-PathCovered([string]$repoRelFile, $set) {
@@ -337,7 +325,7 @@ $statusIcon = switch ($status) {
 # Escape a table cell: collapse newlines and escape pipes so markdown tables stay intact.
 function Format-Cell([string]$s) {
     if (-not $s) { return '' }
-    return (($s -replace '\r?\n', ' ') -replace '\|', '\|').Trim()
+    return (($s -replace '\r?\n', ' ') -replace '\|', '\|' -replace '`', '&#96;' -replace '<', '&lt;' -replace '>', '&gt;').Trim()
 }
 
 $sb = [System.Text.StringBuilder]::new()
@@ -356,17 +344,24 @@ else {
     $buildStatusCell = switch ($status) {
         'repaired'              { ':white_check_mark: Green' }
         'skipped_already_green' { ':white_check_mark: Green (no changes needed)' }
-        default                 { ':x: Red' }
+        default                 { ':x: Not confirmed green (see failure details)' }
     }
     [void]$sb.AppendLine('### Summary')
     [void]$sb.AppendLine('')
     [void]$sb.AppendLine('| | |')
     [void]$sb.AppendLine('|---|---|')
-    if ($PackagePath) { [void]$sb.AppendLine("| **Package** | ``$PackagePath`` |") }
+    if ($PackagePath) { [void]$sb.AppendLine("| **Package** | ``$(Format-Cell $PackagePath)`` |") }
     [void]$sb.AppendLine("| **Final build status** | $buildStatusCell |")
-    [void]$sb.AppendLine("| **Iterations used** | $iterations of $MaxIterations |")
+    $iterationText = if ($null -ne $iterations) { "$iterations of $MaxIterations" } else { "Unknown of $MaxIterations (no valid attemptsUsed)" }
+    [void]$sb.AppendLine("| **Iterations used** | $iterationText |")
     [void]$sb.AppendLine('| **Engine** | `azsdk tsp client customized-update --edit-scope CustomCode` |')
-    if ($stopReason) { [void]$sb.AppendLine("| **Stop reason** | ``$stopReason`` |") }
+    if ($stopReason) { [void]$sb.AppendLine("| **Stop reason** | ``$(Format-Cell $stopReason)`` |") }
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('_Iterations count completed patch proposals reaching host validation, including no-progress proposals; baseline/classifier checks and tool calls are excluded._')
+    if ($RunId -match '^gha-(\d+)-\d+$') {
+        $server = if ($env:GITHUB_SERVER_URL) { $env:GITHUB_SERVER_URL.TrimEnd('/') } else { 'https://github.com' }
+        [void]$sb.AppendLine("[Workflow logs]($server/$Repo/actions/runs/$($Matches[1]))")
+    }
     [void]$sb.AppendLine('')
 
     # ----- Build errors (fixed on success, remaining on failure) -----
@@ -381,7 +376,7 @@ else {
             [void]$sb.AppendLine('| Error | Location |')
             [void]$sb.AppendLine('|---|---|')
             foreach ($d in ($diags | Sort-Object File, @{ Expression = { [int]$_.Line } }, Code)) {
-                $loc = if ($d.File) { "``$($d.File):$($d.Line)``" } else { '_n/a_' }
+                $loc = if ($d.File) { "``$(Format-Cell "$($d.File):$($d.Line)")``" } else { '_n/a_' }
                 $emsg = Format-Cell "$($d.Code): $($d.Message)"
                 [void]$sb.AppendLine("| ``$emsg`` | $loc |")
             }
@@ -394,36 +389,28 @@ else {
         }
     }
 
-    # ----- Files changed (grouped by iteration) -----
-    # Custom-code edits are attributed to the exact engine iteration that made them (from
-    # each result-<n>.json's appliedPatches). Regenerated Generated/ files are a cumulative
-    # downstream effect and are not attributable to a single iteration, so they are listed
-    # once. On success, all groups are part of one repair commit; on failure, none are committed.
+    # ----- Files changed (cumulative final response plus Git attribution) -----
     if ($changedFiles.Count -gt 0) {
         [void]$sb.AppendLine("### Files Changed ($($changedFiles.Count) distinct: $($customFiles.Count) custom, $($genFiles.Count) generated)")
         [void]$sb.AppendLine('')
 
-        $anyIterRows = @($iterationPatches | Where-Object { $_.Rows.Count -gt 0 }).Count -gt 0
-        if ($anyIterRows) {
-            foreach ($grp in $iterationPatches) {
-                if ($grp.Rows.Count -eq 0) { continue }
-                [void]$sb.AppendLine("#### Iteration $($grp.Iteration)")
-                [void]$sb.AppendLine('')
-                [void]$sb.AppendLine('| File | Type | Change |')
-                [void]$sb.AppendLine('|---|---|---|')
-                foreach ($r in ($grp.Rows | Sort-Object File)) {
-                    $change = if ($r.Description) { $r.Description } else { 'Custom-code edit' }
-                    if ($r.Replacements) {
-                        $n = [int]$r.Replacements
-                        $change += " ($n replacement$(if ($n -ne 1) { 's' }))"
-                    }
-                    [void]$sb.AppendLine("| ``$(Get-PkgRelPath $r.File)`` | Custom code | $(Format-Cell $change) |")
+        if ($patchRows.Count -gt 0) {
+            [void]$sb.AppendLine('#### Engine-reported patches (cumulative; attempted on failure)')
+            [void]$sb.AppendLine('')
+            [void]$sb.AppendLine('| File | Type | Change |')
+            [void]$sb.AppendLine('|---|---|---|')
+            foreach ($r in ($patchRows | Sort-Object File)) {
+                $change = if ($r.Description) { $r.Description } else { 'Custom-code edit' }
+                if ($r.Replacements -is [int] -or $r.Replacements -is [long]) {
+                    $n = [int]$r.Replacements
+                    $change += " ($n replacement$(if ($n -ne 1) { 's' }))"
                 }
-                [void]$sb.AppendLine('')
+                [void]$sb.AppendLine("| ``$(Format-Cell (Get-PkgRelPath $r.File))`` | Custom code | $(Format-Cell $change) |")
             }
+            [void]$sb.AppendLine('')
         }
 
-        # Custom files present in the diff but not reported by any attempt's appliedPatches.
+        # Custom files present in the diff but not reported in appliedPatches.
         $otherCustom = @($customFiles | Where-Object { -not (Test-PathCovered $_ $patchedCustom) })
         if ($otherCustom.Count -gt 0) {
             [void]$sb.AppendLine('#### Other custom changes')
@@ -431,7 +418,7 @@ else {
             [void]$sb.AppendLine('| File | Type | Change |')
             [void]$sb.AppendLine('|---|---|---|')
             foreach ($f in ($otherCustom | Sort-Object)) {
-                [void]$sb.AppendLine("| ``$(Get-PkgRelPath (Get-RelPath $f))`` | Custom code | Custom-code edit |")
+                [void]$sb.AppendLine("| ``$(Format-Cell (Get-PkgRelPath (Get-RelPath $f)))`` | Custom code | Custom-code edit |")
             }
             [void]$sb.AppendLine('')
         }
@@ -443,7 +430,7 @@ else {
             [void]$sb.AppendLine('| File | Type | Change |')
             [void]$sb.AppendLine('|---|---|---|')
             foreach ($f in ($genFiles | Sort-Object)) {
-                [void]$sb.AppendLine("| ``$(Get-PkgRelPath (Get-RelPath $f))`` | Generated | Regenerated from unchanged spec inputs |")
+                [void]$sb.AppendLine("| ``$(Format-Cell (Get-PkgRelPath (Get-RelPath $f)))`` | Generated | Generated-source change |")
             }
             [void]$sb.AppendLine('')
         }
@@ -454,21 +441,45 @@ else {
         }
     }
 
-    # ----- Out-of-scope spec guidance + full log (failed only) -----
-    if ($status -eq 'failed' -and $final) {
+    # ----- Failure cause, next action, and final diagnostics -----
+    if ($status -eq 'failed') {
+        [void]$sb.AppendLine('### Why repair stopped')
+        [void]$sb.AppendLine('')
+        $cause = switch ($resultIssue) {
+            'NoEngineResult' { 'The engine did not produce result.json. Check CLI availability, capability checks, and captured process errors.' }
+            'MalformedEngineResult' { 'The final result.json is unreadable or is not a single JSON object. No older result was used.' }
+            'InvalidEngineSuccess' { 'The final response is missing a Boolean success value. It cannot confirm a green build.' }
+            'InvalidAttemptsUsed' { 'The final response has no valid integer attemptsUsed within the configured bound. Check the engine version and response.' }
+            default { 'The engine did not report a successful repair. Its final errors and guidance follow.' }
+        }
+        [void]$sb.AppendLine($cause)
+        foreach ($field in @('response_error', 'message')) {
+            $value = Get-Prop $final $field
+            if ($value) { [void]$sb.AppendLine("- **${field}:** $(Format-Cell ([string]$value))") }
+        }
+        [void]$sb.AppendLine('')
         $scr = Get-Prop $final 'specChangeRequired'
         if ($scr -and @($scr).Count -gt 0) {
             [void]$sb.AppendLine('### Requires a spec-repo change (out of scope for custom-code repair)')
             [void]$sb.AppendLine('')
-            foreach ($item in $scr) { [void]$sb.AppendLine("- $item") }
+            foreach ($item in $scr) { [void]$sb.AppendLine("- $(Format-Cell ([string]$item))") }
             [void]$sb.AppendLine('')
         }
-        $br = [string](Get-Prop $final 'buildResult')
+        [void]$sb.AppendLine('### Next action')
+        [void]$sb.AppendLine('')
+        $steps = Get-Prop $final 'next_steps'
+        if ($steps) {
+            foreach ($step in $steps) { [void]$sb.AppendLine("- $(Format-Cell ([string]$step))") }
+        }
+        elseif ($scr) { [void]$sb.AppendLine('Request a separate spec-repository change; do not edit pinned spec inputs in this repair.') }
+        else { [void]$sb.AppendLine('Review the final diagnostics, attempted patches, and workflow logs. Resolve the reported cause before starting a new repair run; do not repeat the engine invocation in this run.') }
+        [void]$sb.AppendLine('')
+        $br = (@($remainingText, [string](Get-Prop $final 'response_error'), $engineErrors) | Where-Object { $_ }) -join "`n"
         # Guard the fenced block: strip any accidental closing fence in engine output.
         $safeBr = ($br -replace '```', '` ` `')
         if ($safeBr.Length -gt 8000) { $safeBr = $safeBr.Substring(0, 8000) + "`n...(truncated)" }
         if ($safeBr.Trim()) {
-            [void]$sb.AppendLine('<details><summary>Full build output (final attempt)</summary>')
+            [void]$sb.AppendLine('<details><summary>Final build/generation and engine error output</summary>')
             [void]$sb.AppendLine('')
             [void]$sb.AppendLine('```')
             [void]$sb.AppendLine($safeBr.TrimEnd())
@@ -478,17 +489,17 @@ else {
         }
     }
 
-    # ----- Invariants (deterministic; guaranteed by --edit-scope CustomCode + push denylist) -----
-    [void]$sb.AppendLine('### Invariants Confirmed')
+    # The renderer describes the existing guardrails; it does not attest source or publication.
+    [void]$sb.AppendLine('### Workflow Guardrails')
     [void]$sb.AppendLine('')
-    [void]$sb.AppendLine('- No spec inputs modified (`client.tsp`, `tspconfig.yaml`, TypeSpec sources)')
-    [void]$sb.AppendLine('- Pinned commit in `tsp-location.yaml` unchanged')
-    [void]$sb.AppendLine('- No `.github/`, `eng/`, pipeline, or package-metadata files touched')
+    [void]$sb.AppendLine('- Spec inputs must remain unchanged (`client.tsp`, `tspconfig.yaml`, TypeSpec sources)')
+    [void]$sb.AppendLine('- The pinned commit in `tsp-location.yaml` must remain unchanged')
+    [void]$sb.AppendLine('- Changes to `.github/`, `eng/`, pipelines, or package metadata are disallowed')
     # Only a successful repair is eligible for the push safe output. Every failure leaves any
     # attempted changes uncommitted in the ephemeral agent workspace.
     $commitLine = switch ($status) {
-        'repaired'              { '- Fix committed as a reviewable commit - not auto-merged' }
-        'failed'                { '- Build remains red - repair changes were not committed' }
+        'repaired'              { '- Engine reports a green build; success-only publication is handled by the workflow, not confirmed by this report' }
+        'failed'                { '- Repair failed - changes are not eligible for publication' }
         'skipped_already_green' { '- No changes needed - nothing committed' }
         default                 { '- No fix applied - nothing committed' }
     }

@@ -1,0 +1,212 @@
+name: auto-build-repair-eval
+description: Single-invocation bounded repair with a local fixture-backed MCP tool
+
+type: capability
+
+environment:
+  skills: [..]
+  files:
+    - src: fixtures/package
+      dest: sdk/contoso/Azure.Contoso.Widgets
+  mcpServers:
+    azure-sdk-mcp:
+      type: stdio
+      command: node
+      args:
+        - -e
+        - |
+          const readline = require('node:readline');
+          const name = 'azsdk_customized_code_update';
+          const tool = { name, description: 'Fixture-backed customization engine. No real edits or builds.',
+            inputSchema: { type: 'object', additionalProperties: false,
+              properties: { editScope: { type: 'string', enum: ['CustomCode'] },
+                packagePath: { type: 'string', minLength: 1 },
+                customizationRequest: { type: 'string', minLength: 1 },
+                maxAttempts: { type: 'integer', minimum: 1, maximum: 10 } },
+              required: ['editScope', 'packagePath', 'customizationRequest', 'maxAttempts'] } };
+          readline.createInterface({ input: process.stdin }).on('line', line => {
+            const q = JSON.parse(line);
+            if (q.id === undefined) return;
+            let result;
+            let error;
+            if (q.method === 'initialize') result = { protocolVersion: q.params.protocolVersion,
+              capabilities: { tools: {} }, serverInfo: { name: 'repair-fixture', version: '1.0.0' } };
+            else if (q.method === 'ping') result = {};
+            else if (q.method === 'tools/list') result = { tools: [tool] };
+            else if (q.method === 'tools/call') {
+              const a = q.params.arguments;
+              if (q.params.name !== name || a?.editScope !== 'CustomCode' ||
+                  !Number.isInteger(a.maxAttempts) || a.maxAttempts < 1 || a.maxAttempts > 10 ||
+                  !a.packagePath || typeof a.customizationRequest !== 'string' || !a.customizationRequest.trim()) {
+                error = { code: -32602, message: 'Invalid bounded CustomCode arguments' };
+              } else {
+                const spec = /AZC0030|@@clientName/.test(a.customizationRequest);
+                const response = { success: false, operation_status: 'Failed',
+                  attemptsUsed: spec ? 0 : a.maxAttempts,
+                  errorCode: spec ? 'SpecChangeRequired' : 'BuildAfterPatchesFailed',
+                  buildResult: spec ? 'error AZC0030: Method name requires @@clientName in client.tsp.'
+                    : 'src/CustomWidget.cs(4,9): error CS1061: Widget has no definition for OldName.',
+                  response_error: spec ? 'The required TypeSpec rename is outside CustomCode scope.'
+                    : 'The final build still fails after the configured patch attempts.',
+                  appliedPatches: spec ? [] : [{ filePath: 'src/CustomWidget.cs', description: 'Updated the custom member reference.', replacementCount: 1 }],
+                  specChangeRequired: spec ? ['Rename the operation in a separate spec-repo PR.'] : [],
+                  next_steps: [spec ? 'Fix the pinned spec upstream; do not edit it here.'
+                    : 'Review the remaining CS1061 diagnostic before requesting another run.'],
+                  message: 'Simulated engine result; no real build, edits, or publication occurred.' };
+                result = { content: [{ type: 'text', text: JSON.stringify(response) }] };
+              }
+            } else error = { code: -32601, message: 'Unknown fixture method' };
+            process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id: q.id, ...(error ? { error } : { result }) }) + '\n');
+          });
+
+tags:
+  area: auto-build-repair
+  type: ci-gate
+
+defaults:
+  runs: 1
+  timeout: "90s"
+  executor: copilot-sdk
+
+scoring:
+  threshold: 1
+
+stimuli:
+  # The real agent calls a local MCP fixture, not a real SDK or publishing API.
+  - name: repair-basic-001
+    prompt: >-
+      This Auto SDK PR is labeled auto-sdk-build-fix. The package at
+      sdk/contoso/Azure.Contoso.Widgets fails to build because a custom partial
+      class references a generated member that was renamed during regeneration.
+      The captured pre-repair diagnostic is:
+      src/CustomWidget.cs(4,9): error CS1061: Widget has no definition for OldName.
+      Pass that diagnostic to the engine; let it inspect the source rather
+      than reading package files yourself. Use the available
+      MCP repair tool with the bound from the skill's repair-config.yml. After
+      loading the skill, use grep with pattern "maxIterations:", paths
+      ["auto-build-repair"], glob "repair-config.yml", output_mode "content".
+      Use that workspace-relative grep request, not view or absolute-path
+      searches. The target is sdk/contoso/Azure.Contoso.Widgets directly
+      under the workspace, NOT the copy under auto-build-repair/evals/fixtures.
+      Do not inspect eval/test definitions. No shell,
+      setup, reporter, or publication commands are needed in this fixture.
+      After the engine returns, summarize its simulated failure cause and
+      attempts used; do not claim a real build or publication.
+    simulation: &read-only
+      max_iterations: 12
+      tool_overrides:
+        bash: &denied
+          is_error: true
+          output: "Fixture denies shell commands; use the typed MCP tool and read-only file tools."
+        edit: *denied
+        create: *denied
+        apply_patch: *denied
+        task: *denied
+    graders:
+      - &one-bounded-call
+        type: program
+        config:
+          program: node
+          args:
+            - -e
+            - |
+              const fs = require('node:fs');
+              const input = JSON.parse(fs.readFileSync(process.env.EVALUATE_GRADER_INPUT, 'utf8'));
+              for (const e of input.trajectory.events.filter(e => e.type === 'tool_call' &&
+                /^(bash|shell|powershell)$/.test(e.data.toolName))) {
+                const command = e.data.arguments?.command;
+                if (typeof command !== 'string' ||
+                    !/^(?:Get-Content(?:\s+-Raw)?|cat)\s+["']?[^"\r\n;&|<>`$]*repair-config\.yml["']?\s*$/i.test(command)) {
+                  throw new Error('Only reading the repair configuration is allowed outside the engine');
+                }
+              }
+              const calls = input.trajectory.events.filter(e =>
+                e.type === 'tool_call' && /azsdk_customized_code_update$/.test(e.data.toolName));
+              if (calls.length !== 1) throw new Error('Expected exactly one engine invocation');
+              const a = calls[0].data.arguments;
+              if (a.editScope !== 'CustomCode' || a.maxAttempts !== 3 ||
+                  typeof a.packagePath !== 'string' || !a.packagePath.includes('Azure.Contoso.Widgets') ||
+                  typeof a.customizationRequest !== 'string' || !a.customizationRequest.trim() ||
+                  Object.hasOwn(a, 'tspProjectPath')) throw new Error('Invalid configured CustomCode invocation');
+      - &no-outer-work
+        type: tool-calls
+        config:
+          disallowed:
+            - name: "^(edit|create|apply_patch|task)$"
+      - &simulated
+        type: output-contains
+        config:
+          substring: "simulat"
+      - type: output-contains
+        config:
+          substring: "CS1061"
+      - type: output-matches
+        config:
+          pattern: '(?i)(3|three).{0,30}attempt|attempt.{0,30}(3|three)'
+
+  # Scope: the skill must stay in custom-code-only scope and must not edit spec
+  # inputs or move the pinned commit.
+  - name: repair-scope-001
+    prompt: >-
+      The Auto SDK PR for sdk/contoso/Azure.Contoso.Widgets is failing to build
+      after regeneration with CS1061 in a custom partial. Its failed baseline
+      build is already captured. Use the fixture-backed MCP tool with the bound
+      from the skill's config. After loading the skill, use grep with pattern
+      "maxIterations:", paths ["auto-build-repair"], glob "repair-config.yml",
+      output_mode "content". Use that workspace-relative grep request, not
+      view or absolute-path searches. Target sdk/contoso/Azure.Contoso.Widgets
+      directly under the workspace, NOT auto-build-repair/evals/fixtures/package.
+      No shell, reporter, or publishing commands are needed; do not inspect
+      eval/test definitions. Explain the allowed scope and the simulated
+      terminal failure. Do not claim real edits, a build, or publication.
+    simulation: *read-only
+    graders:
+      - *one-bounded-call
+      - *no-outer-work
+      - *simulated
+      - type: output-not-contains
+        config:
+          substring: "edit client.tsp"
+      - type: output-not-contains
+        config:
+          substring: "move the pinned commit"
+
+  # Stop condition: when the only viable fix is a spec/decorator change, the
+  # skill must report it as out of scope (a separate spec-repo PR), not attempt it.
+  - name: repair-stop-specchange-001
+    prompt: >-
+      The Auto SDK PR for sdk/contoso/Azure.Contoso.Widgets fails because a
+      client method name violates AZC0030 and the only correct fix is an
+      @@clientName rename in client.tsp. The failed build is already captured.
+      Invoke the available fixture-backed MCP engine with the configured bound
+      (after loading the skill, use grep with pattern "maxIterations:", paths
+      ["auto-build-repair"], glob "repair-config.yml", output_mode "content").
+      Use that workspace-relative grep request, not view or absolute-path
+      searches. Target sdk/contoso/Azure.Contoso.Widgets directly under
+      the workspace, NOT auto-build-repair/evals/fixtures/package.
+      No shell, reporter, or publishing commands are needed; do not inspect
+      eval/test definitions. Report its simulated guidance, not a real repair.
+    simulation: *read-only
+    graders:
+      - *one-bounded-call
+      - *no-outer-work
+      - *simulated
+      - type: output-contains
+        config:
+          substring: "spec"
+      - type: output-contains
+        config:
+          substring: "scope"
+
+  # Negative: a brand-new TypeSpec authoring request must not drive the repair engine.
+  - name: repair-negative-001
+    prompt: "How do I define a new REST operation in my TypeSpec project? Explain only; do not edit files or run commands."
+    simulation: *read-only
+    graders:
+      - type: tool-calls
+        config:
+          disallowed:
+            - name: "azsdk_customized_code_update$|^(bash|shell|powershell|edit|create|apply_patch|task)$"
+      - type: output-not-contains
+        config:
+          substring: "auto-sdk-build-fix"
