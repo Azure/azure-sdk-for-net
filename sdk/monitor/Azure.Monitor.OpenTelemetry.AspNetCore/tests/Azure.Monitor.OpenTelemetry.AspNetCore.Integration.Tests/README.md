@@ -66,6 +66,20 @@ Before running these integration tests against Azure for the first time, you mus
 
 ### Multi-endpoint routing live tests
 
+Every package live-test pipeline run includes isolated routing jobs on Windows,
+Linux, and macOS for .NET 8, 9, and 10 using project references in Release mode.
+Each job provisions the additional regional resource and requires exactly one
+passed routing scenario in its TRX results; skipped or missing results fail the job.
+Class-level `SyncOnly` prevents discovery of an unused async fixture variant.
+These jobs belong to the package live-test pipeline, not the ordinary PR playback pipeline.
+Its [runsettings](../../multi-endpoint-routing-live.runsettings) combine a `Where`
+class filter with `UseNUnitFilter=false`. The class filter limits discovery to
+the explicit routing fixture before NUnit Adapter 4.6 processes the mixed assembly;
+name-based execution avoids directly translating the shared
+`TestCategory!=Manually & (...)` filter, which prevents explicit execution.
+Both settings are required. Expect one passed routing test and no skipped
+async variant in each routing job.
+
 The multi-endpoint fixture is live-only and must run in a separate process because
 its feature switch is cached. Provision the opt-in third Application Insights
 resource in another region:

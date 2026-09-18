@@ -1,0 +1,6 @@
+<RunSettings>
+  <NUnit>
+    <UseNUnitFilter>false</UseNUnitFilter>
+    <Where>class == Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.MultiEndpointRoutingLiveTests</Where>
+  </NUnit>
+</RunSettings>
