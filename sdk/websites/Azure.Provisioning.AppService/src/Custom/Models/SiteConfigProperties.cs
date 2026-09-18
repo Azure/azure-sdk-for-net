@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService;
 
 public partial class SiteConfigProperties
 {
-    // Preserve the legacy flattened API while retaining the current nested API definition model.
+    // Preserve legacy property names while retaining the current generated API.
 
     /// <summary> The URL of the API definition. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -29,5 +29,14 @@ public partial class SiteConfigProperties
             }
             ApiDefinition.ApiDefinitionUri = value;
         }
+    }
+
+    /// <summary> Request tracing expiration time. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future release. Please use RequestTracingExpiresOn instead.", false)]
+    public BicepValue<DateTimeOffset> RequestTracingExpirationOn
+    {
+        get => RequestTracingExpiresOn;
+        set => RequestTracingExpiresOn = value;
     }
 }

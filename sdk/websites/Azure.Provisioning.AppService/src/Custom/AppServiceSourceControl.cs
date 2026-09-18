@@ -1,10 +1,25 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+using Azure.Provisioning;
+
 namespace Azure.Provisioning.AppService;
 
 public partial class AppServiceSourceControl
 {
+    // Preserve the property name shipped before generator naming normalization.
+
+    /// <summary> OAuth token expiration. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future release. Please use ExpiresOn instead.", false)]
+    public BicepValue<DateTimeOffset> ExpireOn
+    {
+        get => ExpiresOn;
+        set => ExpiresOn = value;
+    }
+
     public static partial class ResourceVersions
     {
         // Preserve historical API versions that shipped from the reflection-based provisioning generator.

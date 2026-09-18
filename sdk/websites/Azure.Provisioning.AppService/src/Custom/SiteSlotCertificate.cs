@@ -11,7 +11,12 @@ namespace Azure.Provisioning.AppService;
 
 public partial class SiteSlotCertificate
 {
-    // Preserve the legacy BinaryData API while retaining ThumbprintString for the current string-typed schema.
+    // Preserve legacy APIs while retaining the current generated property names and types.
+
+    /// <summary> Certificate expiration date. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future release. Please use ExpiresOn instead.", false)]
+    public BicepValue<DateTimeOffset> ExpireOn => ExpiresOn;
 
     /// <summary> Certificate thumbprint. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]

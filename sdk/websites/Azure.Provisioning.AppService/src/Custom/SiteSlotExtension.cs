@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.AppService;
@@ -11,6 +12,16 @@ namespace Azure.Provisioning.AppService;
 public partial class SiteSlotExtension
 {
     // Work around https://github.com/Azure/azure-sdk-for-net/issues/61011 by restoring create-body properties omitted from the response model.
+
+    /// <summary> Start time. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future release. Please use StartsOn instead.", false)]
+    public BicepValue<DateTimeOffset> StartOn => StartsOn;
+
+    /// <summary> End time. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future release. Please use EndsOn instead.", false)]
+    public BicepValue<DateTimeOffset> EndOn => EndsOn;
 
     /// <summary> SQL Connection String. </summary>
     public BicepValue<string> ConnectionString

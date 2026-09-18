@@ -1,10 +1,34 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+using Azure.Provisioning;
+
 namespace Azure.Provisioning.AppService;
 
 public partial class AppServicePlan
 {
+    // Preserve property names shipped before generator naming normalization.
+
+    /// <summary> The expiration time of the free offer. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future release. Please use FreeOfferExpiresOn instead.", false)]
+    public BicepValue<DateTimeOffset> FreeOfferExpireOn
+    {
+        get => FreeOfferExpiresOn;
+        set => FreeOfferExpiresOn = value;
+    }
+
+    /// <summary> The expiration time of the spot offer. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future release. Please use SpotExpiresOn instead.", false)]
+    public BicepValue<DateTimeOffset> SpotExpireOn
+    {
+        get => SpotExpiresOn;
+        set => SpotExpiresOn = value;
+    }
+
     public static partial class ResourceVersions
     {
         // Preserve historical API versions that shipped from the reflection-based provisioning generator.

@@ -1,10 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+using Azure.Provisioning;
+
 namespace Azure.Provisioning.AppService;
 
 public partial class AppCertificate
 {
+    // Preserve the property name shipped before generator naming normalization.
+
+    /// <summary> Certificate expiration date. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future release. Please use ExpiresOn instead.", false)]
+    public BicepValue<DateTimeOffset> ExpireOn => ExpiresOn;
+
     public static partial class ResourceVersions
     {
         // Preserve historical API versions that shipped from the reflection-based provisioning generator.

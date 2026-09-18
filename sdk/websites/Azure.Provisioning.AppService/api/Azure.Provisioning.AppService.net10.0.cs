@@ -6,6 +6,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> CanonicalName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> CerBlob { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DomainValidationMethod { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use ExpiresOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> FriendlyName { get { throw null; } }
         public Azure.Provisioning.AppService.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } }
@@ -688,6 +690,8 @@ namespace Azure.Provisioning.AppService
     {
         public AppServicePlan(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.Resources.ExtendedAzureLocation ExtendedLocation { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use FreeOfferExpiresOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> FreeOfferExpireOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> FreeOfferExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> GeoRegion { get { throw null; } }
         public Azure.Provisioning.AppService.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } set { } }
@@ -717,6 +721,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.RegistryAdapter> RegistryAdapters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ResourceGroup { get { throw null; } }
         public Azure.Provisioning.AppService.AppServiceSkuDescription Sku { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use SpotExpiresOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> SpotExpireOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> SpotExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.AppServicePlanStatus> Status { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.StorageMount> StorageMounts { get { throw null; } set { } }
@@ -871,6 +877,8 @@ namespace Azure.Provisioning.AppService
     public partial class AppServiceSourceControl : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public AppServiceSourceControl(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use ExpiresOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
@@ -2986,6 +2994,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> CanonicalName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> CerBlob { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DomainValidationMethod { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use ExpiresOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> FriendlyName { get { throw null; } }
         public Azure.Provisioning.AppService.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } }
@@ -3107,6 +3117,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.AppService.WebAppPushSettings Push { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PythonVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RemoteDebuggingVersion { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use RequestTracingExpiresOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RequestTracingExpirationOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> RequestTracingExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.SiteDefaultAction> ScmIPSecurityRestrictionsDefaultAction { get { throw null; } set { } }
@@ -3300,6 +3312,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> AuthorEmail { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Deployer { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Details { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use EndsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsActive { get { throw null; } set { } }
@@ -3307,6 +3321,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> Message { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.AppService.WebSite Parent { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use StartsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Status { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -3485,6 +3501,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> ConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DBType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Deployer { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use EndsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAppOffline { get { throw null; } set { } }
@@ -3497,6 +3515,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepDictionary<string> SetParameters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> SetParametersXmlFileUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> SkipAppData { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use StartsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -3702,6 +3722,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> ConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DBType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Deployer { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use EndsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAppOffline { get { throw null; } set { } }
@@ -3714,6 +3736,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepDictionary<string> SetParameters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> SetParametersXmlFileUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> SkipAppData { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use StartsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -4172,6 +4196,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> CanonicalName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> CerBlob { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DomainValidationMethod { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use ExpiresOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> FriendlyName { get { throw null; } }
         public Azure.Provisioning.AppService.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } }
@@ -4302,6 +4328,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> AuthorEmail { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Deployer { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Details { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use EndsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsActive { get { throw null; } set { } }
@@ -4309,6 +4337,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> Message { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.AppService.WebSiteSlot Parent { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use StartsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Status { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -4476,6 +4506,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> ConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DBType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Deployer { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use EndsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAppOffline { get { throw null; } set { } }
@@ -4488,6 +4520,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepDictionary<string> SetParameters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> SetParametersXmlFileUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> SkipAppData { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use StartsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -4688,6 +4722,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepValue<string> ConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DBType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Deployer { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use EndsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAppOffline { get { throw null; } set { } }
@@ -4700,6 +4736,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.BicepDictionary<string> SetParameters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> SetParametersXmlFileUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> SkipAppData { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use StartsOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -5699,7 +5737,7 @@ namespace Azure.Provisioning.AppService
     public partial class StaticSiteLinkedBackendInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StaticSiteLinkedBackendInfo() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> BackendResourceId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> BackendResourceId { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Region { get { throw null; } }
@@ -6292,6 +6330,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.AppService.WebAppPushSettings Push { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PythonVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RemoteDebuggingVersion { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use RequestTracingExpiresOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RequestTracingExpirationOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> RequestTracingExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.SiteDefaultAction> ScmIPSecurityRestrictionsDefaultAction { get { throw null; } set { } }
@@ -6866,6 +6906,8 @@ namespace Azure.Provisioning.AppService
         public Azure.Provisioning.AppService.WebAppPushSettings Push { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PythonVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RemoteDebuggingVersion { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use RequestTracingExpiresOn instead.", false)]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RequestTracingExpirationOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> RequestTracingExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppService.AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppService.SiteDefaultAction> ScmIPSecurityRestrictionsDefaultAction { get { throw null; } set { } }
