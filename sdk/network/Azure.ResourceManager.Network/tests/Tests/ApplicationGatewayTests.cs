@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             List<ApplicationGatewaySslCertificate> sslCertList = new List<ApplicationGatewaySslCertificate>{
                 new ApplicationGatewaySslCertificate()
-                {Data = BinaryData.FromString(Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password))),
+                {Data = BinaryData.FromObjectAsJson(Convert.ToBase64String(cert.Export(X509ContentType.Pfx, password))),
                     Password = password
                 }
             };
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Tests
             return
                 new ApplicationGatewayAuthenticationCertificate()
                 {
-                    Data = BinaryData.FromString(Convert.ToBase64String(cert.Export(X509ContentType.Cert)))
+                    Data = BinaryData.FromObjectAsJson(Convert.ToBase64String(cert.Export(X509ContentType.Cert)))
                 };
         }
 

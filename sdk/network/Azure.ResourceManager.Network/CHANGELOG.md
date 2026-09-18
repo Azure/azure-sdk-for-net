@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed double Base64 encoding when using the legacy `BinaryData` representation for certificate data after the TypeSpec migration.
+
 ### Other Changes
 
 ## 1.17.0 (2026-08-21)
