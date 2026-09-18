@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="PortMigrationInfo"/>. </summary>
         internal PortMigrationInfo()
         {
-            Peerings = new ChangeTrackingList<PeeringHealth>();
+            Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringHealth>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PortMigrationInfo"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sourcePortId"> The source port identifier before migration. </param>
         /// <param name="sourcePortStats"> The source port statistics before migration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PortMigrationInfo(string portId, string status, string phase, string failureReason, IList<PeeringHealth> peerings, string sourcePortId, SourcePortStats sourcePortStats, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PortMigrationInfo(string portId, string status, string phase, string failureReason, IList<ExpressRouteCircuitPeeringHealth> peerings, string sourcePortId, SourcePortStats sourcePortStats, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PortId = portId;
             Status = status;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The peering health details for the port. </summary>
         [WirePath("peerings")]
-        public IList<PeeringHealth> Peerings { get; }
+        public IList<ExpressRouteCircuitPeeringHealth> Peerings { get; }
 
         /// <summary> The source port identifier before migration. </summary>
         [WirePath("sourcePortId")]
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The peering health information from the source port. </summary>
         [WirePath("sourcePortStats.peerings")]
-        public IList<PeeringHealth> SourcePortStatsPeerings
+        public IList<ExpressRouteCircuitPeeringHealth> SourcePortStatsPeerings
         {
             get
             {

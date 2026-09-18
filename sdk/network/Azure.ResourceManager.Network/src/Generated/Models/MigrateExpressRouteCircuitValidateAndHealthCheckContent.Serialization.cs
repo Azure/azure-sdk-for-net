@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string targetPeeringLocation = default;
+            AzureLocation targetPeeringLocation = default;
             IList<ExpressRouteCircuitPortMapping> targetPortMapping = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("targetPeeringLocation"u8))
                 {
-                    targetPeeringLocation = prop.Value.GetString();
+                    targetPeeringLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetPortMapping"u8))

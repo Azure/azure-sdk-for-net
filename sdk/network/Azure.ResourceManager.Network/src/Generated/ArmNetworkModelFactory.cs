@@ -4209,7 +4209,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetPeeringLocation"> The target peering location for circuit migration. </param>
         /// <param name="targetPortMapping"> The source-to-target port mappings for circuit migration. </param>
         /// <returns> A new <see cref="Models.MigrateExpressRouteCircuitValidateAndHealthCheckContent"/> instance for mocking. </returns>
-        public static MigrateExpressRouteCircuitValidateAndHealthCheckContent MigrateExpressRouteCircuitValidateAndHealthCheckContent(string targetPeeringLocation = default, IEnumerable<ExpressRouteCircuitPortMapping> targetPortMapping = default)
+        public static MigrateExpressRouteCircuitValidateAndHealthCheckContent MigrateExpressRouteCircuitValidateAndHealthCheckContent(AzureLocation targetPeeringLocation = default, IEnumerable<ExpressRouteCircuitPortMapping> targetPortMapping = default)
         {
             targetPortMapping ??= new ChangeTrackingList<ExpressRouteCircuitPortMapping>();
 
@@ -4266,18 +4266,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sourcePortId"> The source port identifier before migration. </param>
         /// <param name="sourcePortStatsPeerings"> The peering health information from the source port. </param>
         /// <returns> A new <see cref="Models.PortMigrationInfo"/> instance for mocking. </returns>
-        public static PortMigrationInfo PortMigrationInfo(string portId = default, string status = default, string phase = default, string failureReason = default, IEnumerable<PeeringHealth> peerings = default, string sourcePortId = default, IEnumerable<PeeringHealth> sourcePortStatsPeerings = default)
+        public static PortMigrationInfo PortMigrationInfo(string portId = default, string status = default, string phase = default, string failureReason = default, IEnumerable<ExpressRouteCircuitPeeringHealth> peerings = default, string sourcePortId = default, IEnumerable<ExpressRouteCircuitPeeringHealth> sourcePortStatsPeerings = default)
         {
-            peerings ??= new ChangeTrackingList<PeeringHealth>();
+            peerings ??= new ChangeTrackingList<ExpressRouteCircuitPeeringHealth>();
 
             return new PortMigrationInfo(
                 portId,
                 status,
                 phase,
                 failureReason,
-                (peerings ?? new ChangeTrackingList<PeeringHealth>()).ToList(),
+                (peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringHealth>()).ToList(),
                 sourcePortId,
-                sourcePortStatsPeerings is null ? default : new SourcePortStats((sourcePortStatsPeerings ?? new ChangeTrackingList<PeeringHealth>()).ToList(), default),
+                sourcePortStatsPeerings is null ? default : new SourcePortStats((sourcePortStatsPeerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringHealth>()).ToList(), default),
                 default);
         }
 
@@ -4285,21 +4285,21 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> The type of peering (for example, Private, Microsoft, Public). </param>
         /// <param name="statsCurrent"> The current peering statistics. </param>
         /// <param name="statsAtPrepare"> The peering statistics captured at prepare phase. </param>
-        /// <returns> A new <see cref="Models.PeeringHealth"/> instance for mocking. </returns>
-        public static PeeringHealth PeeringHealth(string @type = default, PeeringStats statsCurrent = default, PeeringStats statsAtPrepare = default)
+        /// <returns> A new <see cref="Models.ExpressRouteCircuitPeeringHealth"/> instance for mocking. </returns>
+        public static ExpressRouteCircuitPeeringHealth ExpressRouteCircuitPeeringHealth(string @type = default, ExpressRouteCircuitPeeringStats statsCurrent = default, ExpressRouteCircuitPeeringStats statsAtPrepare = default)
         {
-            return new PeeringHealth(@type, statsCurrent, statsAtPrepare, default);
+            return new ExpressRouteCircuitPeeringHealth(@type, statsCurrent, statsAtPrepare, default);
         }
 
         /// <summary> Statistical information for a peering connection. </summary>
         /// <param name="capturedOn"> The timestamp when these statistics were captured. </param>
         /// <param name="metrics"> The collection of peering metrics. </param>
-        /// <returns> A new <see cref="Models.PeeringStats"/> instance for mocking. </returns>
-        public static PeeringStats PeeringStats(DateTimeOffset? capturedOn = default, IEnumerable<ExpressRoutePeeringMetric> metrics = default)
+        /// <returns> A new <see cref="Models.ExpressRouteCircuitPeeringStats"/> instance for mocking. </returns>
+        public static ExpressRouteCircuitPeeringStats ExpressRouteCircuitPeeringStats(DateTimeOffset? capturedOn = default, IEnumerable<ExpressRoutePeeringMetric> metrics = default)
         {
             metrics ??= new ChangeTrackingList<ExpressRoutePeeringMetric>();
 
-            return new PeeringStats(capturedOn, (metrics ?? new ChangeTrackingList<ExpressRoutePeeringMetric>()).ToList(), default);
+            return new ExpressRouteCircuitPeeringStats(capturedOn, (metrics ?? new ChangeTrackingList<ExpressRoutePeeringMetric>()).ToList(), default);
         }
 
         /// <summary> Metric entry for migration peering statistics. </summary>
@@ -4317,7 +4317,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="targetPortMapping"> The source-to-target port mappings for circuit migration. </param>
         /// <param name="portId"> The port identifier used for shutDownBgp, migrate, restoreBgp, and rollback operations. </param>
         /// <returns> A new <see cref="Models.MigrateExpressRouteCircuitContent"/> instance for mocking. </returns>
-        public static MigrateExpressRouteCircuitContent MigrateExpressRouteCircuitContent(string targetPeeringLocation = default, IEnumerable<ExpressRouteCircuitPortMapping> targetPortMapping = default, string portId = default)
+        public static MigrateExpressRouteCircuitContent MigrateExpressRouteCircuitContent(AzureLocation? targetPeeringLocation = default, IEnumerable<ExpressRouteCircuitPortMapping> targetPortMapping = default, string portId = default)
         {
             targetPortMapping ??= new ChangeTrackingList<ExpressRouteCircuitPortMapping>();
 

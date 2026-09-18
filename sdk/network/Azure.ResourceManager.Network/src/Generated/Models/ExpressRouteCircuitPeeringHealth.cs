@@ -12,22 +12,22 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Health information for a peering connection. </summary>
-    public partial class PeeringHealth
+    public partial class ExpressRouteCircuitPeeringHealth
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PeeringHealth"/>. </summary>
-        internal PeeringHealth()
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringHealth"/>. </summary>
+        internal ExpressRouteCircuitPeeringHealth()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeeringHealth"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringHealth"/>. </summary>
         /// <param name="type"> The type of peering (for example, Private, Microsoft, Public). </param>
         /// <param name="statsCurrent"> The current peering statistics. </param>
         /// <param name="statsAtPrepare"> The peering statistics captured at prepare phase. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringHealth(string @type, PeeringStats statsCurrent, PeeringStats statsAtPrepare, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteCircuitPeeringHealth(string @type, ExpressRouteCircuitPeeringStats statsCurrent, ExpressRouteCircuitPeeringStats statsAtPrepare, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             StatsCurrent = statsCurrent;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The current peering statistics. </summary>
         [WirePath("statsCurrent")]
-        public PeeringStats StatsCurrent { get; }
+        public ExpressRouteCircuitPeeringStats StatsCurrent { get; }
 
         /// <summary> The peering statistics captured at prepare phase. </summary>
         [WirePath("statsAtPrepare")]
-        public PeeringStats StatsAtPrepare { get; }
+        public ExpressRouteCircuitPeeringStats StatsAtPrepare { get; }
     }
 }

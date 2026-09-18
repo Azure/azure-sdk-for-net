@@ -372,9 +372,11 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(ExpressRouteCircuitListResult))]
     [ModelReaderWriterBuildable(typeof(ExpressRouteCircuitPeeringConfig))]
     [ModelReaderWriterBuildable(typeof(ExpressRouteCircuitPeeringData))]
+    [ModelReaderWriterBuildable(typeof(ExpressRouteCircuitPeeringHealth))]
     [ModelReaderWriterBuildable(typeof(ExpressRouteCircuitPeeringListResult))]
     [ModelReaderWriterBuildable(typeof(ExpressRouteCircuitPeeringPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(ExpressRouteCircuitPeeringResource))]
+    [ModelReaderWriterBuildable(typeof(ExpressRouteCircuitPeeringStats))]
     [ModelReaderWriterBuildable(typeof(ExpressRouteCircuitPortMapping))]
     [ModelReaderWriterBuildable(typeof(ExpressRouteCircuitPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(ExpressRouteCircuitResource))]
@@ -875,8 +877,6 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(PeerExpressRouteCircuitConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(PeerExpressRouteCircuitConnectionPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(PeerExpressRouteCircuitConnectionResource))]
-    [ModelReaderWriterBuildable(typeof(PeeringHealth))]
-    [ModelReaderWriterBuildable(typeof(PeeringStats))]
 #pragma warning disable CS0618 // global::Azure.ResourceManager.Network.Models.PeerRouteList is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(PeerRouteList))]
 #pragma warning restore CS0618 // global::Azure.ResourceManager.Network.Models.PeerRouteList is obsolete and may be removed in future versions.

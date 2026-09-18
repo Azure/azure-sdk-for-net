@@ -12,22 +12,22 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Statistical information for a peering connection. </summary>
-    public partial class PeeringStats
+    public partial class ExpressRouteCircuitPeeringStats
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PeeringStats"/>. </summary>
-        internal PeeringStats()
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringStats"/>. </summary>
+        internal ExpressRouteCircuitPeeringStats()
         {
             Metrics = new ChangeTrackingList<ExpressRoutePeeringMetric>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PeeringStats"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringStats"/>. </summary>
         /// <param name="capturedOn"> The timestamp when these statistics were captured. </param>
         /// <param name="metrics"> The collection of peering metrics. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringStats(DateTimeOffset? capturedOn, IList<ExpressRoutePeeringMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteCircuitPeeringStats(DateTimeOffset? capturedOn, IList<ExpressRoutePeeringMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapturedOn = capturedOn;
             Metrics = metrics;

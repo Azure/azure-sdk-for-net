@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(TargetPeeringLocation))
             {
                 writer.WritePropertyName("targetPeeringLocation"u8);
-                writer.WriteStringValue(TargetPeeringLocation);
+                writer.WriteStringValue(TargetPeeringLocation.Value);
             }
             if (Optional.IsCollectionDefined(TargetPortMapping))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string targetPeeringLocation = default;
+            AzureLocation? targetPeeringLocation = default;
             IList<ExpressRouteCircuitPortMapping> targetPortMapping = default;
             string portId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -155,7 +155,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("targetPeeringLocation"u8))
                 {
-                    targetPeeringLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetPeeringLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetPortMapping"u8))
