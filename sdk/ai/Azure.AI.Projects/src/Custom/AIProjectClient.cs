@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Evaluation;
@@ -238,27 +239,39 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// Return the new instance of ProjectsRealtimeSessionClient.
+        /// Creates and connects a new <see cref="ProjectsRealtimeSessionClient"/> for the named voice agent.
         /// </summary>
-        /// <param name="model">The model to be used by the client.</param>
+        /// <param name="model">The name of the voice agent to connect to (used as the <c>{agentName}</c> path segment).</param>
         /// <param name="intent">The client intent.</param>
-        /// <returns>The new instance of ProjectsRealtimeSessionClient.</returns>
+        /// <param name="store">Whether this session's conversation is persisted, overriding the agent definition when specified.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns>A connected <see cref="ProjectsRealtimeSessionClient"/>.</returns>
+#pragma warning disable AZC0015 // Returns a connected WebSocket session client, not a REST response; there is no response body to wrap.
+#pragma warning disable AZC0004 // Establishing a WebSocket connection is asynchronous-only.
         [Experimental("AAIP002")]
-        public virtual ProjectsRealtimeSessionClient GetProjectsRealtimeSessionClient(string model, string intent)
+        public virtual async Task<ProjectsRealtimeSessionClient> GetProjectsRealtimeSessionClientAsync(
+            string model,
+            string intent = null,
+            bool? store = null,
+            CancellationToken cancellationToken = default)
+#pragma warning restore AZC0004
+#pragma warning restore AZC0015
         {
-            return new ProjectsRealtimeSessionClient(
-                endpoint: _endpoint,
-                tokenProvider: _tokenProvider,
-                new ProjectsRealtimeSessionClientOptions(
-                    parentClient: GetProjectsRealtimeClient(),
-                    tokenProperties: _flows[0],
-                    experimentalHeaders: s_experimentalHeaders
-                )
-                {
-                    Model =model,
-                    Intent = intent
-                }
-            );
+            ProjectsRealtimeSessionClient session = new(_endpoint, _tokenProvider, model, intent, store, GetProjectsRealtimeClient())
+            {
+                TokenProperties = _flows[0],
+                ApiVersion = _apiVersion,
+            };
+            try
+            {
+                await session.ConnectInternalAsync(cancellationToken).ConfigureAwait(false);
+                return session;
+            }
+            catch
+            {
+                session.Dispose();
+                throw;
+            }
         }
 
         /// <summary> Initializes a new instance of AgentInsightMonitors. </summary>

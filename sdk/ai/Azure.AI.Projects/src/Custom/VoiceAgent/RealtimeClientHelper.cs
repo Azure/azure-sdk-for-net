@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Text;
 using OpenAI;
 using OpenAI.Realtime;
 
@@ -11,33 +12,50 @@ namespace Azure.AI.Projects;
 
 internal class RealtimeClientHelper
 {
-    internal static Uri GetWebSocketEndpoint(Uri endpoint, RealtimeClientOptions options = null)
+    /// <summary>
+    /// Builds the WebSocket URI for a specific voice agent's realtime endpoint
+    /// (<c>/agents/{agentName}/endpoint/protocols/voice</c>), matching the REST-documented
+    /// conversation-history path (<c>/agents/{agentName}/endpoint/protocols/voice/conversations</c>)
+    /// exposed by <see cref="Azure.AI.Projects.Agents.BetaVoiceAgentsConversations"/>.
+    /// </summary>
+    internal static Uri GetAgentWebSocketEndpoint(Uri endpoint, string agentName)
     {
-        if (options?.Endpoint is not null && endpoint is not null)
+        Argument.AssertNotNull(endpoint, nameof(endpoint));
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
+        UriBuilder uriBuilder = new(endpoint)
         {
-            throw new InvalidOperationException(
-                $"Cannot supply both a {nameof(options)}.{nameof(options.Endpoint)} and {nameof(endpoint)}.");
-        }
-        else if (options?.Endpoint is null && endpoint is null)
-        {
-            throw new InvalidOperationException($"Both {nameof(options)}.{nameof(options.Endpoint)} and {nameof(endpoint)} are null.");
-        }
-        UriBuilder uriBuilder = new(endpoint ?? options?.Endpoint);
-        uriBuilder.Scheme = uriBuilder.Scheme.ToLowerInvariant() switch
-        {
-            "http" => "ws",
-            "https" => "wss",
-            _ => uriBuilder.Scheme
+            Scheme = endpoint.Scheme.ToLowerInvariant() switch
+            {
+                "http" => "ws",
+                "https" => "wss",
+                _ => endpoint.Scheme
+            },
+            Query = ""
         };
-        uriBuilder.Query = "";
-        string path = uriBuilder.Path.TrimEnd('/');
-        if (!path.EndsWith("/realtime", StringComparison.Ordinal))
-        {
-            path += "/realtime";
-        }
-        uriBuilder.Path = path;
+        uriBuilder.Path = $"{endpoint.AbsolutePath.TrimEnd('/')}/agents/{Uri.EscapeDataString(agentName)}/endpoint/protocols/voice";
 
         return uriBuilder.Uri;
+    }
+
+    /// <summary>
+    /// Appends a non-empty query parameter to <paramref name="query"/>, matching the format
+    /// expected by <see cref="UriBuilder.Query"/> (a leading '?' is not included).
+    /// </summary>
+    internal static void AppendQueryParameter(StringBuilder query, string name, string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return;
+        }
+
+        if (query.Length > 0)
+        {
+            query.Append('&');
+        }
+        query.Append(Uri.EscapeDataString(name));
+        query.Append('=');
+        query.Append(Uri.EscapeDataString(value));
     }
 
     internal static ClientPipeline CreatePipeline(Uri endpoint, AuthenticationTokenProvider tokenProvider, string experimentalHeaders, string authorizationScope, RealtimeClientOptions options = null)

@@ -3,10 +3,14 @@
 ## 3.0.0-beta.3 (2026-09-16)
 
 ### Features Added
-- Added two clients to work with voice Agents: `ProjectsRealtimeClient` and `ProjectsRealtimeSessionClient`.
+- Added `ProjectsRealtimeSessionClient` to work with voice agents. `AIProjectClient.GetProjectsRealtimeSessionClientAsync` connects `ProjectsRealtimeSessionClient` to the named voice agent's realtime endpoint (`/agents/{agentName}/endpoint/protocols/voice`) and returns an already-connected instance; a `store` parameter controls whether the session's conversation is persisted.
 
 ### Breaking Changes
 - `MaxSamples` member was removed from `DataGenerationJobOptions`.
+- `AIProjectClient.GetProjectsRealtimeSessionClient(string, string)` was replaced by the asynchronous `GetProjectsRealtimeSessionClientAsync(string, string, bool?, CancellationToken)`, which now actually establishes the realtime WebSocket connection before returning (the previous synchronous method returned an unconnected client).
+
+### Sample Updates
+- Added `Sample_VoiceAgent`, showing how to create a voice agent and exchange a realtime text turn with it, and `Sample_VoiceAgent_ReadConversation`, showing how to persist a realtime session's conversation with `store: true` and read it back afterward through `BetaVoiceAgentsConversations`.
 
 ## 3.0.0-beta.2 (2026-09-03)
 

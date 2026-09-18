@@ -23,6 +23,7 @@ namespace Azure.AI.Projects.Tests
         public string DATASETVERSION1 => GetRecordedVariable("DATASET_VERSION_1");
         public string DATASETVERSION2 => GetRecordedVariable("DATASET_VERSION_2");
         public string FOUNDRY_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_MODEL_NAME));
+        public string FOUNDRY_REALTIME_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_REALTIME_MODEL_NAME));
         public string MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME => GetRecordedVariable(nameof(MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
         public string MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME => GetRecordedVariable(nameof(MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME));
         public string EMBEDDING_MODEL_NAME => GetRecordedVariable(nameof(EMBEDDING_MODEL_NAME));
