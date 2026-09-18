@@ -193,7 +193,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
-        public async Task PostAndGetReceipt_WithV2026_02_23_ReturnsTypedReceipt()
+        [LiveOnly]
+        public async Task PostAndGetReceipt_WithV2026_02_23_ReturnsApplicationClaim()
         {
             // Dedicated client pinned to the new "2026-02-23" service version (rather than the
             // V2024_12_09_Preview version used by the shared Setup() client), to exercise a write
@@ -212,15 +213,23 @@ namespace Azure.Security.ConfidentialLedger.Tests
             string transactionId = operation.Id;
             Assert.NotNull(transactionId);
 
-            Response<TransactionReceipt> receiptResponse = await v2026Client.GetReceiptAsync(transactionId).ConfigureAwait(false);
+            Response<TransactionReceipt> receiptResponse = null;
+            for (int attempt = 0; attempt < 10; attempt++)
+            {
+                receiptResponse = await v2026Client.GetReceiptAsync(transactionId).ConfigureAwait(false);
+                if (receiptResponse.Value.TransactionId == transactionId &&
+                    receiptResponse.Value.ApplicationClaims.Count > 0)
+                {
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+            }
 
             Assert.AreEqual((int)HttpStatusCode.OK, receiptResponse.GetRawResponse().Status);
             Assert.AreEqual(transactionId, receiptResponse.Value.TransactionId);
-            // Whether the ledger's application (if any) attaches claims to this transaction depends on the
-            // live deployment/permissions of the ryan-app-claim-test ledger, so ApplicationClaims is only
-            // asserted to be present (never null) here; the deterministic shape of individual claim kinds
-            // (ClaimDigest / LedgerEntry) is covered by ConfidentialLedgerServiceVersionTests.
-            Assert.IsNotNull(receiptResponse.Value.ApplicationClaims);
+            Assert.IsNotEmpty(receiptResponse.Value.ApplicationClaims);
+            Assert.That(receiptResponse.Value.ApplicationClaims, Has.Some.Matches<ApplicationClaim>(
+                claim => claim.Kind == ApplicationClaimKind.LedgerEntry && claim.LedgerEntry != null));
         }
         #endregion
 

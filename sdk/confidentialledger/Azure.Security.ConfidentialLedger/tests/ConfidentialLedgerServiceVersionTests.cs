@@ -8,6 +8,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Security.ConfidentialLedger.Certificate;
 using Azure.Security.ConfidentialLedger.Models;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 using static Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions;
 
@@ -72,14 +73,24 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [Test]
-        public void ConfigurationDefault_ResolvesTo_V2026_02_23()
+        public async Task ConfigurationDefault_SendsExactApiVersionQueryParameter()
         {
-            // ConfidentialLedgerClientOptions() and ConfidentialLedgerClientOptions(ServiceVersion.V2026_02_23)
-            // must produce the identical wire api-version, since V2026_02_23 is now the default.
-            var defaultOptions = new ConfidentialLedgerClientOptions();
-            var explicitOptions = new ConfidentialLedgerClientOptions(ServiceVersion.V2026_02_23);
+            string capturedQuery = null;
+            var transport = new MockTransport(req =>
+            {
+                capturedQuery = req.Uri.Query;
+                var response = new MockResponse(200);
+                response.SetContent(@"{ ""state"": ""Ready"", ""transactionId"": ""1.1"" }");
+                return response;
+            });
+#pragma warning disable SCME0002 // Testing the experimental configuration constructor.
+            var options = new ConfidentialLedgerClientOptions((IConfigurationSection)null);
+#pragma warning restore SCME0002
+            var client = CreateClient(transport, options);
 
-            Assert.AreEqual(explicitOptions.Version, defaultOptions.Version);
+            await client.GetReceiptAsync("1.1", new RequestContext());
+
+            Assert.AreEqual("?api-version=2026-02-23", capturedQuery);
         }
 
         [TestCase(null)]
