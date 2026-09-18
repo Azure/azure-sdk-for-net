@@ -25,7 +25,11 @@
   by `azsdk -o json tsp client customized-update ...`:
     success (bool), attemptsUsed (int), appliedPatches[]{filePath,description,replacementCount},
     buildResult (string, only when !success), errorCode (KnownErrorCodes),
-    specChangeRequired[], customCodeChangeRequired[], message, typeSpecChangesSummary[]
+    operation_status, response_error, next_steps[], specChangeRequired[],
+    customCodeChangeRequired[], message, typeSpecChangesSummary[].
+  attemptsUsed counts completed proposals reaching host validation, including no-progress;
+  it excludes baseline/classifier builds, Exit reminders, and individual tool calls.
+  Missing/invalid counts remain unknown, never inferred from files or patch counts.
 #>
 [CmdletBinding()]
 param(
@@ -59,7 +63,7 @@ param(
     [string]$PreRepairErrorsFile = $env:AZSDK_REPAIR_PRE_ERRORS_FILE,
 
     # Captured CLI stderr/capability errors, including failures without a JSON response.
-    [string]$EngineErrorsFile = $env:AZSDK_REPAIR_ENGINE_ERRORS_FILE,
+    [string]$EngineErrorsFile = '',
 
     # Identity fields (default to GitHub Actions env; overridable for tests).
     [string]$Repo = $env:GITHUB_REPOSITORY,
@@ -215,10 +219,8 @@ $remainingText = if ($status -eq 'failed' -and $final) { [string](Get-Prop $fina
 $remainingCounts = Get-ErrorCounts $remainingText
 $remainingDiags = Get-Diagnostics $remainingText
 $engineErrors = ''
-if ($EngineErrorsFile) {
-    $engineErrors = if (Test-Path -LiteralPath $EngineErrorsFile -PathType Leaf) {
-        Get-Content -Raw -LiteralPath $EngineErrorsFile
-    } else { 'The requested captured engine error file was not found. Consult the workflow logs.' }
+if ($status -eq 'failed' -and $EngineErrorsFile -and (Test-Path -LiteralPath $EngineErrorsFile -PathType Leaf)) {
+    $engineErrors = Get-Content -Raw -LiteralPath $EngineErrorsFile
 }
 
 # ---- files changed (git diff, Generated/ vs custom) ----------------------------
