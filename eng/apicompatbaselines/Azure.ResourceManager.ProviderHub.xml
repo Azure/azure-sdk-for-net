@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
 <!--
-  This file records a subset of the ApiCompat breaks in Azure.ResourceManager.ProviderHub 1.3.0:
-  the ones that come from regenerating the package on the current management-plane generator rather
-  than from the upstream compliance change to the Microsoft.ProviderHub specification.
+  This file records 8 of the ApiCompat breaks in Azure.ResourceManager.ProviderHub 1.3.0. They are
+  the breaks caused by deliberate modelling changes in API version 2025-10-01, as distinct from the
+  ones caused by the upstream compliance change to the Microsoft.ProviderHub specification. They
+  fall into exactly two groups:
+
+    - The resource-deletion-policy rename. The specification records this with @renamedFrom on
+      API version 2025-10-01, so it is a service decision rather than an artifact of regeneration.
+    - The promotion of OperationsPutContent to an ARM resource. The specification declares it
+      Azure.ResourceManager.ProxyResource, so the flat model exposed by 1.2.x was the anomaly and
+      reverting it would regress ARM conformance.
+
+  Neither group should be mitigated back to the 1.2.x shape: doing so would contradict the
+  specification. They are recorded here so the decision is reviewable.
 
   Measured against the 1.2.1 baseline, the regeneration produces 97 distinct ApiCompat findings.
-  Only 26 of them name an internal-only Microsoft identifier removed by the compliance change; the
+  26 of them name an internal-only Microsoft identifier removed by the compliance change; the
   remaining 71 name nothing sensitive. ApiCompat suppression targets are fully qualified signatures
   and the tool supports no wildcard, so suppressing those 26 would reproduce in this repository the
   exact identifiers the upstream change exists to remove. They are described by location and shape
-  in the package CHANGELOG.md instead.
+  in the package CHANGELOG.md instead. This file is therefore NOT a complete suppression list and
+  could not be made into one while the compliance removals stand.
 
-  Four findings that were previously listed here have since been fixed rather than suppressed, by
+  Four findings that were previously listed here have since been fixed rather than recorded, by
   restoring the members in src/Custom: the synchronous ProviderRegistrationResource.Delete pair and
   the flattened ResourceTypeRegistrationResourceManagementOptions.BatchProvisioningSupportSupported-
   Operations property.
