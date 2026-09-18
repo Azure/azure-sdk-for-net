@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.Discovery.Models
         public int? ImageCacheUpperThreshold { get { throw null; } set { } }
         public int MaxNodeCount { get { throw null; } set { } }
         public int? MinNodeCount { get { throw null; } set { } }
-        public int? OsDiskSizeGb { get { throw null; } set { } }
+        public int? OSDiskSizeGb { get { throw null; } set { } }
         public Azure.ResourceManager.Discovery.Models.DiscoveryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Discovery.Models.DiscoveryScaleSetPriority? ScaleSetPriority { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }

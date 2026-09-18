@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -25,12 +26,16 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
         /// <param name="newStorageCapacityTiB"> The new storage capacity in TiB for the AML file system after expansion. This must be a multiple of the Sku step size, and greater than the current storage capacity of the AML file system. </param>
         /// <param name="status"> The status of the expansion job. </param>
+        /// <param name="shouldRunRebalanceJob"> When true, expansion creates a RebalanceJob after completing. Optional, defaults to true. </param>
+        /// <param name="rebalanceJobId"> Fully qualified ARM resource ID of the child rebalance job created by this expansion. Populated after RebalanceJob is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpansionJobProperties(AmlFileSystemExpansionJobProvisioningState? provisioningState, float? newStorageCapacityTiB, ExpansionJobPropertiesStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpansionJobProperties(AmlFileSystemExpansionJobProvisioningState? provisioningState, float? newStorageCapacityTiB, ExpansionJobPropertiesStatus status, bool? shouldRunRebalanceJob, ResourceIdentifier rebalanceJobId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             NewStorageCapacityTiB = newStorageCapacityTiB;
             Status = status;
+            ShouldRunRebalanceJob = shouldRunRebalanceJob;
+            RebalanceJobId = rebalanceJobId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,6 +47,12 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> The status of the expansion job. </summary>
         internal ExpansionJobPropertiesStatus Status { get; }
+
+        /// <summary> When true, expansion creates a RebalanceJob after completing. Optional, defaults to true. </summary>
+        public bool? ShouldRunRebalanceJob { get; set; }
+
+        /// <summary> Fully qualified ARM resource ID of the child rebalance job created by this expansion. Populated after RebalanceJob is created. </summary>
+        public ResourceIdentifier RebalanceJobId { get; }
 
         /// <summary> The operational state of the expansion job. InProgress indicates the expansion is still running. Completed indicates expansion finished successfully. Failed means the expansion was unable to complete due to a fatal error. Deleting indicates the expansion is being rolled back. </summary>
         public AmlFileSystemExpansionJobStatusType? State

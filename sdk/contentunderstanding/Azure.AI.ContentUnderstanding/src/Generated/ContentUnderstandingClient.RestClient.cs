@@ -27,7 +27,7 @@ namespace Azure.AI.ContentUnderstanding
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateAnalyzeRequest(string analyzerId, RequestContent content, string stringEncoding, string processingLocation, Guid? clientRequestId, RequestContext context)
+        internal HttpMessage CreateAnalyzeRequest(string analyzerId, RequestContent content, string stringEncoding, string processingLocation, bool? allowInputTruncation, Guid? clientRequestId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,6 +47,10 @@ namespace Azure.AI.ContentUnderstanding
             {
                 uri.AppendQuery("processingLocation", processingLocation, true);
             }
+            if (allowInputTruncation != null)
+            {
+                uri.AppendQuery("allowInputTruncation", TypeFormatters.ConvertToString(allowInputTruncation), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -61,7 +65,7 @@ namespace Azure.AI.ContentUnderstanding
             return message;
         }
 
-        internal HttpMessage CreateAnalyzeBinaryRequest(string analyzerId, string contentType, RequestContent content, string stringEncoding, string processingLocation, string contentRange, Guid? clientRequestId, RequestContext context)
+        internal HttpMessage CreateAnalyzeBinaryRequest(string analyzerId, string contentType, RequestContent content, string stringEncoding, string processingLocation, bool? allowInputTruncation, string contentRange, Guid? clientRequestId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -81,11 +85,95 @@ namespace Azure.AI.ContentUnderstanding
             {
                 uri.AppendQuery("processingLocation", processingLocation, true);
             }
+            if (allowInputTruncation != null)
+            {
+                uri.AppendQuery("allowInputTruncation", TypeFormatters.ConvertToString(allowInputTruncation), true);
+            }
             if (contentRange != null)
             {
                 uri.AppendQuery("range", contentRange, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", contentType);
+            if (clientRequestId != null)
+            {
+                request.Headers.SetValue("x-ms-client-request-id", TypeFormatters.ConvertToString(clientRequestId));
+            }
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAnalyzeInlineRequest(string analyzerId, RequestContent content, string stringEncoding, string processingLocation, bool? allowInputTruncation, Guid? clientRequestId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/contentunderstanding", false);
+            uri.AppendPath("/analyzers/", false);
+            uri.AppendPath(analyzerId, true);
+            uri.AppendPath(":analyzeInline", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (stringEncoding != null)
+            {
+                uri.AppendQuery("stringEncoding", stringEncoding, true);
+            }
+            if (processingLocation != null)
+            {
+                uri.AppendQuery("processingLocation", processingLocation, true);
+            }
+            if (allowInputTruncation != null)
+            {
+                uri.AppendQuery("allowInputTruncation", TypeFormatters.ConvertToString(allowInputTruncation), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            if (clientRequestId != null)
+            {
+                request.Headers.SetValue("x-ms-client-request-id", TypeFormatters.ConvertToString(clientRequestId));
+            }
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateAnalyzeBinaryInlineRequest(string analyzerId, RequestContent content, string contentType, string stringEncoding, string processingLocation, bool? allowInputTruncation, string contentRange, Guid? clientRequestId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/contentunderstanding", false);
+            uri.AppendPath("/analyzers/", false);
+            uri.AppendPath(analyzerId, true);
+            uri.AppendPath(":analyzeBinaryInline", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (stringEncoding != null)
+            {
+                uri.AppendQuery("stringEncoding", stringEncoding, true);
+            }
+            if (processingLocation != null)
+            {
+                uri.AppendQuery("processingLocation", processingLocation, true);
+            }
+            if (allowInputTruncation != null)
+            {
+                uri.AppendQuery("allowInputTruncation", TypeFormatters.ConvertToString(allowInputTruncation), true);
+            }
+            if (contentRange != null)
+            {
+                uri.AppendQuery("range", contentRange, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;

@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            DestinationsConfiguration destinationsConfiguration = default;
-            TracesConfiguration tracesConfiguration = default;
+            ContainerAppOpenTelemetryDestinationsConfiguration destinationsConfiguration = default;
+            ContainerAppOpenTelemetryTracesConfiguration tracesConfiguration = default;
             LogsConfiguration logsConfiguration = default;
-            MetricsConfiguration metricsConfiguration = default;
+            ContainerAppOpenTelemetryMetricsConfiguration metricsConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    destinationsConfiguration = DestinationsConfiguration.DeserializeDestinationsConfiguration(prop.Value, options);
+                    destinationsConfiguration = ContainerAppOpenTelemetryDestinationsConfiguration.DeserializeContainerAppOpenTelemetryDestinationsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tracesConfiguration"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    tracesConfiguration = TracesConfiguration.DeserializeTracesConfiguration(prop.Value, options);
+                    tracesConfiguration = ContainerAppOpenTelemetryTracesConfiguration.DeserializeContainerAppOpenTelemetryTracesConfiguration(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("logsConfiguration"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    metricsConfiguration = MetricsConfiguration.DeserializeMetricsConfiguration(prop.Value, options);
+                    metricsConfiguration = ContainerAppOpenTelemetryMetricsConfiguration.DeserializeContainerAppOpenTelemetryMetricsConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

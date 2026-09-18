@@ -75,6 +75,8 @@ Before starting, ensure the build environment is ready.
 
 ## Step 1 — Discover coverage gaps
 
+Before identifying missing scenarios, compare the working branch with current upstream `Azure/azure-sdk-for-net` main and check the dashboard report's generator commit and spec version. An older fork or dependency pin can make already-implemented scenarios appear missing locally.
+
 ### How specs are organized
 
 The Azure C# emitter tests specs from **two sources**:
@@ -90,7 +92,7 @@ The file `{PKG}/eng/scripts/Spector-Helper.psm1` defines which specs are include
 
 Current exclusions fall into three categories:
 
-1. **Standard spec issues**: `streaming/jsonl`, `response/status-code-range` (namespace conflict with `Azure.Response`), `type/file`
+1. **Standard spec issues**: `response/status-code-range` (namespace conflict with `Azure.Response`), `type/file`
 2. **Azure specs not yet buildable**: `azure/client-generator-core/alternate-type`, `azure/client-generator-core/deserialize-empty-string-as-null`
 3. **Delegated to management generator**: All `azure/resource-manager/*` specs (common-properties, non-resource, operation-templates, resources, large-header, method-subscription-id, multi-service variants)
 
@@ -152,6 +154,7 @@ Server/           (Endpoint/NotDefined, Path/Multiple, Path/Single, Versions/*)
 Service/
 SpecialHeaders/   (ConditionalRequest, Repeatability)
 SpecialWords/
+Streaming/        (Jsonl, Sse, including SSE protocol metadata and explicit resumption)
 Versioning/       (Added, MadeOptional, Removed, RenamedFrom, ReturnTypeChangedFrom, TypeChangedFrom)
 _Type/            (Array, Dictionary, Enum/*, Model/*, Property/*, Scalar, Union)
 ```

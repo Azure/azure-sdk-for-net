@@ -11,35 +11,35 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Representation of the months available selection in a gregorian calendar. </summary>
+    /// <summary> A month in which the scheduled action can run. </summary>
     public readonly partial struct Month : IEquatable<Month>
     {
         private readonly string _value;
-        /// <summary> The January month. </summary>
+        /// <summary> The scheduled action can run in January. </summary>
         private const string JanuaryValue = "January";
-        /// <summary> The February month. </summary>
+        /// <summary> The scheduled action can run in February. </summary>
         private const string FebruaryValue = "February";
-        /// <summary> The March month. </summary>
+        /// <summary> The scheduled action can run in March. </summary>
         private const string MarchValue = "March";
-        /// <summary> The April month. </summary>
+        /// <summary> The scheduled action can run in April. </summary>
         private const string AprilValue = "April";
-        /// <summary> The May month. </summary>
+        /// <summary> The scheduled action can run in May. </summary>
         private const string MayValue = "May";
-        /// <summary> The June month. </summary>
+        /// <summary> The scheduled action can run in June. </summary>
         private const string JuneValue = "June";
-        /// <summary> The July month. </summary>
+        /// <summary> The scheduled action can run in July. </summary>
         private const string JulyValue = "July";
-        /// <summary> The August month. </summary>
+        /// <summary> The scheduled action can run in August. </summary>
         private const string AugustValue = "August";
-        /// <summary> The September month. </summary>
+        /// <summary> The scheduled action can run in September. </summary>
         private const string SeptemberValue = "September";
-        /// <summary> The October month. </summary>
+        /// <summary> The scheduled action can run in October. </summary>
         private const string OctoberValue = "October";
-        /// <summary> The November month. </summary>
+        /// <summary> The scheduled action can run in November. </summary>
         private const string NovemberValue = "November";
-        /// <summary> The December month. </summary>
+        /// <summary> The scheduled action can run in December. </summary>
         private const string DecemberValue = "December";
-        /// <summary> All months. </summary>
+        /// <summary> Every month. </summary>
         private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="Month"/>. </summary>
@@ -52,43 +52,43 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> The January month. </summary>
+        /// <summary> The scheduled action can run in January. </summary>
         public static Month January { get; } = new Month(JanuaryValue);
 
-        /// <summary> The February month. </summary>
+        /// <summary> The scheduled action can run in February. </summary>
         public static Month February { get; } = new Month(FebruaryValue);
 
-        /// <summary> The March month. </summary>
+        /// <summary> The scheduled action can run in March. </summary>
         public static Month March { get; } = new Month(MarchValue);
 
-        /// <summary> The April month. </summary>
+        /// <summary> The scheduled action can run in April. </summary>
         public static Month April { get; } = new Month(AprilValue);
 
-        /// <summary> The May month. </summary>
+        /// <summary> The scheduled action can run in May. </summary>
         public static Month May { get; } = new Month(MayValue);
 
-        /// <summary> The June month. </summary>
+        /// <summary> The scheduled action can run in June. </summary>
         public static Month June { get; } = new Month(JuneValue);
 
-        /// <summary> The July month. </summary>
+        /// <summary> The scheduled action can run in July. </summary>
         public static Month July { get; } = new Month(JulyValue);
 
-        /// <summary> The August month. </summary>
+        /// <summary> The scheduled action can run in August. </summary>
         public static Month August { get; } = new Month(AugustValue);
 
-        /// <summary> The September month. </summary>
+        /// <summary> The scheduled action can run in September. </summary>
         public static Month September { get; } = new Month(SeptemberValue);
 
-        /// <summary> The October month. </summary>
+        /// <summary> The scheduled action can run in October. </summary>
         public static Month October { get; } = new Month(OctoberValue);
 
-        /// <summary> The November month. </summary>
+        /// <summary> The scheduled action can run in November. </summary>
         public static Month November { get; } = new Month(NovemberValue);
 
-        /// <summary> The December month. </summary>
+        /// <summary> The scheduled action can run in December. </summary>
         public static Month December { get; } = new Month(DecemberValue);
 
-        /// <summary> All months. </summary>
+        /// <summary> Every month. </summary>
         public static Month All { get; } = new Month(AllValue);
 
         /// <summary> Determines if two <see cref="Month"/> values are the same. </summary>

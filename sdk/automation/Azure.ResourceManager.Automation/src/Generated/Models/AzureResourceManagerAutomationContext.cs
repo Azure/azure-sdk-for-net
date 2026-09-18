@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Automation
 {
@@ -28,6 +29,8 @@ namespace Azure.ResourceManager.Automation
     [ModelReaderWriterBuildable(typeof(AutomationAccountModuleResource))]
     [ModelReaderWriterBuildable(typeof(AutomationAccountPatch))]
     [ModelReaderWriterBuildable(typeof(AutomationAccountProperties))]
+    [ModelReaderWriterBuildable(typeof(AutomationAccountPython2PackageCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(AutomationAccountPython2PackagePatch))]
     [ModelReaderWriterBuildable(typeof(AutomationAccountPython2PackageResource))]
     [ModelReaderWriterBuildable(typeof(AutomationAccountResource))]
     [ModelReaderWriterBuildable(typeof(AutomationAccountStatistics))]
@@ -291,6 +294,7 @@ namespace Azure.ResourceManager.Automation
     [ModelReaderWriterBuildable(typeof(WebhookProperties))]
     [ModelReaderWriterBuildable(typeof(WebhookUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(WindowsUpdateConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerAutomationContext : ModelReaderWriterContext
     {
     }

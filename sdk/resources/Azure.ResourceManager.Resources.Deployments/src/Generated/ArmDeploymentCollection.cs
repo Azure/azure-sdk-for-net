@@ -14,9 +14,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     /// <summary>
     /// A class representing a collection of <see cref="ArmDeploymentResource"/> and their operations.
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources
         internal ArmDeploymentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ArmDeploymentResource.ResourceType, out string armDeploymentApiVersion);
-            _armDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
+            _armDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Deployments", ArmDeploymentResource.ResourceType.Namespace, Diagnostics);
             _armDeploymentsRestClient = new ArmDeployments(_armDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, armDeploymentApiVersion ?? "2025-04-01");
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.ToString(), deploymentName, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
+                DeploymentsArmOperation<ArmDeploymentResource> operation = new DeploymentsArmOperation<ArmDeploymentResource>(
                     new ArmDeploymentResourceOperationSource(Client),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.ToString(), deploymentName, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
+                DeploymentsArmOperation<ArmDeploymentResource> operation = new DeploymentsArmOperation<ArmDeploymentResource>(
                     new ArmDeploymentResourceOperationSource(Client),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,

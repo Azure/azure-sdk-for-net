@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             bool? isLocalAuthDisabled = default;
             bool? isUnifiedSentinelBillingOnly = default;
             IReadOnlyList<string> associations = default;
+            bool? dataAuthorizationMode = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -118,6 +119,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     associations = array;
                     continue;
                 }
+                if (prop.NameEquals("dataAuthorizationMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dataAuthorizationMode = null;
+                        continue;
+                    }
+                    dataAuthorizationMode = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -131,6 +142,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 isLocalAuthDisabled,
                 isUnifiedSentinelBillingOnly,
                 associations ?? new ChangeTrackingList<string>(),
+                dataAuthorizationMode,
                 additionalProperties);
         }
     }

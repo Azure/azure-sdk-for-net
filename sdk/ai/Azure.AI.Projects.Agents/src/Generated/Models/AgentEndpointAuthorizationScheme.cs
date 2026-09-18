@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The AgentEndpointAuthorizationScheme.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EntraAuthorizationScheme"/>, <see cref="BotServiceAuthorizationScheme"/>, <see cref="BotServiceRbacAuthorizationScheme"/>, and <see cref="BotServiceTenantAuthorizationScheme"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BotServiceAuthorizationScheme"/>, <see cref="BotServiceRbacAuthorizationScheme"/>, <see cref="BotServiceTenantAuthorizationScheme"/>, and <see cref="EntraAuthorizationScheme"/>.
     /// </summary>
     public abstract partial class AgentEndpointAuthorizationScheme
     {

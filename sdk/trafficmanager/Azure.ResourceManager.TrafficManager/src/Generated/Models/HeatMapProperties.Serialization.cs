@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 throw new FormatException($"The model {nameof(HeatMapProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Endpoints))
             {
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             IList<TrafficManagerHeatMapEndpoint> endpoints = default;
             IList<TrafficManagerHeatMapTrafficFlow> trafficFlows = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endpoints"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HeatMapProperties(startOn, endOn, endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>(), trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>(), additionalBinaryDataProperties);
+            return new HeatMapProperties(startsOn, endsOn, endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>(), trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>(), additionalBinaryDataProperties);
         }
     }
 }

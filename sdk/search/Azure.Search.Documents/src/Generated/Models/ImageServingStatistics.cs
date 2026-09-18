@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -19,6 +20,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="ImageServingStatistics"/>. </summary>
         internal ImageServingStatistics()
         {
+            ServedImages = new ChangeTrackingList<ServedImage>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageServingStatistics"/>. </summary>
@@ -26,13 +28,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="imagesSentToModel"> The number of images sent to the downstream model. </param>
         /// <param name="totalImageSizeBytes"> The total size in bytes of images sent to the model. </param>
         /// <param name="verbalizationUsed"> Indicates whether image verbalization was used instead of direct image serving. </param>
+        /// <param name="servedImages"> The set of images the model selected to be served to the downstream model for this retrieval activity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImageServingStatistics(int? imagesRetrieved, int? imagesSentToModel, long? totalImageSizeBytes, bool? verbalizationUsed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImageServingStatistics(int? imagesRetrieved, int? imagesSentToModel, long? totalImageSizeBytes, bool? verbalizationUsed, IList<ServedImage> servedImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImagesRetrieved = imagesRetrieved;
             ImagesSentToModel = imagesSentToModel;
             TotalImageSizeBytes = totalImageSizeBytes;
             VerbalizationUsed = verbalizationUsed;
+            ServedImages = servedImages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,5 +51,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Indicates whether image verbalization was used instead of direct image serving. </summary>
         public bool? VerbalizationUsed { get; }
+
+        /// <summary> The set of images the model selected to be served to the downstream model for this retrieval activity. </summary>
+        public IList<ServedImage> ServedImages { get; }
     }
 }

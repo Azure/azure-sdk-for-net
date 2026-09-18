@@ -144,14 +144,14 @@ namespace BasicTypeSpec
                     List<ThingModel> array = new List<ThingModel>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ThingModel.DeserializeThingModel(item, options));
+                        array.Add(ThingModel.DeserializeThingModel(item, item.GetUtf8Bytes(), options));
                     }
                     items = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new PageThingModel(items, additionalBinaryDataProperties);

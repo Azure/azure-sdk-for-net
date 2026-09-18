@@ -42,8 +42,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="eTag"> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </param>
         /// <param name="status"> Contains read-only information about the machine. </param>
         /// <param name="localDnsProfile"> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </param>
+        /// <param name="capacityReservation"> The Capacity Reservation Group to provide virtual machines from a reserved group of Machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceMachineProperties(ContainerServiceMachineNetworkProperties network, ResourceIdentifier resourceId, ContainerServiceMachineHardwareProfile hardware, ContainerServiceMachineOSProfile operatingSystem, ContainerServiceMachineKubernetesProfile kubernetes, AgentPoolMode? mode, ContainerServiceMachineSecurityProfile security, ScaleSetPriority? priority, ScaleSetEvictionPolicy? evictionPolicy, MachineBillingProfile billing, string nodeImageVersion, string provisioningState, IDictionary<string, string> tags, ETag? eTag, ContainerServiceMachineStatus status, LocalDnsProfile localDnsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceMachineProperties(ContainerServiceMachineNetworkProperties network, ResourceIdentifier resourceId, ContainerServiceMachineHardwareProfile hardware, ContainerServiceMachineOSProfile operatingSystem, ContainerServiceMachineKubernetesProfile kubernetes, AgentPoolMode? mode, ContainerServiceMachineSecurityProfile security, ScaleSetPriority? priority, ScaleSetEvictionPolicy? evictionPolicy, MachineBillingProfile billing, string nodeImageVersion, string provisioningState, IDictionary<string, string> tags, ETag? eTag, ContainerServiceMachineStatus status, LocalDnsProfile localDnsProfile, CapacityReservation capacityReservation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Network = network;
             ResourceId = resourceId;
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ETag = eTag;
             Status = status;
             LocalDnsProfile = localDnsProfile;
+            CapacityReservation = capacityReservation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -128,6 +130,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("localDNSProfile")]
         public LocalDnsProfile LocalDnsProfile { get; set; }
 
+        /// <summary> The Capacity Reservation Group to provide virtual machines from a reserved group of Machines. </summary>
+        [WirePath("capacityReservation")]
+        internal CapacityReservation CapacityReservation { get; set; }
+
         /// <summary> The max price (in US Dollars) you are willing to pay for spot instances. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. For more details on spot pricing, see [spot VMs pricing](https://docs.microsoft.com/azure/virtual-machines/spot-vms#pricing). </summary>
         [WirePath("billing.spotMaxPrice")]
         public float? BillingSpotMaxPrice
@@ -143,6 +149,24 @@ namespace Azure.ResourceManager.ContainerService.Models
                     Billing = new MachineBillingProfile();
                 }
                 Billing.SpotMaxPrice = value;
+            }
+        }
+
+        /// <summary> The fully qualified resource ID of the Capacity Reservation Group to provide virtual machines from a reserved group of Machines. This is of the form: '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Compute/capacityreservationgroups/{capacityReservationGroupName}' Customers use it to create a Machine with a specified CRG. For more information see [Capacity Reservation](aka.ms/CapacityReservation). </summary>
+        [WirePath("capacityReservation.capacityReservationGroup.id")]
+        public ResourceIdentifier CapacityReservationGroupId
+        {
+            get
+            {
+                return CapacityReservation is null ? default : CapacityReservation.CapacityReservationGroupId;
+            }
+            set
+            {
+                if (CapacityReservation is null)
+                {
+                    CapacityReservation = new CapacityReservation();
+                }
+                CapacityReservation.CapacityReservationGroupId = value;
             }
         }
     }

@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     [CodeGenSuppress("MachineLearningError", typeof(ResponseError))]
     [CodeGenSuppress("MachineLearningPrivateEndpointConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(WorkspacePrivateEndpointResource), typeof(MachineLearningPrivateLinkServiceConnectionState), typeof(MachineLearningPrivateEndpointConnectionProvisioningState?), typeof(ManagedServiceIdentity), typeof(MachineLearningSku))]
-    [CodeGenSuppress("MachineLearningWorkspaceData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(Uri), typeof(bool?), typeof(bool?), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(string), typeof(string), typeof(Uri), typeof(bool?), typeof(bool?), typeof(bool?), typeof(bool?), typeof(EncryptionProperty), typeof(IEnumerable<string>), typeof(FeatureStoreSettings), typeof(string), typeof(bool?), typeof(ResourceIdentifier), typeof(string), typeof(IEnumerable<string>), typeof(string), typeof(IEnumerable<string>), typeof(ManagedNetworkSettings), typeof(Uri), typeof(NetworkAcls), typeof(MachineLearningNotebookResourceInfo), typeof(string), typeof(IEnumerable<MachineLearningPrivateEndpointConnectionData>), typeof(int?), typeof(bool?), typeof(MachineLearningProvisioningState?), typeof(PublicNetworkAccess?), typeof(ServerlessComputeSettings), typeof(string), typeof(IEnumerable<MachineLearningSharedPrivateLinkResource>), typeof(int?), typeof(string), typeof(IEnumerable<string>), typeof(bool?), typeof(SystemDatastoresAuthMode?), typeof(Guid?), typeof(bool?), typeof(WorkspaceHubConfig), typeof(string), typeof(int?), typeof(ManagedServiceIdentity), typeof(string), typeof(MachineLearningSku))]
     [CodeGenSuppress("MachineLearningWorkspaceGetKeysResult", typeof(string), typeof(RegistryListCredentialsResult), typeof(MachineLearningWorkspaceGetNotebookKeysResult), typeof(string), typeof(string))]
     public static partial class ArmMachineLearningModelFactory
     {
@@ -171,12 +170,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 identity,
                 sku,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningSweepJob"/>. </summary>
-        public static MachineLearningSweepJob MachineLearningSweepJob(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, string displayName = default, MachineLearningJobStatus? status = default, string experimentName = default, IDictionary<string, MachineLearningJobService> services = default, ResourceIdentifier computeId = default, bool? isArchived = default, MachineLearningIdentityConfiguration identity = default, ResourceIdentifier componentId = default, NotificationSetting notificationSetting = default, BinaryData searchSpace = default, SamplingAlgorithm samplingAlgorithm = default, MachineLearningSweepJobLimits limits = default, MachineLearningEarlyTerminationPolicy earlyTermination = default, MachineLearningObjective objective = default, MachineLearningTrialComponent trial = default, IDictionary<string, MachineLearningJobInput> inputs = default, IDictionary<string, MachineLearningJobOutput> outputs = default, JobTier? jobTier = default)
-        {
-            return new MachineLearningSweepJob(description, properties, tags, additionalBinaryDataProperties: null, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Sweep, notificationSetting, parentJobName: null, services, status, earlyTermination, inputs, limits, objective, outputs, queueSettings: jobTier.HasValue ? new QueueSettings(jobTier.Value, additionalBinaryDataProperties: null) : null, samplingAlgorithm, searchSpace, trial);
         }
     }
 }

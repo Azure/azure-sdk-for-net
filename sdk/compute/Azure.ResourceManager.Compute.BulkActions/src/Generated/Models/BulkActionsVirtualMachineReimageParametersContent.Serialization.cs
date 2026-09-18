@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("exactVersion"u8);
                 writer.WriteStringValue(ExactVersion);
             }
-            if (Optional.IsDefined(OsProfile))
+            if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OsProfile, options);
+                writer.WriteObjectValue(OSProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             bool? isTempDisk = default;
             string exactVersion = default;
-            BulkActionsOsProfileProvisioningContent osProfile = default;
+            BulkActionsOSProfileProvisioningContent osProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    osProfile = BulkActionsOsProfileProvisioningContent.DeserializeBulkActionsOsProfileProvisioningContent(prop.Value, options);
+                    osProfile = BulkActionsOSProfileProvisioningContent.DeserializeBulkActionsOSProfileProvisioningContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

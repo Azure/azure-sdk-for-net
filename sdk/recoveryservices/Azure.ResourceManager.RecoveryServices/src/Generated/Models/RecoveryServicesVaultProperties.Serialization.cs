@@ -179,6 +179,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(RegionOfChoiceSettings))
+            {
+                writer.WritePropertyName("regionOfChoiceSettings"u8);
+                writer.WriteObjectValue(RegionOfChoiceSettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -239,6 +244,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             SecureScoreLevel? secureScore = default;
             BcdrSecurityLevel? bcdrSecurityLevel = default;
             IList<string> resourceGuardOperationRequests = default;
+            RegionOfChoiceSettings regionOfChoiceSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -417,6 +423,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     resourceGuardOperationRequests = array;
                     continue;
                 }
+                if (prop.NameEquals("regionOfChoiceSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    regionOfChoiceSettings = RegionOfChoiceSettings.DeserializeRegionOfChoiceSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -441,6 +456,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 secureScore,
                 bcdrSecurityLevel,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                regionOfChoiceSettings,
                 additionalBinaryDataProperties);
         }
     }

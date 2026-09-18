@@ -15,6 +15,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningSynapseSpark. </summary>
         public MachineLearningSynapseSpark()
         {
+            ComputeType.Assign(MachineLearning.ComputeType.SynapseSpark);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("computeType", new string[] { "computeType" }, defaultValue: "SynapseSpark");
             _properties = DefineModelProperty<MachineLearningSynapseSparkProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactoryKeyVaultSecret>(Password, options);
+            }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
@@ -185,6 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> connectionString = default;
             AzureSqlMIAuthenticationType? authenticationType = default;
             DataFactoryElement<string> userName = default;
+            DataFactoryKeyVaultSecret password = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
@@ -386,6 +392,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadUserName(prop, ref userName);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
@@ -488,6 +503,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 connectionString,
                 authenticationType,
                 userName,
+                password,
                 servicePrincipalId,
                 servicePrincipalKey,
                 servicePrincipalCredentialType,

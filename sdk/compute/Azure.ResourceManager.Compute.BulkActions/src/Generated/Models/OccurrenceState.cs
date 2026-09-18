@@ -11,23 +11,23 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The state the occurrence is at a given time. </summary>
+    /// <summary> The current state of a scheduled action occurrence. </summary>
     public readonly partial struct OccurrenceState : IEquatable<OccurrenceState>
     {
         private readonly string _value;
-        /// <summary> The occurrence was created. </summary>
+        /// <summary> The occurrence has been created. </summary>
         private const string CreatedValue = "Created";
-        /// <summary> The occurrence is being rescheduled. </summary>
+        /// <summary> The scheduled time for the occurrence is being updated. </summary>
         private const string ReschedulingValue = "Rescheduling";
         /// <summary> The occurrence has been scheduled. </summary>
         private const string ScheduledValue = "Scheduled";
-        /// <summary> The occurrence has successfully ran. </summary>
+        /// <summary> The occurrence operations completed successfully. </summary>
         private const string SucceededValue = "Succeeded";
-        /// <summary> The occurrence has failed during its scheduling. </summary>
+        /// <summary> One or more of the occurrence operations failed. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> The occurrence is going through cancellation. </summary>
+        /// <summary> Cancellation of the occurrence is in progress. </summary>
         private const string CancellingValue = "Cancelling";
-        /// <summary> The occurrence has been canceled. </summary>
+        /// <summary> The occurrence was canceled. </summary>
         private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceState"/>. </summary>
@@ -40,25 +40,25 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> The occurrence was created. </summary>
+        /// <summary> The occurrence has been created. </summary>
         public static OccurrenceState Created { get; } = new OccurrenceState(CreatedValue);
 
-        /// <summary> The occurrence is being rescheduled. </summary>
+        /// <summary> The scheduled time for the occurrence is being updated. </summary>
         public static OccurrenceState Rescheduling { get; } = new OccurrenceState(ReschedulingValue);
 
         /// <summary> The occurrence has been scheduled. </summary>
         public static OccurrenceState Scheduled { get; } = new OccurrenceState(ScheduledValue);
 
-        /// <summary> The occurrence has successfully ran. </summary>
+        /// <summary> The occurrence operations completed successfully. </summary>
         public static OccurrenceState Succeeded { get; } = new OccurrenceState(SucceededValue);
 
-        /// <summary> The occurrence has failed during its scheduling. </summary>
+        /// <summary> One or more of the occurrence operations failed. </summary>
         public static OccurrenceState Failed { get; } = new OccurrenceState(FailedValue);
 
-        /// <summary> The occurrence is going through cancellation. </summary>
+        /// <summary> Cancellation of the occurrence is in progress. </summary>
         public static OccurrenceState Cancelling { get; } = new OccurrenceState(CancellingValue);
 
-        /// <summary> The occurrence has been canceled. </summary>
+        /// <summary> The occurrence was canceled. </summary>
         public static OccurrenceState Canceled { get; } = new OccurrenceState(CanceledValue);
 
         /// <summary> Determines if two <see cref="OccurrenceState"/> values are the same. </summary>

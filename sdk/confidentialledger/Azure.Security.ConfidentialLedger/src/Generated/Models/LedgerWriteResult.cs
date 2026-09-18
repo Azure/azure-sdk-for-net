@@ -16,61 +16,31 @@ namespace Azure.Security.ConfidentialLedger.Models
     /// </summary>
     public partial class LedgerWriteResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LedgerWriteResult"/>. </summary>
+        /// <param name="transactionId"> The transaction id at which this write will become durable. </param>
         /// <param name="collectionId"> The collection identifier of the ledger entry. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        internal LedgerWriteResult(string collectionId)
+        internal LedgerWriteResult(string transactionId, string collectionId)
         {
-            Argument.AssertNotNull(collectionId, nameof(collectionId));
-
+            TransactionId = transactionId;
             CollectionId = collectionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="LedgerWriteResult"/>. </summary>
+        /// <param name="transactionId"> The transaction id at which this write will become durable. </param>
         /// <param name="collectionId"> The collection identifier of the ledger entry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LedgerWriteResult(string collectionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LedgerWriteResult(string transactionId, string collectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            TransactionId = transactionId;
             CollectionId = collectionId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LedgerWriteResult"/> for deserialization. </summary>
-        internal LedgerWriteResult()
-        {
-        }
+        /// <summary> The transaction id at which this write will become durable. </summary>
+        public string TransactionId { get; }
 
         /// <summary> The collection identifier of the ledger entry. </summary>
         public string CollectionId { get; }

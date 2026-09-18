@@ -18,31 +18,31 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkspacePurgeLakeDataTimeRange"/>. </summary>
-        /// <param name="startOn"> The inclusive start of the time range, in UTC. Must fall on an hour boundary (minutes and seconds must be zero). </param>
-        /// <param name="endOn"> The exclusive end of the time range, in UTC. Must fall on an hour boundary and be earlier than the start of the current hour. </param>
-        public WorkspacePurgeLakeDataTimeRange(DateTimeOffset startOn, DateTimeOffset endOn)
+        /// <param name="startsOn"> The inclusive start of the time range, in UTC. Must fall on an hour boundary (minutes and seconds must be zero). </param>
+        /// <param name="endsOn"> The exclusive end of the time range, in UTC. Must fall on an hour boundary and be earlier than the start of the current hour. </param>
+        public WorkspacePurgeLakeDataTimeRange(DateTimeOffset startsOn, DateTimeOffset endsOn)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspacePurgeLakeDataTimeRange"/>. </summary>
-        /// <param name="startOn"> The inclusive start of the time range, in UTC. Must fall on an hour boundary (minutes and seconds must be zero). </param>
-        /// <param name="endOn"> The exclusive end of the time range, in UTC. Must fall on an hour boundary and be earlier than the start of the current hour. </param>
+        /// <param name="startsOn"> The inclusive start of the time range, in UTC. Must fall on an hour boundary (minutes and seconds must be zero). </param>
+        /// <param name="endsOn"> The exclusive end of the time range, in UTC. Must fall on an hour boundary and be earlier than the start of the current hour. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspacePurgeLakeDataTimeRange(DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkspacePurgeLakeDataTimeRange(DateTimeOffset startsOn, DateTimeOffset endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The inclusive start of the time range, in UTC. Must fall on an hour boundary (minutes and seconds must be zero). </summary>
         [WirePath("startTime")]
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The exclusive end of the time range, in UTC. Must fall on an hour boundary and be earlier than the start of the current hour. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndsOn { get; }
     }
 }

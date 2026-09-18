@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Output information for a data generation job.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileDataGenerationJobOutput"/> and <see cref="DatasetDataGenerationJobOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatasetDataGenerationJobOutput"/> and <see cref="FileDataGenerationJobOutput"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataGenerationJobOutput))]
     public abstract partial class DataGenerationJobOutput : IJsonModel<DataGenerationJobOutput>
@@ -126,10 +126,10 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
-                    case "file":
-                        return FileDataGenerationJobOutput.DeserializeFileDataGenerationJobOutput(element, options);
                     case "dataset":
                         return DatasetDataGenerationJobOutput.DeserializeDatasetDataGenerationJobOutput(element, options);
+                    case "file":
+                        return FileDataGenerationJobOutput.DeserializeFileDataGenerationJobOutput(element, options);
                 }
             }
             return UnknownDataGenerationJobOutput.DeserializeUnknownDataGenerationJobOutput(element, options);

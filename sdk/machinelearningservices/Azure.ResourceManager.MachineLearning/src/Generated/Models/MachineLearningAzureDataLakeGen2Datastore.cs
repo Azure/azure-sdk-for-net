@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningAzureDataLakeGen2Datastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>
-        /// <param name="accountName"> [Required] Storage account name. </param>
         /// <param name="filesystem"> [Required] The name of the Data Lake Gen2 filesystem. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="accountName"/> or <paramref name="filesystem"/> is null. </exception>
-        public MachineLearningAzureDataLakeGen2Datastore(MachineLearningDatastoreCredentials credentials, string accountName, string filesystem) : base(credentials, DatastoreType.AzureDataLakeGen2)
+        /// <param name="accountName"> [Required] Storage account name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentials"/>, <paramref name="filesystem"/> or <paramref name="accountName"/> is null. </exception>
+        public MachineLearningAzureDataLakeGen2Datastore(MachineLearningDatastoreCredentials credentials, string filesystem, string accountName) : base(credentials, DatastoreType.AzureDataLakeGen2)
         {
             Argument.AssertNotNull(credentials, nameof(credentials));
             Argument.AssertNotNull(accountName, nameof(accountName));

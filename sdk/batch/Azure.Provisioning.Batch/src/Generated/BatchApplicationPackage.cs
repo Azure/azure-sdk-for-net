@@ -162,8 +162,8 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets the StorageUriExpireOn. </summary>
-        public BicepValue<DateTimeOffset> StorageUriExpireOn
+        /// <summary> Gets the StorageUriExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> StorageUriExpiresOn
         {
             get
             {
@@ -171,7 +171,7 @@ namespace Azure.Provisioning.Batch
                 {
                     Properties = new ApplicationPackageProperties();
                 }
-                return Properties.StorageUriExpireOn;
+                return Properties.StorageUriExpiresOn;
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.Provisioning.Batch
             _properties = DefineModelProperty<ApplicationPackageProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<BatchApplication>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BatchApplication>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

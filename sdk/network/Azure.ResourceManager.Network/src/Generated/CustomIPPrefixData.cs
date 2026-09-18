@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="extendedLocation"> The extended location of the custom IP prefix. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
-        internal CustomIPPrefixData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomIpPrefixPropertiesFormat properties, ExtendedLocation extendedLocation, ETag? eTag, IList<string> zones) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
+        internal CustomIPPrefixData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomIPPrefixPropertiesFormat properties, ExtendedLocation extendedLocation, ETag? eTag, IList<string> zones) : base(id, name, @type, location, tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Custom IP prefix properties. </summary>
         [WirePath("properties")]
-        internal CustomIpPrefixPropertiesFormat Properties { get; set; }
+        internal CustomIPPrefixPropertiesFormat Properties { get; set; }
 
         /// <summary> The extended location of the custom IP prefix. </summary>
         [WirePath("extendedLocation")]
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.Asn = value;
             }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.Cidr = value;
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.SignedMessage = value;
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.AuthorizationMessage = value;
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.CommissionedState = value;
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.ExpressRouteAdvertise = value;
             }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.Geo = value;
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.NoInternetAdvertise = value;
             }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.PrefixType = value;
             }

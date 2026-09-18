@@ -12,7 +12,6 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Migration. </summary>
     internal partial class MigrationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -111,30 +110,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [WirePath("sslMode")]
         public PostgreSqlFlexibleServersSslMode? SslMode { get; set; }
 
-        /// <summary> Metadata of source database server. </summary>
-        [WirePath("sourceDbServerMetadata")]
-        public PostgreSqlServerMetadata SourceDbServerMetadata { get; }
-
-        /// <summary> Metadata of target database server. </summary>
-        [WirePath("targetDbServerMetadata")]
-        public PostgreSqlServerMetadata TargetDbServerMetadata { get; }
-
-        /// <summary> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </summary>
-        [WirePath("sourceDbServerResourceId")]
-        public ResourceIdentifier SourceDbServerResourceId { get; set; }
-
-        /// <summary> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </summary>
-        [WirePath("sourceDbServerFullyQualifiedDomainName")]
-        public string SourceDbServerFullyQualifiedDomainName { get; set; }
-
-        /// <summary> Identifier of the target database server resource. </summary>
-        [WirePath("targetDbServerResourceId")]
-        public ResourceIdentifier TargetDbServerResourceId { get; }
-
-        /// <summary> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </summary>
-        [WirePath("targetDbServerFullyQualifiedDomainName")]
-        public string TargetDbServerFullyQualifiedDomainName { get; set; }
-
         /// <summary> Migration secret parameters. </summary>
         [WirePath("secretParameters")]
         public PostgreSqlMigrationSecretParameters SecretParameters { get; set; }
@@ -142,10 +117,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Names of databases to migrate. </summary>
         [WirePath("dbsToMigrate")]
         public IList<string> DbsToMigrate { get; } = new ChangeTrackingList<string>();
-
-        /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
-        [WirePath("setupLogicalReplicationOnSourceDbIfNeeded")]
-        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded { get; set; }
 
         /// <summary> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </summary>
         [WirePath("overwriteDbsInTarget")]

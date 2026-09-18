@@ -12,7 +12,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.FrontDoor
 {
     /// <summary> Reference to another subresource. </summary>
-    internal partial class FrontDoorSubResource : ProvisionableConstruct
+    public partial class FrontDoorSubResource : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _id;
 

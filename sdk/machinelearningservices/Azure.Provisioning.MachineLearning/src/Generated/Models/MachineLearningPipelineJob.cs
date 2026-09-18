@@ -23,6 +23,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningPipelineJob. </summary>
         public MachineLearningPipelineJob()
         {
+            JobType.Assign(MachineLearning.JobType.Pipeline);
         }
 
         /// <summary> Gets or sets the Inputs. </summary>
@@ -104,7 +105,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "Pipeline");
             _inputs = DefineDictionaryProperty<MachineLearningJobInput>(nameof(Inputs), new string[] { "inputs" });
             _jobs = DefineDictionaryProperty<BinaryData>(nameof(Jobs), new string[] { "jobs" });
             _outputs = DefineDictionaryProperty<MachineLearningJobOutput>(nameof(Outputs), new string[] { "outputs" });

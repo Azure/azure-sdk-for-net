@@ -46,9 +46,9 @@ public class BasicSearchTests
               name: take('search-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
-                replicaCount: 1
-                partitionCount: 1
                 hostingMode: 'Default'
+                partitionCount: 1
+                replicaCount: 1
               }
               sku: {
                 name: 'standard'
@@ -90,10 +90,10 @@ public class BasicSearchTests
               name: take('search-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
-                replicaCount: 1
-                partitionCount: 1
                 hostingMode: 'Default'
+                partitionCount: 1
                 publicNetworkAccess: 'enabled'
+                replicaCount: 1
               }
               sku: {
                 name: 'standard'

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.LoadTesting.Models;
 using Azure.ResourceManager.Models;
 
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.LoadTesting
     [ModelReaderWriterBuildable(typeof(QuotaBucketRequestProperties))]
     [ModelReaderWriterBuildable(typeof(QuotaResourceListResult))]
     [ModelReaderWriterBuildable(typeof(QuotaResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerLoadTestingContext : ModelReaderWriterContext

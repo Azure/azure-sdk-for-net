@@ -115,15 +115,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("billingPlan"u8);
                 writer.WriteStringValue(BillingPlan.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryDateTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (Optional.IsDefined(BenefitStartsOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
-                writer.WriteStringValue(BenefitStartOn.Value, "O");
+                writer.WriteStringValue(BenefitStartsOn.Value, "O");
             }
             if (Optional.IsDefined(PlanInformation))
             {
@@ -200,8 +200,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             ResourceIdentifier billingAccountId = default;
             BillingBenefitsTerm? term = default;
             BillingBenefitsBillingPlan? billingPlan = default;
-            DateTimeOffset? expireOn = default;
-            DateTimeOffset? benefitStartOn = default;
+            DateTimeOffset? expiresOn = default;
+            DateTimeOffset? benefitStartsOn = default;
             BillingPlanInformation planInformation = default;
             IList<string> savingsPlans = default;
             BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("benefitStartTime"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    benefitStartOn = prop.Value.GetDateTimeOffset("O");
+                    benefitStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("planInformation"u8))
@@ -347,8 +347,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 billingAccountId,
                 term,
                 billingPlan,
-                expireOn,
-                benefitStartOn,
+                expiresOn,
+                benefitStartsOn,
                 planInformation,
                 savingsPlans ?? new ChangeTrackingList<string>(),
                 extendedStatusInfo,

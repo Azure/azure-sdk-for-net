@@ -154,6 +154,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Encoding, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactoryKeyVaultSecret>(Password, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -219,6 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<bool> logParameters = default;
             DataFactoryElement<string> timezone = default;
             DataFactoryElement<string> encoding = default;
+            DataFactoryKeyVaultSecret password = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -361,6 +367,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     encoding = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("encryptedCredential"u8))
                 {
                     encryptedCredential = prop.Value.GetString();
@@ -390,6 +405,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 logParameters,
                 timezone,
                 encoding,
+                password,
                 encryptedCredential,
                 additionalBinaryDataProperties);
         }

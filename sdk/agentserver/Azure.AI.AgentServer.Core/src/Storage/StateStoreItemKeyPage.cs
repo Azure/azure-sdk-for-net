@@ -8,7 +8,7 @@ using System.Linq;
 namespace Azure.AI.AgentServer.Core.Storage
 {
     /// <summary>
-    /// A page of keys returned by <see cref="FoundryStateStore.ListKeysAsync"/>.
+    /// A page of keys returned by <see cref="FoundryStateStore"/> item-list operations.
     /// </summary>
     /// <remarks>
     /// A hand-written convenience wrapper (not itself part of the wire contract) over the

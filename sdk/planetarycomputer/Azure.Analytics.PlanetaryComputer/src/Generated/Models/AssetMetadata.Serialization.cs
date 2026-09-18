@@ -81,7 +81,7 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Kind);
             writer.WritePropertyName("roles"u8);
             writer.WriteStartArray();
             foreach (string item in Roles)
@@ -141,7 +141,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             string key = default;
-            string @type = default;
+            string kind = default;
             IList<string> roles = default;
             string title = default;
             string description = default;
@@ -155,7 +155,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("roles"u8))
@@ -187,12 +187,12 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AssetMetadata(
                 key,
-                @type,
+                kind,
                 roles,
                 title,
                 description,

@@ -79,6 +79,16 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(Association))
+            {
+                writer.WritePropertyName("association"u8);
+                writer.WriteObjectValue(Association, options);
+            }
             if (Optional.IsDefined(SecurityPolicyConfigurations))
             {
                 writer.WritePropertyName("securityPolicyConfigurations"u8);
@@ -132,6 +142,8 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 return null;
             }
             string fqdn = default;
+            TrafficControllerPublicNetworkAccess? publicNetworkAccess = default;
+            FrontendAssociation association = default;
             SecurityPolicyConfigurations securityPolicyConfigurations = default;
             ServiceNetworkingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -140,6 +152,24 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 if (prop.NameEquals("fqdn"u8))
                 {
                     fqdn = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkAccess = new TrafficControllerPublicNetworkAccess(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("association"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    association = FrontendAssociation.DeserializeFrontendAssociation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("securityPolicyConfigurations"u8))
@@ -165,7 +195,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontendProperties(fqdn, securityPolicyConfigurations, provisioningState, additionalBinaryDataProperties);
+            return new FrontendProperties(
+                fqdn,
+                publicNetworkAccess,
+                association,
+                securityPolicyConfigurations,
+                provisioningState,
+                additionalBinaryDataProperties);
         }
     }
 }

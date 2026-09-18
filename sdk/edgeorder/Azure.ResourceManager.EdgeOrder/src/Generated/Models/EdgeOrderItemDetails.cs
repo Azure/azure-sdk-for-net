@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
             get
             {
-                return SiteDetails is null ? default : SiteDetails.SiteId;
+                return SiteDetails is null ? (Guid?)default : SiteDetails.SiteId;
             }
             set
             {
