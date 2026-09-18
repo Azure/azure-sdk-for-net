@@ -209,11 +209,15 @@ namespace Azure.Identity
             // client is the standard client, so proof-of-possession requests fall back to a regular
             // bearer token instead of attempting an mTLS PoP handshake.
             //
-            // The PoP client is created lazily on first use, but all input parameters are captured here
-            // at construction time so the client's state is locked in regardless of when it is materialized.
+            // The PoP client is created lazily on first use, but all input parameters - including a
+            // snapshot of the options - are captured here at construction time so the client's state is
+            // locked in regardless of when it is materialized. Snapshotting the options ensures the PoP
+            // client observes the same AuthorityHost (and other MSAL settings) as the eagerly-created
+            // bearer client, even if the caller mutates its options instance before first use.
             MsalConfidentialClient capturedClient = client;
             MsalConfidentialClient capturedPopClient = popClient;
             MsalConfidentialClient standardClient = Client;
+            TokenCredentialOptions snapshotOptions = certCredOptions?.Clone<ClientCertificateCredentialOptions>() ?? options?.Clone<TokenCredentialOptions>();
             _popClient = new Lazy<MsalConfidentialClient>(() =>
                 capturedPopClient ?? capturedClient ??
                 (sendCertificateChain
@@ -223,7 +227,7 @@ namespace Azure.Identity
                         clientId,
                         certificateProvider,
                         sendCertificateChain,
-                        options,
+                        snapshotOptions,
                         enableMtlsProofOfPossession: true)
                     : standardClient));
 
