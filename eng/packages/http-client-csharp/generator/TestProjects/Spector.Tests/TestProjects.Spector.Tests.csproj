@@ -94,7 +94,6 @@
     <ProjectReference Include="..\Spector\http\special-headers\conditional-request\src\SpecialHeaders.ConditionalRequest.csproj" />
     <ProjectReference Include="..\Spector\http\special-headers\repeatability\src\SpecialHeaders.Repeatability.csproj" />
     <ProjectReference Include="..\Spector\http\special-words\src\SpecialWords.csproj" />
-    <ProjectReference Include="..\Spector\http\streaming\jsonl\src\Streaming.Jsonl.csproj" />
     <ProjectReference Include="..\Spector\http\type\dictionary\src\Type.Dictionary.csproj" />
     <ProjectReference Include="..\Spector\http\type\model\empty\src\Type.Model.Empty.csproj" />
     <ProjectReference Include="..\Spector\http\type\model\inheritance\enum-discriminator\src\Type.Model.Inheritance.EnumDiscriminator.csproj" />
