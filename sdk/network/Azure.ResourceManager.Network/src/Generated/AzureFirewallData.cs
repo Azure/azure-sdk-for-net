@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Indicates whether the AI security add-on is enabled for the Azure Firewall. </summary>
         [WirePath("properties.aiSecurityAddOn")]
-        public bool? EnableAISecurityAddOn
+        public bool? IsAISecurityAddOnEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.EnableAISecurityAddOn;
+                return Properties is null ? default : Properties.IsAISecurityAddOnEnabled;
             }
             set
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Network
                 {
                     Properties = new AzureFirewallPropertiesFormat();
                 }
-                Properties.EnableAISecurityAddOn = value;
+                Properties.IsAISecurityAddOnEnabled = value;
             }
         }
 
