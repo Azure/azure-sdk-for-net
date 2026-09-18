@@ -2,12 +2,6 @@
 
 ## 1.4.0-beta.3 (2026-09-18)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 
 - Migrated code generation to the TypeSpec-based provisioning generator.
