@@ -20,10 +20,12 @@ namespace Azure.ResourceManager.Network
     public partial class BastionHostResource
     {
         /// <summary> Invokes the UpdateAsync compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `BastionHostCollection.CreateOrUpdateAsync` instead.", false)]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is obsolete and will be removed in a future release, please use `BastionHostCollection.CreateOrUpdateAsync` instead.", false)]
         public virtual Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
         /// <summary> Invokes the Update compatibility operation. </summary>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `BastionHostCollection.CreateOrUpdate` instead.", false)]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is obsolete and will be removed in a future release, please use `BastionHostCollection.CreateOrUpdate` instead.", false)]
         public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
 
         /// <summary> Updates tags for this Bastion Host resource. </summary>
@@ -31,6 +33,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkTagsObject"> Parameters supplied to update Bastion Host tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="System.ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is obsolete and will be removed in a future release, please use `UpdateAsync(WaitUntil, BastionHostPatch, CancellationToken)` instead.", false)]
         public virtual Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
@@ -44,6 +48,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkTagsObject"> Parameters supplied to update Bastion Host tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="System.ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is obsolete and will be removed in a future release, please use `Update(WaitUntil, BastionHostPatch, CancellationToken)` instead.", false)]
         public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));

@@ -717,6 +717,7 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(NetworkManagerCommit))]
     [ModelReaderWriterBuildable(typeof(NetworkManagerConfigurationCommitData))]
     [ModelReaderWriterBuildable(typeof(NetworkManagerConfigurationCommitResource))]
+    [ModelReaderWriterBuildable(typeof(NetworkManagerConnectionData))]
     [ModelReaderWriterBuildable(typeof(NetworkManagerConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(NetworkManagerConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(NetworkManagerData))]

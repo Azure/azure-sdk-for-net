@@ -5709,12 +5709,21 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Instance of StaticCidr resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of static CIDR resource. </param>
-        /// <param name="name"> StaticCidr resource name to retrieve. </param>
         /// <returns> A new <see cref="Network.StaticCidrData"/> instance for mocking. </returns>
-        public static StaticCidrData StaticCidrData(StaticCidrProperties properties = default, string name = default)
+        public static StaticCidrData StaticCidrData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StaticCidrProperties properties = default)
         {
-            return new StaticCidrData(properties, name, default);
+            return new StaticCidrData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Properties of static CIDR resource. </summary>
@@ -6134,38 +6143,10 @@ namespace Azure.ResourceManager.Network.Models
             return new LoadBalancerVipSwapRequestFrontendIPConfiguration(id, publicIPAddressId is null ? default : new LoadBalancerVipSwapRequestFrontendIPConfigurationProperties(publicIPAddressId is null ? default : new NetworkSubResource(publicIPAddressId, default), default), default);
         }
 
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="networkManagerId"> Network Manager Id. </param>
-        /// <param name="connectionState"> Connection state. </param>
-        /// <param name="description"> A description of the network manager connection. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <returns> A new <see cref="Network.SubscriptionNetworkManagerConnectionData"/> instance for mocking. </returns>
-        public static SubscriptionNetworkManagerConnectionData SubscriptionNetworkManagerConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default, ResourceIdentifier networkManagerId = default, ScopeConnectionState? connectionState = default, string description = default, SystemData systemData = default)
-        {
-            return new SubscriptionNetworkManagerConnectionData(
-                id,
-                name,
-                @type,
-                eTag,
-                default,
-                networkManagerId is null && connectionState is null && description is null ? default : new NetworkManagerConnectionProperties(networkManagerId, connectionState, description, default),
-                systemData);
-        }
-
-        /// <summary> Proxy resource representation. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.NetworkChildResource"/> instance for mocking. </returns>
-        public static NetworkChildResource NetworkChildResource(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
-        {
-            return new NetworkChildResource(id, name, @type, eTag, default);
-        }
-
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the connectivity configuration. </param>
         /// <param name="connectivityTopology"> Connectivity topology type. </param>
         /// <param name="hubs"> List of hubItems. </param>
@@ -6175,76 +6156,122 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="name"> The name of the network manager connectivity configuration. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ConnectivityConfigurationData"/> instance for mocking. </returns>
-        public static ConnectivityConfigurationData ConnectivityConfigurationData(string description = default, ConnectivityTopology? connectivityTopology = default, IEnumerable<ConnectivityHub> hubs = default, GlobalMeshSupportFlag? isGlobal = default, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = default, IEnumerable<ConnectivityGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, DeleteExistingPeering? deleteExistingPeering = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        public static ConnectivityConfigurationData ConnectivityConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, ConnectivityTopology? connectivityTopology = default, IEnumerable<ConnectivityHub> hubs = default, GlobalMeshSupportFlag? isGlobal = default, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = default, IEnumerable<ConnectivityGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, DeleteExistingPeering? deleteExistingPeering = default, Guid? resourceGuid = default, ETag? etag = default)
         {
-            return new ConnectivityConfigurationData(description is null && connectivityTopology is null && hubs is null && isGlobal is null && connectivityCapabilities is null && appliesToGroups is null && provisioningState is null && deleteExistingPeering is null && resourceGuid is null ? default : new ConnectivityConfigurationProperties(
-                description,
-                connectivityTopology.GetValueOrDefault(),
-                (hubs ?? new ChangeTrackingList<ConnectivityHub>()).ToList(),
-                isGlobal,
-                connectivityCapabilities,
-                (appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>()).ToList(),
-                provisioningState,
-                deleteExistingPeering,
-                resourceGuid,
-                default), name, systemData, default);
+            return new ConnectivityConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && connectivityTopology is null && hubs is null && isGlobal is null && connectivityCapabilities is null && appliesToGroups is null && provisioningState is null && deleteExistingPeering is null && resourceGuid is null ? default : new ConnectivityConfigurationProperties(
+                    description,
+                    connectivityTopology.GetValueOrDefault(),
+                    (hubs ?? new ChangeTrackingList<ConnectivityHub>()).ToList(),
+                    isGlobal,
+                    connectivityCapabilities,
+                    (appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>()).ToList(),
+                    provisioningState,
+                    deleteExistingPeering,
+                    resourceGuid,
+                    default),
+                etag,
+                default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the network group. </param>
         /// <param name="memberType"> The type of the group member. </param>
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="name"> The name of the network group. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkGroupData"/> instance for mocking. </returns>
-        public static NetworkGroupData NetworkGroupData(string description = default, NetworkGroupMemberType? memberType = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        public static NetworkGroupData NetworkGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, NetworkGroupMemberType? memberType = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
         {
-            return new NetworkGroupData(description is null && memberType is null && provisioningState is null && resourceGuid is null ? default : new NetworkGroupProperties(description, memberType, provisioningState, resourceGuid, default), name, systemData, default);
+            return new NetworkGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && memberType is null && provisioningState is null && resourceGuid is null ? default : new NetworkGroupProperties(description, memberType, provisioningState, resourceGuid, default),
+                etag,
+                default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="region"> Resource region. </param>
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        /// <param name="name"> The name of the static member. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkGroupStaticMemberData"/> instance for mocking. </returns>
-        public static NetworkGroupStaticMemberData NetworkGroupStaticMemberData(ResourceIdentifier resourceId = default, string region = default, NetworkProvisioningState? provisioningState = default, string name = default, SystemData systemData = default)
+        public static NetworkGroupStaticMemberData NetworkGroupStaticMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier resourceId = default, string region = default, NetworkProvisioningState? provisioningState = default, ETag? etag = default)
         {
-            return new NetworkGroupStaticMemberData(resourceId is null && region is null && provisioningState is null ? default : new StaticMemberProperties(resourceId, region, provisioningState, default), name, systemData, default);
+            return new NetworkGroupStaticMemberData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceId is null && region is null && provisioningState is null ? default : new StaticMemberProperties(resourceId, region, provisioningState, default),
+                etag,
+                default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the routing configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="routeTableUsageMode"> Route table usage mode defines which route table will be used by the configuration. If not defined, this will default to 'ManagedOnly'. </param>
-        /// <param name="name"> The name of the network manager Routing Configuration. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkManagerRoutingConfigurationData"/> instance for mocking. </returns>
-        public static NetworkManagerRoutingConfigurationData NetworkManagerRoutingConfigurationData(string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, RouteTableUsageMode? routeTableUsageMode = default, string name = default, SystemData systemData = default)
+        public static NetworkManagerRoutingConfigurationData NetworkManagerRoutingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, RouteTableUsageMode? routeTableUsageMode = default, ETag? etag = default)
         {
-            return new NetworkManagerRoutingConfigurationData(description is null && provisioningState is null && resourceGuid is null && routeTableUsageMode is null ? default : new NetworkManagerRoutingConfigurationPropertiesFormat(description, provisioningState, resourceGuid, routeTableUsageMode, default), name, systemData, default);
+            return new NetworkManagerRoutingConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && provisioningState is null && resourceGuid is null && routeTableUsageMode is null ? default : new NetworkManagerRoutingConfigurationPropertiesFormat(description, provisioningState, resourceGuid, routeTableUsageMode, default),
+                etag,
+                default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the routing rule collection. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="appliesTo"> Groups for configuration. </param>
         /// <param name="disableBgpRoutePropagation"> Determines whether BGP route propagation is enabled. Defaults to true. </param>
-        /// <param name="name"> The name of the network manager routing Configuration rule collection. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkManagerRoutingRulesData"/> instance for mocking. </returns>
-        public static NetworkManagerRoutingRulesData NetworkManagerRoutingRulesData(string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, IEnumerable<NetworkManagerRoutingGroupItem> appliesTo = default, DisableBgpRoutePropagation? disableBgpRoutePropagation = default, string name = default, SystemData systemData = default)
+        public static NetworkManagerRoutingRulesData NetworkManagerRoutingRulesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, IEnumerable<NetworkManagerRoutingGroupItem> appliesTo = default, DisableBgpRoutePropagation? disableBgpRoutePropagation = default, ETag? etag = default)
         {
-            return new NetworkManagerRoutingRulesData(description is null && provisioningState is null && resourceGuid is null && appliesTo is null && disableBgpRoutePropagation is null ? default : new RoutingRuleCollectionPropertiesFormat(
-                description,
-                provisioningState,
-                resourceGuid,
-                (appliesTo ?? new ChangeTrackingList<NetworkManagerRoutingGroupItem>()).ToList(),
-                disableBgpRoutePropagation,
-                default), name, systemData, default);
+            return new NetworkManagerRoutingRulesData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && provisioningState is null && resourceGuid is null && appliesTo is null && disableBgpRoutePropagation is null ? default : new RoutingRuleCollectionPropertiesFormat(
+                    description,
+                    provisioningState,
+                    resourceGuid,
+                    (appliesTo ?? new ChangeTrackingList<NetworkManagerRoutingGroupItem>()).ToList(),
+                    disableBgpRoutePropagation,
+                    default),
+                etag,
+                default);
         }
 
         /// <summary> Network manager routing group item. </summary>
@@ -6255,23 +6282,33 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkManagerRoutingGroupItem(networkGroupId, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description for this rule. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="destination"> Indicates the destination for this particular rule. </param>
         /// <param name="nextHop"> Indicates the next hop for this particular rule. </param>
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkManagerRoutingRuleData"/> instance for mocking. </returns>
-        public static NetworkManagerRoutingRuleData NetworkManagerRoutingRuleData(string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, RoutingRuleRouteDestination destination = default, RoutingRuleNextHop nextHop = default, string name = default, SystemData systemData = default)
+        public static NetworkManagerRoutingRuleData NetworkManagerRoutingRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, RoutingRuleRouteDestination destination = default, RoutingRuleNextHop nextHop = default, ETag? etag = default)
         {
-            return new NetworkManagerRoutingRuleData(description is null && provisioningState is null && resourceGuid is null && destination is null && nextHop is null ? default : new RoutingRulePropertiesFormat(
-                description,
-                provisioningState,
-                resourceGuid,
-                destination,
-                nextHop,
-                default), name, systemData, default);
+            return new NetworkManagerRoutingRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && provisioningState is null && resourceGuid is null && destination is null && nextHop is null ? default : new RoutingRulePropertiesFormat(
+                    description,
+                    provisioningState,
+                    resourceGuid,
+                    destination,
+                    nextHop,
+                    default),
+                etag,
+                default);
         }
 
         /// <summary> Route destination. </summary>
@@ -6292,17 +6329,26 @@ namespace Azure.ResourceManager.Network.Models
             return new RoutingRuleNextHop(nextHopType, nextHopAddress, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tenantId"> Tenant ID. </param>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="connectionState"> Connection State. </param>
         /// <param name="description"> A description of the scope connection. </param>
-        /// <param name="name"> Name for the cross-tenant connection. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ScopeConnectionData"/> instance for mocking. </returns>
-        public static ScopeConnectionData ScopeConnectionData(Guid? tenantId = default, ResourceIdentifier resourceId = default, ScopeConnectionState? connectionState = default, string description = default, string name = default, ETag? eTag = default, SystemData systemData = default)
+        public static ScopeConnectionData ScopeConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? tenantId = default, ResourceIdentifier resourceId = default, ScopeConnectionState? connectionState = default, string description = default, ETag? etag = default)
         {
-            return new ScopeConnectionData(tenantId is null && resourceId is null && connectionState is null && description is null ? default : new ScopeConnectionProperties(tenantId, resourceId, connectionState, description, default), name, eTag, systemData, default);
+            return new ScopeConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tenantId is null && resourceId is null && connectionState is null && description is null ? default : new ScopeConnectionProperties(tenantId, resourceId, connectionState, description, default),
+                etag,
+                default);
         }
 
         /// <summary> The commit resource. </summary>
@@ -6353,58 +6399,107 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
+        /// <summary> Proxy resource representation. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Models.NetworkChildResource"/> instance for mocking. </returns>
+        public static NetworkChildResource NetworkChildResource(ResourceIdentifier id = default, string name = default, string @type = default, string eTag = default)
+        {
+            return new NetworkChildResource(id, name, @type, eTag, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the security configuration. </param>
         /// <param name="applyOnNetworkIntentPolicyBasedServices"> Enum list of network intent policy based services. </param>
         /// <param name="networkGroupAddressSpaceAggregationOption"> Determine update behavior for changes to network groups referenced within the rules in this configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="name"> The name of the network manager Security Configuration. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.SecurityAdminConfigurationData"/> instance for mocking. </returns>
-        public static SecurityAdminConfigurationData SecurityAdminConfigurationData(string description = default, IEnumerable<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices = default, AddressSpaceAggregationOption? networkGroupAddressSpaceAggregationOption = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        public static SecurityAdminConfigurationData SecurityAdminConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices = default, AddressSpaceAggregationOption? networkGroupAddressSpaceAggregationOption = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
         {
-            return new SecurityAdminConfigurationData(description is null && applyOnNetworkIntentPolicyBasedServices is null && networkGroupAddressSpaceAggregationOption is null && provisioningState is null && resourceGuid is null ? default : new SecurityAdminConfigurationPropertiesFormat(
-                description,
-                (applyOnNetworkIntentPolicyBasedServices ?? new ChangeTrackingList<NetworkIntentPolicyBasedService>()).ToList(),
-                networkGroupAddressSpaceAggregationOption,
-                provisioningState,
-                resourceGuid,
-                default), name, systemData, default);
+            return new SecurityAdminConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && applyOnNetworkIntentPolicyBasedServices is null && networkGroupAddressSpaceAggregationOption is null && provisioningState is null && resourceGuid is null ? default : new SecurityAdminConfigurationPropertiesFormat(
+                    description,
+                    (applyOnNetworkIntentPolicyBasedServices ?? new ChangeTrackingList<NetworkIntentPolicyBasedService>()).ToList(),
+                    networkGroupAddressSpaceAggregationOption,
+                    provisioningState,
+                    resourceGuid,
+                    default),
+                etag,
+                default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the admin rule collection. </param>
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="name"> The name of the network manager security Configuration rule collection. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
         /// <returns> A new <see cref="Network.AdminRuleGroupData"/> instance for mocking. </returns>
-        public static AdminRuleGroupData AdminRuleGroupData(string description = default, IEnumerable<NetworkManagerSecurityGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        public static AdminRuleGroupData AdminRuleGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IEnumerable<NetworkManagerSecurityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, Guid? resourceGuid)
         {
-            return new AdminRuleGroupData(description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new AdminRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(), provisioningState, resourceGuid, default), name, systemData, default);
+            return new AdminRuleGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new AdminRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(), provisioningState, resourceGuid, default),
+                default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the security user configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="name"> The name of the network manager Security Configuration. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkManagerSecurityUserConfigurationData"/> instance for mocking. </returns>
-        public static NetworkManagerSecurityUserConfigurationData NetworkManagerSecurityUserConfigurationData(string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        public static NetworkManagerSecurityUserConfigurationData NetworkManagerSecurityUserConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
         {
-            return new NetworkManagerSecurityUserConfigurationData(description is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserConfigurationPropertiesFormat(description, provisioningState, resourceGuid, default), name, systemData, default);
+            return new NetworkManagerSecurityUserConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserConfigurationPropertiesFormat(description, provisioningState, resourceGuid, default),
+                etag,
+                default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the security user rule collection. </param>
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="name"> The name of the network manager security Configuration rule collection. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkManagerSecurityUserRulesData"/> instance for mocking. </returns>
-        public static NetworkManagerSecurityUserRulesData NetworkManagerSecurityUserRulesData(string description = default, IEnumerable<SecurityUserGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        public static NetworkManagerSecurityUserRulesData NetworkManagerSecurityUserRulesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<SecurityUserGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
         {
-            return new NetworkManagerSecurityUserRulesData(description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<SecurityUserGroupItem>()).ToList(), provisioningState, resourceGuid, default), name, systemData, default);
+            return new NetworkManagerSecurityUserRulesData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<SecurityUserGroupItem>()).ToList(), provisioningState, resourceGuid, default),
+                etag,
+                default);
         }
 
         /// <summary> Network manager security user group item. </summary>
@@ -6415,6 +6510,10 @@ namespace Azure.ResourceManager.Network.Models
             return new SecurityUserGroupItem(networkGroupId, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description for this rule. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
         /// <param name="sources"> The CIDR or source IP ranges. </param>
@@ -6424,22 +6523,28 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the security configuration user rule resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkManagerSecurityUserRuleData"/> instance for mocking. </returns>
-        public static NetworkManagerSecurityUserRuleData NetworkManagerSecurityUserRuleData(string description = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        public static NetworkManagerSecurityUserRuleData NetworkManagerSecurityUserRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
         {
-            return new NetworkManagerSecurityUserRuleData(description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && direction is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserRulePropertiesFormat(
-                description,
-                protocol.GetValueOrDefault(),
-                (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                direction.GetValueOrDefault(),
-                provisioningState,
-                resourceGuid,
-                default), name, systemData, default);
+            return new NetworkManagerSecurityUserRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && direction is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserRulePropertiesFormat(
+                    description,
+                    protocol.GetValueOrDefault(),
+                    (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    direction.GetValueOrDefault(),
+                    provisioningState,
+                    resourceGuid,
+                    default),
+                etag,
+                default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -6546,13 +6651,21 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Configuration information or intent on which to do the analysis on. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Represents the Reachability Analysis Intent properties. </param>
-        /// <param name="name"> Reachability Analysis Intent name. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
         /// <returns> A new <see cref="Network.ReachabilityAnalysisIntentData"/> instance for mocking. </returns>
-        public static ReachabilityAnalysisIntentData ReachabilityAnalysisIntentData(ReachabilityAnalysisIntentProperties properties = default, string name = default, SystemData systemData = default)
+        public static ReachabilityAnalysisIntentData ReachabilityAnalysisIntentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ReachabilityAnalysisIntentProperties properties = default)
         {
-            return new ReachabilityAnalysisIntentData(properties, name, systemData, default);
+            return new ReachabilityAnalysisIntentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Represents the Reachability Analysis Intent properties. </summary>
@@ -6627,13 +6740,21 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Configuration information for analysis run. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Represents the Reachability Analysis Run properties. </param>
-        /// <param name="name"> Reachability Analysis Run name. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
         /// <returns> A new <see cref="Network.ReachabilityAnalysisRunData"/> instance for mocking. </returns>
-        public static ReachabilityAnalysisRunData ReachabilityAnalysisRunData(ReachabilityAnalysisRunProperties properties = default, string name = default, SystemData systemData = default)
+        public static ReachabilityAnalysisRunData ReachabilityAnalysisRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ReachabilityAnalysisRunProperties properties = default)
         {
-            return new ReachabilityAnalysisRunData(properties, name, systemData, default);
+            return new ReachabilityAnalysisRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Represents the Reachability Analysis Run properties. </summary>
@@ -10111,16 +10232,26 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualHubOutboundRoutesContent(resourceUri, connectionType, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="associatedInboundConnections"> List of connections which have this RoutMap associated for inbound traffic. </param>
         /// <param name="associatedOutboundConnections"> List of connections which have this RoutMap associated for outbound traffic. </param>
         /// <param name="rules"> List of RouteMap rules to be applied. </param>
         /// <param name="provisioningState"> The provisioning state of the RouteMap resource. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.RouteMapData"/> instance for mocking. </returns>
-        public static RouteMapData RouteMapData(IEnumerable<string> associatedInboundConnections = default, IEnumerable<string> associatedOutboundConnections = default, IEnumerable<RouteMapRule> rules = default, NetworkProvisioningState? provisioningState = default, string name = default, ETag? eTag = default)
+        public static RouteMapData RouteMapData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<string> associatedInboundConnections, IEnumerable<string> associatedOutboundConnections, IEnumerable<RouteMapRule> rules, NetworkProvisioningState? provisioningState, ETag? eTag)
         {
-            return new RouteMapData(associatedInboundConnections is null && associatedOutboundConnections is null && rules is null && provisioningState is null ? default : new RouteMapProperties((associatedInboundConnections ?? new ChangeTrackingList<string>()).ToList(), (associatedOutboundConnections ?? new ChangeTrackingList<string>()).ToList(), (rules ?? new ChangeTrackingList<RouteMapRule>()).ToList(), provisioningState, default), name, eTag, default);
+            return new RouteMapData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                associatedInboundConnections is null && associatedOutboundConnections is null && rules is null && provisioningState is null ? default : new RouteMapProperties((associatedInboundConnections ?? new ChangeTrackingList<string>()).ToList(), (associatedOutboundConnections ?? new ChangeTrackingList<string>()).ToList(), (rules ?? new ChangeTrackingList<RouteMapRule>()).ToList(), provisioningState, default),
+                eTag,
+                default);
         }
 
         /// <summary> A RouteMap Rule. </summary>
@@ -11220,14 +11351,24 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="availableRuleSets"> The available rulesets. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
         /// <param name="displayName"> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </param>
         /// <returns> A new <see cref="Network.ApplicationGatewayWafDynamicManifestData"/> instance for mocking. </returns>
-        public static ApplicationGatewayWafDynamicManifestData ApplicationGatewayWafDynamicManifestData(IEnumerable<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets, string ruleSetType, string ruleSetVersion, string displayName)
+        public static ApplicationGatewayWafDynamicManifestData ApplicationGatewayWafDynamicManifestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets, string ruleSetType, string ruleSetVersion, string displayName)
         {
-            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && displayName is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(ruleSetType is null && ruleSetVersion is null && displayName is null ? default : new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, displayName, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), default);
+            return new ApplicationGatewayWafDynamicManifestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ruleSetType is null && ruleSetVersion is null && displayName is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(ruleSetType is null && ruleSetVersion is null && displayName is null ? default : new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, displayName, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default),
+                default);
         }
 
         /// <summary> Properties of the web application firewall rule set. </summary>
@@ -11253,12 +11394,23 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="group"> The name of the group that the category belongs to. </param>
-        /// <param name="name"> The name of the azureWebCategory. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.AzureWebCategoryData"/> instance for mocking. </returns>
-        public static AzureWebCategoryData AzureWebCategoryData(string @group = default, string name = default)
+        public static AzureWebCategoryData AzureWebCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string @group, ETag? eTag)
         {
-            return new AzureWebCategoryData(@group is null ? default : new AzureWebCategoryPropertiesFormat(@group, default), name, default);
+            return new AzureWebCategoryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                @group is null ? default : new AzureWebCategoryPropertiesFormat(@group, default),
+                eTag,
+                default);
         }
 
         /// <summary> Response for ListExpressRouteProviderPort API service call. </summary>
@@ -11272,12 +11424,21 @@ namespace Azure.ResourceManager.Network.Models
             return new ExpressRouteProviderPortListResult((value ?? new ChangeTrackingList<ExpressRouteProviderPortData>()).ToList(), nextLink, default);
         }
 
-        /// <param name="swapResourceSlotType"> Specifies slot info on a cloud service. </param>
-        /// <param name="name"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="cloudServiceSwapSlotType"> Specifies slot info on a cloud service. </param>
         /// <returns> A new <see cref="Network.CloudServiceSwapData"/> instance for mocking. </returns>
-        public static CloudServiceSwapData CloudServiceSwapData(SwapSlotType? swapResourceSlotType = default, string name = default)
+        public static CloudServiceSwapData CloudServiceSwapData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SwapSlotType? cloudServiceSwapSlotType = default)
         {
-            return new CloudServiceSwapData(swapResourceSlotType is null ? default : new SwapResourceProperties(swapResourceSlotType, default), name, default);
+            return new CloudServiceSwapData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                default,
+                default);
         }
 
         /// <summary> SwapResource List with single entry to represent slot type on the specified cloud service. </summary>
@@ -11620,21 +11781,30 @@ namespace Azure.ResourceManager.Network.Models
             return new LoadBalancerHealthPerRulePerBackendAddress(ipAddress, networkInterfaceIPConfigurationId, state, reason, default);
         }
 
-        /// <summary>
-        /// Network base admin rule.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.NetworkAdminRule"/> and <see cref="Models.NetworkDefaultAdminRule"/>.
-        /// </summary>
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.BaseAdminRuleData"/> instance for mocking. </returns>
-        public static BaseAdminRuleData BaseAdminRuleData(string name = default, SystemData systemData = default, string kind = default)
+        public static BaseAdminRuleData BaseAdminRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, ETag? etag = default)
         {
-            return new BaseAdminRuleData(name, systemData, default, default);
+            return new BaseAdminRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                default,
+                etag,
+                default);
         }
 
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
         /// <param name="sources"> The CIDR or source IP ranges. </param>
@@ -11647,25 +11817,36 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <returns> A new <see cref="Models.NetworkAdminRule"/> instance for mocking. </returns>
-        public static NetworkAdminRule NetworkAdminRule(string name = default, SystemData systemData = default, string description = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleAccess? access = default, int? priority = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default)
+        public static NetworkAdminRule NetworkAdminRule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string description = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleAccess? access = default, int? priority = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default)
         {
-            return new NetworkAdminRule(name, systemData, default, default, description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new AdminPropertiesFormat(
-                description,
-                protocol.GetValueOrDefault(),
-                (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                access.GetValueOrDefault(),
-                priority.GetValueOrDefault(),
-                direction.GetValueOrDefault(),
-                provisioningState,
-                resourceGuid,
-                default));
+            return new NetworkAdminRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                default,
+                etag,
+                default,
+                description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new AdminPropertiesFormat(
+                    description,
+                    protocol.GetValueOrDefault(),
+                    (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    access.GetValueOrDefault(),
+                    priority.GetValueOrDefault(),
+                    direction.GetValueOrDefault(),
+                    provisioningState,
+                    resourceGuid,
+                    default));
         }
 
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
         /// <param name="flag"> Default rule flag. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
@@ -11679,33 +11860,54 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <returns> A new <see cref="Models.NetworkDefaultAdminRule"/> instance for mocking. </returns>
-        public static NetworkDefaultAdminRule NetworkDefaultAdminRule(string name = default, SystemData systemData = default, string description = default, string flag = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleAccess? access = default, int? priority = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default)
+        public static NetworkDefaultAdminRule NetworkDefaultAdminRule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string description = default, string flag = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleAccess? access = default, int? priority = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default)
         {
-            return new NetworkDefaultAdminRule(name, systemData, default, default, description is null && flag is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new DefaultAdminPropertiesFormat(
-                description,
-                flag,
-                protocol,
-                (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                access,
-                priority,
-                direction,
-                provisioningState,
-                resourceGuid,
-                default));
+            return new NetworkDefaultAdminRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                default,
+                etag,
+                default,
+                description is null && flag is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new DefaultAdminPropertiesFormat(
+                    description,
+                    flag,
+                    protocol,
+                    (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    access,
+                    priority,
+                    direction,
+                    provisioningState,
+                    resourceGuid,
+                    default));
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="accessRulesVersion"> Version number that increases with every update to access rules within the profile. </param>
         /// <param name="diagnosticSettingsVersion"> Version number that increases with every update to diagnostic settings within the profile. </param>
-        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterProfileData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterProfileData NetworkSecurityPerimeterProfileData(string accessRulesVersion = default, string diagnosticSettingsVersion = default, string name = default)
+        public static NetworkSecurityPerimeterProfileData NetworkSecurityPerimeterProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string accessRulesVersion = default, string diagnosticSettingsVersion = default)
         {
-            return new NetworkSecurityPerimeterProfileData(accessRulesVersion is null && diagnosticSettingsVersion is null ? default : new NspProfileProperties(accessRulesVersion, diagnosticSettingsVersion, default), name, default);
+            return new NetworkSecurityPerimeterProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                accessRulesVersion is null && diagnosticSettingsVersion is null ? default : new NspProfileProperties(accessRulesVersion, diagnosticSettingsVersion, default),
+                default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="direction"> Direction that specifies whether the access rules is inbound/outbound. </param>
         /// <param name="addressPrefixes"> Inbound address prefixes (IPv4/IPv6). </param>
@@ -11715,21 +11917,26 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="emailAddresses"> Outbound rules in email address format. This access rule type is currently unavailable for use. </param>
         /// <param name="phoneNumbers"> Outbound rules in phone number format. This access rule type is currently unavailable for use. </param>
         /// <param name="serviceTags"> Inbound rules of type service tag. This access rule type is currently unavailable for use. </param>
-        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAccessRuleData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterAccessRuleData NetworkSecurityPerimeterAccessRuleData(NetworkSecurityPerimeterProvisioningState? provisioningState = default, NetworkSecurityPerimeterAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<WritableSubResource> subscriptions = default, IEnumerable<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default, IEnumerable<string> serviceTags = default, string name = default)
+        public static NetworkSecurityPerimeterAccessRuleData NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterProvisioningState? provisioningState = default, NetworkSecurityPerimeterAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<WritableSubResource> subscriptions = default, IEnumerable<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default, IEnumerable<string> serviceTags = default)
         {
-            return new NetworkSecurityPerimeterAccessRuleData(provisioningState is null && direction is null && addressPrefixes is null && fullyQualifiedDomainNames is null && subscriptions is null && networkSecurityPerimeters is null && emailAddresses is null && phoneNumbers is null && serviceTags is null ? default : new NspAccessRuleProperties(
-                provisioningState,
-                direction,
-                (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                (fullyQualifiedDomainNames ?? new ChangeTrackingList<string>()).ToList(),
-                (subscriptions ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                (networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeterBasedAccessRule>()).ToList(),
-                (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
-                (phoneNumbers ?? new ChangeTrackingList<string>()).ToList(),
-                (serviceTags ?? new ChangeTrackingList<string>()).ToList(),
-                default), name, default);
+            return new NetworkSecurityPerimeterAccessRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && direction is null && addressPrefixes is null && fullyQualifiedDomainNames is null && subscriptions is null && networkSecurityPerimeters is null && emailAddresses is null && phoneNumbers is null && serviceTags is null ? default : new NspAccessRuleProperties(
+                    provisioningState,
+                    direction,
+                    (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                    (fullyQualifiedDomainNames ?? new ChangeTrackingList<string>()).ToList(),
+                    (subscriptions ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeterBasedAccessRule>()).ToList(),
+                    (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                    (phoneNumbers ?? new ChangeTrackingList<string>()).ToList(),
+                    (serviceTags ?? new ChangeTrackingList<string>()).ToList(),
+                    default),
+                default);
         }
 
         /// <summary> The NetworkSecurityPerimeterBasedAccessRule. </summary>
@@ -11742,24 +11949,37 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkSecurityPerimeterBasedAccessRule(id, perimeterGuid, location, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> The provisioning state of the resource  association resource. </param>
         /// <param name="accessMode"> Access mode on the association. </param>
         /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
         /// <param name="privateLinkResourceId"> Resource ID. </param>
         /// <param name="profileId"> Resource ID. </param>
-        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAssociationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterAssociationData NetworkSecurityPerimeterAssociationData(NetworkSecurityPerimeterProvisioningState? provisioningState = default, NetworkSecurityPerimeterAssociationAccessMode? accessMode = default, string hasProvisioningIssues = default, ResourceIdentifier privateLinkResourceId = default, ResourceIdentifier profileId = default, string name = default)
+        public static NetworkSecurityPerimeterAssociationData NetworkSecurityPerimeterAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterProvisioningState? provisioningState, NetworkSecurityPerimeterAssociationAccessMode? accessMode, string hasProvisioningIssues, ResourceIdentifier privateLinkResourceId, ResourceIdentifier profileId)
         {
-            return new NetworkSecurityPerimeterAssociationData(provisioningState is null && privateLinkResourceId is null && profileId is null && accessMode is null && hasProvisioningIssues is null ? default : new NspAssociationProperties(
-                provisioningState,
-                privateLinkResourceId is null ? default : new NetworkSubResource(privateLinkResourceId, default),
-                profileId is null ? default : new NetworkSubResource(profileId, default),
-                accessMode,
-                hasProvisioningIssues,
-                default), name, default);
+            return new NetworkSecurityPerimeterAssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && privateLinkResourceId is null && profileId is null && accessMode is null && hasProvisioningIssues is null ? default : new NspAssociationProperties(
+                    provisioningState,
+                    privateLinkResourceId is null ? default : new NetworkSubResource(privateLinkResourceId, default),
+                    profileId is null ? default : new NetworkSubResource(profileId, default),
+                    accessMode,
+                    hasProvisioningIssues,
+                    default),
+                default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> The provisioning state of the NSP Link resource. </param>
         /// <param name="autoApprovedRemotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </param>
         /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link gets created. </param>
@@ -11770,24 +11990,33 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
         /// <param name="description"> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </param>
         /// <param name="status"> The NSP link state. </param>
-        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterLinkData NetworkSecurityPerimeterLinkData(NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default, ResourceIdentifier autoApprovedRemotePerimeterResourceId = default, Guid? remotePerimeterGuid = default, string remotePerimeterLocation = default, IEnumerable<string> localInboundProfiles = default, IEnumerable<string> localOutboundProfiles = default, IEnumerable<string> remoteInboundProfiles = default, IEnumerable<string> remoteOutboundProfiles = default, string description = default, NetworkSecurityPerimeterLinkStatus? status = default, string name = default)
+        public static NetworkSecurityPerimeterLinkData NetworkSecurityPerimeterLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default, ResourceIdentifier autoApprovedRemotePerimeterResourceId = default, Guid? remotePerimeterGuid = default, string remotePerimeterLocation = default, IEnumerable<string> localInboundProfiles = default, IEnumerable<string> localOutboundProfiles = default, IEnumerable<string> remoteInboundProfiles = default, IEnumerable<string> remoteOutboundProfiles = default, string description = default, NetworkSecurityPerimeterLinkStatus? status = default)
         {
-            return new NetworkSecurityPerimeterLinkData(provisioningState is null && autoApprovedRemotePerimeterResourceId is null && remotePerimeterGuid is null && remotePerimeterLocation is null && localInboundProfiles is null && localOutboundProfiles is null && remoteInboundProfiles is null && remoteOutboundProfiles is null && description is null && status is null ? default : new NspLinkProperties(
-                provisioningState,
-                autoApprovedRemotePerimeterResourceId,
-                remotePerimeterGuid,
-                remotePerimeterLocation,
-                (localInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (localOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (remoteInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (remoteOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                description,
-                status,
-                default), name, default);
+            return new NetworkSecurityPerimeterLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && autoApprovedRemotePerimeterResourceId is null && remotePerimeterGuid is null && remotePerimeterLocation is null && localInboundProfiles is null && localOutboundProfiles is null && remoteInboundProfiles is null && remoteOutboundProfiles is null && description is null && status is null ? default : new NspLinkProperties(
+                    provisioningState,
+                    autoApprovedRemotePerimeterResourceId,
+                    remotePerimeterGuid,
+                    remotePerimeterLocation,
+                    (localInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (localOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (remoteInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (remoteOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    description,
+                    status,
+                    default),
+                default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> The provisioning state of the NSP LinkReference resource. </param>
         /// <param name="remotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link is created. </param>
         /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link is created. </param>
@@ -11798,31 +12027,45 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. ['*'] value implies outbound is allowed from all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
         /// <param name="description"> A message sent by the remote NSP link admin for connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. </param>
         /// <param name="status"> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </param>
-        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkReferenceData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterLinkReferenceData NetworkSecurityPerimeterLinkReferenceData(NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default, ResourceIdentifier remotePerimeterResourceId = default, Guid? remotePerimeterGuid = default, string remotePerimeterLocation = default, IEnumerable<string> localInboundProfiles = default, IEnumerable<string> localOutboundProfiles = default, IEnumerable<string> remoteInboundProfiles = default, IEnumerable<string> remoteOutboundProfiles = default, string description = default, NetworkSecurityPerimeterLinkStatus? status = default, string name = default)
+        public static NetworkSecurityPerimeterLinkReferenceData NetworkSecurityPerimeterLinkReferenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default, ResourceIdentifier remotePerimeterResourceId = default, Guid? remotePerimeterGuid = default, string remotePerimeterLocation = default, IEnumerable<string> localInboundProfiles = default, IEnumerable<string> localOutboundProfiles = default, IEnumerable<string> remoteInboundProfiles = default, IEnumerable<string> remoteOutboundProfiles = default, string description = default, NetworkSecurityPerimeterLinkStatus? status = default)
         {
-            return new NetworkSecurityPerimeterLinkReferenceData(provisioningState is null && remotePerimeterResourceId is null && remotePerimeterGuid is null && remotePerimeterLocation is null && localInboundProfiles is null && localOutboundProfiles is null && remoteInboundProfiles is null && remoteOutboundProfiles is null && description is null && status is null ? default : new NspLinkReferenceProperties(
-                provisioningState,
-                remotePerimeterResourceId,
-                remotePerimeterGuid,
-                remotePerimeterLocation,
-                (localInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (localOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (remoteInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (remoteOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                description,
-                status,
-                default), name, default);
+            return new NetworkSecurityPerimeterLinkReferenceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && remotePerimeterResourceId is null && remotePerimeterGuid is null && remotePerimeterLocation is null && localInboundProfiles is null && localOutboundProfiles is null && remoteInboundProfiles is null && remoteOutboundProfiles is null && description is null && status is null ? default : new NspLinkReferenceProperties(
+                    provisioningState,
+                    remotePerimeterResourceId,
+                    remotePerimeterGuid,
+                    remotePerimeterLocation,
+                    (localInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (localOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (remoteInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (remoteOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    description,
+                    status,
+                    default),
+                default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="enabledLogCategories"> The log categories to enable in the NSP logging configuration. </param>
         /// <param name="version"> The version of the NSP logging configuration. </param>
-        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLoggingConfigurationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterLoggingConfigurationData NetworkSecurityPerimeterLoggingConfigurationData(IEnumerable<string> enabledLogCategories = default, string version = default, string name = default)
+        public static NetworkSecurityPerimeterLoggingConfigurationData NetworkSecurityPerimeterLoggingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> enabledLogCategories = default, string version = default)
         {
-            return new NetworkSecurityPerimeterLoggingConfigurationData(enabledLogCategories is null && version is null ? default : new NspLoggingConfigurationProperties((enabledLogCategories ?? new ChangeTrackingList<string>()).ToList(), version, default), name, default);
+            return new NetworkSecurityPerimeterLoggingConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                enabledLogCategories is null && version is null ? default : new NspLoggingConfigurationProperties((enabledLogCategories ?? new ChangeTrackingList<string>()).ToList(), version, default),
+                default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -12001,7 +12244,11 @@ namespace Azure.ResourceManager.Network.Models
             return new PacketCaptureSettings(fileCount, fileSizeInBytes, sessionTimeLimitInSeconds, default);
         }
 
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
         /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
         /// <param name="targetType"> Target type of the resource provided. </param>
@@ -12010,25 +12257,32 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
         /// <param name="storageLocation"> The storage location for a packet capture session. </param>
         /// <param name="filters"> A list of packet capture filters. </param>
-        /// <param name="continuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
+        /// <param name="isContinuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
         /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
         /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
         /// <returns> A new <see cref="Network.PacketCaptureData"/> instance for mocking. </returns>
-        public static PacketCaptureData PacketCaptureData(ETag? eTag, string target, PacketCaptureMachineScope scope, PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IEnumerable<PacketCaptureFilter> filters, bool? continuousCapture, PacketCaptureSettings captureSettings, NetworkProvisioningState? provisioningState)
+        public static PacketCaptureData PacketCaptureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? isContinuousCapture = default, PacketCaptureSettings captureSettings = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new PacketCaptureData(eTag, target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && continuousCapture is null && captureSettings is null && provisioningState is null ? default : new PacketCaptureResultProperties(
-                target,
-                scope,
-                targetType,
-                bytesToCapturePerPacket,
-                totalBytesPerSession,
-                timeLimitInSeconds,
-                storageLocation,
-                (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
-                continuousCapture,
-                captureSettings,
-                default,
-                provisioningState), default);
+            return new PacketCaptureData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && captureSettings is null && provisioningState is null ? default : new PacketCaptureResultProperties(
+                    target,
+                    scope,
+                    targetType,
+                    bytesToCapturePerPacket,
+                    totalBytesPerSession,
+                    timeLimitInSeconds,
+                    storageLocation,
+                    (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
+                    default,
+                    captureSettings,
+                    default,
+                    provisioningState),
+                default);
         }
 
         /// <summary> The properties of a packet capture session. </summary>
@@ -12085,6 +12339,10 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="source"> Describes the source of connection monitor. </param>
         /// <param name="destination"> Describes the destination of connection monitor. </param>
         /// <param name="autoStart"> Determines if the connection monitor will start automatically once created. </param>
@@ -12098,25 +12356,38 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="startOn"> The date and time when the connection monitor was started. </param>
         /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
         /// <param name="connectionMonitorType"> Type of connection monitor. </param>
-        /// <param name="name"> The name of the connection monitor. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="location"> Connection monitor location. </param>
+        /// <param name="tags"> Connection monitor tags. </param>
         /// <returns> A new <see cref="Network.ConnectionMonitorData"/> instance for mocking. </returns>
-        public static ConnectionMonitorData ConnectionMonitorData(ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IEnumerable<ConnectionMonitorEndpoint> endpoints, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations, IEnumerable<ConnectionMonitorTestGroup> testGroups, IEnumerable<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorEndpointType? connectionMonitorType, string name)
+        public static ConnectionMonitorData ConnectionMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectionMonitorSource source, ConnectionMonitorDestination destination, bool? autoStart, int? monitoringIntervalInSeconds, IEnumerable<ConnectionMonitorEndpoint> endpoints, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations, IEnumerable<ConnectionMonitorTestGroup> testGroups, IEnumerable<ConnectionMonitorOutput> outputs, string notes, NetworkProvisioningState? provisioningState, DateTimeOffset? startOn, string monitoringStatus, ConnectionMonitorEndpointType? connectionMonitorType, ETag? eTag, AzureLocation? location, IReadOnlyDictionary<string, string> tags)
         {
-            return new ConnectionMonitorData(source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null && connectionMonitorType is null ? default : new ConnectionMonitorResultProperties(
-                source,
-                destination,
-                autoStart,
-                monitoringIntervalInSeconds,
-                (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
-                (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
-                (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
-                (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
-                notes,
-                default,
-                provisioningState,
-                startOn,
-                monitoringStatus,
-                connectionMonitorType), name, default);
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConnectionMonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null && connectionMonitorType is null ? default : new ConnectionMonitorResultProperties(
+                    source,
+                    destination,
+                    autoStart,
+                    monitoringIntervalInSeconds,
+                    (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
+                    (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
+                    (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
+                    (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
+                    notes,
+                    default,
+                    provisioningState,
+                    startOn,
+                    monitoringStatus,
+                    connectionMonitorType),
+                eTag,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
         }
 
         /// <summary> Describes the properties of a connection monitor. </summary>
@@ -12463,27 +12734,27 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="allowRemoteVnetToUseHubVnetGateways"> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
         /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        /// <param name="enableOnlyIPv6Peering"> Enable Only IPv6 Peering for this connection. </param>
+        /// <param name="isOnlyIPv6PeeringEnabled"> Enable Only IPv6 Peering for this connection. </param>
         /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
         /// <param name="remoteVirtualNetworkId"> Resource ID. </param>
         /// <param name="connectionPolicyId"> Resource ID. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.HubVirtualNetworkConnectionData"/> instance for mocking. </returns>
-        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
+        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id, string name, string @type, bool? allowHubToRemoteVnetTransit, bool? allowRemoteVnetToUseHubVnetGateways, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration, bool? isOnlyIPv6PeeringEnabled, NetworkProvisioningState? provisioningState, ResourceIdentifier remoteVirtualNetworkId, ResourceIdentifier connectionPolicyId, ETag? eTag)
         {
             return new HubVirtualNetworkConnectionData(
                 id,
                 default,
                 name,
                 @type,
-                remoteVirtualNetworkId is null && allowHubToRemoteVnetTransit is null && allowRemoteVnetToUseHubVnetGateways is null && connectionPolicyId is null && enableInternetSecurity is null && routingConfiguration is null && enableOnlyIPv6Peering is null && provisioningState is null ? default : new HubVirtualNetworkConnectionProperties(
+                remoteVirtualNetworkId is null && allowHubToRemoteVnetTransit is null && allowRemoteVnetToUseHubVnetGateways is null && connectionPolicyId is null && enableInternetSecurity is null && routingConfiguration is null && isOnlyIPv6PeeringEnabled is null && provisioningState is null ? default : new HubVirtualNetworkConnectionProperties(
                     remoteVirtualNetworkId is null ? default : new NetworkSubResource(remoteVirtualNetworkId, default),
                     allowHubToRemoteVnetTransit,
                     allowRemoteVnetToUseHubVnetGateways,
                     connectionPolicyId is null ? default : new NetworkSubResource(connectionPolicyId, default),
                     enableInternetSecurity,
                     routingConfiguration,
-                    enableOnlyIPv6Peering,
+                    isOnlyIPv6PeeringEnabled,
                     provisioningState,
                     default),
                 eTag);
@@ -12642,34 +12913,43 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The serviceName of an AvailableDelegation indicates a possible delegation for a subnet. </summary>
-        /// <param name="name"> The name of the AvailableDelegation resource. </param>
-        /// <param name="id"> A unique identifier of the AvailableDelegation resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="serviceName"> The name of the service and resource. </param>
         /// <param name="actions"> The actions permitted to the service upon delegation. </param>
         /// <returns> A new <see cref="Models.AvailableDelegation"/> instance for mocking. </returns>
-        public static AvailableDelegation AvailableDelegation(string name = default, string id = default, string @type = default, string serviceName = default, IEnumerable<string> actions = default)
+        public static AvailableDelegation AvailableDelegation(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string serviceName = default, IEnumerable<string> actions = default)
         {
             actions ??= new ChangeTrackingList<string>();
 
             return new AvailableDelegation(
-                name,
                 id,
-                @type,
+                name,
+                resourceType,
+                systemData,
                 serviceName,
                 (actions ?? new ChangeTrackingList<string>()).ToList(),
                 default);
         }
 
         /// <summary> The available service alias. </summary>
-        /// <param name="name"> The name of the service alias. </param>
-        /// <param name="id"> The ID of the service alias. </param>
-        /// <param name="type"> The type of the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="resourceName"> The resource name of the service alias. </param>
         /// <returns> A new <see cref="Models.AvailableServiceAlias"/> instance for mocking. </returns>
-        public static AvailableServiceAlias AvailableServiceAlias(string name = default, string id = default, string @type = default, string resourceName = default)
+        public static AvailableServiceAlias AvailableServiceAlias(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string resourceName = default)
         {
-            return new AvailableServiceAlias(name, id, @type, resourceName, default);
+            return new AvailableServiceAlias(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceName,
+                default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -12738,28 +13018,35 @@ namespace Azure.ResourceManager.Network.Models
             return new ExpressRouteServiceProviderBandwidthsOffered(offerName, valueInMbps, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> A friendly name for the properties of perimeter associable resources. </param>
-        /// <param name="resourceType"> Resource type/provider name. </param>
+        /// <param name="resourceType0"> Resource type/provider name. </param>
         /// <param name="publicDnsZones"> Public DNS zone names of the resources. </param>
         /// <param name="serviceTags"> Service tags associated with the resource provider. </param>
         /// <param name="readinessState"> The readiness state of the resource type for NSP support. </param>
         /// <param name="outboundSupported"> Indicates whether the resource type supports outbound scenario. </param>
         /// <param name="description"> Description of the PaaS resource type. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="id"> Identifier of the perimeter associable resource. </param>
-        /// <param name="type"> Resource type. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterAssociableResourceType"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterAssociableResourceType NetworkSecurityPerimeterAssociableResourceType(string displayName = default, string resourceType = default, IEnumerable<string> publicDnsZones = default, IEnumerable<string> serviceTags = default, NspReadinessState? readinessState = default, bool? outboundSupported = default, string description = default, string name = default, string id = default, string @type = default)
+        public static NetworkSecurityPerimeterAssociableResourceType NetworkSecurityPerimeterAssociableResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string resourceType0, IEnumerable<string> publicDnsZones, IEnumerable<string> serviceTags = default, NspReadinessState? readinessState = default, bool? outboundSupported = default, string description = default)
         {
-            return new NetworkSecurityPerimeterAssociableResourceType(displayName is null && resourceType is null && publicDnsZones is null && serviceTags is null && readinessState is null && outboundSupported is null && description is null ? default : new PerimeterAssociableResourceProperties(
-                displayName,
+            return new NetworkSecurityPerimeterAssociableResourceType(
+                id,
+                name,
                 resourceType,
-                (publicDnsZones ?? new ChangeTrackingList<string>()).ToList(),
-                (serviceTags ?? new ChangeTrackingList<string>()).ToList(),
-                readinessState,
-                outboundSupported,
-                description,
-                default), name, id, @type, default);
+                systemData,
+                displayName is null && resourceType0 is null && publicDnsZones is null && serviceTags is null && readinessState is null && outboundSupported is null && description is null ? default : new PerimeterAssociableResourceProperties(
+                    displayName,
+                    resourceType0,
+                    (publicDnsZones ?? new ChangeTrackingList<string>()).ToList(),
+                    (serviceTags ?? new ChangeTrackingList<string>()).ToList(),
+                    readinessState,
+                    outboundSupported,
+                    description,
+                    default),
+                default);
         }
 
         /// <summary> Resource containing list of NSP service tags. </summary>
@@ -12773,18 +13060,20 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The information of an AvailablePrivateEndpointType. </summary>
-        /// <param name="name"> The name of the service and resource. </param>
-        /// <param name="id"> A unique identifier of the AvailablePrivateEndpoint Type resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="resourceName"> The name of the service and resource. </param>
         /// <param name="displayName"> Display name of the resource. </param>
         /// <returns> A new <see cref="Models.AvailablePrivateEndpointType"/> instance for mocking. </returns>
-        public static AvailablePrivateEndpointType AvailablePrivateEndpointType(string name = default, string id = default, string @type = default, string resourceName = default, string displayName = default)
+        public static AvailablePrivateEndpointType AvailablePrivateEndpointType(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string resourceName = default, string displayName = default)
         {
             return new AvailablePrivateEndpointType(
-                name,
                 id,
-                @type,
+                name,
+                resourceType,
+                systemData,
                 resourceName,
                 displayName,
                 default);
@@ -12835,22 +13124,24 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Response for the ListServiceTags API service call. </summary>
-        /// <param name="name"> The name of the cloud. </param>
-        /// <param name="id"> The ID of the cloud. </param>
-        /// <param name="type"> The azure resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="changeNumber"> The iteration number. </param>
         /// <param name="cloud"> The name of the cloud. </param>
         /// <param name="values"> The list of service tag information resources. </param>
         /// <param name="nextLink"> The URL to get next page of service tag information resources. </param>
         /// <returns> A new <see cref="Models.ServiceTagsListResult"/> instance for mocking. </returns>
-        public static ServiceTagsListResult ServiceTagsListResult(string name = default, string id = default, string @type = default, string changeNumber = default, string cloud = default, IEnumerable<ServiceTagInformation> values = default, string nextLink = default)
+        public static ServiceTagsListResult ServiceTagsListResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string changeNumber = default, string cloud = default, IEnumerable<ServiceTagInformation> values = default, string nextLink = default)
         {
             values ??= new ChangeTrackingList<ServiceTagInformation>();
 
             return new ServiceTagsListResult(
-                name,
                 id,
-                @type,
+                name,
+                resourceType,
+                systemData,
                 changeNumber,
                 cloud,
                 (values ?? new ChangeTrackingList<ServiceTagInformation>()).ToList(),
@@ -13431,6 +13722,22 @@ namespace Azure.ResourceManager.Network.Models
             return new IpamPoolUpdateProperties(description, displayName, default, default, default);
         }
 
+        /// <summary> Instance of StaticCidr resource. </summary>
+        /// <param name="properties"> Properties of static CIDR resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <returns> A new <see cref="Network.StaticCidrData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StaticCidrData StaticCidrData(StaticCidrProperties properties = default, string name = default)
+        {
+            return new StaticCidrData(
+                default,
+                name,
+                default,
+                default,
+                properties,
+                default);
+        }
+
         /// <summary> A load balancing rule for a load balancer. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -13517,6 +13824,341 @@ namespace Azure.ResourceManager.Network.Models
                 eTag);
         }
 
+        /// <summary> The network manager connectivity configuration resource. </summary>
+        /// <param name="description"> A description of the connectivity configuration. </param>
+        /// <param name="connectivityTopology"> Connectivity topology type. </param>
+        /// <param name="hubs"> List of hubItems. </param>
+        /// <param name="isGlobal"> Flag if global mesh is supported. </param>
+        /// <param name="connectivityCapabilities"> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </param>
+        /// <param name="appliesToGroups"> Groups for configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
+        /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.ConnectivityConfigurationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConnectivityConfigurationData ConnectivityConfigurationData(string description = default, ConnectivityTopology? connectivityTopology = default, IEnumerable<ConnectivityHub> hubs = default, GlobalMeshSupportFlag? isGlobal = default, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = default, IEnumerable<ConnectivityGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, DeleteExistingPeering? deleteExistingPeering = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        {
+            return new ConnectivityConfigurationData(
+                default,
+                name,
+                default,
+                systemData,
+                description is null && connectivityTopology is null && hubs is null && isGlobal is null && connectivityCapabilities is null && appliesToGroups is null && provisioningState is null && deleteExistingPeering is null && resourceGuid is null ? default : new ConnectivityConfigurationProperties(
+                    description,
+                    connectivityTopology.GetValueOrDefault(),
+                    (hubs ?? new ChangeTrackingList<ConnectivityHub>()).ToList(),
+                    isGlobal,
+                    connectivityCapabilities,
+                    (appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>()).ToList(),
+                    provisioningState,
+                    deleteExistingPeering,
+                    resourceGuid,
+                    default),
+                default,
+                default);
+        }
+
+        /// <summary> The network group resource. </summary>
+        /// <param name="description"> A description of the network group. </param>
+        /// <param name="memberType"> The type of the group member. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.NetworkGroupData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkGroupData NetworkGroupData(string description = default, NetworkGroupMemberType? memberType = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        {
+            return new NetworkGroupData(
+                default,
+                name,
+                default,
+                systemData,
+                description is null && memberType is null && provisioningState is null && resourceGuid is null ? default : new NetworkGroupProperties(description, memberType, provisioningState, resourceGuid, default),
+                default,
+                default);
+        }
+
+        /// <summary> StaticMember Item. </summary>
+        /// <param name="resourceId"> Resource Id. </param>
+        /// <param name="region"> Resource region. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.NetworkGroupStaticMemberData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkGroupStaticMemberData NetworkGroupStaticMemberData(ResourceIdentifier resourceId = default, string region = default, NetworkProvisioningState? provisioningState = default, string name = default, SystemData systemData = default)
+        {
+            return new NetworkGroupStaticMemberData(
+                default,
+                name,
+                default,
+                systemData,
+                resourceId is null && region is null && provisioningState is null ? default : new StaticMemberProperties(resourceId, region, provisioningState, default),
+                default,
+                default);
+        }
+
+        /// <summary> Defines the routing configuration. </summary>
+        /// <param name="description"> A description of the routing configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="routeTableUsageMode"> Route table usage mode defines which route table will be used by the configuration. If not defined, this will default to 'ManagedOnly'. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.NetworkManagerRoutingConfigurationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkManagerRoutingConfigurationData NetworkManagerRoutingConfigurationData(string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, RouteTableUsageMode? routeTableUsageMode = default, string name = default, SystemData systemData = default)
+        {
+            return new NetworkManagerRoutingConfigurationData(
+                default,
+                name,
+                default,
+                systemData,
+                description is null && provisioningState is null && resourceGuid is null && routeTableUsageMode is null ? default : new NetworkManagerRoutingConfigurationPropertiesFormat(description, provisioningState, resourceGuid, routeTableUsageMode, default),
+                default,
+                default);
+        }
+
+        /// <summary> Defines the routing rule collection. </summary>
+        /// <param name="description"> A description of the routing rule collection. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="appliesTo"> Groups for configuration. </param>
+        /// <param name="disableBgpRoutePropagation"> Determines whether BGP route propagation is enabled. Defaults to true. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.NetworkManagerRoutingRulesData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkManagerRoutingRulesData NetworkManagerRoutingRulesData(string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, IEnumerable<NetworkManagerRoutingGroupItem> appliesTo = default, DisableBgpRoutePropagation? disableBgpRoutePropagation = default, string name = default, SystemData systemData = default)
+        {
+            return new NetworkManagerRoutingRulesData(
+                default,
+                name,
+                default,
+                systemData,
+                description is null && provisioningState is null && resourceGuid is null && appliesTo is null && disableBgpRoutePropagation is null ? default : new RoutingRuleCollectionPropertiesFormat(
+                    description,
+                    provisioningState,
+                    resourceGuid,
+                    (appliesTo ?? new ChangeTrackingList<NetworkManagerRoutingGroupItem>()).ToList(),
+                    disableBgpRoutePropagation,
+                    default),
+                default,
+                default);
+        }
+
+        /// <summary> Network routing rule. </summary>
+        /// <param name="description"> A description for this rule. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="destination"> Indicates the destination for this particular rule. </param>
+        /// <param name="nextHop"> Indicates the next hop for this particular rule. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.NetworkManagerRoutingRuleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkManagerRoutingRuleData NetworkManagerRoutingRuleData(string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, RoutingRuleRouteDestination destination = default, RoutingRuleNextHop nextHop = default, string name = default, SystemData systemData = default)
+        {
+            return new NetworkManagerRoutingRuleData(
+                default,
+                name,
+                default,
+                systemData,
+                description is null && provisioningState is null && resourceGuid is null && destination is null && nextHop is null ? default : new RoutingRulePropertiesFormat(
+                    description,
+                    provisioningState,
+                    resourceGuid,
+                    destination,
+                    nextHop,
+                    default),
+                default,
+                default);
+        }
+
+        /// <summary> The Scope Connections resource. </summary>
+        /// <param name="tenantId"> Tenant ID. </param>
+        /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="connectionState"> Connection State. </param>
+        /// <param name="description"> A description of the scope connection. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.ScopeConnectionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ScopeConnectionData ScopeConnectionData(Guid? tenantId = default, ResourceIdentifier resourceId = default, ScopeConnectionState? connectionState = default, string description = default, string name = default, ETag? eTag = default, SystemData systemData = default)
+        {
+            return new ScopeConnectionData(
+                default,
+                name,
+                default,
+                systemData,
+                tenantId is null && resourceId is null && connectionState is null && description is null ? default : new ScopeConnectionProperties(tenantId, resourceId, connectionState, description, default),
+                eTag,
+                default);
+        }
+
+        /// <summary> Defines the security admin configuration. </summary>
+        /// <param name="description"> A description of the security configuration. </param>
+        /// <param name="applyOnNetworkIntentPolicyBasedServices"> Enum list of network intent policy based services. </param>
+        /// <param name="networkGroupAddressSpaceAggregationOption"> Determine update behavior for changes to network groups referenced within the rules in this configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.SecurityAdminConfigurationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityAdminConfigurationData SecurityAdminConfigurationData(string description = default, IEnumerable<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices = default, AddressSpaceAggregationOption? networkGroupAddressSpaceAggregationOption = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        {
+            return new SecurityAdminConfigurationData(
+                default,
+                name,
+                default,
+                systemData,
+                description is null && applyOnNetworkIntentPolicyBasedServices is null && networkGroupAddressSpaceAggregationOption is null && provisioningState is null && resourceGuid is null ? default : new SecurityAdminConfigurationPropertiesFormat(
+                    description,
+                    (applyOnNetworkIntentPolicyBasedServices ?? new ChangeTrackingList<NetworkIntentPolicyBasedService>()).ToList(),
+                    networkGroupAddressSpaceAggregationOption,
+                    provisioningState,
+                    resourceGuid,
+                    default),
+                default,
+                default);
+        }
+
+        /// <summary> Defines the admin rule collection. </summary>
+        /// <param name="description"> A description of the admin rule collection. </param>
+        /// <param name="appliesToGroups"> Groups for configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.AdminRuleGroupData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AdminRuleGroupData AdminRuleGroupData(string description = default, IEnumerable<NetworkManagerSecurityGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        {
+            return new AdminRuleGroupData(
+                default,
+                name,
+                default,
+                systemData,
+                description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new AdminRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(), provisioningState, resourceGuid, default),
+                default);
+        }
+
+        /// <summary> Defines the security user configuration. </summary>
+        /// <param name="description"> A description of the security user configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.NetworkManagerSecurityUserConfigurationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkManagerSecurityUserConfigurationData NetworkManagerSecurityUserConfigurationData(string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        {
+            return new NetworkManagerSecurityUserConfigurationData(
+                default,
+                name,
+                default,
+                systemData,
+                description is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserConfigurationPropertiesFormat(description, provisioningState, resourceGuid, default),
+                default,
+                default);
+        }
+
+        /// <summary> Defines the security user rule collection. </summary>
+        /// <param name="description"> A description of the security user rule collection. </param>
+        /// <param name="appliesToGroups"> Groups for configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.NetworkManagerSecurityUserRulesData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkManagerSecurityUserRulesData NetworkManagerSecurityUserRulesData(string description = default, IEnumerable<SecurityUserGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        {
+            return new NetworkManagerSecurityUserRulesData(
+                default,
+                name,
+                default,
+                systemData,
+                description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<SecurityUserGroupItem>()).ToList(), provisioningState, resourceGuid, default),
+                default,
+                default);
+        }
+
+        /// <summary> Network security user rule. </summary>
+        /// <param name="description"> A description for this rule. </param>
+        /// <param name="protocol"> Network protocol this rule applies to. </param>
+        /// <param name="sources"> The CIDR or source IP ranges. </param>
+        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
+        /// <param name="sourcePortRanges"> The source port ranges. </param>
+        /// <param name="destinationPortRanges"> The destination port ranges. </param>
+        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
+        /// <param name="provisioningState"> The provisioning state of the security configuration user rule resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.NetworkManagerSecurityUserRuleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkManagerSecurityUserRuleData NetworkManagerSecurityUserRuleData(string description = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, string name = default, SystemData systemData = default)
+        {
+            return new NetworkManagerSecurityUserRuleData(
+                default,
+                name,
+                default,
+                systemData,
+                description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && direction is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserRulePropertiesFormat(
+                    description,
+                    protocol.GetValueOrDefault(),
+                    (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    direction.GetValueOrDefault(),
+                    provisioningState,
+                    resourceGuid,
+                    default),
+                default,
+                default);
+        }
+
+        /// <summary> Configuration information or intent on which to do the analysis on. </summary>
+        /// <param name="properties"> Represents the Reachability Analysis Intent properties. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.ReachabilityAnalysisIntentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ReachabilityAnalysisIntentData ReachabilityAnalysisIntentData(ReachabilityAnalysisIntentProperties properties = default, string name = default, SystemData systemData = default)
+        {
+            return new ReachabilityAnalysisIntentData(
+                default,
+                name,
+                default,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Configuration information for analysis run. </summary>
+        /// <param name="properties"> Represents the Reachability Analysis Run properties. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <returns> A new <see cref="Network.ReachabilityAnalysisRunData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ReachabilityAnalysisRunData ReachabilityAnalysisRunData(ReachabilityAnalysisRunProperties properties = default, string name = default, SystemData systemData = default)
+        {
+            return new ReachabilityAnalysisRunData(
+                default,
+                name,
+                default,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> Information on the configuration of flow log and traffic analytics (optional) . </summary>
         /// <param name="targetResourceId"> The ID of the resource to configure for flow log and traffic analytics (optional) . </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
@@ -13543,6 +14185,27 @@ namespace Azure.ResourceManager.Network.Models
                 default), networkWatcherFlowAnalyticsConfiguration is null ? default : new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration, default), identity, default);
         }
 
+        /// <summary> The RouteMap child resource of a Virtual hub. </summary>
+        /// <param name="associatedInboundConnections"> List of connections which have this RoutMap associated for inbound traffic. </param>
+        /// <param name="associatedOutboundConnections"> List of connections which have this RoutMap associated for outbound traffic. </param>
+        /// <param name="rules"> List of RouteMap rules to be applied. </param>
+        /// <param name="provisioningState"> The provisioning state of the RouteMap resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.RouteMapData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RouteMapData RouteMapData(IEnumerable<string> associatedInboundConnections = default, IEnumerable<string> associatedOutboundConnections = default, IEnumerable<RouteMapRule> rules = default, NetworkProvisioningState? provisioningState = default, string name = default, ETag? eTag = default)
+        {
+            return new RouteMapData(
+                default,
+                name,
+                default,
+                default,
+                associatedInboundConnections is null && associatedOutboundConnections is null && rules is null && provisioningState is null ? default : new RouteMapProperties((associatedInboundConnections ?? new ChangeTrackingList<string>()).ToList(), (associatedOutboundConnections ?? new ChangeTrackingList<string>()).ToList(), (rules ?? new ChangeTrackingList<RouteMapRule>()).ToList(), provisioningState, default),
+                eTag,
+                default);
+        }
+
         /// <summary> Response for ApplicationGatewayWafDynamicManifest API service call. </summary>
         /// <param name="availableRuleSets"> The available rulesets. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
@@ -13551,7 +14214,13 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApplicationGatewayWafDynamicManifestData ApplicationGatewayWafDynamicManifestData(IEnumerable<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets = default, string ruleSetType = default, string ruleSetVersion = default)
         {
-            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(ruleSetType is null && ruleSetVersion is null ? default : new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), default);
+            return new ApplicationGatewayWafDynamicManifestData(
+                default,
+                default,
+                default,
+                default,
+                ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(ruleSetType is null && ruleSetVersion is null ? default : new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default),
+                default);
         }
 
         /// <summary> Properties of the web application firewall rule set. </summary>
@@ -13571,6 +14240,310 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 (tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>()).ToList(),
                 (ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>()).ToList(),
+                default);
+        }
+
+        /// <summary> Azure Web Category Resource. </summary>
+        /// <param name="group"> The name of the group that the category belongs to. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <returns> A new <see cref="Network.AzureWebCategoryData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureWebCategoryData AzureWebCategoryData(string @group = default, string name = default)
+        {
+            return new AzureWebCategoryData(
+                default,
+                name,
+                default,
+                default,
+                @group is null ? default : new AzureWebCategoryPropertiesFormat(@group, default),
+                default,
+                default);
+        }
+
+        /// <summary> SwapResource to represent slot type on the specified cloud service. </summary>
+        /// <param name="swapResourceSlotType"> Specifies slot info on a cloud service. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <returns> A new <see cref="Network.CloudServiceSwapData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CloudServiceSwapData CloudServiceSwapData(SwapSlotType? swapResourceSlotType = default, string name = default)
+        {
+            return new CloudServiceSwapData(
+                default,
+                name,
+                default,
+                default,
+                swapResourceSlotType is null ? default : new SwapResourceProperties(swapResourceSlotType, default),
+                default);
+        }
+
+        /// <summary>
+        /// Network base admin rule.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.NetworkAdminRule"/> and <see cref="Models.NetworkDefaultAdminRule"/>.
+        /// </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"></param>
+        /// <returns> A new <see cref="Network.BaseAdminRuleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BaseAdminRuleData BaseAdminRuleData(string name = default, SystemData systemData = default, string kind = default)
+        {
+            return new BaseAdminRuleData(
+                default,
+                name,
+                default,
+                systemData,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> Network admin rule. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
+        /// <param name="protocol"> Network protocol this rule applies to. </param>
+        /// <param name="sources"> The CIDR or source IP ranges. </param>
+        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
+        /// <param name="sourcePortRanges"> The source port ranges. </param>
+        /// <param name="destinationPortRanges"> The destination port ranges. </param>
+        /// <param name="access"> Indicates the access allowed for this particular rule. </param>
+        /// <param name="priority"> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
+        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <returns> A new <see cref="Models.NetworkAdminRule"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkAdminRule NetworkAdminRule(string name = default, SystemData systemData = default, string description = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleAccess? access = default, int? priority = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default)
+        {
+            return new NetworkAdminRule(
+                default,
+                name,
+                default,
+                systemData,
+                default,
+                default,
+                default,
+                description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new AdminPropertiesFormat(
+                    description,
+                    protocol.GetValueOrDefault(),
+                    (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    access.GetValueOrDefault(),
+                    priority.GetValueOrDefault(),
+                    direction.GetValueOrDefault(),
+                    provisioningState,
+                    resourceGuid,
+                    default));
+        }
+
+        /// <summary> Network default admin rule. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
+        /// <param name="flag"> Default rule flag. </param>
+        /// <param name="protocol"> Network protocol this rule applies to. </param>
+        /// <param name="sources"> The CIDR or source IP ranges. </param>
+        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
+        /// <param name="sourcePortRanges"> The source port ranges. </param>
+        /// <param name="destinationPortRanges"> The destination port ranges. </param>
+        /// <param name="access"> Indicates the access allowed for this particular rule. </param>
+        /// <param name="priority"> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
+        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <returns> A new <see cref="Models.NetworkDefaultAdminRule"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkDefaultAdminRule NetworkDefaultAdminRule(string name = default, SystemData systemData = default, string description = default, string flag = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleAccess? access = default, int? priority = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default)
+        {
+            return new NetworkDefaultAdminRule(
+                default,
+                name,
+                default,
+                systemData,
+                default,
+                default,
+                default,
+                description is null && flag is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new DefaultAdminPropertiesFormat(
+                    description,
+                    flag,
+                    protocol,
+                    (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
+                    (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
+                    access,
+                    priority,
+                    direction,
+                    provisioningState,
+                    resourceGuid,
+                    default));
+        }
+
+        /// <summary> The network security perimeter profile resource. </summary>
+        /// <param name="accessRulesVersion"> Version number that increases with every update to access rules within the profile. </param>
+        /// <param name="diagnosticSettingsVersion"> Version number that increases with every update to diagnostic settings within the profile. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterProfileData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkSecurityPerimeterProfileData NetworkSecurityPerimeterProfileData(string accessRulesVersion = default, string diagnosticSettingsVersion = default, string name = default)
+        {
+            return new NetworkSecurityPerimeterProfileData(
+                default,
+                name,
+                default,
+                default,
+                accessRulesVersion is null && diagnosticSettingsVersion is null ? default : new NspProfileProperties(accessRulesVersion, diagnosticSettingsVersion, default),
+                default);
+        }
+
+        /// <summary> The NSP access rule resource. </summary>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="direction"> Direction that specifies whether the access rules is inbound/outbound. </param>
+        /// <param name="addressPrefixes"> Inbound address prefixes (IPv4/IPv6). </param>
+        /// <param name="fullyQualifiedDomainNames"> Outbound rules in fully qualified domain name format. </param>
+        /// <param name="subscriptions"> List of subscription ids. </param>
+        /// <param name="networkSecurityPerimeters"> Rule specified by the perimeter id. </param>
+        /// <param name="emailAddresses"> Outbound rules in email address format. This access rule type is currently unavailable for use. </param>
+        /// <param name="phoneNumbers"> Outbound rules in phone number format. This access rule type is currently unavailable for use. </param>
+        /// <param name="serviceTags"> Inbound rules of type service tag. This access rule type is currently unavailable for use. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAccessRuleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkSecurityPerimeterAccessRuleData NetworkSecurityPerimeterAccessRuleData(NetworkSecurityPerimeterProvisioningState? provisioningState = default, NetworkSecurityPerimeterAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<WritableSubResource> subscriptions = default, IEnumerable<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default, IEnumerable<string> serviceTags = default, string name = default)
+        {
+            return new NetworkSecurityPerimeterAccessRuleData(
+                default,
+                name,
+                default,
+                default,
+                provisioningState is null && direction is null && addressPrefixes is null && fullyQualifiedDomainNames is null && subscriptions is null && networkSecurityPerimeters is null && emailAddresses is null && phoneNumbers is null && serviceTags is null ? default : new NspAccessRuleProperties(
+                    provisioningState,
+                    direction,
+                    (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
+                    (fullyQualifiedDomainNames ?? new ChangeTrackingList<string>()).ToList(),
+                    (subscriptions ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeterBasedAccessRule>()).ToList(),
+                    (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                    (phoneNumbers ?? new ChangeTrackingList<string>()).ToList(),
+                    (serviceTags ?? new ChangeTrackingList<string>()).ToList(),
+                    default),
+                default);
+        }
+
+        /// <summary> The NSP resource association resource. </summary>
+        /// <param name="provisioningState"> The provisioning state of the resource  association resource. </param>
+        /// <param name="accessMode"> Access mode on the association. </param>
+        /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
+        /// <param name="privateLinkResourceId"> Resource ID. </param>
+        /// <param name="profileId"> Resource ID. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAssociationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkSecurityPerimeterAssociationData NetworkSecurityPerimeterAssociationData(NetworkSecurityPerimeterProvisioningState? provisioningState = default, NetworkSecurityPerimeterAssociationAccessMode? accessMode = default, string hasProvisioningIssues = default, ResourceIdentifier privateLinkResourceId = default, ResourceIdentifier profileId = default, string name = default)
+        {
+            return new NetworkSecurityPerimeterAssociationData(
+                default,
+                name,
+                default,
+                default,
+                provisioningState is null && privateLinkResourceId is null && profileId is null && accessMode is null && hasProvisioningIssues is null ? default : new NspAssociationProperties(
+                    provisioningState,
+                    privateLinkResourceId is null ? default : new NetworkSubResource(privateLinkResourceId, default),
+                    profileId is null ? default : new NetworkSubResource(profileId, default),
+                    accessMode,
+                    hasProvisioningIssues,
+                    default),
+                default);
+        }
+
+        /// <summary> The network security perimeter link resource. </summary>
+        /// <param name="provisioningState"> The provisioning state of the NSP Link resource. </param>
+        /// <param name="autoApprovedRemotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </param>
+        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link gets created. </param>
+        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
+        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
+        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. This property can only be updated in auto-approval mode. </param>
+        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="description"> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </param>
+        /// <param name="status"> The NSP link state. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkSecurityPerimeterLinkData NetworkSecurityPerimeterLinkData(NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default, ResourceIdentifier autoApprovedRemotePerimeterResourceId = default, Guid? remotePerimeterGuid = default, string remotePerimeterLocation = default, IEnumerable<string> localInboundProfiles = default, IEnumerable<string> localOutboundProfiles = default, IEnumerable<string> remoteInboundProfiles = default, IEnumerable<string> remoteOutboundProfiles = default, string description = default, NetworkSecurityPerimeterLinkStatus? status = default, string name = default)
+        {
+            return new NetworkSecurityPerimeterLinkData(
+                default,
+                name,
+                default,
+                default,
+                provisioningState is null && autoApprovedRemotePerimeterResourceId is null && remotePerimeterGuid is null && remotePerimeterLocation is null && localInboundProfiles is null && localOutboundProfiles is null && remoteInboundProfiles is null && remoteOutboundProfiles is null && description is null && status is null ? default : new NspLinkProperties(
+                    provisioningState,
+                    autoApprovedRemotePerimeterResourceId,
+                    remotePerimeterGuid,
+                    remotePerimeterLocation,
+                    (localInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (localOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (remoteInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (remoteOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    description,
+                    status,
+                    default),
+                default);
+        }
+
+        /// <summary> The network security perimeter linkReference resource. </summary>
+        /// <param name="provisioningState"> The provisioning state of the NSP LinkReference resource. </param>
+        /// <param name="remotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link is created. </param>
+        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link is created. </param>
+        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
+        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
+        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. ['*'] value implies inbound is allowed to all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
+        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. ['*'] value implies outbound is allowed from all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
+        /// <param name="description"> A message sent by the remote NSP link admin for connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. </param>
+        /// <param name="status"> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkReferenceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkSecurityPerimeterLinkReferenceData NetworkSecurityPerimeterLinkReferenceData(NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default, ResourceIdentifier remotePerimeterResourceId = default, Guid? remotePerimeterGuid = default, string remotePerimeterLocation = default, IEnumerable<string> localInboundProfiles = default, IEnumerable<string> localOutboundProfiles = default, IEnumerable<string> remoteInboundProfiles = default, IEnumerable<string> remoteOutboundProfiles = default, string description = default, NetworkSecurityPerimeterLinkStatus? status = default, string name = default)
+        {
+            return new NetworkSecurityPerimeterLinkReferenceData(
+                default,
+                name,
+                default,
+                default,
+                provisioningState is null && remotePerimeterResourceId is null && remotePerimeterGuid is null && remotePerimeterLocation is null && localInboundProfiles is null && localOutboundProfiles is null && remoteInboundProfiles is null && remoteOutboundProfiles is null && description is null && status is null ? default : new NspLinkReferenceProperties(
+                    provisioningState,
+                    remotePerimeterResourceId,
+                    remotePerimeterGuid,
+                    remotePerimeterLocation,
+                    (localInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (localOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (remoteInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    (remoteOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
+                    description,
+                    status,
+                    default),
+                default);
+        }
+
+        /// <summary> The NSP logging configuration. </summary>
+        /// <param name="enabledLogCategories"> The log categories to enable in the NSP logging configuration. </param>
+        /// <param name="version"> The version of the NSP logging configuration. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLoggingConfigurationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkSecurityPerimeterLoggingConfigurationData NetworkSecurityPerimeterLoggingConfigurationData(IEnumerable<string> enabledLogCategories = default, string version = default, string name = default)
+        {
+            return new NetworkSecurityPerimeterLoggingConfigurationData(
+                default,
+                name,
+                default,
+                default,
+                enabledLogCategories is null && version is null ? default : new NspLoggingConfigurationProperties((enabledLogCategories ?? new ChangeTrackingList<string>()).ToList(), version, default),
                 default);
         }
 
@@ -13622,19 +14595,26 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PacketCaptureData PacketCaptureData(ETag? eTag = default, string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? continuousCapture = default, PacketCaptureSettings captureSettings = default, bool? isContinuousCapture = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new PacketCaptureData(eTag, target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && continuousCapture is null && captureSettings is null && provisioningState is null ? default : new PacketCaptureResultProperties(
-                target,
-                scope,
-                targetType,
-                bytesToCapturePerPacket,
-                totalBytesPerSession,
-                timeLimitInSeconds,
-                storageLocation,
-                (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
-                continuousCapture,
-                captureSettings,
+            return new PacketCaptureData(
                 default,
-                provisioningState), default);
+                default,
+                default,
+                default,
+                eTag,
+                target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && continuousCapture is null && captureSettings is null && provisioningState is null ? default : new PacketCaptureResultProperties(
+                    target,
+                    scope,
+                    targetType,
+                    bytesToCapturePerPacket,
+                    totalBytesPerSession,
+                    timeLimitInSeconds,
+                    storageLocation,
+                    (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
+                    continuousCapture,
+                    captureSettings,
+                    default,
+                    provisioningState),
+                default);
         }
 
         /// <summary> Information about the connection monitor. </summary>
@@ -13647,32 +14627,41 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="testGroups"> List of connection monitor test groups. </param>
         /// <param name="outputs"> List of connection monitor outputs. </param>
         /// <param name="notes"> Optional notes to be associated with the connection monitor. </param>
-        /// <param name="location"></param>
-        /// <param name="tags"></param>
+        /// <param name="location"> Connection monitor location. </param>
+        /// <param name="tags"> Connection monitor tags. </param>
         /// <param name="provisioningState"> The provisioning state of the connection monitor. </param>
         /// <param name="startOn"> The date and time when the connection monitor was started. </param>
         /// <param name="monitoringStatus"> The monitoring status of the connection monitor. </param>
         /// <param name="connectionMonitorType"> Type of connection monitor. </param>
-        /// <param name="name"> The name of the connection monitor. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <returns> A new <see cref="Network.ConnectionMonitorData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConnectionMonitorData ConnectionMonitorData(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string monitoringStatus = default, ConnectionMonitorEndpointType? connectionMonitorType = default, string name = default)
         {
-            return new ConnectionMonitorData(source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null && connectionMonitorType is null ? default : new ConnectionMonitorResultProperties(
-                source,
-                destination,
-                autoStart,
-                monitoringIntervalInSeconds,
-                (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
-                (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
-                (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
-                (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
-                notes,
+            return new ConnectionMonitorData(
                 default,
-                provisioningState,
-                startOn,
-                monitoringStatus,
-                connectionMonitorType), name, default);
+                name,
+                default,
+                default,
+                source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null && connectionMonitorType is null ? default : new ConnectionMonitorResultProperties(
+                    source,
+                    destination,
+                    autoStart,
+                    monitoringIntervalInSeconds,
+                    (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
+                    (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
+                    (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
+                    (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
+                    notes,
+                    default,
+                    provisioningState,
+                    startOn,
+                    monitoringStatus,
+                    connectionMonitorType),
+                default,
+                location,
+                new ChangeTrackingDictionary<string, string>(tags ?? new ChangeTrackingDictionary<string, string>()),
+                default);
         }
 
         /// <summary> Parameters that define the operation to create a connection monitor. </summary>
@@ -13702,6 +14691,120 @@ namespace Azure.ResourceManager.Network.Models
                 (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
                 notes,
                 default), default);
+        }
+
+        /// <summary> The serviceName of an AvailableDelegation indicates a possible delegation for a subnet. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <param name="serviceName"> The name of the service and resource. </param>
+        /// <param name="actions"> The actions permitted to the service upon delegation. </param>
+        /// <returns> A new <see cref="Models.AvailableDelegation"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvailableDelegation AvailableDelegation(string name = default, string id = default, string @type = default, string serviceName = default, IEnumerable<string> actions = default)
+        {
+            return new AvailableDelegation(
+                default,
+                name,
+                default,
+                default,
+                serviceName,
+                (actions ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <summary> The available service alias. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <param name="resourceName"> The resource name of the service alias. </param>
+        /// <returns> A new <see cref="Models.AvailableServiceAlias"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvailableServiceAlias AvailableServiceAlias(string name = default, string id = default, string @type = default, string resourceName = default)
+        {
+            return new AvailableServiceAlias(
+                default,
+                name,
+                default,
+                default,
+                resourceName,
+                default);
+        }
+
+        /// <summary> Resource that is onboarded to use network security perimeter. Also referred as perimeter associable resource. </summary>
+        /// <param name="displayName"> A friendly name for the properties of perimeter associable resources. </param>
+        /// <param name="resourceType"> Resource type/provider name. </param>
+        /// <param name="publicDnsZones"> Public DNS zone names of the resources. </param>
+        /// <param name="serviceTags"> Service tags associated with the resource provider. </param>
+        /// <param name="readinessState"> The readiness state of the resource type for NSP support. </param>
+        /// <param name="outboundSupported"> Indicates whether the resource type supports outbound scenario. </param>
+        /// <param name="description"> Description of the PaaS resource type. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterAssociableResourceType"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkSecurityPerimeterAssociableResourceType NetworkSecurityPerimeterAssociableResourceType(string displayName = default, string resourceType = default, IEnumerable<string> publicDnsZones = default, IEnumerable<string> serviceTags = default, NspReadinessState? readinessState = default, bool? outboundSupported = default, string description = default, string name = default, string id = default, string @type = default)
+        {
+            return new NetworkSecurityPerimeterAssociableResourceType(
+                default,
+                name,
+                default,
+                default,
+                displayName is null && resourceType is null && publicDnsZones is null && serviceTags is null && readinessState is null && outboundSupported is null && description is null ? default : new PerimeterAssociableResourceProperties(
+                    displayName,
+                    resourceType,
+                    (publicDnsZones ?? new ChangeTrackingList<string>()).ToList(),
+                    (serviceTags ?? new ChangeTrackingList<string>()).ToList(),
+                    readinessState,
+                    outboundSupported,
+                    description,
+                    default),
+                default);
+        }
+
+        /// <summary> The information of an AvailablePrivateEndpointType. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <param name="resourceName"> The name of the service and resource. </param>
+        /// <param name="displayName"> Display name of the resource. </param>
+        /// <returns> A new <see cref="Models.AvailablePrivateEndpointType"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvailablePrivateEndpointType AvailablePrivateEndpointType(string name = default, string id = default, string @type = default, string resourceName = default, string displayName = default)
+        {
+            return new AvailablePrivateEndpointType(
+                default,
+                name,
+                default,
+                default,
+                resourceName,
+                displayName,
+                default);
+        }
+
+        /// <summary> Response for the ListServiceTags API service call. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <param name="changeNumber"> The iteration number. </param>
+        /// <param name="cloud"> The name of the cloud. </param>
+        /// <param name="values"> The list of service tag information resources. </param>
+        /// <param name="nextLink"> The URL to get next page of service tag information resources. </param>
+        /// <returns> A new <see cref="Models.ServiceTagsListResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceTagsListResult ServiceTagsListResult(string name = default, string id = default, string @type = default, string changeNumber = default, string cloud = default, IEnumerable<ServiceTagInformation> values = default, string nextLink = default)
+        {
+            return new ServiceTagsListResult(
+                default,
+                name,
+                default,
+                default,
+                changeNumber,
+                cloud,
+                (values ?? new ChangeTrackingList<ServiceTagInformation>()).ToList(),
+                nextLink,
+                default);
         }
 
         /// <summary> Frontend IP address of the load balancer. </summary>
@@ -17101,10 +18204,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Response for ApplicationGatewayWafDynamicManifest API service call. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="availableRuleSets"> The available rulesets. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
@@ -17112,40 +18215,13 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApplicationGatewayWafDynamicManifestData ApplicationGatewayWafDynamicManifestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets = default, string ruleSetType = default, string ruleSetVersion = default)
         {
-            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(ruleSetType is null && ruleSetVersion is null ? default : new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), default);
-        }
-
-        /// <summary> The serviceName of an AvailableDelegation indicates a possible delegation for a subnet. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the AvailableDelegation resource. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="serviceName"> The name of the service and resource. </param>
-        /// <param name="actions"> The actions permitted to the service upon delegation. </param>
-        /// <returns> A new <see cref="Models.AvailableDelegation"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvailableDelegation AvailableDelegation(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string serviceName = default, IEnumerable<string> actions = default)
-        {
-            return new AvailableDelegation(
+            return new ApplicationGatewayWafDynamicManifestData(
+                id,
                 name,
-                default,
-                default,
-                serviceName,
-                (actions ?? new ChangeTrackingList<string>()).ToList(),
+                resourceType,
+                systemData,
+                ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(ruleSetType is null && ruleSetVersion is null ? default : new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default),
                 default);
-        }
-
-        /// <summary> The available service alias. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the service alias. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="resourceName"> The resource name of the service alias. </param>
-        /// <returns> A new <see cref="Models.AvailableServiceAlias"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvailableServiceAlias AvailableServiceAlias(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string resourceName = default)
-        {
-            return new AvailableServiceAlias(name, default, default, resourceName, default);
         }
 
         /// <summary> Azure Firewall resource. </summary>
@@ -17318,17 +18394,24 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Azure Web Category Resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the azureWebCategory. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="etag"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="group"> The name of the group that the category belongs to. </param>
         /// <returns> A new <see cref="Network.AzureWebCategoryData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureWebCategoryData AzureWebCategoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string @group = default)
         {
-            return new AzureWebCategoryData(@group is null ? default : new AzureWebCategoryPropertiesFormat(@group, default), name, default);
+            return new AzureWebCategoryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                @group is null ? default : new AzureWebCategoryPropertiesFormat(@group, default),
+                etag,
+                default);
         }
 
         /// <summary> Bastion Host resource. </summary>
@@ -17408,19 +18491,6 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 subnetId is null && publicIPAddressId is null && provisioningState is null && privateIPAllocationMethod is null ? default : new BastionHostIPConfigurationPropertiesFormat(new NetworkSubResource(subnetId, default), publicIPAddressId is null ? default : new NetworkSubResource(publicIPAddressId, default), provisioningState, privateIPAllocationMethod, default),
                 etag);
-        }
-
-        /// <summary> SwapResource to represent slot type on the specified cloud service. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="cloudServiceSwapSlotType"></param>
-        /// <returns> A new <see cref="Network.CloudServiceSwapData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CloudServiceSwapData CloudServiceSwapData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SwapSlotType? cloudServiceSwapSlotType = default)
-        {
-            return new CloudServiceSwapData(default, name, default);
         }
 
         /// <summary> Custom IP prefix resource. </summary>
@@ -18235,19 +19305,6 @@ namespace Azure.ResourceManager.Network.Models
             return new IpamPoolData(properties, etag, name, default);
         }
 
-        /// <summary> Instance of StaticCidr resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> StaticCidr resource name to retrieve. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="properties"> Properties of static CIDR resource. </param>
-        /// <returns> A new <see cref="Network.StaticCidrData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StaticCidrData StaticCidrData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StaticCidrProperties properties = default)
-        {
-            return new StaticCidrData(properties, name, default);
-        }
-
         /// <summary> IpAllocation resource. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -18716,182 +19773,11 @@ namespace Azure.ResourceManager.Network.Models
                 default), (configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>()).ToList(), default);
         }
 
-        /// <summary> The network manager connectivity configuration resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network manager connectivity configuration. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="description"> A description of the connectivity configuration. </param>
-        /// <param name="connectivityTopology"> Connectivity topology type. </param>
-        /// <param name="hubs"> List of hubItems. </param>
-        /// <param name="isGlobal"> Flag if global mesh is supported. </param>
-        /// <param name="connectivityCapabilities"> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </param>
-        /// <param name="appliesToGroups"> Groups for configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
-        /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.ConnectivityConfigurationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConnectivityConfigurationData ConnectivityConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, ConnectivityTopology? connectivityTopology = default, IEnumerable<ConnectivityHub> hubs = default, GlobalMeshSupportFlag? isGlobal = default, ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = default, IEnumerable<ConnectivityGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, DeleteExistingPeering? deleteExistingPeering = default, Guid? resourceGuid = default, ETag? etag = default)
-        {
-            return new ConnectivityConfigurationData(description is null && connectivityTopology is null && hubs is null && isGlobal is null && connectivityCapabilities is null && appliesToGroups is null && provisioningState is null && deleteExistingPeering is null && resourceGuid is null ? default : new ConnectivityConfigurationProperties(
-                description,
-                connectivityTopology.GetValueOrDefault(),
-                (hubs ?? new ChangeTrackingList<ConnectivityHub>()).ToList(),
-                isGlobal,
-                connectivityCapabilities,
-                (appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>()).ToList(),
-                provisioningState,
-                deleteExistingPeering,
-                resourceGuid,
-                default), name, systemData, default);
-        }
-
-        /// <summary> The network group resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network group. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="description"> A description of the network group. </param>
-        /// <param name="memberType"> The type of the group member. </param>
-        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.NetworkGroupData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkGroupData NetworkGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, NetworkGroupMemberType? memberType = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
-        {
-            return new NetworkGroupData(description is null && memberType is null && provisioningState is null && resourceGuid is null ? default : new NetworkGroupProperties(description, memberType, provisioningState, resourceGuid, default), name, systemData, default);
-        }
-
-        /// <summary> StaticMember Item. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the static member. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="resourceId"> Resource Id. </param>
-        /// <param name="region"> Resource region. </param>
-        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.NetworkGroupStaticMemberData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkGroupStaticMemberData NetworkGroupStaticMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier resourceId = default, string region = default, NetworkProvisioningState? provisioningState = default, ETag? etag = default)
-        {
-            return new NetworkGroupStaticMemberData(resourceId is null && region is null && provisioningState is null ? default : new StaticMemberProperties(resourceId, region, provisioningState, default), name, systemData, default);
-        }
-
-        /// <summary> Defines the routing configuration. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network manager Routing Configuration. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="description"> A description of the routing configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="routeTableUsageMode"> Route table usage mode defines which route table will be used by the configuration. If not defined, this will default to 'ManagedOnly'. </param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.NetworkManagerRoutingConfigurationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkManagerRoutingConfigurationData NetworkManagerRoutingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, RouteTableUsageMode? routeTableUsageMode = default, ETag? etag = default)
-        {
-            return new NetworkManagerRoutingConfigurationData(description is null && provisioningState is null && resourceGuid is null && routeTableUsageMode is null ? default : new NetworkManagerRoutingConfigurationPropertiesFormat(description, provisioningState, resourceGuid, routeTableUsageMode, default), name, systemData, default);
-        }
-
-        /// <summary> Defines the routing rule collection. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network manager routing Configuration rule collection. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="description"> A description of the routing rule collection. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="appliesTo"> Groups for configuration. </param>
-        /// <param name="disableBgpRoutePropagation"> Determines whether BGP route propagation is enabled. Defaults to true. </param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.NetworkManagerRoutingRulesData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkManagerRoutingRulesData NetworkManagerRoutingRulesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, IEnumerable<NetworkManagerRoutingGroupItem> appliesTo = default, DisableBgpRoutePropagation? disableBgpRoutePropagation = default, ETag? etag = default)
-        {
-            return new NetworkManagerRoutingRulesData(description is null && provisioningState is null && resourceGuid is null && appliesTo is null && disableBgpRoutePropagation is null ? default : new RoutingRuleCollectionPropertiesFormat(
-                description,
-                provisioningState,
-                resourceGuid,
-                (appliesTo ?? new ChangeTrackingList<NetworkManagerRoutingGroupItem>()).ToList(),
-                disableBgpRoutePropagation,
-                default), name, systemData, default);
-        }
-
-        /// <summary> Network routing rule. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="description"> A description for this rule. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="destination"> Indicates the destination for this particular rule. </param>
-        /// <param name="nextHop"> Indicates the next hop for this particular rule. </param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.NetworkManagerRoutingRuleData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkManagerRoutingRuleData NetworkManagerRoutingRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, RoutingRuleRouteDestination destination = default, RoutingRuleNextHop nextHop = default, ETag? etag = default)
-        {
-            return new NetworkManagerRoutingRuleData(description is null && provisioningState is null && resourceGuid is null && destination is null && nextHop is null ? default : new RoutingRulePropertiesFormat(
-                description,
-                provisioningState,
-                resourceGuid,
-                destination,
-                nextHop,
-                default), name, systemData, default);
-        }
-
-        /// <summary> The Scope Connections resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> Name for the cross-tenant connection. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="tenantId"> Tenant ID. </param>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="connectionState"> Connection State. </param>
-        /// <param name="description"> A description of the scope connection. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.ScopeConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ScopeConnectionData ScopeConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? tenantId = default, ResourceIdentifier resourceId = default, ScopeConnectionState? connectionState = default, string description = default, ETag? etag = default)
-        {
-            return new ScopeConnectionData(tenantId is null && resourceId is null && connectionState is null && description is null ? default : new ScopeConnectionProperties(tenantId, resourceId, connectionState, description, default), name, etag, systemData, default);
-        }
-
-        /// <summary> Defines the security admin configuration. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network manager Security Configuration. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="description"> A description of the security configuration. </param>
-        /// <param name="applyOnNetworkIntentPolicyBasedServices"> Enum list of network intent policy based services. </param>
-        /// <param name="networkGroupAddressSpaceAggregationOption"> Determine update behavior for changes to network groups referenced within the rules in this configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.SecurityAdminConfigurationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SecurityAdminConfigurationData SecurityAdminConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices = default, AddressSpaceAggregationOption? networkGroupAddressSpaceAggregationOption = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
-        {
-            return new SecurityAdminConfigurationData(description is null && applyOnNetworkIntentPolicyBasedServices is null && networkGroupAddressSpaceAggregationOption is null && provisioningState is null && resourceGuid is null ? default : new SecurityAdminConfigurationPropertiesFormat(
-                description,
-                (applyOnNetworkIntentPolicyBasedServices ?? new ChangeTrackingList<NetworkIntentPolicyBasedService>()).ToList(),
-                networkGroupAddressSpaceAggregationOption,
-                provisioningState,
-                resourceGuid,
-                default), name, systemData, default);
-        }
-
         /// <summary> Defines the admin rule collection. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network manager security Configuration rule collection. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the admin rule collection. </param>
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
@@ -18901,89 +19787,13 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AdminRuleGroupData AdminRuleGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<NetworkManagerSecurityGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
         {
-            return new AdminRuleGroupData(description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new AdminRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(), provisioningState, resourceGuid, default), name, systemData, default);
-        }
-
-        /// <summary>
-        /// Network base admin rule.
-        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.NetworkAdminRule"/> and <see cref="Models.NetworkDefaultAdminRule"/>.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="kind"></param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.BaseAdminRuleData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BaseAdminRuleData BaseAdminRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, ETag? etag = default)
-        {
-            return new BaseAdminRuleData(name, systemData, default, default);
-        }
-
-        /// <summary> Defines the security user configuration. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network manager Security Configuration. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="description"> A description of the security user configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.NetworkManagerSecurityUserConfigurationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkManagerSecurityUserConfigurationData NetworkManagerSecurityUserConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
-        {
-            return new NetworkManagerSecurityUserConfigurationData(description is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserConfigurationPropertiesFormat(description, provisioningState, resourceGuid, default), name, systemData, default);
-        }
-
-        /// <summary> Defines the security user rule collection. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network manager security Configuration rule collection. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="description"> A description of the security user rule collection. </param>
-        /// <param name="appliesToGroups"> Groups for configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.NetworkManagerSecurityUserRulesData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkManagerSecurityUserRulesData NetworkManagerSecurityUserRulesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<SecurityUserGroupItem> appliesToGroups = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
-        {
-            return new NetworkManagerSecurityUserRulesData(description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<SecurityUserGroupItem>()).ToList(), provisioningState, resourceGuid, default), name, systemData, default);
-        }
-
-        /// <summary> Network security user rule. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="description"> A description for this rule. </param>
-        /// <param name="protocol"> Network protocol this rule applies to. </param>
-        /// <param name="sources"> The CIDR or source IP ranges. </param>
-        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
-        /// <param name="sourcePortRanges"> The source port ranges. </param>
-        /// <param name="destinationPortRanges"> The destination port ranges. </param>
-        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
-        /// <param name="provisioningState"> The provisioning state of the security configuration user rule resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"></param>
-        /// <returns> A new <see cref="Network.NetworkManagerSecurityUserRuleData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkManagerSecurityUserRuleData NetworkManagerSecurityUserRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? etag = default)
-        {
-            return new NetworkManagerSecurityUserRuleData(description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && direction is null && provisioningState is null && resourceGuid is null ? default : new SecurityUserRulePropertiesFormat(
-                description,
-                protocol.GetValueOrDefault(),
-                (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                direction.GetValueOrDefault(),
-                provisioningState,
-                resourceGuid,
-                default), name, systemData, default);
+            return new AdminRuleGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && appliesToGroups is null && provisioningState is null && resourceGuid is null ? default : new AdminRuleCollectionPropertiesFormat(description, (appliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>()).ToList(), provisioningState, resourceGuid, default),
+                default);
         }
 
         /// <summary> Network profile resource. </summary>
@@ -19083,56 +19893,11 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkSecurityPerimeterData(provisioningState is null && perimeterGuid is null ? default : new NetworkSecurityPerimeterProperties(provisioningState, perimeterGuid, default), name, default);
         }
 
-        /// <summary> The network security perimeter profile resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the NSP profile. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="accessRulesVersion"> Version number that increases with every update to access rules within the profile. </param>
-        /// <param name="diagnosticSettingsVersion"> Version number that increases with every update to diagnostic settings within the profile. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterProfileData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkSecurityPerimeterProfileData NetworkSecurityPerimeterProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string accessRulesVersion = default, string diagnosticSettingsVersion = default)
-        {
-            return new NetworkSecurityPerimeterProfileData(accessRulesVersion is null && diagnosticSettingsVersion is null ? default : new NspProfileProperties(accessRulesVersion, diagnosticSettingsVersion, default), name, default);
-        }
-
-        /// <summary> The NSP access rule resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the NSP access rule. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        /// <param name="direction"> Direction that specifies whether the access rules is inbound/outbound. </param>
-        /// <param name="addressPrefixes"> Inbound address prefixes (IPv4/IPv6). </param>
-        /// <param name="fullyQualifiedDomainNames"> Outbound rules in fully qualified domain name format. </param>
-        /// <param name="subscriptions"> List of subscription ids. </param>
-        /// <param name="networkSecurityPerimeters"> Rule specified by the perimeter id. </param>
-        /// <param name="emailAddresses"> Outbound rules in email address format. This access rule type is currently unavailable for use. </param>
-        /// <param name="phoneNumbers"> Outbound rules in phone number format. This access rule type is currently unavailable for use. </param>
-        /// <param name="serviceTags"> Inbound rules of type service tag. This access rule type is currently unavailable for use. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAccessRuleData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkSecurityPerimeterAccessRuleData NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterProvisioningState? provisioningState = default, NetworkSecurityPerimeterAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<WritableSubResource> subscriptions = default, IEnumerable<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default, IEnumerable<string> serviceTags = default)
-        {
-            return new NetworkSecurityPerimeterAccessRuleData(provisioningState is null && direction is null && addressPrefixes is null && fullyQualifiedDomainNames is null && subscriptions is null && networkSecurityPerimeters is null && emailAddresses is null && phoneNumbers is null && serviceTags is null ? default : new NspAccessRuleProperties(
-                provisioningState,
-                direction,
-                (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                (fullyQualifiedDomainNames ?? new ChangeTrackingList<string>()).ToList(),
-                (subscriptions ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                (networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeterBasedAccessRule>()).ToList(),
-                (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
-                (phoneNumbers ?? new ChangeTrackingList<string>()).ToList(),
-                (serviceTags ?? new ChangeTrackingList<string>()).ToList(),
-                default), name, default);
-        }
-
         /// <summary> The NSP resource association resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the NSP association. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> The provisioning state of the resource  association resource. </param>
         /// <param name="privateLinkResourceId"> Resource ID. </param>
         /// <param name="profileId"> Resource ID. </param>
@@ -19142,141 +19907,47 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkSecurityPerimeterAssociationData NetworkSecurityPerimeterAssociationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterProvisioningState? provisioningState = default, ResourceIdentifier privateLinkResourceId = default, ResourceIdentifier profileId = default, NetworkSecurityPerimeterAssociationAccessMode? accessMode = default, string hasProvisioningIssues = default)
         {
-            return new NetworkSecurityPerimeterAssociationData(provisioningState is null && privateLinkResourceId is null && profileId is null && accessMode is null && hasProvisioningIssues is null ? default : new NspAssociationProperties(
-                provisioningState,
-                privateLinkResourceId is null ? default : new NetworkSubResource(privateLinkResourceId, default),
-                profileId is null ? default : new NetworkSubResource(profileId, default),
-                accessMode,
-                hasProvisioningIssues,
-                default), name, default);
+            return new NetworkSecurityPerimeterAssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && privateLinkResourceId is null && profileId is null && accessMode is null && hasProvisioningIssues is null ? default : new NspAssociationProperties(
+                    provisioningState,
+                    privateLinkResourceId is null ? default : new NetworkSubResource(privateLinkResourceId, default),
+                    profileId is null ? default : new NetworkSubResource(profileId, default),
+                    accessMode,
+                    hasProvisioningIssues,
+                    default),
+                default);
         }
 
         /// <summary> Resource that is onboarded to use network security perimeter. Also referred as perimeter associable resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> A friendly name for the properties of perimeter associable resources. </param>
         /// <param name="publicDnsZones"> Public DNS zone names of the resources. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterAssociableResourceType"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkSecurityPerimeterAssociableResourceType NetworkSecurityPerimeterAssociableResourceType(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, IEnumerable<string> publicDnsZones = default)
         {
-            return new NetworkSecurityPerimeterAssociableResourceType(displayName is null && publicDnsZones is null ? default : new PerimeterAssociableResourceProperties(
-                displayName,
-                default,
-                (publicDnsZones ?? new ChangeTrackingList<string>()).ToList(),
-                default,
-                default,
-                default,
-                default,
-                default), name, default, default, default);
-        }
-
-        /// <summary> The network security perimeter link resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the NSP link. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="provisioningState"> The provisioning state of the NSP Link resource. </param>
-        /// <param name="autoApprovedRemotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </param>
-        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link gets created. </param>
-        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
-        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
-        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
-        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. This property can only be updated in auto-approval mode. </param>
-        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
-        /// <param name="description"> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </param>
-        /// <param name="status"> The NSP link state. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkSecurityPerimeterLinkData NetworkSecurityPerimeterLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default, ResourceIdentifier autoApprovedRemotePerimeterResourceId = default, Guid? remotePerimeterGuid = default, string remotePerimeterLocation = default, IEnumerable<string> localInboundProfiles = default, IEnumerable<string> localOutboundProfiles = default, IEnumerable<string> remoteInboundProfiles = default, IEnumerable<string> remoteOutboundProfiles = default, string description = default, NetworkSecurityPerimeterLinkStatus? status = default)
-        {
-            return new NetworkSecurityPerimeterLinkData(provisioningState is null && autoApprovedRemotePerimeterResourceId is null && remotePerimeterGuid is null && remotePerimeterLocation is null && localInboundProfiles is null && localOutboundProfiles is null && remoteInboundProfiles is null && remoteOutboundProfiles is null && description is null && status is null ? default : new NspLinkProperties(
-                provisioningState,
-                autoApprovedRemotePerimeterResourceId,
-                remotePerimeterGuid,
-                remotePerimeterLocation,
-                (localInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (localOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (remoteInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (remoteOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                description,
-                status,
-                default), name, default);
-        }
-
-        /// <summary> The network security perimeter linkReference resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the NSP linkReference. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="provisioningState"> The provisioning state of the NSP LinkReference resource. </param>
-        /// <param name="remotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link is created. </param>
-        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link is created. </param>
-        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
-        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
-        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
-        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. ['*'] value implies inbound is allowed to all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
-        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. ['*'] value implies outbound is allowed from all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
-        /// <param name="description"> A message sent by the remote NSP link admin for connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. </param>
-        /// <param name="status"> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLinkReferenceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkSecurityPerimeterLinkReferenceData NetworkSecurityPerimeterLinkReferenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default, ResourceIdentifier remotePerimeterResourceId = default, Guid? remotePerimeterGuid = default, string remotePerimeterLocation = default, IEnumerable<string> localInboundProfiles = default, IEnumerable<string> localOutboundProfiles = default, IEnumerable<string> remoteInboundProfiles = default, IEnumerable<string> remoteOutboundProfiles = default, string description = default, NetworkSecurityPerimeterLinkStatus? status = default)
-        {
-            return new NetworkSecurityPerimeterLinkReferenceData(provisioningState is null && remotePerimeterResourceId is null && remotePerimeterGuid is null && remotePerimeterLocation is null && localInboundProfiles is null && localOutboundProfiles is null && remoteInboundProfiles is null && remoteOutboundProfiles is null && description is null && status is null ? default : new NspLinkReferenceProperties(
-                provisioningState,
-                remotePerimeterResourceId,
-                remotePerimeterGuid,
-                remotePerimeterLocation,
-                (localInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (localOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (remoteInboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                (remoteOutboundProfiles ?? new ChangeTrackingList<string>()).ToList(),
-                description,
-                status,
-                default), name, default);
-        }
-
-        /// <summary> The NSP logging configuration. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="enabledLogCategories"> The log categories to enable in the NSP logging configuration. </param>
-        /// <param name="version"> The version of the NSP logging configuration. </param>
-        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterLoggingConfigurationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkSecurityPerimeterLoggingConfigurationData NetworkSecurityPerimeterLoggingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> enabledLogCategories = default, string version = default)
-        {
-            return new NetworkSecurityPerimeterLoggingConfigurationData(enabledLogCategories is null && version is null ? default : new NspLoggingConfigurationProperties((enabledLogCategories ?? new ChangeTrackingList<string>()).ToList(), version, default), name, default);
-        }
-
-        /// <summary> Configuration information or intent on which to do the analysis on. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> Reachability Analysis Intent name. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="properties"> Represents the Reachability Analysis Intent properties. </param>
-        /// <returns> A new <see cref="Network.ReachabilityAnalysisIntentData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ReachabilityAnalysisIntentData ReachabilityAnalysisIntentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ReachabilityAnalysisIntentProperties properties = default)
-        {
-            return new ReachabilityAnalysisIntentData(properties, name, systemData, default);
-        }
-
-        /// <summary> Configuration information for analysis run. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> Reachability Analysis Run name. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="properties"> Represents the Reachability Analysis Run properties. </param>
-        /// <returns> A new <see cref="Network.ReachabilityAnalysisRunData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ReachabilityAnalysisRunData ReachabilityAnalysisRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ReachabilityAnalysisRunProperties properties = default)
-        {
-            return new ReachabilityAnalysisRunData(properties, name, systemData, default);
+            return new NetworkSecurityPerimeterAssociableResourceType(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && publicDnsZones is null ? default : new PerimeterAssociableResourceProperties(
+                    displayName,
+                    default,
+                    (publicDnsZones ?? new ChangeTrackingList<string>()).ToList(),
+                    default,
+                    default,
+                    default,
+                    default,
+                    default),
+                default);
         }
 
         /// <summary> Instance of Verifier Workspace. </summary>
@@ -19443,42 +20114,6 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState is null ? default : new NetworkWatcherPropertiesFormat(provisioningState, default));
         }
 
-        /// <summary> Information about packet capture session. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
-        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
-        /// <param name="targetType"> Target type of the resource provided. </param>
-        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
-        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
-        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
-        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
-        /// <param name="filters"> A list of packet capture filters. </param>
-        /// <param name="isContinuousCapture"></param>
-        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
-        /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
-        /// <returns> A new <see cref="Network.PacketCaptureData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PacketCaptureData PacketCaptureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? isContinuousCapture = default, PacketCaptureSettings captureSettings = default, NetworkProvisioningState? provisioningState = default)
-        {
-            return new PacketCaptureData(etag, target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && captureSettings is null && provisioningState is null ? default : new PacketCaptureResultProperties(
-                target,
-                scope,
-                targetType,
-                bytesToCapturePerPacket,
-                totalBytesPerSession,
-                timeLimitInSeconds,
-                storageLocation,
-                (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
-                default,
-                captureSettings,
-                default,
-                provisioningState), default);
-        }
-
         /// <summary> Hop link. </summary>
         /// <param name="nextHopId"> The ID of the next hop. </param>
         /// <param name="linkType"> Link type. </param>
@@ -19503,13 +20138,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Information about the connection monitor. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the connection monitor. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="etag"></param>
-        /// <param name="location"></param>
-        /// <param name="tags"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="location"> Connection monitor location. </param>
+        /// <param name="tags"> Connection monitor tags. </param>
         /// <param name="source"> Describes the source of connection monitor. </param>
         /// <param name="destination"> Describes the destination of connection monitor. </param>
         /// <param name="autoStart"> Determines if the connection monitor will start automatically once created. </param>
@@ -19527,40 +20162,29 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConnectionMonitorData ConnectionMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, NetworkProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string monitoringStatus = default, ConnectionMonitorType? connectionMonitorType = default)
         {
-            return new ConnectionMonitorData(source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null ? default : new ConnectionMonitorResultProperties(
-                source,
-                destination,
-                autoStart,
-                monitoringIntervalInSeconds,
-                (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
-                (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
-                (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
-                (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
-                notes,
-                default,
-                provisioningState,
-                startOn,
-                monitoringStatus,
-                default), name, default);
-        }
-
-        /// <summary> The information of an AvailablePrivateEndpointType. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the service and resource. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="resourceName"> The name of the service and resource. </param>
-        /// <param name="displayName"> Display name of the resource. </param>
-        /// <returns> A new <see cref="Models.AvailablePrivateEndpointType"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvailablePrivateEndpointType AvailablePrivateEndpointType(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string resourceName = default, string displayName = default)
-        {
-            return new AvailablePrivateEndpointType(
+            return new ConnectionMonitorData(
+                id,
                 name,
-                default,
-                default,
-                resourceName,
-                displayName,
+                resourceType,
+                systemData,
+                source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null ? default : new ConnectionMonitorResultProperties(
+                    source,
+                    destination,
+                    autoStart,
+                    monitoringIntervalInSeconds,
+                    (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
+                    (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
+                    (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
+                    (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
+                    notes,
+                    default,
+                    provisioningState,
+                    startOn,
+                    monitoringStatus,
+                    default),
+                etag,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 
@@ -19877,30 +20501,6 @@ namespace Azure.ResourceManager.Network.Models
                     (remoteSubnetNames ?? new ChangeTrackingList<string>()).ToList(),
                     default),
                 etag);
-        }
-
-        /// <summary> Response for the ListServiceTags API service call. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the cloud. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="changeNumber"> The iteration number. </param>
-        /// <param name="cloud"> The name of the cloud. </param>
-        /// <param name="values"> The list of service tag information resources. </param>
-        /// <param name="nextLink"> The URL to get next page of service tag information resources. </param>
-        /// <returns> A new <see cref="Models.ServiceTagsListResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceTagsListResult ServiceTagsListResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string changeNumber = default, string cloud = default, IEnumerable<ServiceTagInformation> values = default, string nextLink = default)
-        {
-            return new ServiceTagsListResult(
-                name,
-                default,
-                default,
-                changeNumber,
-                cloud,
-                (values ?? new ChangeTrackingList<ServiceTagInformation>()).ToList(),
-                nextLink,
-                default);
         }
 
         /// <summary> Network Intent Policy resource. </summary>
@@ -20854,10 +21454,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The RouteMap child resource of a Virtual hub. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="associatedInboundConnections"> List of connections which have this RoutMap associated for inbound traffic. </param>
         /// <param name="associatedOutboundConnections"> List of connections which have this RoutMap associated for outbound traffic. </param>
@@ -20867,7 +21467,14 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RouteMapData RouteMapData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IEnumerable<string> associatedInboundConnections = default, IEnumerable<string> associatedOutboundConnections = default, IEnumerable<RouteMapRule> rules = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new RouteMapData(associatedInboundConnections is null && associatedOutboundConnections is null && rules is null && provisioningState is null ? default : new RouteMapProperties((associatedInboundConnections ?? new ChangeTrackingList<string>()).ToList(), (associatedOutboundConnections ?? new ChangeTrackingList<string>()).ToList(), (rules ?? new ChangeTrackingList<RouteMapRule>()).ToList(), provisioningState, default), name, etag, default);
+            return new RouteMapData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                associatedInboundConnections is null && associatedOutboundConnections is null && rules is null && provisioningState is null ? default : new RouteMapProperties((associatedInboundConnections ?? new ChangeTrackingList<string>()).ToList(), (associatedOutboundConnections ?? new ChangeTrackingList<string>()).ToList(), (rules ?? new ChangeTrackingList<RouteMapRule>()).ToList(), provisioningState, default),
+                etag,
+                default);
         }
 
         /// <summary> HubVirtualNetworkConnection Resource. </summary>
@@ -21322,80 +21929,6 @@ namespace Azure.ResourceManager.Network.Models
                     default,
                     default),
                 etag);
-        }
-
-        /// <summary> Network admin rule. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="etag"></param>
-        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
-        /// <param name="protocol"> Network protocol this rule applies to. </param>
-        /// <param name="sources"> The CIDR or source IP ranges. </param>
-        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
-        /// <param name="sourcePortRanges"> The source port ranges. </param>
-        /// <param name="destinationPortRanges"> The destination port ranges. </param>
-        /// <param name="access"> Indicates the access allowed for this particular rule. </param>
-        /// <param name="priority"> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
-        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkAdminRule"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkAdminRule NetworkAdminRule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string description = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleAccess? access = default, int? priority = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default)
-        {
-            return new NetworkAdminRule(name, systemData, default, default, description is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new AdminPropertiesFormat(
-                description,
-                protocol.GetValueOrDefault(),
-                (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                access.GetValueOrDefault(),
-                priority.GetValueOrDefault(),
-                direction.GetValueOrDefault(),
-                provisioningState,
-                resourceGuid,
-                default));
-        }
-
-        /// <summary> Network default admin rule. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the rule. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="etag"></param>
-        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
-        /// <param name="flag"> Default rule flag. </param>
-        /// <param name="protocol"> Network protocol this rule applies to. </param>
-        /// <param name="sources"> The CIDR or source IP ranges. </param>
-        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
-        /// <param name="sourcePortRanges"> The source port ranges. </param>
-        /// <param name="destinationPortRanges"> The destination port ranges. </param>
-        /// <param name="access"> Indicates the access allowed for this particular rule. </param>
-        /// <param name="priority"> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
-        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkDefaultAdminRule"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkDefaultAdminRule NetworkDefaultAdminRule(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string description = default, string flag = default, SecurityConfigurationRuleProtocol? protocol = default, IEnumerable<AddressPrefixItem> sources = default, IEnumerable<AddressPrefixItem> destinations = default, IEnumerable<string> sourcePortRanges = default, IEnumerable<string> destinationPortRanges = default, SecurityConfigurationRuleAccess? access = default, int? priority = default, SecurityConfigurationRuleDirection? direction = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default)
-        {
-            return new NetworkDefaultAdminRule(name, systemData, default, default, description is null && flag is null && protocol is null && sources is null && destinations is null && sourcePortRanges is null && destinationPortRanges is null && access is null && priority is null && direction is null && provisioningState is null && resourceGuid is null ? default : new DefaultAdminPropertiesFormat(
-                description,
-                flag,
-                protocol,
-                (sources ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (destinations ?? new ChangeTrackingList<AddressPrefixItem>()).ToList(),
-                (sourcePortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                (destinationPortRanges ?? new ChangeTrackingList<string>()).ToList(),
-                access,
-                priority,
-                direction,
-                provisioningState,
-                resourceGuid,
-                default));
         }
 
         /// <summary> Subnet in a virtual network resource. </summary>
@@ -21955,19 +22488,26 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Defines the routing configuration. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network manager Routing Configuration. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the routing configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkManagerRoutingConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkManagerRoutingConfigurationData NetworkManagerRoutingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ETag? etag)
         {
-            return new NetworkManagerRoutingConfigurationData(description is null && provisioningState is null && resourceGuid is null ? default : new NetworkManagerRoutingConfigurationPropertiesFormat(description, provisioningState, resourceGuid, default, default), name, systemData, default);
+            return new NetworkManagerRoutingConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && provisioningState is null && resourceGuid is null ? default : new NetworkManagerRoutingConfigurationPropertiesFormat(description, provisioningState, resourceGuid, default, default),
+                etag,
+                default);
         }
 
         /// <summary> A common class for general resource information. </summary>
@@ -22792,10 +23332,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The network manager connectivity configuration resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network manager connectivity configuration. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the connectivity configuration. </param>
         /// <param name="connectivityTopology"> Connectivity topology type. </param>
         /// <param name="hubs"> List of hubItems. </param>
@@ -22804,22 +23344,29 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.ConnectivityConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConnectivityConfigurationData ConnectivityConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ConnectivityTopology? connectivityTopology, IEnumerable<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IEnumerable<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, ETag? etag)
         {
-            return new ConnectivityConfigurationData(description is null && connectivityTopology is null && hubs is null && isGlobal is null && appliesToGroups is null && provisioningState is null && deleteExistingPeering is null && resourceGuid is null ? default : new ConnectivityConfigurationProperties(
-                description,
-                connectivityTopology.GetValueOrDefault(),
-                (hubs ?? new ChangeTrackingList<ConnectivityHub>()).ToList(),
-                isGlobal,
-                default,
-                (appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>()).ToList(),
-                provisioningState,
-                deleteExistingPeering,
-                resourceGuid,
-                default), name, systemData, default);
+            return new ConnectivityConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && connectivityTopology is null && hubs is null && isGlobal is null && appliesToGroups is null && provisioningState is null && deleteExistingPeering is null && resourceGuid is null ? default : new ConnectivityConfigurationProperties(
+                    description,
+                    connectivityTopology.GetValueOrDefault(),
+                    (hubs ?? new ChangeTrackingList<ConnectivityHub>()).ToList(),
+                    isGlobal,
+                    default,
+                    (appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>()).ToList(),
+                    provisioningState,
+                    deleteExistingPeering,
+                    resourceGuid,
+                    default),
+                etag,
+                default);
         }
 
         /// <summary> Instance of Verifier Workspace. </summary>
@@ -23246,26 +23793,33 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Defines the security admin configuration. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network manager Security Configuration. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the security configuration. </param>
         /// <param name="applyOnNetworkIntentPolicyBasedServices"> Enum list of network intent policy based services. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.SecurityAdminConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SecurityAdminConfigurationData SecurityAdminConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, IEnumerable<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ETag? etag)
         {
-            return new SecurityAdminConfigurationData(description is null && applyOnNetworkIntentPolicyBasedServices is null && provisioningState is null && resourceGuid is null ? default : new SecurityAdminConfigurationPropertiesFormat(
-                description,
-                (applyOnNetworkIntentPolicyBasedServices ?? new ChangeTrackingList<NetworkIntentPolicyBasedService>()).ToList(),
-                default,
-                provisioningState,
-                resourceGuid,
-                default), name, systemData, default);
+            return new SecurityAdminConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && applyOnNetworkIntentPolicyBasedServices is null && provisioningState is null && resourceGuid is null ? default : new SecurityAdminConfigurationPropertiesFormat(
+                    description,
+                    (applyOnNetworkIntentPolicyBasedServices ?? new ChangeTrackingList<NetworkIntentPolicyBasedService>()).ToList(),
+                    default,
+                    provisioningState,
+                    resourceGuid,
+                    default),
+                etag,
+                default);
         }
 
         /// <summary> Private link service resource. </summary>
@@ -23554,19 +24108,26 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The network group resource. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"> The name of the network group. </param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="description"> A description of the network group. </param>
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"></param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.NetworkGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkGroupData NetworkGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, NetworkProvisioningState? provisioningState, Guid? resourceGuid, ETag? etag)
         {
-            return new NetworkGroupData(description is null && provisioningState is null && resourceGuid is null ? default : new NetworkGroupProperties(description, default, provisioningState, resourceGuid, default), name, systemData, default);
+            return new NetworkGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && provisioningState is null && resourceGuid is null ? default : new NetworkGroupProperties(description, default, provisioningState, resourceGuid, default),
+                etag,
+                default);
         }
 
         /// <summary> Defines web application firewall policy. </summary>
@@ -23898,10 +24459,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Information about packet capture session. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
         /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
@@ -23916,19 +24477,26 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PacketCaptureData PacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string target, PacketCaptureMachineScope scope, PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IEnumerable<PacketCaptureFilter> filters, NetworkProvisioningState? provisioningState)
         {
-            return new PacketCaptureData(etag, target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && provisioningState is null ? default : new PacketCaptureResultProperties(
-                target,
-                scope,
-                targetType,
-                bytesToCapturePerPacket,
-                totalBytesPerSession,
-                timeLimitInSeconds,
-                storageLocation,
-                (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
-                default,
-                default,
-                default,
-                provisioningState), default);
+            return new PacketCaptureData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && provisioningState is null ? default : new PacketCaptureResultProperties(
+                    target,
+                    scope,
+                    targetType,
+                    bytesToCapturePerPacket,
+                    totalBytesPerSession,
+                    timeLimitInSeconds,
+                    storageLocation,
+                    (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
+                    default,
+                    default,
+                    default,
+                    provisioningState),
+                default);
         }
 
         /// <summary> VpnSiteLinkConnection Resource. </summary>
