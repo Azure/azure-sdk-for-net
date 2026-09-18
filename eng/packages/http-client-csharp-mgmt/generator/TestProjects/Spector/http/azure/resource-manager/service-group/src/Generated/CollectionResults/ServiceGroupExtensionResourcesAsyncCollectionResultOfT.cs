@@ -15,19 +15,19 @@ using Azure.ResourceManager.ServiceGroupExtension.Models;
 
 namespace Azure.ResourceManager.ServiceGroupExtension
 {
-    internal partial class ServiceGroupExtensionResourcesGetByServiceGroupAsyncCollectionResultOfT : AsyncPageable<ServiceGroupExtensionResourceData>
+    internal partial class ServiceGroupExtensionResourcesAsyncCollectionResultOfT : AsyncPageable<ServiceGroupExtensionResourceData>
     {
         private readonly ServiceGroupExtensionResources _client;
         private readonly string _serviceGroupId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ServiceGroupExtensionResourcesGetByServiceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ServiceGroupExtensionResourcesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ServiceGroupExtensionResources client used to send requests. </param>
         /// <param name="serviceGroupId"> The service group name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ServiceGroupExtensionResourcesGetByServiceGroupAsyncCollectionResultOfT(ServiceGroupExtensionResources client, string serviceGroupId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ServiceGroupExtensionResourcesAsyncCollectionResultOfT(ServiceGroupExtensionResources client, string serviceGroupId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _serviceGroupId = serviceGroupId;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.ServiceGroupExtension
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ServiceGroupExtensionResourcesGetByServiceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ServiceGroupExtensionResourcesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ServiceGroupExtensionResourcesGetByServiceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ServiceGroupExtensionResourcesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ServiceGroupExtensionResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

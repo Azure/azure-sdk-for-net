@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ServiceGroupExtension
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceGroupExtensionResourceData, ServiceGroupExtensionResource>(new ServiceGroupExtensionResourcesGetByServiceGroupAsyncCollectionResultOfT(_serviceGroupExtensionResourcesRestClient, Id.Name, context, "ServiceGroupExtensionResourceCollection.GetAll"), data => new ServiceGroupExtensionResource(Client, data));
+            return new AsyncPageableWrapper<ServiceGroupExtensionResourceData, ServiceGroupExtensionResource>(new ServiceGroupExtensionResourcesAsyncCollectionResultOfT(_serviceGroupExtensionResourcesRestClient, Id.Name, context, "ServiceGroupExtensionResourceCollection.GetAll"), data => new ServiceGroupExtensionResource(Client, data));
         }
 
         /// <summary>
