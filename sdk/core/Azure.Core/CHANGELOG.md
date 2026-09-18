@@ -5,6 +5,7 @@
 ### Features Added
 
 - The mTLS proof-of-possession APIs on `BearerTokenAuthenticationPolicy` and `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` are no longer experimental and no longer require `AZID0004` suppression.
+- Added mTLS proof-of-possession support to the managed identity federated identity flow used by configured credentials, covering both managed identity assertion acquisition and client assertion token redemption. Set `DisableMtlsProofOfPossession` to `true` in the credential's JSON configuration to force bearer authentication for both exchanges.
 
 ### Breaking Changes
 
