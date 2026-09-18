@@ -2,6 +2,9 @@
 
 ## 3.0.0-beta.3 (2026-09-16)
 
+### Features Added
+- Added two clients to work with voice Agents: `ProjectsRealtimeClient` and `ProjectsRealtimeSessionClient`.
+
 ### Breaking Changes
 - `MaxSamples` member was removed from `DataGenerationJobOptions`.
 
