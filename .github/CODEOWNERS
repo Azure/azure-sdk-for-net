@@ -151,10 +151,10 @@
 # ServiceOwners: @quentinRobinson @sarkar-rajarshi
 
 # PRLabel: %Cognitive - Content Safety
-/sdk/contentsafety/Azure.AI.ContentSafety/    @bojunehsu @changjian-wang
+/sdk/contentsafety/Azure.AI.ContentSafety/    @Azure/azure-sdk-write-contentsafety
 
 # ServiceLabel: %Cognitive - Content Safety
-# ServiceOwners: @bojunehsu @changjian-wang
+# ServiceOwners: @Azure/azure-sdk-write-contentsafety
 
 # PRLabel: %Cognitive - Content Understanding
 /sdk/contentunderstanding/    @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
