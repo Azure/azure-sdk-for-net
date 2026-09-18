@@ -21,6 +21,7 @@ using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using Azure.Data.ConfidentialLedger.Tests.Helper;
 using Azure.Security.ConfidentialLedger.Certificate;
+using Azure.Security.ConfidentialLedger.Models;
 using NUnit.Framework;
 using static Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions;
 using static Azure.Security.ConfidentialLedger.Tests.ConfidentialLedgerClientLiveTests;
@@ -189,6 +190,37 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
+        }
+
+        [RecordedTest]
+        public async Task PostAndGetReceipt_WithV2026_02_23_ReturnsTypedReceipt()
+        {
+            // Dedicated client pinned to the new "2026-02-23" service version (rather than the
+            // V2024_12_09_Preview version used by the shared Setup() client), to exercise a write
+            // followed by a typed GetReceipt against the intended live ledger (ryan-app-claim-test).
+            var v2026Client = InstrumentClient(
+                new ConfidentialLedgerClient(
+                    TestEnvironment.ConfidentialLedgerUrl,
+                    credential: Credential,
+                    clientCertificate: null,
+                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions(ServiceVersion.V2026_02_23)),
+                    identityServiceCert: serviceCert.Cert));
+
+            var operation = await v2026Client.PostLedgerEntryAsync(
+                waitUntil: WaitUntil.Completed,
+                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
+            string transactionId = operation.Id;
+            Assert.NotNull(transactionId);
+
+            Response<TransactionReceipt> receiptResponse = await v2026Client.GetReceiptAsync(transactionId).ConfigureAwait(false);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, receiptResponse.GetRawResponse().Status);
+            Assert.AreEqual(transactionId, receiptResponse.Value.TransactionId);
+            // Whether the ledger's application (if any) attaches claims to this transaction depends on the
+            // live deployment/permissions of the ryan-app-claim-test ledger, so ApplicationClaims is only
+            // asserted to be present (never null) here; the deterministic shape of individual claim kinds
+            // (ClaimDigest / LedgerEntry) is covered by ConfidentialLedgerServiceVersionTests.
+            Assert.IsNotNull(receiptResponse.Value.ApplicationClaims);
         }
         #endregion
 
