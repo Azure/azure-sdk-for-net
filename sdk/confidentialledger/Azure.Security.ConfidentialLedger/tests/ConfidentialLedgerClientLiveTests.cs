@@ -196,16 +196,46 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [LiveOnly]
         public async Task PostAndGetReceipt_WithV2026_02_23_ReturnsApplicationClaim()
         {
-            // Dedicated client pinned to the new "2026-02-23" service version (rather than the
-            // V2024_12_09_Preview version used by the shared Setup() client), to exercise a write
-            // followed by a typed GetReceipt against the intended live ledger (ryan-app-claim-test).
+            if (!TestEnvironment.IsApplicationClaimsLedgerConfigured)
+            {
+                Assert.Ignore(
+                    "Set CONFIDENTIALLEDGER_APPLICATION_CLAIMS_URL and " +
+                    "CONFIDENTIALLEDGER_APPLICATION_CLAIMS_IDENTITY_URL to run the application-claims live test.");
+            }
+
+            var identityClient = new ConfidentialLedgerCertificateClient(
+                TestEnvironment.ConfidentialLedgerApplicationClaimsIdentityUrl,
+                InstrumentClientOptions(new ConfidentialLedgerCertificateClientOptions()));
+            (X509Certificate2 Cert, string PEM) applicationClaimsServiceCert =
+                ConfidentialLedgerClient.GetIdentityServerTlsCert(
+                    TestEnvironment.ConfidentialLedgerApplicationClaimsUrl,
+                    new ConfidentialLedgerCertificateClientOptions(),
+                    identityClient);
+
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await SetProxyOptionsAsync(
+                    new ProxyOptions
+                    {
+                        Transport = new ProxyOptionsTransport
+                        {
+                            TLSValidationCert = applicationClaimsServiceCert.PEM,
+                            AllowAutoRedirect = true
+                        }
+                    });
+            }
+
             var v2026Client = InstrumentClient(
                 new ConfidentialLedgerClient(
-                    TestEnvironment.ConfidentialLedgerUrl,
+                    TestEnvironment.ConfidentialLedgerApplicationClaimsUrl,
                     credential: Credential,
                     clientCertificate: null,
-                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions(ServiceVersion.V2026_02_23)),
-                    identityServiceCert: serviceCert.Cert));
+                    ledgerOptions: InstrumentClientOptions(
+                        new ConfidentialLedgerClientOptions(ServiceVersion.V2026_02_23)
+                        {
+                            CertificateEndpoint = TestEnvironment.ConfidentialLedgerApplicationClaimsIdentityUrl,
+                        }),
+                    identityServiceCert: applicationClaimsServiceCert.Cert));
 
             var operation = await v2026Client.PostLedgerEntryAsync(
                 waitUntil: WaitUntil.Completed,
