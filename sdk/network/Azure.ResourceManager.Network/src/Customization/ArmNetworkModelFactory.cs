@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -22,8 +23,33 @@ namespace Azure.ResourceManager.Network.Models
     // The generated factory signature includes the internal ApplicationGatewayForContainersReferenceDefinition helper type,
     // which would make a public method less accessible than one of its parameters.
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(ETag?))]
+    [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a legacy hub virtual network connection resource model. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is deprecated and is no longer supported by the service.")]
+        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
+        {
+            bool? isOnlyIPv6PeeringEnabled = enableOnlyIPv6Peering.HasValue
+                ? enableOnlyIPv6Peering.Value == EnableOnlyIPv6PeeringState.Enabled
+                : default;
+
+            return HubVirtualNetworkConnectionData(
+                id,
+                name,
+                @type,
+                allowHubToRemoteVnetTransit,
+                allowRemoteVnetToUseHubVnetGateways,
+                enableInternetSecurity,
+                routingConfiguration,
+                isOnlyIPv6PeeringEnabled,
+                provisioningState,
+                remoteVirtualNetworkId,
+                connectionPolicyId,
+                eTag);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.EffectiveBaseSecurityAdminRule"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>
@@ -102,11 +128,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="Network.NetworkManagerConnectionData"/>. </summary>
         public static NetworkManagerConnectionData NetworkManagerConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier networkManagerId = default, ScopeConnectionState? connectionState = default, string description = default, ETag? etag = default)
         {
-            return new NetworkManagerConnectionData
-            {
-                NetworkManagerId = networkManagerId,
-                Description = description
-            };
+            var properties = new NetworkManagerConnectionProperties(networkManagerId, connectionState, description, default);
+            return new NetworkManagerConnectionData(id, name, resourceType, systemData, properties, etag, default);
+        }
+
+        /// <summary> Initializes a former subscription-specific network manager connection data instance. </summary>
+        public static SubscriptionNetworkManagerConnectionData SubscriptionNetworkManagerConnectionData(ResourceIdentifier id = default, string name = default, string type = default, string eTag = default, ResourceIdentifier networkManagerId = default, ScopeConnectionState? connectionState = default, string description = default, SystemData systemData = default)
+        {
+            var properties = new NetworkManagerConnectionProperties(networkManagerId, connectionState, description, default);
+            return new SubscriptionNetworkManagerConnectionData(id, name, type, eTag, default, properties, systemData);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeerRouteList"/>. </summary>

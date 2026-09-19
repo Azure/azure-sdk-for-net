@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ManagementGroupNetworkManagerConnectionResource.ResourceType, out string managementGroupNetworkManagerConnectionApiVersion);
             _managementGroupNetworkManagerConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ManagementGroupNetworkManagerConnectionResource.ResourceType.Namespace, Diagnostics);
-            _managementGroupNetworkManagerConnectionsRestClient = new ManagementGroupNetworkManagerConnections(_managementGroupNetworkManagerConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupNetworkManagerConnectionApiVersion ?? "2025-09-01");
+            _managementGroupNetworkManagerConnectionsRestClient = new ManagementGroupNetworkManagerConnections(_managementGroupNetworkManagerConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupNetworkManagerConnectionApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkManagerConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ManagementGroupNetworkManagerConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkManagerConnectionName, SubscriptionNetworkManagerConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagementGroupNetworkManagerConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string networkManagerConnectionName, NetworkManagerConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateCreateOrUpdateRequest(Id.Name, networkManagerConnectionName, SubscriptionNetworkManagerConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateCreateOrUpdateRequest(Id.Name, networkManagerConnectionName, NetworkManagerConnectionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                Response<NetworkManagerConnectionData> response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource> operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkManagerConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ManagementGroupNetworkManagerConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string networkManagerConnectionName, SubscriptionNetworkManagerConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagementGroupNetworkManagerConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string networkManagerConnectionName, NetworkManagerConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateCreateOrUpdateRequest(Id.Name, networkManagerConnectionName, SubscriptionNetworkManagerConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateCreateOrUpdateRequest(Id.Name, networkManagerConnectionName, NetworkManagerConnectionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                Response<NetworkManagerConnectionData> response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource> operation = new NetworkArmOperation<ManagementGroupNetworkManagerConnectionResource>(Response.FromValue(new ManagementGroupNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateGetRequest(Id.Name, networkManagerConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                Response<NetworkManagerConnectionData> response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateGetRequest(Id.Name, networkManagerConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SubscriptionNetworkManagerConnectionData> response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                Response<NetworkManagerConnectionData> response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SubscriptionNetworkManagerConnectionData, ManagementGroupNetworkManagerConnectionResource>(new ManagementGroupNetworkManagerConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkManagerConnectionData, ManagementGroupNetworkManagerConnectionResource>(new ManagementGroupNetworkManagerConnectionsGetAllAsyncCollectionResultOfT(
                 _managementGroupNetworkManagerConnectionsRestClient,
                 Id.Name,
                 top,
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SubscriptionNetworkManagerConnectionData, ManagementGroupNetworkManagerConnectionResource>(new ManagementGroupNetworkManagerConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkManagerConnectionData, ManagementGroupNetworkManagerConnectionResource>(new ManagementGroupNetworkManagerConnectionsGetAllCollectionResultOfT(
                 _managementGroupNetworkManagerConnectionsRestClient,
                 Id.Name,
                 top,
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,14 +371,14 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateGetRequest(Id.Name, networkManagerConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SubscriptionNetworkManagerConnectionData> response = default;
+                Response<NetworkManagerConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionNetworkManagerConnectionData)null, result);
+                        response = Response.FromValue((NetworkManagerConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -428,14 +428,14 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateGetRequest(Id.Name, networkManagerConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SubscriptionNetworkManagerConnectionData> response = default;
+                Response<NetworkManagerConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionNetworkManagerConnectionData)null, result);
+                        response = Response.FromValue((NetworkManagerConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -485,14 +485,14 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateGetRequest(Id.Name, networkManagerConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SubscriptionNetworkManagerConnectionData> response = default;
+                Response<NetworkManagerConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionNetworkManagerConnectionData)null, result);
+                        response = Response.FromValue((NetworkManagerConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -546,14 +546,14 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _managementGroupNetworkManagerConnectionsRestClient.CreateGetRequest(Id.Name, networkManagerConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SubscriptionNetworkManagerConnectionData> response = default;
+                Response<NetworkManagerConnectionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SubscriptionNetworkManagerConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(NetworkManagerConnectionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SubscriptionNetworkManagerConnectionData)null, result);
+                        response = Response.FromValue((NetworkManagerConnectionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
