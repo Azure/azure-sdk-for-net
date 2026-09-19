@@ -84,4 +84,33 @@ Describe "Apply-WeightedBatching" {
 
     @(Get-ChildItem $packageInfoFolder -Filter "*.json").Count | Should -Be 2
   }
+
+  It "does not consolidate packages with different CI matrix configurations when requested" {
+    $packages = @(
+      @{ Name = "Package.Default"; Configs = $null },
+      @{ Name = "Package.Custom"; Configs = @(@{ Name = 'custom'; Path = 'custom-matrix.json'; Selection = 'all' }) }
+    )
+    $weights = [ordered]@{}
+    foreach ($package in $packages) {
+      @{
+        ArtifactName = $package.Name
+        IncludedForValidation = $false
+        CIParameters = @{ CIMatrixConfigs = $package.Configs }
+      } | ConvertTo-Json -Depth 10 | Set-Content (Join-Path $packageInfoFolder "$($package.Name).json")
+      $weights[$package.Name] = 1
+    }
+    $weights | ConvertTo-Json | Set-Content $weightsFile
+
+    & (Join-Path $PSScriptRoot ".." "Apply-WeightedBatching.ps1") `
+      -PackageInfoFolder $packageInfoFolder `
+      -WeightsFile $weightsFile `
+      -Target 100 `
+      -PreserveCIMatrixConfigs
+
+    $remaining = @(Get-ChildItem $packageInfoFolder -Filter "*.json")
+    $remaining.Count | Should -Be 2
+    @($remaining | ForEach-Object {
+      (Get-Content -Raw $_.FullName | ConvertFrom-Json).ArtifactName
+    } | Sort-Object) | Should -Be @('Package.Custom', 'Package.Default')
+  }
 }
