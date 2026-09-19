@@ -55,5 +55,15 @@ namespace Azure.ResourceManager.Network
                 return Properties is null ? default : Properties.RuleSetVersion;
             }
         }
+
+        /// <summary> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </summary>
+        [WirePath("properties.defaultRuleSet.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
     }
 }

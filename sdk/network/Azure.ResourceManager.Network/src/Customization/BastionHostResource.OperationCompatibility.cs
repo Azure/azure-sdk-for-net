@@ -25,5 +25,15 @@ namespace Azure.ResourceManager.Network
         /// <summary> Invokes the Update compatibility operation. </summary>
         [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `BastionHostCollection.CreateOrUpdate` instead.", false)]
         public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+
+        /// <summary> Invokes the legacy UpdateAsync compatibility operation. </summary>
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is deprecated. Use the overload accepting BastionHostPatch instead.")]
+        public virtual Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
+
+        /// <summary> Invokes the legacy Update compatibility operation. </summary>
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is deprecated. Use the overload accepting BastionHostPatch instead.")]
+        public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken) => throw new global::System.NotSupportedException("This compatibility method is not supported by the TypeSpec-generated Network SDK.");
     }
 }
