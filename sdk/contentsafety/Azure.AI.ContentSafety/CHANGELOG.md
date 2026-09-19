@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Added `UnifiedModerate` and `UnifiedModerateAsync` operations for the `2026-09-01-preview` service API.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 - Added `ContentSafetyClientSettings` to support creating a `ContentSafetyClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 - Added `BlocklistClientSettings` to support creating a `BlocklistClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
