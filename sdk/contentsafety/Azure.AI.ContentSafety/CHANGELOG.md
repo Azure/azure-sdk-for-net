@@ -1,18 +1,12 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2026-09-18)
 
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 - Added `ContentSafetyClientSettings` to support creating a `ContentSafetyClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
 - Added `BlocklistClientSettings` to support creating a `BlocklistClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0 (2023-12-15)
 
