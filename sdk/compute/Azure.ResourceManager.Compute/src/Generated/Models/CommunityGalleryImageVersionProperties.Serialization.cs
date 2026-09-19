@@ -115,6 +115,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && Optional.IsDefined(ConsumptionEndsOn))
+            {
+                writer.WritePropertyName("consumptionEndTime"u8);
+                writer.WriteStringValue(ConsumptionEndsOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ImageState))
+            {
+                writer.WritePropertyName("imageState"u8);
+                writer.WriteStringValue(ImageState.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -163,6 +173,8 @@ namespace Azure.ResourceManager.Compute.Models
             SharedGalleryImageVersionStorageProfile storageProfile = default;
             string disclaimer = default;
             IDictionary<string, string> artifactTags = default;
+            DateTimeOffset? consumptionEndsOn = default;
+            GalleryImageVersionState? imageState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -228,6 +240,24 @@ namespace Azure.ResourceManager.Compute.Models
                     artifactTags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("consumptionEndTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    consumptionEndsOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("imageState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    imageState = new GalleryImageVersionState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -240,6 +270,8 @@ namespace Azure.ResourceManager.Compute.Models
                 storageProfile,
                 disclaimer,
                 artifactTags ?? new ChangeTrackingDictionary<string, string>(),
+                consumptionEndsOn,
+                imageState,
                 additionalBinaryDataProperties);
         }
     }

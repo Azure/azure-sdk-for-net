@@ -29,14 +29,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
+        /// <param name="consumptionEndsOn"> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period, and is not present for active gallery image versions. In dateTime offset format. </param>
+        /// <param name="imageState"> The state of the gallery image version, derived from its soft-delete status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedGalleryImageVersionProperties(DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, IDictionary<string, string> artifactTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedGalleryImageVersionProperties(DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, IDictionary<string, string> artifactTags, DateTimeOffset? consumptionEndsOn, GalleryImageVersionState? imageState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublishedOn = publishedOn;
             EndOfLifeOn = endOfLifeOn;
             IsExcludedFromLatest = isExcludedFromLatest;
             StorageProfile = storageProfile;
             ArtifactTags = artifactTags;
+            ConsumptionEndsOn = consumptionEndsOn;
+            ImageState = imageState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,5 +58,11 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The artifact tags of a shared gallery resource. </summary>
         public IDictionary<string, string> ArtifactTags { get; } = new ChangeTrackingDictionary<string, string>();
+
+        /// <summary> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period, and is not present for active gallery image versions. In dateTime offset format. </summary>
+        public DateTimeOffset? ConsumptionEndsOn { get; }
+
+        /// <summary> The state of the gallery image version, derived from its soft-delete status. </summary>
+        public GalleryImageVersionState? ImageState { get; }
     }
 }

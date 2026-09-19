@@ -69,5 +69,23 @@ namespace Azure.ResourceManager.Compute
                 return Properties is null ? default : Properties.StorageProfile;
             }
         }
+
+        /// <summary> The timestamp after which a soft-deleted gallery image version is no longer consumable for VM/VMSS creation or VMSS scale out. It is calculated from the soft-deleted time plus the retention period, and is not present for active gallery image versions. In dateTime offset format. </summary>
+        public DateTimeOffset? ConsumptionEndsOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConsumptionEndsOn;
+            }
+        }
+
+        /// <summary> The state of the gallery image version, derived from its soft-delete status. </summary>
+        public GalleryImageVersionState? ImageState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImageState;
+            }
+        }
     }
 }
