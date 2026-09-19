@@ -30,8 +30,10 @@ namespace Azure.Communication.Identity.Tests
             var transport = new MockTransport(_ =>
             {
                 var r = new MockResponse(status);
-                if (payload != null) { r.SetContent(payload); }
-                if (contentType != null) { r.AddHeader(new Core.HttpHeader("Content-Type", contentType)); }
+                if (payload != null)
+                { r.SetContent(payload); }
+                if (contentType != null)
+                { r.AddHeader(new Core.HttpHeader("Content-Type", contentType)); }
                 return r;
             });
 

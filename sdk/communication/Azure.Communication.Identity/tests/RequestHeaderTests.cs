@@ -35,7 +35,8 @@ namespace Azure.Communication.Identity.Tests
             {
                 sent.Add(request.Headers.Where(h => !Volatile_.Contains(h.Name)).ToArray());
                 var r = new MockResponse(status);
-                if (payload != null) { r.SetContent(payload); }
+                if (payload != null)
+                { r.SetContent(payload); }
                 return r;
             });
 
@@ -53,7 +54,9 @@ namespace Azure.Communication.Identity.Tests
         private static async Task<HttpHeader[]> Send(Func<CommunicationIdentityClient, Task> act, int status, string? payload)
         {
             var p = Probe(status, payload);
-            try { await act(p.Client).ConfigureAwait(false); } catch { }
+            try
+            { await act(p.Client).ConfigureAwait(false); }
+            catch { }
             Assert.That(p.Sent, Is.Not.Empty, "no request reached the transport");
             return p.Sent[0];
         }
@@ -139,7 +142,9 @@ namespace Azure.Communication.Identity.Tests
                 new AzureKeyCredential(Convert.ToBase64String(Encoding.UTF8.GetBytes("probe-key"))),
                 options);
 
-            try { await act(client).ConfigureAwait(false); } catch { }
+            try
+            { await act(client).ConfigureAwait(false); }
+            catch { }
 
             Assert.That(sent, Is.Not.Empty, "no request reached the transport");
             Assert.That(Value(sent[0], "Accept"), Is.EqualTo("application/custom"),

@@ -41,7 +41,9 @@ namespace Azure.Communication.Identity.Tests
         public async Task DefaultClientSendsCurrentApiVersion()
         {
             var p = Probe(new CommunicationIdentityClientOptions());
-            try { await p.Client.CreateUserAsync(); } catch { }
+            try
+            { await p.Client.CreateUserAsync(); }
+            catch { }
 
             Assert.That(p.Uris, Is.Not.Empty, "no request was sent");
             Assert.That(p.Uris[0], Does.Contain("api-version=2026-09-23"),
@@ -66,7 +68,9 @@ namespace Azure.Communication.Identity.Tests
             })
             {
                 var p = Probe(new CommunicationIdentityClientOptions());
-                try { await op.Act(p.Client); } catch { }
+                try
+                { await op.Act(p.Client); }
+                catch { }
                 Assert.That(p.Uris, Is.Not.Empty, $"{op.Name}: no request sent");
                 Assert.That(p.Uris[0], Does.Contain("api-version=2026-09-23"), $"{op.Name} sent the wrong api-version");
             }
@@ -85,7 +89,9 @@ namespace Azure.Communication.Identity.Tests
             })
             {
                 var p = Probe(new CommunicationIdentityClientOptions(pair.V));
-                try { await p.Client.CreateUserAsync(); } catch { }
+                try
+                { await p.Client.CreateUserAsync(); }
+                catch { }
                 Assert.That(p.Uris, Is.Not.Empty, $"{pair.V}: no request sent");
                 Assert.That(p.Uris[0], Does.Contain($"api-version={pair.Wire}"),
                     $"{pair.V} must map to api-version={pair.Wire}");

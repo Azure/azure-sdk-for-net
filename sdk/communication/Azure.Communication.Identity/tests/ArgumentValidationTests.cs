@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Communication.Identity.Models;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -114,6 +116,39 @@ namespace Azure.Communication.Identity.Tests
 
             Assert.DoesNotThrow(() => p.Client.CreateUserAndToken(scopes: null!));
             Assert.That(p.Sent, Has.Count.EqualTo(1), "create must keep its AutoRest behaviour of sending empty scopes");
+        }
+
+        [Test]
+        public void ModelFactoryWithNullTokenThrows()
+        {
+            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(
+                () => CommunicationIdentityModelFactory.CommunicationUserIdentifierAndToken(User, default(AccessToken)));
+
+            Assert.That(ex!.ParamName, Is.EqualTo("token"));
+        }
+
+        [TestCase("{\"accessToken\":{\"token\":\"T\",\"expiresOn\":\"2030-01-01T00:00:00.0000000+00:00\"}}")]
+        [TestCase("{\"identity\":null,\"accessToken\":{\"token\":\"T\",\"expiresOn\":\"2030-01-01T00:00:00.0000000+00:00\"}}")]
+        public void CreateUserAndTokenWithMissingIdentityThrows(string payload)
+        {
+            var p = Probe(201, payload);
+
+            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(
+                () => p.Client.CreateUserAndToken(new[] { CommunicationTokenScope.Chat }));
+
+            Assert.That(ex!.ParamName, Is.EqualTo("identity"));
+        }
+
+        [TestCase("{\"identity\":{\"id\":\"8:acs:probe\"},\"accessToken\":{\"expiresOn\":\"2030-01-01T00:00:00.0000000+00:00\"}}")]
+        [TestCase("{\"identity\":{\"id\":\"8:acs:probe\"},\"accessToken\":{\"token\":null,\"expiresOn\":\"2030-01-01T00:00:00.0000000+00:00\"}}")]
+        public void CreateUserAndTokenWithMissingTokenThrows(string payload)
+        {
+            var p = Probe(201, payload);
+
+            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(
+                () => p.Client.CreateUserAndToken(new[] { CommunicationTokenScope.Chat }));
+
+            Assert.That(ex!.ParamName, Is.EqualTo("token"));
         }
     }
 }

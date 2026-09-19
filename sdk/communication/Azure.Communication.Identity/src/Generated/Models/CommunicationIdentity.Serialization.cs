@@ -14,11 +14,6 @@ namespace Azure.Communication.Identity
 {
     internal partial class CommunicationIdentity : IJsonModel<CommunicationIdentity>
     {
-        /// <summary> Initializes a new instance of <see cref="CommunicationIdentity"/> for deserialization. </summary>
-        internal CommunicationIdentity()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CommunicationIdentity PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

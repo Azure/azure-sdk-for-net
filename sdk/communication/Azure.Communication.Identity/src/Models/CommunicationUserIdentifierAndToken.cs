@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -10,6 +11,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.Communication.Identity
 {
     [CodeGenSuppress("CommunicationUserIdentifierAndToken", typeof(CommunicationIdentity))]
+    [CodeGenSuppress("CommunicationUserIdentifierAndToken", typeof(CommunicationIdentity), typeof(CommunicationIdentityAccessToken), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppress("CommunicationUserIdentifierAndToken")]
     public partial class CommunicationUserIdentifierAndToken
     {
         internal CommunicationUserIdentifierAndToken(CommunicationIdentity identity, CommunicationIdentityAccessToken accessToken)
@@ -19,6 +22,15 @@ namespace Azure.Communication.Identity
 
             Identity = identity;
             InternalAccessToken = accessToken;
+        }
+
+        internal CommunicationUserIdentifierAndToken(
+            CommunicationIdentity identity,
+            CommunicationIdentityAccessToken accessToken,
+            IDictionary<string, BinaryData> additionalBinaryDataProperties)
+            : this(identity, accessToken)
+        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>Deconstructs the <see cref="CommunicationUserIdentifierAndToken"/> into a user and token.</summary>

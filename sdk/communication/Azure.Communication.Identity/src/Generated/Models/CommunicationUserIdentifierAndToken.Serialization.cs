@@ -16,11 +16,6 @@ namespace Azure.Communication.Identity
     /// <summary> A communication identity with access token. </summary>
     public partial class CommunicationUserIdentifierAndToken : IJsonModel<CommunicationUserIdentifierAndToken>
     {
-        /// <summary> Initializes a new instance of <see cref="CommunicationUserIdentifierAndToken"/> for deserialization. </summary>
-        internal CommunicationUserIdentifierAndToken()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual CommunicationUserIdentifierAndToken PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

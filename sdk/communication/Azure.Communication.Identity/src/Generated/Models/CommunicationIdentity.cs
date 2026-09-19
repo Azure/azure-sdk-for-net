@@ -15,22 +15,6 @@ namespace Azure.Communication.Identity
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CommunicationIdentity"/>. </summary>
-        /// <param name="id"> Identifier of the identity. </param>
-        internal CommunicationIdentity(string id)
-        {
-            Id = id;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CommunicationIdentity"/>. </summary>
-        /// <param name="id"> Identifier of the identity. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationIdentity(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Id = id;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
         /// <summary> Identifier of the identity. </summary>
         public string Id { get; }
     }
