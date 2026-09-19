@@ -17,8 +17,6 @@
 
 ### Other Changes
 
-- Updated `Microsoft.Identity.Client` dependency to `4.87.0`.
-
 ## 1.62.0 (2026-08-20)
 
 ### Features Added
