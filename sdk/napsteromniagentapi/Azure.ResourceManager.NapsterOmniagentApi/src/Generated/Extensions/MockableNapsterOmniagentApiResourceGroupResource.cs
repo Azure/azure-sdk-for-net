@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-24-preview. </description>
+        /// <description> 2026-08-11. </description>
         /// </item>
         /// </list>
         /// </summary>
