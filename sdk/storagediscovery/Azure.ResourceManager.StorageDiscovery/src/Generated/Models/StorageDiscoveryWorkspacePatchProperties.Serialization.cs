@@ -110,6 +110,11 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteObjectValue(Capabilities, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -156,6 +161,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             string description = default;
             IList<ResourceIdentifier> workspaceRoots = default;
             IList<StorageDiscoveryScope> scopes = default;
+            StorageDiscoveryCapabilitiesUpdate capabilities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,12 +214,27 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     scopes = array;
                     continue;
                 }
+                if (prop.NameEquals("capabilities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capabilities = StorageDiscoveryCapabilitiesUpdate.DeserializeStorageDiscoveryCapabilitiesUpdate(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageDiscoveryWorkspacePatchProperties(sku, description, workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>(), scopes ?? new ChangeTrackingList<StorageDiscoveryScope>(), additionalBinaryDataProperties);
+            return new StorageDiscoveryWorkspacePatchProperties(
+                sku,
+                description,
+                workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>(),
+                scopes ?? new ChangeTrackingList<StorageDiscoveryScope>(),
+                capabilities,
+                additionalBinaryDataProperties);
         }
     }
 }

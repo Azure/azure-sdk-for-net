@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -41,14 +42,14 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 default);
         }
 
-        /// <summary> Storage Discovery Workspace Properties. </summary>
         /// <param name="sku"> The storage discovery sku. </param>
         /// <param name="description"> The description of the storage discovery workspace. </param>
+        /// <param name="capabilitiesAzureBlobStorage"> The Azure Blob Storage capability configuration for the storage discovery workspace. </param>
         /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.StorageDiscoveryWorkspaceProperties"/> instance for mocking. </returns>
-        public static StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku = default, string description = default, IEnumerable<ResourceIdentifier> workspaceRoots = default, IEnumerable<StorageDiscoveryScope> scopes = default, StorageDiscoveryProvisioningState? provisioningState = default)
+        public static StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku, string description, AzureBlobStorageCapability capabilitiesAzureBlobStorage, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes, StorageDiscoveryProvisioningState? provisioningState)
         {
             workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
             scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
@@ -56,10 +57,31 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             return new StorageDiscoveryWorkspaceProperties(
                 sku,
                 description,
+                capabilitiesAzureBlobStorage is null ? default : new StorageDiscoveryCapabilities(capabilitiesAzureBlobStorage, default),
                 (workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 (scopes ?? new ChangeTrackingList<StorageDiscoveryScope>()).ToList(),
                 provisioningState,
                 default);
+        }
+
+        /// <param name="capacityDetailsStatus"> The enablement status of the capacity details capability. </param>
+        /// <param name="prefixDefinitions"> The prefix definitions that scope the capacity details to specific storage accounts, containers, and prefixes. </param>
+        /// <returns> A new <see cref="Models.AzureBlobStorageCapability"/> instance for mocking. </returns>
+        public static AzureBlobStorageCapability AzureBlobStorageCapability(CapabilityStatus capacityDetailsStatus = default, IEnumerable<PrefixDefinition> prefixDefinitions = default)
+        {
+            prefixDefinitions ??= new ChangeTrackingList<PrefixDefinition>();
+
+            return new AzureBlobStorageCapability(new CapacityDetails(capacityDetailsStatus, default), (prefixDefinitions ?? new ChangeTrackingList<PrefixDefinition>()).ToList(), default);
+        }
+
+        /// <summary> A prefix definition that scopes capacity details to a specific storage account, container, and prefix. </summary>
+        /// <param name="storageAccountName"> The name of the storage account. </param>
+        /// <param name="containerName"> The name of the blob container within the storage account. </param>
+        /// <param name="prefix"> The blob prefix within the container to scope capacity details to. An empty value scopes to the entire container. Must not start with a '/'. </param>
+        /// <returns> A new <see cref="Models.PrefixDefinition"/> instance for mocking. </returns>
+        public static PrefixDefinition PrefixDefinition(string storageAccountName = default, string containerName = default, string prefix = default)
+        {
+            return new PrefixDefinition(storageAccountName, containerName, prefix, default);
         }
 
         /// <summary> Storage Discovery Scope. This had added validations. </summary>
@@ -88,18 +110,82 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             return new StorageDiscoveryWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <param name="sku"> The storage discovery sku. </param>
+        /// <param name="description"> The description of the storage discovery workspace. </param>
+        /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
+        /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
+        /// <param name="capabilitiesAzureBlobStorage"> The Azure Blob Storage capability configuration to update. </param>
+        /// <returns> A new <see cref="Models.StorageDiscoveryWorkspacePatchProperties"/> instance for mocking. </returns>
+        public static StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku, string description, IEnumerable<ResourceIdentifier> workspaceRoots, IEnumerable<StorageDiscoveryScope> scopes, AzureBlobStorageCapabilityUpdate capabilitiesAzureBlobStorage)
+        {
+            workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
+            scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
+
+            return new StorageDiscoveryWorkspacePatchProperties(
+                sku,
+                description,
+                (workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                (scopes ?? new ChangeTrackingList<StorageDiscoveryScope>()).ToList(),
+                capabilitiesAzureBlobStorage is null ? default : new StorageDiscoveryCapabilitiesUpdate(capabilitiesAzureBlobStorage, default),
+                default);
+        }
+
+        /// <param name="capacityDetailsStatus"> The enablement status to update for the capacity details capability. </param>
+        /// <param name="prefixDefinitions"> The prefix definitions to update for Azure Blob Storage. </param>
+        /// <returns> A new <see cref="Models.AzureBlobStorageCapabilityUpdate"/> instance for mocking. </returns>
+        public static AzureBlobStorageCapabilityUpdate AzureBlobStorageCapabilityUpdate(CapabilityStatus? capacityDetailsStatus = default, IEnumerable<PrefixDefinitionUpdate> prefixDefinitions = default)
+        {
+            prefixDefinitions ??= new ChangeTrackingList<PrefixDefinitionUpdate>();
+
+            return new AzureBlobStorageCapabilityUpdate(capacityDetailsStatus is null ? default : new CapacityDetailsUpdate(capacityDetailsStatus, default), (prefixDefinitions ?? new ChangeTrackingList<PrefixDefinitionUpdate>()).ToList(), default);
+        }
+
+        /// <summary> A prefix definition that can be updated. </summary>
+        /// <param name="storageAccountName"> The name of the storage account. </param>
+        /// <param name="containerName"> The name of the blob container within the storage account. </param>
+        /// <param name="prefix"> The blob prefix within the container to scope capacity details to. An empty value scopes to the entire container. Must not start with a '/'. </param>
+        /// <returns> A new <see cref="Models.PrefixDefinitionUpdate"/> instance for mocking. </returns>
+        public static PrefixDefinitionUpdate PrefixDefinitionUpdate(string storageAccountName = default, string containerName = default, string prefix = default)
+        {
+            return new PrefixDefinitionUpdate(storageAccountName, containerName, prefix, default);
+        }
+
+        /// <summary> Storage Discovery Workspace Properties. </summary>
+        /// <param name="sku"> The storage discovery sku. </param>
+        /// <param name="description"> The description of the storage discovery workspace. </param>
+        /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
+        /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.StorageDiscoveryWorkspaceProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(StorageDiscoverySku? sku = default, string description = default, IEnumerable<ResourceIdentifier> workspaceRoots = default, IEnumerable<StorageDiscoveryScope> scopes = default, StorageDiscoveryProvisioningState? provisioningState = default)
+        {
+            return new StorageDiscoveryWorkspaceProperties(
+                sku,
+                description,
+                default,
+                (workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                (scopes ?? new ChangeTrackingList<StorageDiscoveryScope>()).ToList(),
+                provisioningState,
+                default);
+        }
+
         /// <summary> The template for adding updateable properties. </summary>
         /// <param name="sku"> The storage discovery sku. </param>
         /// <param name="description"> The description of the storage discovery workspace. </param>
         /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
         /// <param name="scopes"> The scopes of the storage discovery workspace. </param>
         /// <returns> A new <see cref="Models.StorageDiscoveryWorkspacePatchProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(StorageDiscoverySku? sku = default, string description = default, IEnumerable<ResourceIdentifier> workspaceRoots = default, IEnumerable<StorageDiscoveryScope> scopes = default)
         {
-            workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
-            scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
-
-            return new StorageDiscoveryWorkspacePatchProperties(sku, description, (workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (scopes ?? new ChangeTrackingList<StorageDiscoveryScope>()).ToList(), default);
+            return new StorageDiscoveryWorkspacePatchProperties(
+                sku,
+                description,
+                (workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                (scopes ?? new ChangeTrackingList<StorageDiscoveryScope>()).ToList(),
+                default,
+                default);
         }
     }
 }
