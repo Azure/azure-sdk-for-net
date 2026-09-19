@@ -35,5 +35,47 @@ namespace Azure.ResourceManager.Network.Mocking
         [ForwardsClientCalls]
         public virtual global::Azure.Response<global::Azure.ResourceManager.Network.LoadBalancerResource> GetLoadBalancer(global::System.String loadBalancerName, global::System.String expand = null, global::System.Threading.CancellationToken cancellationToken = default)
             => GetLoadBalancer(loadBalancerName, expand, default(global::Azure.ResourceManager.Network.Models.LoadBalancerDetailLevel?), cancellationToken);
+
+        /// <summary> Gets the deprecated Cloud Services network interfaces. </summary>
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is deprecated and is no longer supported by the service.")]
+        public virtual global::Azure.AsyncPageable<global::Azure.ResourceManager.Network.NetworkInterfaceData> GetCloudServiceNetworkInterfacesAsync(global::System.String cloudServiceName, global::System.Threading.CancellationToken cancellationToken = default)
+            => throw new global::System.NotSupportedException("Cloud Services network interface operations are no longer supported.");
+
+        /// <summary> Gets the deprecated Cloud Services network interfaces. </summary>
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is deprecated and is no longer supported by the service.")]
+        public virtual global::Azure.Pageable<global::Azure.ResourceManager.Network.NetworkInterfaceData> GetCloudServiceNetworkInterfaces(global::System.String cloudServiceName, global::System.Threading.CancellationToken cancellationToken = default)
+            => throw new global::System.NotSupportedException("Cloud Services network interface operations are no longer supported.");
+
+        /// <summary> Gets the deprecated Cloud Services public IP addresses. </summary>
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is deprecated and is no longer supported by the service.")]
+        public virtual global::Azure.AsyncPageable<global::Azure.ResourceManager.Network.PublicIPAddressData> GetCloudServicePublicIPAddressesAsync(global::System.String cloudServiceName, global::System.Threading.CancellationToken cancellationToken = default)
+            => throw new global::System.NotSupportedException("Cloud Services public IP address operations are no longer supported.");
+
+        /// <summary> Gets the deprecated Cloud Services public IP addresses. </summary>
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is deprecated and is no longer supported by the service.")]
+        public virtual global::Azure.Pageable<global::Azure.ResourceManager.Network.PublicIPAddressData> GetCloudServicePublicIPAddresses(global::System.String cloudServiceName, global::System.Threading.CancellationToken cancellationToken = default)
+            => throw new global::System.NotSupportedException("Cloud Services public IP address operations are no longer supported.");
+
+        /// <summary> Gets the deprecated Cloud Services role instance network interface collection. </summary>
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is deprecated and is no longer supported by the service.")]
+        public virtual global::Azure.ResourceManager.Network.NetworkInterfaceCollection GetNetworkInterfaces(global::System.String cloudServiceName, global::System.String roleInstanceName)
+            => throw new global::System.NotSupportedException("Cloud Services role instance network interface operations are no longer supported.");
+
+        /// <summary> Gets a deprecated Cloud Services role instance network interface. </summary>
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is deprecated and is no longer supported by the service.")]
+        public virtual global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.NetworkInterfaceResource>> GetNetworkInterfaceAsync(global::System.String cloudServiceName, global::System.String roleInstanceName, global::System.String networkInterfaceName, global::System.String expand, global::System.Threading.CancellationToken cancellationToken = default)
+            => throw new global::System.NotSupportedException("Cloud Services role instance network interface operations are no longer supported.");
+
+        /// <summary> Gets a deprecated Cloud Services role instance network interface. </summary>
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        [global::System.Obsolete("This method is deprecated and is no longer supported by the service.")]
+        public virtual global::Azure.Response<global::Azure.ResourceManager.Network.NetworkInterfaceResource> GetNetworkInterface(global::System.String cloudServiceName, global::System.String roleInstanceName, global::System.String networkInterfaceName, global::System.String expand, global::System.Threading.CancellationToken cancellationToken = default)
+            => throw new global::System.NotSupportedException("Cloud Services role instance network interface operations are no longer supported.");
     }
 }
