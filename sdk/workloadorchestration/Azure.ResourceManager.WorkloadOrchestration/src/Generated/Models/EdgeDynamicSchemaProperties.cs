@@ -22,17 +22,22 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeDynamicSchemaProperties"/>. </summary>
+        /// <param name="displayName"> Display name of the dynamic schema. </param>
         /// <param name="configurationType"> Type of configuration. </param>
         /// <param name="configurationModel"> Type of configuration model. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeDynamicSchemaProperties(EdgeSchemaConfigurationType? configurationType, EdgeSchemaConfigurationModelType? configurationModel, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeDynamicSchemaProperties(string displayName, EdgeSchemaConfigurationType? configurationType, EdgeSchemaConfigurationModelType? configurationModel, WorkloadOrchestrationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            DisplayName = displayName;
             ConfigurationType = configurationType;
             ConfigurationModel = configurationModel;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Display name of the dynamic schema. </summary>
+        public string DisplayName { get; }
 
         /// <summary> Type of configuration. </summary>
         public EdgeSchemaConfigurationType? ConfigurationType { get; }

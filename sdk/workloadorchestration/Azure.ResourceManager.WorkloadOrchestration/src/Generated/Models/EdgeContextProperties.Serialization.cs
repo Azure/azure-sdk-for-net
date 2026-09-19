@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 throw new FormatException($"The model {nameof(EdgeContextProperties)} does not support writing '{format}' format.");
             }
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
+            {
+                writer.WritePropertyName("uniqueIdentifier"u8);
+                writer.WriteStringValue(UniqueIdentifier);
+            }
             writer.WritePropertyName("capabilities"u8);
             writer.WriteStartArray();
             foreach (ContextCapability item in Capabilities)
@@ -140,12 +145,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             {
                 return null;
             }
+            string uniqueIdentifier = default;
             IList<ContextCapability> capabilities = default;
             IList<ContextHierarchy> hierarchies = default;
             WorkloadOrchestrationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("uniqueIdentifier"u8))
+                {
+                    uniqueIdentifier = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("capabilities"u8))
                 {
                     List<ContextCapability> array = new List<ContextCapability>();
@@ -180,7 +191,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EdgeContextProperties(capabilities, hierarchies, provisioningState, additionalBinaryDataProperties);
+            return new EdgeContextProperties(uniqueIdentifier, capabilities, hierarchies, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

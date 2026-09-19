@@ -82,10 +82,30 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             writer.WritePropertyName("targetId"u8);
             writer.WriteStringValue(TargetId);
+            if (Optional.IsCollectionDefined(SolutionDependencies))
+            {
+                writer.WritePropertyName("solutionDependencies"u8);
+                writer.WriteStartArray();
+                foreach (EdgeSolutionDependencyContent item in SolutionDependencies)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(SolutionInstanceName))
             {
                 writer.WritePropertyName("solutionInstanceName"u8);
                 writer.WriteStringValue(SolutionInstanceName);
+            }
+            if (Optional.IsDefined(SolutionVersionId))
+            {
+                writer.WritePropertyName("solutionVersionId"u8);
+                writer.WriteStringValue(SolutionVersionId);
+            }
+            if (Optional.IsDefined(SolutionConfiguration))
+            {
+                writer.WritePropertyName("solutionConfiguration"u8);
+                writer.WriteStringValue(SolutionConfiguration);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -130,7 +150,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 return null;
             }
             ResourceIdentifier targetId = default;
+            IList<EdgeSolutionDependencyContent> solutionDependencies = default;
             string solutionInstanceName = default;
+            ResourceIdentifier solutionVersionId = default;
+            string solutionConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,9 +162,37 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     targetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("solutionDependencies"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EdgeSolutionDependencyContent> array = new List<EdgeSolutionDependencyContent>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(EdgeSolutionDependencyContent.DeserializeEdgeSolutionDependencyContent(item, options));
+                    }
+                    solutionDependencies = array;
+                    continue;
+                }
                 if (prop.NameEquals("solutionInstanceName"u8))
                 {
                     solutionInstanceName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("solutionVersionId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    solutionVersionId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("solutionConfiguration"u8))
+                {
+                    solutionConfiguration = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +200,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkPublishTargetDetails(targetId, solutionInstanceName, additionalBinaryDataProperties);
+            return new BulkPublishTargetDetails(
+                targetId,
+                solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>(),
+                solutionInstanceName,
+                solutionVersionId,
+                solutionConfiguration,
+                additionalBinaryDataProperties);
         }
     }
 }

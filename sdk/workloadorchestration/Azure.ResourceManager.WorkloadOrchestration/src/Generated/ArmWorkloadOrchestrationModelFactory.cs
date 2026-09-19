@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -39,13 +40,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> DynamicSchema Properties. </summary>
+        /// <param name="displayName"> Display name of the dynamic schema. </param>
         /// <param name="configurationType"> Type of configuration. </param>
         /// <param name="configurationModel"> Type of configuration model. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeDynamicSchemaProperties"/> instance for mocking. </returns>
-        public static EdgeDynamicSchemaProperties EdgeDynamicSchemaProperties(EdgeSchemaConfigurationType? configurationType = default, EdgeSchemaConfigurationModelType? configurationModel = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeDynamicSchemaProperties EdgeDynamicSchemaProperties(string displayName, EdgeSchemaConfigurationType? configurationType, EdgeSchemaConfigurationModelType? configurationModel, WorkloadOrchestrationProvisioningState? provisioningState)
         {
-            return new EdgeDynamicSchemaProperties(configurationType, configurationModel, provisioningState, default);
+            return new EdgeDynamicSchemaProperties(displayName, configurationType, configurationModel, provisioningState, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -82,7 +84,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new EdgeSchemaProperties(currentVersion, provisioningState, default);
         }
 
-        /// <summary> The type used for update operations of the Schema. </summary>
+        /// <summary> The updatable properties of the Schema. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.EdgeSchemaPatch"/> instance for mocking. </returns>
@@ -94,10 +96,12 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> The updatable properties of the Schema. </summary>
+        /// <param name="currentVersion"> Current Version of schema. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSchemaPatchProperties"/> instance for mocking. </returns>
-        public static EdgeSchemaPatchProperties EdgeSchemaPatchProperties()
+        public static EdgeSchemaPatchProperties EdgeSchemaPatchProperties(string currentVersion, WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
-            return new EdgeSchemaPatchProperties(default);
+            return new EdgeSchemaPatchProperties(currentVersion, provisioningState, default);
         }
 
         /// <summary> Schema Version With Update Type. </summary>
@@ -185,16 +189,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="reviewId"> Review id of resolved config for this solution version. </param>
         /// <param name="externalValidationId"> External validation id. </param>
         /// <param name="state"> State of solution instance. </param>
+        /// <param name="currentStage"> Current Stage of revision. </param>
+        /// <param name="stages"> Stages of revision. </param>
         /// <param name="solutionInstanceName"> Solution instance name. </param>
         /// <param name="solutionDependencies"> Solution Dependency Context. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
         /// <param name="latestActionTrackingUri"> The URI for tracking the latest action performed on this solution version. </param>
+        /// <param name="latestActionTriggeredBy"> Object Id of user who triggered the latest action on this solution version. </param>
         /// <param name="actionType"> The type of the latest action performed on this solution version. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionVersionProperties"/> instance for mocking. </returns>
-        public static EdgeSolutionVersionProperties EdgeSolutionVersionProperties(string solutionTemplateVersionId = default, int? revision = default, string targetDisplayName = default, string configuration = default, string targetLevelConfiguration = default, IDictionary<string, BinaryData> specification = default, string reviewId = default, string externalValidationId = default, SolutionInstanceState? state = default, string solutionInstanceName = default, IEnumerable<EdgeSolutionDependency> solutionDependencies = default, ResponseError errorDetails = default, string latestActionTrackingUri = default, EdgeJobType? actionType = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeSolutionVersionProperties EdgeSolutionVersionProperties(string solutionTemplateVersionId, int? revision, string targetDisplayName, string configuration, string targetLevelConfiguration, IDictionary<string, BinaryData> specification, string reviewId, string externalValidationId, SolutionInstanceState? state, StageMap currentStage, IEnumerable<StageMap> stages, string solutionInstanceName, IEnumerable<EdgeSolutionDependency> solutionDependencies, ResponseError errorDetails, string latestActionTrackingUri, string latestActionTriggeredBy, EdgeJobType? actionType = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
             specification ??= new ChangeTrackingDictionary<string, BinaryData>();
+            stages ??= new ChangeTrackingList<StageMap>();
             solutionDependencies ??= new ChangeTrackingList<EdgeSolutionDependency>();
 
             return new EdgeSolutionVersionProperties(
@@ -207,12 +215,37 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 reviewId,
                 externalValidationId,
                 state,
+                currentStage,
+                (stages ?? new ChangeTrackingList<StageMap>()).ToList(),
                 solutionInstanceName,
                 (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependency>()).ToList(),
                 errorDetails,
                 latestActionTrackingUri,
+                latestActionTriggeredBy,
                 actionType,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> Stage Map for Solution Version. </summary>
+        /// <param name="displayState"> Display State. </param>
+        /// <param name="stage"> Stage name. </param>
+        /// <param name="status"> Stage status. </param>
+        /// <param name="startsOn"> Stage start time. </param>
+        /// <param name="endsOn"> Stage end time. </param>
+        /// <param name="childStages"> Child stages which represents more granular level stage status if any. </param>
+        /// <returns> A new <see cref="Models.StageMap"/> instance for mocking. </returns>
+        public static StageMap StageMap(string displayState = default, CMStages stage = default, StateCategory status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<StageMap> childStages = default)
+        {
+            childStages ??= new ChangeTrackingList<StageMap>();
+
+            return new StageMap(
+                displayState,
+                stage,
+                status,
+                startsOn,
+                endsOn,
+                (childStages ?? new ChangeTrackingList<StageMap>()).ToList(),
                 default);
         }
 
@@ -255,7 +288,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 default);
         }
 
-        /// <summary> Properties of a Job resource, including type, status, parameters, steps, and error details. </summary>
         /// <param name="jobType"> The type of job. </param>
         /// <param name="startOn"> Start time of the job (ISO8601). </param>
         /// <param name="endOn"> End time of the job (ISO8601). </param>
@@ -266,8 +298,9 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="triggeredBy"> The OID or identity that triggered the job. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
+        /// <param name="additionalDataWorkflowId"> Id of the workflow. </param>
         /// <returns> A new <see cref="Models.EdgeJobProperties"/> instance for mocking. </returns>
-        public static EdgeJobProperties EdgeJobProperties(EdgeJobType jobType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, EdgeJobStatus status = default, EdgeJobContent jobParameter = default, string correlationId = default, IEnumerable<EdgeJobStep> steps = default, string triggeredBy = default, WorkloadOrchestrationProvisioningState? provisioningState = default, ResponseError errorDetails = default)
+        public static EdgeJobProperties EdgeJobProperties(EdgeJobType jobType, DateTimeOffset? startOn, DateTimeOffset? endOn, EdgeJobStatus status, EdgeJobContent jobParameter, string correlationId, IEnumerable<EdgeJobStep> steps, string triggeredBy, WorkloadOrchestrationProvisioningState? provisioningState, ResponseError errorDetails, string additionalDataWorkflowId)
         {
             steps ??= new ChangeTrackingList<EdgeJobStep>();
 
@@ -282,12 +315,13 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 triggeredBy,
                 provisioningState,
                 errorDetails,
+                additionalDataWorkflowId is null ? default : new AdditionalData(additionalDataWorkflowId, default),
                 default);
         }
 
         /// <summary>
         /// Base Job Parameter
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeployJobContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeployJobContent"/>, <see cref="Models.PublishJobParameter"/>, and <see cref="Models.UninstallJobParameter"/>.
         /// </summary>
         /// <param name="jobType"> Job type discriminator value. </param>
         /// <returns> A new <see cref="Models.EdgeJobContent"/> instance for mocking. </returns>
@@ -309,6 +343,38 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static InstallSolutionContent InstallSolutionContent(ResourceIdentifier solutionVersionId = default)
         {
             return new InstallSolutionContent(solutionVersionId, default);
+        }
+
+        /// <param name="parameterSolutionVersionId"> Solution Version ARM Id. </param>
+        /// <returns> A new <see cref="Models.PublishJobParameter"/> instance for mocking. </returns>
+        public static PublishJobParameter PublishJobParameter(ResourceIdentifier parameterSolutionVersionId = default)
+        {
+            return new PublishJobParameter(default, default, parameterSolutionVersionId is null ? default : new EdgeSolutionVersionContent(parameterSolutionVersionId, default));
+        }
+
+        /// <summary> Solution Version Parameter. </summary>
+        /// <param name="solutionVersionId"> Solution Version ARM Id. </param>
+        /// <returns> A new <see cref="Models.EdgeSolutionVersionContent"/> instance for mocking. </returns>
+        public static EdgeSolutionVersionContent EdgeSolutionVersionContent(ResourceIdentifier solutionVersionId = default)
+        {
+            return new EdgeSolutionVersionContent(solutionVersionId, default);
+        }
+
+        /// <summary> Parameters for an Uninstall job. </summary>
+        /// <param name="parameter"></param>
+        /// <returns> A new <see cref="Models.UninstallJobParameter"/> instance for mocking. </returns>
+        public static UninstallJobParameter UninstallJobParameter(UninstallSolutionContent parameter = default)
+        {
+            return new UninstallJobParameter(default, default, parameter);
+        }
+
+        /// <summary> Uninstall Solution Parameter. </summary>
+        /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
+        /// <param name="solutionInstanceName"> Solution Instance Name. </param>
+        /// <returns> A new <see cref="Models.UninstallSolutionContent"/> instance for mocking. </returns>
+        public static UninstallSolutionContent UninstallSolutionContent(ResourceIdentifier solutionTemplateId = default, string solutionInstanceName = default)
+        {
+            return new UninstallSolutionContent(solutionTemplateId, solutionInstanceName, default);
         }
 
         /// <summary> Job Step. </summary>
@@ -339,7 +405,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary>
         /// Base Job Step Statistics
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeployJobStepStatistics"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeployJobStepStatistics"/>, <see cref="Models.PublishJobStepStatistics"/>, and <see cref="Models.UninstallJobStepStatistics"/>.
         /// </summary>
         /// <param name="statisticsType"> Statistics type discriminator value. </param>
         /// <returns> A new <see cref="Models.EdgeJobStepStatistics"/> instance for mocking. </returns>
@@ -356,6 +422,26 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static DeployJobStepStatistics DeployJobStepStatistics(int? totalCount = default, int? successCount = default, int? failedCount = default)
         {
             return new DeployJobStepStatistics(default, default, totalCount, successCount, failedCount);
+        }
+
+        /// <summary> Publish statistics for a job step, including total, success, and failed counts. </summary>
+        /// <param name="totalCount"> Total count of items processed in this step. </param>
+        /// <param name="successCount"> Count of successful items in this step. </param>
+        /// <param name="failedCount"> Count of failed items in this step. </param>
+        /// <returns> A new <see cref="Models.PublishJobStepStatistics"/> instance for mocking. </returns>
+        public static PublishJobStepStatistics PublishJobStepStatistics(int? totalCount = default, int? successCount = default, int? failedCount = default)
+        {
+            return new PublishJobStepStatistics(default, default, totalCount, successCount, failedCount);
+        }
+
+        /// <summary> Uninstall statistics for a job step, including total, success, and failed counts. </summary>
+        /// <param name="totalCount"> Total count of items processed in this step. </param>
+        /// <param name="successCount"> Count of successful items in this step. </param>
+        /// <param name="failedCount"> Count of failed items in this step. </param>
+        /// <returns> A new <see cref="Models.UninstallJobStepStatistics"/> instance for mocking. </returns>
+        public static UninstallJobStepStatistics UninstallJobStepStatistics(int? totalCount = default, int? successCount = default, int? failedCount = default)
+        {
+            return new UninstallJobStepStatistics(default, default, totalCount, successCount, failedCount);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -501,15 +587,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 default);
         }
 
-        /// <summary> Uninstall Solution Parameter. </summary>
-        /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
-        /// <param name="solutionInstanceName"> Solution Instance Name. </param>
-        /// <returns> A new <see cref="Models.UninstallSolutionContent"/> instance for mocking. </returns>
-        public static UninstallSolutionContent UninstallSolutionContent(ResourceIdentifier solutionTemplateId = default, string solutionInstanceName = default)
-        {
-            return new UninstallSolutionContent(solutionTemplateId, solutionInstanceName, default);
-        }
-
         /// <summary> Install Solution Parameter. </summary>
         /// <param name="solutionTemplateId"> Solution Template ARM Id. </param>
         /// <param name="solutionVersion"> Solution Version Name. </param>
@@ -559,14 +636,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static ResolvedConfiguration ResolvedConfiguration(string configuration = default)
         {
             return new ResolvedConfiguration(configuration, default);
-        }
-
-        /// <summary> Solution Version Parameter. </summary>
-        /// <param name="solutionVersionId"> Solution Version ARM Id. </param>
-        /// <returns> A new <see cref="Models.EdgeSolutionVersionContent"/> instance for mocking. </returns>
-        public static EdgeSolutionVersionContent EdgeSolutionVersionContent(ResourceIdentifier solutionVersionId = default)
-        {
-            return new EdgeSolutionVersionContent(solutionVersionId, default);
         }
 
         /// <summary> Update External Validation Status Parameter. </summary>
@@ -650,14 +719,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Solution Properties. </summary>
         /// <param name="solutionTemplateId"> Solution template Id. </param>
+        /// <param name="displayName"> Display name of the solution. </param>
         /// <param name="availableSolutionTemplateVersions"> List of latest revisions for available solution template versions. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionProperties"/> instance for mocking. </returns>
-        public static EdgeSolutionProperties EdgeSolutionProperties(string solutionTemplateId = default, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeSolutionProperties EdgeSolutionProperties(string solutionTemplateId, string displayName, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions, WorkloadOrchestrationProvisioningState? provisioningState)
         {
             availableSolutionTemplateVersions ??= new ChangeTrackingList<AvailableSolutionTemplateVersion>();
 
-            return new EdgeSolutionProperties(solutionTemplateId, (availableSolutionTemplateVersions ?? new ChangeTrackingList<AvailableSolutionTemplateVersion>()).ToList(), provisioningState, default);
+            return new EdgeSolutionProperties(solutionTemplateId, displayName, (availableSolutionTemplateVersions ?? new ChangeTrackingList<AvailableSolutionTemplateVersion>()).ToList(), provisioningState, default);
         }
 
         /// <summary> Available Solution template Version along with latest revision. </summary>
@@ -670,7 +740,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new AvailableSolutionTemplateVersion(solutionTemplateVersion, latestConfigRevision, isConfigured, default);
         }
 
-        /// <summary> The type used for update operations of the Solution. </summary>
+        /// <summary> The updatable properties of the Solution. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionPatch"/> instance for mocking. </returns>
         public static EdgeSolutionPatch EdgeSolutionPatch(EdgeSolutionPatchProperties properties = default)
@@ -679,10 +749,81 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> The updatable properties of the Solution. </summary>
+        /// <param name="solutionTemplateId"> Solution template Id. </param>
+        /// <param name="displayName"> Display name of the solution. </param>
+        /// <param name="availableSolutionTemplateVersions"> List of latest revisions for available solution template versions. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionPatchProperties"/> instance for mocking. </returns>
-        public static EdgeSolutionPatchProperties EdgeSolutionPatchProperties()
+        public static EdgeSolutionPatchProperties EdgeSolutionPatchProperties(string solutionTemplateId, string displayName = default, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
-            return new EdgeSolutionPatchProperties(default);
+            availableSolutionTemplateVersions ??= new ChangeTrackingList<AvailableSolutionTemplateVersion>();
+
+            return new EdgeSolutionPatchProperties(solutionTemplateId, displayName, (availableSolutionTemplateVersions ?? new ChangeTrackingList<AvailableSolutionTemplateVersion>()).ToList(), provisioningState, default);
+        }
+
+        /// <summary> Solution Metadata Resource attached to a Target or Site. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="WorkloadOrchestration.SolutionMetadataData"/> instance for mocking. </returns>
+        public static SolutionMetadataData SolutionMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SolutionMetadataProperties properties = default)
+        {
+            return new SolutionMetadataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Solution Metadata Properties. </summary>
+        /// <param name="displayName"> Display name of the solution metadata resource. </param>
+        /// <param name="solutionTemplateId"> Solution template Id. </param>
+        /// <param name="latestVersion"> Latest solution template version. </param>
+        /// <param name="currentVersion"> Current solution template version. </param>
+        /// <returns> A new <see cref="Models.SolutionMetadataProperties"/> instance for mocking. </returns>
+        public static SolutionMetadataProperties SolutionMetadataProperties(string displayName = default, ResourceIdentifier solutionTemplateId = default, string latestVersion = default, string currentVersion = default)
+        {
+            return new SolutionMetadataProperties(displayName, solutionTemplateId, latestVersion, currentVersion, default);
+        }
+
+        /// <summary> Solution Metadata Version Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="WorkloadOrchestration.SolutionMetadataVersionData"/> instance for mocking. </returns>
+        public static SolutionMetadataVersionData SolutionMetadataVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SolutionMetadataVersionProperties properties = default)
+        {
+            return new SolutionMetadataVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Solution Metadata Version Properties. </summary>
+        /// <param name="parentDisplayName"> Display name of the solution metadata resource. </param>
+        /// <param name="solutionTemplateVersionId"> Solution template version Id. </param>
+        /// <param name="schemaId"> Schema Id for the solution template version at the hierarchy. </param>
+        /// <param name="dynamicConfigurationVersionId"> Dynamic Configuration Id for the solution template version. </param>
+        /// <param name="configurationStatus"> Configuration status of the solution template version. </param>
+        /// <returns> A new <see cref="Models.SolutionMetadataVersionProperties"/> instance for mocking. </returns>
+        public static SolutionMetadataVersionProperties SolutionMetadataVersionProperties(string parentDisplayName = default, ResourceIdentifier solutionTemplateVersionId = default, ResourceIdentifier schemaId = default, ResourceIdentifier dynamicConfigurationVersionId = default, ConfigurationState? configurationStatus = default)
+        {
+            return new SolutionMetadataVersionProperties(
+                parentDisplayName,
+                solutionTemplateVersionId,
+                schemaId,
+                dynamicConfigurationVersionId,
+                configurationStatus,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -708,13 +849,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="configurations"> Config expressions for this solution version. </param>
         /// <param name="specification"> App components spec. </param>
         /// <param name="orchestratorType"> Orchestrator type. </param>
+        /// <param name="internalState"> Internal State of resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeSolutionTemplateVersionProperties"/> instance for mocking. </returns>
-        public static EdgeSolutionTemplateVersionProperties EdgeSolutionTemplateVersionProperties(string configurations = default, IDictionary<string, BinaryData> specification = default, SolutionVersionOrchestratorType? orchestratorType = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeSolutionTemplateVersionProperties EdgeSolutionTemplateVersionProperties(string configurations, IDictionary<string, BinaryData> specification, SolutionVersionOrchestratorType? orchestratorType, InternalState? internalState, WorkloadOrchestrationProvisioningState? provisioningState)
         {
             specification ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new EdgeSolutionTemplateVersionProperties(configurations, specification ?? new ChangeTrackingDictionary<string, BinaryData>(), orchestratorType, provisioningState, default);
+            return new EdgeSolutionTemplateVersionProperties(
+                configurations,
+                specification ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                orchestratorType,
+                internalState,
+                provisioningState,
+                default);
         }
 
         /// <summary> Bulk deploy solution parameter. </summary>
@@ -739,22 +887,61 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="targets"> Targets to which solution needs to be published. </param>
         /// <param name="solutionInstanceName"> Name of the solution instance. </param>
         /// <param name="solutionDependencies"> Solution dependencies. </param>
+        /// <param name="solutionConfiguration"> Configuration of solution. </param>
         /// <returns> A new <see cref="Models.BulkPublishSolutionContent"/> instance for mocking. </returns>
-        public static BulkPublishSolutionContent BulkPublishSolutionContent(IEnumerable<BulkPublishTargetDetails> targets = default, string solutionInstanceName = default, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies = default)
+        public static BulkPublishSolutionContent BulkPublishSolutionContent(IEnumerable<BulkPublishTargetDetails> targets, string solutionInstanceName, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies, string solutionConfiguration)
         {
             targets ??= new ChangeTrackingList<BulkPublishTargetDetails>();
             solutionDependencies ??= new ChangeTrackingList<EdgeSolutionDependencyContent>();
 
-            return new BulkPublishSolutionContent((targets ?? new ChangeTrackingList<BulkPublishTargetDetails>()).ToList(), solutionInstanceName, (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>()).ToList(), default);
+            return new BulkPublishSolutionContent((targets ?? new ChangeTrackingList<BulkPublishTargetDetails>()).ToList(), solutionInstanceName, (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>()).ToList(), solutionConfiguration, default);
         }
 
         /// <summary> Bulk publish target details. </summary>
         /// <param name="targetId"> ArmId of Target. </param>
+        /// <param name="solutionDependencies"> Solution dependencies. </param>
         /// <param name="solutionInstanceName"> Name of the solution instance. </param>
+        /// <param name="solutionVersionId"> ArmId of Target Solution Version. </param>
+        /// <param name="solutionConfiguration"> Configuration of solution. </param>
         /// <returns> A new <see cref="Models.BulkPublishTargetDetails"/> instance for mocking. </returns>
-        public static BulkPublishTargetDetails BulkPublishTargetDetails(ResourceIdentifier targetId = default, string solutionInstanceName = default)
+        public static BulkPublishTargetDetails BulkPublishTargetDetails(ResourceIdentifier targetId, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies, string solutionInstanceName, ResourceIdentifier solutionVersionId = default, string solutionConfiguration = default)
         {
-            return new BulkPublishTargetDetails(targetId, solutionInstanceName, default);
+            solutionDependencies ??= new ChangeTrackingList<EdgeSolutionDependencyContent>();
+
+            return new BulkPublishTargetDetails(
+                targetId,
+                (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>()).ToList(),
+                solutionInstanceName,
+                solutionVersionId,
+                solutionConfiguration,
+                default);
+        }
+
+        /// <summary> Bulk publish solution parameter. </summary>
+        /// <param name="targets"> Targets to which solution needs to be published. </param>
+        /// <param name="solutionInstanceName"> Name of the solution instance. </param>
+        /// <param name="solutionDependencies"> Solution dependencies. </param>
+        /// <param name="solutionConfiguration"> Configuration of solution. </param>
+        /// <returns> A new <see cref="Models.BulkReviewSolutionParameter"/> instance for mocking. </returns>
+        public static BulkReviewSolutionParameter BulkReviewSolutionParameter(IEnumerable<BulkReviewTargetDetails> targets = default, string solutionInstanceName = default, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies = default, string solutionConfiguration = default)
+        {
+            targets ??= new ChangeTrackingList<BulkReviewTargetDetails>();
+            solutionDependencies ??= new ChangeTrackingList<EdgeSolutionDependencyContent>();
+
+            return new BulkReviewSolutionParameter((targets ?? new ChangeTrackingList<BulkReviewTargetDetails>()).ToList(), solutionInstanceName, (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>()).ToList(), solutionConfiguration, default);
+        }
+
+        /// <summary> Bulk publish target details. </summary>
+        /// <param name="targetId"> ArmId of Target. </param>
+        /// <param name="solutionDependencies"> Solution dependencies. </param>
+        /// <param name="solutionInstanceName"> Name of the solution instance. </param>
+        /// <param name="solutionConfiguration"> Configuration of solution. </param>
+        /// <returns> A new <see cref="Models.BulkReviewTargetDetails"/> instance for mocking. </returns>
+        public static BulkReviewTargetDetails BulkReviewTargetDetails(ResourceIdentifier targetId = default, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies = default, string solutionInstanceName = default, string solutionConfiguration = default)
+        {
+            solutionDependencies ??= new ChangeTrackingList<EdgeSolutionDependencyContent>();
+
+            return new BulkReviewTargetDetails(targetId, (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>()).ToList(), solutionInstanceName, solutionConfiguration, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -817,7 +1004,6 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new EdgeSolutionTemplatePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <summary> The updatable properties of the SolutionTemplate. </summary>
         /// <param name="description"> Description of Solution template. </param>
         /// <param name="capabilities"> List of capabilities. </param>
         /// <param name="state"> State of resource. </param>
@@ -827,7 +1013,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         {
             capabilities ??= new ChangeTrackingList<string>();
 
-            return new EdgeSolutionTemplatePatchProperties(description, (capabilities ?? new ChangeTrackingList<string>()).ToList(), state, isExternalValidationEnabled, default);
+            return new EdgeSolutionTemplatePatchProperties(description, (capabilities ?? new ChangeTrackingList<string>()).ToList(), state, default, default);
         }
 
         /// <summary> Solution Template Version With Update Type. </summary>
@@ -1004,6 +1190,18 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new EdgeConfigTemplatePatch(tags ?? new ChangeTrackingDictionary<string, string>(), configTemplateUpdateDescription is null ? default : new ConfigTemplateUpdateProperties(configTemplateUpdateDescription, default), default);
+        }
+
+        /// <summary> Hierarchy Ids With Level for applying config Template which will further generate ARG objects. </summary>
+        /// <param name="contextId"> Context Id. </param>
+        /// <param name="hierarchyIds"> Hierarchy Ids. </param>
+        /// <param name="level"> Hierarchy Level. </param>
+        /// <returns> A new <see cref="Models.HierarchySelector"/> instance for mocking. </returns>
+        public static HierarchySelector HierarchySelector(ResourceIdentifier contextId = default, IEnumerable<ResourceIdentifier> hierarchyIds = default, string level = default)
+        {
+            hierarchyIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new HierarchySelector(contextId, (hierarchyIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), level, default);
         }
 
         /// <summary> Config Template Version With Update Type. </summary>
@@ -1265,7 +1463,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                 default);
         }
 
-        /// <summary> The type used for update operations of the Diagnostic. </summary>
+        /// <summary> The updatable properties of the Diagnostic. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.EdgeDiagnosticPatch"/> instance for mocking. </returns>
@@ -1277,10 +1475,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> The updatable properties of the Diagnostic. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.EdgeDiagnosticPatchProperties"/> instance for mocking. </returns>
-        public static EdgeDiagnosticPatchProperties EdgeDiagnosticPatchProperties()
+        public static EdgeDiagnosticPatchProperties EdgeDiagnosticPatchProperties(WorkloadOrchestrationProvisioningState? provisioningState)
         {
-            return new EdgeDiagnosticPatchProperties(default);
+            return new EdgeDiagnosticPatchProperties(provisioningState, default);
         }
 
         /// <summary> Context Resource. </summary>
@@ -1308,19 +1507,20 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         }
 
         /// <summary> Context Properties. </summary>
+        /// <param name="uniqueIdentifier"> A unique identifier for the context, generated by the system. </param>
         /// <param name="capabilities"> List of Capabilities. </param>
         /// <param name="hierarchies"> List of Hierarchies. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="Models.EdgeContextProperties"/> instance for mocking. </returns>
-        public static EdgeContextProperties EdgeContextProperties(IEnumerable<ContextCapability> capabilities = default, IEnumerable<ContextHierarchy> hierarchies = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        public static EdgeContextProperties EdgeContextProperties(string uniqueIdentifier, IEnumerable<ContextCapability> capabilities, IEnumerable<ContextHierarchy> hierarchies, WorkloadOrchestrationProvisioningState? provisioningState)
         {
             capabilities ??= new ChangeTrackingList<ContextCapability>();
             hierarchies ??= new ChangeTrackingList<ContextHierarchy>();
 
-            return new EdgeContextProperties((capabilities ?? new ChangeTrackingList<ContextCapability>()).ToList(), (hierarchies ?? new ChangeTrackingList<ContextHierarchy>()).ToList(), provisioningState, default);
+            return new EdgeContextProperties(uniqueIdentifier, (capabilities ?? new ChangeTrackingList<ContextCapability>()).ToList(), (hierarchies ?? new ChangeTrackingList<ContextHierarchy>()).ToList(), provisioningState, default);
         }
 
-        /// <summary> Capability, to match in Solution Templates and Targets. </summary>
+        /// <summary> Capability, to match in Solution Templates &amp; Targets. </summary>
         /// <param name="name"> Name of Capability. </param>
         /// <param name="description"> Description of Capability. </param>
         /// <param name="state"> State of resource. </param>
@@ -1387,6 +1587,481 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public static EdgeSiteReferenceProperties EdgeSiteReferenceProperties(string siteId = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
         {
             return new EdgeSiteReferenceProperties(siteId, provisioningState, default);
+        }
+
+        /// <summary> SolutionSchema Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="WorkloadOrchestration.SolutionSchemaData"/> instance for mocking. </returns>
+        public static SolutionSchemaData SolutionSchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SolutionSchemaProperties properties = default, ETag? eTag = default)
+        {
+            return new SolutionSchemaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> SolutionSchema Properties. </summary>
+        /// <param name="value"> Value of schema. </param>
+        /// <param name="level"> Hierarchy Level. </param>
+        /// <param name="templateUniqueIdentifier"> Unique identifier for the solution template, generated by the system. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="Models.SolutionSchemaProperties"/> instance for mocking. </returns>
+        public static SolutionSchemaProperties SolutionSchemaProperties(BinaryData value = default, string level = default, string templateUniqueIdentifier = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        {
+            return new SolutionSchemaProperties(value, level, templateUniqueIdentifier, provisioningState, default);
+        }
+
+        /// <summary> SolutionSchema Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="WorkloadOrchestration.ConfigTemplateSchemaData"/> instance for mocking. </returns>
+        public static ConfigTemplateSchemaData ConfigTemplateSchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfigTemplateSchemaProperties properties = default, ETag? eTag = default)
+        {
+            return new ConfigTemplateSchemaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> ConfigTemplateSchema Properties. </summary>
+        /// <param name="value"> Value of schema. </param>
+        /// <param name="templateUniqueIdentifier"> Unique identifier for the config template, generated by the system. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="Models.ConfigTemplateSchemaProperties"/> instance for mocking. </returns>
+        public static ConfigTemplateSchemaProperties ConfigTemplateSchemaProperties(BinaryData value = default, string templateUniqueIdentifier = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        {
+            return new ConfigTemplateSchemaProperties(value, templateUniqueIdentifier, provisioningState, default);
+        }
+
+        /// <summary> ConfigTemplateMetadata Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="WorkloadOrchestration.ConfigTemplateMetadataData"/> instance for mocking. </returns>
+        public static ConfigTemplateMetadataData ConfigTemplateMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfigTemplateMetadataProperties properties = default, ETag? eTag = default)
+        {
+            return new ConfigTemplateMetadataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> ConfigTemplateMetadata Properties. </summary>
+        /// <param name="contextId"> ArmId of Context. </param>
+        /// <param name="linkedHierarchies"> Hierarchy ARM Ids. </param>
+        /// <param name="unLinkedHierarchies"> Hierarchy ARM Ids. </param>
+        /// <param name="templateUniqueIdentifier"> Unique identifier for the config template, generated by the system. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="Models.ConfigTemplateMetadataProperties"/> instance for mocking. </returns>
+        public static ConfigTemplateMetadataProperties ConfigTemplateMetadataProperties(ResourceIdentifier contextId = default, IEnumerable<HierarchyMetadata> linkedHierarchies = default, IEnumerable<HierarchyMetadata> unLinkedHierarchies = default, string templateUniqueIdentifier = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        {
+            linkedHierarchies ??= new ChangeTrackingList<HierarchyMetadata>();
+            unLinkedHierarchies ??= new ChangeTrackingList<HierarchyMetadata>();
+
+            return new ConfigTemplateMetadataProperties(
+                contextId,
+                (linkedHierarchies ?? new ChangeTrackingList<HierarchyMetadata>()).ToList(),
+                (unLinkedHierarchies ?? new ChangeTrackingList<HierarchyMetadata>()).ToList(),
+                templateUniqueIdentifier,
+                provisioningState,
+                default);
+        }
+
+        /// <summary> Hierarchy Ids With Level for applying config Template which will further generate ARG objects. </summary>
+        /// <param name="hierarchyIds"> Hierarchy Ids. </param>
+        /// <param name="level"> Hierarchy Level. </param>
+        /// <returns> A new <see cref="Models.HierarchyMetadata"/> instance for mocking. </returns>
+        public static HierarchyMetadata HierarchyMetadata(IEnumerable<ResourceIdentifier> hierarchyIds = default, string level = default)
+        {
+            hierarchyIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new HierarchyMetadata((hierarchyIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), level, default);
+        }
+
+        /// <summary> The type used for update operations of the ConfigTemplateMetadata. </summary>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.ConfigTemplateMetadataPatch"/> instance for mocking. </returns>
+        public static ConfigTemplateMetadataPatch ConfigTemplateMetadataPatch(ConfigTemplateMetadataUpdateProperties properties = default)
+        {
+            return new ConfigTemplateMetadataPatch(properties, default);
+        }
+
+        /// <summary> The updatable properties of the ConfigTemplateMetadata. </summary>
+        /// <param name="contextId"> ArmId of Context. </param>
+        /// <param name="linkedHierarchies"> Hierarchy ARM Ids. </param>
+        /// <param name="unLinkedHierarchies"> Hierarchy ARM Ids. </param>
+        /// <returns> A new <see cref="Models.ConfigTemplateMetadataUpdateProperties"/> instance for mocking. </returns>
+        public static ConfigTemplateMetadataUpdateProperties ConfigTemplateMetadataUpdateProperties(ResourceIdentifier contextId = default, IEnumerable<HierarchyMetadata> linkedHierarchies = default, IEnumerable<HierarchyMetadata> unLinkedHierarchies = default)
+        {
+            linkedHierarchies ??= new ChangeTrackingList<HierarchyMetadata>();
+            unLinkedHierarchies ??= new ChangeTrackingList<HierarchyMetadata>();
+
+            return new ConfigTemplateMetadataUpdateProperties(contextId, (linkedHierarchies ?? new ChangeTrackingList<HierarchyMetadata>()).ToList(), (unLinkedHierarchies ?? new ChangeTrackingList<HierarchyMetadata>()).ToList(), default);
+        }
+
+        /// <summary> Hierarchy Configuration Metadata Resource attached to a Target or Site. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="WorkloadOrchestration.HierarchyConfigurationMetadataData"/> instance for mocking. </returns>
+        public static HierarchyConfigurationMetadataData HierarchyConfigurationMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HierarchyConfigurationMetadataProperties properties = default)
+        {
+            return new HierarchyConfigurationMetadataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Hierarchy Configuration Metadata Properties. </summary>
+        /// <param name="displayName"> Display name of the hierarchy configuration metadata resource. </param>
+        /// <param name="configTemplateId"> Configuration template Id. </param>
+        /// <returns> A new <see cref="Models.HierarchyConfigurationMetadataProperties"/> instance for mocking. </returns>
+        public static HierarchyConfigurationMetadataProperties HierarchyConfigurationMetadataProperties(string displayName = default, ResourceIdentifier configTemplateId = default)
+        {
+            return new HierarchyConfigurationMetadataProperties(displayName, configTemplateId, default);
+        }
+
+        /// <summary> Configuration Metadata Version Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="WorkloadOrchestration.HierarchyConfigurationMetadataVersionData"/> instance for mocking. </returns>
+        public static HierarchyConfigurationMetadataVersionData HierarchyConfigurationMetadataVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HierarchyConfigurationMetadataVersionProperties properties = default)
+        {
+            return new HierarchyConfigurationMetadataVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Hierarchy Configuration Metadata Version Properties. </summary>
+        /// <param name="parentDisplayName"> Display name of the hierarchy configuration metadata resource. </param>
+        /// <param name="configTemplateVersionId"> Configuration template version Id. </param>
+        /// <param name="schemaId"> Schema Id for the config template version at the hierarchy. </param>
+        /// <param name="dynamicConfigurationVersionId"> Dynamic Configuration Id for the config template version. </param>
+        /// <param name="configurationStatus"> Configuration status of the config template version. </param>
+        /// <returns> A new <see cref="Models.HierarchyConfigurationMetadataVersionProperties"/> instance for mocking. </returns>
+        public static HierarchyConfigurationMetadataVersionProperties HierarchyConfigurationMetadataVersionProperties(string parentDisplayName = default, ResourceIdentifier configTemplateVersionId = default, ResourceIdentifier schemaId = default, ResourceIdentifier dynamicConfigurationVersionId = default, ConfigTemplateConfigurationState? configurationStatus = default)
+        {
+            return new HierarchyConfigurationMetadataVersionProperties(
+                parentDisplayName,
+                configTemplateVersionId,
+                schemaId,
+                dynamicConfigurationVersionId,
+                configurationStatus,
+                default);
+        }
+
+        /// <summary> Solution Deployment Resource. Represents a resource to be deployed on the cloud or edge. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="WorkloadOrchestration.SolutionDeploymentData"/> instance for mocking. </returns>
+        public static SolutionDeploymentData SolutionDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SolutionDeploymentProperties properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SolutionDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> Solution Deployment Properties. </summary>
+        /// <param name="solutionTemplateProperties"> Target properties. </param>
+        /// <param name="input"> Input field. </param>
+        /// <param name="output"> Output field. </param>
+        /// <param name="targetProperties"> Target properties. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="Models.SolutionDeploymentProperties"/> instance for mocking. </returns>
+        public static SolutionDeploymentProperties SolutionDeploymentProperties(SolutionTemplateMetadata solutionTemplateProperties = default, IDictionary<string, BinaryData> input = default, IReadOnlyDictionary<string, BinaryData> output = default, TargetMetadata targetProperties = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        {
+            input ??= new ChangeTrackingDictionary<string, BinaryData>();
+            output ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new SolutionDeploymentProperties(
+                solutionTemplateProperties,
+                input ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                output ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                targetProperties,
+                provisioningState,
+                default);
+        }
+
+        /// <summary> Solution Template Details. </summary>
+        /// <param name="subscriptionId"> Solution template subscription. </param>
+        /// <param name="resourceGroupName"> Solution template resource group. </param>
+        /// <param name="name"> Solution template name. </param>
+        /// <param name="version"> Solution template version. </param>
+        /// <returns> A new <see cref="Models.SolutionTemplateMetadata"/> instance for mocking. </returns>
+        public static SolutionTemplateMetadata SolutionTemplateMetadata(string subscriptionId = default, string resourceGroupName = default, string name = default, string version = default)
+        {
+            return new SolutionTemplateMetadata(subscriptionId, resourceGroupName, name, version, default);
+        }
+
+        /// <summary> Solution Deployment Target Details. </summary>
+        /// <param name="capabilities"> List of capabilities. </param>
+        /// <param name="targetIds"> ARM resource IDs of the Targets resources. </param>
+        /// <returns> A new <see cref="Models.TargetMetadata"/> instance for mocking. </returns>
+        public static TargetMetadata TargetMetadata(IEnumerable<string> capabilities = default, IEnumerable<ResourceIdentifier> targetIds = default)
+        {
+            capabilities ??= new ChangeTrackingList<string>();
+            targetIds ??= new ChangeTrackingList<ResourceIdentifier>();
+
+            return new TargetMetadata((capabilities ?? new ChangeTrackingList<string>()).ToList(), (targetIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+        }
+
+        /// <summary> The type used for update operations of the SolutionDeployment. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.SolutionDeploymentPatch"/> instance for mocking. </returns>
+        public static SolutionDeploymentPatch SolutionDeploymentPatch(IDictionary<string, string> tags = default, SolutionDeploymentUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SolutionDeploymentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> The updatable properties of the SolutionDeploymentProperties. </summary>
+        /// <param name="solutionTemplateProperties"> Target properties. </param>
+        /// <param name="input"> Input field. </param>
+        /// <param name="targetProperties"> Target properties. </param>
+        /// <returns> A new <see cref="Models.SolutionDeploymentUpdateProperties"/> instance for mocking. </returns>
+        public static SolutionDeploymentUpdateProperties SolutionDeploymentUpdateProperties(SolutionTemplateMetadataUpdate solutionTemplateProperties = default, IDictionary<string, BinaryData> input = default, TargetMetadata targetProperties = default)
+        {
+            input ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new SolutionDeploymentUpdateProperties(solutionTemplateProperties, input ?? new ChangeTrackingDictionary<string, BinaryData>(), targetProperties, default);
+        }
+
+        /// <summary> Solution Template Details for update operations. </summary>
+        /// <param name="subscriptionId"> Solution template subscription. </param>
+        /// <param name="resourceGroupName"> Solution template resource group. </param>
+        /// <param name="name"> Solution template name. </param>
+        /// <param name="version"> Solution template version. </param>
+        /// <returns> A new <see cref="Models.SolutionTemplateMetadataUpdate"/> instance for mocking. </returns>
+        public static SolutionTemplateMetadataUpdate SolutionTemplateMetadataUpdate(string subscriptionId = default, string resourceGroupName = default, string name = default, string version = default)
+        {
+            return new SolutionTemplateMetadataUpdate(subscriptionId, resourceGroupName, name, version, default);
+        }
+
+        /// <summary> DynamicSchema Properties. </summary>
+        /// <param name="configurationType"> Type of configuration. </param>
+        /// <param name="configurationModel"> Type of configuration model. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="Models.EdgeDynamicSchemaProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeDynamicSchemaProperties EdgeDynamicSchemaProperties(EdgeSchemaConfigurationType? configurationType = default, EdgeSchemaConfigurationModelType? configurationModel = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        {
+            return new EdgeDynamicSchemaProperties(default, configurationType, configurationModel, provisioningState, default);
+        }
+
+        /// <summary> The updatable properties of the Schema. </summary>
+        /// <returns> A new <see cref="Models.EdgeSchemaPatchProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeSchemaPatchProperties EdgeSchemaPatchProperties()
+        {
+            return new EdgeSchemaPatchProperties(default, default, default);
+        }
+
+        /// <summary> Solution Version Properties. </summary>
+        /// <param name="solutionTemplateVersionId"> Solution Template Version Id. </param>
+        /// <param name="revision"> Revision number of resolved config for this solution version. </param>
+        /// <param name="targetDisplayName"> Name of applicable target's display name. </param>
+        /// <param name="configuration"> Resolved configuration values. </param>
+        /// <param name="targetLevelConfiguration"> Configuration on the line level across all solution template versions. </param>
+        /// <param name="specification"> App components spec. </param>
+        /// <param name="reviewId"> Review id of resolved config for this solution version. </param>
+        /// <param name="externalValidationId"> External validation id. </param>
+        /// <param name="state"> State of solution instance. </param>
+        /// <param name="solutionInstanceName"> Solution instance name. </param>
+        /// <param name="solutionDependencies"> Solution Dependency Context. </param>
+        /// <param name="errorDetails"> Error Details if any failure is there. </param>
+        /// <param name="latestActionTrackingUri"> The URI for tracking the latest action performed on this solution version. </param>
+        /// <param name="actionType"> The type of the latest action performed on this solution version. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="Models.EdgeSolutionVersionProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeSolutionVersionProperties EdgeSolutionVersionProperties(string solutionTemplateVersionId = default, int? revision = default, string targetDisplayName = default, string configuration = default, string targetLevelConfiguration = default, IDictionary<string, BinaryData> specification = default, string reviewId = default, string externalValidationId = default, SolutionInstanceState? state = default, string solutionInstanceName = default, IEnumerable<EdgeSolutionDependency> solutionDependencies = default, ResponseError errorDetails = default, string latestActionTrackingUri = default, EdgeJobType? actionType = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        {
+            return new EdgeSolutionVersionProperties(
+                solutionTemplateVersionId,
+                revision,
+                targetDisplayName,
+                configuration,
+                targetLevelConfiguration,
+                specification ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                reviewId,
+                externalValidationId,
+                state,
+                default,
+                default,
+                solutionInstanceName,
+                (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependency>()).ToList(),
+                errorDetails,
+                latestActionTrackingUri,
+                default,
+                actionType,
+                provisioningState,
+                default);
+        }
+
+        /// <summary> Properties of a Job resource, including type, status, parameters, steps, and error details. </summary>
+        /// <param name="jobType"> The type of job. </param>
+        /// <param name="startOn"> Start time of the job (ISO8601). </param>
+        /// <param name="endOn"> End time of the job (ISO8601). </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="jobParameter"> Parameters for the job. </param>
+        /// <param name="correlationId"> Correlation ID for tracking. </param>
+        /// <param name="steps"> Steps and substatuses for the job. </param>
+        /// <param name="triggeredBy"> The OID or identity that triggered the job. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="errorDetails"> Error Details if any failure is there. </param>
+        /// <returns> A new <see cref="Models.EdgeJobProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeJobProperties EdgeJobProperties(EdgeJobType jobType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, EdgeJobStatus status = default, EdgeJobContent jobParameter = default, string correlationId = default, IEnumerable<EdgeJobStep> steps = default, string triggeredBy = default, WorkloadOrchestrationProvisioningState? provisioningState = default, ResponseError errorDetails = default)
+        {
+            return new EdgeJobProperties(
+                jobType,
+                startOn,
+                endOn,
+                status,
+                jobParameter,
+                correlationId,
+                (steps ?? new ChangeTrackingList<EdgeJobStep>()).ToList(),
+                triggeredBy,
+                provisioningState,
+                errorDetails,
+                default,
+                default);
+        }
+
+        /// <summary> Solution Properties. </summary>
+        /// <param name="solutionTemplateId"> Solution template Id. </param>
+        /// <param name="availableSolutionTemplateVersions"> List of latest revisions for available solution template versions. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="Models.EdgeSolutionProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeSolutionProperties EdgeSolutionProperties(string solutionTemplateId = default, IEnumerable<AvailableSolutionTemplateVersion> availableSolutionTemplateVersions = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        {
+            return new EdgeSolutionProperties(solutionTemplateId, default, (availableSolutionTemplateVersions ?? new ChangeTrackingList<AvailableSolutionTemplateVersion>()).ToList(), provisioningState, default);
+        }
+
+        /// <summary> The updatable properties of the Solution. </summary>
+        /// <returns> A new <see cref="Models.EdgeSolutionPatchProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeSolutionPatchProperties EdgeSolutionPatchProperties()
+        {
+            return new EdgeSolutionPatchProperties(default, default, default, default, default);
+        }
+
+        /// <summary> Solution Template Version Properties. </summary>
+        /// <param name="configurations"> Config expressions for this solution version. </param>
+        /// <param name="specification"> App components spec. </param>
+        /// <param name="orchestratorType"> Orchestrator type. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="Models.EdgeSolutionTemplateVersionProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeSolutionTemplateVersionProperties EdgeSolutionTemplateVersionProperties(string configurations = default, IDictionary<string, BinaryData> specification = default, SolutionVersionOrchestratorType? orchestratorType = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        {
+            return new EdgeSolutionTemplateVersionProperties(
+                configurations,
+                specification ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                orchestratorType,
+                default,
+                provisioningState,
+                default);
+        }
+
+        /// <summary> Bulk publish solution parameter. </summary>
+        /// <param name="targets"> Targets to which solution needs to be published. </param>
+        /// <param name="solutionInstanceName"> Name of the solution instance. </param>
+        /// <param name="solutionDependencies"> Solution dependencies. </param>
+        /// <returns> A new <see cref="Models.BulkPublishSolutionContent"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BulkPublishSolutionContent BulkPublishSolutionContent(IEnumerable<BulkPublishTargetDetails> targets = default, string solutionInstanceName = default, IEnumerable<EdgeSolutionDependencyContent> solutionDependencies = default)
+        {
+            return new BulkPublishSolutionContent((targets ?? new ChangeTrackingList<BulkPublishTargetDetails>()).ToList(), solutionInstanceName, (solutionDependencies ?? new ChangeTrackingList<EdgeSolutionDependencyContent>()).ToList(), default, default);
+        }
+
+        /// <summary> Bulk publish target details. </summary>
+        /// <param name="targetId"> ArmId of Target. </param>
+        /// <param name="solutionInstanceName"> Name of the solution instance. </param>
+        /// <returns> A new <see cref="Models.BulkPublishTargetDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BulkPublishTargetDetails BulkPublishTargetDetails(ResourceIdentifier targetId = default, string solutionInstanceName = default)
+        {
+            return new BulkPublishTargetDetails(
+                targetId,
+                default,
+                solutionInstanceName,
+                default,
+                default,
+                default);
+        }
+
+        /// <summary> The updatable properties of the Diagnostic. </summary>
+        /// <returns> A new <see cref="Models.EdgeDiagnosticPatchProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeDiagnosticPatchProperties EdgeDiagnosticPatchProperties()
+        {
+            return new EdgeDiagnosticPatchProperties(default, default);
+        }
+
+        /// <summary> Context Properties. </summary>
+        /// <param name="capabilities"> List of Capabilities. </param>
+        /// <param name="hierarchies"> List of Hierarchies. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="Models.EdgeContextProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EdgeContextProperties EdgeContextProperties(IEnumerable<ContextCapability> capabilities = default, IEnumerable<ContextHierarchy> hierarchies = default, WorkloadOrchestrationProvisioningState? provisioningState = default)
+        {
+            return new EdgeContextProperties(default, (capabilities ?? new ChangeTrackingList<ContextCapability>()).ToList(), (hierarchies ?? new ChangeTrackingList<ContextHierarchy>()).ToList(), provisioningState, default);
         }
     }
 }
