@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="logLevel"> The log level for the monitoring configuration status of the bare metal machine. </param>
         /// <param name="metricsLevel"> The metrics level for the monitoring configuration status of the bare metal machine. </param>
         /// <returns> A new <see cref="Models.BareMetalMachineMonitoringConfigurationStatus"/> instance for mocking. </returns>
-        public static BareMetalMachineMonitoringConfigurationStatus BareMetalMachineMonitoringConfigurationStatus(BareMetalMachineMetricsConfigurationStatusLogLevel? logLevel = default, BareMetalMachineMetricsConfigurationStatusMetricsLevel? metricsLevel = default)
+        public static BareMetalMachineMonitoringConfigurationStatus BareMetalMachineMonitoringConfigurationStatus(BareMetalMachineMonitoringConfigurationStatusLogLevel? logLevel = default, BareMetalMachineMonitoringConfigurationStatusMetricsLevel? metricsLevel = default)
         {
             return new BareMetalMachineMonitoringConfigurationStatus(logLevel, metricsLevel, default);
         }
@@ -1045,39 +1045,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 default);
         }
 
-        /// <param name="identity"> The identity for the resource. </param>
-        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
-        /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
-        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
-        /// <param name="clusterServicePrincipal"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
-        /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
-        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
-        /// <param name="computeRackDefinitions"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
-        /// <param name="runtimeProtectionConfiguration"> The settings for cluster runtime protection. </param>
-        /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
-        /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
-        /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
-        /// <param name="vulnerabilityScanningContainerScan"> The mode selection for container vulnerability scanning. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkCloudClusterPatch"/> instance for mocking. </returns>
-        public static NetworkCloudClusterPatch NetworkCloudClusterPatch(ManagedServiceIdentity identity = default, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default, AnalyticsOutputSettings analyticsOutputSettings = default, string clusterLocation = default, ServicePrincipalInformation clusterServicePrincipal = default, CommandOutputSettings commandOutputSettings = default, ValidationThreshold computeDeploymentThreshold = default, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = default, RuntimeProtectionConfiguration runtimeProtectionConfiguration = default, ClusterSecretArchive secretArchive = default, SecretArchiveSettings secretArchiveSettings = default, ClusterUpdateStrategy updateStrategy = default, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default, IDictionary<string, string> tags = default)
+        /// <summary> RuntimeProtectionConfigurationPatch represents the runtime protection configuration for the cluster for patch operations. </summary>
+        /// <param name="definitionUpdateMode"> The definition update mode for runtime protection. </param>
+        /// <param name="enforcementLevel"> The mode of operation for runtime protection. </param>
+        /// <returns> A new <see cref="Models.RuntimeProtectionConfigurationPatch"/> instance for mocking. </returns>
+        public static RuntimeProtectionConfigurationPatch RuntimeProtectionConfigurationPatch(RuntimeProtectionDefinitionUpdateMode? definitionUpdateMode = default, RuntimeProtectionEnforcementLevel? enforcementLevel = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkCloudClusterPatch(identity, aggregatorOrSingleRackDefinition is null && analyticsOutputSettings is null && clusterLocation is null && clusterServicePrincipal is null && commandOutputSettings is null && computeDeploymentThreshold is null && computeRackDefinitions is null && runtimeProtectionConfiguration is null && secretArchive is null && secretArchiveSettings is null && updateStrategy is null && vulnerabilityScanningContainerScan is null ? default : new ClusterPatchProperties(
-                aggregatorOrSingleRackDefinition,
-                analyticsOutputSettings,
-                clusterLocation,
-                clusterServicePrincipal,
-                commandOutputSettings,
-                computeDeploymentThreshold,
-                (computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>()).ToList(),
-                runtimeProtectionConfiguration,
-                secretArchive,
-                secretArchiveSettings,
-                updateStrategy,
-                vulnerabilityScanningContainerScan is null ? default : new VulnerabilityScanningSettingsPatch(vulnerabilityScanningContainerScan, default),
-                default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new RuntimeProtectionConfigurationPatch(definitionUpdateMode, enforcementLevel, default);
         }
 
         /// <summary> ClusterContinueUpdateVersionParameters represents the body of the request to continue the update of a cluster version. </summary>
@@ -1898,11 +1872,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
+        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
-        /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
+        /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="caCertificate"> The CA certificate information issued by the platform for connecting to TLS interfaces for the storage appliance. Callers add this certificate to their trusted CA store to allow secure communication with the storage appliance. </param>
         /// <param name="capacity"> The total capacity of the storage appliance. Measured in GiB. </param>
         /// <param name="capacityUsed"> The amount of storage consumed. Measured in GiB. </param>
@@ -1922,7 +1896,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudStorageApplianceData"/> instance for mocking. </returns>
-        public static NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AdministrativeCredentials administratorCredentials, ResourceIdentifier rackId, long rackSlot, string serialNumber = default, string storageApplianceSkuId = default, NetworkCloudCertificateInfo caCertificate = default, long? capacity = default, long? capacityUsed = default, ResourceIdentifier clusterId = default, StorageApplianceDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<StorageApplianceExpansionShelf> expansionShelves = default, IPAddress managementIPv4Address = default, string manufacturer = default, string model = default, StorageApplianceMonitoringConfigurationStatus monitoringConfigurationStatus = default, RemoteVendorManagementFeature? remoteVendorManagementFeature = default, RemoteVendorManagementStatus? remoteVendorManagementStatus = default, IEnumerable<SecretRotationStatus> secretRotationStatus = default, string version = default, StorageApplianceProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
+        public static NetworkCloudStorageApplianceData NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier rackId, string storageApplianceSkuId, long rackSlot, string serialNumber = default, AdministrativeCredentials administratorCredentials = default, NetworkCloudCertificateInfo caCertificate = default, long? capacity = default, long? capacityUsed = default, ResourceIdentifier clusterId = default, StorageApplianceDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, IEnumerable<StorageApplianceExpansionShelf> expansionShelves = default, IPAddress managementIPv4Address = default, string manufacturer = default, string model = default, StorageApplianceMonitoringConfigurationStatus monitoringConfigurationStatus = default, RemoteVendorManagementFeature? remoteVendorManagementFeature = default, RemoteVendorManagementStatus? remoteVendorManagementStatus = default, IEnumerable<SecretRotationStatus> secretRotationStatus = default, string version = default, StorageApplianceProvisioningState? provisioningState = default, ETag? eTag = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1934,11 +1908,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 new StorageApplianceProperties(
-                    administratorCredentials,
                     rackId,
+                    storageApplianceSkuId,
                     rackSlot,
                     serialNumber,
-                    storageApplianceSkuId,
+                    administratorCredentials,
                     caCertificate,
                     capacity,
                     capacityUsed,
@@ -1974,7 +1948,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="logLevel"> The log level for the monitoring configuration status of the storage appliance. </param>
         /// <param name="metricsLevel"> The metrics level for the monitoring configuration status of the storage appliance. </param>
         /// <returns> A new <see cref="Models.StorageApplianceMonitoringConfigurationStatus"/> instance for mocking. </returns>
-        public static StorageApplianceMonitoringConfigurationStatus StorageApplianceMonitoringConfigurationStatus(StorageApplianceMetricsConfigurationStatusLogLevel? logLevel = default, StorageApplianceMetricsConfigurationStatusMetricsLevel? metricsLevel = default)
+        public static StorageApplianceMonitoringConfigurationStatus StorageApplianceMonitoringConfigurationStatus(StorageApplianceMonitoringConfigurationStatusLogLevel? logLevel = default, StorageApplianceMonitoringConfigurationStatusMetricsLevel? metricsLevel = default)
         {
             return new StorageApplianceMonitoringConfigurationStatus(logLevel, metricsLevel, default);
         }
@@ -2203,17 +2177,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static ImageRepositoryCredentials ImageRepositoryCredentials(string password = default, string registryUriString = default, string username = default)
         {
             return new ImageRepositoryCredentials(password, registryUriString, username, default);
-        }
-
-        /// <param name="identity"> The identity for the resource. </param>
-        /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkCloudVirtualMachinePatch"/> instance for mocking. </returns>
-        public static NetworkCloudVirtualMachinePatch NetworkCloudVirtualMachinePatch(ManagedServiceIdentity identity = default, ImageRepositoryCredentials vmImageRepositoryCredentials = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkCloudVirtualMachinePatch(identity, vmImageRepositoryCredentials is null ? default : new VirtualMachinePatchProperties(vmImageRepositoryCredentials, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> VirtualMachineAssignRelayParameters represents the body of the request to update the relay used for a Microsoft.HybridCompute machine associated with the virtual machine. </summary>
@@ -2655,7 +2618,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkCloudVirtualMachineConsolePatch(enabled is null && expireOn is null && keyData is null ? default : new ConsolePatchProperties(enabled, expireOn, keyData is null ? default : new NetworkCloudSshPublicKey(keyData, default), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new NetworkCloudVirtualMachineConsolePatch(enabled is null && expireOn is null && keyData is null ? default : new ConsolePatchProperties(enabled, expireOn, keyData is null ? default : new NetworkCloudSshPublicKeyPatch(keyData, default), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> KubernetesClusterNode represents the details of a node in a Kubernetes cluster. </summary>
@@ -3348,11 +3311,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 new StorageApplianceProperties(
-                    administratorCredentials,
                     rackId,
+                    storageApplianceSkuId,
                     rackSlot,
                     serialNumber,
-                    storageApplianceSkuId,
+                    administratorCredentials,
                     caCertificate,
                     capacity,
                     capacityUsed,
@@ -4094,11 +4057,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 new StorageApplianceProperties(
-                    administratorCredentials,
                     rackId,
+                    storageApplianceSkuId,
                     rackSlot,
                     serialNumber,
-                    storageApplianceSkuId,
+                    administratorCredentials,
                     default,
                     capacity,
                     capacityUsed,
@@ -4447,11 +4410,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 new StorageApplianceProperties(
-                    administratorCredentials,
                     rackId,
+                    storageApplianceSkuId,
                     rackSlot,
                     serialNumber,
-                    storageApplianceSkuId,
+                    administratorCredentials,
                     default,
                     capacity,
                     capacityUsed,
@@ -4730,11 +4693,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 new StorageApplianceProperties(
-                    administratorCredentials,
                     rackId,
+                    storageApplianceSkuId,
                     rackSlot,
                     serialNumber,
-                    storageApplianceSkuId,
+                    administratorCredentials,
                     default,
                     capacity,
                     capacityUsed,
