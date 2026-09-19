@@ -1,4 +1,6 @@
-directory: specification/automation/Automation.Management
-commit: 045377b363b6e8d13348e711b10cead886a573fa
+directory: specification/automation/resource-manager/Microsoft.Automation/Automation
+commit: b05ec1fd11430d6bbbdaf4980fd3bdecafaad986
 repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

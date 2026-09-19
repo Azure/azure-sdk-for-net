@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Automation
 {
-    internal partial class SourceControlSyncJobOperations
+    internal partial class SourceControlSyncJob
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobOperations for mocking. </summary>
-        protected SourceControlSyncJobOperations()
+        /// <summary> Initializes a new instance of SourceControlSyncJob for mocking. </summary>
+        protected SourceControlSyncJob()
         {
         }
 
-        /// <summary> Initializes a new instance of SourceControlSyncJobOperations. </summary>
+        /// <summary> Initializes a new instance of SourceControlSyncJob. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal SourceControlSyncJobOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal SourceControlSyncJob(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(SourceControlSyncJobOperations).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(SourceControlSyncJob).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Automation
     [ModelReaderWriterBuildable(typeof(SourceControlListResult))]
     [ModelReaderWriterBuildable(typeof(SourceControlProperties))]
     [ModelReaderWriterBuildable(typeof(SourceControlSecurityTokenProperties))]
-    [ModelReaderWriterBuildable(typeof(SourceControlSyncJob))]
+    [ModelReaderWriterBuildable(typeof(Models.SourceControlSyncJob))]
     [ModelReaderWriterBuildable(typeof(SourceControlSyncJobByIdProperties))]
     [ModelReaderWriterBuildable(typeof(SourceControlSyncJobCreateContent))]
     [ModelReaderWriterBuildable(typeof(SourceControlSyncJobCreateProperties))]
