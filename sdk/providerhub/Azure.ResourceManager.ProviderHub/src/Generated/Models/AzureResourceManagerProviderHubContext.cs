@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ProviderHub.Models;
 
@@ -16,10 +15,12 @@ namespace Azure.ResourceManager.ProviderHub
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ActionConfiguration))]
     [ModelReaderWriterBuildable(typeof(AllowedResourceName))]
     [ModelReaderWriterBuildable(typeof(AllowedUnauthorizedActionsExtension))]
     [ModelReaderWriterBuildable(typeof(ApplicationDataAuthorization))]
     [ModelReaderWriterBuildable(typeof(ApplicationProviderAuthorization))]
+    [ModelReaderWriterBuildable(typeof(AppliedManifestInfo))]
     [ModelReaderWriterBuildable(typeof(AsyncOperationPollingRules))]
     [ModelReaderWriterBuildable(typeof(AsyncTimeoutRule))]
     [ModelReaderWriterBuildable(typeof(AuthorizationActionMapping))]
@@ -48,6 +49,7 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(ExtendedErrorInfo))]
     [ModelReaderWriterBuildable(typeof(ExtensionOptions))]
     [ModelReaderWriterBuildable(typeof(FanoutLinkedNotificationRule))]
+    [ModelReaderWriterBuildable(typeof(GroupConnectivityInformation))]
     [ModelReaderWriterBuildable(typeof(IdentityManagement))]
     [ModelReaderWriterBuildable(typeof(IdentityManagementProperties))]
     [ModelReaderWriterBuildable(typeof(LegacyDisallowedCondition))]
@@ -57,9 +59,14 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(LinkedOperationRule))]
     [ModelReaderWriterBuildable(typeof(LocalizedOperationDefinition))]
     [ModelReaderWriterBuildable(typeof(LocalizedOperationDisplayDefinition))]
+    [ModelReaderWriterBuildable(typeof(LocalizedOperationDisplayDefinitionQpsPloc))]
     [ModelReaderWriterBuildable(typeof(LoggingHiddenPropertyPaths))]
     [ModelReaderWriterBuildable(typeof(LoggingRule))]
-    [ModelReaderWriterBuildable(typeof(ManifestLevelPropertyBag))]
+    [ModelReaderWriterBuildable(typeof(ManagedResourceGroupDenyAssignmentConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ManifestCheckinSpecification))]
+    [ModelReaderWriterBuildable(typeof(ManifestInfoData))]
+    [ModelReaderWriterBuildable(typeof(ManifestInfoProperties))]
+    [ModelReaderWriterBuildable(typeof(ManifestInfoResource))]
     [ModelReaderWriterBuildable(typeof(NestedProvisioningSupport))]
     [ModelReaderWriterBuildable(typeof(NestedResourceTypeFirstSkuResource))]
     [ModelReaderWriterBuildable(typeof(NestedResourceTypeSecondSkuResource))]
@@ -74,18 +81,17 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(OperationsContentProperties))]
     [ModelReaderWriterBuildable(typeof(OperationsDefinition))]
     [ModelReaderWriterBuildable(typeof(OperationsDisplayDefinition))]
-    [ModelReaderWriterBuildable(typeof(OperationsPutContent))]
+    [ModelReaderWriterBuildable(typeof(OperationsPutContentData))]
+    [ModelReaderWriterBuildable(typeof(OperationsPutContentResource))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConfiguration))]
     [ModelReaderWriterBuildable(typeof(PrivateResourceProviderConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProviderAdditionalAuthorization))]
     [ModelReaderWriterBuildable(typeof(ProviderAuthorizedApplicationData))]
     [ModelReaderWriterBuildable(typeof(ProviderAuthorizedApplicationProperties))]
     [ModelReaderWriterBuildable(typeof(ProviderAuthorizedApplicationResource))]
-    [ModelReaderWriterBuildable(typeof(ProviderDstsConfiguration))]
     [ModelReaderWriterBuildable(typeof(ProviderEndpointInformation))]
     [ModelReaderWriterBuildable(typeof(ProviderFeaturesRule))]
     [ModelReaderWriterBuildable(typeof(ProviderFilterRule))]
-    [ModelReaderWriterBuildable(typeof(ProviderFrontloadPayload))]
-    [ModelReaderWriterBuildable(typeof(ProviderFrontloadPayloadProperties))]
     [ModelReaderWriterBuildable(typeof(ProviderHubExtendedLocationOptions))]
     [ModelReaderWriterBuildable(typeof(ProviderHubMetadata))]
     [ModelReaderWriterBuildable(typeof(ProviderLocationQuotaRule))]
@@ -103,10 +109,11 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(ProviderResourceQueryManagement))]
     [ModelReaderWriterBuildable(typeof(ProviderResourceType))]
     [ModelReaderWriterBuildable(typeof(ProviderSubscriptionStateRule))]
-    [ModelReaderWriterBuildable(typeof(RegistrationNewRegionFrontloadReleaseResource))]
     [ModelReaderWriterBuildable(typeof(ReRegisterSubscriptionMetadata))]
     [ModelReaderWriterBuildable(typeof(ResourceAccessRole))]
     [ModelReaderWriterBuildable(typeof(ResourceConcurrencyControlOption))]
+    [ModelReaderWriterBuildable(typeof(ResourceDeletionPolicyAndProperties))]
+    [ModelReaderWriterBuildable(typeof(ResourceDeletionPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceGraphConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResourceHydrationAccount))]
     [ModelReaderWriterBuildable(typeof(ResourceManagementAction))]
@@ -129,9 +136,9 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(ResourceSkuCapability))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeCommonAttributeManagement))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeEndpoint))]
-    [ModelReaderWriterBuildable(typeof(ResourceTypeEndpointBase))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeExtension))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeExtensionOptions))]
+    [ModelReaderWriterBuildable(typeof(ResourceTypeManagedResourceGroupConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeOnBehalfOfToken))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeRegistrationApiProfile))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeRegistrationAvailabilityZoneRule))]
@@ -155,9 +162,7 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuResource))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuSetting))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeSkuZoneDetail))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RolloutStatusBase))]
-    [ModelReaderWriterBuildable(typeof(ServiceTreeInfo))]
     [ModelReaderWriterBuildable(typeof(SubscriberSetting))]
     [ModelReaderWriterBuildable(typeof(SubscriptionLifecycleNotificationSpecifications))]
     [ModelReaderWriterBuildable(typeof(SubscriptionStateOverrideAction))]
@@ -173,6 +178,7 @@ namespace Azure.ResourceManager.ProviderHub
     [ModelReaderWriterBuildable(typeof(TrafficRegionRolloutConfiguration))]
     [ModelReaderWriterBuildable(typeof(TrafficRegions))]
     [ModelReaderWriterBuildable(typeof(TypedErrorInfo))]
+    [ModelReaderWriterBuildable(typeof(WriteLockConfiguration))]
     public partial class AzureResourceManagerProviderHubContext : ModelReaderWriterContext
     {
     }

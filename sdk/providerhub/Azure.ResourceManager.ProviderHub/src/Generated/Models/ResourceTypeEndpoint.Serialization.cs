@@ -185,11 +185,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DstsConfiguration))
-            {
-                writer.WritePropertyName("dstsConfiguration"u8);
-                writer.WriteObjectValue(DstsConfiguration, options);
-            }
             if (Optional.IsDefined(DataBoundary))
             {
                 writer.WritePropertyName("dataBoundary"u8);
@@ -251,7 +246,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Uri endpointUri = default;
             string apiVersion = default;
             IList<string> zones = default;
-            ProviderDstsConfiguration dstsConfiguration = default;
             ResourceTypeDataBoundary? dataBoundary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -420,15 +414,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     zones = array;
                     continue;
                 }
-                if (prop.NameEquals("dstsConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("dataBoundary"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -458,7 +443,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 endpointUri,
                 apiVersion,
                 zones ?? new ChangeTrackingList<string>(),
-                dstsConfiguration,
                 dataBoundary,
                 additionalBinaryDataProperties);
         }
