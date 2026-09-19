@@ -6,257 +6,716 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Security.Attestation
 {
-    internal partial class AttestationRestClient
+    /// <summary> The AttestationRestClient sub-client. </summary>
+    public partial class AttestationRestClient
     {
-        private readonly HttpPipeline _pipeline;
-        private readonly string _instanceUrl;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
+
+        /// <summary> Initializes a new instance of AttestationRestClient for mocking. </summary>
+        protected AttestationRestClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of AttestationRestClient. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal AttestationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of AttestationRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="instanceUrl"> The attestation instance base URI, for example https://mytenant.attest.azure.net. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="instanceUrl"/> or <paramref name="apiVersion"/> is null. </exception>
-        public AttestationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string instanceUrl, string apiVersion = "2020-10-01")
+        /// <summary>
+        /// [Protocol Method] Processes an OpenEnclave report , producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response AttestOpenEnclave(RequestContent content, RequestContext context = null)
         {
-            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _instanceUrl = instanceUrl ?? throw new ArgumentNullException(nameof(instanceUrl));
-            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
-        }
-
-        internal HttpMessage CreateAttestOpenEnclaveRequest(AttestOpenEnclaveRequest request)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_instanceUrl, false);
-            uri.AppendPath("/attest/OpenEnclave", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
-            return message;
-        }
-
-        /// <summary> Attest to an SGX enclave. </summary>
-        /// <param name="request"> Request object containing the quote. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        /// <remarks> Processes an OpenEnclave report , producing an artifact. The type of artifact produced is dependent upon attestation policy. </remarks>
-        public async Task<Response<AttestationResponse>> AttestOpenEnclaveAsync(AttestOpenEnclaveRequest request, CancellationToken cancellationToken = default)
-        {
-            if (request == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestOpenEnclave");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(request));
+                using HttpMessage message = CreateAttestOpenEnclaveRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-
-            using var message = CreateAttestOpenEnclaveRequest(request);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    {
-                        AttestationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AttestationResponse.DeserializeAttestationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Attest to an SGX enclave. </summary>
-        /// <param name="request"> Request object containing the quote. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        /// <remarks> Processes an OpenEnclave report , producing an artifact. The type of artifact produced is dependent upon attestation policy. </remarks>
-        public Response<AttestationResponse> AttestOpenEnclave(AttestOpenEnclaveRequest request, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Processes an OpenEnclave report , producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> AttestOpenEnclaveAsync(RequestContent content, RequestContext context = null)
         {
-            if (request == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestOpenEnclave");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(request));
+                using HttpMessage message = CreateAttestOpenEnclaveRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-
-            using var message = CreateAttestOpenEnclaveRequest(request);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    {
-                        AttestationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AttestationResponse.DeserializeAttestationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateAttestSgxEnclaveRequest(AttestSgxEnclaveRequest request)
+        /// <summary>
+        /// Processes an OpenEnclave report , producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// </summary>
+        /// <param name="report"> OpenEnclave report from the enclave to be attested. </param>
+        /// <param name="runtimeData">
+        /// Runtime data provided by the enclave at the time of report generation. The MAA
+        /// will verify that the first 32 bytes of the report_data field of the quote
+        /// contains the SHA256 hash of the decoded "data" field of the runtime data.
+        /// </param>
+        /// <param name="initTimeData">
+        /// Base64Url encoded "InitTime data". The MAA will verify that the init data was
+        /// known to the enclave. Note that InitTimeData is invalid for CoffeeLake
+        /// processors.
+        /// </param>
+        /// <param name="draftPolicyForAttestation">
+        /// Attest against the provided draft policy. Note that the resulting token cannot
+        /// be validated.
+        /// </param>
+        /// <param name="nonce"> Nonce for incoming request - emitted in the generated attestation token. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<AttestationResponse> AttestOpenEnclave(BinaryData report = default, RuntimeData runtimeData = default, InitTimeData initTimeData = default, string draftPolicyForAttestation = default, string nonce = default, CancellationToken cancellationToken = default)
         {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_instanceUrl, false);
-            uri.AppendPath("/attest/SgxEnclave", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
-            return message;
+            AttestOpenEnclaveRequest1 spreadModel = new AttestOpenEnclaveRequest1(
+                report,
+                runtimeData,
+                initTimeData,
+                draftPolicyForAttestation,
+                nonce,
+                default);
+            Response result = AttestOpenEnclave(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((AttestationResponse)result, result);
         }
 
-        /// <summary> Attest to an SGX enclave. </summary>
-        /// <param name="request"> Request object containing the quote. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        /// <remarks> Processes an SGX enclave quote, producing an artifact. The type of artifact produced is dependent upon attestation policy. </remarks>
-        public async Task<Response<AttestationResponse>> AttestSgxEnclaveAsync(AttestSgxEnclaveRequest request, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Processes an OpenEnclave report , producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// </summary>
+        /// <param name="report"> OpenEnclave report from the enclave to be attested. </param>
+        /// <param name="runtimeData">
+        /// Runtime data provided by the enclave at the time of report generation. The MAA
+        /// will verify that the first 32 bytes of the report_data field of the quote
+        /// contains the SHA256 hash of the decoded "data" field of the runtime data.
+        /// </param>
+        /// <param name="initTimeData">
+        /// Base64Url encoded "InitTime data". The MAA will verify that the init data was
+        /// known to the enclave. Note that InitTimeData is invalid for CoffeeLake
+        /// processors.
+        /// </param>
+        /// <param name="draftPolicyForAttestation">
+        /// Attest against the provided draft policy. Note that the resulting token cannot
+        /// be validated.
+        /// </param>
+        /// <param name="nonce"> Nonce for incoming request - emitted in the generated attestation token. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<AttestationResponse>> AttestOpenEnclaveAsync(BinaryData report = default, RuntimeData runtimeData = default, InitTimeData initTimeData = default, string draftPolicyForAttestation = default, string nonce = default, CancellationToken cancellationToken = default)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var message = CreateAttestSgxEnclaveRequest(request);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AttestationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AttestationResponse.DeserializeAttestationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            AttestOpenEnclaveRequest1 spreadModel = new AttestOpenEnclaveRequest1(
+                report,
+                runtimeData,
+                initTimeData,
+                draftPolicyForAttestation,
+                nonce,
+                default);
+            Response result = await AttestOpenEnclaveAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AttestationResponse)result, result);
         }
 
-        /// <summary> Attest to an SGX enclave. </summary>
-        /// <param name="request"> Request object containing the quote. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        /// <remarks> Processes an SGX enclave quote, producing an artifact. The type of artifact produced is dependent upon attestation policy. </remarks>
-        public Response<AttestationResponse> AttestSgxEnclave(AttestSgxEnclaveRequest request, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Processes an SGX enclave quote, producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response AttestSgxEnclave(RequestContent content, RequestContext context = null)
         {
-            if (request == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestSgxEnclave");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(request));
+                using HttpMessage message = CreateAttestSgxEnclaveRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
-
-            using var message = CreateAttestSgxEnclaveRequest(request);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            catch (Exception e)
             {
-                case 200:
-                    {
-                        AttestationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AttestationResponse.DeserializeAttestationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateAttestTpmRequest(TpmAttestationRequest request)
-        {
-            var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_instanceUrl, false);
-            uri.AppendPath("/attest/Tpm", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
-            return message;
-        }
-
-        /// <summary> Attest a Virtualization-based Security (VBS) enclave. </summary>
-        /// <param name="request"> Request object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        /// <remarks> Processes attestation evidence from a VBS enclave, producing an attestation result. The attestation result produced is dependent upon the attestation policy. </remarks>
-        public async Task<Response<TpmAttestationResponse>> AttestTpmAsync(TpmAttestationRequest request, CancellationToken cancellationToken = default)
-        {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            using var message = CreateAttestTpmRequest(request);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        TpmAttestationResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TpmAttestationResponse.DeserializeTpmAttestationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
-        /// <summary> Attest a Virtualization-based Security (VBS) enclave. </summary>
-        /// <param name="request"> Request object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        /// <remarks> Processes attestation evidence from a VBS enclave, producing an attestation result. The attestation result produced is dependent upon the attestation policy. </remarks>
-        public Response<TpmAttestationResponse> AttestTpm(TpmAttestationRequest request, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// [Protocol Method] Processes an SGX enclave quote, producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> AttestSgxEnclaveAsync(RequestContent content, RequestContext context = null)
         {
-            if (request == null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestSgxEnclave");
+            scope.Start();
+            try
             {
-                throw new ArgumentNullException(nameof(request));
+                using HttpMessage message = CreateAttestSgxEnclaveRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-            using var message = CreateAttestTpmRequest(request);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+        /// <summary>
+        /// Processes an SGX enclave quote, producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// </summary>
+        /// <param name="quote"> Quote of the enclave to be attested. </param>
+        /// <param name="runtimeData">
+        /// Runtime data provided by the enclave at the time of quote generation. The MAA
+        /// will verify that the first 32 bytes of the report_data field of the quote
+        /// contains the SHA256 hash of the decoded "data" field of the runtime data.
+        /// </param>
+        /// <param name="initTimeData">
+        /// Initialization data provided when the enclave is created. MAA will verify that
+        /// the init data was known to the enclave. Note that InitTimeData is invalid for
+        /// CoffeeLake processors.
+        /// </param>
+        /// <param name="draftPolicyForAttestation">
+        /// Attest against the provided draft policy. Note that the resulting token cannot
+        /// be validated.
+        /// </param>
+        /// <param name="nonce"> Nonce for incoming request - emitted in the generated attestation token. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<AttestationResponse> AttestSgxEnclave(BinaryData quote = default, RuntimeData runtimeData = default, InitTimeData initTimeData = default, string draftPolicyForAttestation = default, string nonce = default, CancellationToken cancellationToken = default)
+        {
+            AttestSgxEnclaveRequest1 spreadModel = new AttestSgxEnclaveRequest1(
+                quote,
+                runtimeData,
+                initTimeData,
+                draftPolicyForAttestation,
+                nonce,
+                default);
+            Response result = AttestSgxEnclave(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((AttestationResponse)result, result);
+        }
+
+        /// <summary>
+        /// Processes an SGX enclave quote, producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// </summary>
+        /// <param name="quote"> Quote of the enclave to be attested. </param>
+        /// <param name="runtimeData">
+        /// Runtime data provided by the enclave at the time of quote generation. The MAA
+        /// will verify that the first 32 bytes of the report_data field of the quote
+        /// contains the SHA256 hash of the decoded "data" field of the runtime data.
+        /// </param>
+        /// <param name="initTimeData">
+        /// Initialization data provided when the enclave is created. MAA will verify that
+        /// the init data was known to the enclave. Note that InitTimeData is invalid for
+        /// CoffeeLake processors.
+        /// </param>
+        /// <param name="draftPolicyForAttestation">
+        /// Attest against the provided draft policy. Note that the resulting token cannot
+        /// be validated.
+        /// </param>
+        /// <param name="nonce"> Nonce for incoming request - emitted in the generated attestation token. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<AttestationResponse>> AttestSgxEnclaveAsync(BinaryData quote = default, RuntimeData runtimeData = default, InitTimeData initTimeData = default, string draftPolicyForAttestation = default, string nonce = default, CancellationToken cancellationToken = default)
+        {
+            AttestSgxEnclaveRequest1 spreadModel = new AttestSgxEnclaveRequest1(
+                quote,
+                runtimeData,
+                initTimeData,
+                draftPolicyForAttestation,
+                nonce,
+                default);
+            Response result = await AttestSgxEnclaveAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AttestationResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Processes an Azure Guest TCG Log, producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response AttestAzureGuest(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestAzureGuest");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        TpmAttestationResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TpmAttestationResponse.DeserializeTpmAttestationResponse(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateAttestAzureGuestRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
             }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Processes an Azure Guest TCG Log, producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> AttestAzureGuestAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestAzureGuest");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAttestAzureGuestRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Processes an Azure Guest TCG Log, producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// </summary>
+        /// <param name="attestationInfo">
+        /// Attestation client information containing all artifacts required for Guest
+        /// Attestation.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<SealedAttestationResponse> AttestAzureGuest(string attestationInfo = default, CancellationToken cancellationToken = default)
+        {
+            AttestAzureGuestRequest spreadModel = new AttestAzureGuestRequest(attestationInfo, default);
+            Response result = AttestAzureGuest(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((SealedAttestationResponse)result, result);
+        }
+
+        /// <summary>
+        /// Processes an Azure Guest TCG Log, producing an artifact. The type of artifact
+        /// produced is dependent upon attestation policy.
+        /// </summary>
+        /// <param name="attestationInfo">
+        /// Attestation client information containing all artifacts required for Guest
+        /// Attestation.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<SealedAttestationResponse>> AttestAzureGuestAsync(string attestationInfo = default, CancellationToken cancellationToken = default)
+        {
+            AttestAzureGuestRequest spreadModel = new AttestAzureGuestRequest(attestationInfo, default);
+            Response result = await AttestAzureGuestAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((SealedAttestationResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Processes attestation evidence from a VBS enclave, producing an attestation
+        /// result. The attestation result produced is dependent upon the attestation
+        /// policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response AttestTpm(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestTpm");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAttestTpmRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Processes attestation evidence from a VBS enclave, producing an attestation
+        /// result. The attestation result produced is dependent upon the attestation
+        /// policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> AttestTpmAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestTpm");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAttestTpmRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Processes attestation evidence from a VBS enclave, producing an attestation
+        /// result. The attestation result produced is dependent upon the attestation
+        /// policy.
+        /// </summary>
+        /// <param name="data"> Protocol data containing artifacts for attestation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<TpmAttestationResponse> AttestTpm(BinaryData data = default, CancellationToken cancellationToken = default)
+        {
+            AttestTpmRequest spreadModel = new AttestTpmRequest(data, default);
+            Response result = AttestTpm(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((TpmAttestationResponse)result, result);
+        }
+
+        /// <summary>
+        /// Processes attestation evidence from a VBS enclave, producing an attestation
+        /// result. The attestation result produced is dependent upon the attestation
+        /// policy.
+        /// </summary>
+        /// <param name="data"> Protocol data containing artifacts for attestation. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<TpmAttestationResponse>> AttestTpmAsync(BinaryData data = default, CancellationToken cancellationToken = default)
+        {
+            AttestTpmRequest spreadModel = new AttestTpmRequest(data, default);
+            Response result = await AttestTpmAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TpmAttestationResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Processes a SEV SNP Boot chain. The type of artifact produced is dependent upon
+        /// attestation policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response AttestSevSnpVm(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestSevSnpVm");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAttestSevSnpVmRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Processes a SEV SNP Boot chain. The type of artifact produced is dependent upon
+        /// attestation policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> AttestSevSnpVmAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestSevSnpVm");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAttestSevSnpVmRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Processes a SEV SNP Boot chain. The type of artifact produced is dependent upon
+        /// attestation policy.
+        /// </summary>
+        /// <param name="report">
+        /// Hardware rooted report of the virtual machine being attested along with the
+        /// signing certificate chain and optionally, additional endorsements
+        /// </param>
+        /// <param name="runtimeData">
+        /// Runtime data provided by the enclave at the time of report generation. The MAA
+        /// will verify that the run time data is known to the attestation target.
+        /// </param>
+        /// <param name="initTimeData">
+        /// Initialization data provided by the enclave at the time of report generation.
+        /// The MAA will verify that the init time data is known to the attestation target.
+        /// </param>
+        /// <param name="draftPolicyForAttestation">
+        /// Attest against the provided draft policy. Note that the resulting token cannot
+        /// be validated.
+        /// </param>
+        /// <param name="nonce"> Nonce for incoming request - emitted in the generated attestation token. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<AttestationResponse> AttestSevSnpVm(string report = default, RuntimeData runtimeData = default, InitTimeData initTimeData = default, string draftPolicyForAttestation = default, string nonce = default, CancellationToken cancellationToken = default)
+        {
+            AttestSevSnpVmRequest spreadModel = new AttestSevSnpVmRequest(
+                report,
+                runtimeData,
+                initTimeData,
+                draftPolicyForAttestation,
+                nonce,
+                default);
+            Response result = AttestSevSnpVm(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((AttestationResponse)result, result);
+        }
+
+        /// <summary>
+        /// Processes a SEV SNP Boot chain. The type of artifact produced is dependent upon
+        /// attestation policy.
+        /// </summary>
+        /// <param name="report">
+        /// Hardware rooted report of the virtual machine being attested along with the
+        /// signing certificate chain and optionally, additional endorsements
+        /// </param>
+        /// <param name="runtimeData">
+        /// Runtime data provided by the enclave at the time of report generation. The MAA
+        /// will verify that the run time data is known to the attestation target.
+        /// </param>
+        /// <param name="initTimeData">
+        /// Initialization data provided by the enclave at the time of report generation.
+        /// The MAA will verify that the init time data is known to the attestation target.
+        /// </param>
+        /// <param name="draftPolicyForAttestation">
+        /// Attest against the provided draft policy. Note that the resulting token cannot
+        /// be validated.
+        /// </param>
+        /// <param name="nonce"> Nonce for incoming request - emitted in the generated attestation token. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<AttestationResponse>> AttestSevSnpVmAsync(string report = default, RuntimeData runtimeData = default, InitTimeData initTimeData = default, string draftPolicyForAttestation = default, string nonce = default, CancellationToken cancellationToken = default)
+        {
+            AttestSevSnpVmRequest spreadModel = new AttestSevSnpVmRequest(
+                report,
+                runtimeData,
+                initTimeData,
+                draftPolicyForAttestation,
+                nonce,
+                default);
+            Response result = await AttestSevSnpVmAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AttestationResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Processes an TDX quote, producing an artifact. The type of artifact produced is
+        /// dependent upon attestation policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response AttestTdxVm(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestTdxVm");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAttestTdxVmRequest(content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Processes an TDX quote, producing an artifact. The type of artifact produced is
+        /// dependent upon attestation policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> AttestTdxVmAsync(RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AttestationRestClient.AttestTdxVm");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateAttestTdxVmRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Processes an TDX quote, producing an artifact. The type of artifact produced is
+        /// dependent upon attestation policy.
+        /// </summary>
+        /// <param name="quote"> Quote of the TDX virtual machine to be attested. </param>
+        /// <param name="runtimeData">
+        /// Runtime data provided by the enclave at the time of quote generation. The MAA
+        /// will verify that the first 32 bytes of the report_data field of the quote
+        /// contains the SHA256 hash of the decoded "data" field of the runtime data.
+        /// </param>
+        /// <param name="initTimeData">
+        /// Initialization data provided when the enclave is created. MAA will verify that
+        /// the init data was known to the enclave.
+        /// </param>
+        /// <param name="nonce"> Nonce for incoming request - emitted in the generated attestation token. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<AttestationResponse> AttestTdxVm(BinaryData quote = default, RuntimeData runtimeData = default, InitTimeData initTimeData = default, string nonce = default, CancellationToken cancellationToken = default)
+        {
+            AttestTdxVmRequest spreadModel = new AttestTdxVmRequest(quote, runtimeData, initTimeData, nonce, default);
+            Response result = AttestTdxVm(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((AttestationResponse)result, result);
+        }
+
+        /// <summary>
+        /// Processes an TDX quote, producing an artifact. The type of artifact produced is
+        /// dependent upon attestation policy.
+        /// </summary>
+        /// <param name="quote"> Quote of the TDX virtual machine to be attested. </param>
+        /// <param name="runtimeData">
+        /// Runtime data provided by the enclave at the time of quote generation. The MAA
+        /// will verify that the first 32 bytes of the report_data field of the quote
+        /// contains the SHA256 hash of the decoded "data" field of the runtime data.
+        /// </param>
+        /// <param name="initTimeData">
+        /// Initialization data provided when the enclave is created. MAA will verify that
+        /// the init data was known to the enclave.
+        /// </param>
+        /// <param name="nonce"> Nonce for incoming request - emitted in the generated attestation token. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<AttestationResponse>> AttestTdxVmAsync(BinaryData quote = default, RuntimeData runtimeData = default, InitTimeData initTimeData = default, string nonce = default, CancellationToken cancellationToken = default)
+        {
+            AttestTdxVmRequest spreadModel = new AttestTdxVmRequest(quote, runtimeData, initTimeData, nonce, default);
+            Response result = await AttestTdxVmAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AttestationResponse)result, result);
         }
     }
 }

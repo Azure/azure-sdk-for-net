@@ -1,7 +1,25 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (Unreleased)
 
+### Features Added
+
+- Updated the client library to target the `2025-06-01` Azure Attestation service API version.
+- Added `AttestationClientOptions.ServiceVersion.V2025_06_01`, which is now the default service version. `V2020_10_01` remains available for callers that need to continue targeting the previous service API version.
+
+### Breaking Changes
+
+- `AttestationToken.ValidateToken` and `AttestationToken.ValidateTokenAsync` now return `false` for unsecured tokens, that is, tokens whose `alg` header is `none`. Such tokens carry no signature, so no signature verification was performed and validation previously succeeded by default. The `AttestationTokenValidationOptions.TokenValidated` handler is no longer invoked for these tokens and cannot be used to accept them. Tokens returned by the Attestation service are always signed and are unaffected; unsecured tokens sent to the service by `SetPolicy` and `ResetPolicy` are also unaffected, as they are never validated by the client.
+
+### Bugs Fixed
+
+- Fixed `GetPolicyManagementCertificates` failing to deserialize the service response.
+- Fixed `GetPolicy` throwing instead of returning a null policy when the requested attestation type has no policy configured.
+- Fixed `AddPolicyManagementCertificate` and `RemovePolicyManagementCertificate` sending a malformed request body, which caused the service to return `InvalidParameter`.
+
+### Other Changes
+
+- Migrated the code generation from AutoRest/Swagger to TypeSpec. The public API surface is preserved.
 
 ## 1.0.0 (2021-05-11)
 

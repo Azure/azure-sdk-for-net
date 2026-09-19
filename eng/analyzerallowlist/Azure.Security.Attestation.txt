@@ -1,0 +1,8 @@
+# Analyzer allow-list for Azure.Security.Attestation
+# See eng/analyzerallowlist/README.md for format.
+
+# CS0618: The generated AttestationResult (de)serialization code references the type's own
+# [Obsolete] legacy claim members (DeprecatedSvn/DeprecatedTee/...) as part of round-trip
+# serialization. This is a legitimate generator self-reference that cannot be fixed in this
+# project without editing generated code, which is not permitted.
+nowarn:CS0618
