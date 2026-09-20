@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network.Samples
             BastionHostResource bastionHost = client.GetBastionHostResource(bastionHostResourceId);
 
             // invoke the operation
-            NetworkTagsObject networkTagsObject = new NetworkTagsObject
+            BastionHostPatch patch = new BastionHostPatch
             {
                 Tags =
 {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["tag2"] = "value2"
 },
             };
-            ArmOperation<BastionHostResource> lro = await bastionHost.UpdateAsync(WaitUntil.Completed, networkTagsObject, cancellationToken: System.Threading.CancellationToken.None);
+            ArmOperation<BastionHostResource> lro = await bastionHost.UpdateAsync(WaitUntil.Completed, patch, cancellationToken: System.Threading.CancellationToken.None);
             BastionHostResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
