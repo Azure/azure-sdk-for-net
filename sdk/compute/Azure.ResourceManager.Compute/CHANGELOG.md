@@ -1,6 +1,6 @@
 # Release History
 
-## 1.17.0-beta.1 (Unreleased)
+## 1.18.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.17.0 (2026-09-14)
+
+### Features Added
+
+- Upgraded Compute API version to `2026-04-01`.
+- Added the `ComputeCapacityReservationType` model for virtual machine capacity reservation status.
 
 ## 1.16.0 (2026-07-01)
 

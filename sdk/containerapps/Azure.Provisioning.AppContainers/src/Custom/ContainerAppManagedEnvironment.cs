@@ -3,6 +3,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Provisioning;
 
 namespace Azure.Provisioning.AppContainers
 {

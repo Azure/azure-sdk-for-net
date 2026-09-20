@@ -1061,80 +1061,6 @@
     {
       "$id": "81",
       "kind": "model",
-      "name": "FooProperties",
-      "apiVersions": [
-        "2024-01-01"
-      ],
-      "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
-      "crossLanguageDefinitionId": "ServiceOne.FooProperties",
-      "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
-      "decorators": [],
-      "serializationOptions": {
-        "json": {
-          "name": "FooProperties"
-        }
-      },
-      "isExactName": false,
-      "properties": [
-        {
-          "$id": "82",
-          "kind": "property",
-          "name": "displayName",
-          "apiVersions": [
-            "2024-01-01"
-          ],
-          "serializedName": "displayName",
-          "type": {
-            "$id": "83",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "ServiceOne.FooProperties.displayName",
-          "serializationOptions": {
-            "json": {
-              "name": "displayName"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "84",
-          "kind": "property",
-          "name": "provisioningState",
-          "apiVersions": [
-            "2024-01-01"
-          ],
-          "serializedName": "provisioningState",
-          "type": {
-            "$ref": "1"
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "ServiceOne.FooProperties.provisioningState",
-          "serializationOptions": {
-            "json": {
-              "name": "provisioningState"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        }
-      ]
-    },
-    {
-      "$id": "85",
-      "kind": "model",
       "name": "Foo",
       "apiVersions": [
         "2024-01-01"
@@ -1156,7 +1082,7 @@
       },
       "isExactName": false,
       "baseModel": {
-        "$id": "86",
+        "$id": "82",
         "kind": "model",
         "name": "TrackedResource",
         "apiVersions": [
@@ -1178,7 +1104,7 @@
         },
         "isExactName": false,
         "baseModel": {
-          "$id": "87",
+          "$id": "83",
           "kind": "model",
           "name": "Resource",
           "apiVersions": [
@@ -1201,7 +1127,7 @@
           "isExactName": false,
           "properties": [
             {
-              "$id": "88",
+              "$id": "84",
               "kind": "property",
               "name": "id",
               "apiVersions": [
@@ -1213,12 +1139,12 @@
               "serializedName": "id",
               "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
               "type": {
-                "$id": "89",
+                "$id": "85",
                 "kind": "string",
                 "name": "armResourceIdentifier",
                 "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                 "baseType": {
-                  "$id": "90",
+                  "$id": "86",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1241,7 +1167,7 @@
               "isExactName": false
             },
             {
-              "$id": "91",
+              "$id": "87",
               "kind": "property",
               "name": "name",
               "apiVersions": [
@@ -1253,7 +1179,7 @@
               "serializedName": "name",
               "doc": "The name of the resource",
               "type": {
-                "$id": "92",
+                "$id": "88",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1274,7 +1200,7 @@
               "isExactName": false
             },
             {
-              "$id": "93",
+              "$id": "89",
               "kind": "property",
               "name": "type",
               "apiVersions": [
@@ -1286,12 +1212,12 @@
               "serializedName": "type",
               "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
               "type": {
-                "$id": "94",
+                "$id": "90",
                 "kind": "string",
                 "name": "armResourceType",
                 "crossLanguageDefinitionId": "Azure.Core.armResourceType",
                 "baseType": {
-                  "$id": "95",
+                  "$id": "91",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1314,7 +1240,7 @@
               "isExactName": false
             },
             {
-              "$id": "96",
+              "$id": "92",
               "kind": "property",
               "name": "systemData",
               "apiVersions": [
@@ -1326,7 +1252,7 @@
               "serializedName": "systemData",
               "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
               "type": {
-                "$id": "97",
+                "$id": "93",
                 "kind": "model",
                 "name": "SystemData",
                 "apiVersions": [
@@ -1348,7 +1274,7 @@
                 "isExactName": false,
                 "properties": [
                   {
-                    "$id": "98",
+                    "$id": "94",
                     "kind": "property",
                     "name": "createdBy",
                     "apiVersions": [
@@ -1360,7 +1286,7 @@
                     "serializedName": "createdBy",
                     "doc": "The identity that created the resource.",
                     "type": {
-                      "$id": "99",
+                      "$id": "95",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1381,7 +1307,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "100",
+                    "$id": "96",
                     "kind": "property",
                     "name": "createdByType",
                     "apiVersions": [
@@ -1410,7 +1336,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "101",
+                    "$id": "97",
                     "kind": "property",
                     "name": "createdAt",
                     "apiVersions": [
@@ -1422,12 +1348,12 @@
                     "serializedName": "createdAt",
                     "doc": "The timestamp of resource creation (UTC).",
                     "type": {
-                      "$id": "102",
+                      "$id": "98",
                       "kind": "utcDateTime",
                       "name": "utcDateTime",
                       "encode": "rfc3339",
                       "wireType": {
-                        "$id": "103",
+                        "$id": "99",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1451,7 +1377,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "104",
+                    "$id": "100",
                     "kind": "property",
                     "name": "lastModifiedBy",
                     "apiVersions": [
@@ -1463,7 +1389,7 @@
                     "serializedName": "lastModifiedBy",
                     "doc": "The identity that last modified the resource.",
                     "type": {
-                      "$id": "105",
+                      "$id": "101",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1484,7 +1410,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "106",
+                    "$id": "102",
                     "kind": "property",
                     "name": "lastModifiedByType",
                     "apiVersions": [
@@ -1513,7 +1439,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "107",
+                    "$id": "103",
                     "kind": "property",
                     "name": "lastModifiedAt",
                     "apiVersions": [
@@ -1525,12 +1451,12 @@
                     "serializedName": "lastModifiedAt",
                     "doc": "The timestamp of resource last modification (UTC)",
                     "type": {
-                      "$id": "108",
+                      "$id": "104",
                       "kind": "utcDateTime",
                       "name": "utcDateTime",
                       "encode": "rfc3339",
                       "wireType": {
-                        "$id": "109",
+                        "$id": "105",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1573,7 +1499,7 @@
         },
         "properties": [
           {
-            "$id": "110",
+            "$id": "106",
             "kind": "property",
             "name": "tags",
             "apiVersions": [
@@ -1585,17 +1511,17 @@
             "serializedName": "tags",
             "doc": "Resource tags.",
             "type": {
-              "$id": "111",
+              "$id": "107",
               "kind": "dict",
               "keyType": {
-                "$id": "112",
+                "$id": "108",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
                 "decorators": []
               },
               "valueType": {
-                "$id": "113",
+                "$id": "109",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1618,7 +1544,7 @@
             "isExactName": false
           },
           {
-            "$id": "114",
+            "$id": "110",
             "kind": "property",
             "name": "location",
             "apiVersions": [
@@ -1630,12 +1556,12 @@
             "serializedName": "location",
             "doc": "The geo-location where the resource lives",
             "type": {
-              "$id": "115",
+              "$id": "111",
               "kind": "string",
               "name": "azureLocation",
               "crossLanguageDefinitionId": "Azure.Core.azureLocation",
               "baseType": {
-                "$id": "116",
+                "$id": "112",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1661,14 +1587,85 @@
       },
       "properties": [
         {
-          "$id": "117",
+          "$id": "113",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$ref": "81"
+            "$id": "114",
+            "kind": "model",
+            "name": "FooProperties",
+            "apiVersions": [
+              "2024-01-01"
+            ],
+            "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
+            "crossLanguageDefinitionId": "ServiceOne.FooProperties",
+            "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+            "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "FooProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "115",
+                "kind": "property",
+                "name": "displayName",
+                "apiVersions": [
+                  "2024-01-01"
+                ],
+                "serializedName": "displayName",
+                "type": {
+                  "$id": "116",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "ServiceOne.FooProperties.displayName",
+                "serializationOptions": {
+                  "json": {
+                    "name": "displayName"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "117",
+                "kind": "property",
+                "name": "provisioningState",
+                "apiVersions": [
+                  "2024-01-01"
+                ],
+                "serializedName": "provisioningState",
+                "type": {
+                  "$ref": "1"
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "ServiceOne.FooProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
           },
           "optional": true,
           "readOnly": false,
@@ -1722,13 +1719,16 @@
       ]
     },
     {
-      "$ref": "86"
+      "$ref": "114"
     },
     {
-      "$ref": "87"
+      "$ref": "82"
     },
     {
-      "$ref": "97"
+      "$ref": "83"
+    },
+    {
+      "$ref": "93"
     },
     {
       "$id": "120",
@@ -1982,7 +1982,7 @@
             "kind": "array",
             "name": "ArrayFoo",
             "valueType": {
-              "$ref": "85"
+              "$ref": "81"
             },
             "crossLanguageDefinitionId": "TypeSpec.Array",
             "decorators": []
@@ -2465,80 +2465,6 @@
     {
       "$id": "164",
       "kind": "model",
-      "name": "BarProperties",
-      "apiVersions": [
-        "2024-06-01"
-      ],
-      "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
-      "crossLanguageDefinitionId": "ServiceTwo.BarProperties",
-      "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
-      "decorators": [],
-      "serializationOptions": {
-        "json": {
-          "name": "BarProperties"
-        }
-      },
-      "isExactName": false,
-      "properties": [
-        {
-          "$id": "165",
-          "kind": "property",
-          "name": "description",
-          "apiVersions": [
-            "2024-06-01"
-          ],
-          "serializedName": "description",
-          "type": {
-            "$id": "166",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "ServiceTwo.BarProperties.description",
-          "serializationOptions": {
-            "json": {
-              "name": "description"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "167",
-          "kind": "property",
-          "name": "provisioningState",
-          "apiVersions": [
-            "2024-06-01"
-          ],
-          "serializedName": "provisioningState",
-          "type": {
-            "$ref": "1"
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "ServiceTwo.BarProperties.provisioningState",
-          "serializationOptions": {
-            "json": {
-              "name": "provisioningState"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        }
-      ]
-    },
-    {
-      "$id": "168",
-      "kind": "model",
       "name": "Bar",
       "apiVersions": [
         "2024-06-01"
@@ -2560,18 +2486,89 @@
       },
       "isExactName": false,
       "baseModel": {
-        "$ref": "86"
+        "$ref": "82"
       },
       "properties": [
         {
-          "$id": "169",
+          "$id": "165",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$ref": "164"
+            "$id": "166",
+            "kind": "model",
+            "name": "BarProperties",
+            "apiVersions": [
+              "2024-06-01"
+            ],
+            "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
+            "crossLanguageDefinitionId": "ServiceTwo.BarProperties",
+            "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+            "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "BarProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "167",
+                "kind": "property",
+                "name": "description",
+                "apiVersions": [
+                  "2024-06-01"
+                ],
+                "serializedName": "description",
+                "type": {
+                  "$id": "168",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "ServiceTwo.BarProperties.description",
+                "serializationOptions": {
+                  "json": {
+                    "name": "description"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "169",
+                "kind": "property",
+                "name": "provisioningState",
+                "apiVersions": [
+                  "2024-06-01"
+                ],
+                "serializedName": "provisioningState",
+                "type": {
+                  "$ref": "1"
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "ServiceTwo.BarProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
           },
           "optional": true,
           "readOnly": false,
@@ -2625,6 +2622,9 @@
       ]
     },
     {
+      "$ref": "166"
+    },
+    {
       "$id": "172",
       "kind": "model",
       "name": "BarListResult",
@@ -2653,7 +2653,7 @@
             "kind": "array",
             "name": "ArrayBar",
             "valueType": {
-              "$ref": "168"
+              "$ref": "164"
             },
             "crossLanguageDefinitionId": "TypeSpec.Array",
             "decorators": []
@@ -3721,7 +3721,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "85"
+                      "$ref": "81"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -3779,7 +3779,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "85"
+                  "$ref": "81"
                 }
               },
               "isOverride": false,
@@ -4139,7 +4139,7 @@
                     "serializedName": "resource",
                     "doc": "Resource create parameters.",
                     "type": {
-                      "$ref": "85"
+                      "$ref": "81"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -4159,7 +4159,7 @@
                         "serializedName": "resource",
                         "doc": "Resource create parameters.",
                         "type": {
-                          "$ref": "85"
+                          "$ref": "81"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -4186,7 +4186,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "85"
+                      "$ref": "81"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -4204,7 +4204,7 @@
                       201
                     ],
                     "bodyType": {
-                      "$ref": "85"
+                      "$ref": "81"
                     },
                     "headers": [
                       {
@@ -4296,7 +4296,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "85"
+                  "$ref": "81"
                 }
               },
               "isOverride": false,
@@ -4310,7 +4310,7 @@
                     200
                   ],
                   "bodyType": {
-                    "$ref": "85"
+                    "$ref": "81"
                   }
                 }
               }
@@ -5597,7 +5597,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "168"
+                      "$ref": "164"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -5655,7 +5655,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "168"
+                  "$ref": "164"
                 }
               },
               "isOverride": false,
@@ -6015,7 +6015,7 @@
                     "serializedName": "resource",
                     "doc": "Resource create parameters.",
                     "type": {
-                      "$ref": "168"
+                      "$ref": "164"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -6035,7 +6035,7 @@
                         "serializedName": "resource",
                         "doc": "Resource create parameters.",
                         "type": {
-                          "$ref": "168"
+                          "$ref": "164"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -6062,7 +6062,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "168"
+                      "$ref": "164"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -6080,7 +6080,7 @@
                       201
                     ],
                     "bodyType": {
-                      "$ref": "168"
+                      "$ref": "164"
                     },
                     "headers": [
                       {
@@ -6172,7 +6172,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "168"
+                  "$ref": "164"
                 }
               },
               "isOverride": false,
@@ -6186,7 +6186,7 @@
                     200
                   ],
                   "bodyType": {
-                    "$ref": "168"
+                    "$ref": "164"
                   }
                 }
               }

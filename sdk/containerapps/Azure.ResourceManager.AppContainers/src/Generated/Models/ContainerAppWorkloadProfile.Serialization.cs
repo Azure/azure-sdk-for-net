@@ -81,11 +81,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(EnableFips))
-            {
-                writer.WritePropertyName("enableFips"u8);
-                writer.WriteBooleanValue(EnableFips.Value);
-            }
             writer.WritePropertyName("workloadProfileType"u8);
             writer.WriteStringValue(WorkloadProfileType);
             if (Optional.IsDefined(MinimumNodeCount))
@@ -141,7 +136,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string name = default;
-            bool? enableFips = default;
             string workloadProfileType = default;
             int? minimumNodeCount = default;
             int? maximumNodeCount = default;
@@ -151,15 +145,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("enableFips"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableFips = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("workloadProfileType"u8))
@@ -190,13 +175,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerAppWorkloadProfile(
-                name,
-                enableFips,
-                workloadProfileType,
-                minimumNodeCount,
-                maximumNodeCount,
-                additionalBinaryDataProperties);
+            return new ContainerAppWorkloadProfile(name, workloadProfileType, minimumNodeCount, maximumNodeCount, additionalBinaryDataProperties);
         }
     }
 }

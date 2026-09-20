@@ -131,9 +131,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 writer.WritePropertyName("prop1"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "prop1"u8);
                 for (int i = 0; i < Prop1.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop1[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop1[{i}]")))
                     {
                         continue;
                     }
@@ -159,9 +160,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 writer.WritePropertyName("prop2"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "prop2"u8);
                 for (int i = 0; i < Prop2.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop2[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop2[{i}]")))
                     {
                         continue;
                     }

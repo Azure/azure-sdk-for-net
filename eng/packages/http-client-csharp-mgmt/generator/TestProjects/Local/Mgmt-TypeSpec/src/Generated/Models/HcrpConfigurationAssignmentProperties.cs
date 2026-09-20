@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="configurationName"> The configuration name. </param>
         /// <param name="machineComplianceStatus"> Machine compliance status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcrpConfigurationAssignmentProperties(string configurationName, HcrpConfigurationAssignmentMachineComplianceStatus? machineComplianceStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcrpConfigurationAssignmentProperties(string configurationName, HcrpConfigurationAssignmentPropertiesMachineComplianceStatus? machineComplianceStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationName = configurationName;
             MachineComplianceStatus = machineComplianceStatus;
@@ -39,6 +39,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Machine compliance status. </summary>
         [WirePath("machineComplianceStatus")]
-        public HcrpConfigurationAssignmentMachineComplianceStatus? MachineComplianceStatus { get; }
+        public HcrpConfigurationAssignmentPropertiesMachineComplianceStatus? MachineComplianceStatus { get; }
     }
 }

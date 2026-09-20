@@ -35,7 +35,7 @@ public class Sample_WebIQ : ProjectsOpenAITestBase
         string WebIQProjectConnectionId = (await projectClient.Connections.GetConnectionAsync(WebIQProjectConnectionName)).Value.Id;
         WebIQPreviewTool WebIQTool = new(projectConnectionId: WebIQProjectConnectionId)
         {
-            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+            RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
@@ -84,7 +84,7 @@ public class Sample_WebIQ : ProjectsOpenAITestBase
         string WebIQProjectConnectionId = projectClient.Connections.GetConnection(WebIQProjectConnectionName).Value.Id;
         WebIQPreviewTool WebIQTool = new(projectConnectionId: WebIQProjectConnectionId)
         {
-            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+            RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {

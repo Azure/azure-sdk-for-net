@@ -1965,121 +1965,6 @@
     {
       "$id": "151",
       "kind": "model",
-      "name": "OrderProperties",
-      "apiVersions": [
-        "2023-12-01-preview"
-      ],
-      "namespace": "Azure.ResourceManager.OperationTemplates",
-      "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OrderProperties",
-      "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
-      "decorators": [
-        {
-          "name": "Azure.ResourceManager.@armProviderNamespace",
-          "arguments": {}
-        }
-      ],
-      "serializationOptions": {
-        "json": {
-          "name": "OrderProperties"
-        }
-      },
-      "isExactName": false,
-      "properties": [
-        {
-          "$id": "152",
-          "kind": "property",
-          "name": "productId",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "productId",
-          "doc": "The product ID of the order.",
-          "type": {
-            "$id": "153",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": false,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OrderProperties.productId",
-          "serializationOptions": {
-            "json": {
-              "name": "productId"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "154",
-          "kind": "property",
-          "name": "amount",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "amount",
-          "doc": "Amount of the product.",
-          "type": {
-            "$id": "155",
-            "kind": "int32",
-            "name": "int32",
-            "crossLanguageDefinitionId": "TypeSpec.int32",
-            "decorators": []
-          },
-          "optional": false,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OrderProperties.amount",
-          "serializationOptions": {
-            "json": {
-              "name": "amount"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "156",
-          "kind": "property",
-          "name": "provisioningState",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "provisioningState",
-          "doc": "The provisioning state of the product.",
-          "type": {
-            "$id": "157",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": true,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OrderProperties.provisioningState",
-          "serializationOptions": {
-            "json": {
-              "name": "provisioningState"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        }
-      ]
-    },
-    {
-      "$id": "158",
-      "kind": "model",
       "name": "Order",
       "apiVersions": [
         "2023-12-01-preview"
@@ -2105,7 +1990,7 @@
       },
       "isExactName": false,
       "baseModel": {
-        "$id": "159",
+        "$id": "152",
         "kind": "model",
         "name": "TrackedResource",
         "apiVersions": [
@@ -2127,7 +2012,7 @@
         },
         "isExactName": false,
         "baseModel": {
-          "$id": "160",
+          "$id": "153",
           "kind": "model",
           "name": "Resource",
           "apiVersions": [
@@ -2150,7 +2035,7 @@
           "isExactName": false,
           "properties": [
             {
-              "$id": "161",
+              "$id": "154",
               "kind": "property",
               "name": "id",
               "apiVersions": [
@@ -2162,12 +2047,12 @@
               "serializedName": "id",
               "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
               "type": {
-                "$id": "162",
+                "$id": "155",
                 "kind": "string",
                 "name": "armResourceIdentifier",
                 "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
                 "baseType": {
-                  "$id": "163",
+                  "$id": "156",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2190,7 +2075,7 @@
               "isExactName": false
             },
             {
-              "$id": "164",
+              "$id": "157",
               "kind": "property",
               "name": "name",
               "apiVersions": [
@@ -2202,7 +2087,7 @@
               "serializedName": "name",
               "doc": "The name of the resource",
               "type": {
-                "$id": "165",
+                "$id": "158",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2223,7 +2108,7 @@
               "isExactName": false
             },
             {
-              "$id": "166",
+              "$id": "159",
               "kind": "property",
               "name": "type",
               "apiVersions": [
@@ -2235,12 +2120,12 @@
               "serializedName": "type",
               "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
               "type": {
-                "$id": "167",
+                "$id": "160",
                 "kind": "string",
                 "name": "armResourceType",
                 "crossLanguageDefinitionId": "Azure.Core.armResourceType",
                 "baseType": {
-                  "$id": "168",
+                  "$id": "161",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2263,7 +2148,7 @@
               "isExactName": false
             },
             {
-              "$id": "169",
+              "$id": "162",
               "kind": "property",
               "name": "systemData",
               "apiVersions": [
@@ -2275,7 +2160,7 @@
               "serializedName": "systemData",
               "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
               "type": {
-                "$id": "170",
+                "$id": "163",
                 "kind": "model",
                 "name": "SystemData",
                 "apiVersions": [
@@ -2297,7 +2182,7 @@
                 "isExactName": false,
                 "properties": [
                   {
-                    "$id": "171",
+                    "$id": "164",
                     "kind": "property",
                     "name": "createdBy",
                     "apiVersions": [
@@ -2309,7 +2194,7 @@
                     "serializedName": "createdBy",
                     "doc": "The identity that created the resource.",
                     "type": {
-                      "$id": "172",
+                      "$id": "165",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2330,7 +2215,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "173",
+                    "$id": "166",
                     "kind": "property",
                     "name": "createdByType",
                     "apiVersions": [
@@ -2359,7 +2244,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "174",
+                    "$id": "167",
                     "kind": "property",
                     "name": "createdAt",
                     "apiVersions": [
@@ -2371,12 +2256,12 @@
                     "serializedName": "createdAt",
                     "doc": "The timestamp of resource creation (UTC).",
                     "type": {
-                      "$id": "175",
+                      "$id": "168",
                       "kind": "utcDateTime",
                       "name": "utcDateTime",
                       "encode": "rfc3339",
                       "wireType": {
-                        "$id": "176",
+                        "$id": "169",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2400,7 +2285,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "177",
+                    "$id": "170",
                     "kind": "property",
                     "name": "lastModifiedBy",
                     "apiVersions": [
@@ -2412,7 +2297,7 @@
                     "serializedName": "lastModifiedBy",
                     "doc": "The identity that last modified the resource.",
                     "type": {
-                      "$id": "178",
+                      "$id": "171",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2433,7 +2318,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "179",
+                    "$id": "172",
                     "kind": "property",
                     "name": "lastModifiedByType",
                     "apiVersions": [
@@ -2462,7 +2347,7 @@
                     "isExactName": false
                   },
                   {
-                    "$id": "180",
+                    "$id": "173",
                     "kind": "property",
                     "name": "lastModifiedAt",
                     "apiVersions": [
@@ -2474,12 +2359,12 @@
                     "serializedName": "lastModifiedAt",
                     "doc": "The timestamp of resource last modification (UTC)",
                     "type": {
-                      "$id": "181",
+                      "$id": "174",
                       "kind": "utcDateTime",
                       "name": "utcDateTime",
                       "encode": "rfc3339",
                       "wireType": {
-                        "$id": "182",
+                        "$id": "175",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2522,7 +2407,7 @@
         },
         "properties": [
           {
-            "$id": "183",
+            "$id": "176",
             "kind": "property",
             "name": "tags",
             "apiVersions": [
@@ -2534,17 +2419,17 @@
             "serializedName": "tags",
             "doc": "Resource tags.",
             "type": {
-              "$id": "184",
+              "$id": "177",
               "kind": "dict",
               "keyType": {
-                "$id": "185",
+                "$id": "178",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
                 "decorators": []
               },
               "valueType": {
-                "$id": "186",
+                "$id": "179",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2567,7 +2452,7 @@
             "isExactName": false
           },
           {
-            "$id": "187",
+            "$id": "180",
             "kind": "property",
             "name": "location",
             "apiVersions": [
@@ -2579,12 +2464,12 @@
             "serializedName": "location",
             "doc": "The geo-location where the resource lives",
             "type": {
-              "$id": "188",
+              "$id": "181",
               "kind": "string",
               "name": "azureLocation",
               "crossLanguageDefinitionId": "Azure.Core.azureLocation",
               "baseType": {
-                "$id": "189",
+                "$id": "182",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2610,14 +2495,126 @@
       },
       "properties": [
         {
-          "$id": "190",
+          "$id": "183",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$ref": "151"
+            "$id": "184",
+            "kind": "model",
+            "name": "OrderProperties",
+            "apiVersions": [
+              "2023-12-01-preview"
+            ],
+            "namespace": "Azure.ResourceManager.OperationTemplates",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OrderProperties",
+            "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "OrderProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "185",
+                "kind": "property",
+                "name": "productId",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "productId",
+                "doc": "The product ID of the order.",
+                "type": {
+                  "$id": "186",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OrderProperties.productId",
+                "serializationOptions": {
+                  "json": {
+                    "name": "productId"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "187",
+                "kind": "property",
+                "name": "amount",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "amount",
+                "doc": "Amount of the product.",
+                "type": {
+                  "$id": "188",
+                  "kind": "int32",
+                  "name": "int32",
+                  "crossLanguageDefinitionId": "TypeSpec.int32",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OrderProperties.amount",
+                "serializationOptions": {
+                  "json": {
+                    "name": "amount"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "189",
+                "kind": "property",
+                "name": "provisioningState",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "provisioningState",
+                "doc": "The provisioning state of the product.",
+                "type": {
+                  "$id": "190",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.OrderProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
           },
           "optional": true,
           "readOnly": false,
@@ -2671,13 +2668,16 @@
       ]
     },
     {
-      "$ref": "159"
+      "$ref": "184"
     },
     {
-      "$ref": "160"
+      "$ref": "152"
     },
     {
-      "$ref": "170"
+      "$ref": "153"
+    },
+    {
+      "$ref": "163"
     },
     {
       "$id": "193",
@@ -3020,91 +3020,6 @@
     {
       "$id": "214",
       "kind": "model",
-      "name": "CostReportProperties",
-      "apiVersions": [
-        "2023-12-01-preview"
-      ],
-      "namespace": "Azure.ResourceManager.OperationTemplates",
-      "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.CostReportProperties",
-      "usage": "Output,Json",
-      "decorators": [
-        {
-          "name": "Azure.ResourceManager.@armProviderNamespace",
-          "arguments": {}
-        }
-      ],
-      "serializationOptions": {
-        "json": {
-          "name": "CostReportProperties"
-        }
-      },
-      "isExactName": false,
-      "properties": [
-        {
-          "$id": "215",
-          "kind": "property",
-          "name": "downloadUrl",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "downloadUrl",
-          "doc": "The download URL for the cost report.",
-          "type": {
-            "$id": "216",
-            "kind": "url",
-            "name": "url",
-            "crossLanguageDefinitionId": "TypeSpec.url",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.CostReportProperties.downloadUrl",
-          "serializationOptions": {
-            "json": {
-              "name": "downloadUrl"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "217",
-          "kind": "property",
-          "name": "provisioningState",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "provisioningState",
-          "doc": "The provisioning state of the cost report.",
-          "type": {
-            "$id": "218",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": true,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.CostReportProperties.provisioningState",
-          "serializationOptions": {
-            "json": {
-              "name": "provisioningState"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        }
-      ]
-    },
-    {
-      "$id": "219",
-      "kind": "model",
       "name": "CostReport",
       "apiVersions": [
         "2023-12-01-preview"
@@ -3130,7 +3045,7 @@
       },
       "isExactName": false,
       "baseModel": {
-        "$id": "220",
+        "$id": "215",
         "kind": "model",
         "name": "ExtensionResource",
         "apiVersions": [
@@ -3151,20 +3066,102 @@
         },
         "isExactName": false,
         "baseModel": {
-          "$ref": "160"
+          "$ref": "153"
         },
         "properties": []
       },
       "properties": [
         {
-          "$id": "221",
+          "$id": "216",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$ref": "214"
+            "$id": "217",
+            "kind": "model",
+            "name": "CostReportProperties",
+            "apiVersions": [
+              "2023-12-01-preview"
+            ],
+            "namespace": "Azure.ResourceManager.OperationTemplates",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.CostReportProperties",
+            "usage": "Output,Json",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "CostReportProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "218",
+                "kind": "property",
+                "name": "downloadUrl",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "downloadUrl",
+                "doc": "The download URL for the cost report.",
+                "type": {
+                  "$id": "219",
+                  "kind": "url",
+                  "name": "url",
+                  "crossLanguageDefinitionId": "TypeSpec.url",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.CostReportProperties.downloadUrl",
+                "serializationOptions": {
+                  "json": {
+                    "name": "downloadUrl"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "220",
+                "kind": "property",
+                "name": "provisioningState",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "provisioningState",
+                "doc": "The provisioning state of the cost report.",
+                "type": {
+                  "$id": "221",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.CostReportProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
           },
           "optional": true,
           "readOnly": false,
@@ -3218,7 +3215,10 @@
       ]
     },
     {
-      "$ref": "220"
+      "$ref": "217"
+    },
+    {
+      "$ref": "215"
     },
     {
       "$id": "224",
@@ -3283,7 +3283,7 @@
               },
               "isExactName": false,
               "baseModel": {
-                "$ref": "159"
+                "$ref": "152"
               },
               "properties": [
                 {
@@ -3632,91 +3632,6 @@
     {
       "$id": "247",
       "kind": "model",
-      "name": "ConfigurationProperties",
-      "apiVersions": [
-        "2023-12-01-preview"
-      ],
-      "namespace": "Azure.ResourceManager.OperationTemplates",
-      "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.ConfigurationProperties",
-      "usage": "Input,Output,Json",
-      "decorators": [
-        {
-          "name": "Azure.ResourceManager.@armProviderNamespace",
-          "arguments": {}
-        }
-      ],
-      "serializationOptions": {
-        "json": {
-          "name": "ConfigurationProperties"
-        }
-      },
-      "isExactName": false,
-      "properties": [
-        {
-          "$id": "248",
-          "kind": "property",
-          "name": "configValue",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "configValue",
-          "doc": "The configuration value.",
-          "type": {
-            "$id": "249",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.ConfigurationProperties.configValue",
-          "serializationOptions": {
-            "json": {
-              "name": "configValue"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "250",
-          "kind": "property",
-          "name": "provisioningState",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "provisioningState",
-          "doc": "The provisioning state.",
-          "type": {
-            "$id": "251",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": true,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.ConfigurationProperties.provisioningState",
-          "serializationOptions": {
-            "json": {
-              "name": "provisioningState"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        }
-      ]
-    },
-    {
-      "$id": "252",
-      "kind": "model",
       "name": "Configuration",
       "apiVersions": [
         "2023-12-01-preview"
@@ -3742,18 +3657,100 @@
       },
       "isExactName": false,
       "baseModel": {
-        "$ref": "159"
+        "$ref": "152"
       },
       "properties": [
         {
-          "$id": "253",
+          "$id": "248",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$ref": "247"
+            "$id": "249",
+            "kind": "model",
+            "name": "ConfigurationProperties",
+            "apiVersions": [
+              "2023-12-01-preview"
+            ],
+            "namespace": "Azure.ResourceManager.OperationTemplates",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.ConfigurationProperties",
+            "usage": "Input,Output,Json",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "ConfigurationProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "250",
+                "kind": "property",
+                "name": "configValue",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "configValue",
+                "doc": "The configuration value.",
+                "type": {
+                  "$id": "251",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.ConfigurationProperties.configValue",
+                "serializationOptions": {
+                  "json": {
+                    "name": "configValue"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "252",
+                "kind": "property",
+                "name": "provisioningState",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "provisioningState",
+                "doc": "The provisioning state.",
+                "type": {
+                  "$id": "253",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.ConfigurationProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
           },
           "optional": true,
           "readOnly": false,
@@ -3807,122 +3804,10 @@
       ]
     },
     {
-      "$id": "256",
-      "kind": "model",
-      "name": "WidgetProperties",
-      "apiVersions": [
-        "2023-12-01-preview"
-      ],
-      "namespace": "Azure.ResourceManager.OperationTemplates",
-      "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.WidgetProperties",
-      "usage": "Input,Output,Json",
-      "decorators": [
-        {
-          "name": "Azure.ResourceManager.@armProviderNamespace",
-          "arguments": {}
-        }
-      ],
-      "serializationOptions": {
-        "json": {
-          "name": "WidgetProperties"
-        }
-      },
-      "isExactName": false,
-      "properties": [
-        {
-          "$id": "257",
-          "kind": "property",
-          "name": "name",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "name",
-          "doc": "The name of the widget.",
-          "type": {
-            "$id": "258",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.WidgetProperties.name",
-          "serializationOptions": {
-            "json": {
-              "name": "name"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "259",
-          "kind": "property",
-          "name": "description",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "description",
-          "doc": "The description of the widget.",
-          "type": {
-            "$id": "260",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.WidgetProperties.description",
-          "serializationOptions": {
-            "json": {
-              "name": "description"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "261",
-          "kind": "property",
-          "name": "provisioningState",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "provisioningState",
-          "doc": "The provisioning state of the widget.",
-          "type": {
-            "$id": "262",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": true,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.WidgetProperties.provisioningState",
-          "serializationOptions": {
-            "json": {
-              "name": "provisioningState"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        }
-      ]
+      "$ref": "249"
     },
     {
-      "$id": "263",
+      "$id": "256",
       "kind": "model",
       "name": "Widget",
       "apiVersions": [
@@ -3949,18 +3834,130 @@
       },
       "isExactName": false,
       "baseModel": {
-        "$ref": "159"
+        "$ref": "152"
       },
       "properties": [
         {
-          "$id": "264",
+          "$id": "257",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$ref": "256"
+            "$id": "258",
+            "kind": "model",
+            "name": "WidgetProperties",
+            "apiVersions": [
+              "2023-12-01-preview"
+            ],
+            "namespace": "Azure.ResourceManager.OperationTemplates",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.WidgetProperties",
+            "usage": "Input,Output,Json",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "WidgetProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "259",
+                "kind": "property",
+                "name": "name",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "name",
+                "doc": "The name of the widget.",
+                "type": {
+                  "$id": "260",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.WidgetProperties.name",
+                "serializationOptions": {
+                  "json": {
+                    "name": "name"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "261",
+                "kind": "property",
+                "name": "description",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "description",
+                "doc": "The description of the widget.",
+                "type": {
+                  "$id": "262",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.WidgetProperties.description",
+                "serializationOptions": {
+                  "json": {
+                    "name": "description"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "263",
+                "kind": "property",
+                "name": "provisioningState",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "provisioningState",
+                "doc": "The provisioning state of the widget.",
+                "type": {
+                  "$id": "264",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.WidgetProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
           },
           "optional": true,
           "readOnly": false,
@@ -4012,6 +4009,9 @@
           "isExactName": false
         }
       ]
+    },
+    {
+      "$ref": "258"
     },
     {
       "$id": "267",
@@ -4326,91 +4326,6 @@
     {
       "$id": "285",
       "kind": "model",
-      "name": "MonitorProperties",
-      "apiVersions": [
-        "2023-12-01-preview"
-      ],
-      "namespace": "Azure.ResourceManager.OperationTemplates",
-      "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.MonitorProperties",
-      "usage": "Output,Json",
-      "decorators": [
-        {
-          "name": "Azure.ResourceManager.@armProviderNamespace",
-          "arguments": {}
-        }
-      ],
-      "serializationOptions": {
-        "json": {
-          "name": "MonitorProperties"
-        }
-      },
-      "isExactName": false,
-      "properties": [
-        {
-          "$id": "286",
-          "kind": "property",
-          "name": "status",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "status",
-          "doc": "The status of the monitor.",
-          "type": {
-            "$id": "287",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.MonitorProperties.status",
-          "serializationOptions": {
-            "json": {
-              "name": "status"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        },
-        {
-          "$id": "288",
-          "kind": "property",
-          "name": "provisioningState",
-          "apiVersions": [
-            "2023-12-01-preview"
-          ],
-          "serializedName": "provisioningState",
-          "doc": "The provisioning state.",
-          "type": {
-            "$id": "289",
-            "kind": "string",
-            "name": "string",
-            "crossLanguageDefinitionId": "TypeSpec.string",
-            "decorators": []
-          },
-          "optional": true,
-          "readOnly": true,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.MonitorProperties.provisioningState",
-          "serializationOptions": {
-            "json": {
-              "name": "provisioningState"
-            }
-          },
-          "isHttpMetadata": false,
-          "isExactName": false
-        }
-      ]
-    },
-    {
-      "$id": "290",
-      "kind": "model",
       "name": "Monitor",
       "apiVersions": [
         "2023-12-01-preview"
@@ -4436,18 +4351,100 @@
       },
       "isExactName": false,
       "baseModel": {
-        "$ref": "159"
+        "$ref": "152"
       },
       "properties": [
         {
-          "$id": "291",
+          "$id": "286",
           "kind": "property",
           "name": "properties",
           "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
-            "$ref": "285"
+            "$id": "287",
+            "kind": "model",
+            "name": "MonitorProperties",
+            "apiVersions": [
+              "2023-12-01-preview"
+            ],
+            "namespace": "Azure.ResourceManager.OperationTemplates",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.MonitorProperties",
+            "usage": "Output,Json",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "MonitorProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "288",
+                "kind": "property",
+                "name": "status",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "status",
+                "doc": "The status of the monitor.",
+                "type": {
+                  "$id": "289",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.MonitorProperties.status",
+                "serializationOptions": {
+                  "json": {
+                    "name": "status"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "290",
+                "kind": "property",
+                "name": "provisioningState",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
+                "serializedName": "provisioningState",
+                "doc": "The provisioning state.",
+                "type": {
+                  "$id": "291",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.MonitorProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
           },
           "optional": true,
           "readOnly": false,
@@ -4499,6 +4496,9 @@
           "isExactName": false
         }
       ]
+    },
+    {
+      "$ref": "287"
     },
     {
       "$id": "294",
@@ -4818,7 +4818,7 @@
                 },
                 "isExactName": false,
                 "baseModel": {
-                  "$ref": "160"
+                  "$ref": "153"
                 },
                 "properties": []
               },
@@ -6801,7 +6801,7 @@
                     "serializedName": "resource",
                     "doc": "Resource create parameters.",
                     "type": {
-                      "$ref": "158"
+                      "$ref": "151"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -6821,7 +6821,7 @@
                         "serializedName": "resource",
                         "doc": "Resource create parameters.",
                         "type": {
-                          "$ref": "158"
+                          "$ref": "151"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -6848,7 +6848,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "158"
+                      "$ref": "151"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -6866,7 +6866,7 @@
                       201
                     ],
                     "bodyType": {
-                      "$ref": "158"
+                      "$ref": "151"
                     },
                     "headers": [
                       {
@@ -6958,7 +6958,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "158"
+                  "$ref": "151"
                 }
               },
               "isOverride": false,
@@ -6972,7 +6972,7 @@
                     200
                   ],
                   "bodyType": {
-                    "$ref": "158"
+                    "$ref": "151"
                   }
                 }
               }
@@ -8474,7 +8474,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "219"
+                      "$ref": "214"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -8532,7 +8532,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "219"
+                  "$ref": "214"
                 }
               },
               "isOverride": false,
@@ -8546,7 +8546,7 @@
                     200
                   ],
                   "bodyType": {
-                    "$ref": "219"
+                    "$ref": "214"
                   }
                 }
               }
@@ -10561,7 +10561,7 @@
                     "serializedName": "resource",
                     "doc": "Resource create parameters.",
                     "type": {
-                      "$ref": "252"
+                      "$ref": "247"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -10581,7 +10581,7 @@
                         "serializedName": "resource",
                         "doc": "Resource create parameters.",
                         "type": {
-                          "$ref": "252"
+                          "$ref": "247"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -10608,7 +10608,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "252"
+                      "$ref": "247"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -10675,7 +10675,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "252"
+                  "$ref": "247"
                 }
               },
               "isOverride": false,
@@ -11130,7 +11130,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "263"
+                      "$ref": "256"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -11188,7 +11188,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "263"
+                  "$ref": "256"
                 }
               },
               "isOverride": false,
@@ -11548,7 +11548,7 @@
                     "serializedName": "properties",
                     "doc": "The resource properties to be updated.",
                     "type": {
-                      "$ref": "263"
+                      "$ref": "256"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -11568,7 +11568,7 @@
                         "serializedName": "properties",
                         "doc": "The resource properties to be updated.",
                         "type": {
-                          "$ref": "263"
+                          "$ref": "256"
                         },
                         "location": "Body",
                         "isApiVersion": false,
@@ -11595,7 +11595,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "263"
+                      "$ref": "256"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -11662,7 +11662,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "263"
+                  "$ref": "256"
                 }
               },
               "isOverride": false,
@@ -12894,7 +12894,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "290"
+                      "$ref": "285"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -12952,7 +12952,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "290"
+                  "$ref": "285"
                 }
               },
               "isOverride": false,

@@ -37,16 +37,6 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new CheckNameAvailabilityResponse(nameAvailable, reason, message, default);
         }
 
-        /// <summary> The OrderProperties. </summary>
-        /// <param name="productId"> The product ID of the order. </param>
-        /// <param name="amount"> Amount of the product. </param>
-        /// <param name="provisioningState"> The provisioning state of the product. </param>
-        /// <returns> A new <see cref="Models.OrderProperties"/> instance for mocking. </returns>
-        public static OrderProperties OrderProperties(string productId = default, int amount = default, string provisioningState = default)
-        {
-            return new OrderProperties(productId, amount, provisioningState, default);
-        }
-
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -71,6 +61,16 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 default);
         }
 
+        /// <summary> The OrderProperties. </summary>
+        /// <param name="productId"> The product ID of the order. </param>
+        /// <param name="amount"> Amount of the product. </param>
+        /// <param name="provisioningState"> The provisioning state of the product. </param>
+        /// <returns> A new <see cref="Models.OrderProperties"/> instance for mocking. </returns>
+        public static OrderProperties OrderProperties(string productId = default, int amount = default, string provisioningState = default)
+        {
+            return new OrderProperties(productId, amount, provisioningState, default);
+        }
+
         /// <summary> The ExportRequest. </summary>
         /// <param name="format"> Format of the exported order. </param>
         /// <returns> A new <see cref="Models.ExportRequest"/> instance for mocking. </returns>
@@ -85,15 +85,6 @@ namespace Azure.ResourceManager.OperationTemplates.Models
         public static ExportResult ExportResult(string content = default)
         {
             return new ExportResult(content, default);
-        }
-
-        /// <summary> The CostReportProperties. </summary>
-        /// <param name="downloadUri"> The download URL for the cost report. </param>
-        /// <param name="provisioningState"> The provisioning state of the cost report. </param>
-        /// <returns> A new <see cref="Models.CostReportProperties"/> instance for mocking. </returns>
-        public static CostReportProperties CostReportProperties(Uri downloadUri = default, string provisioningState = default)
-        {
-            return new CostReportProperties(downloadUri, provisioningState, default);
         }
 
         /// <summary> Concrete extension resource types can be created by aliasing this type using a specific property type. </summary>
@@ -114,6 +105,15 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 default);
         }
 
+        /// <summary> The CostReportProperties. </summary>
+        /// <param name="downloadUri"> The download URL for the cost report. </param>
+        /// <param name="provisioningState"> The provisioning state of the cost report. </param>
+        /// <returns> A new <see cref="Models.CostReportProperties"/> instance for mocking. </returns>
+        public static CostReportProperties CostReportProperties(Uri downloadUri = default, string provisioningState = default)
+        {
+            return new CostReportProperties(downloadUri, provisioningState, default);
+        }
+
         /// <summary> The DiagnosticInfo. </summary>
         /// <param name="name"> The diagnostic name. </param>
         /// <param name="status"> The diagnostic status. </param>
@@ -121,15 +121,6 @@ namespace Azure.ResourceManager.OperationTemplates.Models
         public static DiagnosticInfo DiagnosticInfo(string name = default, string status = default)
         {
             return new DiagnosticInfo(name, status, default);
-        }
-
-        /// <summary> The ConfigurationProperties. </summary>
-        /// <param name="configValue"> The configuration value. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="Models.ConfigurationProperties"/> instance for mocking. </returns>
-        public static ConfigurationProperties ConfigurationProperties(string configValue = default, string provisioningState = default)
-        {
-            return new ConfigurationProperties(configValue, provisioningState, default);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -156,14 +147,13 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 default);
         }
 
-        /// <summary> The WidgetProperties. </summary>
-        /// <param name="name"> The name of the widget. </param>
-        /// <param name="description"> The description of the widget. </param>
-        /// <param name="provisioningState"> The provisioning state of the widget. </param>
-        /// <returns> A new <see cref="Models.WidgetProperties"/> instance for mocking. </returns>
-        public static WidgetProperties WidgetProperties(string name = default, string description = default, string provisioningState = default)
+        /// <summary> The ConfigurationProperties. </summary>
+        /// <param name="configValue"> The configuration value. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <returns> A new <see cref="Models.ConfigurationProperties"/> instance for mocking. </returns>
+        public static ConfigurationProperties ConfigurationProperties(string configValue = default, string provisioningState = default)
         {
-            return new WidgetProperties(name, description, provisioningState, default);
+            return new ConfigurationProperties(configValue, provisioningState, default);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -188,6 +178,16 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 location,
                 properties,
                 default);
+        }
+
+        /// <summary> The WidgetProperties. </summary>
+        /// <param name="name"> The name of the widget. </param>
+        /// <param name="description"> The description of the widget. </param>
+        /// <param name="provisioningState"> The provisioning state of the widget. </param>
+        /// <returns> A new <see cref="Models.WidgetProperties"/> instance for mocking. </returns>
+        public static WidgetProperties WidgetProperties(string name = default, string description = default, string provisioningState = default)
+        {
+            return new WidgetProperties(name, description, provisioningState, default);
         }
 
         /// <summary> The ActionRequest. </summary>
@@ -225,15 +225,6 @@ namespace Azure.ResourceManager.OperationTemplates.Models
             return new ChangeAllowanceResult(totalAllowed, status, default);
         }
 
-        /// <summary> The MonitorProperties. </summary>
-        /// <param name="status"> The status of the monitor. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="Models.MonitorProperties"/> instance for mocking. </returns>
-        public static MonitorProperties MonitorProperties(string status = default, string provisioningState = default)
-        {
-            return new MonitorProperties(status, provisioningState, default);
-        }
-
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -256,6 +247,15 @@ namespace Azure.ResourceManager.OperationTemplates.Models
                 location,
                 properties,
                 default);
+        }
+
+        /// <summary> The MonitorProperties. </summary>
+        /// <param name="status"> The status of the monitor. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <returns> A new <see cref="Models.MonitorProperties"/> instance for mocking. </returns>
+        public static MonitorProperties MonitorProperties(string status = default, string provisioningState = default)
+        {
+            return new MonitorProperties(status, provisioningState, default);
         }
 
         /// <summary> The LogStatusRequest. </summary>

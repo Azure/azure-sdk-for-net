@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// Base for Azure voice configurations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureCustomVoice"/>, <see cref="AzureStandardVoice"/>, <see cref="AzurePersonalVoice"/>, and <see cref="AzureAvatarSyncVoice"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAvatarSyncVoice"/>, <see cref="AzureCustomVoice"/>, <see cref="AzurePersonalVoice"/>, and <see cref="AzureStandardVoice"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAzureVoice))]
     public abstract partial class AzureVoice : VoiceProvider, IJsonModel<AzureVoice>
@@ -129,14 +129,14 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
-                    case "azure-custom":
-                        return AzureCustomVoice.DeserializeAzureCustomVoice(element, options);
-                    case "azure-standard":
-                        return AzureStandardVoice.DeserializeAzureStandardVoice(element, options);
-                    case "azure-personal":
-                        return AzurePersonalVoice.DeserializeAzurePersonalVoice(element, options);
                     case "avatar-voice-sync":
                         return AzureAvatarSyncVoice.DeserializeAzureAvatarSyncVoice(element, options);
+                    case "azure-custom":
+                        return AzureCustomVoice.DeserializeAzureCustomVoice(element, options);
+                    case "azure-personal":
+                        return AzurePersonalVoice.DeserializeAzurePersonalVoice(element, options);
+                    case "azure-standard":
+                        return AzureStandardVoice.DeserializeAzureStandardVoice(element, options);
                 }
             }
             return UnknownAzureVoice.DeserializeUnknownAzureVoice(element, options);

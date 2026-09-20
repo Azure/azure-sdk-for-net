@@ -52,6 +52,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         A2A,
         A2ASpecialConnection,
         BrowserAutomation,
+        BrowserAutomationGA,
         MicrosoftFabric,
         FabricIQ,
         Sharepoint,
@@ -85,6 +86,12 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.FileSearch,  "Can you give me the documented codes for 'banana' and 'orange'?"},
         {ToolType.AzureFunction, "What is the most prevalent element in the universe? What would foo say?"},
         {ToolType.BrowserAutomation, "Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+                "To do that, go to the website finance.yahoo.com.\n" +
+                "At the top of the page, you will find a search bar.\n" +
+                "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+                "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+                "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
+        {ToolType.BrowserAutomationGA, "Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
                 "To do that, go to the website finance.yahoo.com.\n" +
                 "At the top of the page, you will find a search bar.\n" +
                 "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
@@ -126,6 +133,9 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.ConnectedAgent, "You are a helpful assistant, and use the connected agents to get stock prices."},
         {ToolType.FileSearch,  "You are helpful agent."},
         {ToolType.BrowserAutomation, "You are an Agent helping with browser automation tasks.\n" +
+            "You can answer questions, provide information, and assist with various tasks\n" +
+            "related to web browsing using the Browser Automation tool available to you." },
+        {ToolType.BrowserAutomationGA, "You are an Agent helping with browser automation tasks.\n" +
             "You can answer questions, provide information, and assist with various tasks\n" +
             "related to web browsing using the Browser Automation tool available to you." },
         {ToolType.MicrosoftFabric, "You are helpful agent."},
@@ -204,6 +214,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.OpenAPI, "openapi_call"},
         {ToolType.OpenAPIConnection, "openapi_call"},
         {ToolType.BrowserAutomation, "browser_automation_preview_call"},
+        {ToolType.BrowserAutomationGA, "browser_automation_call"},
         {ToolType.Sharepoint, "sharepoint_grounding_preview_call"},
         {ToolType.MicrosoftFabric, "fabric_dataagent_preview_call_output"},
         {ToolType.FabricIQ, "mcp_call"},
@@ -352,7 +363,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         McpTool tool = ResponseTool.CreateMcpTool(
             serverLabel: "api-specs",
             serverUri: new Uri("https://api.githubcopilot.com/mcp"),
-            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
         ));
         tool.ProjectConnectionId = TestEnvironment.MCP_PROJECT_CONNECTION_NAME;
         return tool;
@@ -405,7 +416,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         global::Azure.AI.Extensions.OpenAI.FabricIQPreviewTool fabricIQTool = new(projectConnectionId: TestEnvironment.FABRIC_IQ_CONNECTION_ID)
         {
-            RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+            RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
         };
         return fabricIQTool;
     }
@@ -482,7 +493,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         MCPToolboxTool mcp = new(serverLabel: "api-specs")
         {
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         CodeInterpreterToolboxTool codeInterpreter = new()
         {
@@ -606,12 +617,17 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.MCP => ResponseTool.CreateMcpTool(
                 serverLabel: "api-specs",
                 serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval
             )),
             ToolType.MCPConnection => GetProjectConnectedMCPTool(),
             ToolType.OpenAPI => GetOpenAPITool(projectClient, false),
             ToolType.OpenAPIConnection => GetOpenAPITool(projectClient, true),
             ToolType.Sharepoint => GetSharepointTool(projectClient),
+            // TODO: Uncomment this code when the service will be available and BrowserAutomationTool will be generated.
+            //ToolType.BrowserAutomationGA => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationTool(
+            //new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
+            //    new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+            //)),
             ToolType.BrowserAutomation => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool(
             new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
                 new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
@@ -625,7 +641,7 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.MCPToolboxWithPreview => await GetToolBoxAsync(projectClient, true),
             ToolType.WebIQ => new global::Azure.AI.Extensions.OpenAI.WebIQPreviewTool(projectConnectionId: TestEnvironment.WEBIQ_CONNECTION_ID)
             {
-                RequireApproval = new WebIQPreviewToolRequireApprovalChoice(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+                RequireApproval = new WebIQPreviewToolRequireApprovalChoice(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             ToolType.WorkIQTool => new global::Azure.AI.Extensions.OpenAI.WorkIQPreviewTool(TestEnvironment.WORKIQ_CONNECTION_ID),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")

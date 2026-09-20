@@ -12,7 +12,7 @@ namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary>
     /// The abstract base class for RedactionPolicy.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CharacterMaskPolicyType"/>, <see cref="NoMaskPolicyType"/>, and <see cref="EntityMaskTypePolicyType"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskTypePolicyType"/>, and <see cref="NoMaskPolicyType"/>.
     /// </summary>
     public abstract partial class BaseRedactionPolicy
     {

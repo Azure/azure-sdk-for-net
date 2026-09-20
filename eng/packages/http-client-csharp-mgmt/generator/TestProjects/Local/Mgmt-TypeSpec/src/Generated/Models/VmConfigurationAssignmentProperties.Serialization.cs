@@ -127,7 +127,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 return null;
             }
             string configurationName = default;
-            VmConfigurationAssignmentComplianceStatus? complianceStatus = default;
+            VmConfigurationAssignmentPropertiesComplianceStatus? complianceStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,12 +142,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    complianceStatus = prop.Value.GetString().ToVmConfigurationAssignmentComplianceStatus();
+                    complianceStatus = prop.Value.GetString().ToVmConfigurationAssignmentPropertiesComplianceStatus();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VmConfigurationAssignmentProperties(configurationName, complianceStatus, additionalBinaryDataProperties);
