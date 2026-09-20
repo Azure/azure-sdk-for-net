@@ -105,9 +105,40 @@ Some generated `BicepValue<BinaryData>` properties declare their wire format
 as `base64`. Those properties always encode the original bytes as Base64.
 Their generated format takes precedence over `BinaryData.MediaType`.
 
-## Structured collections
+## Structured object expressions
 
-This support does not add implicit conversions from heterogeneous CLR
-collections to `BicepList` or `BicepDictionary`. Use JSON for structured
-free-form data, or build the appropriate provisioning value types explicitly
-when the property has a known schema.
+JSON cannot contain provisioning expressions. When a free-form object mixes
+literal values with parameters, variables, or resource references, construct a
+`BicepDictionary<object>` and explicitly compile it for the
+`BicepValue<BinaryData>` property:
+
+```C# Snippet:BinaryDataBicepDictionaryProvisioningValue
+ProvisioningParameter featureFlag = new("featureFlag", typeof(bool));
+BicepDictionary<object> parameters = new()
+{
+    ["enabled"] = featureFlag,
+    ["retryCount"] = 3,
+    ["environment"] = "production"
+};
+
+ArmApplication application = new("application")
+{
+    Name = "sample-application",
+    Kind = "ServiceCatalog",
+    Location = AzureLocation.WestUS2,
+    Parameters = parameters.Compile()
+};
+
+Infrastructure infrastructure = new();
+infrastructure.Add(featureFlag);
+infrastructure.Add(application);
+string bicep = infrastructure.Build().Compile().Single().Value;
+```
+
+This produces a native Bicep object expression rather than a serialized JSON
+value, so nested expressions remain part of the generated Bicep syntax and
+participate in normal dependency analysis.
+
+Implicit conversions from heterogeneous `BicepDictionary` or `BicepList`
+instances to `BicepValue<BinaryData>` are not provided. Call `Compile()`
+explicitly to make the structured-expression behavior clear.

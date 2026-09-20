@@ -276,6 +276,40 @@ public class BicepValueTests
     }
 
     [Test]
+    public void ValidateBicepDictionaryResourceProperty()
+    {
+        #region Snippet:BinaryDataBicepDictionaryProvisioningValue
+        ProvisioningParameter featureFlag = new("featureFlag", typeof(bool));
+        BicepDictionary<object> parameters = new()
+        {
+            ["enabled"] = featureFlag,
+            ["retryCount"] = 3,
+            ["environment"] = "production"
+        };
+
+        ArmApplication application = new("application")
+        {
+            Name = "sample-application",
+            Kind = "ServiceCatalog",
+            Location = AzureLocation.WestUS2,
+            Parameters = parameters.Compile()
+        };
+
+        Infrastructure infrastructure = new();
+        infrastructure.Add(featureFlag);
+        infrastructure.Add(application);
+        string bicep = infrastructure.Build().Compile().Single().Value;
+        #endregion
+
+        Assert.That(
+            bicep,
+            Does.Contain("parameters: {")
+                .And.Contain("enabled: featureFlag")
+                .And.Contain("retryCount: 3")
+                .And.Contain("environment: 'production'"));
+    }
+
+    [Test]
     public void ValidateBinaryDataMediaTypeDispatchThroughGeneratedProperty()
     {
         BinaryDataResource resource = new("resource");
