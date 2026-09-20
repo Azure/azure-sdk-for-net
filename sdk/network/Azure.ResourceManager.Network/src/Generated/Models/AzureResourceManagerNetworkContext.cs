@@ -1075,7 +1075,6 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(SubnetPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(SubnetResource))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
-    [ModelReaderWriterBuildable(typeof(SubscriptionNetworkManagerConnectionData))]
     [ModelReaderWriterBuildable(typeof(SubscriptionNetworkManagerConnectionResource))]
     [ModelReaderWriterBuildable(typeof(SwapResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SwapResourceProperties))]

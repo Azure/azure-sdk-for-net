@@ -9,7 +9,9 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The state of IPv6 peering. </summary>
+    // Restores the released EnableOnlyIPv6PeeringState type for backward compatibility with the canonical Boolean
+    // IsOnlyIPv6PeeringEnabled API.
+    /// <summary> Represents whether IPv6-only peering is enabled. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This type is deprecated and is no longer supported by the service.")]
     public readonly partial struct EnableOnlyIPv6PeeringState : IEquatable<EnableOnlyIPv6PeeringState>

@@ -10,6 +10,8 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    // The generator emits these deserialization bodies with the inherited BaseAdminRuleData return type. Matching custom methods
+    // are discovered without CodeGenSuppress and preserve the released protected signatures for API compatibility.
     public partial class NetworkDefaultAdminRule
     {
         /// <param name="data"> The data to parse. </param>

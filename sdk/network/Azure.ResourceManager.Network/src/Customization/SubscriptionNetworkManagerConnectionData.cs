@@ -6,6 +6,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Text.Json;
 using Azure;
@@ -15,7 +16,11 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility type for the former subscription-specific projection of network manager connection data. </summary>
+    // The previous GA version mistakenly exposed this subscription-specific data type. This facade is retained solely to
+    // mitigate breaking changes and converts to the canonical NetworkManagerConnectionData for generated operations.
+    /// <summary> Represents subscription network manager connection data. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This type is obsolete. Please use NetworkManagerConnectionData instead.")]
     public partial class SubscriptionNetworkManagerConnectionData : NetworkChildResource, IJsonModel<SubscriptionNetworkManagerConnectionData>, IPersistableModel<SubscriptionNetworkManagerConnectionData>
     {
         private NetworkManagerConnectionProperties _properties;

@@ -9,7 +9,8 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> Compatibility declaration for the HubVirtualNetworkConnectionData type. </summary>
+    // Restores the released enum-shaped EnableOnlyIPv6Peering API and delegates it to the canonical generated
+    // Boolean IsOnlyIPv6PeeringEnabled property.
     public partial class HubVirtualNetworkConnectionData
     {
         /// <summary> Gets or sets the deprecated IPv6 peering state. </summary>

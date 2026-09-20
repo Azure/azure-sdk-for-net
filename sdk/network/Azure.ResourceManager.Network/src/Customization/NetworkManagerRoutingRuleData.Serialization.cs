@@ -9,6 +9,8 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    // The generator emits these deserialization bodies with ResourceData return types. Matching custom methods are discovered
+    // without CodeGenSuppress and preserve the released NetworkManagerRoutingRuleData protected return signatures for API compatibility.
     public partial class NetworkManagerRoutingRuleData
     {
         /// <param name="data"> The data to parse. </param>
