@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\Azure.Generator.Management\test\Common\Azure.Generator.Management.Tests.Common.csproj" />
     <ProjectReference Include="..\Spector\http\azure\resource-manager\large-header\src\Azure.ResourceManager.LargeHeader.csproj" />
     <ProjectReference Include="..\Spector\http\azure\resource-manager\management-group\src\Azure.ResourceManager.ManagementGroup.csproj" />
+    <ProjectReference Include="..\Spector\http\azure\resource-manager\multi-service-shared-models\src\Azure.ResourceManager.MultiServiceSharedModels.Combined.csproj" />
     <ProjectReference Include="..\Spector\http\azure\resource-manager\non-resource\src\Azure.ResourceManager.NonResource.csproj" />
     <ProjectReference Include="..\Spector\http\azure\resource-manager\operation-templates\src\Azure.ResourceManager.OperationTemplates.csproj" />
     <ProjectReference Include="..\Spector\http\azure\resource-manager\service-group\src\Azure.ResourceManager.ServiceGroupExtension.csproj" />
