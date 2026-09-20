@@ -9130,7 +9130,10 @@
         },
         {
           "name": "Azure.ResourceManager.Private.@armResourceWithParameter",
-          "arguments": {}
+          "arguments": {
+            "type": "privateEndpointConnections",
+            "nameParameter": "privateEndpointConnectionName"
+          }
         },
         {
           "name": "TypeSpec.Rest.@parentResource",
@@ -79184,7 +79187,11 @@
           "decorators": [
             {
               "name": "Azure.ResourceManager.@armResourceOperations",
-              "arguments": {}
+              "arguments": {
+                "resourceOperationOptions": {
+                  "omitTags": true
+                }
+              }
             }
           ],
           "crossLanguageDefinitionId": "MgmtTypeSpec.ServiceGroupSites",
@@ -102008,7 +102015,11 @@
           "decorators": [
             {
               "name": "Azure.ResourceManager.@armResourceOperations",
-              "arguments": {}
+              "arguments": {
+                "resourceOperationOptions": {
+                  "allowStaticRoutes": true
+                }
+              }
             }
           ],
           "crossLanguageDefinitionId": "MgmtTypeSpec.EventGridPrivateEndpointConnections",
@@ -103470,7 +103481,11 @@
           "decorators": [
             {
               "name": "Azure.ResourceManager.@armResourceOperations",
-              "arguments": {}
+              "arguments": {
+                "resourceOperationOptions": {
+                  "allowStaticRoutes": true
+                }
+              }
             }
           ],
           "crossLanguageDefinitionId": "MgmtTypeSpec.SolutionsApplicationDefinitions",

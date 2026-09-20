@@ -10724,7 +10724,12 @@
           "decorators": [
             {
               "name": "Azure.ResourceManager.@armResourceOperations",
-              "arguments": {}
+              "arguments": {
+                "resourceOperationOptions": {
+                  "allowStaticRoutes": true,
+                  "omitTags": true
+                }
+              }
             }
           ],
           "crossLanguageDefinitionId": "Azure.ResourceManager.OperationTemplates.Legacy",
