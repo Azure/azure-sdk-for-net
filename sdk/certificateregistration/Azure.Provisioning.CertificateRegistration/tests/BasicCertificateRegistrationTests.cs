@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -20,6 +21,7 @@ public class BasicCertificateRegistrationTests
                 AppServiceCertificateOrder order =
                     new(nameof(order), AppServiceCertificateOrder.ResourceVersions.V2024_11_01)
                     {
+                        Location = new AzureLocation("global"),
                         DistinguishedName = "CN=example.com",
                         ValidityInYears = 1,
                         KeySize = 2048,
@@ -40,12 +42,9 @@ public class BasicCertificateRegistrationTests
         await using Trycep test = CreateAppServiceCertificateOrderTest();
         test.Compare(
             """
-            @description('The location for the resource(s) to be deployed.')
-            param location string = resourceGroup().location
-
             resource order 'Microsoft.CertificateRegistration/certificateOrders@2024-11-01' = {
               name: take('order${uniqueString(resourceGroup().id)}', 24)
-              location: location
+              location: 'global'
               properties: {
                 autoRenew: true
                 distinguishedName: 'CN=example.com'

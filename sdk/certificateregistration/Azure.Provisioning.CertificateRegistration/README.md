@@ -34,6 +34,7 @@ Infrastructure infra = new();
 AppServiceCertificateOrder order =
     new(nameof(order), AppServiceCertificateOrder.ResourceVersions.V2024_11_01)
     {
+        Location = new AzureLocation("global"),
         DistinguishedName = "CN=example.com",
         ValidityInYears = 1,
         KeySize = 2048,
