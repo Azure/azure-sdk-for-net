@@ -10,10 +10,12 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
+using OpenAI.Realtime;
 
 #pragma warning disable AZC0007
 
@@ -234,32 +236,17 @@ namespace Azure.AI.Projects
         [Experimental("AAIP002")]
         internal virtual ProjectsRealtimeClient GetProjectsRealtimeClient()
         {
-            return Volatile.Read(ref _cachedProjectsRealtimeClient) ?? Interlocked.CompareExchange(ref _cachedProjectsRealtimeClient, new ProjectsRealtimeClient(_endpoint, _tokenProvider, s_experimentalHeaders), null) ?? _cachedProjectsRealtimeClient;
+            return Volatile.Read(ref _cachedProjectsRealtimeClient) ?? Interlocked.CompareExchange(ref _cachedProjectsRealtimeClient, new ProjectsRealtimeClient(_endpoint, _tokenProvider, _flows[0], _apiVersion, s_experimentalHeaders), null) ?? _cachedProjectsRealtimeClient;
         }
 
         /// <summary>
-        /// Return the new instance of ProjectsRealtimeSessionClient.
+        /// Gets the client for working with Voice Agents' realtime endpoints. Call
+        /// <see cref="ProjectsRealtimeClient.StartSessionAsync"/> on it (the same method an OpenAI
+        /// <see cref="RealtimeClient"/> consumer would use) to start and connect a session for a
+        /// named voice agent.
         /// </summary>
-        /// <param name="model">The model to be used by the client.</param>
-        /// <param name="intent">The client intent.</param>
-        /// <returns>The new instance of ProjectsRealtimeSessionClient.</returns>
         [Experimental("AAIP002")]
-        public virtual ProjectsRealtimeSessionClient GetProjectsRealtimeSessionClient(string model, string intent)
-        {
-            return new ProjectsRealtimeSessionClient(
-                endpoint: _endpoint,
-                tokenProvider: _tokenProvider,
-                new ProjectsRealtimeSessionClientOptions(
-                    parentClient: GetProjectsRealtimeClient(),
-                    tokenProperties: _flows[0],
-                    experimentalHeaders: s_experimentalHeaders
-                )
-                {
-                    Model =model,
-                    Intent = intent
-                }
-            );
-        }
+        public virtual ProjectsRealtimeClient ProjectsRealtimeClient => GetProjectsRealtimeClient();
 
         /// <summary> Initializes a new instance of AgentInsightMonitors. </summary>
         internal virtual AgentInsightMonitors GetAgentInsightMonitorsClient()
