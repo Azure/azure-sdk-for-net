@@ -12,7 +12,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MultiService.Combined
 {
+    // The cross-language Spector contract requires an empty properties object, but the generated
+    // constructor leaves Properties null and omits it from the request payload.
     [CodeGenSuppress("VirtualMachineData", typeof(AzureLocation))]
+    // TODO: Remove the string-ID workaround after the fix in Azure/typespec-azure#5517 is released
+    // and adopted. ARM common types v3 projects the ID as string, while TrackedResourceData requires
+    // ResourceIdentifier.
     [CodeGenSuppress("VirtualMachineData", typeof(string), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(VirtualMachineProperties), typeof(IDictionary<string, BinaryData>))]
     public partial class VirtualMachineData
     {
