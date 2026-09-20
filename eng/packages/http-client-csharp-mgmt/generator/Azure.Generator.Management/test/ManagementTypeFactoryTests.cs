@@ -101,7 +101,9 @@ namespace Azure.Generator.Mgmt.Tests
                 Assert.That(mappedBase, Is.Not.Null);
                 Assert.That(mappedBase!.SystemType.FrameworkType, Is.EqualTo(typeof(TrackedResourceData)));
                 Assert.That(mappedBase.FullConstructor.Signature.Parameters.Select(parameter => parameter.Name),
-                    Is.EqualTo(new[] { "id", "name", "type", "systemData", "tags", "location" }));
+                    Is.EqualTo(new[] { "id", "name", "resourceType", "systemData", "tags", "location" }));
+                Assert.That(mappedBase.Properties.Select(property => property.Name),
+                    Is.EqualTo(new[] { "Tags", "Location", "Id", "Name", "ResourceType", "SystemData" }));
             });
         }
 
@@ -131,7 +133,9 @@ namespace Azure.Generator.Mgmt.Tests
                 Assert.That(mappedBase, Is.Not.Null);
                 Assert.That(mappedBase!.SystemType.FrameworkType, Is.EqualTo(typeof(ResourceData)));
                 Assert.That(mappedBase.FullConstructor.Signature.Parameters.Select(parameter => parameter.Name),
-                    Is.EqualTo(new[] { "id", "name", "type", "systemData" }));
+                    Is.EqualTo(new[] { "id", "name", "resourceType", "systemData" }));
+                Assert.That(mappedBase.Properties.Select(property => property.Name),
+                    Is.EqualTo(new[] { "Id", "Name", "ResourceType", "SystemData" }));
             });
         }
 
