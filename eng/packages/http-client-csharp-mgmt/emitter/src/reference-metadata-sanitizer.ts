@@ -20,8 +20,9 @@ export function removeReferenceIdsFromUnknownValues(
 
   const record = value as Record<string, unknown>;
   if (record.kind === "unknown" && "value" in record) {
-    // The C# deserializer otherwise interprets user-defined JSON Schema IDs as
+    // Work around the C# deserializer interpreting user-defined JSON Schema IDs as
     // code-model reference metadata before reading the value as opaque JSON.
+    // Remove this when https://github.com/microsoft/typespec/issues/12022 is fixed.
     removeReferenceIds(record.value, visited);
   }
 
