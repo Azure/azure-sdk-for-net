@@ -211,6 +211,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         OpenAPI,
         A2A,
         BrowserAutomation,
+        BrowserAutomationGA,
         ReminderPreview,
         WorkIQ,
         FabricIQ,
@@ -294,7 +295,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "mcp-tool",
                 Description = "Test mcp tool",
                 ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-                ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+                ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
             },
             ToolType.OpenAPI => new OpenApiToolboxTool(new OpenApiFunctionDefinition(
                 name: "get_weather",
@@ -313,6 +314,15 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "browser-automation",
                 Description = "Test browser automation"
             },
+            // TODO: Uncomment this code when the BrowserAutomation will be available on the service side.
+            //ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
+            //new BrowserAutomationToolOptions(
+            //    new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+            //))
+            //{
+            //    Name = "browser-automation",
+            //    Description = "Test browser automation"
+            //},
             ToolType.A2A => new A2APreviewToolboxTool()
             {
                 Name = "a2a-preview",
@@ -328,7 +338,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "fabric-iq",
                 Description = "Test Fabric IQ",
-                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+                RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             ToolType.ReminderPreview => new ReminderPreviewToolboxTool()
             {
@@ -339,7 +349,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "web-iq",
                 Description = "Test Web IQ",
-                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+                RequireApproval = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
