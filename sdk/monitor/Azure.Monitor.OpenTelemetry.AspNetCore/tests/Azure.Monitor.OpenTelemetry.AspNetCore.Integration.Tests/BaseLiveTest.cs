@@ -24,6 +24,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         private LogsQueryClient? _logsQueryClient = null;
         protected bool? _useTimestampInQuery;
 
+        protected LogsQueryClient QueryClient => _logsQueryClient!;
+
         [SetUp] // SetUp is run before every individual test method.
         public void Setup()
         {

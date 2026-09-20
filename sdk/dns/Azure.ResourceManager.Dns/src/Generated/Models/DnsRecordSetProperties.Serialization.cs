@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Dns;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -110,12 +108,12 @@ namespace Azure.ResourceManager.Dns.Models
             if (Optional.IsDefined(TargetResource))
             {
                 writer.WritePropertyName("targetResource"u8);
-                ((IJsonModel<WritableSubResource>)TargetResource).Write(writer, options);
+                writer.WriteObjectValue(TargetResource, options);
             }
             if (Optional.IsDefined(TrafficManagementProfile))
             {
                 writer.WritePropertyName("trafficManagementProfile"u8);
-                ((IJsonModel<WritableSubResource>)TrafficManagementProfile).Write(writer, options);
+                writer.WriteObjectValue(TrafficManagementProfile, options);
             }
             if (Optional.IsCollectionDefined(DnsARecords))
             {
@@ -283,8 +281,8 @@ namespace Azure.ResourceManager.Dns.Models
             long? ttlInSeconds = default;
             string fqdn = default;
             string provisioningState = default;
-            WritableSubResource targetResource = default;
-            WritableSubResource trafficManagementProfile = default;
+            DnsSubResourceInfo targetResource = default;
+            DnsSubResourceInfo trafficManagementProfile = default;
             IList<DnsARecordInfo> dnsARecords = default;
             IList<DnsAaaaRecordInfo> dnsAaaaRecords = default;
             IList<DnsMXRecordInfo> dnsMXRecords = default;
@@ -347,7 +345,7 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    targetResource = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsContext.Default);
+                    targetResource = DnsSubResourceInfo.DeserializeDnsSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("trafficManagementProfile"u8))
@@ -356,7 +354,7 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    trafficManagementProfile = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsContext.Default);
+                    trafficManagementProfile = DnsSubResourceInfo.DeserializeDnsSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ARecords"u8))

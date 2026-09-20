@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(Template))
             {
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             JobExecutionRunningState? status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             ContainerAppJobExecutionTemplate template = default;
             ExecutionStatus detailedStatus = default;
             string reason = default;
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("template"u8))
@@ -223,8 +223,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             return new JobExecutionProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 template,
                 detailedStatus,
                 reason,

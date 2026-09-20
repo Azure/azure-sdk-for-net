@@ -13,6 +13,28 @@ namespace Azure.Provisioning.PrivateDns.Tests;
 
 public class BasicPrivateDnsTests
 {
+    [Test]
+    public void RecordPropertiesUsePreferredNamesAndAliasesForward()
+    {
+        PrivateDnsARecord aRecord = new("a") { ARecords = new() };
+        PrivateDnsAaaaRecord aaaaRecord = new("aaaa") { AaaaRecords = new() };
+        PrivateDnsMXRecord mxRecord = new("mx") { MxRecords = new() };
+        PrivateDnsPtrRecord ptrRecord = new("ptr") { PtrRecords = new() };
+        PrivateDnsSoaRecord soaRecord = new("soa") { SoaRecordInfo = new() };
+        PrivateDnsSrvRecord srvRecord = new("srv") { SrvRecords = new() };
+        PrivateDnsTxtRecord txtRecord = new("txt") { TxtRecords = new() };
+
+#pragma warning disable CS0618 // Verify compatibility aliases forward to the preferred properties.
+        Assert.That(aRecord.PrivateDnsARecords, Is.SameAs(aRecord.ARecords));
+        Assert.That(aaaaRecord.PrivateDnsAaaaRecords, Is.SameAs(aaaaRecord.AaaaRecords));
+        Assert.That(mxRecord.PrivateDnsMXRecords, Is.SameAs(mxRecord.MxRecords));
+        Assert.That(ptrRecord.PrivateDnsPtrRecords, Is.SameAs(ptrRecord.PtrRecords));
+        Assert.That(soaRecord.PrivateDnsSoaRecordInfo, Is.SameAs(soaRecord.SoaRecordInfo));
+        Assert.That(srvRecord.PrivateDnsSrvRecords, Is.SameAs(srvRecord.SrvRecords));
+        Assert.That(txtRecord.PrivateDnsTxtRecords, Is.SameAs(txtRecord.TxtRecords));
+#pragma warning restore CS0618
+    }
+
     internal static Trycep CreatePrivateDnsZoneBasic()
     {
         return new Trycep().Define(

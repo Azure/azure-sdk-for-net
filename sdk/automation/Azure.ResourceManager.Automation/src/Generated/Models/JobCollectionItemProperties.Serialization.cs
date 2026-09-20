@@ -99,15 +99,15 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.Automation.Models
             string startedBy = default;
             DateTimeOffset? createdOn = default;
             AutomationJobStatus? status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             DateTimeOffset? lastModifiedOn = default;
             string provisioningState = default;
             JobRuntimeEnvironment jobRuntimeEnvironment = default;
@@ -235,20 +235,20 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startOn = null;
+                        startsOn = null;
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endOn = null;
+                        endsOn = null;
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -291,8 +291,8 @@ namespace Azure.ResourceManager.Automation.Models
                 startedBy,
                 createdOn,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 lastModifiedOn,
                 provisioningState,
                 jobRuntimeEnvironment,

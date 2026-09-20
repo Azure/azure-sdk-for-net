@@ -569,6 +569,116 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
+        /// [Protocol Method] Invokes the latest version of the specified toolbox through its MCP endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The content type of the MCP request body. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult InvokeLatestToolboxMcp(string name, BinaryContent content, string contentType, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.InvokeLatestToolboxMcp");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+
+                using PipelineMessage message = CreateInvokeLatestToolboxMcpRequest(name, content, contentType, options);
+                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Invokes the latest version of the specified toolbox through its MCP endpoint.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The content type of the MCP request body. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> InvokeLatestToolboxMcpAsync(string name, BinaryContent content, string contentType, RequestOptions options = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentToolboxes.InvokeLatestToolboxMcp");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+
+                using PipelineMessage message = CreateInvokeLatestToolboxMcpRequest(name, content, contentType, options);
+                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Invokes the latest version of the specified toolbox through its MCP endpoint. </summary>
+        /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="request"> The MCP request body. </param>
+        /// <param name="contentType"> The content type of the MCP request body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="request"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<BinaryData> InvokeLatestToolboxMcp(string name, IDictionary<string, BinaryData> request, string contentType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+
+            using BinaryContent content = BinaryContentHelper.FromDictionary(request);
+            ClientResult result = InvokeLatestToolboxMcp(name, content, contentType, cancellationToken.ToRequestOptions());
+            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+        }
+
+        /// <summary> Invokes the latest version of the specified toolbox through its MCP endpoint. </summary>
+        /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="request"> The MCP request body. </param>
+        /// <param name="contentType"> The content type of the MCP request body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="request"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<BinaryData>> InvokeLatestToolboxMcpAsync(string name, IDictionary<string, BinaryData> request, string contentType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+
+            using BinaryContent content = BinaryContentHelper.FromDictionary(request);
+            ClientResult result = await InvokeLatestToolboxMcpAsync(name, content, contentType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return ClientResult.FromValue(result.GetRawResponse().Content, result.GetRawResponse());
+        }
+
+        /// <summary>
         /// [Protocol Method] Updates the toolbox's default version pointer to the specified version.
         /// <list type="bullet">
         /// <item>

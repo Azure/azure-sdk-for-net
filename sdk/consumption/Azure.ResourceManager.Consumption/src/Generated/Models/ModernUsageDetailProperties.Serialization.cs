@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("billingAccountName"u8);
                 writer.WriteStringValue(BillingAccountName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingPeriodStartOn))
+            if (options.Format != "W" && Optional.IsDefined(BillingPeriodStartsOn))
             {
                 writer.WritePropertyName("billingPeriodStartDate"u8);
-                writer.WriteStringValue(BillingPeriodStartOn.Value, "O");
+                writer.WriteStringValue(BillingPeriodStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingPeriodEndOn))
+            if (options.Format != "W" && Optional.IsDefined(BillingPeriodEndsOn))
             {
                 writer.WritePropertyName("billingPeriodEndDate"u8);
-                writer.WriteStringValue(BillingPeriodEndOn.Value, "O");
+                writer.WriteStringValue(BillingPeriodEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
             {
@@ -334,15 +334,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("resourceLocationNormalized"u8);
                 writer.WriteStringValue(ResourceLocationNormalized);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServicePeriodStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ServicePeriodStartsOn))
             {
                 writer.WritePropertyName("servicePeriodStartDate"u8);
-                writer.WriteStringValue(ServicePeriodStartOn.Value, "O");
+                writer.WriteStringValue(ServicePeriodStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ServicePeriodEndOn))
+            if (options.Format != "W" && Optional.IsDefined(ServicePeriodEndsOn))
             {
                 writer.WritePropertyName("servicePeriodEndDate"u8);
-                writer.WriteStringValue(ServicePeriodEndOn.Value, "O");
+                writer.WriteStringValue(ServicePeriodEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CustomerTenantId))
             {
@@ -480,8 +480,8 @@ namespace Azure.ResourceManager.Consumption.Models
             decimal? effectivePrice = default;
             ConsumptionPricingModelType? pricingModel = default;
             string billingAccountName = default;
-            DateTimeOffset? billingPeriodStartOn = default;
-            DateTimeOffset? billingPeriodEndOn = default;
+            DateTimeOffset? billingPeriodStartsOn = default;
+            DateTimeOffset? billingPeriodEndsOn = default;
             string billingProfileId = default;
             string billingProfileName = default;
             string subscriptionGuid = default;
@@ -528,8 +528,8 @@ namespace Azure.ResourceManager.Consumption.Models
             string pricingCurrencyCode = default;
             string productIdentifier = default;
             string resourceLocationNormalized = default;
-            DateTimeOffset? servicePeriodStartOn = default;
-            DateTimeOffset? servicePeriodEndOn = default;
+            DateTimeOffset? servicePeriodStartsOn = default;
+            DateTimeOffset? servicePeriodEndsOn = default;
             string customerTenantId = default;
             string customerName = default;
             string partnerTenantId = default;
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    billingPeriodStartOn = prop.Value.GetDateTimeOffset("O");
+                    billingPeriodStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("billingPeriodEndDate"u8))
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    billingPeriodEndOn = prop.Value.GetDateTimeOffset("O");
+                    billingPeriodEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("billingProfileId"u8))
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    servicePeriodStartOn = prop.Value.GetDateTimeOffset("O");
+                    servicePeriodStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("servicePeriodEndDate"u8))
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    servicePeriodEndOn = prop.Value.GetDateTimeOffset("O");
+                    servicePeriodEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("customerTenantId"u8))
@@ -1005,8 +1005,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 effectivePrice,
                 pricingModel,
                 billingAccountName,
-                billingPeriodStartOn,
-                billingPeriodEndOn,
+                billingPeriodStartsOn,
+                billingPeriodEndsOn,
                 billingProfileId,
                 billingProfileName,
                 subscriptionGuid,
@@ -1053,8 +1053,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 pricingCurrencyCode,
                 productIdentifier,
                 resourceLocationNormalized,
-                servicePeriodStartOn,
-                servicePeriodEndOn,
+                servicePeriodStartsOn,
+                servicePeriodEndsOn,
                 customerTenantId,
                 customerName,
                 partnerTenantId,

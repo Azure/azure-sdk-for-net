@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
     public static partial class ArmMonitorPipelineGroupsModelFactory
     {
 
+        /// <summary> A pipeline group definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
                 default);
         }
 
+        /// <summary> Properties that need to be specified to create a new pipeline group instance. </summary>
         /// <param name="replicas"> Defines the amount of replicas of the pipeline group instance. </param>
         /// <param name="receivers"> The receivers specified for a pipeline group instance. </param>
         /// <param name="processors"> The processors specified for a pipeline group instance. </param>
@@ -89,6 +91,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
                 default);
         }
 
+        /// <summary> Base receiver using TCP as transport protocol. </summary>
         /// <param name="endpoint"> Syslog receiver endpoint definition. Example: 0.0.0.0:&lt;port&gt;. </param>
         /// <param name="allowedFormats"> List of allowed message formats for syslog/CEF ingestion. Default 'all'. </param>
         /// <param name="transportProtocol"> Transport protocol. Default tcp. </param>
@@ -111,6 +114,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupProcessor(@type, name, batch, transformStatement is null ? default : new PipelineGroupTransformLanguageProcessor(transformStatement, default), default);
         }
 
+        /// <summary> Batch processor. </summary>
         /// <param name="batchSize"> Size of the batch. </param>
         /// <param name="timeoutInMilliseconds"> Timeout in milliseconds. </param>
         /// <returns> A new <see cref="Models.PipelineGroupBatchProcessor"/> instance for mocking. </returns>
@@ -119,6 +123,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupBatchProcessor(batchSize, timeoutInMilliseconds, default);
         }
 
+        /// <summary> Exporter Info. </summary>
         /// <param name="type"> The type of exporter. </param>
         /// <param name="name"> The name of exporter. </param>
         /// <param name="azureMonitorWorkspaceLogs"> Azure Monitor Workspace Logs specific configurations. </param>
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupExporter(@type, name, azureMonitorWorkspaceLogs, default);
         }
 
+        /// <summary> Azure Monitor Workspace Logs specific configurations. </summary>
         /// <param name="api"> API configurations for Azure Monitor workspace exporter. </param>
         /// <param name="persistence"> Persistence options for the exporter. </param>
         /// <returns> A new <see cref="Models.AzureMonitorWorkspaceLogsExporter"/> instance for mocking. </returns>
@@ -136,6 +142,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new AzureMonitorWorkspaceLogsExporter(api, persistence, default);
         }
 
+        /// <summary> Azure Monitor Workspace Logs Api configurations. </summary>
         /// <param name="dataCollectionEndpointUri"> Data collection endpoint ingestion url. </param>
         /// <param name="stream"> Stream name in destination. Azure Monitor stream is related to the destination table. </param>
         /// <param name="dataCollectionRuleId"> Data Collection Rule (DCR) immutable id. </param>
@@ -146,6 +153,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new AzureMonitorWorkspaceLogsApiConfig(dataCollectionEndpointUri, stream, dataCollectionRuleId, schema, default);
         }
 
+        /// <summary> Schema map for azure monitor for logs. </summary>
         /// <param name="recordMap"> Record Map. </param>
         /// <param name="resourceMap"> Resource Map captures information about the entity for which telemetry is recorded. For example, metrics exposed by a Kubernetes container can be linked to a resource that specifies the cluster, namespace, pod, and container name.Resource may capture an entire hierarchy of entity identification. It may describe the host in the cloud and specific container or an application running in the process. </param>
         /// <param name="scopeMap"> A scope map is a logical unit of the application code with which the emitted telemetry can be associated. </param>
@@ -159,6 +167,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupSchemaMap((recordMap ?? new ChangeTrackingList<PipelineGroupRecordMap>()).ToList(), (resourceMap ?? new ChangeTrackingList<PipelineGroupResourceMap>()).ToList(), (scopeMap ?? new ChangeTrackingList<PipelineGroupScopeMap>()).ToList(), default);
         }
 
+        /// <summary> Record map for schema in azure monitor. </summary>
         /// <param name="from"> Record Map Key. </param>
         /// <param name="to"> Record Map Value. </param>
         /// <returns> A new <see cref="Models.PipelineGroupRecordMap"/> instance for mocking. </returns>
@@ -167,6 +176,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupRecordMap(@from, to, default);
         }
 
+        /// <summary> Resource map for schema in azure monitor. </summary>
         /// <param name="from"> Resource Map Key. </param>
         /// <param name="to"> Resource Map Value. </param>
         /// <returns> A new <see cref="Models.PipelineGroupResourceMap"/> instance for mocking. </returns>
@@ -175,6 +185,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupResourceMap(@from, to, default);
         }
 
+        /// <summary> Scope map for schema in azure monitor. </summary>
         /// <param name="from"> Scope Map Key. </param>
         /// <param name="to"> Scope Map Value. </param>
         /// <returns> A new <see cref="Models.PipelineGroupScopeMap"/> instance for mocking. </returns>
@@ -183,6 +194,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupScopeMap(@from, to, default);
         }
 
+        /// <summary> Persistence options for this exporter. </summary>
         /// <param name="maxStorageUsageInGigabytes"> Max storage usage in gigabytes. </param>
         /// <param name="retentionPeriodInMinutes"> Retention period in minutes. </param>
         /// <returns> A new <see cref="Models.PipelineGroupExporterPersistenceConfiguration"/> instance for mocking. </returns>
@@ -201,6 +213,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupService((pipelines ?? new ChangeTrackingList<PipelineGroupPipeline>()).ToList(), persistencePersistentVolumeName is null ? default : new PersistenceConfigurations(persistencePersistentVolumeName, default), default);
         }
 
+        /// <summary> Pipeline Info. </summary>
         /// <param name="name"> Name of the pipeline. </param>
         /// <param name="type"> The type of pipeline. </param>
         /// <param name="receivers"> Reference to receivers configured for the pipeline. </param>
@@ -232,6 +245,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupExecutionPlacement((constraints ?? new ChangeTrackingList<PipelineGroupPlacementConstraint>()).ToList(), distributionMaxInstancesPerHost is null ? default : new DistributionPolicy(distributionMaxInstancesPerHost, default), default);
         }
 
+        /// <summary> A placement constraint defines requirements for where pipeline group instances can be scheduled. </summary>
         /// <param name="capability"> The capability or attribute key used to match compute unit properties. </param>
         /// <param name="operator"> The match operator, e.g., In, NotIn, Exists, DoesNotExist. </param>
         /// <param name="values"> The values to match against. Not required for Exists/DoesNotExist. </param>
@@ -243,6 +257,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupPlacementConstraint(capability, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> TLS configuration that can be referenced by receivers. </summary>
         /// <param name="name"> The name of the TLS configuration. </param>
         /// <param name="mode"> The TLS security mode for receivers using this configuration. Default is 'mutualTls'. </param>
         /// <param name="tlsCertificate"> TLS certificate and its private key. If not specified, default TLS certificate is used. </param>
@@ -253,6 +268,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupTlsConfiguration(name, mode, tlsCertificate, clientCa, default);
         }
 
+        /// <summary> TLS certificate and private key pair. </summary>
         /// <param name="certificate"> Source configuration for the TLS certificate. </param>
         /// <param name="privateKey"> Source configuration for the private key. Private keys must be stored in Kubernetes secrets for security reasons. </param>
         /// <returns> A new <see cref="Models.PipelineGroupCertificateWithKey"/> instance for mocking. </returns>
@@ -261,6 +277,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupCertificateWithKey(certificate, privateKey, default);
         }
 
+        /// <summary> Configuration for certificate source location. </summary>
         /// <param name="type"> The type of certificate source. </param>
         /// <param name="location"> Location of the certificate source. </param>
         /// <param name="subLocation"> Sub-location within the certificate source. </param>
@@ -270,6 +287,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups.Models
             return new PipelineGroupCertificateSource(@type, location, subLocation, default);
         }
 
+        /// <summary> Configuration for private key source location. </summary>
         /// <param name="type"> The type of private key source. Only kubernetesSecret is supported for security reasons. </param>
         /// <param name="location"> Location of the private key source. </param>
         /// <param name="subLocation"> Sub-location within the private key source. </param>
