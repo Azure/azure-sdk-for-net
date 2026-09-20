@@ -8,6 +8,7 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +71,83 @@ namespace Azure.Generator.Mgmt.Tests
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputEnums: () => [enumType]);
             var result = plugin.Object.TypeFactory.CreateEnum(enumType, null);
             Assert.That(result, Is.Null);
+        }
+
+        [Test]
+        public void KnownLastContractTrackedResourceDataCreatesMappedProvider()
+        {
+            var currentBase = InputFactory.Model(
+                "CurrentResource",
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("tags", new InputDictionaryType("tags", InputPrimitiveType.String, InputPrimitiveType.String)),
+                    InputFactory.Property("location", InputPrimitiveType.String)
+                ]);
+            var model = InputFactory.Model("WidgetData", properties: [], baseModel: currentBase);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [currentBase, model],
+                primaryNamespace: "Azure.ResourceManager.Test",
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+            var mappedBase = provider.BaseModelProvider as SystemObjectModelProvider;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(provider.BaseType?.Name, Is.EqualTo(nameof(TrackedResourceData)));
+                Assert.That(mappedBase, Is.Not.Null);
+                Assert.That(mappedBase!.SystemType.FrameworkType, Is.EqualTo(typeof(TrackedResourceData)));
+                Assert.That(mappedBase.FullConstructor.Signature.Parameters.Select(parameter => parameter.Name),
+                    Is.EqualTo(new[] { "id", "name", "type", "systemData", "tags", "location" }));
+            });
+        }
+
+        [Test]
+        public void KnownLastContractResourceDataCreatesMappedProvider()
+        {
+            var currentBase = InputFactory.Model(
+                "CurrentResource",
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true)
+                ]);
+            var model = InputFactory.Model("WidgetData", properties: [], baseModel: currentBase);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [currentBase, model],
+                primaryNamespace: "Azure.ResourceManager.Test",
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+            var mappedBase = provider.BaseModelProvider as SystemObjectModelProvider;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(provider.BaseType?.Name, Is.EqualTo(nameof(ResourceData)));
+                Assert.That(mappedBase, Is.Not.Null);
+                Assert.That(mappedBase!.SystemType.FrameworkType, Is.EqualTo(typeof(ResourceData)));
+                Assert.That(mappedBase.FullConstructor.Signature.Parameters.Select(parameter => parameter.Name),
+                    Is.EqualTo(new[] { "id", "name", "type", "systemData" }));
+            });
+        }
+
+        [Test]
+        public void UnknownLastContractBaseIsNotMapped()
+        {
+            var currentBase = InputFactory.Model("CurrentResource", properties: []);
+            var model = InputFactory.Model("WidgetData", properties: [], baseModel: currentBase);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [currentBase, model],
+                primaryNamespace: "Azure.ResourceManager.Test",
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
+
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+
+            Assert.That(provider.BaseType?.Name, Is.EqualTo("CurrentResource"));
         }
 
         [Test]

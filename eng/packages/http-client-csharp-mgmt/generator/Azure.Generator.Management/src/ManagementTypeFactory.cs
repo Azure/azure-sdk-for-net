@@ -30,6 +30,8 @@ namespace Azure.Generator.Management
     public class ManagementTypeFactory : AzureTypeFactory
     {
         private static readonly CSharpType _managedServiceIdentityCSharpType = typeof(ManagedServiceIdentity);
+        private static readonly CSharpType _resourceDataType = typeof(ResourceData);
+        private static readonly CSharpType _trackedResourceDataType = typeof(TrackedResourceData);
         private bool? _useManagedServiceIdentityV3;
         private string? _resourceProviderName;
 
@@ -87,6 +89,131 @@ namespace Azure.Generator.Management
             }
 
             return base.CreateFrameworkType(fullyQualifiedTypeName);
+        }
+
+        /// <inheritdoc/>
+        protected override ModelProvider? CreateLastContractModelBase(CSharpType previousBase, InputModelType currentModel)
+        {
+            if (currentModel.BaseModel is not { } currentBase)
+            {
+                return null;
+            }
+
+            var knownBase = previousBase.AreNamesEqual(_resourceDataType)
+                ? _resourceDataType
+                : previousBase.AreNamesEqual(_trackedResourceDataType)
+                    ? _trackedResourceDataType
+                    : null;
+
+            if (knownBase is null || !TryCreateKnownResourceDataContract(knownBase, currentBase, out var mappedContract))
+            {
+                return null;
+            }
+
+            return new SystemObjectModelProvider(knownBase, mappedContract);
+        }
+
+        private static bool TryCreateKnownResourceDataContract(
+            CSharpType knownBase,
+            InputModelType currentBase,
+            [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out InputModelType? mappedContract)
+        {
+            var currentProperties = currentBase.Properties
+                .GroupBy(property => property.SerializedName ?? property.Name, StringComparer.Ordinal)
+                .ToDictionary(group => group.Key, group => group.First(), StringComparer.Ordinal);
+            var propertyNames = knownBase.AreNamesEqual(_trackedResourceDataType)
+                ? new[] { "id", "name", "type", "systemData", "tags", "location" }
+                : new[] { "id", "name", "type", "systemData" };
+            var properties = new List<InputModelProperty>(propertyNames.Length);
+            foreach (var propertyName in propertyNames)
+            {
+                if (!currentProperties.TryGetValue(propertyName, out var property))
+                {
+                    if (propertyName != "systemData")
+                    {
+                        mappedContract = null;
+                        return false;
+                    }
+
+                    property = CreateSystemDataProperty(currentBase.Namespace);
+                }
+
+                properties.Add(new InputModelProperty(
+                    property.Name,
+                    property.Summary,
+                    property.Doc,
+                    property.Type,
+                    propertyName == "location",
+                    propertyName is "id" or "name" or "type" or "systemData",
+                    property.Access,
+                    property.IsDiscriminator,
+                    property.SerializedName,
+                    property.IsHttpMetadata,
+                    property.IsApiVersion,
+                    property.DefaultValue,
+                    property.SerializationOptions ?? new InputSerializationOptions(),
+                    property.Encode,
+                    property.ApiVersions));
+            }
+
+            mappedContract = new InputModelType(
+                knownBase.Name,
+                knownBase.Namespace,
+                knownBase.FullyQualifiedName,
+                "public",
+                null,
+                null,
+                null,
+                InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties,
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(new InputJsonSerializationOptions(knownBase.Name)),
+                false);
+            return true;
+        }
+
+        private static InputModelProperty CreateSystemDataProperty(string modelNamespace)
+        {
+            var serializationOptions = new InputSerializationOptions(new InputJsonSerializationOptions("systemData"));
+            var systemData = new InputModelType(
+                "SystemData",
+                modelNamespace,
+                "Azure.ResourceManager.CommonTypes.SystemData",
+                "public",
+                null,
+                null,
+                null,
+                InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                [],
+                null,
+                [],
+                null,
+                null,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(new InputJsonSerializationOptions("SystemData")),
+                false);
+            return new InputModelProperty(
+                "systemData",
+                null,
+                null,
+                systemData,
+                false,
+                true,
+                null,
+                false,
+                "systemData",
+                false,
+                false,
+                null,
+                serializationOptions);
         }
 
         /// <inheritdoc/>
