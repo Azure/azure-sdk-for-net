@@ -17,17 +17,17 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MultiServiceSharedModels.Combined.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
-    public partial class MockableMultiServiceSharedModelsCombinedResourceGroupResource : ArmResource
+    public partial class MockableMultiServiceSharedModelsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableMultiServiceSharedModelsCombinedResourceGroupResource for mocking. </summary>
-        protected MockableMultiServiceSharedModelsCombinedResourceGroupResource()
+        /// <summary> Initializes a new instance of MockableMultiServiceSharedModelsResourceGroupResource for mocking. </summary>
+        protected MockableMultiServiceSharedModelsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableMultiServiceSharedModelsCombinedResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMultiServiceSharedModelsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableMultiServiceSharedModelsCombinedResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableMultiServiceSharedModelsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

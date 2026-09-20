@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
         }
 
         /// <param name="resourceGroupResource"></param>
-        private static MockableMultiServiceSharedModelsCombinedResourceGroupResource GetMockableMultiServiceSharedModelsCombinedResourceGroupResource(ResourceGroupResource resourceGroupResource)
+        private static MockableMultiServiceSharedModelsResourceGroupResource GetMockableMultiServiceSharedModelsResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resourceGroupResource.GetCachedClient(client => new MockableMultiServiceSharedModelsCombinedResourceGroupResource(client, resourceGroupResource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableMultiServiceSharedModelsResourceGroupResource(client, resourceGroupResource.Id));
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
         /// Gets a collection of VirtualMachines in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsCombinedResourceGroupResource.GetVirtualMachines()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsResourceGroupResource.GetVirtualMachines()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMultiServiceSharedModelsCombinedResourceGroupResource(resourceGroupResource).GetVirtualMachines();
+            return GetMockableMultiServiceSharedModelsResourceGroupResource(resourceGroupResource).GetVirtualMachines();
         }
 
         /// <summary>
         /// Retrieves information about the model view or the instance view of a virtual machine.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsCombinedResourceGroupResource.GetVirtualMachineAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsResourceGroupResource.GetVirtualMachineAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -100,14 +100,14 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMultiServiceSharedModelsCombinedResourceGroupResource(resourceGroupResource).GetVirtualMachineAsync(vmName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMultiServiceSharedModelsResourceGroupResource(resourceGroupResource).GetVirtualMachineAsync(vmName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Retrieves information about the model view or the instance view of a virtual machine.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsCombinedResourceGroupResource.GetVirtualMachine(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsResourceGroupResource.GetVirtualMachine(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -119,14 +119,14 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMultiServiceSharedModelsCombinedResourceGroupResource(resourceGroupResource).GetVirtualMachine(vmName, cancellationToken);
+            return GetMockableMultiServiceSharedModelsResourceGroupResource(resourceGroupResource).GetVirtualMachine(vmName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of StorageAccounts in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsCombinedResourceGroupResource.GetStorageAccounts()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsResourceGroupResource.GetStorageAccounts()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMultiServiceSharedModelsCombinedResourceGroupResource(resourceGroupResource).GetStorageAccounts();
+            return GetMockableMultiServiceSharedModelsResourceGroupResource(resourceGroupResource).GetStorageAccounts();
         }
 
         /// <summary>
         /// Gets information about a storage account.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsCombinedResourceGroupResource.GetStorageAccountAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsResourceGroupResource.GetStorageAccountAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMultiServiceSharedModelsCombinedResourceGroupResource(resourceGroupResource).GetStorageAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMultiServiceSharedModelsResourceGroupResource(resourceGroupResource).GetStorageAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets information about a storage account.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsCombinedResourceGroupResource.GetStorageAccount(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMultiServiceSharedModelsResourceGroupResource.GetStorageAccount(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MultiServiceSharedModels.Combined
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMultiServiceSharedModelsCombinedResourceGroupResource(resourceGroupResource).GetStorageAccount(accountName, cancellationToken);
+            return GetMockableMultiServiceSharedModelsResourceGroupResource(resourceGroupResource).GetStorageAccount(accountName, cancellationToken);
         }
     }
 }
