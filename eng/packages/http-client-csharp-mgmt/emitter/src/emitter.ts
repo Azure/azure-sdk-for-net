@@ -27,6 +27,7 @@ import type {
 } from "./code-model-types.js";
 import { removeModelDecoratorArguments } from "./decorator-sanitizer.js";
 import { ArmProviderSchema } from "./resource-metadata.js";
+import { removeReferenceIdsFromUnknownValues } from "./reference-metadata-sanitizer.js";
 
 export type ManagementCodeModelTransformer = (
   codeModel: CodeModel,
@@ -71,6 +72,7 @@ export async function emitManagementCodeModel(
     setFlattenProperty(codeModel, sdkContext);
     setHasClientNameOverride(codeModel, sdkContext);
     removeModelDecoratorArguments(codeModel);
+    removeReferenceIdsFromUnknownValues(codeModel);
     return transform?.(codeModel, sdkContext, armProviderSchema) ?? codeModel;
   }
 }
