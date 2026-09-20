@@ -142,31 +142,11 @@ BicepDictionary<string> dynamicTags = parameter;
 
 #### Free-form JSON and Bicep values
 
-Properties typed as `BicepValue<BinaryData>` treat an absent media type or
-`application/json` as JSON. The JSON is validated and emitted through Bicep's
-`json(...)` function.
-
-```C#
-resource.Settings = BinaryData.FromObjectAsJson(new
-{
-    enabled = true,
-    retryCount = 3
-});
-```
-
-To deliberately supply a raw Bicep value expression, set the media type to
-`text/vnd.microsoft.bicep`. This Azure.Provisioning-specific media type accepts
-UTF-8 content and an optional `charset=utf-8` parameter.
-
-```C#
-resource.Settings = BinaryData.FromString(
-    "{ enabled: featureFlag, endpoint: storageAccount.properties.primaryEndpoints.blob }",
-    "text/vnd.microsoft.bicep");
-```
-
-Other explicitly set media types are rejected. Invalid JSON never falls back
-to raw Bicep. Raw Bicep is caller-controlled source, so prefer structured
-provisioning values when available and do not interpolate untrusted input.
+Properties typed as `BicepValue<BinaryData>` accept free-form JSON or an
+explicitly tagged raw Bicep expression. See
+[BinaryData provisioning values](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/provisioning/Azure.Provisioning/docs/BinaryDataValues.md)
+for supported media types, executable examples, validation behavior, and
+security guidance.
 
 #### Working with Azure Resources
 

@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using NUnit.Framework;
@@ -209,6 +210,31 @@ public class BicepValueTests
     }
 
     [Test]
+    public void ValidateBinaryDataJsonResourceProperty()
+    {
+        #region Snippet:BinaryDataJsonProvisioningValue
+        ArmApplication application = new("application")
+        {
+            Name = "sample-application",
+            Kind = "ServiceCatalog",
+            Location = AzureLocation.WestUS2,
+            Parameters = BinaryData.FromObjectAsJson(new
+            {
+                enabled = true,
+                threshold = 3,
+                items = new[] { "a", "b" }
+            })
+        };
+
+        Infrastructure infrastructure = new();
+        infrastructure.Add(application);
+        string bicep = infrastructure.Build().Compile().Single().Value;
+        #endregion
+
+        Assert.That(bicep, Does.Contain("parameters: json('{\"enabled\":true,\"threshold\":3,\"items\":[\"a\",\"b\"]}')"));
+    }
+
+    [Test]
     public void ValidateBinaryDataJsonEscapesBicepStringCharacters()
     {
         TestHelpers.AssertExpression(
@@ -223,6 +249,30 @@ public class BicepValueTests
         TestHelpers.AssertExpression("true", new BicepValue<BinaryData>(BinaryData.FromString("true", "text/vnd.microsoft.bicep")));
         TestHelpers.AssertExpression("{ enabled: featureFlag }", new BicepValue<BinaryData>(BinaryData.FromString("{ enabled: featureFlag }", """ Text/Vnd.Microsoft.Bicep ; charset="utf-8" """)));
         TestHelpers.AssertExpression("union(defaults, overrides)", new BicepValue<BinaryData>(BinaryData.FromString("union(defaults, overrides)", "text/vnd.microsoft.bicep")));
+    }
+
+    [Test]
+    public void ValidateRawBicepResourceProperty()
+    {
+        #region Snippet:BinaryDataRawBicepProvisioningValue
+        BinaryData rawBicep = BinaryData.FromString(
+            "union({ enabled: true }, { retries: 3 })",
+            "text/vnd.microsoft.bicep");
+
+        ArmApplication application = new("application")
+        {
+            Name = "sample-application",
+            Kind = "ServiceCatalog",
+            Location = AzureLocation.WestUS2,
+            Parameters = rawBicep
+        };
+
+        Infrastructure infrastructure = new();
+        infrastructure.Add(application);
+        string bicep = infrastructure.Build().Compile().Single().Value;
+        #endregion
+
+        Assert.That(bicep, Does.Contain("parameters: union({ enabled: true }, { retries: 3 })"));
     }
 
     [Test]
