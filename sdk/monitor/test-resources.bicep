@@ -8,6 +8,12 @@ param testApplicationOid string
 @description('The base resource name.')
 param baseName string = resourceGroup().name
 
+@description('Provision the additional region for multi-endpoint routing live tests.')
+param enableMultiEndpointRouting bool = false
+
+@description('The additional Application Insights region; must differ from location for multi-endpoint tests.')
+param multiEndpointLocation string = location == 'eastus2' ? 'westus2' : 'eastus2'
+
 // VARIABLES
 var streamName = 'Custom-MyTableRawData'
 var tableName = 'MyTable_CL'
@@ -273,6 +279,32 @@ resource dataCollectionEndpoint2 'Microsoft.Insights/dataCollectionEndpoints@202
   }
 }
 
+resource multiEndpointWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = if (enableMultiEndpointRouting) {
+  name: '${baseName}-me-logs'
+  location: multiEndpointLocation
+  properties: {
+    sku: {
+      name: 'PerGB2018'
+    }
+    retentionInDays: 30
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+  }
+}
+
+resource multiEndpointInsights 'Microsoft.Insights/components@2020-02-02' = if (enableMultiEndpointRouting) {
+  name: '${baseName}-me-ai'
+  kind: 'other'
+  location: multiEndpointLocation
+  properties: {
+    Application_Type: 'other'
+    WorkspaceResourceId: multiEndpointWorkspace!.id
+    DisableLocalAuth: false
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+  }
+}
+
 //STORAGE ACCOUNT FOR METRICSCLIENT
 @description('The base resource name.')
 param storageAccountName string = uniqueString(baseName, 'storage')
@@ -302,6 +334,24 @@ output WORKSPACE_KEY string = listKeys(LogAnalyticsWorkspace1.id, '2020-08-01').
 output SECONDARY_CONNECTION_STRING string = ApplicationInsightsResource2.properties.ConnectionString
 output SECONDARY_WORKSPACE_ID string = LogAnalyticsWorkspace2.properties.customerId
 output SECONDARY_WORKSPACE_KEY string = listKeys(LogAnalyticsWorkspace2.id, '2020-08-01').primarySharedKey
+
+output MONITOR_MULTI_ENDPOINT_RESOURCES string = enableMultiEndpointRouting ? string([
+  {
+    connectionString: ApplicationInsightsResource1.properties.ConnectionString
+    workspaceId: LogAnalyticsWorkspace1.properties.customerId
+    resourceId: ApplicationInsightsResource1.id
+  }
+  {
+    connectionString: ApplicationInsightsResource2.properties.ConnectionString
+    workspaceId: LogAnalyticsWorkspace2.properties.customerId
+    resourceId: ApplicationInsightsResource2.id
+  }
+  {
+    connectionString: multiEndpointInsights!.properties.ConnectionString
+    workspaceId: multiEndpointWorkspace!.properties.customerId
+    resourceId: multiEndpointInsights!.id
+  }
+]) : '[]'
 
 // VALUES NEEDED FOR AZURE.MONITOR.QUERY
 output WORKSPACE_PRIMARY_RESOURCE_ID string = LogAnalyticsWorkspace1.id

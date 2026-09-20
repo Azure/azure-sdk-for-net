@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Contains configuration options specific to the compression method used during indexing or querying.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScalarQuantizationCompression"/> and <see cref="BinaryQuantizationCompression"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BinaryQuantizationCompression"/> and <see cref="ScalarQuantizationCompression"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVectorSearchCompression))]
     public abstract partial class VectorSearchCompression : IJsonModel<VectorSearchCompression>
@@ -142,10 +142,10 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "scalarQuantization":
-                        return ScalarQuantizationCompression.DeserializeScalarQuantizationCompression(element, options);
                     case "binaryQuantization":
                         return BinaryQuantizationCompression.DeserializeBinaryQuantizationCompression(element, options);
+                    case "scalarQuantization":
+                        return ScalarQuantizationCompression.DeserializeScalarQuantizationCompression(element, options);
                 }
             }
             return UnknownVectorSearchCompression.DeserializeUnknownVectorSearchCompression(element, options);

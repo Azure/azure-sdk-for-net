@@ -177,7 +177,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     properties = dictionary;
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new MetricsData(version, kind, additionalProperties, metrics, properties ?? new ChangeTrackingDictionary<string, string>());
         }
