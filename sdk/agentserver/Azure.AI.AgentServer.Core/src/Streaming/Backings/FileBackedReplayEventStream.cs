@@ -156,41 +156,84 @@ internal sealed class FileBackedReplayEventStream :
 
     // Cheap peek used by the orphan sweep to skip streams that were already closed: true when the
     // file's FINAL complete record is the terminal sentinel (a torn trailing partial line is ignored,
-    // matching rehydrate). Avoids opening/rehydrating/holding handles for non-orphaned streams.
+    // matching rehydrate). Scans backwards from the end in bounded chunks and materializes only the
+    // last line, so an already-closed multi-megabyte log costs a small tail read rather than loading
+    // its entire history into memory during the startup-blocking sweep.
     internal static bool IsFileTerminated(string filePath)
     {
-        byte[] data;
         try
         {
-            data = File.ReadAllBytes(filePath);
+            using var file = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            long length = file.Length;
+            if (length == 0)
+            {
+                return false;
+            }
+
+            // Locate the last two newlines: the final COMPLETE line is the text terminated by the
+            // last '\n' (bytes after it are a torn, unterminated partial and are ignored). Its start
+            // is one past the preceding '\n', or the start of file when there is none.
+            const int chunkSize = 8192;
+            long position = length;
+            long lastNewline = -1;
+            long previousNewline = -1;
+            int newlinesFound = 0;
+            var buffer = new byte[chunkSize];
+
+            while (position > 0 && newlinesFound < 2)
+            {
+                int toRead = (int)Math.Min(chunkSize, position);
+                position -= toRead;
+                file.Seek(position, SeekOrigin.Begin);
+                file.ReadExactly(buffer, 0, toRead);
+                for (int i = toRead - 1; i >= 0; i--)
+                {
+                    if (buffer[i] != (byte)'\n')
+                    {
+                        continue;
+                    }
+
+                    if (newlinesFound == 0)
+                    {
+                        lastNewline = position + i;
+                        newlinesFound = 1;
+                    }
+                    else
+                    {
+                        previousNewline = position + i;
+                        newlinesFound = 2;
+                        break;
+                    }
+                }
+            }
+
+            if (lastNewline < 0)
+            {
+                // No newline at all: the file is a single unterminated (torn) line — not terminated.
+                return false;
+            }
+
+            long start = previousNewline + 1;
+            int lineLength = (int)(lastNewline - start);
+            if (lineLength <= 0)
+            {
+                return false;
+            }
+
+            var lineBytes = new byte[lineLength];
+            file.Seek(start, SeekOrigin.Begin);
+            file.ReadExactly(lineBytes, 0, lineLength);
+            string line = Encoding.UTF8.GetString(lineBytes);
+
+            return TryParse(line) is JsonObject obj
+                && obj[TerminalKey] is JsonValue value
+                && value.TryGetValue(out bool terminal)
+                && terminal;
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
         {
             return false;
         }
-
-        if (data.Length == 0)
-        {
-            return false;
-        }
-
-        string[] lines = Encoding.UTF8.GetString(data).Split('\n');
-        // A non-empty final element is a torn partial line (no trailing newline) and is ignored.
-        int last = lines.Length > 0 && lines[^1].Length == 0 ? lines.Length - 1 : lines.Length - 2;
-        for (int i = last; i >= 0; i--)
-        {
-            if (lines[i].Length == 0)
-            {
-                continue;
-            }
-
-            return TryParse(lines[i]) is JsonObject obj
-                && obj[TerminalKey] is JsonValue value
-                && value.TryGetValue(out bool terminal)
-                && terminal;
-        }
-
-        return false;
     }
 
     public string? TaskId => _taskId;

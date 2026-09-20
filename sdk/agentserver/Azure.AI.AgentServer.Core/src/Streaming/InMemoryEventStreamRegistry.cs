@@ -220,7 +220,7 @@ internal sealed class InMemoryEventStreamRegistry :
         }
     }
 
-    public async Task CloseOrphanTaskStreamsAsync(
+    public async Task<int> CloseOrphanTaskStreamsAsync(
         Func<string, string, ValueTask<bool>> shouldClose,
         CancellationToken cancellationToken = default)
     {
@@ -228,9 +228,10 @@ internal sealed class InMemoryEventStreamRegistry :
         if (directory is null || !Directory.Exists(directory))
         {
             // Non-persistent backing: streams do not survive a restart, so there are no orphans.
-            return;
+            return 0;
         }
 
+        int failures = 0;
         foreach (string jsonl in Directory.EnumerateFiles(directory, "*.jsonl"))
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -246,22 +247,24 @@ internal sealed class InMemoryEventStreamRegistry :
                     continue;
                 }
 
-                // Skip streams that are already closed: only genuinely orphaned (unterminated) files
-                // are opened, so the sweep never bursts open every historical retired stream.
-                if (FileBackedReplayEventStream.IsFileTerminated(jsonl))
-                {
-                    continue;
-                }
-
+                // Establish ownership BEFORE reading any history: a standalone (non-task) stream has
+                // no owner sidecar and is skipped without touching the — potentially large — log body.
                 string ownerPath = Path.Combine(directory, stem + ".owner");
                 if (!File.Exists(ownerPath))
                 {
-                    // No owner sidecar: a custom/standalone stream, never swept as task-owned.
                     continue;
                 }
 
                 string taskId = File.ReadAllText(ownerPath, Encoding.UTF8).Trim();
                 if (taskId.Length == 0)
+                {
+                    continue;
+                }
+
+                // Skip streams that are already closed. The terminal check reads only the file's
+                // tail, so a large retired log is not loaded in full just to confirm it needs no
+                // recovery, and the sweep never bursts open every historical retired stream.
+                if (FileBackedReplayEventStream.IsFileTerminated(jsonl))
                 {
                     continue;
                 }
@@ -285,10 +288,13 @@ internal sealed class InMemoryEventStreamRegistry :
             catch (Exception ex)
             {
                 // A live writer still holding the lock, an unreadable entry, or a transient error must
-                // not abort the rest of the sweep; skip this file and continue.
+                // not abort the rest of the sweep; skip this file, count it, and let the caller retry.
+                failures++;
                 _logger.LogWarning(ex, "Orphan-stream sweep skipped {File}.", jsonl);
             }
         }
+
+        return failures;
     }
 
     public override ValueTask DeleteAsync(string id, CancellationToken cancellationToken = default)

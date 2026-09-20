@@ -467,4 +467,70 @@ public sealed class FileBackedReplayEventStreamTests
             }
         }
     }
+
+    private const string TerminalLine = "{\"__terminal__\":true}";
+    private static readonly UTF8Encoding NoBom = new(encoderShouldEmitUTF8Identifier: false);
+
+    [Test]
+    public void IsFileTerminated_TrueForTerminatedTailInLargeMultiChunkFile()
+    {
+        // A closed multi-megabyte log must be recognized as terminated by reading only its tail,
+        // not by loading the whole history: the terminal marker sits far past the first 8 KiB chunk.
+        var sb = new StringBuilder();
+        for (int i = 0; i < 20000; i++)
+        {
+            sb.Append("{\"data\":\"payload-").Append(i).Append("\",\"id\":\"").Append(i).Append("\"}\n");
+        }
+
+        sb.Append(TerminalLine).Append('\n');
+        string path = Path.Combine(_dir, "big-terminated.jsonl");
+        File.WriteAllText(path, sb.ToString(), NoBom);
+
+        Assert.That(new FileInfo(path).Length, Is.GreaterThan(8192), "guard: the file must span multiple read chunks.");
+        Assert.That(FileBackedReplayEventStream.IsFileTerminated(path), Is.True);
+    }
+
+    [Test]
+    public void IsFileTerminated_TrueWhenTornPartialFollowsTerminalMarker()
+    {
+        // A crash mid-write after the terminal marker leaves a torn (newline-less) partial line; the
+        // last COMPLETE line is still the terminal marker, so the stream is terminated (rehydrate parity).
+        string path = Path.Combine(_dir, "torn-after-terminal.jsonl");
+        File.WriteAllText(path, "{\"data\":\"a\",\"id\":\"0\"}\n" + TerminalLine + "\n{\"data\":\"torn", NoBom);
+        Assert.That(FileBackedReplayEventStream.IsFileTerminated(path), Is.True);
+    }
+
+    [Test]
+    public void IsFileTerminated_FalseForUnterminatedLog()
+    {
+        string path = Path.Combine(_dir, "open.jsonl");
+        File.WriteAllText(path, "{\"data\":\"a\",\"id\":\"0\"}\n{\"data\":\"b\",\"id\":\"1\"}\n", NoBom);
+        Assert.That(FileBackedReplayEventStream.IsFileTerminated(path), Is.False);
+    }
+
+    [Test]
+    public void IsFileTerminated_FalseForTornTerminalWithoutTrailingNewline()
+    {
+        // The terminal marker itself is torn (no trailing newline): it is an incomplete final line and
+        // must be ignored, so the last complete line ("a") governs — not terminated.
+        string path = Path.Combine(_dir, "torn-terminal.jsonl");
+        File.WriteAllText(path, "{\"data\":\"a\",\"id\":\"0\"}\n" + TerminalLine, NoBom);
+        Assert.That(FileBackedReplayEventStream.IsFileTerminated(path), Is.False);
+    }
+
+    [Test]
+    public void IsFileTerminated_FalseForEmptyFile()
+    {
+        string path = Path.Combine(_dir, "empty.jsonl");
+        File.WriteAllText(path, string.Empty);
+        Assert.That(FileBackedReplayEventStream.IsFileTerminated(path), Is.False);
+    }
+
+    [Test]
+    public void IsFileTerminated_TrueForSingleTerminalLine()
+    {
+        string path = Path.Combine(_dir, "only-terminal.jsonl");
+        File.WriteAllText(path, TerminalLine + "\n", NoBom);
+        Assert.That(FileBackedReplayEventStream.IsFileTerminated(path), Is.True);
+    }
 }

@@ -22,6 +22,8 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 public class TaskOrphanStreamSweepTests
 {
     private static readonly TimeSpan Timeout = TimeSpan.FromSeconds(15);
+    private const string Agent = "agent-a";
+    private const string Session = "session-a";
 
     [Test]
     public async Task SweepClosesSelectedStreamsAndLeavesOthersOpen()
@@ -70,31 +72,65 @@ public class TaskOrphanStreamSweepTests
             (_, _) => new ValueTask<bool>(true)));
     }
 
+    [Test]
+    public async Task SweepReportsTransientFailuresSoTheCallerCanRetry()
+    {
+        string root = Path.Combine(Path.GetTempPath(), "agentserver-orphan-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            using TaskTestHost host = TaskTestHost.Create(
+                sharedDir: Path.Combine(root, "tasks"),
+                configureStreams: o => o.UseFileBackedReplay(Path.Combine(root, "streams"), TimeSpan.FromMinutes(10)));
+            var registry = (ITaskEventStreamRegistry)host.Streams;
+
+            AgentEventStream orphan = await registry.GetOrCreateTaskStreamAsync("t", "orphan");
+            await orphan.EmitAsync(new SseItem<string>("first") { EventId = "1" });
+
+            // A transient decision failure for an eligible orphan must be counted (not silently
+            // dropped) so the cold-start caller retries it rather than leaving the stream open forever.
+            int failures = await registry.CloseOrphanTaskStreamsAsync(
+                (_, _) => throw new IOException("transient"));
+            Assert.That(failures, Is.EqualTo(1), "A skipped orphan must be reported for retry.");
+
+            // The stream is still open (the failure did not close it): a clean pass then closes it and
+            // reports no failures.
+            int cleanFailures = await registry.CloseOrphanTaskStreamsAsync(
+                (_, inputId) => new ValueTask<bool>(inputId == "orphan"));
+            Assert.That(cleanFailures, Is.EqualTo(0), "A pass that closes every candidate reports no failures.");
+        }
+        finally
+        {
+            if (Directory.Exists(root))
+            { Directory.Delete(root, recursive: true); }
+        }
+    }
+
     [TestCase(TaskWireKeys.StatusSuspended, "a", ExpectedResult = true, TestName = "Suspended finished input is closed")]
     [TestCase(TaskWireKeys.StatusCompleted, "a", ExpectedResult = true, TestName = "Completed input is closed")]
     public bool TerminalRecord_ClosesTheInput(string status, string inputId)
-        => TaskEngine.ShouldCloseOrphanInput(Record(status, active: "a"), inputId);
+        => TaskEngine.ShouldCloseOrphanInput(Record(status, active: "a"), inputId, Agent, Session);
 
     [Test]
     public void InProgress_KeepsActiveInputOpen()
         => Assert.That(TaskEngine.ShouldCloseOrphanInput(
-            Record(TaskWireKeys.StatusInProgress, active: "b"), "b"), Is.False);
+            Record(TaskWireKeys.StatusInProgress, active: "b"), "b", Agent, Session), Is.False);
 
     [Test]
     public void InProgress_ClosesRetiredPredecessor()
         => Assert.That(TaskEngine.ShouldCloseOrphanInput(
-            Record(TaskWireKeys.StatusInProgress, active: "b"), "a"), Is.True,
+            Record(TaskWireKeys.StatusInProgress, active: "b"), "a", Agent, Session), Is.True,
             "A promoted-away predecessor of a running turn is orphaned.");
 
     [Test]
     public void KeepsQueuedInputsOpen_EvenWhenSuspended()
         => Assert.That(TaskEngine.ShouldCloseOrphanInput(
-            Record(TaskWireKeys.StatusSuspended, active: "a", queued: new[] { "q1", "q2" }), "q1"), Is.False,
+            Record(TaskWireKeys.StatusSuspended, active: "a", queued: new[] { "q1", "q2" }), "q1", Agent, Session), Is.False,
             "A durably-queued input runs on resume; its stream must stay open.");
 
     [Test]
     public void LeavesMissingRecordUntouched()
-        => Assert.That(TaskEngine.ShouldCloseOrphanInput(null, "a"), Is.False,
+        => Assert.That(TaskEngine.ShouldCloseOrphanInput(null, "a", Agent, Session), Is.False,
             "A deleted or foreign-scope task's stream must never be sealed.");
 
     [Test]
@@ -102,13 +138,33 @@ public class TaskOrphanStreamSweepTests
     {
         TaskRecord record = Record(TaskWireKeys.StatusSuspended, active: "a");
         record.Source = new Source { Type = "other.framework" };
-        Assert.That(TaskEngine.ShouldCloseOrphanInput(record, "a"), Is.False);
+        Assert.That(TaskEngine.ShouldCloseOrphanInput(record, "a", Agent, Session), Is.False);
+    }
+
+    [Test]
+    public void LeavesForeignAgentScopeUntouched()
+    {
+        // A present, terminal, matching-source record that belongs to ANOTHER agent on the shared
+        // store must not be swept: the direct-by-id lookup can see it, but it is out of scope.
+        TaskRecord record = Record(TaskWireKeys.StatusSuspended, active: "a");
+        record.AgentName = "other-agent";
+        Assert.That(TaskEngine.ShouldCloseOrphanInput(record, "a", Agent, Session), Is.False,
+            "A record owned by a different agent is outside this engine's recovery scope.");
+    }
+
+    [Test]
+    public void LeavesForeignSessionScopeUntouched()
+    {
+        TaskRecord record = Record(TaskWireKeys.StatusSuspended, active: "a");
+        record.SessionId = "other-session";
+        Assert.That(TaskEngine.ShouldCloseOrphanInput(record, "a", Agent, Session), Is.False,
+            "A record owned by a different session is outside this engine's recovery scope.");
     }
 
     [Test]
     public void LeavesPendingRecordUntouched()
         => Assert.That(TaskEngine.ShouldCloseOrphanInput(
-            Record(TaskWireKeys.StatusPending, active: "a"), "a"), Is.False);
+            Record(TaskWireKeys.StatusPending, active: "a"), "a", Agent, Session), Is.False);
 
     private static TaskRecord Record(string status, string active, string[]? queued = null)
     {
@@ -132,6 +188,8 @@ public class TaskOrphanStreamSweepTests
         {
             Id = "t",
             Status = status,
+            AgentName = Agent,
+            SessionId = Session,
             Source = new Source { Type = TaskWireKeys.SourceTypeValue, Name = "task" },
             Payload = payload,
         };

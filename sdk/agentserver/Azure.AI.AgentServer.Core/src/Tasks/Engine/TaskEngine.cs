@@ -2449,7 +2449,10 @@ internal sealed partial class TaskEngine : IDisposable
 
     // One-shot cold-start cleanup of streams orphaned by a previous process. Bounded by the number
     // of persisted stream files (not task records); reconciliation of the record side is untouched —
-    // the startup scan still recovers only in_progress tasks.
+    // the startup scan still recovers only in_progress tasks. A transient close/read failure is
+    // retried in-place (still before any producer runs) up to OrphanSweepMaxAttempts rather than
+    // permanently leaving that orphan open; the sweep never re-runs after the engine dispatches work,
+    // so a live in-process producer's stream can never be closed by a later pass.
     private async Task SweepOrphanStreamsOnceAsync(CancellationToken cancellationToken)
     {
         if (Interlocked.Exchange(ref _orphanSweepDone, 1) != 0)
@@ -2462,40 +2465,70 @@ internal sealed partial class TaskEngine : IDisposable
             return;
         }
 
-        // Cache the record per task id so a multi-turn task with several streams is read once.
+        // Cache the record per task id so a multi-turn task with several streams is read once. A
+        // definitive result (including a genuine absence) persists across retry passes; an uncertain
+        // read is deliberately left uncached so a later pass re-attempts it.
         var records = new Dictionary<string, TaskRecord?>(StringComparer.Ordinal);
 
-        await registry.CloseOrphanTaskStreamsAsync(
-            async (taskId, inputId) =>
-            {
-                if (!records.TryGetValue(taskId, out TaskRecord? record))
+        for (int attempt = 0; attempt < TaskEngineConstants.OrphanSweepMaxAttempts; attempt++)
+        {
+            bool uncertainRead = false;
+
+            int closeFailures = await registry.CloseOrphanTaskStreamsAsync(
+                async (taskId, inputId) =>
                 {
-                    try
+                    if (!records.TryGetValue(taskId, out TaskRecord? record))
                     {
-                        record = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (TaskStoreException)
-                    {
-                        // An uncertain read must not be treated as absence; leave the stream open.
-                        record = null;
+                        try
+                        {
+                            record = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false);
+                            records[taskId] = record;
+                        }
+                        catch (TaskStoreException)
+                        {
+                            // An uncertain read must not be treated as absence (which would leave the
+                            // stream open forever): don't cache it, keep the stream open this pass, and
+                            // retry the candidate on the next bounded attempt.
+                            uncertainRead = true;
+                            return false;
+                        }
                     }
 
-                    records[taskId] = record;
-                }
+                    return ShouldCloseOrphanInput(record, inputId, _agentName, _sessionId);
+                },
+                cancellationToken).ConfigureAwait(false);
 
-                return ShouldCloseOrphanInput(record, inputId);
-            },
-            cancellationToken).ConfigureAwait(false);
+            // Stop as soon as a pass closes every eligible orphan with no transient failure; otherwise
+            // retry (bounded) so a transient close/read error recovers without a full task-record scan.
+            if (closeFailures == 0 && !uncertainRead)
+            {
+                break;
+            }
+        }
     }
 
-    // A persisted task stream is closeable only when its owning framework record is present and the
-    // input is no longer live: for an in_progress record the executing input and every queued input
-    // stay open; for a terminal (suspended/completed) record only its queued inputs stay open. A
-    // record that is absent (deleted, or owned by another agent/session scope) is left untouched, so
-    // a live or foreign stream is never sealed.
-    internal static bool ShouldCloseOrphanInput(TaskRecord? record, string inputId)
+    // A persisted task stream is closeable only when its owning framework record is present, in THIS
+    // engine's (agent, session) recovery scope, and the input is no longer live: for an in_progress
+    // record the executing input and every queued input stay open; for a terminal (suspended/
+    // completed) record only its queued inputs stay open. A record that is absent (deleted), owned by
+    // a foreign source type, or owned by another agent/session on the shared store is left untouched,
+    // so a live, deleted, or foreign stream is never sealed.
+    internal static bool ShouldCloseOrphanInput(
+        TaskRecord? record,
+        string inputId,
+        string expectedAgentName,
+        string expectedSessionId)
     {
         if (record is null || record.Source?.Type != TaskWireKeys.SourceTypeValue)
+        {
+            return false;
+        }
+
+        // Scope guard: LocalTaskStore.GetAsync/FindTaskPath resolves by task id across every
+        // agent/session directory, so a second engine sharing the storage root can see records it
+        // does not own. Never close a stream whose record belongs to a different (agent, session).
+        if (!string.Equals(record.AgentName, expectedAgentName, StringComparison.Ordinal)
+            || !string.Equals(record.SessionId, expectedSessionId, StringComparison.Ordinal))
         {
             return false;
         }
