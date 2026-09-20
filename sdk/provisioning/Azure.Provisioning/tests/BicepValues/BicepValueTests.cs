@@ -351,6 +351,45 @@ public class BicepValueTests
     }
 
     [Test]
+    public async Task ValidateBicepDictionaryBinaryDataInTemplate()
+    {
+        await using Trycep test = new();
+        test.Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                ProvisioningParameter featureFlag = new(nameof(featureFlag), typeof(bool));
+                BicepDictionary<object> value = new()
+                {
+                    ["enabled"] = featureFlag,
+                    ["retryCount"] = 3
+                };
+
+                infra.Add(featureFlag);
+                infra.Add(new BinaryDataResource("resource")
+                {
+                    Name = "binary-data",
+                    Value = value.Compile()
+                });
+                return infra;
+            })
+            .Compare(
+                """
+                param featureFlag bool
+
+                resource resource 'Test.Provider/binaryDataResources@2024-01-01' = {
+                  name: 'binary-data'
+                  properties: {
+                    value: {
+                      enabled: featureFlag
+                      retryCount: 3
+                    }
+                  }
+                }
+                """);
+    }
+
+    [Test]
     public void ValidateInvalidJsonBinaryDataThrowsJsonException()
     {
         foreach (BinaryData data in new[]
