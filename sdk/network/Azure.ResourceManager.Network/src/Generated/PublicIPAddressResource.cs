@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PublicIPAddressResource(ArmClient client, PublicIPAddressData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicIPAddressResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string publicIPAddressApiVersion);
+            TryGetApiVersion(ResourceType, out string publicIPAddressApiVersion);
             _publicIPAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicIPAddressApiVersion ?? "2026-01-01");
-            PublicIPAddressResource.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    PublicIPAddressData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    PublicIPAddressData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    PublicIPAddressData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    PublicIPAddressData current = Get(cancellationToken: cancellationToken).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    PublicIPAddressData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    PublicIPAddressData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     patch.Tags.ReplaceWith(tags);
                     Response<PublicIPAddressResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    PublicIPAddressData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    PublicIPAddressData current = Get(cancellationToken: cancellationToken).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     patch.Tags.ReplaceWith(tags);
                     Response<PublicIPAddressResource> result = Update(patch, cancellationToken: cancellationToken);
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    PublicIPAddressData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    PublicIPAddressData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -995,7 +995,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    PublicIPAddressData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    PublicIPAddressData current = Get(cancellationToken: cancellationToken).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkInterfaceResource(ArmClient client, NetworkInterfaceData data) : this(client, data.Id)
         {
-            this.HasData = true;
+            HasData = true;
             _data = data;
         }
 
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkInterfaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            this.TryGetApiVersion(ResourceType, out string networkInterfaceApiVersion);
+            TryGetApiVersion(ResourceType, out string networkInterfaceApiVersion);
             _networkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceApiVersion ?? "2026-01-01");
             _networkInterfaceLoadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
             _networkInterfaceLoadBalancersRestClient = new NetworkInterfaceLoadBalancers(_networkInterfaceLoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkInterfaceApiVersion ?? "2026-01-01");
-            NetworkInterfaceResource.ValidateResourceId(id);
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    NetworkInterfaceData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkInterfaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    NetworkInterfaceData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkInterfaceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    NetworkInterfaceData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkInterfaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     patch.Tags.ReplaceWith(tags);
                     Response<NetworkInterfaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    NetworkInterfaceData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkInterfaceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     patch.Tags.ReplaceWith(tags);
                     Response<NetworkInterfaceResource> result = Update(patch, cancellationToken: cancellationToken);
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    NetworkInterfaceData current = (await this.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NetworkInterfaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Network
                 }
                 else
                 {
-                    NetworkInterfaceData current = this.Get(cancellationToken: cancellationToken).Value.Data;
+                    NetworkInterfaceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     NetworkTagsObject patch = new NetworkTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
