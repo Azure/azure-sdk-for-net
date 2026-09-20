@@ -38,8 +38,9 @@ public class ProjectsRealtimeConnectionErrorTests : ProjectsRealtimeLiveTestBase
         WebSocketException exception = null;
         try
         {
-            using ProjectsRealtimeSessionClient session = await client.GetProjectsRealtimeSessionClientAsync(
+            using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
                 "cs-e2e-tests-nonexistent-agent",
+                intent: null,
                 cancellationToken: timeout.Token);
         }
         catch (WebSocketException ex)
@@ -47,6 +48,6 @@ public class ProjectsRealtimeConnectionErrorTests : ProjectsRealtimeLiveTestBase
             exception = ex;
         }
 
-        Assert.That(exception, Is.Not.Null, "Expected GetProjectsRealtimeSessionClientAsync to throw a WebSocketException for an unknown agent.");
+        Assert.That(exception, Is.Not.Null, "Expected ProjectsRealtimeClient.StartSessionAsync to throw a WebSocketException for an unknown agent.");
     }
 }

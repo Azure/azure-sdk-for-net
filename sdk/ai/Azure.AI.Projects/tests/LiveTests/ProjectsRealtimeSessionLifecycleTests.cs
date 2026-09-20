@@ -47,7 +47,7 @@ public class ProjectsRealtimeSessionLifecycleTests : ProjectsRealtimeLiveTestBas
                 cancellationToken: cancellationToken);
         }
 
-        return await client.GetProjectsRealtimeSessionClientAsync(LIFECYCLE_AGENT_NAME, cancellationToken: cancellationToken);
+        return (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(LIFECYCLE_AGENT_NAME, intent: null, cancellationToken: cancellationToken);
     }
 
     // -----------------------------------------------------------------------

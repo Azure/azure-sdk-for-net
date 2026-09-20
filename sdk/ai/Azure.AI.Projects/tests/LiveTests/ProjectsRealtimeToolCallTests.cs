@@ -80,8 +80,9 @@ public class ProjectsRealtimeToolCallTests : ProjectsRealtimeLiveTestBase
         using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
         await EnsureToolCallAgentAsync(client.AgentAdministrationClient, timeout.Token);
 
-        using ProjectsRealtimeSessionClient session = await client.GetProjectsRealtimeSessionClientAsync(
+        using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
             TOOLCALL_AGENT_NAME,
+            intent: null,
             cancellationToken: timeout.Token);
 
         await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("What time is it right now in Seattle?"), timeout.Token);

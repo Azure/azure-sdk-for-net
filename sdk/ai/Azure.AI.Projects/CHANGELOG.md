@@ -3,11 +3,12 @@
 ## 3.0.0-beta.3 (2026-09-16)
 
 ### Features Added
-- Added `ProjectsRealtimeSessionClient` to work with voice agents. `AIProjectClient.GetProjectsRealtimeSessionClientAsync` connects `ProjectsRealtimeSessionClient` to the named voice agent's realtime endpoint (`/agents/{agentName}/endpoint/protocols/voice`) and returns an already-connected instance; a `store` parameter controls whether the session's conversation is persisted.
+- Added `ProjectsRealtimeClient` and `ProjectsRealtimeSessionClient` to work with voice agents. `AIProjectClient.ProjectsRealtimeClient` gets a `ProjectsRealtimeClient`; calling `StartSessionAsync(model, intent, options, cancellationToken)` on it -- the same method used with OpenAI's own `RealtimeClient` -- connects a `ProjectsRealtimeSessionClient` to the named voice agent's realtime endpoint (`/agents/{agentName}/endpoint/protocols/voice`). Pass `store=true`/`store=false` via `options.QueryString` to control whether the session's conversation is persisted.
 
 ### Breaking Changes
 - `MaxSamples` member was removed from `DataGenerationJobOptions`.
-- `AIProjectClient.GetProjectsRealtimeSessionClient(string, string)` was replaced by the asynchronous `GetProjectsRealtimeSessionClientAsync(string, string, bool?, CancellationToken)`, which now actually establishes the realtime WebSocket connection before returning (the previous synchronous method returned an unconnected client).
+- `AIProjectClient.GetProjectsRealtimeSessionClient(string, string)` and its replacement `GetProjectsRealtimeSessionClientAsync(string, string, bool?, CancellationToken)` were both removed in favor of `AIProjectClient.ProjectsRealtimeClient.StartSessionAsync(string, string, RealtimeSessionClientOptions, CancellationToken)`, reusing OpenAI's own `RealtimeClient.StartSessionAsync` method rather than introducing a separate one.
+- `ProjectsRealtimeSessionClient`'s public constructor no longer takes a `store` parameter; `store` is only meaningful as a per-connection option (passed via `RealtimeSessionClientOptions.QueryString` when calling `StartSessionAsync`), not a constructor-time one.
 
 ### Sample Updates
 - Added `Sample_VoiceAgent`, showing how to create a voice agent and exchange a realtime text turn with it, and `Sample_VoiceAgent_ReadConversation`, showing how to persist a realtime session's conversation with `store: true` and read it back afterward through `BetaVoiceAgentsConversations`.

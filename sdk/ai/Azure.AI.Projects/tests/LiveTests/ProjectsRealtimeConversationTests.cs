@@ -117,8 +117,9 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
         using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
         await EnsureConversationAgentAsync(client.AgentAdministrationClient, timeout.Token);
 
-        using ProjectsRealtimeSessionClient session = await client.GetProjectsRealtimeSessionClientAsync(
+        using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
             CONVERSATION_AGENT_NAME,
+            intent: null,
             cancellationToken: timeout.Token);
 
         await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("Say hello in one short sentence."), timeout.Token);
@@ -156,9 +157,10 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
         await EnsureConversationAgentAsync(client.AgentAdministrationClient, timeout.Token);
 
         string conversationId;
-        using (ProjectsRealtimeSessionClient session = await client.GetProjectsRealtimeSessionClientAsync(
+        using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
             CONVERSATION_AGENT_NAME,
-            store: true,
+            intent: null,
+            options: new RealtimeSessionClientOptions { QueryString = "store=true" },
             cancellationToken: timeout.Token))
         {
             await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("Say hello in one short sentence."), timeout.Token);
@@ -220,8 +222,9 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
         using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(2));
         await EnsureAudioConversationAgentAsync(client.AgentAdministrationClient, timeout.Token);
 
-        using ProjectsRealtimeSessionClient session = await client.GetProjectsRealtimeSessionClientAsync(
+        using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
             AUDIO_CONVERSATION_AGENT_NAME,
+            intent: null,
             cancellationToken: timeout.Token);
 
         await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("Say hello in one short sentence."), timeout.Token);

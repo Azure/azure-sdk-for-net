@@ -4,7 +4,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,10 +20,13 @@ namespace Azure.AI.Projects;
 /// <see cref="RealtimeSessionClient.SendInputAudioAsync(BinaryData, CancellationToken)"/>,
 /// <see cref="RealtimeSessionClient.AddItemAsync(RealtimeItem, string, CancellationToken)"/>, or
 /// <see cref="RealtimeSessionClient.ReceiveUpdatesAsync(CancellationToken)"/> for OpenAI's
-/// strongly-typed <see cref="RealtimeServerUpdate"/> sequence). Only the WebSocket connection
-/// handshake is overridden here to reach the Foundry voice-agent endpoint
-/// (<c>/agents/{agentName}/endpoint/protocols/voice</c>) instead of OpenAI's generic
-/// <c>/realtime</c> endpoint. Use <see cref="AIProjectClient.GetProjectsRealtimeSessionClientAsync"/>
+/// strongly-typed <see cref="RealtimeServerUpdate"/> sequence). Only the query string/header
+/// values are Foundry-specific here (see the <see cref="ConnectAsync"/> override below); the
+/// WebSocket handshake itself is performed by the base <see cref="RealtimeSessionClient.ConnectAsync"/>
+/// implementation, targeting the Foundry voice-agent endpoint
+/// (<c>/agents/{agentName}/endpoint/protocols/voice</c>) this instance was constructed with instead
+/// of OpenAI's generic <c>/realtime</c> endpoint. Use
+/// <see cref="ProjectsRealtimeClient.StartSessionAsync"/> (via <see cref="AIProjectClient.ProjectsRealtimeClient"/>)
 /// to obtain an already-connected instance.
 /// </remarks>
 [Experimental("AAIP002")]
@@ -38,9 +40,8 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
 
     private readonly string _experimentalHeaders;
     private readonly AuthenticationTokenProvider _tokenProvider;
-    private readonly Uri _endpoint;
-    private readonly string _agentName;
-    private readonly bool? _store;
+    private readonly IReadOnlyDictionary<string, object> _tokenProperties;
+    private readonly string _apiVersion;
 
     /// <summary>
     /// Internal empty constructor for mocking.
@@ -54,20 +55,32 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
     /// <param name="tokenProvider">The token provider used to authenticate the connection.</param>
     /// <param name="model">The name of the voice agent to connect to (used as the <c>{agentName}</c> path segment).</param>
     /// <param name="intent">The client intent.</param>
-    /// <param name="store">Whether this session's conversation is persisted, overriding the agent definition when specified.</param>
-    public ProjectsRealtimeSessionClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, string model, string intent = null, bool? store = null)
-        : this(endpoint, tokenProvider, model, intent, store, parentClient: null)
+    public ProjectsRealtimeSessionClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, string model, string intent = null)
+        : this(endpoint, tokenProvider, model, intent, tokenProperties: null, apiVersion: null, parentClient: null)
     {
     }
 
-    // Bridges AIProjectClient.GetProjectsRealtimeSessionClientAsync (a sibling type, not a subclass,
-    // but in the same assembly): it alone needs to additionally wire up the ProjectsRealtimeClient
-    // passed to the base OpenAI type, plus this type's own TokenProperties/ApiVersion used for its
-    // WebSocket handshake -- none of which an external caller has any legitimate reason to supply.
-    internal ProjectsRealtimeSessionClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, string model, string intent, bool? store, ProjectsRealtimeClient parentClient)
+    // Bridges ProjectsRealtimeClient.StartSessionAsync (a sibling type, not a subclass, but in the
+    // same assembly): it alone needs to additionally wire up the ProjectsRealtimeClient passed to
+    // the base OpenAI type, plus this type's own tokenProperties/apiVersion used for its WebSocket
+    // handshake -- none of which an external caller has any legitimate reason to supply.
+    //
+    // The agent-scoped WebSocket endpoint (.../agents/{model}/endpoint/protocols/voice) is resolved
+    // once, here, and handed to the base RealtimeSessionClient constructor as its own endpoint. That
+    // lets the base ConnectAsync's own URI building (endpoint + queryString) produce the correct
+    // Foundry URL unmodified -- see the ConnectAsync override below, which only needs to supply the
+    // Foundry-specific query string/headers, not rebuild the whole URI itself.
+    internal ProjectsRealtimeSessionClient(
+        Uri endpoint,
+        AuthenticationTokenProvider tokenProvider,
+        string model,
+        string intent,
+        IReadOnlyDictionary<string, object> tokenProperties,
+        string apiVersion,
+        ProjectsRealtimeClient parentClient)
         : base(
             credential: null,
-            endpoint: endpoint,
+            endpoint: RealtimeClientHelper.GetAgentWebSocketEndpoint(endpoint, model),
             model: model,
             intent: intent,
             parentClient: parentClient
@@ -76,72 +89,63 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
         Argument.AssertNotNullOrEmpty(model, nameof(model));
 
         _tokenProvider = tokenProvider;
-        _endpoint = endpoint;
-        _agentName = model;
-        _store = store;
+        _tokenProperties = tokenProperties;
+        _apiVersion = apiVersion;
         _experimentalHeaders = parentClient?.ExperimentalHeaders ?? RealtimeClientHelper.ExperimentalHeaders(null);
     }
 
-    // Set by AIProjectClient.GetProjectsRealtimeSessionClientAsync right after construction; see the
-    // internal constructor above for why these can't just be additional constructor parameters.
-    internal IReadOnlyDictionary<string, object> TokenProperties { get; set; }
-    internal string ApiVersion { get; set; }
-
-    // Bridges AIProjectClient.GetProjectsRealtimeSessionClientAsync (a sibling type, not a subclass,
-    // but in the same assembly) to the protected ConnectAsync override below; the override itself
-    // cannot be "protected internal" because it overrides a protected-internal member declared in
-    // another assembly (OpenAI.dll).
-    internal Task ConnectInternalAsync(CancellationToken cancellationToken)
-        => ConnectAsync(queryString: null, headers: null, cancellationToken: cancellationToken);
+    // Bridges ProjectsRealtimeClient.StartSessionAsync (a sibling type, not a subclass, but in the
+    // same assembly) to the protected ConnectAsync override below; the override itself cannot be
+    // "protected internal" because it overrides a protected-internal member declared in another
+    // assembly (OpenAI.dll).
+    internal Task ConnectInternalAsync(string queryString, IDictionary<string, string> headers, CancellationToken cancellationToken)
+        => ConnectAsync(queryString: queryString, headers: headers, cancellationToken: cancellationToken);
 
     /// <summary>
-    /// Connect to the web socket of the Voice Agent.
+    /// Connects to the Foundry voice-agent endpoint this instance was constructed with. Only the
+    /// Foundry-specific query string (api-version, merged with any caller-supplied query string --
+    /// see <paramref name="queryString"/> -- such as ProjectsRealtimeClient.StartSessionAsync's
+    /// "store" option) and headers (User-Agent, Foundry-Features, bearer Authorization) are computed
+    /// here; the WebSocket handshake itself (subprotocol negotiation, applying the headers,
+    /// connecting, assigning <see cref="RealtimeSessionClient.WebSocket"/>) is entirely delegated to
+    /// <see cref="RealtimeSessionClient.ConnectAsync"/>.
     /// </summary>
-    /// <param name="queryString"></param>
-    /// <param name="headers">Additional headers to ba added to the request.</param>
+    /// <param name="queryString">An additional query string merged in after api-version.</param>
+    /// <param name="headers">Additional headers to merge with the ones this override computes.</param>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     protected override async Task ConnectAsync(string queryString = null, IDictionary<string, string> headers = null, CancellationToken cancellationToken = default)
     {
-        ClientWebSocket webSocket = new();
-        try
+        GetTokenOptions tokenOptions = new(_tokenProperties);
+        AuthenticationToken token = await _tokenProvider.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
+
+        Dictionary<string, string> connectionHeaders = new()
         {
-            webSocket.Options.AddSubProtocol("realtime");
-            webSocket.Options.SetRequestHeader("User-Agent", s_userAgent);
-            webSocket.Options.SetRequestHeader("Foundry-Features", _experimentalHeaders);
-            if (headers is not null)
+            ["User-Agent"] = s_userAgent,
+            ["Foundry-Features"] = _experimentalHeaders,
+            ["Authorization"] = $"{token.TokenType} {token.TokenValue}",
+        };
+        if (headers is not null)
+        {
+            foreach (KeyValuePair<string, string> nameHeader in headers)
             {
-                foreach (KeyValuePair<string, string> nameHeader in headers)
-                {
-                    webSocket.Options.SetRequestHeader(nameHeader.Key, nameHeader.Value);
-                }
+                connectionHeaders[nameHeader.Key] = nameHeader.Value;
             }
-            GetTokenOptions tokenOptions = new(TokenProperties);
-            AuthenticationToken token = await _tokenProvider.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
-            webSocket.Options.SetRequestHeader("Authorization", $"{token.TokenType} {token.TokenValue}");
-
-            Uri socketUri = BuildConnectionUri(queryString);
-            await webSocket.ConnectAsync(socketUri, cancellationToken).ConfigureAwait(false);
-            WebSocket = webSocket;
         }
-        catch
-        {
-            webSocket.Dispose();
-            throw;
-        }
-    }
 
-    private Uri BuildConnectionUri(string queryString)
-    {
-        Uri baseUri = RealtimeClientHelper.GetAgentWebSocketEndpoint(_endpoint, _agentName);
+        StringBuilder mergedQueryString = new();
+        RealtimeClientHelper.AppendQueryParameter(mergedQueryString, "api-version", _apiVersion);
         if (!string.IsNullOrEmpty(queryString))
         {
-            return new UriBuilder(baseUri) { Query = queryString }.Uri;
+            if (mergedQueryString.Length > 0)
+            {
+                mergedQueryString.Append('&');
+            }
+            mergedQueryString.Append(queryString);
         }
 
-        StringBuilder query = new StringBuilder();
-        RealtimeClientHelper.AppendQueryParameter(query, "api-version", ApiVersion);
-        RealtimeClientHelper.AppendQueryParameter(query, "store", _store.HasValue ? (_store.Value ? "true" : "false") : null);
-        return new UriBuilder(baseUri) { Query = query.ToString() }.Uri;
+        await base.ConnectAsync(
+            queryString: mergedQueryString.ToString(),
+            headers: connectionHeaders,
+            cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 }

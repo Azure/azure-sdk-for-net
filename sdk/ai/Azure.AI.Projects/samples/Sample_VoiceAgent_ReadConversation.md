@@ -25,13 +25,15 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 2. Hold a realtime session with `store: true` and note the conversation ID reported by `response.done`.
 
 ```C# Snippet:Sample_VoiceAgent_ReadConversation_HoldSession
-// store: true persists this session's conversation so it can be read back afterward
-// through BetaVoiceAgentsConversations; the response.done event reports the resulting
-// conversation ID.
+// Passing store: true (via options.QueryString) persists this session's conversation so
+// it can be read back afterward through BetaVoiceAgentsConversations; the response.done
+// event reports the resulting conversation ID.
 string conversationId;
-using (ProjectsRealtimeSessionClient session = await projectClient.GetProjectsRealtimeSessionClientAsync(
-    agentName,
-    store: true))
+using (ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
+    await projectClient.ProjectsRealtimeClient.StartSessionAsync(
+        agentName,
+        intent: null,
+        options: new RealtimeSessionClientOptions { QueryString = "store=true" }))
 {
     await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("Say hello in one short sentence."));
     await session.StartResponseAsync();

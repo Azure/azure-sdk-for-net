@@ -15,6 +15,7 @@ using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
+using OpenAI.Realtime;
 
 #pragma warning disable AZC0007
 
@@ -235,44 +236,17 @@ namespace Azure.AI.Projects
         [Experimental("AAIP002")]
         internal virtual ProjectsRealtimeClient GetProjectsRealtimeClient()
         {
-            return Volatile.Read(ref _cachedProjectsRealtimeClient) ?? Interlocked.CompareExchange(ref _cachedProjectsRealtimeClient, new ProjectsRealtimeClient(_endpoint, _tokenProvider, s_experimentalHeaders), null) ?? _cachedProjectsRealtimeClient;
+            return Volatile.Read(ref _cachedProjectsRealtimeClient) ?? Interlocked.CompareExchange(ref _cachedProjectsRealtimeClient, new ProjectsRealtimeClient(_endpoint, _tokenProvider, _flows[0], _apiVersion, s_experimentalHeaders), null) ?? _cachedProjectsRealtimeClient;
         }
 
         /// <summary>
-        /// Creates and connects a new <see cref="ProjectsRealtimeSessionClient"/> for the named voice agent.
+        /// Gets the client for working with Voice Agents' realtime endpoints. Call
+        /// <see cref="ProjectsRealtimeClient.StartSessionAsync"/> on it (the same method an OpenAI
+        /// <see cref="RealtimeClient"/> consumer would use) to start and connect a session for a
+        /// named voice agent.
         /// </summary>
-        /// <param name="model">The name of the voice agent to connect to (used as the <c>{agentName}</c> path segment).</param>
-        /// <param name="intent">The client intent.</param>
-        /// <param name="store">Whether this session's conversation is persisted, overriding the agent definition when specified.</param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns>A connected <see cref="ProjectsRealtimeSessionClient"/>.</returns>
-#pragma warning disable AZC0015 // Returns a connected WebSocket session client, not a REST response; there is no response body to wrap.
-#pragma warning disable AZC0004 // Establishing a WebSocket connection is asynchronous-only.
         [Experimental("AAIP002")]
-        public virtual async Task<ProjectsRealtimeSessionClient> GetProjectsRealtimeSessionClientAsync(
-            string model,
-            string intent = null,
-            bool? store = null,
-            CancellationToken cancellationToken = default)
-#pragma warning restore AZC0004
-#pragma warning restore AZC0015
-        {
-            ProjectsRealtimeSessionClient session = new(_endpoint, _tokenProvider, model, intent, store, GetProjectsRealtimeClient())
-            {
-                TokenProperties = _flows[0],
-                ApiVersion = _apiVersion,
-            };
-            try
-            {
-                await session.ConnectInternalAsync(cancellationToken).ConfigureAwait(false);
-                return session;
-            }
-            catch
-            {
-                session.Dispose();
-                throw;
-            }
-        }
+        public virtual ProjectsRealtimeClient ProjectsRealtimeClient => GetProjectsRealtimeClient();
 
         /// <summary> Initializes a new instance of AgentInsightMonitors. </summary>
         internal virtual AgentInsightMonitors GetAgentInsightMonitorsClient()

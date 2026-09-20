@@ -56,9 +56,12 @@ public class Sample_VoiceAgent : SamplesBase
             #region Snippet:Sample_VoiceAgent_Realtime
             // ProjectsRealtimeSessionClient extends OpenAI's RealtimeSessionClient, so it reuses
             // OpenAI's realtime command/event model (SendInputAudioAsync, AddItemAsync,
-            // StartResponseAsync, ReceiveUpdatesAsync, ...); only the WebSocket handshake targets
-            // the Foundry voice-agent endpoint instead of OpenAI's own /realtime endpoint.
-            using ProjectsRealtimeSessionClient session = await projectClient.GetProjectsRealtimeSessionClientAsync(agentName);
+            // StartResponseAsync, ReceiveUpdatesAsync, ...). Getting one works the same way as with
+            // OpenAI's own RealtimeClient: call StartSessionAsync on a ProjectsRealtimeClient; only
+            // the WebSocket handshake targets the Foundry voice-agent endpoint instead of OpenAI's
+            // own /realtime endpoint.
+            using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)
+                await projectClient.ProjectsRealtimeClient.StartSessionAsync(agentName, intent: null);
 
             await session.AddItemAsync(RealtimeItem.CreateUserMessageItem("Say hello in one short sentence."));
             await session.StartResponseAsync();

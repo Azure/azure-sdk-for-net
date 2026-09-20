@@ -9,14 +9,16 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using OpenAI.Realtime;
 
 #pragma warning disable AAIP002
+#pragma warning disable OPENAI002
 
 namespace Azure.AI.Projects.Tests;
 
 /// <summary>
 /// Unit tests for the Voice Agents realtime session connection handshake
-/// (<see cref="AIProjectClient.GetProjectsRealtimeSessionClientAsync"/> and
+/// (<see cref="ProjectsRealtimeClient.StartSessionAsync"/> and
 /// <see cref="ProjectsRealtimeSessionClient"/>). These use a real loopback HttpListener/WebSocket
 /// handshake (not a live Foundry resource) so the request the client actually sends on the wire can
 /// be observed.
@@ -25,7 +27,7 @@ public class ProjectsRealtimeClientTests
 {
     // -----------------------------------------------------------------------
     // Verifies (without any live Foundry service, using a real loopback
-    // HttpListener/WebSocket handshake): AIProjectClient.GetProjectsRealtimeSessionClientAsync
+    // HttpListener/WebSocket handshake): ProjectsRealtimeClient.StartSessionAsync
     // actually performs a connection attempt (the bug fixed in this change was that nothing ever
     // called ConnectAsync), and that it targets the agent-scoped
     // "/agents/{agentName}/endpoint/protocols/voice" path -- not OpenAI's generic
@@ -67,8 +69,9 @@ public class ProjectsRealtimeClientTests
         using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
         try
         {
-            using ProjectsRealtimeSessionClient session = await client.GetProjectsRealtimeSessionClientAsync(
+            using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
                 "cs-e2e-connectivity-test-agent",
+                intent: null,
                 cancellationToken: timeout.Token);
         }
         catch
@@ -94,8 +97,8 @@ public class ProjectsRealtimeClientTests
     }
 
     // -----------------------------------------------------------------------
-    // Verifies that GetProjectsRealtimeSessionClientAsync's store parameter is reflected as a
-    // "store" query parameter on the realtime WebSocket handshake.
+    // Verifies that ProjectsRealtimeClient.StartSessionAsync's options.QueryString "store=true" is
+    // reflected as a "store" query parameter on the realtime WebSocket handshake.
     // -----------------------------------------------------------------------
     [Test]
     public async Task ConnectWithStoreOptionIncludesStoreQueryParameter()
@@ -126,9 +129,10 @@ public class ProjectsRealtimeClientTests
         using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
         try
         {
-            using ProjectsRealtimeSessionClient session = await client.GetProjectsRealtimeSessionClientAsync(
+            using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
                 "cs-e2e-connectivity-test-agent",
-                store: true,
+                intent: null,
+                options: new RealtimeSessionClientOptions { QueryString = "store=true" },
                 cancellationToken: timeout.Token);
         }
         catch
