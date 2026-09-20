@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Azure.Generator.Management.Tests.Common;
@@ -8,6 +9,7 @@ using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -73,6 +75,18 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(result, Is.Null);
         }
 
+        [TestCase(typeof(ResourceData))]
+        [TestCase(typeof(TrackedResourceData))]
+        public void InheritableSystemTypesCanBeResolvedByClrType(System.Type frameworkType)
+        {
+            Assert.That(
+                KnownManagementTypes.TryGetInheritableSystemType(new CSharpType(frameworkType), out var knownType),
+                Is.True);
+            Assert.That(knownType!.FrameworkType, Is.EqualTo(frameworkType));
+            Assert.That(frameworkType.IsAbstract, Is.True,
+                "Known ARM data bases are abstract marker classes without abstract members");
+        }
+
         [Test]
         public void KnownLastContractTrackedResourceDataCreatesMappedProvider()
         {
@@ -93,6 +107,11 @@ namespace Azure.Generator.Mgmt.Tests
                 lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
 
             var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+            var previousBase = provider.LastContractView!.BaseType!;
+            Assert.That(
+                KnownManagementTypes.TryGetInheritableSystemType(previousBase, out _),
+                Is.True,
+                $"Expected '{previousBase.FullyQualifiedName}' to resolve as a known inheritable management type");
             var mappedBase = provider.BaseModelProvider as SystemObjectModelProvider;
 
             Assert.Multiple(() =>
