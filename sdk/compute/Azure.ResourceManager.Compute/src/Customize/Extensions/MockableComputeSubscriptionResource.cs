@@ -92,7 +92,14 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            return GetVirtualMachineImagesAsync(location.Name, publisherName, offer, skus, expand, top, orderby, cancellationToken);
+            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location, publisherName, offer, skus)
+            {
+                Expand = expand,
+                Top = top,
+                Orderby = orderby
+            };
+
+            return GetVirtualMachineImagesAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Compute.Mocking
             Argument.AssertNotNullOrEmpty(offer, nameof(offer));
             Argument.AssertNotNullOrEmpty(skus, nameof(skus));
 
-            return GetVirtualMachineImages(location.Name, publisherName, offer, skus, expand, top, orderby, cancellationToken);
+            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location, publisherName, offer, skus)
+            {
+                Expand = expand,
+                Top = top,
+                Orderby = orderby
+            };
+
+            return GetVirtualMachineImages(options, cancellationToken);
         }
 
         /// <summary>
@@ -415,7 +429,23 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
-            return GetVirtualMachineImages(options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby, cancellationToken);
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ComputeVirtualMachineImagesOperationGroupListVersionsCollectionResultOfT(
+                VirtualMachineImagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                options.Location,
+                options.PublisherName,
+                options.Offer,
+                options.Skus,
+                options.Expand,
+                options.Top,
+                options.Orderby,
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImages");
         }
 
         /// <summary> Gets a list of virtual machine images. </summary>
@@ -423,7 +453,23 @@ namespace Azure.ResourceManager.Compute.Mocking
         {
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
-            return GetVirtualMachineImagesAsync(options.Location, options.PublisherName, options.Offer, options.Skus, options.Expand, options.Top, options.Orderby, cancellationToken);
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ComputeVirtualMachineImagesOperationGroupListVersionsAsyncCollectionResultOfT(
+                VirtualMachineImagesOperationGroupRestClient,
+                Id.SubscriptionId,
+                options.Location,
+                options.PublisherName,
+                options.Offer,
+                options.Skus,
+                options.Expand,
+                options.Top,
+                options.Orderby,
+                context,
+                "MockableComputeSubscriptionResource.GetVirtualMachineImages");
         }
 
         /// <summary> Gets a virtual machine image in an edge zone. </summary>

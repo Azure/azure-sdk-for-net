@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.Compute.Mocking;
 using Azure.ResourceManager.Compute.Models;
@@ -242,6 +243,35 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
                 }
                 count++;
             }
+        }
+
+        [Test]
+        public void Mocking_GetVirtualMachineImagesDoesNotRecurse()
+        {
+            var subscription = new ReproComputeSubscriptionResource();
+
+            var pageable = subscription.GetVirtualMachineImages(
+                new Azure.Core.AzureLocation("eastus"),
+                "MicrosoftWindowsServer",
+                "WindowsServer",
+                "2022-datacenter-azure-edition-smalldisk");
+            var asyncPageable = subscription.GetVirtualMachineImagesAsync(
+                new Azure.Core.AzureLocation("eastus"),
+                "MicrosoftWindowsServer",
+                "WindowsServer",
+                "2022-datacenter-azure-edition-smalldisk");
+
+            Assert.IsNotNull(pageable);
+            Assert.IsNotNull(asyncPageable);
+        }
+
+        private sealed class ReproComputeSubscriptionResource : MockableComputeSubscriptionResource
+        {
+            public override Pageable<VirtualMachineImageBase> GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+                => Pageable<VirtualMachineImageBase>.FromPages(Array.Empty<Page<VirtualMachineImageBase>>());
+
+            public override AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+                => AsyncPageable<VirtualMachineImageBase>.FromPages(Array.Empty<Page<VirtualMachineImageBase>>());
         }
     }
 }
