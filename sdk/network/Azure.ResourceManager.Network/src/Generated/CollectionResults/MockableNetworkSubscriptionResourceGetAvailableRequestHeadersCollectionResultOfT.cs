@@ -16,19 +16,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersCollectionResultOfT : Pageable<string>
+    internal partial class MockableNetworkSubscriptionResourceGetAvailableRequestHeadersCollectionResultOfT : Pageable<string>
     {
         private readonly ApplicationGateways _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of MockableNetworkSubscriptionResourceGetAvailableRequestHeadersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ApplicationGateways client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersCollectionResultOfT(ApplicationGateways client, Guid subscriptionId, RequestContext context, string diagnosticScope)
+        public MockableNetworkSubscriptionResourceGetAvailableRequestHeadersCollectionResultOfT(ApplicationGateways client, Guid subscriptionId, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Network
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MockableNetworkSubscriptionResourceGetAvailableRequestHeadersCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of MockableNetworkSubscriptionResourceGetAvailableRequestHeadersCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<string>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);

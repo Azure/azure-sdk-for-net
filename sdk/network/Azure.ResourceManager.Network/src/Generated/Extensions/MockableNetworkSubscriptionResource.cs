@@ -3486,7 +3486,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableServerVariablesAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
+            return new MockableNetworkSubscriptionResourceGetAvailableServerVariablesAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
         }
 
         /// <summary>
@@ -3514,7 +3514,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableServerVariablesCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
+            return new MockableNetworkSubscriptionResourceGetAvailableServerVariablesCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableServerVariables");
         }
 
         /// <summary>
@@ -3542,7 +3542,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableRequestHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
         }
 
         /// <summary>
@@ -3570,7 +3570,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableRequestHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableRequestHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableRequestHeaders");
         }
 
         /// <summary>
@@ -3598,7 +3598,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableResponseHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableResponseHeadersAsyncCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
         }
 
         /// <summary>
@@ -3626,7 +3626,7 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftNetworkApplicationGatewaysOperationGroupListAvailableResponseHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
+            return new MockableNetworkSubscriptionResourceGetAvailableResponseHeadersCollectionResultOfT(ApplicationGatewaysRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetAvailableResponseHeaders");
         }
 
         /// <summary>
