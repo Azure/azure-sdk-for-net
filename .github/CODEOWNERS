@@ -405,10 +405,10 @@
 # ServiceOwners: @Azure/azure-sdk-write-onlineexperimentation
 
 # PRLabel: %OpenAI
-/sdk/openai/    @joseharriaga @jpalvarezl @m-nash @trrwilson
+/sdk/openai/    @joseharriaga @jpalvarezl @m-nash
 
 # ServiceLabel: %OpenAI
-# ServiceOwners: @jpalvarezl @trrwilson
+# ServiceOwners: @jpalvarezl 
 
 # PRLabel: %Planetary Computer
 /sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/    @chahibi @karthick-rn @mandarinamdar
