@@ -779,6 +779,9 @@ namespace Azure.Storage.Files.Shares
                 MaxBurstCreditsForIops = response.Headers.TryGetValue("x-ms-share-max-burst-credits-for-iops", out long? maxBurstCreditsForIops) ? maxBurstCreditsForIops : null,
                 NextAllowedProvisionedIopsDowngradeTime = response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-iops-downgrade-time", out DateTimeOffset? nextIopsDowngrade) ? nextIopsDowngrade : null,
                 NextAllowedProvisionedBandwidthDowngradeTime = response.Headers.TryGetValue("x-ms-share-next-allowed-provisioned-bandwidth-downgrade-time", out DateTimeOffset? nextBwDowngrade) ? nextBwDowngrade : null,
+                EnableChangeFeed = response.Headers.TryGetValue("x-ms-file-enable-change-feed", out bool? enableChangeFeed) ? enableChangeFeed : null,
+                ChangeFeedRetentionInDays = response.Headers.TryGetValue("x-ms-file-change-feed-retention-in-days", out int? changeFeedRetentionInDays) ? changeFeedRetentionInDays : null,
+                ChangeFeedBlobContainerName = response.Headers.TryGetValue("x-ms-file-blob-container-for-xfiles-change-feed", out string changeFeedBlobContainerName) ? changeFeedBlobContainerName : null,
                 //EnableDirectoryLease = response.Headers.EnableSmbDirectoryLease,
             };
         }

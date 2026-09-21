@@ -161,6 +161,24 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeTime { get; internal set; }
 
+        /// <summary>
+        /// Optional. Supported in version 2026-02-01 and above.
+        /// Specifies whether change feed is enabled on the share.
+        /// </summary>
+        public bool? EnableChangeFeed { get; internal set; }
+
+        /// <summary>
+        /// Optional. Supported in version 2026-02-01 and above.
+        /// The number of days that change feed records are retained on the share.  Valid values are between 1 and 365.
+        /// </summary>
+        public int? ChangeFeedRetentionInDays { get; internal set; }
+
+        /// <summary>
+        /// Optional. Supported in version 2026-02-01 and above.
+        /// The name of the blob container where the change feed records are stored.
+        /// </summary>
+        public string ChangeFeedBlobContainerName { get; internal set; }
+
         ///// <summary>
         ///// Optional, default value is true.  Ony applicable to SMB shares.
         ///// Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled.
