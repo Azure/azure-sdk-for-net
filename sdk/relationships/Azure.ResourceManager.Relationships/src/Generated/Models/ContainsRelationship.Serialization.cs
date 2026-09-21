@@ -10,76 +10,58 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Relationships.Models;
+using Azure.ResourceManager.Relationships;
 
-namespace Azure.ResourceManager.Relationships
+namespace Azure.ResourceManager.Relationships.Models
 {
-    /// <summary> Defines a ServiceGroupMember relationship resource. </summary>
-    public partial class ServiceGroupMemberRelationshipData : ResourceData, IJsonModel<ServiceGroupMemberRelationshipData>
+    /// <summary> Defines a contains relationship resource. </summary>
+    public partial class ContainsRelationship : ResourceData, IJsonModel<ContainsRelationship>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceGroupMemberRelationshipData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainsRelationship>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeServiceGroupMemberRelationshipData(document.RootElement, options);
+                        return DeserializeContainsRelationship(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceGroupMemberRelationshipData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainsRelationship)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceGroupMemberRelationshipData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainsRelationship>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRelationshipsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceGroupMemberRelationshipData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainsRelationship)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServiceGroupMemberRelationshipData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainsRelationship>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceGroupMemberRelationshipData IPersistableModel<ServiceGroupMemberRelationshipData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceGroupMemberRelationshipData)PersistableModelCreateCore(data, options);
+        ContainsRelationship IPersistableModel<ContainsRelationship>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainsRelationship)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServiceGroupMemberRelationshipData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="serviceGroupMemberRelationshipData"> The <see cref="ServiceGroupMemberRelationshipData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ServiceGroupMemberRelationshipData serviceGroupMemberRelationshipData)
-        {
-            if (serviceGroupMemberRelationshipData == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(serviceGroupMemberRelationshipData, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceGroupMemberRelationshipData"/> from. </param>
-        internal static ServiceGroupMemberRelationshipData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeServiceGroupMemberRelationshipData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<ContainsRelationship>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ServiceGroupMemberRelationshipData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainsRelationship>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +72,10 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceGroupMemberRelationshipData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainsRelationship>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceGroupMemberRelationshipData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainsRelationship)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,24 +102,24 @@ namespace Azure.ResourceManager.Relationships
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceGroupMemberRelationshipData IJsonModel<ServiceGroupMemberRelationshipData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceGroupMemberRelationshipData)JsonModelCreateCore(ref reader, options);
+        ContainsRelationship IJsonModel<ContainsRelationship>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainsRelationship)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceGroupMemberRelationshipData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainsRelationship>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceGroupMemberRelationshipData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainsRelationship)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServiceGroupMemberRelationshipData(document.RootElement, options);
+            return DeserializeContainsRelationship(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ServiceGroupMemberRelationshipData DeserializeServiceGroupMemberRelationshipData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainsRelationship DeserializeContainsRelationship(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +129,7 @@ namespace Azure.ResourceManager.Relationships
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ServiceGroupMemberRelationshipPropertiesV2 properties = default;
+            ContainsRelationshipProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +171,7 @@ namespace Azure.ResourceManager.Relationships
                     {
                         continue;
                     }
-                    properties = ServiceGroupMemberRelationshipPropertiesV2.DeserializeServiceGroupMemberRelationshipPropertiesV2(prop.Value, options);
+                    properties = ContainsRelationshipProperties.DeserializeContainsRelationshipProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +179,7 @@ namespace Azure.ResourceManager.Relationships
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServiceGroupMemberRelationshipData(
+            return new ContainsRelationship(
                 id,
                 name,
                 resourceType,

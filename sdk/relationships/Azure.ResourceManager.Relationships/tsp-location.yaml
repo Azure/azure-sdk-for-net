@@ -1,4 +1,6 @@
-directory: specification/relationships/Relationships.Management
-commit: d44296304c89dc2e634690f90950c5d97181aeec
+directory: specification/relationships/resource-manager/Microsoft.Relationships/Relationships
+commit: 85e949e122626f546750f7ce795e278f0523c1d9
 repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
