@@ -111,6 +111,13 @@ namespace Azure.Security.KeyVault.Tests
         public string EkmPrivateLinkServiceId => GetRecordedOptionalVariable("EKM_PRIVATE_LINK_SERVICE_ID", options => options.IsSecret("fake-private-link-service-id"));
 
         /// <summary>
+        /// The subject common name of the EKM proxy's server certificate. Required when connecting to an EKM proxy
+        /// through a private endpoint, since the private endpoint's name (not the proxy's real DNS name) is used
+        /// as the connection host.
+        /// </summary>
+        public string EkmServerSubjectCommonName => GetRecordedOptionalVariable("EKM_SERVER_SUBJECT_COMMON_NAME", options => options.IsSecret("ekm.contoso.com"));
+
+        /// <summary>
         /// Gets the value of the "AZURE_KEYVAULT_ATTESTATION_URL" variable.
         /// </summary>
         public Uri AttestationUri => Uri.TryCreate(GetRecordedOptionalVariable("AZURE_KEYVAULT_ATTESTATION_URL"), UriKind.Absolute, out Uri attestationUri)
