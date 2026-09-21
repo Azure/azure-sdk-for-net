@@ -369,5 +369,23 @@ namespace Azure.ResourceManager.Network
                 Properties.ExpressRoutePortId = value;
             }
         }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.expressRouteLag.id")]
+        public ResourceIdentifier ExpressRouteLagId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteLagId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCircuitPropertiesFormat();
+                }
+                Properties.ExpressRouteLagId = value;
+            }
+        }
     }
 }

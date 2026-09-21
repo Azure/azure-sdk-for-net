@@ -26,6 +26,24 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="CustomCaptureConfigurationsFirewallResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CustomCaptureConfigurationsFirewallResource"/> object. </returns>
+        public virtual CustomCaptureConfigurationsFirewallResource GetCustomCaptureConfigurationsFirewallResource(ResourceIdentifier id)
+        {
+            CustomCaptureConfigurationsFirewallResource.ValidateResourceId(id);
+            return new CustomCaptureConfigurationsFirewallResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LogIngestionSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LogIngestionSettingsResource"/> object. </returns>
+        public virtual LogIngestionSettingsResource GetLogIngestionSettingsResource(ResourceIdentifier id)
+        {
+            LogIngestionSettingsResource.ValidateResourceId(id);
+            return new LogIngestionSettingsResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="GlobalRulestackResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GlobalRulestackResource"/> object. </returns>

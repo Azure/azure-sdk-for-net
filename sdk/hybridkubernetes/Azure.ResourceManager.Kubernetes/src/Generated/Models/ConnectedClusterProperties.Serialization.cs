@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WritePropertyName("offering"u8);
                 writer.WriteStringValue(Offering);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityCertificateExpirationOn))
+            if (options.Format != "W" && Optional.IsDefined(ManagedIdentityCertificateExpiresOn))
             {
                 writer.WritePropertyName("managedIdentityCertificateExpirationTime"u8);
-                writer.WriteStringValue(ManagedIdentityCertificateExpirationOn.Value, "O");
+                writer.WriteStringValue(ManagedIdentityCertificateExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastConnectivityOn))
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             string distributionVersion = default;
             string infrastructure = default;
             string offering = default;
-            DateTimeOffset? managedIdentityCertificateExpirationOn = default;
+            DateTimeOffset? managedIdentityCertificateExpiresOn = default;
             DateTimeOffset? lastConnectivityOn = default;
             ConnectedClusterConnectivityStatus? connectivityStatus = default;
             ConnectedClusterPrivateLinkState? privateLinkState = default;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     {
                         continue;
                     }
-                    managedIdentityCertificateExpirationOn = prop.Value.GetDateTimeOffset("O");
+                    managedIdentityCertificateExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastConnectivityTime"u8))
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 distributionVersion,
                 infrastructure,
                 offering,
-                managedIdentityCertificateExpirationOn,
+                managedIdentityCertificateExpiresOn,
                 lastConnectivityOn,
                 connectivityStatus,
                 privateLinkState,

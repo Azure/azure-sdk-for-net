@@ -98,7 +98,7 @@ namespace Azure.Generator.Visitors
 #pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         private static bool IsStreamingResponseType(CSharpType? type)
             => UnwrapTask(type) is { IsFrameworkType: true, IsGenericType: true } streamingType &&
-               streamingType.GetGenericTypeDefinition().Equals(typeof(AsyncStreamingClientResult<>));
+               streamingType.GetGenericTypeDefinition().Equals(typeof(AsyncStreamingResult<>));
 #pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         private static bool TryFindAzureResponseMessage(

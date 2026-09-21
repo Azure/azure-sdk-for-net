@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WritePropertyName("azureGroupId"u8);
             writer.WriteStringValue(AzureGroupId);
             writer.WritePropertyName("expiration"u8);
-            writer.WriteStringValue(ExpireOn, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             writer.WritePropertyName("jumpHostsAllowed"u8);
             writer.WriteStartArray();
             foreach (IPAddress item in JumpHostsAllowed)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string azureGroupId = default;
-            DateTimeOffset expireOn = default;
+            DateTimeOffset expiresOn = default;
             IList<IPAddress> jumpHostsAllowed = default;
             string osGroupName = default;
             BareMetalMachineKeySetPrivilegeLevel privilegeLevel = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (prop.NameEquals("expiration"u8))
                 {
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("jumpHostsAllowed"u8))
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             return new BareMetalMachineKeySetProperties(
                 azureGroupId,
-                expireOn,
+                expiresOn,
                 jumpHostsAllowed,
                 osGroupName,
                 privilegeLevel,

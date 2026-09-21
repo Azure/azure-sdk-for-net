@@ -1,7 +1,11 @@
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 
 $supportedSpecs = @(
+    "http/azure/resource-manager/large-header"
+    "http/azure/resource-manager/management-group"
+    "http/azure/resource-manager/non-resource"
     "http/azure/resource-manager/operation-templates"
+    "http/azure/resource-manager/service-group"
 )
 
 function Capitalize-FirstLetter {

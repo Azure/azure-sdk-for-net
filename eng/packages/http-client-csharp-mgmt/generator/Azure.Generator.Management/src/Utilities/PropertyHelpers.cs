@@ -31,11 +31,9 @@ namespace Azure.Generator.Management.Utilities
             }
             while (baseTypes.TryPop(out var item))
             {
-                result.AddRange(item.Properties);
-                result.AddRange(item.CustomCodeView?.Properties ?? []);
+                result.AddRange(item.CanonicalView.Properties);
             }
-            result.AddRange(propertyModelProvider.Properties);
-            result.AddRange(propertyModelProvider.CustomCodeView?.Properties ?? []);
+            result.AddRange(propertyModelProvider.CanonicalView.Properties);
             return result;
         }
 
@@ -82,16 +80,19 @@ namespace Azure.Generator.Management.Utilities
             return false;
         }
 
-        public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider innerProperty)
+        public static MethodBodyStatement BuildGetter(bool? includeGetterNullCheck, PropertyProvider internalProperty, TypeProvider innerModel, PropertyProvider innerProperty, bool isPropertyLiftedToNullable)
         {
             var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
+            var guardedDefault = isPropertyLiftedToNullable && innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable
+                ? Default.CastTo(innerProperty.Type.WithNullable(true))
+                : Default;
             var shouldNullGuard = internalProperty.Type.IsNullable || internalProperty.WireInfo?.IsRequired == false || innerModel.Type.IsNullable;
             // For collection types, we initialize the internal property if it's null and return the inner property.
             if (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
             {
                 if (!internalProperty.Body.HasSetter)
                 {
-                    return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
+                    return Return(new TernaryConditionalExpression(checkNullExpression, guardedDefault, new MemberExpression(internalProperty, innerProperty.Name)));
                 }
 
                 return new List<MethodBodyStatement> {
@@ -127,13 +128,13 @@ namespace Azure.Generator.Management.Utilities
                         Return(new MemberExpression(internalProperty, innerProperty.Name))
                     };
                 }
-                return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
+                return Return(new TernaryConditionalExpression(checkNullExpression, guardedDefault, new MemberExpression(internalProperty, innerProperty.Name)));
             }
             else
             {
                 if (shouldNullGuard)
                 {
-                    return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
+                    return Return(new TernaryConditionalExpression(checkNullExpression, guardedDefault, new MemberExpression(internalProperty, innerProperty.Name)));
                 }
                 return Return(new MemberExpression(internalProperty, innerProperty.Name));
             }

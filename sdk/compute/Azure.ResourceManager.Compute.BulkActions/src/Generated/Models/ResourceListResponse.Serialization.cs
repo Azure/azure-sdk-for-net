@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Paged collection of ScheduledActionResource items. </summary>
+    /// <summary> A paged list of compute resources associated with a scheduled action. </summary>
     internal partial class ResourceListResponse : IJsonModel<ResourceListResponse>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceListResponse"/> for deserialization. </summary>

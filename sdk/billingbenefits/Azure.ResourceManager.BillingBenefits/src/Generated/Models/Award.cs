@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Initializes a new instance of <see cref="Award"/>. </summary>
         /// <param name="credit"> Credit amount to be awarded. </param>
-        /// <param name="startOn"> Start date when the credit becomes effective. </param>
-        /// <param name="endOn"> End date when the credit expires. </param>
+        /// <param name="startsOn"> Start date when the credit becomes effective. </param>
+        /// <param name="endsOn"> End date when the credit expires. </param>
         /// <param name="resourceId"> Resource ID for the awarded credit. </param>
         /// <param name="systemId"> This is the globally unique identifier of the credit which will not change for its lifetime. </param>
         /// <param name="balanceVersion"> Points to BalanceVersion document that indicates the remaining commitment balance when the credit was created. </param>
         /// <param name="duration"> Duration for which the benefit is active. Will be in format P{int}M or P{int}Y. Any values representing up to 12 years are valid. Upper limit examples: P144M, P12Y. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Award(BillingBenefitsCommitment credit, DateTimeOffset? startOn, DateTimeOffset? endOn, ResourceIdentifier resourceId, string systemId, float? balanceVersion, BillingBenefitsTerm? duration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Award(BillingBenefitsCommitment credit, DateTimeOffset? startsOn, DateTimeOffset? endsOn, ResourceIdentifier resourceId, string systemId, float? balanceVersion, BillingBenefitsTerm? duration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Credit = credit;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ResourceId = resourceId;
             SystemId = systemId;
             BalanceVersion = balanceVersion;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsCommitment Credit { get; set; }
 
         /// <summary> Start date when the credit becomes effective. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End date when the credit expires. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Resource ID for the awarded credit. </summary>
         public ResourceIdentifier ResourceId { get; }

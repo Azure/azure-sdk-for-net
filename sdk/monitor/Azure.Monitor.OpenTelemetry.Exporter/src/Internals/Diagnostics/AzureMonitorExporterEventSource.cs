@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
@@ -350,8 +351,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void TransmitterFailed(string origin, bool isAadEnabled, string instrumentationKey, string exceptionMessage) => WriteEvent(33, origin, isAadEnabled, instrumentationKey, exceptionMessage);
 
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
-        [Event(34, Message = "Exporter encountered a transmission failure and will wait {0} milliseconds before transmitting again.", Level = EventLevel.Warning)]
-        public void BackoffEnabled(double milliseconds) => WriteEvent(34, milliseconds);
+        [Event(34, Message = "Exporter encountered a transmission failure and will wait {0} milliseconds before transmitting again. Endpoint: {1}.", Level = EventLevel.Warning)]
+        public void BackoffEnabled(double milliseconds, string endpoint) => WriteEvent(34, milliseconds, endpoint);
 
         [NonEvent]
         public void FailedToDeserializeIngestionResponse(Exception ex)
@@ -557,5 +558,136 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(60, Message = "Ingestion rejected a batch of {0} stored payloads with status code {1}. Retrying them individually to isolate the rejected payload.", Level = EventLevel.Warning)]
         public void CoalescedBatchRejected(int batchSize, int statusCode) => WriteEvent(60, batchSize, statusCode);
+
+        [Event(61, Message = "Multi-endpoint routing is enabled. Telemetry is routed by its microsoft.instrumentation_key and microsoft.ingestion_endpoint tags.", Level = EventLevel.Informational)]
+        public void MultiEndpointRoutingEnabled() => WriteEvent(61);
+
+        [Event(62, Message = "Live Metrics was disabled because multi-endpoint routing is enabled. Live Metrics streams to the endpoint from the exporter's own connection string and cannot serve routed destinations.", Level = EventLevel.Warning)]
+        public void LiveMetricsDisabledForMultiEndpointRouting() => WriteEvent(62);
+
+        [Event(63, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. The endpoint's storage partition is full or unwritable.", Level = EventLevel.Error)]
+        public void FailedToPersistRoutedTelemetry(string ingestionEndpoint) => WriteEvent(63, ingestionEndpoint);
+
+        [Event(64, Message = "Rate-limited sampling of {0} traces per second was ignored because multi-endpoint routing is enabled. The limit is per process, so it would be shared across every destination the process carries. Fixed-rate sampling of {1} is used instead; set SamplingRatio to change it.", Level = EventLevel.Warning)]
+        public void RateLimitedSamplingIgnoredForMultiEndpointRouting(double tracesPerSecond, float samplingRatio) => WriteEvent(64, tracesPerSecond, samplingRatio);
+
+        [Event(65, Message = "Storage partition for ingestion endpoint '{0}' is directory '{1}'. The directory name is a hash of the endpoint and cannot be reversed.", Level = EventLevel.Informational)]
+        public void MultiEndpointPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
+
+        [NonEvent]
+        public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                RoutedTelemetryPersistenceThrew(ingestionEndpoint, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(66, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. {1}", Level = EventLevel.Error)]
+        public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, string exceptionMessage) => WriteEvent(66, ingestionEndpoint, exceptionMessage);
+
+        [NonEvent]
+        public void RoutedTelemetryCollected(long exportSequence, string ingestionEndpoint, string instrumentationKey, Activity activity)
+        {
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                RoutedTelemetryCollected(exportSequence, ingestionEndpoint, instrumentationKey, activity.TraceId.ToHexString(), activity.SpanId.ToHexString());
+            }
+        }
+
+        [Event(67, Message = "Export {0}: collected telemetry for ingestion endpoint '{1}'. Instrumentation Key: {2}. Trace Id: {3}. Span Id: {4}", Level = EventLevel.Verbose)]
+        public void RoutedTelemetryCollected(long exportSequence, string ingestionEndpoint, string instrumentationKey, string traceId, string spanId) => WriteEvent(67, exportSequence, ingestionEndpoint, instrumentationKey, traceId, spanId);
+
+        [NonEvent]
+        public void RoutedTelemetryRejected(long exportSequence, MultiEndpoint.RoutingRejectionReason reason, Activity activity)
+        {
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                RoutedTelemetryRejected(exportSequence, reason.ToString(), activity.TraceId.ToHexString(), activity.SpanId.ToHexString());
+            }
+        }
+
+        [Event(68, Message = "Export {0}: dropped telemetry that could not be routed. Reason: {1}. Trace Id: {2}. Span Id: {3}. The Activity must carry a valid microsoft.instrumentation_key and microsoft.ingestion_endpoint.", Level = EventLevel.Verbose)]
+        public void RoutedTelemetryRejected(long exportSequence, string reason, string traceId, string spanId) => WriteEvent(68, exportSequence, reason, traceId, spanId);
+
+        [Event(69, Message = "No storage partition for ingestion endpoint '{0}': the limit of {1} partitions is already in use. Telemetry for this endpoint is transmitted without an offline storage fallback.", Level = EventLevel.Warning)]
+        public void MultiEndpointPartitionCapReached(string ingestionEndpoint, int partitionCount) => WriteEvent(69, ingestionEndpoint, partitionCount);
+
+        [NonEvent]
+        public void RoutedTelemetryEvicted(string evictedOwner, long evictedBytes, string requestingEndpoint)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                RoutedTelemetryEvicted(evictedOwner, evictedBytes.ToString(System.Globalization.CultureInfo.InvariantCulture), requestingEndpoint);
+            }
+        }
+
+        [Event(70, Message = "Evicted stored telemetry owned by '{0}' ({1} bytes) to make room for a write from ingestion endpoint '{2}'. The owner is an ingestion endpoint, or a storage directory name when the partition was left by an earlier run. The evicted telemetry was never transmitted and is lost.", Level = EventLevel.Warning)]
+        public void RoutedTelemetryEvicted(string evictedOwner, string evictedBytes, string requestingEndpoint) => WriteEvent(70, evictedOwner, evictedBytes, requestingEndpoint);
+
+        // Guarded in the body: neither parameter list matches a typed WriteEvent overload, so the
+        // call allocates an argument array whether or not anything is listening.
+        [Event(71, Message = "Export {0}: routed {1} Activities or metric points to {2} ingestion endpoints and dropped {3} that could not be routed. These count routing inputs, not envelopes - one Activity can produce several - so event 72 reports the item count actually sent to each endpoint.", Level = EventLevel.Informational)]
+        public void RoutedExportSummary(long exportSequence, int collected, int endpointCount, int rejected)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(71, exportSequence, collected, endpointCount, rejected);
+            }
+        }
+
+        [Event(72, Message = "Export {0}: {1} telemetry items for ingestion endpoint '{2}' were {3}. Accepted by ingestion: {4}, where -1 means ingestion reported no usable count. Status code: {5}", Level = EventLevel.Informational)]
+        public void RoutedGroupOutcome(long exportSequence, int itemCount, string ingestionEndpoint, string outcome, int itemsAccepted, int statusCode)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(72, exportSequence, itemCount, ingestionEndpoint, outcome, itemsAccepted, statusCode);
+            }
+        }
+
+        [Event(73, Message = "Standard metrics and performance counters are not collected while multi-endpoint routing is enabled. Routed destinations are not sent standard metrics, and a process-scoped performance counter has no single owner among the destinations a routed process carries.", Level = EventLevel.Warning)]
+        public void StandardMetricsDisabledForMultiEndpointRouting() => WriteEvent(73);
+
+        // A metric point has no trace or span id, so it is identified by the instrument that
+        // produced it. Guarded in the body rather than by a typed wrapper, because an overload
+        // taking the same string parameters would be ambiguous with the event method itself.
+        [Event(74, Message = "Export {0}: collected a metric point for ingestion endpoint '{1}'. Instrumentation Key: {2}. Meter: {3}. Instrument: {4}", Level = EventLevel.Verbose)]
+        public void RoutedMetricCollected(long exportSequence, string ingestionEndpoint, string instrumentationKey, string meterName, string instrumentName)
+        {
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                WriteEvent(74, exportSequence, ingestionEndpoint, instrumentationKey, meterName, instrumentName);
+            }
+        }
+
+        [NonEvent]
+        public void RoutedMetricRejected(long exportSequence, MultiEndpoint.RoutingRejectionReason reason, string meterName, string instrumentName)
+        {
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                RoutedMetricRejected(exportSequence, reason.ToString(), meterName, instrumentName);
+            }
+        }
+
+        [Event(75, Message = "Export {0}: dropped a metric point that could not be routed. Reason: {1}. Meter: {2}. Instrument: {3}. The measurement must carry a valid microsoft.instrumentation_key and microsoft.ingestion_endpoint dimension.", Level = EventLevel.Verbose)]
+        public void RoutedMetricRejected(long exportSequence, string reason, string meterName, string instrumentName) => WriteEvent(75, exportSequence, reason, meterName, instrumentName);
+
+        [NonEvent]
+        public void RoutedInstrumentDropped(string meterName, string instrumentName, MultiEndpoint.RoutingRejectionReason reason)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                RoutedInstrumentDropped(meterName, instrumentName, reason.ToString());
+            }
+        }
+
+        [Event(76, Message = "Measurements from meter '{0}' instrument '{1}' were dropped because they could not be routed. Reason: {2}. Reported once per instrument per export; enable Verbose for the individual points.", Level = EventLevel.Informational)]
+        public void RoutedInstrumentDropped(string meterName, string instrumentName, string reason) => WriteEvent(76, meterName, instrumentName, reason);
+
+        [Event(77, Message = "No connection string was configured. Multi-endpoint routing is enabled, so telemetry carrying valid routing attributes is still sent to the endpoint it names; everything else is dropped, and this process can send nothing of its own. SDK statistics are not collected, because they identify a component this process does not have.", Level = EventLevel.Warning)]
+        public void RoutingWithoutConnectionString() => WriteEvent(77);
+
+        [Event(78, Message = "Telemetry that was not routed has been dropped because no connection string is configured, so there is no destination of this process's own to send it to.", Level = EventLevel.Warning)]
+        public void DroppedUnroutedTelemetryWithoutConnectionString() => WriteEvent(78);
     }
 }

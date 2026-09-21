@@ -12,7 +12,7 @@ namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// Recurrence model.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByWeekDays"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="RecurrenceWithCron"/>, and <see cref="WeeklyRecurrence"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DailyRecurrence"/>, <see cref="HourlyRecurrence"/>, <see cref="MonthlyRecurrenceByDates"/>, <see cref="MonthlyRecurrenceByWeekDays"/>, <see cref="RecurrenceWithCron"/>, and <see cref="WeeklyRecurrence"/>.
     /// </summary>
     public abstract partial class LoadTestingRecurrence
     {

@@ -39,5 +39,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             Shape = shape;
             SshPublicKeys = sshPublicKeys.ToList();
         }
+
+        /// <summary> The storage option used in DB system. ASM - Automatic storage management, LVM - Logical Volume management. </summary>
+        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("DBSystemOptionsStorageManagement")]
+        public StorageManagementType? DbSystemOptionsStorageManagement
+        {
+            get
+            {
+                return DBSystemOptions is null ? default : DBSystemOptions.StorageManagement;
+            }
+            set
+            {
+                if (DBSystemOptions is null)
+                {
+                    DBSystemOptions = new OracleDBSystemOptions();
+                }
+                DBSystemOptions.StorageManagement = value;
+            }
+        }
     }
 }
