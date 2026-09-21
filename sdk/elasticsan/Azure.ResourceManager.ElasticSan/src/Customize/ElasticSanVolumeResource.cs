@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.ElasticSan
             ValidateResourceId(id);
         }
 
+        // [TODO] Remove after breaking change is resolved
+        /*
         /// <summary>
         /// Delete an Volume.
         /// <list type="bullet">
@@ -156,6 +158,7 @@ namespace Azure.ResourceManager.ElasticSan
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, ElasticSanDeleteSnapshotsUnderVolume? deleteSnapshots = null, ElasticSanForceDeleteVolume? forceDelete = null, ElasticSanDeleteType? deleteType = null, CancellationToken cancellationToken = default)
             => Delete(waitUntil, deleteSnapshots, forceDelete, cancellationToken);
+        */
 
         /// <summary>
         /// Restore Soft Deleted Volumes. The volume name is obtained by using the API to list soft deleted volumes by volume group

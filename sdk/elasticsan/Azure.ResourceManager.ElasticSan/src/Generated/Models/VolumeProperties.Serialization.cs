@@ -96,10 +96,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("storageTarget"u8);
                 writer.WriteObjectValue(StorageTarget, options);
             }
-            if (Optional.IsDefined(ManagedBy))
+            if (Optional.IsCollectionDefined(ManagedBy))
             {
                 writer.WritePropertyName("managedBy"u8);
-                writer.WriteObjectValue(ManagedBy, options);
+                writer.WriteStartArray();
+                foreach (ManagedByResources item in ManagedBy)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -152,7 +157,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanVolumeDataSourceInfo creationData = default;
             long sizeGiB = default;
             IscsiTargetInfo storageTarget = default;
-            ManagedByInfo managedBy = default;
+            IList<ManagedByResources> managedBy = default;
             ElasticSanProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -195,7 +200,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    managedBy = ManagedByInfo.DeserializeManagedByInfo(prop.Value, options);
+                    List<ManagedByResources> array = new List<ManagedByResources>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ManagedByResources.DeserializeManagedByResources(item, options));
+                    }
+                    managedBy = array;
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -217,7 +227,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 creationData,
                 sizeGiB,
                 storageTarget,
-                managedBy,
+                managedBy ?? new ChangeTrackingList<ManagedByResources>(),
                 provisioningState,
                 additionalBinaryDataProperties);
         }

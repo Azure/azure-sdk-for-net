@@ -89,6 +89,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     (privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
                     new AutoScaleProperties(scaleUpProperties, null),
+                    null,
+                    null,
+                    null,
+                    null,
                     null),
                 additionalBinaryDataProperties: null);
         }

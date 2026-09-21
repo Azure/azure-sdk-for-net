@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ElasticSan
             return message;
         }
 
-        internal HttpMessage CreateGetByElasticSanRequest(string subscriptionId, string resourceGroupName, string elasticSanName, RequestContext context)
+        internal HttpMessage CreateGetByElasticSanRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string accessSoftDeletedResources, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -167,11 +167,15 @@ namespace Azure.ResourceManager.ElasticSan
             request.Uri = uri;
             request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
+            if (accessSoftDeletedResources != null)
+            {
+                request.Headers.SetValue("x-ms-access-soft-deleted-resources", accessSoftDeletedResources);
+            }
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateNextGetByElasticSanRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string elasticSanName, RequestContext context)
+        internal HttpMessage CreateNextGetByElasticSanRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string elasticSanName, string accessSoftDeletedResources, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

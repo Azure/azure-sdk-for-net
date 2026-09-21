@@ -95,6 +95,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ZoneDetails))
+            {
+                writer.WritePropertyName("zoneDetails"u8);
+                writer.WriteStartArray();
+                foreach (SkuZoneDetails item in ZoneDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,6 +149,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
             AzureLocation? location = default;
             IReadOnlyList<string> zones = default;
+            IReadOnlyList<SkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,12 +183,26 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     zones = array;
                     continue;
                 }
+                if (prop.NameEquals("zoneDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SkuZoneDetails> array = new List<SkuZoneDetails>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SkuZoneDetails.DeserializeSkuZoneDetails(item, options));
+                    }
+                    zoneDetails = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ElasticSanSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ElasticSanSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<SkuZoneDetails>(), additionalBinaryDataProperties);
         }
     }
 }
