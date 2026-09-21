@@ -8,7 +8,7 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "test": "node --experimental-strip-types --test"
+    "test": "node --experimental-strip-types --test test/*.test.ts"
   },
   "devDependencies": {
     "@microsoft/vally-cli": "0.14.0"

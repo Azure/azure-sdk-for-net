@@ -5,41 +5,115 @@ parameters:
   - name: failOnFailedTests
     type: boolean
     default: false
-
-jobs:
-  - job: Summarize
-    displayName: 'Publish + gate rollup'
-    pool:
+  - name: createDashboardBundle
+    type: boolean
+    default: false
+  - name: publishDashboardResults
+    type: boolean
+    default: false
+  - name: storageServiceConnection
+    type: string
+    default: ''
+  - name: storageContainerUrl
+    type: string
+    default: ''
+  - name: notifyDashboard
+    type: boolean
+    default: false
+  - name: dashboardUrl
+    type: string
+    default: ''
+  - name: dashboardAudience
+    type: string
+    default: ''
+  - name: storageSmokeTest
+    type: boolean
+    default: false
+  - name: summaryPool
+    type: object
+    default:
       name: $(LINUXPOOL)
       image: $(LINUXVMIMAGE)
       os: linux
+
+jobs:
+  - job: Summarize
+    displayName: 'Consolidate, publish + gate results'
+    pool: ${{ parameters.summaryPool }}
+    workspace:
+      clean: all
+    variables:
+      EvalExpectedMatrix: $[ stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'] ]
+    templateContext:
+      outputs:
+        - output: pipelineArtifact
+          displayName: 'Retain selected build summary and saved bundle'
+          artifactName: 'eval-summary-$(System.JobAttempt)'
+          targetPath: $(Build.ArtifactStagingDirectory)/eval-summary
+          condition: always()
     steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 1
+
       - task: UseNode@1
         displayName: 'Use Node.js 22.x'
         inputs:
           version: 22.x
 
-      # Match *.junit.xml only so stray XML (e.g. a DLL's doc XML) can't fake a shard.
+      # Allowlist result data only, excluding debug, MCP, SDL and signing artifacts.
       - task: DownloadPipelineArtifact@2
         displayName: 'Download all shard results'
         inputs:
           buildType: 'current'
-          itemPattern: '**/*.junit.xml'
+          itemPattern: |
+            eval-result-*/results.jsonl
+            eval-result-*/shard.json
+            eval-result-*/**/*.junit.xml
           targetPath: $(Pipeline.Workspace)/eval-results
+
+      # Read this build only; this is not dashboard polling or historical discovery.
+      # A newer job attempt without any artifact must never reuse older results.
+      - script: |
+          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/capture-eval-attempts.ts" \
+            --output "$(Build.ArtifactStagingDirectory)/eval-summary/job-attempts.json"
+        displayName: 'Verify latest shard job attempts from current build timeline'
+        condition: always()
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+          EVAL_EXPECTED_MATRIX: $(EvalExpectedMatrix)
 
       # Renders the rollup to the run's Summary tab (##vso[task.uploadsummary]).
       - script: |
           node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/build-eval-summary.ts" \
             --results-root "$(Pipeline.Workspace)/eval-results" \
-            --output-path "$(Build.ArtifactStagingDirectory)/eval-summary.md"
-        displayName: 'Render Markdown rollup'
+            --selected-root "$(Pipeline.Workspace)/eval-selected" \
+            --attempts-file "$(Build.ArtifactStagingDirectory)/eval-summary/job-attempts.json" \
+            --output-path "$(Build.ArtifactStagingDirectory)/eval-summary/eval-summary.md"
+        displayName: 'Select expected latest attempts and render complete-build summary'
         condition: always()
+        env:
+          EVAL_EXPECTED_MATRIX: $(EvalExpectedMatrix)
 
+      - ${{ if or(parameters.createDashboardBundle, parameters.publishDashboardResults, parameters.storageSmokeTest) }}:
+        - template: ../steps/eval-publish-results.yml
+          parameters:
+            publishDashboardResults: ${{ parameters.publishDashboardResults }}
+            storageServiceConnection: ${{ parameters.storageServiceConnection }}
+            storageContainerUrl: ${{ parameters.storageContainerUrl }}
+            notifyDashboard: ${{ parameters.notifyDashboard }}
+            dashboardUrl: ${{ parameters.dashboardUrl }}
+            dashboardAudience: ${{ parameters.dashboardAudience }}
+            storageSmokeTest: ${{ parameters.storageSmokeTest }}
+
+      # Completed failing evals are useful data: publish BEFORE the evaluation gate.
       - task: PublishTestResults@2
         displayName: 'Publish eval rollup'
+        condition: succeededOrFailed()
         inputs:
           testResultsFormat: 'JUnit'
-          testResultsFiles: '$(Pipeline.Workspace)/eval-results/**/*.junit.xml'
+          testResultsFiles: '$(Pipeline.Workspace)/eval-selected/**/*.junit.xml'
           mergeTestResults: true
           failTaskOnFailedTests: ${{ parameters.failOnFailedTests }}
+          failTaskOnMissingResultsFile: true
           testRunTitle: 'Vally evals'

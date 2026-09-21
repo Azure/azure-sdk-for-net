@@ -1,0 +1,21 @@
+# Keep the same output contract as the real Prepare job without building an MCP.
+jobs:
+  - job: generate_eval_matrix
+    displayName: 'Prepare synthetic storage smoke matrix (no evaluations)'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 1
+      - task: UseNode@1
+        inputs:
+          version: 22.x
+      - script: node --experimental-strip-types --test test/*.test.ts
+        displayName: 'Validate shared result staging and summary helpers'
+        workingDirectory: eng/common/scripts/eval
+      - script: node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/create-storage-smoke-results.ts" --matrix
+        name: detect
+        displayName: 'Create two synthetic shard names'
