@@ -18,39 +18,39 @@ using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    internal partial class ComponentAPIsAnnotationsOperationGroupGetAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsAnnotation>
+    internal partial class ApplicationInsightsComponentResourceCreateAnnotationsAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsAnnotation>
     {
         private readonly Annotations _client;
-        private readonly string _resourceGroupName;
         private readonly Guid _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly string _resourceName;
-        private readonly string _annotationId;
+        private readonly RequestContent _content;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ComponentAPIsAnnotationsOperationGroupGetAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ApplicationInsightsComponentResourceCreateAnnotationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Annotations client used to send requests. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="annotationId"> The unique annotation ID. This is unique within a Application Insights component. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComponentAPIsAnnotationsOperationGroupGetAsyncCollectionResultOfT(Annotations client, string resourceGroupName, Guid subscriptionId, string resourceName, string annotationId, RequestContext context, string diagnosticScope)
+        public ApplicationInsightsComponentResourceCreateAnnotationsAsyncCollectionResultOfT(Annotations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
-            _resourceGroupName = resourceGroupName;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _resourceName = resourceName;
-            _annotationId = annotationId;
+            _content = content;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ComponentAPIsAnnotationsOperationGroupGetAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ApplicationInsightsComponentResourceCreateAnnotationsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComponentAPIsAnnotationsOperationGroupGetAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ApplicationInsightsComponentResourceCreateAnnotationsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ApplicationInsightsAnnotation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetAnnotationsRequest(_resourceGroupName, _subscriptionId, _resourceName, _annotationId, _context);
+            HttpMessage message = _client.CreateCreateAnnotationsRequest(_subscriptionId, _resourceGroupName, _resourceName, _content, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

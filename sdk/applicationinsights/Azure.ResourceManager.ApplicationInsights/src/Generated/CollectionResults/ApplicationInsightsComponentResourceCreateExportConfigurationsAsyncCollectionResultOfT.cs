@@ -18,7 +18,7 @@ using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    internal partial class ComponentAPIsExportConfigurationsOperationGroupCreateAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsComponentExportConfiguration>
+    internal partial class ApplicationInsightsComponentResourceCreateExportConfigurationsAsyncCollectionResultOfT : AsyncPageable<ApplicationInsightsComponentExportConfiguration>
     {
         private readonly ExportConfigurations _client;
         private readonly Guid _subscriptionId;
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ComponentAPIsExportConfigurationsOperationGroupCreateAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ApplicationInsightsComponentResourceCreateExportConfigurationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ExportConfigurations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComponentAPIsExportConfigurationsOperationGroupCreateAsyncCollectionResultOfT(ExportConfigurations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context, string diagnosticScope)
+        public ApplicationInsightsComponentResourceCreateExportConfigurationsAsyncCollectionResultOfT(ExportConfigurations client, Guid subscriptionId, string resourceGroupName, string resourceName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ApplicationInsights
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ComponentAPIsExportConfigurationsOperationGroupCreateAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ApplicationInsightsComponentResourceCreateExportConfigurationsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComponentAPIsExportConfigurationsOperationGroupCreateAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ApplicationInsightsComponentResourceCreateExportConfigurationsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ApplicationInsightsComponentExportConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);

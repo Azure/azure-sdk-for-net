@@ -2302,7 +2302,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceAsyncCollectionResultOfT(
+            return new ApiManagementServiceResourceGetNetworkStatusesAsyncCollectionResultOfT(
                 _networkStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2340,7 +2340,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftApiManagementApiManagementServiceResourcesNetworkStatusListByServiceCollectionResultOfT(
+            return new ApiManagementServiceResourceGetNetworkStatusesCollectionResultOfT(
                 _networkStatusRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
