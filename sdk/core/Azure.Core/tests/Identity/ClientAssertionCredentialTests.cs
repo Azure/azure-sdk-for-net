@@ -146,6 +146,39 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
+        public void FailsClosedWhenAssertionHasNoBindingCertificate()
+        {
+            // Exercises the real PoP MsalConfidentialClient (rather than an injected exception): the assertion
+            // source returns a token with no binding certificate, so MSAL rejects the mTLS proof-of-possession
+            // request with MtlsCertificateNotProvided. The credential must fail closed (AuthenticationFailedException
+            // with the proof-of-possession diagnostic) and must not issue a bearer token request.
+            int bearerCalls = 0;
+            var bearerClient = new MockMsalConfidentialClient().WithClientFactory((_, _, _, _) =>
+            {
+                bearerCalls++;
+                return AuthenticationResultFactory.Create("bearer-token");
+            });
+            var assertionSource = new MockTokenCredential
+            {
+                // Returns a token but no binding certificate (BindingCertificate defaults to null).
+                TokenFactory = (context, cancellationToken) => new AccessToken("assertion-token", DateTimeOffset.UtcNow.AddHours(1)),
+            };
+            var options = new ClientAssertionCredentialOptions
+            {
+                MsalClient = bearerClient,        // mock bearer client, to prove it is never invoked
+                DisableInstanceDiscovery = true,  // avoid network for authority instance discovery
+                Pipeline = CredentialPipeline.GetInstance(null),
+            };
+            // PopMsalClient is intentionally not set, so a real mTLS PoP MsalConfidentialClient is created.
+            var credential = new ClientAssertionCredential(TenantId, ClientId, assertionSource, "api://AzureADTokenExchange/.default", options);
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await GetTokenAsync(credential, isProofOfPossessionEnabled: true));
+            Assert.That(ex.Message, Does.Contain("binding certificate"));
+            Assert.AreEqual(0, bearerCalls, "Bearer client must not be invoked when the proof-of-possession assertion lacks a binding certificate.");
+        }
+
+        [Test]
         public async Task PopAssertionPropagatesContextCancellationAndCertificate()
         {
 #pragma warning disable SYSLIB0026 // Empty certificate is sufficient to verify reference propagation.
