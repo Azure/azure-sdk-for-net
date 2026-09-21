@@ -17,36 +17,39 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class MicrosoftBillingEnrollmentAccountOperationGroupCheckAccessByEnrollmentAccountCollectionResultOfT : Pageable<BillingCheckAccessResult>
+    internal partial class BillingInvoiceSectionResourceCheckAccessBillingPermissionsCollectionResultOfT : Pageable<BillingCheckAccessResult>
     {
-        private readonly EnrollmentAccountOperationGroup _client;
+        private readonly InvoiceSections _client;
         private readonly string _billingAccountName;
-        private readonly string _enrollmentAccountName;
+        private readonly string _billingProfileName;
+        private readonly string _invoiceSectionName;
         private readonly RequestContent _content;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftBillingEnrollmentAccountOperationGroupCheckAccessByEnrollmentAccountCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The EnrollmentAccountOperationGroup client used to send requests. </param>
+        /// <summary> Initializes a new instance of BillingInvoiceSectionResourceCheckAccessBillingPermissionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The InvoiceSections client used to send requests. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="enrollmentAccountName"> The name of the enrollment account. </param>
+        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
+        /// <param name="invoiceSectionName"> The ID that uniquely identifies an invoice section. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftBillingEnrollmentAccountOperationGroupCheckAccessByEnrollmentAccountCollectionResultOfT(EnrollmentAccountOperationGroup client, string billingAccountName, string enrollmentAccountName, RequestContent content, RequestContext context, string diagnosticScope)
+        public BillingInvoiceSectionResourceCheckAccessBillingPermissionsCollectionResultOfT(InvoiceSections client, string billingAccountName, string billingProfileName, string invoiceSectionName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _billingAccountName = billingAccountName;
-            _enrollmentAccountName = enrollmentAccountName;
+            _billingProfileName = billingProfileName;
+            _invoiceSectionName = invoiceSectionName;
             _content = content;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftBillingEnrollmentAccountOperationGroupCheckAccessByEnrollmentAccountCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BillingInvoiceSectionResourceCheckAccessBillingPermissionsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftBillingEnrollmentAccountOperationGroupCheckAccessByEnrollmentAccountCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of BillingInvoiceSectionResourceCheckAccessBillingPermissionsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<BillingCheckAccessResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateCheckAccessBillingPermissionsRequest(_billingAccountName, _enrollmentAccountName, _content, _context);
+            HttpMessage message = _client.CreateCheckAccessBillingPermissionsRequest(_billingAccountName, _billingProfileName, _invoiceSectionName, _content, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

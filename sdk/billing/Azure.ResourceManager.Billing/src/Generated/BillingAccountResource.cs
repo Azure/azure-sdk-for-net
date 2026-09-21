@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingBillingAccountsCheckAccessByBillingAccountAsyncCollectionResultOfT(_billingAccountsRestClient, Id.Name, BillingCheckAccessContent.ToRequestContent(content), context, "BillingAccountResource.CheckAccessBillingPermissions");
+            return new BillingAccountResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(_billingAccountsRestClient, Id.Name, BillingCheckAccessContent.ToRequestContent(content), context, "BillingAccountResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Billing
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftBillingBillingAccountsCheckAccessByBillingAccountCollectionResultOfT(_billingAccountsRestClient, Id.Name, BillingCheckAccessContent.ToRequestContent(content), context, "BillingAccountResource.CheckAccessBillingPermissions");
+            return new BillingAccountResourceCheckAccessBillingPermissionsCollectionResultOfT(_billingAccountsRestClient, Id.Name, BillingCheckAccessContent.ToRequestContent(content), context, "BillingAccountResource.CheckAccessBillingPermissions");
         }
 
         /// <summary>

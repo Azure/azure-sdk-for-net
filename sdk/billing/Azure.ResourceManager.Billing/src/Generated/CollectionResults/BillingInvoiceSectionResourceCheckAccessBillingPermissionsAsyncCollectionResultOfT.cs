@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -17,7 +18,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionCollectionResultOfT : Pageable<BillingCheckAccessResult>
+    internal partial class BillingInvoiceSectionResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT : AsyncPageable<BillingCheckAccessResult>
     {
         private readonly InvoiceSections _client;
         private readonly string _billingAccountName;
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Billing
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BillingInvoiceSectionResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The InvoiceSections client used to send requests. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionCollectionResultOfT(InvoiceSections client, string billingAccountName, string billingProfileName, string invoiceSectionName, RequestContent content, RequestContext context, string diagnosticScope)
+        public BillingInvoiceSectionResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(InvoiceSections client, string billingAccountName, string billingProfileName, string invoiceSectionName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _billingAccountName = billingAccountName;
@@ -46,13 +47,13 @@ namespace Azure.ResourceManager.Billing
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BillingInvoiceSectionResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftBillingInvoiceSectionsCheckAccessByInvoiceSectionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<BillingCheckAccessResult>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of BillingInvoiceSectionResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<BillingCheckAccessResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
+            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
@@ -64,14 +65,14 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateCheckAccessBillingPermissionsRequest(_billingAccountName, _billingProfileName, _invoiceSectionName, _content, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

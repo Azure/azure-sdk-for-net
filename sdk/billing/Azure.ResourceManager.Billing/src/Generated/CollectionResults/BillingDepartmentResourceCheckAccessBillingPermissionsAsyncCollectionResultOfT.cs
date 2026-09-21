@@ -18,7 +18,7 @@ using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class MicrosoftBillingDepartmentsCheckAccessByDepartmentAsyncCollectionResultOfT : AsyncPageable<BillingCheckAccessResult>
+    internal partial class BillingDepartmentResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT : AsyncPageable<BillingCheckAccessResult>
     {
         private readonly Departments _client;
         private readonly string _billingAccountName;
@@ -27,14 +27,14 @@ namespace Azure.ResourceManager.Billing
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftBillingDepartmentsCheckAccessByDepartmentAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BillingDepartmentResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Departments client used to send requests. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="departmentName"> The name of the department. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftBillingDepartmentsCheckAccessByDepartmentAsyncCollectionResultOfT(Departments client, string billingAccountName, string departmentName, RequestContent content, RequestContext context, string diagnosticScope)
+        public BillingDepartmentResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT(Departments client, string billingAccountName, string departmentName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _billingAccountName = billingAccountName;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Billing
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftBillingDepartmentsCheckAccessByDepartmentAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BillingDepartmentResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftBillingDepartmentsCheckAccessByDepartmentAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of BillingDepartmentResourceCheckAccessBillingPermissionsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BillingCheckAccessResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
