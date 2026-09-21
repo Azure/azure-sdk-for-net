@@ -8,6 +8,7 @@ import { zipSync, strToU8 } from "fflate";
 import { blobName, boundedFile, pipelineManifest, prepareBundle, selectAttempts, sha256, validateBundle } from "../bundle.mjs";
 import { containerUrl, publisherIdentity, publishBundle } from "../storage.mjs";
 import { notifyDashboard, refreshUrl } from "../notification.mjs";
+import { publicationFailure } from "../diagnostics.mjs";
 
 const manifest = { schemaVersion: 1, adoOrganization: "azure-sdk", adoProject: "internal", repo: "Azure/azure-sdk-tools",
     pipeline: "synthetic", pipelineDefinitionId: "8255", buildId: "1001", summaryAttempt: 1, runTimestamp: "2026-09-21T00:00:00.000Z" };
@@ -201,6 +202,17 @@ test("real CLI blocks PR publication before requesting a credential", () => {
     delete env.NODE_TEST_CONTEXT;
     const child = spawnSync(process.execPath, [script, "--bundle", "unused.zip", "--result", "unused.json"], { encoding: "utf8", env, timeout: 30_000 });
     assert.equal(child.status, 1); assert.match(child.stderr, /trusted internal, non-PR/);
+});
+
+test("failure diagnostics retain operation/code/status but never arbitrary error payloads", () => {
+    assert.deepEqual(publicationFailure({ code: "AuthorizationPermissionMismatch", statusCode: 403,
+        message: "secret", request: { headers: { Authorization: "Bearer secret" } }, details: { requestId: "11111111-1111-1111-1111-111111111111" } }, "publish_blob"), {
+        status: "failed", operation: "publish_blob", errorCode: "AuthorizationPermissionMismatch", httpStatus: 403,
+        requestId: "11111111-1111-1111-1111-111111111111",
+    });
+    const failure = publicationFailure({ code: "https://secret.example?token=secret", statusCode: "403", details: { requestId: "secret" } }, "acquire_storage_token");
+    assert.deepEqual(failure, { status: "failed", operation: "acquire_storage_token", errorCode: "publication_failed" });
+    assert.doesNotMatch(JSON.stringify(failure), /secret/);
 });
 
 test("synthetic producer is manual-only and never imports an evaluator", async () => {
