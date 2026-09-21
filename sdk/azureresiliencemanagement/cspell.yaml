@@ -3,5 +3,7 @@ import:
 overrides:
   - filename: "**/sdk/azureresiliencemanagement/**/*.cs"
     words:
+      - amws
       - mobo
       - reprotect
+      - slis
