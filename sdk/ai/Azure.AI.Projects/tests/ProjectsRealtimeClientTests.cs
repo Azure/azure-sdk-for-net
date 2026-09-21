@@ -43,7 +43,7 @@ public class ProjectsRealtimeClientTests
         listener.Prefixes.Add($"http://127.0.0.1:{port}/");
         listener.Start();
 
-        Task<(string Path, string Query, string Authorization, string FoundryFeatures, string SubProtocol, string UserAgent)> serverTask = Task.Run(async () =>
+        Task<(string Path, string Query, string Authorization, string FoundryFeatures, string SubProtocol)> serverTask = Task.Run(async () =>
         {
             HttpListenerContext context = await listener.GetContextAsync();
             string path = context.Request.Url.AbsolutePath;
@@ -51,7 +51,6 @@ public class ProjectsRealtimeClientTests
             string authorization = context.Request.Headers["Authorization"];
             string foundryFeatures = context.Request.Headers["Foundry-Features"];
             string subProtocol = context.Request.Headers["Sec-WebSocket-Protocol"];
-            string userAgent = context.Request.Headers["User-Agent"];
             if (context.Request.IsWebSocketRequest)
             {
                 await context.AcceptWebSocketAsync(subProtocol: "realtime");
@@ -61,7 +60,7 @@ public class ProjectsRealtimeClientTests
                 context.Response.StatusCode = 400;
                 context.Response.Close();
             }
-            return (path, query, authorization, foundryFeatures, subProtocol, userAgent);
+            return (path, query, authorization, foundryFeatures, subProtocol);
         });
 
         AIProjectClient client = new(new Uri($"http://127.0.0.1:{port}/api/projects/proj1"), new FakeTokenProvider());
@@ -81,7 +80,7 @@ public class ProjectsRealtimeClientTests
             // server observed (asserted below) matters for this test.
         }
 
-        (string path, string query, string authorization, string foundryFeatures, string subProtocol, string userAgent) = await serverTask;
+        (string path, string query, string authorization, string foundryFeatures, string subProtocol) = await AwaitServerRequestAsync(serverTask);
         listener.Stop();
 
         Assert.Multiple(() =>
@@ -92,7 +91,6 @@ public class ProjectsRealtimeClientTests
             Assert.That(foundryFeatures, Does.Contain("VoiceAgents=V1Preview"));
             Assert.That(authorization, Does.StartWith("Bearer "));
             Assert.That(subProtocol, Is.EqualTo("realtime"));
-            Assert.That(userAgent, Does.Contain("Azure.AI.Projects"));
         });
     }
 
@@ -140,10 +138,24 @@ public class ProjectsRealtimeClientTests
             // See comment above: only the request the server observed matters for this test.
         }
 
-        string query = await serverTask;
+        string query = await AwaitServerRequestAsync(serverTask);
         listener.Stop();
 
         Assert.That(query, Does.Contain("store=true"));
+    }
+
+    // The client-side call above is bounded by its own 10-second cancellation token, but that
+    // alone can't stop this test from hanging (until the CI job's own outer timeout, e.g. 60
+    // minutes) if the client faults before ever reaching the socket -- the loopback listener would
+    // then wait for a request that never arrives. Bound the server side independently too.
+    private static async Task<T> AwaitServerRequestAsync<T>(Task<T> serverTask)
+    {
+        Task winner = await Task.WhenAny(serverTask, Task.Delay(TimeSpan.FromSeconds(15)));
+        if (winner != serverTask)
+        {
+            Assert.Fail("Timed out waiting for the loopback listener to receive the client's request.");
+        }
+        return await serverTask;
     }
 
     private static int GetFreeTcpPort()

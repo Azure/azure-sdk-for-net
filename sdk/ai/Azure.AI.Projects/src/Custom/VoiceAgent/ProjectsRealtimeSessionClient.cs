@@ -32,12 +32,6 @@ namespace Azure.AI.Projects;
 [Experimental("AAIP002")]
 public class ProjectsRealtimeSessionClient : RealtimeSessionClient
 {
-    // Reused across connections; matches the User-Agent value the REST pipeline sends elsewhere in
-    // this SDK (see AIProjectClient/ProjectsRealtimeClient), so support engineers can identify the
-    // SDK/version from either surface. The WebSocket handshake otherwise carries none, unlike a
-    // normal HTTP request through a ClientPipeline (which adds this header automatically).
-    private static readonly string s_userAgent = new TelemetryDetails(typeof(ProjectsRealtimeSessionClient).Assembly, null, null).UserAgent.ToString();
-
     private readonly string _experimentalHeaders;
     private readonly AuthenticationTokenProvider _tokenProvider;
     private readonly IReadOnlyDictionary<string, object> _tokenProperties;
@@ -105,9 +99,9 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
     /// Connects to the Foundry voice-agent endpoint this instance was constructed with. Only the
     /// Foundry-specific query string (api-version, merged with any caller-supplied query string --
     /// see <paramref name="queryString"/> -- such as ProjectsRealtimeClient.StartSessionAsync's
-    /// "store" option) and headers (User-Agent, Foundry-Features, bearer Authorization) are computed
-    /// here; the WebSocket handshake itself (subprotocol negotiation, applying the headers,
-    /// connecting, assigning <see cref="RealtimeSessionClient.WebSocket"/>) is entirely delegated to
+    /// "store" option) and headers (Foundry-Features, bearer Authorization) are computed here; the
+    /// WebSocket handshake itself (subprotocol negotiation, applying the headers, connecting,
+    /// assigning <see cref="RealtimeSessionClient.WebSocket"/>) is entirely delegated to
     /// <see cref="RealtimeSessionClient.ConnectAsync"/>.
     /// </summary>
     /// <param name="queryString">An additional query string merged in after api-version.</param>
@@ -118,9 +112,14 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
         GetTokenOptions tokenOptions = new(_tokenProperties);
         AuthenticationToken token = await _tokenProvider.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
 
+        // No "User-Agent" here: RealtimeSessionClient.ConnectAsync applies every entry in this
+        // dictionary via ClientWebSocketOptions.SetRequestHeader, and .NET Framework's
+        // implementation of that method rejects "User-Agent" as a restricted header (throwing
+        // ArgumentException), unlike .NET/.NET Core. Since Azure.AI.Projects also targets
+        // netstandard2.0 (loadable by .NET Framework consumers), sending it here would break the
+        // WebSocket handshake for them.
         Dictionary<string, string> connectionHeaders = new()
         {
-            ["User-Agent"] = s_userAgent,
             ["Foundry-Features"] = _experimentalHeaders,
             ["Authorization"] = $"{token.TokenType} {token.TokenValue}",
         };
