@@ -123,3 +123,21 @@ upload is validated only by the explicitly approved pipeline smoke run above.
 The publisher's dependency lock is separate from the evaluator lock, and the
 Summary restore uses the authenticated Azure SDK npm mirror. Do not place keys,
 tokens, local archives, database files, or external dashboard source in this package.
+
+## Diagnosing a failed pilot
+
+The result artifact records a bounded failure `operation`, `errorCode` and HTTP
+status when available. Raw Azure SDK exceptions, requests, headers and tokens are
+never logged. A saved successful storage result is not replaced by a later error.
+
+- `acquire_storage_token`: check service-connection federation and token acquisition.
+- `publish_blob` with `AuthorizationPermissionMismatch`/403: check the connection
+   identity's Blob data role and its scope; do not substitute an account key.
+- `publish_blob` with network errors or `AuthorizationFailure`: check approved agent
+   egress/storage network rules before assuming the RBAC grant is missing.
+- `submission_conflict`: retain the original bytes and use a new Summary attempt
+   for corrected content; never overwrite existing history.
+
+An Azure CLI login succeeding proves the connection can sign in, not that the
+subsequent Blob request succeeded. Keep cloud-pilot results separate from local
+unit/emulator validation and do not broaden network/security settings to hide a failure.
