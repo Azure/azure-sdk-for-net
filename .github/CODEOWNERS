@@ -89,10 +89,6 @@
 
 /sdk/agentserver/Azure.AI.AgentServer.Responses/    @Shivakishore14
 
-/sdk/ai/Azure.AI.Extensions.OpenAI/    @rhurey
-
-/sdk/ai/Azure.AI.Projects.Agents/    @rhurey
-
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
 
@@ -100,16 +96,16 @@
 # ServiceOwners: @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
 
 # PRLabel: %AI Model Inference %AI Projects
-/sdk/ai/    @dargilco @glharper @nick863 @trangevi @trrwilson
+/sdk/ai/    @dargilco @glharper @nick863 @trangevi @Azure/ai-foundry-devex
 
 # PRLabel: %AI Model Inference
-/sdk/ai/Azure.AI.Inference/    @dargilco @glharper @trangevi
+/sdk/ai/Azure.AI.Inference/    @dargilco @glharper @trangevi @Azure/ai-foundry-devex
 
 # ServiceLabel: %AI Model Inference
 # ServiceOwners: @dargilco @glharper @trangevi
 
 # PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects/    @dargilco @nick863 @rhurey @trangevi @trrwilson
+/sdk/ai/Azure.AI.Projects/    @dargilco @nick863 @rhurey @trangevi @Azure/ai-foundry-devex
 
 # ServiceLabel: %AI Projects
 # ServiceOwners: @dargilco @nick863 @trangevi
