@@ -5,9 +5,16 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
+/// <summary>One immutable content part in an ordered user message.</summary>
+[Experimental("AAAS001")]
+public abstract class VoiceInputPart
+{
+    private protected VoiceInputPart() { }
+}
+
 /// <summary>One supported text part in a completed user turn.</summary>
 [Experimental("AAAS001")]
-public sealed class VoiceInputTextPart
+public sealed class VoiceInputTextPart : VoiceInputPart
 {
     /// <summary>Initializes a text content part.</summary>
     public VoiceInputTextPart(string text)
@@ -22,6 +29,24 @@ public sealed class VoiceInputTextPart
     public override string ToString() => nameof(VoiceInputTextPart);
 }
 
+/// <summary>One application-defined JSON object in a user message.</summary>
+[Experimental("AAAS001")]
+public sealed class VoiceInputDataPart : VoiceInputPart
+{
+    /// <summary>Initializes a data part, copying the supplied JSON bytes.</summary>
+    public VoiceInputDataPart(BinaryData data)
+    {
+        ArgumentNullException.ThrowIfNull(data);
+        Data = VoiceModelHelpers.CopyBinaryData(data)!;
+    }
+
+    /// <summary>Gets the application JSON object.</summary>
+    public BinaryData Data { get; }
+
+    /// <inheritdoc />
+    public override string ToString() => nameof(VoiceInputDataPart);
+}
+
 /// <summary>A completed user text turn.</summary>
 [Experimental("AAAS001")]
 public sealed class VoiceUserMessageEvent : VoiceInboundMessage
@@ -32,18 +57,32 @@ public sealed class VoiceUserMessageEvent : VoiceInboundMessage
         DateTimeOffset timestamp,
         string itemId,
         IEnumerable<VoiceInputTextPart> content)
+        : this(id, timestamp, itemId, (IEnumerable<VoiceInputPart>)content)
+    {
+    }
+
+    /// <summary>Initializes a user turn containing ordered text and data parts.</summary>
+    public VoiceUserMessageEvent(
+        string id,
+        DateTimeOffset timestamp,
+        string itemId,
+        IEnumerable<VoiceInputPart> content)
         : base("user.message", id, timestamp)
     {
         ItemId = itemId;
         ArgumentNullException.ThrowIfNull(content);
-        Content = Array.AsReadOnly(content.ToArray());
+        ContentParts = Array.AsReadOnly(content.ToArray());
+        Content = Array.AsReadOnly(ContentParts.OfType<VoiceInputTextPart>().ToArray());
     }
 
     /// <summary>Gets the Bridge-allocated input item identifier.</summary>
     public string ItemId { get; }
 
-    /// <summary>Gets supported content parts in wire order.</summary>
+    /// <summary>Gets the text projection retained for existing text handlers.</summary>
     public IReadOnlyList<VoiceInputTextPart> Content { get; }
+
+    /// <summary>Gets all supported text and data parts in wire order.</summary>
+    public IReadOnlyList<VoiceInputPart> ContentParts { get; }
 }
 
 /// <summary>A Bridge-generated no-input turn.</summary>

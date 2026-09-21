@@ -229,6 +229,8 @@ See [Typed Voice relay](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk
 
 #### WebSocket configuration
 
+Bridge protocol remains `1.0`. `VoiceUserMessageEvent.ContentParts` preserves ordered `VoiceInputTextPart` and `VoiceInputDataPart` values; the existing `Content` property remains the text projection for existing handlers. Data is an application JSON object represented by copied `BinaryData`. Send `VoiceResponseOutputDataDoneMessage` after explicitly opening a response, and finish with `VoiceResponseDoneMessage`. A data item is atomic, cannot interrupt an unfinished text item, and produces no speech. For a successful operation with no output, explicitly send `VoiceResponseNoneMessage` with reason `acknowledged` after required persistence finishes. The relay never infers business completion. Update both the Bridge and library before using the extension; no version change or runtime negotiation is introduced.
+
 | Environment variable | Default | Description |
 |---|---|---|
 | `WS_KEEPALIVE_INTERVAL` | unset → disabled | Integer seconds between RFC 6455 Ping frames. `0` (or unset) disables protocol-level keep-alive. |

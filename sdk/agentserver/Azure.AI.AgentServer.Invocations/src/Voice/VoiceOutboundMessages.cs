@@ -166,6 +166,35 @@ public sealed class VoiceResponseOutputTextDoneMessage : VoiceOutboundMessage
     public BinaryData? Voice { get; }
 }
 
+/// <summary>Completes one non-audio application-data output item.</summary>
+[Experimental("AAAS001")]
+public sealed class VoiceResponseOutputDataDoneMessage : VoiceOutboundMessage
+{
+    /// <summary>Initializes a complete data item, copying the supplied JSON bytes.</summary>
+    public VoiceResponseOutputDataDoneMessage(
+        string responseId,
+        string itemId,
+        BinaryData data,
+        string? id = null,
+        DateTimeOffset? timestamp = null)
+        : base("response.output_data.done", id, timestamp)
+    {
+        ArgumentNullException.ThrowIfNull(data);
+        ResponseId = responseId;
+        ItemId = itemId;
+        Data = VoiceModelHelpers.CopyBinaryData(data)!;
+    }
+
+    /// <summary>Gets the owning response identifier.</summary>
+    public string ResponseId { get; }
+
+    /// <summary>Gets the output item identifier.</summary>
+    public string ItemId { get; }
+
+    /// <summary>Gets the application JSON object.</summary>
+    public BinaryData Data { get; }
+}
+
 /// <summary>Explicitly completes normal response generation.</summary>
 [Experimental("AAAS001")]
 public sealed class VoiceResponseDoneMessage : VoiceOutboundMessage
