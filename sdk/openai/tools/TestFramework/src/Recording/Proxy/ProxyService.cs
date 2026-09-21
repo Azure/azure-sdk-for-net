@@ -50,6 +50,13 @@ public class ProxyService : IDisposable
             UseShellExecute = false,
             EnvironmentVariables =
             {
+                // The proxy ships as a framework-dependent net8.0 application (see the
+                // TestProxyPath metadata in OpenAI.TestFramework.csproj). The default
+                // 'Minor' roll-forward policy will not run it on a host that only has a
+                // newer major runtime, which happens whenever a test leg does not itself
+                // target net8.0. eng/common/testproxy/test-proxy-tool.yml sets the same
+                // variable when the pipeline starts this binary.
+                ["DOTNET_ROLL_FORWARD"] = "Major",
                 ["ASPNETCORE_URLS"] = $"http://127.0.0.1:{options.HttpPort};https://127.0.0.1:{options.HttpsPort}",
                 ["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = "Error",
                 ["Logging__LogLevel__Default"] = "Error",

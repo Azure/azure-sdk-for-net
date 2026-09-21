@@ -107,6 +107,13 @@ public class TestProxyProcess
         testProxyProcessInfo.RedirectStandardError = true;
 
         // Set environment variables
+        // The proxy ships as a framework-dependent net8.0 application, both as the tool
+        // pinned in .config/dotnet-tools.json and as any TEST_PROXY_EXE_PATH override.
+        // The default 'Minor' roll-forward policy will not run it on a host that only has
+        // a newer major runtime, which happens whenever a test leg does not itself target
+        // net8.0. eng/common/testproxy/test-proxy-tool.yml sets the same variable when the
+        // pipeline starts this binary.
+        testProxyProcessInfo.EnvironmentVariables["DOTNET_ROLL_FORWARD"] = "Major";
         testProxyProcessInfo.EnvironmentVariables["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0";
         testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = TestEnvironment.EnableTestProxyDebugLogs ? "Debug" : "Error";
         testProxyProcessInfo.EnvironmentVariables["Logging__LogLevel__Default"] = "Error";

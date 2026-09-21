@@ -26,6 +26,9 @@ parameters:
     default: ''
   - name: OSName
     type: string
+  - name: EnableTestRuntimeTrimming
+    type: boolean
+    default: false
 
 jobs:
   - job:
@@ -131,6 +134,7 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
+          SkipUnusedTestRuntimes: ${{ parameters.EnableTestRuntimeTrimming }}
 
       # this section is only included when invoking with a dynamic set of packages (EG net - pullrequest)
       - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
@@ -203,6 +207,12 @@ jobs:
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@5
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Generate Code Coverage Reports
+        # The task shells out to 'dotnet <task>/tools/net8.0/ReportGenerator.dll'. The
+        # coverage leg runs on a net10.0 agent, so once the 8.0 SDK install is skipped
+        # this only starts because the agent image happens to preinstall the 8.0
+        # runtime. Roll forward explicitly rather than depend on that.
+        env:
+          DOTNET_ROLL_FORWARD: Major
         inputs:
           reports: $(CodeCoverageFilePattern)
           targetdir: $(Build.ArtifactStagingDirectory)/coverage

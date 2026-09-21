@@ -2,6 +2,10 @@ parameters:
   EnableNuGetCache: true
   NuGetCacheKey: 'Build'
   Container: false
+  # When true, the .NET 8 and .NET 9 SDKs are installed only for jobs that actually
+  # run tests on those frameworks. Jobs leave $(TestTargetFramework) unset unless they
+  # come from the test matrix, and those keep installing everything.
+  SkipUnusedTestRuntimes: false
 
 steps:
   # Need to authenticate so our pipeline can update packages in the feed.
@@ -33,6 +37,8 @@ steps:
   - task: UseDotNet@2 # We need .NET 9 for the .NET 9 tests
     displayName: 'Use .NET 9.0 SDK'
     retryCountOnTaskFailure: 3
+    ${{ if parameters.SkipUnusedTestRuntimes }}:
+      condition: and(succeeded(), or(eq(variables['TestTargetFramework'], ''), eq(variables['TestTargetFramework'], 'net9.0')))
     inputs:
       # AspNetCore runtime pack can't be installed outside of SDK and we need it for integration tests
       packageType: sdk
@@ -41,6 +47,8 @@ steps:
   - task: UseDotNet@2 # We need .NET 8 for the .NET 8 tests
     displayName: 'Use .NET 8.0 SDK'
     retryCountOnTaskFailure: 3
+    ${{ if parameters.SkipUnusedTestRuntimes }}:
+      condition: and(succeeded(), or(eq(variables['TestTargetFramework'], ''), eq(variables['TestTargetFramework'], 'net8.0')))
     inputs:
       # AspNetCore runtime pack can't be installed outside of SDK and we need it for integration tests
       packageType: sdk
