@@ -3488,7 +3488,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftHDInsightVirtualMachinesListHostsAsyncCollectionResultOfT(
+            return new HDInsightClusterResourceGetVirtualMachineHostsAsyncCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -3526,7 +3526,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftHDInsightVirtualMachinesListHostsCollectionResultOfT(
+            return new HDInsightClusterResourceGetVirtualMachineHostsCollectionResultOfT(
                 _virtualMachinesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
