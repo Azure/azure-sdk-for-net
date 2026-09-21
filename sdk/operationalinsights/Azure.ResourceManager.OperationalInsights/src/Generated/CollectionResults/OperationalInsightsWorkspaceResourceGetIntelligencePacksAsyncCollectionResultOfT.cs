@@ -14,52 +14,49 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.OracleDatabase.Models;
+using Azure.ResourceManager.OperationalInsights.Models;
 
-namespace Azure.ResourceManager.OracleDatabase
+namespace Azure.ResourceManager.OperationalInsights
 {
-    internal partial class OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT : AsyncPageable<PrivateIPAddressResult>
+    internal partial class OperationalInsightsWorkspaceResourceGetIntelligencePacksAsyncCollectionResultOfT : AsyncPageable<OperationalInsightsIntelligencePack>
     {
-        private readonly CloudVmClusters _client;
+        private readonly IntelligencePacks _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _cloudvmclustername;
-        private readonly RequestContent _content;
+        private readonly string _workspaceName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The CloudVmClusters client used to send requests. </param>
+        /// <summary> Initializes a new instance of OperationalInsightsWorkspaceResourceGetIntelligencePacksAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The IntelligencePacks client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cloudvmclustername"> CloudVmCluster name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT(CloudVmClusters client, Guid subscriptionId, string resourceGroupName, string cloudvmclustername, RequestContent content, RequestContext context, string diagnosticScope)
+        public OperationalInsightsWorkspaceResourceGetIntelligencePacksAsyncCollectionResultOfT(IntelligencePacks client, Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _cloudvmclustername = cloudvmclustername;
-            _content = content;
+            _workspaceName = workspaceName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of OperationalInsightsWorkspaceResourceGetIntelligencePacksAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of OracleDatabaseCloudVmClustersListPrivateIpAddressesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<PrivateIPAddressResult>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of OperationalInsightsWorkspaceResourceGetIntelligencePacksAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<OperationalInsightsIntelligencePack>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<PrivateIPAddressResult> result = ParseArrayFromResponse(response);
-            yield return Page<PrivateIPAddressResult>.FromValues(result, null, response);
+            IReadOnlyList<OperationalInsightsIntelligencePack> result = ParseArrayFromResponse(response);
+            yield return Page<OperationalInsightsIntelligencePack>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -67,7 +64,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetPrivateIPAddressesRequest(_subscriptionId, _resourceGroupName, _cloudvmclustername, _content, _context);
+            HttpMessage message = _client.CreateGetIntelligencePacksRequest(_subscriptionId, _resourceGroupName, _workspaceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -84,14 +81,14 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<PrivateIPAddressResult> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<OperationalInsightsIntelligencePack> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<PrivateIPAddressResult> result = new List<PrivateIPAddressResult>();
+            List<OperationalInsightsIntelligencePack> result = new List<OperationalInsightsIntelligencePack>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<PrivateIPAddressResult>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOracleDatabaseContext.Default));
+                result.Add(ModelReaderWriter.Read<OperationalInsightsIntelligencePack>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOperationalInsightsContext.Default));
             }
             return result;
         }
