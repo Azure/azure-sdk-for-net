@@ -241,21 +241,21 @@ namespace Azure.Provisioning.Billing
             }
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 
-        /// <summary> Gets the ReservationExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ReservationExpireOn
+        /// <summary> Gets the ReservationExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ReservationExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.ReservationExpireOn;
+                return Properties is null ? default : Properties.ReservationExpiresOn;
             }
         }
 

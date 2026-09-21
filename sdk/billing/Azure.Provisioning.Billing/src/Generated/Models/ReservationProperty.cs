@@ -26,8 +26,8 @@ namespace Azure.Provisioning.Billing
         private BicepValue<DateTimeOffset> _effectiveOn;
         private BicepValue<DateTimeOffset> _benefitStartsOn;
         private BicepValue<DateTimeOffset> _lastUpdatedOn;
-        private BicepValue<DateTimeOffset> _expireOn;
-        private BicepValue<DateTimeOffset> _reservationExpireOn;
+        private BicepValue<DateTimeOffset> _expiresOn;
+        private BicepValue<DateTimeOffset> _reservationExpiresOn;
         private BicepValue<DateTimeOffset> _reviewOn;
         private BicepValue<string> _skuDescription;
         private ReservationExtendedStatusInfo _extendedStatusInfo;
@@ -176,23 +176,23 @@ namespace Azure.Provisioning.Billing
             }
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expireOn;
+                return _expiresOn;
             }
         }
 
-        /// <summary> Gets the ReservationExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ReservationExpireOn
+        /// <summary> Gets the ReservationExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ReservationExpiresOn
         {
             get
             {
                 Initialize();
-                return _reservationExpireOn;
+                return _reservationExpiresOn;
             }
         }
 
@@ -450,8 +450,8 @@ namespace Azure.Provisioning.Billing
             _effectiveOn = DefineProperty<DateTimeOffset>(nameof(EffectiveOn), new string[] { "effectiveDateTime" }, isOutput: true, format: "O");
             _benefitStartsOn = DefineProperty<DateTimeOffset>(nameof(BenefitStartsOn), new string[] { "benefitStartTime" }, format: "O");
             _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedDateTime" }, isOutput: true, format: "O");
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiryDate" }, isOutput: true, format: "O");
-            _reservationExpireOn = DefineProperty<DateTimeOffset>(nameof(ReservationExpireOn), new string[] { "expiryDateTime" }, format: "O");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expiryDate" }, isOutput: true, format: "O");
+            _reservationExpiresOn = DefineProperty<DateTimeOffset>(nameof(ReservationExpiresOn), new string[] { "expiryDateTime" }, format: "O");
             _reviewOn = DefineProperty<DateTimeOffset>(nameof(ReviewOn), new string[] { "reviewDateTime" }, format: "O");
             _skuDescription = DefineProperty<string>(nameof(SkuDescription), new string[] { "skuDescription" }, isOutput: true);
             _extendedStatusInfo = DefineModelProperty<ReservationExtendedStatusInfo>(nameof(ExtendedStatusInfo), new string[] { "extendedStatusInfo" });

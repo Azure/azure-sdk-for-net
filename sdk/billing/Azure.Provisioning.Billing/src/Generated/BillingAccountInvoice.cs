@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Billing
 {
     /// <summary> An invoice. </summary>
-    public partial class BillingInvoice : ProvisionableResource
+    public partial class BillingAccountInvoice : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,10 +22,10 @@ namespace Azure.Provisioning.Billing
         private BillingInvoiceProperties _properties;
         private BicepDictionary<string> _tags;
 
-        /// <summary> Creates a new BillingInvoice. </summary>
+        /// <summary> Creates a new BillingAccountInvoice. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal BillingInvoice(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Billing/billingAccounts/invoices", resourceVersion ?? "2024-04-01")
+        internal BillingAccountInvoice(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Billing/billingAccounts/invoices", resourceVersion ?? "2024-04-01")
         {
         }
 
@@ -84,7 +84,7 @@ namespace Azure.Provisioning.Billing
             }
         }
 
-        /// <summary> Define all the provisionable properties for BillingInvoice. </summary>
+        /// <summary> Define all the provisionable properties for BillingAccountInvoice. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -96,17 +96,17 @@ namespace Azure.Provisioning.Billing
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing BillingInvoice. </summary>
+        /// <summary> Creates a reference to an existing BillingAccountInvoice. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static BillingInvoice FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static BillingAccountInvoice FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            BillingInvoice result = new BillingInvoice(bicepIdentifier, resourceVersion);
+            BillingAccountInvoice result = new BillingAccountInvoice(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for BillingInvoice that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for BillingAccountInvoice that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

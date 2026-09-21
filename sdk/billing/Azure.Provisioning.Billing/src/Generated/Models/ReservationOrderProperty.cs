@@ -22,8 +22,8 @@ namespace Azure.Provisioning.Billing
         private BicepValue<ResourceIdentifier> _billingAccountId;
         private BicepValue<DateTimeOffset> _requestOn;
         private BicepValue<DateTimeOffset> _createdOn;
-        private BicepValue<DateTimeOffset> _expireOn;
-        private BicepValue<DateTimeOffset> _reservationExpireOn;
+        private BicepValue<DateTimeOffset> _expiresOn;
+        private BicepValue<DateTimeOffset> _reservationExpiresOn;
         private BicepValue<DateTimeOffset> _benefitStartsOn;
         private BicepValue<int> _originalQuantity;
         private BicepValue<string> _term;
@@ -110,23 +110,23 @@ namespace Azure.Provisioning.Billing
             }
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expireOn;
+                return _expiresOn;
             }
         }
 
-        /// <summary> Gets the ReservationExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ReservationExpireOn
+        /// <summary> Gets the ReservationExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ReservationExpiresOn
         {
             get
             {
                 Initialize();
-                return _reservationExpireOn;
+                return _reservationExpiresOn;
             }
         }
 
@@ -241,8 +241,8 @@ namespace Azure.Provisioning.Billing
             _billingAccountId = DefineProperty<ResourceIdentifier>(nameof(BillingAccountId), new string[] { "billingAccountId" });
             _requestOn = DefineProperty<DateTimeOffset>(nameof(RequestOn), new string[] { "requestDateTime" }, format: "O");
             _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "createdDateTime" }, format: "O");
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiryDate" }, format: "D");
-            _reservationExpireOn = DefineProperty<DateTimeOffset>(nameof(ReservationExpireOn), new string[] { "expiryDateTime" }, format: "O");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expiryDate" }, format: "D");
+            _reservationExpiresOn = DefineProperty<DateTimeOffset>(nameof(ReservationExpiresOn), new string[] { "expiryDateTime" }, format: "O");
             _benefitStartsOn = DefineProperty<DateTimeOffset>(nameof(BenefitStartsOn), new string[] { "benefitStartTime" }, format: "O");
             _originalQuantity = DefineProperty<int>(nameof(OriginalQuantity), new string[] { "originalQuantity" });
             _term = DefineProperty<string>(nameof(Term), new string[] { "term" }, isOutput: true);

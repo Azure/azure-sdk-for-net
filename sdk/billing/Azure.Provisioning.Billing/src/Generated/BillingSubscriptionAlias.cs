@@ -648,19 +648,6 @@ namespace Azure.Provisioning.Billing
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<BillingProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new BillingSubscriptionAliasProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
         /// <summary> Gets the SubscriptionId. </summary>
         public BicepValue<string> SubscriptionId
         {

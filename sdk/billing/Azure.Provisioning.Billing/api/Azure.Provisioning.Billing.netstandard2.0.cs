@@ -46,6 +46,22 @@ namespace Azure.Provisioning.Billing
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Billing.BillingEnrollmentSupportLevel> SupportLevel { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class BillingAccountInvoice : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal BillingAccountInvoice() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Billing.BillingInvoiceProperties Properties { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Billing.BillingAccountInvoice FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2024_04_01;
+        }
+    }
     public partial class BillingAccountPaymentMethod : Azure.Provisioning.Primitives.ProvisionableResource
     {
         internal BillingAccountPaymentMethod() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -591,22 +607,6 @@ namespace Azure.Provisioning.Billing
         [System.Runtime.Serialization.DataMemberAttribute(Name="Pro-Direct")]
         ProDirect = 2,
         Developer = 3,
-    }
-    public partial class BillingInvoice : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        internal BillingInvoice() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Billing.BillingInvoiceProperties Properties { get { throw null; } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Billing.BillingInvoice FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2024_04_01;
-        }
     }
     public partial class BillingInvoiceFailedPayment : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1448,7 +1448,7 @@ namespace Azure.Provisioning.Billing
         public Azure.Provisioning.BicepValue<string> DisplayProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EffectiveOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> ETag { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.Billing.ReservationExtendedStatusInfo ExtendedStatusInfo { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Billing.InstanceFlexibility> InstanceFlexibility { get { throw null; } }
@@ -1467,7 +1467,7 @@ namespace Azure.Provisioning.Billing
         public Azure.Provisioning.BicepValue<string> RenewDestination { get { throw null; } }
         public Azure.Provisioning.Billing.ReservationRenewProperties RenewProperties { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RenewSource { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ReservationExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ReservationExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ReservationPurchaseOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ReservedResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ReviewOn { get { throw null; } }
@@ -1500,7 +1500,7 @@ namespace Azure.Provisioning.Billing
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> EnrollmentId { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> ETag { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.Billing.ReservationExtendedStatusInfo ExtendedStatusInfo { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -1510,7 +1510,7 @@ namespace Azure.Provisioning.Billing
         public Azure.Provisioning.BicepValue<string> ProductCode { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> RequestOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ReservationExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ReservationExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Billing.BillingReservation> Reservations { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ReviewedOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1750,7 +1750,6 @@ namespace Azure.Provisioning.Billing
         public Azure.Provisioning.BicepValue<string> ProductCategory { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProductType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProductTypeId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Billing.BillingProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> ProvisioningTenantId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> PurchaseOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> Quantity { get { throw null; } set { } }

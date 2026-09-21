@@ -9,10 +9,10 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.Billing
 {
-    /// <summary> A billing subscription alias. </summary>
     internal partial class BillingSubscriptionAliasProperties : BillingSubscriptionProperties
     {
         private BicepValue<string> _subscriptionAliasSubscriptionId;
+
         /// <summary> Creates a new BillingSubscriptionAliasProperties. </summary>
         public BillingSubscriptionAliasProperties()
         {
