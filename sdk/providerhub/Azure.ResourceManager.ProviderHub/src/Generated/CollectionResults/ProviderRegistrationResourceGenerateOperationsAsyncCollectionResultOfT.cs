@@ -18,21 +18,21 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    internal partial class MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT : AsyncPageable<OperationsDefinition>
+    internal partial class ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT : AsyncPageable<OperationsDefinition>
     {
-        private readonly Operations _client;
+        private readonly ProviderRegistrations _client;
         private readonly Guid _subscriptionId;
         private readonly string _providerNamespace;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Operations client used to send requests. </param>
+        /// <summary> Initializes a new instance of ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ProviderRegistrations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT(Operations client, Guid subscriptionId, string providerNamespace, RequestContext context, string diagnosticScope)
+        public ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT(ProviderRegistrations client, Guid subscriptionId, string providerNamespace, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.ProviderHub
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftProviderHubOperationsPutContentsListByProviderRegistrationAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ProviderRegistrationResourceGenerateOperationsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<OperationsDefinition>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetByProviderRegistrationRequest(_subscriptionId, _providerNamespace, _context);
+            HttpMessage message = _client.CreateGenerateOperationsRequest(_subscriptionId, _providerNamespace, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

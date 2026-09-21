@@ -17,7 +17,7 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    internal partial class MicrosoftProviderHubProviderRegistrationsGenerateOperationsCollectionResultOfT : Pageable<OperationsDefinition>
+    internal partial class ProviderRegistrationResourceGenerateOperationsCollectionResultOfT : Pageable<OperationsDefinition>
     {
         private readonly ProviderRegistrations _client;
         private readonly Guid _subscriptionId;
@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftProviderHubProviderRegistrationsGenerateOperationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ProviderRegistrationResourceGenerateOperationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ProviderRegistrations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftProviderHubProviderRegistrationsGenerateOperationsCollectionResultOfT(ProviderRegistrations client, Guid subscriptionId, string providerNamespace, RequestContext context, string diagnosticScope)
+        public ProviderRegistrationResourceGenerateOperationsCollectionResultOfT(ProviderRegistrations client, Guid subscriptionId, string providerNamespace, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.ProviderHub
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftProviderHubProviderRegistrationsGenerateOperationsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ProviderRegistrationResourceGenerateOperationsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftProviderHubProviderRegistrationsGenerateOperationsCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ProviderRegistrationResourceGenerateOperationsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<OperationsDefinition>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
