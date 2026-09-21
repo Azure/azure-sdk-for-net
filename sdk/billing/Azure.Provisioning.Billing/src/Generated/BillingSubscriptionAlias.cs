@@ -752,19 +752,6 @@ namespace Azure.Provisioning.Billing
             }
         }
 
-        /// <summary> Gets the SubscriptionAliasProvisioningState. </summary>
-        public BicepValue<BillingProvisioningState> SubscriptionAliasProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new BillingSubscriptionAliasProperties();
-                }
-                return Properties.SubscriptionAliasProvisioningState;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for BillingSubscriptionAlias. </summary>
         protected override void DefineProvisionableProperties()
         {
