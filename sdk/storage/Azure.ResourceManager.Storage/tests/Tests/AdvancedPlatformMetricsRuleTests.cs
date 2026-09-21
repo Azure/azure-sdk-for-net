@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsTrue(rule.Data.Properties.MetricsEmitted.Contains(MetricsEmitted.ContainerBlobCount));
             Assert.IsTrue(rule.Data.Properties.MetricsEmitted.Contains(MetricsEmitted.ContainerUsedSize));
 
+            AdvancedPlatformMetricsRuleResource resourceRetrieved = (await rule.GetAsync()).Value;
+            Assert.AreEqual(rule.Data.Properties.RuleType, resourceRetrieved.Data.Properties.RuleType);
+            Assert.AreEqual(rule.Id, (await account.GetAdvancedPlatformMetricsRuleAsync(ruleType)).Value.Id);
+            Assert.AreEqual(rule.Id, (await Client.GetAdvancedPlatformMetricsRuleResource(rule.Id).GetAsync()).Value.Id);
+
             //get rule
             AdvancedPlatformMetricsRuleResource retrieved = (await ruleCollection.GetAsync(ruleType)).Value;
             Assert.AreEqual(rule.Data.Properties.RuleType, retrieved.Data.Properties.RuleType);
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     })
             };
             updatedData.Properties.RuleConfig.FilterValues.Add(containerName);
-            AdvancedPlatformMetricsRuleResource updated = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleType, updatedData)).Value;
+            AdvancedPlatformMetricsRuleResource updated = (await rule.UpdateAsync(WaitUntil.Completed, updatedData)).Value;
             Assert.IsFalse(updated.Data.Properties.Enabled);
             Assert.AreEqual(AdvancedPlatformMetricsFilterType.ContainerListFilter, updated.Data.Properties.RuleConfig.FilterType);
             Assert.AreEqual(1, updated.Data.Properties.RuleConfig.FilterValues.Count);
@@ -118,6 +123,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             //verify deleted
             Assert.IsFalse((await ruleCollection.ExistsAsync(ruleType)).Value);
+            Assert.IsFalse((await ruleCollection.GetIfExistsAsync(ruleType)).HasValue);
         }
     }
 }
