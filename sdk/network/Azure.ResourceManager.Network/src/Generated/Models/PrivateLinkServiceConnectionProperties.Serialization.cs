@@ -110,6 +110,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
             }
+            if (Optional.IsDefined(ApprovalReference))
+            {
+                writer.WritePropertyName("approvalReference"u8);
+                writer.WriteObjectValue(ApprovalReference, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -157,6 +162,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> groupIds = default;
             string requestMessage = default;
             NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            ApprovalReference approvalReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -213,6 +219,15 @@ namespace Azure.ResourceManager.Network.Models
                     privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("approvalReference"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    approvalReference = ApprovalReference.DeserializeApprovalReference(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -224,6 +239,7 @@ namespace Azure.ResourceManager.Network.Models
                 groupIds ?? new ChangeTrackingList<string>(),
                 requestMessage,
                 privateLinkServiceConnectionState,
+                approvalReference,
                 additionalBinaryDataProperties);
         }
     }

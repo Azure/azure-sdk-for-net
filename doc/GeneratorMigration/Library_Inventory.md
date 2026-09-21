@@ -16,10 +16,10 @@
 
 ## Summary
 
-- Total libraries: 463
-- Management Plane (MPG): 271
+- Total libraries: 461
+- Management Plane (MPG): 269
   - Autorest/Swagger: 39
-  - New Emitter (TypeSpec): 232
+  - New Emitter (TypeSpec): 230
   - Old TypeSpec: 0
 - Data Plane (DPG): 126
   - Autorest/Swagger: 30
@@ -139,7 +139,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 232 / 232 (100%)
+**Migration Status**: 230 / 230 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -271,7 +271,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations | ✅ |
 | kubernetesconfiguration | Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes | ✅ |
 | kusto | Azure.ResourceManager.Kusto | ✅ |
-| lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
 | loadtestservice | Azure.ResourceManager.LoadTesting | ✅ |
 | machinelearningservices | Azure.ResourceManager.MachineLearning | ✅ |
 | maintenance | Azure.ResourceManager.Maintenance | ✅ |
@@ -305,7 +304,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | oracle | Azure.ResourceManager.OracleDatabase | ✅ |
 | paloaltonetworks.ngfw | Azure.ResourceManager.PaloAltoNetworks.Ngfw | ✅ |
 | peering | Azure.ResourceManager.Peering | ✅ |
-| pineconevectordb | Azure.ResourceManager.PineconeVectorDB | ✅ |
 | planetarycomputer | Azure.ResourceManager.PlanetaryComputer | ✅ |
 | playwright | Azure.ResourceManager.Playwright | ✅ |
 | policyinsights | Azure.ResourceManager.PolicyInsights | ✅ |
@@ -357,6 +355,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | sphere | Azure.ResourceManager.Sphere | ✅ |
 | sqlmanagement | Azure.ResourceManager.Sql | ✅ |
 | sqlvirtualmachine | Azure.ResourceManager.SqlVirtualMachine | ✅ |
+| sreagent | Azure.ResourceManager.AppService.SreAgent | ✅ |
 | standbypool | Azure.ResourceManager.StandbyPool | ✅ |
 | storage | Azure.ResourceManager.Storage | ✅ |
 | storageactions | Azure.ResourceManager.StorageActions | ✅ |
@@ -371,7 +370,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | verifiedid | Azure.ResourceManager.VerifiedId | ✅ |
 | webpubsub | Azure.ResourceManager.WebPubSub | ✅ |
 | websites | Azure.ResourceManager.AppService | ✅ |
-| weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
 | workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
 | workloadssapmonitor | Azure.ResourceManager.WorkloadsSapMonitor | ✅ |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | ✅ |

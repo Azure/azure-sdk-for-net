@@ -45,6 +45,42 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="CustomCaptureConfigurationsFirewallResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetCustomCaptureConfigurationsFirewallResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CustomCaptureConfigurationsFirewallResource"/> object. </returns>
+        public static CustomCaptureConfigurationsFirewallResource GetCustomCaptureConfigurationsFirewallResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockablePaloAltoNetworksNgfwArmClient(client).GetCustomCaptureConfigurationsFirewallResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LogIngestionSettingsResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwArmClient.GetLogIngestionSettingsResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LogIngestionSettingsResource"/> object. </returns>
+        public static LogIngestionSettingsResource GetLogIngestionSettingsResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockablePaloAltoNetworksNgfwArmClient(client).GetLogIngestionSettingsResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="GlobalRulestackResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -479,7 +515,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// CreateProductSerialNumber
+        /// A long-running provider action.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.CreateProductSerialNumberAsync(CancellationToken)"/> instead. </description>
@@ -496,7 +532,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// CreateProductSerialNumber
+        /// A long-running provider action.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.CreateProductSerialNumber(CancellationToken)"/> instead. </description>
@@ -513,7 +549,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// GetCloudManagerTenants
+        /// A long-running provider action.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetCloudManagerTenantsAsync(CancellationToken)"/> instead. </description>
@@ -530,7 +566,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// GetCloudManagerTenants
+        /// A long-running provider action.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetCloudManagerTenants(CancellationToken)"/> instead. </description>
@@ -547,7 +583,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// GetProductSerialNumberStatus
+        /// A long-running provider action.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetProductSerialNumberStatusAsync(CancellationToken)"/> instead. </description>
@@ -564,7 +600,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// GetProductSerialNumberStatus
+        /// A long-running provider action.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetProductSerialNumberStatus(CancellationToken)"/> instead. </description>
@@ -581,7 +617,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// GetSupportInfo
+        /// A long-running provider action.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetSupportInfoAsync(CancellationToken)"/> instead. </description>
@@ -598,7 +634,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// GetSupportInfo
+        /// A long-running provider action.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockablePaloAltoNetworksNgfwSubscriptionResource.GetSupportInfo(CancellationToken)"/> instead. </description>
