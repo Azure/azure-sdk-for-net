@@ -244,6 +244,86 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(MonitoringSourceNotConfigured))
+            {
+                writer.WritePropertyName("monitoringSourceNotConfigured"u8);
+                writer.WriteBooleanValue(MonitoringSourceNotConfigured.Value);
+            }
+            if (Optional.IsDefined(HealthModelExists))
+            {
+                writer.WritePropertyName("healthModelExists"u8);
+                writer.WriteStringValue(HealthModelExists.Value.ToString());
+            }
+            if (Optional.IsDefined(DiscoveryRuleExists))
+            {
+                writer.WritePropertyName("discoveryRuleExists"u8);
+                writer.WriteStringValue(DiscoveryRuleExists.Value.ToString());
+            }
+            if (Optional.IsDefined(DrillRbacOnHealthModel))
+            {
+                writer.WritePropertyName("drillRbacOnHealthModel"u8);
+                writer.WriteStringValue(DrillRbacOnHealthModel.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(RbacNeededForDrillOnHealthModel))
+            {
+                writer.WritePropertyName("rbacNeededForDrillOnHealthModel"u8);
+                writer.WriteStartArray();
+                foreach (string item in RbacNeededForDrillOnHealthModel)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DrillRbacOnSli))
+            {
+                writer.WritePropertyName("drillRbacOnSli"u8);
+                writer.WriteStringValue(DrillRbacOnSli.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(SliAttentionStatuses))
+            {
+                writer.WritePropertyName("sliAttentionStatuses"u8);
+                writer.WriteStartArray();
+                foreach (SliAttentionStatus item in SliAttentionStatuses)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DrillRbacOnGoalAssignment))
+            {
+                writer.WritePropertyName("drillRbacOnGoalAssignment"u8);
+                writer.WriteStringValue(DrillRbacOnGoalAssignment.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(RbacNeededForDrillOnGoalAssignment))
+            {
+                writer.WritePropertyName("rbacNeededForDrillOnGoalAssignment"u8);
+                writer.WriteStartArray();
+                foreach (string item in RbacNeededForDrillOnGoalAssignment)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(GoalAssignment))
+            {
+                writer.WritePropertyName("goalAssignment"u8);
+                writer.WriteStringValue(GoalAssignment.Value.ToString());
+            }
+            if (Optional.IsDefined(RecoveryPlan))
+            {
+                writer.WritePropertyName("recoveryPlan"u8);
+                writer.WriteStringValue(RecoveryPlan.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -307,6 +387,17 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             IList<string> rbacNeededForDrillOnDrillMonitoringResources = default;
             IList<string> rbacNeededForDrillOnDrillResources = default;
             IList<string> missingRequiredResourceProviders = default;
+            bool? monitoringSourceNotConfigured = default;
+            ExtensionObjectState? healthModelExists = default;
+            ExtensionObjectState? discoveryRuleExists = default;
+            ResilienceManagementRbacState? drillRbacOnHealthModel = default;
+            IList<string> rbacNeededForDrillOnHealthModel = default;
+            ResilienceManagementRbacState? drillRbacOnSli = default;
+            IList<SliAttentionStatus> sliAttentionStatuses = default;
+            ResilienceManagementRbacState? drillRbacOnGoalAssignment = default;
+            IList<string> rbacNeededForDrillOnGoalAssignment = default;
+            ExtensionObjectState? goalAssignment = default;
+            ExtensionObjectState? recoveryPlan = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -576,6 +667,134 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     missingRequiredResourceProviders = array;
                     continue;
                 }
+                if (prop.NameEquals("monitoringSourceNotConfigured"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    monitoringSourceNotConfigured = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("healthModelExists"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    healthModelExists = new ExtensionObjectState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("discoveryRuleExists"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    discoveryRuleExists = new ExtensionObjectState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("drillRbacOnHealthModel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    drillRbacOnHealthModel = new ResilienceManagementRbacState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("rbacNeededForDrillOnHealthModel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    rbacNeededForDrillOnHealthModel = array;
+                    continue;
+                }
+                if (prop.NameEquals("drillRbacOnSli"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    drillRbacOnSli = new ResilienceManagementRbacState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("sliAttentionStatuses"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SliAttentionStatus> array = new List<SliAttentionStatus>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(SliAttentionStatus.DeserializeSliAttentionStatus(item, options));
+                    }
+                    sliAttentionStatuses = array;
+                    continue;
+                }
+                if (prop.NameEquals("drillRbacOnGoalAssignment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    drillRbacOnGoalAssignment = new ResilienceManagementRbacState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("rbacNeededForDrillOnGoalAssignment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    rbacNeededForDrillOnGoalAssignment = array;
+                    continue;
+                }
+                if (prop.NameEquals("goalAssignment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    goalAssignment = new ExtensionObjectState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("recoveryPlan"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryPlan = new ExtensionObjectState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -603,6 +822,17 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 rbacNeededForDrillOnDrillMonitoringResources ?? new ChangeTrackingList<string>(),
                 rbacNeededForDrillOnDrillResources ?? new ChangeTrackingList<string>(),
                 missingRequiredResourceProviders ?? new ChangeTrackingList<string>(),
+                monitoringSourceNotConfigured,
+                healthModelExists,
+                discoveryRuleExists,
+                drillRbacOnHealthModel,
+                rbacNeededForDrillOnHealthModel ?? new ChangeTrackingList<string>(),
+                drillRbacOnSli,
+                sliAttentionStatuses ?? new ChangeTrackingList<SliAttentionStatus>(),
+                drillRbacOnGoalAssignment,
+                rbacNeededForDrillOnGoalAssignment ?? new ChangeTrackingList<string>(),
+                goalAssignment,
+                recoveryPlan,
                 additionalBinaryDataProperties);
         }
     }

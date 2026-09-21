@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Regenerated the client library from the `2026-08-31-preview` API version.
+
 ### Breaking Changes
 
 ### Bugs Fixed

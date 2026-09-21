@@ -44,7 +44,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="notes"> Notes for this Drill. </param>
         /// <param name="supportedVerbsForStage"> Matrix of Actions supported on Operations. </param>
         /// <param name="currentActiveOperationId"> The currently active operationID on this Drill Run. There can be only one active. </param>
-        internal DrillRunProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier drillId, DrillMode? drillMode, DrillAttestation? attestation, IReadOnlyList<string> notes, IReadOnlyList<SupportedVerbsForStage> supportedVerbsForStage, string currentActiveOperationId) : base(status, startsOn, endsOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType, executionConfigurations, triggeredBy, additionalBinaryDataProperties)
+        /// <param name="report"> Summary of report generation for this Drill Run. </param>
+        /// <param name="recoveryTimeObjective"> Recovery time objective for the drill run. </param>
+        internal DrillRunProperties(ResilienceManagementJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, JobErrorInfo errorDetails, ResourceIdentifier resourceId, string operation, IList<JobRetryDetails> retryDetails, JobExtendedInfo jobExtendedInfo, IReadOnlyList<JobUserComment> userComments, JobType? jobType, ExecutionConfigurations executionConfigurations, JobTriggeredBy? triggeredBy, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier drillId, DrillMode? drillMode, DrillAttestation? attestation, IReadOnlyList<string> notes, IReadOnlyList<SupportedVerbsForStage> supportedVerbsForStage, string currentActiveOperationId, DrillReportSummary report, IsoDuration? recoveryTimeObjective) : base(status, startsOn, endsOn, duration, errorDetails, resourceId, operation, retryDetails, jobExtendedInfo, userComments, jobType, executionConfigurations, triggeredBy, additionalBinaryDataProperties)
         {
             DrillId = drillId;
             DrillMode = drillMode;
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             Notes = notes;
             SupportedVerbsForStage = supportedVerbsForStage;
             CurrentActiveOperationId = currentActiveOperationId;
+            Report = report;
+            RecoveryTimeObjective = recoveryTimeObjective;
         }
 
         /// <summary> Parent Drill resource. </summary>
@@ -71,5 +75,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> The currently active operationID on this Drill Run. There can be only one active. </summary>
         public string CurrentActiveOperationId { get; }
+
+        /// <summary> Summary of report generation for this Drill Run. </summary>
+        public DrillReportSummary Report { get; }
+
+        /// <summary> Recovery time objective for the drill run. </summary>
+        public IsoDuration? RecoveryTimeObjective { get; }
     }
 }

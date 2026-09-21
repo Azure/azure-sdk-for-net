@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
@@ -82,10 +81,18 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 throw new FormatException($"The model {nameof(GoalAssignmentProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("goalTemplateId"u8);
-            writer.WriteStringValue(GoalTemplateId);
-            writer.WritePropertyName("goalAssignmentType"u8);
-            writer.WriteStringValue(GoalAssignmentType.ToString());
+            writer.WritePropertyName("requireZonalResiliency"u8);
+            writer.WriteBooleanValue(RequireZonalResiliency);
+            if (Optional.IsDefined(RequireRegionalResiliency))
+            {
+                writer.WritePropertyName("requireRegionalResiliency"u8);
+                writer.WriteBooleanValue(RequireRegionalResiliency.Value);
+            }
+            if (Optional.IsDefined(RegionalObjectives))
+            {
+                writer.WritePropertyName("regionalObjectives"u8);
+                writer.WriteObjectValue(RegionalObjectives, options);
+            }
             if (Optional.IsCollectionDefined(ServiceLevelResources))
             {
                 writer.WritePropertyName("serviceLevelResources"u8);
@@ -148,22 +155,36 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 return null;
             }
-            ResourceIdentifier goalTemplateId = default;
-            GoalAssignmentType goalAssignmentType = default;
+            bool requireZonalResiliency = default;
+            bool? requireRegionalResiliency = default;
+            RegionalObjectives regionalObjectives = default;
             IList<ServiceLevelTarget> serviceLevelResources = default;
             ResilienceManagementProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("goalTemplateId"u8))
+                if (prop.NameEquals("requireZonalResiliency"u8))
                 {
-                    goalTemplateId = new ResourceIdentifier(prop.Value.GetString());
+                    requireZonalResiliency = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("goalAssignmentType"u8))
+                if (prop.NameEquals("requireRegionalResiliency"u8))
                 {
-                    goalAssignmentType = new GoalAssignmentType(prop.Value.GetString());
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requireRegionalResiliency = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("regionalObjectives"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    regionalObjectives = RegionalObjectives.DeserializeRegionalObjectives(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("serviceLevelResources"u8))
@@ -204,8 +225,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
             }
             return new GoalAssignmentProperties(
-                goalTemplateId,
-                goalAssignmentType,
+                requireZonalResiliency,
+                requireRegionalResiliency,
+                regionalObjectives,
                 serviceLevelResources ?? new ChangeTrackingList<ServiceLevelTarget>(),
                 provisioningState,
                 errorDetails,

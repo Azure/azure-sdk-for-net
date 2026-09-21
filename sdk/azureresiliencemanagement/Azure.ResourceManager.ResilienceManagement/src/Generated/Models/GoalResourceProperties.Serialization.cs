@@ -82,49 +82,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             writer.WritePropertyName("resourceArmId"u8);
             writer.WriteStringValue(ResourceArmId);
-            writer.WritePropertyName("highAvailabilityGoalParticipation"u8);
-            writer.WriteStringValue(HighAvailabilityGoalParticipation.ToString());
-            writer.WritePropertyName("highAvailabilityAttestationStatus"u8);
-            writer.WriteStringValue(HighAvailabilityAttestationStatus.ToString());
-            if (Optional.IsDefined(DisasterRecoveryGoalParticipation))
+            if (Optional.IsDefined(ZonalResiliency))
             {
-                writer.WritePropertyName("disasterRecoveryGoalParticipation"u8);
-                writer.WriteStringValue(DisasterRecoveryGoalParticipation.Value.ToString());
+                writer.WritePropertyName("zonalResiliency"u8);
+                writer.WriteObjectValue(ZonalResiliency, options);
             }
-            if (Optional.IsDefined(DisasterRecoveryAttestationStatus))
+            if (Optional.IsDefined(RegionalResiliency))
             {
-                writer.WritePropertyName("disasterRecoveryAttestationStatus"u8);
-                writer.WriteStringValue(DisasterRecoveryAttestationStatus.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ExclusionReasonForHighAvailabilityGoals))
-            {
-                writer.WritePropertyName("exclusionReasonForHighAvailabilityGoals"u8);
-                writer.WriteStringValue(ExclusionReasonForHighAvailabilityGoals.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ExclusionReasonForDisasterRecoveryGoals))
-            {
-                writer.WritePropertyName("exclusionReasonForDisasterRecoveryGoals"u8);
-                writer.WriteStringValue(ExclusionReasonForDisasterRecoveryGoals.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(UserConfirmationForHighAvailability))
-            {
-                writer.WritePropertyName("userConfirmationForHighAvailability"u8);
-                writer.WriteStartArray();
-                foreach (UserConfirmationForHighAvailabilityItem item in UserConfirmationForHighAvailability)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceGroupMemberships))
-            {
-                writer.WritePropertyName("serviceGroupMemberships"u8);
-                writer.WriteStartArray();
-                foreach (ServiceGroupMembership item in ServiceGroupMemberships)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("regionalResiliency"u8);
+                writer.WriteObjectValue(RegionalResiliency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -174,14 +140,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             ResourceIdentifier resourceArmId = default;
-            ExclusionState highAvailabilityGoalParticipation = default;
-            AttestationState highAvailabilityAttestationStatus = default;
-            ExclusionState? disasterRecoveryGoalParticipation = default;
-            AttestationState? disasterRecoveryAttestationStatus = default;
-            ExclusionReason? exclusionReasonForHighAvailabilityGoals = default;
-            ExclusionReason? exclusionReasonForDisasterRecoveryGoals = default;
-            IList<UserConfirmationForHighAvailabilityItem> userConfirmationForHighAvailability = default;
-            IReadOnlyList<ServiceGroupMembership> serviceGroupMemberships = default;
+            ResiliencyProperties zonalResiliency = default;
+            ResiliencyProperties regionalResiliency = default;
             ResilienceManagementProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -191,78 +151,22 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     resourceArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("highAvailabilityGoalParticipation"u8))
-                {
-                    highAvailabilityGoalParticipation = new ExclusionState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("highAvailabilityAttestationStatus"u8))
-                {
-                    highAvailabilityAttestationStatus = new AttestationState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("disasterRecoveryGoalParticipation"u8))
+                if (prop.NameEquals("zonalResiliency"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disasterRecoveryGoalParticipation = new ExclusionState(prop.Value.GetString());
+                    zonalResiliency = ResiliencyProperties.DeserializeResiliencyProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("disasterRecoveryAttestationStatus"u8))
+                if (prop.NameEquals("regionalResiliency"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    disasterRecoveryAttestationStatus = new AttestationState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("exclusionReasonForHighAvailabilityGoals"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    exclusionReasonForHighAvailabilityGoals = new ExclusionReason(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("exclusionReasonForDisasterRecoveryGoals"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    exclusionReasonForDisasterRecoveryGoals = new ExclusionReason(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("userConfirmationForHighAvailability"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<UserConfirmationForHighAvailabilityItem> array = new List<UserConfirmationForHighAvailabilityItem>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(UserConfirmationForHighAvailabilityItem.DeserializeUserConfirmationForHighAvailabilityItem(item, options));
-                    }
-                    userConfirmationForHighAvailability = array;
-                    continue;
-                }
-                if (prop.NameEquals("serviceGroupMemberships"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ServiceGroupMembership> array = new List<ServiceGroupMembership>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ServiceGroupMembership.DeserializeServiceGroupMembership(item, options));
-                    }
-                    serviceGroupMemberships = array;
+                    regionalResiliency = ResiliencyProperties.DeserializeResiliencyProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -279,18 +183,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GoalResourceProperties(
-                resourceArmId,
-                highAvailabilityGoalParticipation,
-                highAvailabilityAttestationStatus,
-                disasterRecoveryGoalParticipation,
-                disasterRecoveryAttestationStatus,
-                exclusionReasonForHighAvailabilityGoals,
-                exclusionReasonForDisasterRecoveryGoals,
-                userConfirmationForHighAvailability ?? new ChangeTrackingList<UserConfirmationForHighAvailabilityItem>(),
-                serviceGroupMemberships ?? new ChangeTrackingList<ServiceGroupMembership>(),
-                provisioningState,
-                additionalBinaryDataProperties);
+            return new GoalResourceProperties(resourceArmId, zonalResiliency, regionalResiliency, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

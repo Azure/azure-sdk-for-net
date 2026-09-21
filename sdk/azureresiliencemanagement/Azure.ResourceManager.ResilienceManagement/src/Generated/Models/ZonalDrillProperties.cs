@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="provisioningState"> Status of the last operation. </param>
         /// <param name="serviceGroupId"> Parent SG resource. </param>
         /// <param name="recoveryPlanProperties"> ROPlan properties. </param>
+        /// <param name="goalAssignmentProperties"> Goal Assignment properties. </param>
         /// <param name="drillAssetProperties"> Properties for internal resources that are created for the Drill. </param>
         /// <param name="chaosResourceProperties"> Chaos Resource properties. </param>
         /// <param name="executionState"> Execution state of the Drill. Whether it is currently running or not. </param>
@@ -34,13 +35,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="lastRunProperties"> Last run properties. </param>
         /// <param name="lastSyncOn"> Last sync time. </param>
         /// <param name="lastResyncReadinessCheckOn"> Last resync and readiness check time. </param>
-        /// <param name="managedOnBehalfOfConfiguration"> Managed RG v2 properties. </param>
         /// <param name="drillType"> The discriminator for the Drill object hierarchy. </param>
         /// <param name="monitoringProperties"> Monitoring properties of the Drill. </param>
+        /// <param name="healthModelMonitoringProperties"> Azure Health Model monitoring properties of the Drill. </param>
+        /// <param name="sliMonitoringProperties"> SLI monitoring properties of the Drill. </param>
         /// <param name="errorDetails"> Error details associated with the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmsPresent"> An indication whether a VM is included in this Zonal Drill. If not, RO is not needed. </param>
-        internal ZonalDrillProperties(ResilienceManagementProvisioningState? provisioningState, ResourceIdentifier serviceGroupId, RecoveryPlanPropertiesOfDrill recoveryPlanProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ExecutionState? executionState, ExecutionReadinessState? executionReadinessState, ResilienceManagementRbacSetupMode? rbacSetupMode, AttentionReason attentionReason, DrillSystemMetadata systemMetadata, LastRunProperties lastRunProperties, DateTimeOffset? lastSyncOn, DateTimeOffset? lastResyncReadinessCheckOn, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, DrillType drillType, MonitoringPropertiesOfDrill monitoringProperties, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties, VmPresent? vmsPresent) : base(provisioningState, serviceGroupId, recoveryPlanProperties, drillAssetProperties, chaosResourceProperties, executionState, executionReadinessState, rbacSetupMode, attentionReason, systemMetadata, lastRunProperties, lastSyncOn, lastResyncReadinessCheckOn, managedOnBehalfOfConfiguration, drillType, monitoringProperties, errorDetails, additionalBinaryDataProperties)
+        internal ZonalDrillProperties(ResilienceManagementProvisioningState? provisioningState, ResourceIdentifier serviceGroupId, RecoveryPlanPropertiesOfDrill recoveryPlanProperties, GoalAssignmentPropertiesOfDrill goalAssignmentProperties, AssetPropertiesOfDrill drillAssetProperties, ChaosResourcePropertiesOfDrill chaosResourceProperties, ExecutionState? executionState, ExecutionReadinessState? executionReadinessState, ResilienceManagementRbacSetupMode? rbacSetupMode, AttentionReason attentionReason, DrillSystemMetadata systemMetadata, LastRunProperties lastRunProperties, DateTimeOffset? lastSyncOn, DateTimeOffset? lastResyncReadinessCheckOn, DrillType drillType, MonitoringPropertiesOfDrill monitoringProperties, HealthModelMonitoringProperties healthModelMonitoringProperties, SliMonitoringProperties sliMonitoringProperties, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties, VmPresent? vmsPresent) : base(provisioningState, serviceGroupId, recoveryPlanProperties, goalAssignmentProperties, drillAssetProperties, chaosResourceProperties, executionState, executionReadinessState, rbacSetupMode, attentionReason, systemMetadata, lastRunProperties, lastSyncOn, lastResyncReadinessCheckOn, drillType, monitoringProperties, healthModelMonitoringProperties, sliMonitoringProperties, errorDetails, additionalBinaryDataProperties)
         {
             VmsPresent = vmsPresent;
         }

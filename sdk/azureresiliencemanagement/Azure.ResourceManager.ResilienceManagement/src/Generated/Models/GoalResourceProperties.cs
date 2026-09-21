@@ -20,43 +20,25 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="GoalResourceProperties"/>. </summary>
         /// <param name="resourceArmId"> Arm Id of resource under the SG for which the extension resource is maintained. </param>
-        /// <param name="highAvailabilityGoalParticipation"> Flag which depicts whether the Arm resource is excluded for high availability recommendation. </param>
-        /// <param name="highAvailabilityAttestationStatus"> Flag which depicts whether the Arm resource is manually attested for high availability recommendation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceArmId"/> is null. </exception>
-        public GoalResourceProperties(ResourceIdentifier resourceArmId, ExclusionState highAvailabilityGoalParticipation, AttestationState highAvailabilityAttestationStatus)
+        public GoalResourceProperties(ResourceIdentifier resourceArmId)
         {
             Argument.AssertNotNull(resourceArmId, nameof(resourceArmId));
 
             ResourceArmId = resourceArmId;
-            HighAvailabilityGoalParticipation = highAvailabilityGoalParticipation;
-            HighAvailabilityAttestationStatus = highAvailabilityAttestationStatus;
-            UserConfirmationForHighAvailability = new ChangeTrackingList<UserConfirmationForHighAvailabilityItem>();
-            ServiceGroupMemberships = new ChangeTrackingList<ServiceGroupMembership>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GoalResourceProperties"/>. </summary>
         /// <param name="resourceArmId"> Arm Id of resource under the SG for which the extension resource is maintained. </param>
-        /// <param name="highAvailabilityGoalParticipation"> Flag which depicts whether the Arm resource is excluded for high availability recommendation. </param>
-        /// <param name="highAvailabilityAttestationStatus"> Flag which depicts whether the Arm resource is manually attested for high availability recommendation. </param>
-        /// <param name="disasterRecoveryGoalParticipation"> Flag which depicts whether the Arm resource is excluded for disaster recovery recommendation. </param>
-        /// <param name="disasterRecoveryAttestationStatus"> Flag which depicts whether the Arm resource is manually attested for disaster recovery recommendation. </param>
-        /// <param name="exclusionReasonForHighAvailabilityGoals"> Reason for exclusion from high availability goals. </param>
-        /// <param name="exclusionReasonForDisasterRecoveryGoals"> Reason for exclusion from disaster recovery goals. </param>
-        /// <param name="userConfirmationForHighAvailability"> List of user confirmations for high availability solutions. </param>
-        /// <param name="serviceGroupMemberships"> List of service groups of which this resource is memberof. </param>
+        /// <param name="zonalResiliency"> Zonal resiliency posture (participation, attestation, exclusion reason, and user confirmations) for the Arm resource. </param>
+        /// <param name="regionalResiliency"> Regional resiliency posture (participation, attestation, exclusion reason, and user confirmations) for the Azure resource. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GoalResourceProperties(ResourceIdentifier resourceArmId, ExclusionState highAvailabilityGoalParticipation, AttestationState highAvailabilityAttestationStatus, ExclusionState? disasterRecoveryGoalParticipation, AttestationState? disasterRecoveryAttestationStatus, ExclusionReason? exclusionReasonForHighAvailabilityGoals, ExclusionReason? exclusionReasonForDisasterRecoveryGoals, IList<UserConfirmationForHighAvailabilityItem> userConfirmationForHighAvailability, IReadOnlyList<ServiceGroupMembership> serviceGroupMemberships, ResilienceManagementProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GoalResourceProperties(ResourceIdentifier resourceArmId, ResiliencyProperties zonalResiliency, ResiliencyProperties regionalResiliency, ResilienceManagementProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceArmId = resourceArmId;
-            HighAvailabilityGoalParticipation = highAvailabilityGoalParticipation;
-            HighAvailabilityAttestationStatus = highAvailabilityAttestationStatus;
-            DisasterRecoveryGoalParticipation = disasterRecoveryGoalParticipation;
-            DisasterRecoveryAttestationStatus = disasterRecoveryAttestationStatus;
-            ExclusionReasonForHighAvailabilityGoals = exclusionReasonForHighAvailabilityGoals;
-            ExclusionReasonForDisasterRecoveryGoals = exclusionReasonForDisasterRecoveryGoals;
-            UserConfirmationForHighAvailability = userConfirmationForHighAvailability;
-            ServiceGroupMemberships = serviceGroupMemberships;
+            ZonalResiliency = zonalResiliency;
+            RegionalResiliency = regionalResiliency;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -64,29 +46,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Arm Id of resource under the SG for which the extension resource is maintained. </summary>
         public ResourceIdentifier ResourceArmId { get; set; }
 
-        /// <summary> Flag which depicts whether the Arm resource is excluded for high availability recommendation. </summary>
-        public ExclusionState HighAvailabilityGoalParticipation { get; set; }
+        /// <summary> Zonal resiliency posture (participation, attestation, exclusion reason, and user confirmations) for the Arm resource. </summary>
+        public ResiliencyProperties ZonalResiliency { get; set; }
 
-        /// <summary> Flag which depicts whether the Arm resource is manually attested for high availability recommendation. </summary>
-        public AttestationState HighAvailabilityAttestationStatus { get; set; }
-
-        /// <summary> Flag which depicts whether the Arm resource is excluded for disaster recovery recommendation. </summary>
-        public ExclusionState? DisasterRecoveryGoalParticipation { get; set; }
-
-        /// <summary> Flag which depicts whether the Arm resource is manually attested for disaster recovery recommendation. </summary>
-        public AttestationState? DisasterRecoveryAttestationStatus { get; set; }
-
-        /// <summary> Reason for exclusion from high availability goals. </summary>
-        public ExclusionReason? ExclusionReasonForHighAvailabilityGoals { get; }
-
-        /// <summary> Reason for exclusion from disaster recovery goals. </summary>
-        public ExclusionReason? ExclusionReasonForDisasterRecoveryGoals { get; }
-
-        /// <summary> List of user confirmations for high availability solutions. </summary>
-        public IList<UserConfirmationForHighAvailabilityItem> UserConfirmationForHighAvailability { get; }
-
-        /// <summary> List of service groups of which this resource is memberof. </summary>
-        public IReadOnlyList<ServiceGroupMembership> ServiceGroupMemberships { get; }
+        /// <summary> Regional resiliency posture (participation, attestation, exclusion reason, and user confirmations) for the Azure resource. </summary>
+        public ResiliencyProperties RegionalResiliency { get; set; }
 
         /// <summary> Provisioning state. </summary>
         public ResilienceManagementProvisioningState? ProvisioningState { get; }
