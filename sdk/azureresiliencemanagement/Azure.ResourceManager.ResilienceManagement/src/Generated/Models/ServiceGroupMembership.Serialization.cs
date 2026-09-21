@@ -9,61 +9,62 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
-    /// <summary> Recovery objectives targeted by a goal assignment for regional resiliency. </summary>
-    public partial class RegionalObjectives : IJsonModel<RegionalObjectives>
+    /// <summary> Model for service group membership. </summary>
+    public partial class ServiceGroupMembership : IJsonModel<ServiceGroupMembership>
     {
-        /// <summary> Initializes a new instance of <see cref="RegionalObjectives"/> for deserialization. </summary>
-        internal RegionalObjectives()
+        /// <summary> Initializes a new instance of <see cref="ServiceGroupMembership"/> for deserialization. </summary>
+        internal ServiceGroupMembership()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegionalObjectives PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ServiceGroupMembership PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionalObjectives>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceGroupMembership>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRegionalObjectives(document.RootElement, options);
+                        return DeserializeServiceGroupMembership(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegionalObjectives)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceGroupMembership)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionalObjectives>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceGroupMembership>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResilienceManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RegionalObjectives)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceGroupMembership)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RegionalObjectives>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceGroupMembership>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegionalObjectives IPersistableModel<RegionalObjectives>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ServiceGroupMembership IPersistableModel<ServiceGroupMembership>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RegionalObjectives>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceGroupMembership>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RegionalObjectives>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceGroupMembership>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +75,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionalObjectives>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceGroupMembership>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionalObjectives)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceGroupMembership)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("targetRecoveryPointObjective"u8);
-            writer.WriteStringValue(TargetRecoveryPointObjective.ToString());
-            writer.WritePropertyName("targetRecoveryTimeObjective"u8);
-            writer.WriteStringValue(TargetRecoveryTimeObjective.ToString());
+            writer.WritePropertyName("serviceGroupId"u8);
+            writer.WriteStringValue(ServiceGroupId);
+            writer.WritePropertyName("membershipType"u8);
+            writer.WriteStringValue(MembershipType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -102,42 +103,42 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegionalObjectives IJsonModel<RegionalObjectives>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ServiceGroupMembership IJsonModel<ServiceGroupMembership>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegionalObjectives JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ServiceGroupMembership JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionalObjectives>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceGroupMembership>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionalObjectives)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceGroupMembership)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRegionalObjectives(document.RootElement, options);
+            return DeserializeServiceGroupMembership(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RegionalObjectives DeserializeRegionalObjectives(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceGroupMembership DeserializeServiceGroupMembership(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IsoDuration targetRecoveryPointObjective = default;
-            IsoDuration targetRecoveryTimeObjective = default;
+            ResourceIdentifier serviceGroupId = default;
+            ResilienceManagementMembershipType membershipType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("targetRecoveryPointObjective"u8))
+                if (prop.NameEquals("serviceGroupId"u8))
                 {
-                    targetRecoveryPointObjective = new IsoDuration(prop.Value.GetString());
+                    serviceGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("targetRecoveryTimeObjective"u8))
+                if (prop.NameEquals("membershipType"u8))
                 {
-                    targetRecoveryTimeObjective = new IsoDuration(prop.Value.GetString());
+                    membershipType = new ResilienceManagementMembershipType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RegionalObjectives(targetRecoveryPointObjective, targetRecoveryTimeObjective, additionalBinaryDataProperties);
+            return new ServiceGroupMembership(serviceGroupId, membershipType, additionalBinaryDataProperties);
         }
     }
 }

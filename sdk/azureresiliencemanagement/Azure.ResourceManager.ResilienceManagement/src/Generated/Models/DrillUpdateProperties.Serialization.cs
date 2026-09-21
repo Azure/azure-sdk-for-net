@@ -79,11 +79,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("recoveryPlanProperties"u8);
                 writer.WriteObjectValue(RecoveryPlanProperties, options);
             }
-            if (Optional.IsDefined(GoalAssignmentProperties))
-            {
-                writer.WritePropertyName("goalAssignmentProperties"u8);
-                writer.WriteObjectValue(GoalAssignmentProperties, options);
-            }
             if (Optional.IsDefined(DrillAssetProperties))
             {
                 writer.WritePropertyName("drillAssetProperties"u8);
@@ -157,7 +152,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default;
-            GoalAssignmentPropertiesOfDrill goalAssignmentProperties = default;
             AssetPropertiesOfDrill drillAssetProperties = default;
             ChaosResourcePropertiesOfDrill chaosResourceProperties = default;
             ResilienceManagementRbacSetupMode? rbacSetupMode = default;
@@ -174,15 +168,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     recoveryPlanProperties = RecoveryPlanPropertiesOfDrill.DeserializeRecoveryPlanPropertiesOfDrill(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("goalAssignmentProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    goalAssignmentProperties = GoalAssignmentPropertiesOfDrill.DeserializeGoalAssignmentPropertiesOfDrill(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("drillAssetProperties"u8))
@@ -248,7 +233,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             return new DrillUpdateProperties(
                 recoveryPlanProperties,
-                goalAssignmentProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
                 rbacSetupMode,

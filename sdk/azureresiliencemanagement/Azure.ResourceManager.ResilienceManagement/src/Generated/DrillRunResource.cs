@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(ResourceType, out string drillRunApiVersion);
             _drillRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", ResourceType.Namespace, Diagnostics);
-            _drillRunsRestClient = new DrillRuns(_drillRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, drillRunApiVersion ?? "2026-09-30-preview");
+            _drillRunsRestClient = new DrillRuns(_drillRunsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, drillRunApiVersion ?? "2026-08-31-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-09-30-preview. </description>
+        /// <description> 2026-08-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

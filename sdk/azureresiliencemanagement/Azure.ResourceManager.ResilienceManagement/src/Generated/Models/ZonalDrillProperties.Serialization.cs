@@ -113,7 +113,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ResilienceManagementProvisioningState? provisioningState = default;
             ResourceIdentifier serviceGroupId = default;
             RecoveryPlanPropertiesOfDrill recoveryPlanProperties = default;
-            GoalAssignmentPropertiesOfDrill goalAssignmentProperties = default;
             AssetPropertiesOfDrill drillAssetProperties = default;
             ChaosResourcePropertiesOfDrill chaosResourceProperties = default;
             ExecutionState? executionState = default;
@@ -158,15 +157,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     recoveryPlanProperties = RecoveryPlanPropertiesOfDrill.DeserializeRecoveryPlanPropertiesOfDrill(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("goalAssignmentProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    goalAssignmentProperties = GoalAssignmentPropertiesOfDrill.DeserializeGoalAssignmentPropertiesOfDrill(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("drillAssetProperties"u8))
@@ -318,7 +308,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 provisioningState,
                 serviceGroupId,
                 recoveryPlanProperties,
-                goalAssignmentProperties,
                 drillAssetProperties,
                 chaosResourceProperties,
                 executionState,

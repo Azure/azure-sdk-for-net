@@ -98,11 +98,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("recoveryPlanProperties"u8);
                 writer.WriteObjectValue(RecoveryPlanProperties, options);
             }
-            if (Optional.IsDefined(GoalAssignmentProperties))
-            {
-                writer.WritePropertyName("goalAssignmentProperties"u8);
-                writer.WriteObjectValue(GoalAssignmentProperties, options);
-            }
             if (Optional.IsDefined(DrillAssetProperties))
             {
                 writer.WritePropertyName("drillAssetProperties"u8);

@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceProtectionSolutionSettings"/>. </summary>
         /// <param name="protectionSolutionType"> A setting that indicates the resource protected with which recovery solution. </param>
-        /// <param name="replicationMode"> Replication mode configured for the protected resource. </param>
         /// <param name="protectionStatus"> A status that indicates the protection status of a resource with an Azure solution for regional or zonal recovery. </param>
         /// <param name="resourceId"> Resource ID of the Azure resource associated with the recovery orchestration plan and linked to the recovery resource. </param>
         /// <param name="activeLocation"> Active location of the Azure resource associated with the recovery orchestration plan and linked to the recovery resource. </param>
@@ -43,10 +42,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="failoverState"> Failover state of the recovery orchestration resource. </param>
         /// <param name="testFailoverState"> TestFailover state of the recovery orchestration resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProtectionSolutionSettings(ResourceProtectionSolutionType? protectionSolutionType, ReplicationMode? replicationMode, ResourceProtectionStatus? protectionStatus, ResourceIdentifier resourceId, AzureLocation? activeLocation, IReadOnlyList<AzureLocation> activeLocations, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryLocations, ResourceReplicationRole? replicationRole, ResourceIdentifier primaryResource, IReadOnlyList<ResourceIdentifier> replicaResources, bool isAutoFailover, FailoverState? failoverState, TestFailoverState? testFailoverState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProtectionSolutionSettings(ResourceProtectionSolutionType? protectionSolutionType, ResourceProtectionStatus? protectionStatus, ResourceIdentifier resourceId, AzureLocation? activeLocation, IReadOnlyList<AzureLocation> activeLocations, IReadOnlyList<string> activePhysicalZones, IReadOnlyList<string> recoveryLocations, ResourceReplicationRole? replicationRole, ResourceIdentifier primaryResource, IReadOnlyList<ResourceIdentifier> replicaResources, bool isAutoFailover, FailoverState? failoverState, TestFailoverState? testFailoverState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProtectionSolutionType = protectionSolutionType;
-            ReplicationMode = replicationMode;
             ProtectionStatus = protectionStatus;
             ResourceId = resourceId;
             ActiveLocation = activeLocation;
@@ -64,9 +62,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> A setting that indicates the resource protected with which recovery solution. </summary>
         public ResourceProtectionSolutionType? ProtectionSolutionType { get; }
-
-        /// <summary> Replication mode configured for the protected resource. </summary>
-        public ReplicationMode? ReplicationMode { get; }
 
         /// <summary> A status that indicates the protection status of a resource with an Azure solution for regional or zonal recovery. </summary>
         public ResourceProtectionStatus? ProtectionStatus { get; }

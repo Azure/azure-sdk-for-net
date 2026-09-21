@@ -29,7 +29,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             MissingRequiredResourceProviders = new ChangeTrackingList<string>();
             RbacNeededForDrillOnHealthModel = new ChangeTrackingList<string>();
             SliAttentionStatuses = new ChangeTrackingList<SliAttentionStatus>();
-            RbacNeededForDrillOnGoalAssignment = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AttentionReason"/>. </summary>
@@ -61,12 +60,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="rbacNeededForDrillOnHealthModel"> Permissions needed by the Drill identity to read the selected Azure Health Model. </param>
         /// <param name="drillRbacOnSli"> Rolled-up RBAC state: NotSet if the Drill identity is missing the necessary RBAC to read any selected SLI. </param>
         /// <param name="sliAttentionStatuses"> Per-SLI attention status for each SLI selected for Drill monitoring. </param>
-        /// <param name="drillRbacOnGoalAssignment"> Drill object does not have the necessary RBAC on Goal Assignment. </param>
-        /// <param name="rbacNeededForDrillOnGoalAssignment"> Permissions needed by the Drill MSI on Goal Assignment. </param>
-        /// <param name="goalAssignment"> Goal Assignment not present. </param>
-        /// <param name="recoveryPlan"> Recovery plan not present. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttentionReason(ResilienceManagementRbacState? drillRbacOnChaosResource, IList<string> rbacNeededForDrillOnChaosResource, ResilienceManagementRbacState? drillRbacOnRecoveryPlan, IList<string> rbacNeededForDrillOnRecoveryPlan, RecoveryPlanState? roReadiness, ResilienceManagementRbacState? rbacOnTargetResources, ResilienceManagementRbacState? runbookFaultRbacOnTargets, ExtensionObjectState? chaosResource, IList<string> chaosResourceCreationFailureReasons, RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState, RelativeResourceCompositionState? serviceGroupAndDrillResourcesState, ExtensionObjectState? drillUserMsi, ExtensionObjectState? chaosResourceUserMsi, ExtensionObjectState? includedResourceInDrill, ResilienceManagementRbacState? drillRbacOnMonitoringResources, IList<ResilienceManagementErrorDetail> drillMonitoringErrors, ExtensionObjectState? drillMonitoringResources, ResilienceManagementRbacState? monitoringRbacOnDrillResources, IList<string> rbacNeededForDrillOnDrillMonitoringResources, IList<string> rbacNeededForDrillOnDrillResources, IList<string> missingRequiredResourceProviders, bool? monitoringSourceNotConfigured, ExtensionObjectState? healthModelExists, ExtensionObjectState? discoveryRuleExists, ResilienceManagementRbacState? drillRbacOnHealthModel, IList<string> rbacNeededForDrillOnHealthModel, ResilienceManagementRbacState? drillRbacOnSli, IList<SliAttentionStatus> sliAttentionStatuses, ResilienceManagementRbacState? drillRbacOnGoalAssignment, IList<string> rbacNeededForDrillOnGoalAssignment, ExtensionObjectState? goalAssignment, ExtensionObjectState? recoveryPlan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttentionReason(ResilienceManagementRbacState? drillRbacOnChaosResource, IList<string> rbacNeededForDrillOnChaosResource, ResilienceManagementRbacState? drillRbacOnRecoveryPlan, IList<string> rbacNeededForDrillOnRecoveryPlan, RecoveryPlanState? roReadiness, ResilienceManagementRbacState? rbacOnTargetResources, ResilienceManagementRbacState? runbookFaultRbacOnTargets, ExtensionObjectState? chaosResource, IList<string> chaosResourceCreationFailureReasons, RelativeResourceCompositionState? recoveryPlanAndDrillResourcesState, RelativeResourceCompositionState? serviceGroupAndDrillResourcesState, ExtensionObjectState? drillUserMsi, ExtensionObjectState? chaosResourceUserMsi, ExtensionObjectState? includedResourceInDrill, ResilienceManagementRbacState? drillRbacOnMonitoringResources, IList<ResilienceManagementErrorDetail> drillMonitoringErrors, ExtensionObjectState? drillMonitoringResources, ResilienceManagementRbacState? monitoringRbacOnDrillResources, IList<string> rbacNeededForDrillOnDrillMonitoringResources, IList<string> rbacNeededForDrillOnDrillResources, IList<string> missingRequiredResourceProviders, bool? monitoringSourceNotConfigured, ExtensionObjectState? healthModelExists, ExtensionObjectState? discoveryRuleExists, ResilienceManagementRbacState? drillRbacOnHealthModel, IList<string> rbacNeededForDrillOnHealthModel, ResilienceManagementRbacState? drillRbacOnSli, IList<SliAttentionStatus> sliAttentionStatuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DrillRbacOnChaosResource = drillRbacOnChaosResource;
             RbacNeededForDrillOnChaosResource = rbacNeededForDrillOnChaosResource;
@@ -96,10 +91,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             RbacNeededForDrillOnHealthModel = rbacNeededForDrillOnHealthModel;
             DrillRbacOnSli = drillRbacOnSli;
             SliAttentionStatuses = sliAttentionStatuses;
-            DrillRbacOnGoalAssignment = drillRbacOnGoalAssignment;
-            RbacNeededForDrillOnGoalAssignment = rbacNeededForDrillOnGoalAssignment;
-            GoalAssignment = goalAssignment;
-            RecoveryPlan = recoveryPlan;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -186,17 +177,5 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Per-SLI attention status for each SLI selected for Drill monitoring. </summary>
         public IList<SliAttentionStatus> SliAttentionStatuses { get; }
-
-        /// <summary> Drill object does not have the necessary RBAC on Goal Assignment. </summary>
-        public ResilienceManagementRbacState? DrillRbacOnGoalAssignment { get; }
-
-        /// <summary> Permissions needed by the Drill MSI on Goal Assignment. </summary>
-        public IList<string> RbacNeededForDrillOnGoalAssignment { get; }
-
-        /// <summary> Goal Assignment not present. </summary>
-        public ExtensionObjectState? GoalAssignment { get; }
-
-        /// <summary> Recovery plan not present. </summary>
-        public ExtensionObjectState? RecoveryPlan { get; }
     }
 }

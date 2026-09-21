@@ -119,16 +119,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("inclusionState"u8);
                 writer.WriteStringValue(InclusionState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InclusionDisabledReasons))
-            {
-                writer.WritePropertyName("inclusionDisabledReasons"u8);
-                writer.WriteStartArray();
-                foreach (ResourceInclusionDisabledReason item in InclusionDisabledReasons)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsDefined(IsAttentionRequired))
             {
                 writer.WritePropertyName("needsAttention"u8);
@@ -237,7 +227,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             AzureLocation? resourceLocation = default;
             IReadOnlyList<string> resourcePhysicalZones = default;
             ResourceInclusionState? inclusionState = default;
-            IReadOnlyList<ResourceInclusionDisabledReason> inclusionDisabledReasons = default;
             bool? isAttentionRequired = default;
             IReadOnlyList<string> attentionReasons = default;
             ResourceProtectionStatus? protectionStatus = default;
@@ -310,20 +299,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     inclusionState = new ResourceInclusionState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("inclusionDisabledReasons"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ResourceInclusionDisabledReason> array = new List<ResourceInclusionDisabledReason>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(new ResourceInclusionDisabledReason(item.GetString()));
-                    }
-                    inclusionDisabledReasons = array;
                     continue;
                 }
                 if (prop.NameEquals("needsAttention"u8))
@@ -432,7 +407,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 resourceLocation,
                 resourcePhysicalZones ?? new ChangeTrackingList<string>(),
                 inclusionState,
-                inclusionDisabledReasons ?? new ChangeTrackingList<ResourceInclusionDisabledReason>(),
                 isAttentionRequired,
                 attentionReasons ?? new ChangeTrackingList<string>(),
                 protectionStatus,
