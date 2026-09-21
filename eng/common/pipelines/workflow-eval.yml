@@ -16,20 +16,55 @@ trigger:
       - eng/common/pipelines/templates/jobs/**
       - eng/common/pipelines/templates/steps/eval-invoke.yml
       - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+      - eng/common/pipelines/templates/steps/eval-publish-results.yml
       - eng/common/pipelines/templates/stages/archetype-eval.yml
       - eng/common/scripts/eval/**
 
 pr: none
 
+parameters:
+  - name: publishDashboardResults
+    displayName: 'Publish the complete build bundle directly to Blob'
+    type: boolean
+    default: false
+  - name: storageServiceConnection
+    type: string
+    default: eval-dashboard-sc
+  - name: storageContainerUrl
+    type: string
+    default: https://evaltestsummary.blob.core.windows.net/vally-results
+  - name: storageSmokeTest
+    displayName: 'Manual synthetic storage test (no MCP, evaluations or LLM calls)'
+    type: boolean
+    default: false
+  - name: notifyDashboard
+    type: boolean
+    default: false
+  - name: dashboardUrl
+    type: string
+    default: ''
+  - name: dashboardAudience
+    type: string
+    default: ''
+
 variables:
   # Defines LINUXPOOL + LINUXVMIMAGE used by the archetype's jobs.
   - template: /eng/pipelines/templates/variables/image.yml
   # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
-  - group: AzSDK_Eval_Variable_group
+  - ${{ if not(parameters.storageSmokeTest) }}:
+    - group: AzSDK_Eval_Variable_group
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
+    createDashboardBundle: true
+    publishDashboardResults: ${{ parameters.publishDashboardResults }}
+    storageServiceConnection: ${{ parameters.storageServiceConnection }}
+    storageContainerUrl: ${{ parameters.storageContainerUrl }}
+    storageSmokeTest: ${{ parameters.storageSmokeTest }}
+    notifyDashboard: ${{ parameters.notifyDashboard }}
+    dashboardUrl: ${{ parameters.dashboardUrl }}
+    dashboardAudience: ${{ parameters.dashboardAudience }}
     # Shared mock/live builder; select the mock tier.
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: mock
