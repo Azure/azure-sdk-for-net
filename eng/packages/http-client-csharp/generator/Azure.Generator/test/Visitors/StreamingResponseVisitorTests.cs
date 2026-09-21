@@ -176,7 +176,7 @@ namespace Azure.Generator.Tests.Visitors
 
 #pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         private static CSharpType CreateStreamingResponseType()
-            => new(typeof(System.ClientModel.AsyncStreamingClientResult<>), typeof(BinaryData));
+            => new(typeof(System.ClientModel.AsyncStreamingResult<>), typeof(BinaryData));
 #pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         private class TestStreamingResponseVisitor : StreamingResponseVisitor

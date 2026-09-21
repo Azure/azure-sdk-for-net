@@ -25,7 +25,7 @@ namespace Azure.Identity
         private readonly Func<CancellationToken, Task<string>> _clientAssertionCallbackAsync;
         private readonly Func<AssertionRequestOptions, CancellationToken, Task<ClientSignedAssertion>> _clientSignedAssertionCallbackAsync;
         private readonly Func<AppTokenProviderParameters, Task<AppTokenProviderResult>> _appTokenProviderCallback;
-        private readonly bool _enableMtlsProofOfPossession;
+        internal readonly bool _enableMtlsProofOfPossession;
 
         internal string RedirectUrl { get; }
 
@@ -42,11 +42,12 @@ namespace Azure.Identity
             RedirectUrl = redirectUrl;
         }
 
-        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, TokenCredentialOptions options)
+        public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, IX509Certificate2Provider certificateProvider, bool includeX5CClaimHeader, TokenCredentialOptions options, bool enableMtlsProofOfPossession = false)
             : base(pipeline, tenantId, clientId, options)
         {
             _includeX5CClaimHeader = includeX5CClaimHeader;
             _certificateProvider = certificateProvider;
+            _enableMtlsProofOfPossession = enableMtlsProofOfPossession;
         }
 
         public MsalConfidentialClient(CredentialPipeline pipeline, string tenantId, string clientId, Func<string> assertionCallback, TokenCredentialOptions options)

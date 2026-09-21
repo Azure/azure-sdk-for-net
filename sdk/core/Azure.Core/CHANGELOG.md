@@ -5,12 +5,14 @@
 ### Features Added
 
 - The mTLS proof-of-possession APIs on `BearerTokenAuthenticationPolicy` and `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` are no longer experimental and no longer require `AZID0004` suppression.
+- Added mTLS proof-of-possession support to `ClientCertificateCredential`, including subject name and issuer certificate authentication configured with `SendCertificateChain`.
 - Added mTLS proof-of-possession support to the managed identity federated identity flow used by configured credentials, covering both managed identity assertion acquisition and client assertion token redemption. Set `DisableMtlsProofOfPossession` to `true` in the credential's JSON configuration to force bearer authentication for both exchanges.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed `ModelReaderWriter` deserialization of `GeoPoint` with `AzureCoreContext` or a generated consumer context throwing because its type builder was not registered.
 - Fixed `DefaultAzureCredential` taking up to a minute to continue past managed identity on hosts where IMDS is unavailable. Ordinary chained requests use the short Azure.Core IMDS probe, while proof-of-possession capability discovery passes the same initial IMDS timeout to MSAL so discovery retry delays are canceled and timed-out discovery results are not cached.
 - Fixed chained managed identity aborting the credential chain when MSAL reports all sources unavailable immediately after a successful initial IMDS probe.
 - Managed identity mTLS proof-of-possession now requires a KeyGuard-backed host capability and enforces KeyGuard as the minimum binding strength during token acquisition. ([#62585](https://github.com/Azure/azure-sdk-for-net/issues/62585))

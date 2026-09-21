@@ -190,6 +190,36 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(SourceGeoLocations))
+            {
+                writer.WritePropertyName("sourceGeoLocations"u8);
+                writer.WriteStartArray();
+                foreach (string item in SourceGeoLocations)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DestinationGeoLocations))
+            {
+                writer.WritePropertyName("destinationGeoLocations"u8);
+                writer.WriteStartArray();
+                foreach (string item in DestinationGeoLocations)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -229,6 +259,8 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> destinationIPGroups = default;
             IList<string> destinationFqdns = default;
             IList<string> sourceKubeSelectorGroups = default;
+            IList<string> sourceGeoLocations = default;
+            IList<string> destinationGeoLocations = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -407,6 +439,48 @@ namespace Azure.ResourceManager.Network.Models
                     sourceKubeSelectorGroups = array;
                     continue;
                 }
+                if (prop.NameEquals("sourceGeoLocations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    sourceGeoLocations = array;
+                    continue;
+                }
+                if (prop.NameEquals("destinationGeoLocations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    destinationGeoLocations = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -424,7 +498,9 @@ namespace Azure.ResourceManager.Network.Models
                 sourceIPGroups ?? new ChangeTrackingList<string>(),
                 destinationIPGroups ?? new ChangeTrackingList<string>(),
                 destinationFqdns ?? new ChangeTrackingList<string>(),
-                sourceKubeSelectorGroups ?? new ChangeTrackingList<string>());
+                sourceKubeSelectorGroups ?? new ChangeTrackingList<string>(),
+                sourceGeoLocations ?? new ChangeTrackingList<string>(),
+                destinationGeoLocations ?? new ChangeTrackingList<string>());
         }
     }
 }
