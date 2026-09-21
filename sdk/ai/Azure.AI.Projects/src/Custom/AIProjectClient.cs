@@ -23,6 +23,13 @@ namespace Azure.AI.Projects
 {
     // Data plane generated client.
     /// <summary> The AzureAI service client. </summary>
+    // The generator now also emits its own internal AIProjectClient(AuthenticationPolicy, Uri,
+    // AIProjectClientOptions) constructor to support settings-based construction, but it doesn't
+    // chain to ClientConnectionProvider's required base(int) constructor (a generator emission gap
+    // for this base-class shape), so the generated overload fails to compile. Suppress it in favor
+    // of this file's existing, already-correct customization of the same constructor below (which
+    // also threads a token provider through for ProjectsRealtimeClient's use).
+    [CodeGenSuppress("AIProjectClient", typeof(AuthenticationPolicy), typeof(Uri), typeof(AIProjectClientOptions))]
     public partial class AIProjectClient : ClientConnectionProvider
     {
         private const int _defaultMaxCacheSize = 100;
