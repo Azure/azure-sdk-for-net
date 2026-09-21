@@ -8,6 +8,7 @@
 // agent completes a follow-up response using that result.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ public class ProjectsRealtimeToolCallTests : ProjectsRealtimeLiveTestBase
         {
             await agentsClient.GetAgentAsync(TOOLCALL_AGENT_NAME, cancellationToken);
         }
-        catch
+        catch (ClientResultException ex) when (ex.Status == 404)
         {
             Azure.AI.Projects.Agents.VoiceAgentDefinition definition = new()
             {

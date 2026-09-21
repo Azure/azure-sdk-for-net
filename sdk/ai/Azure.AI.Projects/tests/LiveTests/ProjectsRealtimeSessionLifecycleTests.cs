@@ -7,6 +7,7 @@
 // item delete, and input audio buffer clear.
 
 using System;
+using System.ClientModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
@@ -32,7 +33,7 @@ public class ProjectsRealtimeSessionLifecycleTests : ProjectsRealtimeLiveTestBas
         {
             await agentsClient.GetAgentAsync(LIFECYCLE_AGENT_NAME, cancellationToken);
         }
-        catch
+        catch (ClientResultException ex) when (ex.Status == 404)
         {
             Azure.AI.Projects.Agents.VoiceAgentDefinition definition = new()
             {

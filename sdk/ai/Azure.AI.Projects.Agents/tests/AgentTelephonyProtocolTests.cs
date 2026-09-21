@@ -19,10 +19,12 @@ namespace Azure.AI.Projects.Agents.Tests;
 /// response -- no live or recorded service dependency.
 /// </summary>
 /// <remarks>
-/// The Telephony REST routes are not yet deployed on the available test Foundry resource, so the
-/// recorded tests in <see cref="AgentTelephonyTests"/> that exercise this same surface are all
-/// <c>[Ignore]</c>d. These protocol tests give unconditional, always-running coverage of request
-/// construction in the meantime (mirroring azure-ai-projects' (Python)
+/// The Telephony REST routes are deployed on the test Foundry resource, and most of the recorded
+/// tests in <see cref="AgentTelephonyTests"/> that exercise this same surface are enabled; the few
+/// that remain <c>[Ignore]</c>d there are skipped for narrower, test-environment-specific reasons
+/// (needing a real Twilio/Teams-provider connection, or contention on a shared resource) documented
+/// on each. These protocol tests still give unconditional, always-running coverage of request
+/// construction independent of that live test environment (mirroring azure-ai-projects' (Python)
 /// tests/foundry_features_header/test_agent_telephony_protocol.py, which exists for the same
 /// reason).
 /// </remarks>

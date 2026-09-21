@@ -25,7 +25,7 @@ public class AgentTelephonyTests : AgentsTestBase
         {
             await agentsClient.GetAgentAsync(TELEPHONY_AGENT_NAME);
         }
-        catch
+        catch (ClientResultException ex) when (ex.Status == 404)
         {
             VoiceAgentDefinition definition = new()
             {

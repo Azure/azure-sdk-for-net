@@ -35,7 +35,7 @@ public class Sample_VoiceAgent_ReadConversation : SamplesBase
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.FOUNDRY_REALTIME_MODEL_NAME;
 #endif
-        string agentName = $"voice-agent-read-conversation-sample-{Guid.NewGuid():N}".Substring(0, 40);
+        string agentName = $"voice-agent-conv-sample-{Guid.NewGuid():N}".Substring(0, 40);
 
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 

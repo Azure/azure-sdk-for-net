@@ -24,7 +24,7 @@ public class BetaVoiceAgentsConversationsTests : AgentsTestBase
         {
             await agentsClient.GetAgentAsync(CONVERSATIONS_AGENT_NAME);
         }
-        catch
+        catch (ClientResultException ex) when (ex.Status == 404)
         {
             VoiceAgentDefinition definition = new()
             {

@@ -46,7 +46,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of AIProjectClient from a <see cref="AIProjectClientSettings"/>. </summary>
         /// <param name="settings"> The settings for AIProjectClient. </param>
         [System.Diagnostics.CodeAnalysis.Experimental("SCME0002")]
-        public AIProjectClient(AIProjectClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options)
+        public AIProjectClient(AIProjectClientSettings settings) : this(AuthenticationPolicy.Create(settings), settings?.Endpoint, settings?.Options, settings?.CredentialProvider)
         {
         }
 
@@ -54,7 +54,17 @@ namespace Azure.AI.Projects
         /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        internal AIProjectClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AIProjectClientOptions options)
+        /// <param name="tokenProvider">
+        /// The token provider backing <paramref name="authenticationPolicy"/>, if the settings this
+        /// client was constructed from resolved one (for example a token-credential-based
+        /// <see cref="AIProjectClientSettings"/>). REST calls continue to authenticate solely via
+        /// <paramref name="authenticationPolicy"/> on the pipeline; this is stored only so
+        /// subclients with their own independent auth handshake -- such as the WebSocket-based
+        /// <see cref="ProjectsRealtimeClient"/> -- have a provider to use. It is left <see langword="null"/>
+        /// for settings this client cannot resolve one from (for example API-key-based settings),
+        /// in which case such subclients remain unavailable; see <see cref="GetProjectsRealtimeClient"/>.
+        /// </param>
+        internal AIProjectClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AIProjectClientOptions options, AuthenticationTokenProvider tokenProvider = null)
             : base(maxCacheSize: _defaultMaxCacheSize)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -62,6 +72,7 @@ namespace Azure.AI.Projects
             options ??= new AIProjectClientOptions();
 
             _endpoint = endpoint;
+            _tokenProvider = tokenProvider;
             Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AIProjectClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -236,6 +247,15 @@ namespace Azure.AI.Projects
         [Experimental("AAIP002")]
         internal virtual ProjectsRealtimeClient GetProjectsRealtimeClient()
         {
+            if (_tokenProvider is null)
+            {
+                throw new InvalidOperationException(
+                    $"{nameof(ProjectsRealtimeClient)} requires an {nameof(AuthenticationTokenProvider)}, but this {nameof(AIProjectClient)} " +
+                    $"was not constructed with one (for example, it was constructed from an {nameof(AIProjectClientSettings)} whose credential " +
+                    $"could not resolve one). Construct the client with the {nameof(AIProjectClient)}(Uri, AuthenticationTokenProvider, AIProjectClientOptions) " +
+                    "constructor to use Voice Agents realtime sessions.");
+            }
+
             return Volatile.Read(ref _cachedProjectsRealtimeClient) ?? Interlocked.CompareExchange(ref _cachedProjectsRealtimeClient, new ProjectsRealtimeClient(_endpoint, _tokenProvider, _flows[0], _apiVersion, s_experimentalHeaders), null) ?? _cachedProjectsRealtimeClient;
         }
 

@@ -42,18 +42,13 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
     /// </summary>
     protected ProjectsRealtimeSessionClient() : base(null, null, default, default, null) { }
 
-    /// <summary>
-    /// Create a new instance of ProjectsRealtimeSessionClient.
-    /// </summary>
-    /// <param name="endpoint">The Foundry project endpoint.</param>
-    /// <param name="tokenProvider">The token provider used to authenticate the connection.</param>
-    /// <param name="model">The name of the voice agent to connect to (used as the <c>{agentName}</c> path segment).</param>
-    /// <param name="intent">The client intent.</param>
-    public ProjectsRealtimeSessionClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, string model, string intent = null)
-        : this(endpoint, tokenProvider, model, intent, tokenProperties: null, apiVersion: null, parentClient: null)
-    {
-    }
-
+    // No public constructor: an instance created outside this assembly could never reach a
+    // connected state -- ConnectAsync is only reachable via the internal ConnectInternalAsync
+    // bridge below, which only ProjectsRealtimeClient.StartSessionAsync calls -- so it would be a
+    // permanently disconnected client whose WebSocket is always null. Use
+    // AIProjectClient.ProjectsRealtimeClient.StartSessionAsync to obtain an already-connected
+    // instance instead.
+    //
     // Bridges ProjectsRealtimeClient.StartSessionAsync (a sibling type, not a subclass, but in the
     // same assembly): it alone needs to additionally wire up the ProjectsRealtimeClient passed to
     // the base OpenAI type, plus this type's own tokenProperties/apiVersion used for its WebSocket

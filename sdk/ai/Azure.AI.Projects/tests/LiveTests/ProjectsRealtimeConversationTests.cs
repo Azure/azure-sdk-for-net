@@ -7,6 +7,7 @@
 // interop between a persisted realtime session and the BetaVoiceAgentsConversations REST surface.
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -61,7 +62,7 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
         {
             await agentsClient.GetAgentAsync(CONVERSATION_AGENT_NAME, cancellationToken);
         }
-        catch
+        catch (ClientResultException ex) when (ex.Status == 404)
         {
             Azure.AI.Projects.Agents.VoiceAgentDefinition definition = new()
             {
@@ -83,7 +84,7 @@ public class ProjectsRealtimeConversationTests : ProjectsRealtimeLiveTestBase
         {
             await agentsClient.GetAgentAsync(AUDIO_CONVERSATION_AGENT_NAME, cancellationToken);
         }
-        catch
+        catch (ClientResultException ex) when (ex.Status == 404)
         {
             Azure.AI.Projects.Agents.VoiceAgentDefinition definition = new()
             {
