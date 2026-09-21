@@ -14,49 +14,52 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
 {
-    internal partial class MgmtTypeSpecFoosListDependenciesAsyncCollectionResultOfT : AsyncPageable<FooDependency>
+    internal partial class FooResourceGetPropertiesAsyncCollectionResultOfT : AsyncPageable<FooProperties>
     {
         private readonly Foos _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _fooName;
+        private readonly RequestContent _content;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MgmtTypeSpecFoosListDependenciesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of FooResourceGetPropertiesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Foos client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MgmtTypeSpecFoosListDependenciesAsyncCollectionResultOfT(Foos client, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context, string diagnosticScope)
+        public FooResourceGetPropertiesAsyncCollectionResultOfT(Foos client, Guid subscriptionId, string resourceGroupName, string fooName, RequestContent content, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _fooName = fooName;
+            _content = content;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MgmtTypeSpecFoosListDependenciesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of FooResourceGetPropertiesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MgmtTypeSpecFoosListDependenciesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<FooDependency>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of FooResourceGetPropertiesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<FooProperties>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<FooDependency> result = ParseArrayFromResponse(response);
-            yield return Page<FooDependency>.FromValues(result, null, response);
+            IReadOnlyList<FooProperties> result = ParseArrayFromResponse(response);
+            yield return Page<FooProperties>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -64,7 +67,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetDependenciesRequest(_subscriptionId, _resourceGroupName, _fooName, _context);
+            HttpMessage message = _client.CreateGetPropertiesRequest(_subscriptionId, _resourceGroupName, _fooName, _content, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -81,14 +84,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<FooDependency> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<FooProperties> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<FooDependency> result = new List<FooDependency>();
+            List<FooProperties> result = new List<FooProperties>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<FooDependency>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default));
+                result.Add(ModelReaderWriter.Read<FooProperties>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecMultiServiceTestsContext.Default));
             }
             return result;
         }
