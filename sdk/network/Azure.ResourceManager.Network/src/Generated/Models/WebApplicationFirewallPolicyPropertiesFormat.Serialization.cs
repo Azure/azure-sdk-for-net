@@ -158,6 +158,11 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Tier))
+            {
+                writer.WritePropertyName("tier"u8);
+                writer.WriteStringValue(Tier.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -209,6 +214,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<WritableSubResource> httpListeners = default;
             IReadOnlyList<WritableSubResource> pathBasedRules = default;
             IReadOnlyList<ApplicationGatewayForContainersReferenceDefinition> applicationGatewayForContainers = default;
+            WebApplicationFirewallPolicyTier? tier = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -328,6 +334,15 @@ namespace Azure.ResourceManager.Network.Models
                     applicationGatewayForContainers = array;
                     continue;
                 }
+                if (prop.NameEquals("tier"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tier = new WebApplicationFirewallPolicyTier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -343,6 +358,7 @@ namespace Azure.ResourceManager.Network.Models
                 httpListeners ?? new ChangeTrackingList<WritableSubResource>(),
                 pathBasedRules ?? new ChangeTrackingList<WritableSubResource>(),
                 applicationGatewayForContainers ?? new ChangeTrackingList<ApplicationGatewayForContainersReferenceDefinition>(),
+                tier,
                 additionalBinaryDataProperties);
         }
     }
