@@ -10,13 +10,14 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class MicrosoftSqlServerAdvisorsListByServerCollectionResultOfT : Pageable<SqlAdvisorData>
+    internal partial class SqlServerAdvisorCollectionGetAllAsyncCollectionResultOfT : AsyncPageable<SqlAdvisorData>
     {
         private readonly ServerAdvisors _client;
         private readonly Guid _subscriptionId;
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Sql
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftSqlServerAdvisorsListByServerCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of SqlServerAdvisorCollectionGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ServerAdvisors client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftSqlServerAdvisorsListByServerCollectionResultOfT(ServerAdvisors client, Guid subscriptionId, string resourceGroupName, string serverName, string expand, RequestContext context, string diagnosticScope)
+        public SqlServerAdvisorCollectionGetAllAsyncCollectionResultOfT(ServerAdvisors client, Guid subscriptionId, string resourceGroupName, string serverName, string expand, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -45,13 +46,13 @@ namespace Azure.ResourceManager.Sql
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftSqlServerAdvisorsListByServerCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SqlServerAdvisorCollectionGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftSqlServerAdvisorsListByServerCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SqlAdvisorData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of SqlServerAdvisorCollectionGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<SqlAdvisorData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
+            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
@@ -63,14 +64,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateGetByServerRequest(_subscriptionId, _resourceGroupName, _serverName, _expand, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

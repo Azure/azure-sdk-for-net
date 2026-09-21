@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class MicrosoftSqlAdvisorsListByDatabaseAsyncCollectionResultOfT : AsyncPageable<SqlAdvisorData>
+    internal partial class SqlDatabaseAdvisorCollectionGetAllAsyncCollectionResultOfT : AsyncPageable<SqlAdvisorData>
     {
         private readonly DatabaseAdvisors _client;
         private readonly Guid _subscriptionId;
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of MicrosoftSqlAdvisorsListByDatabaseAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of SqlDatabaseAdvisorCollectionGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DatabaseAdvisors client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public MicrosoftSqlAdvisorsListByDatabaseAsyncCollectionResultOfT(DatabaseAdvisors client, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string expand, RequestContext context, string diagnosticScope)
+        public SqlDatabaseAdvisorCollectionGetAllAsyncCollectionResultOfT(DatabaseAdvisors client, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string expand, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Sql
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of MicrosoftSqlAdvisorsListByDatabaseAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SqlDatabaseAdvisorCollectionGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of MicrosoftSqlAdvisorsListByDatabaseAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of SqlDatabaseAdvisorCollectionGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<SqlAdvisorData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
