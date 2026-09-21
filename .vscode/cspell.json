@@ -1166,6 +1166,13 @@
       ]
     },
     {
+      "filename": "**/sdk/azureresiliencemanagement/**/*.cs",
+      "words": [
+        "amws",
+        "slis"
+      ]
+    },
+    {
       "filename": "**/sdk/resourcemanager/**/*.cs",
       "words": [
         "azprovision"
