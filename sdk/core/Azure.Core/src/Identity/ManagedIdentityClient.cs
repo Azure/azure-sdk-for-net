@@ -80,6 +80,9 @@ namespace Azure.Identity
                 return await _tokenExchangeManagedIdentitySource.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
             }
 
+            // An explicit tenant denial is remembered by this credential; do not repeat PoP
+            // capability discovery and failed token acquisition on subsequent renewals.
+            context = _msalManagedIdentityClient.GetEffectiveRequestContext(context);
             MSAL.ManagedIdentitySource availableSource;
             bool isKeyGuardAvailable = false;
             bool requiresManagedIdentityCapabilities = context.IsProofOfPossessionEnabled && !_options.DisableMtlsProofOfPossession;

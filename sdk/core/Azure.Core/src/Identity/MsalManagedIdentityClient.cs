@@ -7,6 +7,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -24,9 +25,11 @@ namespace Azure.Identity
         // Referencing its types/members with typeof/nameof would reintroduce compile-time coupling.
         private const string ManagedIdentityAttestationExtensionTypeName = "Microsoft.Identity.Client.KeyAttestation.ManagedIdentityAttestationExtensions, Microsoft.Identity.Client.KeyAttestation";
         private const string WithAttestationSupportMethodName = "WithAttestationSupport";
+        private const int TenantNotAllowedForBoundTokenErrorCode = 3921996;
         private static readonly string[] s_cp1Capabilities = ["CP1"];
 
         private readonly ConcurrentDictionary<(bool EnableCae, bool EnableMtlsPop), AsyncLockWithValue<IManagedIdentityApplication>> _clientCache = new();
+        private readonly ConcurrentDictionary<string, byte> _bearerOnlyTenants = new(StringComparer.OrdinalIgnoreCase);
         private readonly bool _isForceRefreshEnabled;
         private readonly bool _disableMtlsProofOfPossession;
         private readonly TimeSpan? _capabilityDiscoveryTimeout;
@@ -174,10 +177,96 @@ namespace Azure.Identity
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
+            requestContext = GetEffectiveRequestContext(requestContext);
             Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> withAttestationSupport =
                 GetAttestationSupport(requestContext, isTokenBindingAvailable);
-            bool enableMtlsPop = withAttestationSupport != null;
 
+            try
+            {
+                return await AcquireTokenAsync(async, requestContext, withAttestationSupport, cancellationToken).ConfigureAwait(false);
+            }
+            catch (MsalServiceException exception) when (withAttestationSupport != null && IsTenantNotAllowedForBoundToken(exception))
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                if (_bearerOnlyTenants.TryAdd(requestContext.TenantId ?? string.Empty, 0))
+                {
+                    AzureIdentityEventSource.Singleton.LogMsal(LogLevel.Warning,
+                        "The token service denied attested token issuance for this managed identity tenant context. Using bearer authentication for this context until the credential is recreated.");
+                }
+
+                // Acquire a genuine bearer token through the bearer-configured MSAL application.
+                // A failure from this separate bearer attempt propagates without another fallback.
+                return await AcquireTokenAsync(async, CreateBearerContext(requestContext), null, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        internal TokenRequestContext GetEffectiveRequestContext(TokenRequestContext context) =>
+            context.IsProofOfPossessionEnabled && _bearerOnlyTenants.ContainsKey(context.TenantId ?? string.Empty)
+                ? CreateBearerContext(context)
+                : context;
+
+        private static TokenRequestContext CreateBearerContext(TokenRequestContext context) =>
+            new(context.Scopes,
+                parentRequestId: context.ParentRequestId,
+                claims: context.Claims,
+                tenantId: context.TenantId,
+                isCaeEnabled: context.IsCaeEnabled);
+
+        internal static bool IsTenantNotAllowedForBoundToken(MsalServiceException exception)
+        {
+            // Match the service-specific tenant eligibility denial, not a generic OAuth error,
+            // exception message, inner exception, resource-support error, or binding failure.
+            if (exception.StatusCode is not (400 or 401) || string.IsNullOrEmpty(exception.ResponseBody))
+            {
+                return false;
+            }
+
+            try
+            {
+                using JsonDocument document = JsonDocument.Parse(exception.ResponseBody);
+                if (document.RootElement.ValueKind != JsonValueKind.Object)
+                {
+                    return false;
+                }
+
+                bool found = false;
+                foreach (JsonProperty property in document.RootElement.EnumerateObject())
+                {
+                    if (!property.NameEquals("error_codes"))
+                    {
+                        continue;
+                    }
+
+                    if (found || property.Value.ValueKind != JsonValueKind.Array || property.Value.GetArrayLength() != 1)
+                    {
+                        return false;
+                    }
+
+                    JsonElement code = property.Value[0];
+                    if (code.ValueKind != JsonValueKind.Number || !code.TryGetInt32(out int value) || value != TenantNotAllowedForBoundTokenErrorCode)
+                    {
+                        return false;
+                    }
+
+                    found = true;
+                }
+
+                return found;
+            }
+            catch (JsonException)
+            {
+                return false;
+            }
+        }
+
+        private async ValueTask<AuthenticationResult> AcquireTokenAsync(
+            bool async,
+            TokenRequestContext requestContext,
+            Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> withAttestationSupport,
+            CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            bool enableMtlsPop = withAttestationSupport != null;
             IManagedIdentityApplication client = await GetClientAsync(async, requestContext.IsCaeEnabled, enableMtlsPop, cancellationToken).ConfigureAwait(false);
             var builder = client.AcquireTokenForManagedIdentity(requestContext.Scopes.FirstOrDefault());
 
@@ -195,6 +284,16 @@ namespace Azure.Identity
             {
                 builder.WithForceRefresh(true);
             }
+
+            return await ExecuteTokenRequestAsync(async, builder, requestContext, cancellationToken).ConfigureAwait(false);
+        }
+
+        protected virtual async ValueTask<AuthenticationResult> ExecuteTokenRequestAsync(
+            bool async,
+            AcquireTokenForManagedIdentityParameterBuilder builder,
+            TokenRequestContext requestContext,
+            CancellationToken cancellationToken)
+        {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             return async ?
                 await builder.ExecuteAsync(cancellationToken).ConfigureAwait(false) :
@@ -204,6 +303,7 @@ namespace Azure.Identity
 
         public virtual async ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesAsync(TokenRequestContext context, CancellationToken cancellationToken)
         {
+            context = GetEffectiveRequestContext(context);
             // Capability discovery determines whether the host can satisfy PoP, so evaluate the
             // request-level prerequisites here and apply the binding-strength requirement afterward.
             bool enableMtlsPop = GetAttestationSupport(context, isTokenBindingAvailable: true) != null;
