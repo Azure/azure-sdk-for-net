@@ -17,33 +17,42 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class ComputeVirtualMachineImagesOperationGroupListPublishersCollectionResultOfT : Pageable<VirtualMachineImageBase>
+    internal partial class MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT : Pageable<VirtualMachineImageBase>
     {
-        private readonly VirtualMachineImagesOperationGroup _client;
+        private readonly VirtualMachineImagesEdgeZoneOperationGroup _client;
         private readonly string _subscriptionId;
         private readonly AzureLocation _location;
+        private readonly string _edgeZone;
+        private readonly string _publisherName;
+        private readonly string _offer;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ComputeVirtualMachineImagesOperationGroupListPublishersCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The VirtualMachineImagesOperationGroup client used to send requests. </param>
+        /// <summary> Initializes a new instance of MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The VirtualMachineImagesEdgeZoneOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
+        /// <param name="publisherName"> A valid image publisher. </param>
+        /// <param name="offer"> A valid image publisher offer. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComputeVirtualMachineImagesOperationGroupListPublishersCollectionResultOfT(VirtualMachineImagesOperationGroup client, string subscriptionId, AzureLocation location, RequestContext context, string diagnosticScope)
+        public MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
+            _edgeZone = edgeZone;
+            _publisherName = publisherName;
+            _offer = offer;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ComputeVirtualMachineImagesOperationGroupListPublishersCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComputeVirtualMachineImagesOperationGroupListPublishersCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<VirtualMachineImageBase>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
@@ -60,7 +69,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetVirtualMachineImagePublishersRequest(_subscriptionId, _location, _context);
+            HttpMessage message = _client.CreateGetVirtualMachineImageEdgeZoneSkusRequest(_subscriptionId, _location, _edgeZone, _publisherName, _offer, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

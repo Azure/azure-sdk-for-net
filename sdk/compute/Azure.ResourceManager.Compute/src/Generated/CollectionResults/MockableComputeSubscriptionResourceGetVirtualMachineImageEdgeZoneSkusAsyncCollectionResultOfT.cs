@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -17,73 +18,64 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class ComputeVirtualMachineImagesOperationGroupListWithPropertiesCollectionResultOfT : Pageable<VirtualMachineImage>
+    internal partial class MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusAsyncCollectionResultOfT : AsyncPageable<VirtualMachineImageBase>
     {
-        private readonly VirtualMachineImagesOperationGroup _client;
+        private readonly VirtualMachineImagesEdgeZoneOperationGroup _client;
         private readonly string _subscriptionId;
         private readonly AzureLocation _location;
+        private readonly string _edgeZone;
         private readonly string _publisherName;
         private readonly string _offer;
-        private readonly string _skus;
-        private readonly string _expand;
-        private readonly int? _top;
-        private readonly string _orderby;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ComputeVirtualMachineImagesOperationGroupListWithPropertiesCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The VirtualMachineImagesOperationGroup client used to send requests. </param>
+        /// <summary> Initializes a new instance of MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The VirtualMachineImagesEdgeZoneOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="edgeZone"> The name of the edge zone. </param>
         /// <param name="publisherName"> A valid image publisher. </param>
         /// <param name="offer"> A valid image publisher offer. </param>
-        /// <param name="skus"> A valid image SKU. </param>
-        /// <param name="expand"> The expand expression to apply on the operation. </param>
-        /// <param name="top"></param>
-        /// <param name="orderby"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComputeVirtualMachineImagesOperationGroupListWithPropertiesCollectionResultOfT(VirtualMachineImagesOperationGroup client, string subscriptionId, AzureLocation location, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context, string diagnosticScope)
+        public MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusAsyncCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
+            _edgeZone = edgeZone;
             _publisherName = publisherName;
             _offer = offer;
-            _skus = skus;
-            _expand = expand;
-            _top = top;
-            _orderby = @orderby;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ComputeVirtualMachineImagesOperationGroupListWithPropertiesCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComputeVirtualMachineImagesOperationGroupListWithPropertiesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VirtualMachineImage>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<VirtualMachineImageBase>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
+            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<VirtualMachineImage> result = ParseArrayFromResponse(response);
-            yield return Page<VirtualMachineImage>.FromValues(result, null, response);
+            IReadOnlyList<VirtualMachineImageBase> result = ParseArrayFromResponse(response);
+            yield return Page<VirtualMachineImageBase>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetVirtualMachineImagesWithPropertiesRequest(_subscriptionId, _location, _publisherName, _offer, _skus, _expand, _top, _orderby, _context);
+            HttpMessage message = _client.CreateGetVirtualMachineImageEdgeZoneSkusRequest(_subscriptionId, _location, _edgeZone, _publisherName, _offer, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -95,14 +87,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<VirtualMachineImage> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<VirtualMachineImageBase> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<VirtualMachineImage> result = new List<VirtualMachineImage>();
+            List<VirtualMachineImageBase> result = new List<VirtualMachineImageBase>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<VirtualMachineImage>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
+                result.Add(ModelReaderWriter.Read<VirtualMachineImageBase>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
             }
             return result;
         }

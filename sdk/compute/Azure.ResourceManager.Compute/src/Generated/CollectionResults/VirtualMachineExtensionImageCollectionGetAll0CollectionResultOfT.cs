@@ -13,55 +13,63 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class ComputeVirtualMachineImagesEdgeZoneOperationGroupListSkusCollectionResultOfT : Pageable<VirtualMachineImageBase>
+    internal partial class VirtualMachineExtensionImageCollectionGetAll0CollectionResultOfT : Pageable<VirtualMachineExtensionImageData>
     {
-        private readonly VirtualMachineImagesEdgeZoneOperationGroup _client;
+        private readonly VirtualMachineExtensionImages _client;
         private readonly string _subscriptionId;
         private readonly AzureLocation _location;
-        private readonly string _edgeZone;
         private readonly string _publisherName;
-        private readonly string _offer;
+        private readonly string _type;
+        private readonly string _filter;
+        private readonly int? _top;
+        private readonly string _orderby;
+        private readonly string _expand;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ComputeVirtualMachineImagesEdgeZoneOperationGroupListSkusCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The VirtualMachineImagesEdgeZoneOperationGroup client used to send requests. </param>
+        /// <summary> Initializes a new instance of VirtualMachineExtensionImageCollectionGetAll0CollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The VirtualMachineExtensionImages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="edgeZone"> The name of the edge zone. </param>
-        /// <param name="publisherName"> A valid image publisher. </param>
-        /// <param name="offer"> A valid image publisher offer. </param>
+        /// <param name="publisherName"></param>
+        /// <param name="type"></param>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="top"></param>
+        /// <param name="orderby"></param>
+        /// <param name="expand"> Expand the response to include additional read-only metadata. Allowed values: `properties` — returns extended metadata (`releaseCategory`, `urgencyLevel`, `runProfile`). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComputeVirtualMachineImagesEdgeZoneOperationGroupListSkusCollectionResultOfT(VirtualMachineImagesEdgeZoneOperationGroup client, string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, RequestContext context, string diagnosticScope)
+        public VirtualMachineExtensionImageCollectionGetAll0CollectionResultOfT(VirtualMachineExtensionImages client, string subscriptionId, AzureLocation location, string publisherName, string @type, string filter, int? top, string @orderby, string expand, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
-            _edgeZone = edgeZone;
             _publisherName = publisherName;
-            _offer = offer;
+            _type = @type;
+            _filter = filter;
+            _top = top;
+            _orderby = @orderby;
+            _expand = expand;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ComputeVirtualMachineImagesEdgeZoneOperationGroupListSkusCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of VirtualMachineExtensionImageCollectionGetAll0CollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComputeVirtualMachineImagesEdgeZoneOperationGroupListSkusCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VirtualMachineImageBase>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of VirtualMachineExtensionImageCollectionGetAll0CollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<VirtualMachineExtensionImageData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
             if (response is null)
             {
                 yield break;
             }
-            IReadOnlyList<VirtualMachineImageBase> result = ParseArrayFromResponse(response);
-            yield return Page<VirtualMachineImageBase>.FromValues(result, null, response);
+            IReadOnlyList<VirtualMachineExtensionImageData> result = ParseArrayFromResponse(response);
+            yield return Page<VirtualMachineExtensionImageData>.FromValues(result, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -69,7 +77,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetVirtualMachineImageEdgeZoneSkusRequest(_subscriptionId, _location, _edgeZone, _publisherName, _offer, _context);
+            HttpMessage message = _client.CreateGetVersionsRequest(_subscriptionId, _location, _publisherName, _type, _filter, _top, _orderby, _expand, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
@@ -86,14 +94,14 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private static IReadOnlyList<VirtualMachineImageBase> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<VirtualMachineExtensionImageData> ParseArrayFromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement array = document.RootElement;
-            List<VirtualMachineImageBase> result = new List<VirtualMachineImageBase>();
+            List<VirtualMachineExtensionImageData> result = new List<VirtualMachineExtensionImageData>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<VirtualMachineImageBase>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
+                result.Add(ModelReaderWriter.Read<VirtualMachineExtensionImageData>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
             }
             return result;
         }

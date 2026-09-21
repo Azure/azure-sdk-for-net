@@ -16,51 +16,36 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Compute
 {
-    internal partial class ComputeVirtualMachineExtensionImagesListVersionsCollectionResultOfT : Pageable<VirtualMachineExtensionImageData>
+    internal partial class VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT : Pageable<VirtualMachineExtensionImageData>
     {
         private readonly VirtualMachineExtensionImages _client;
         private readonly string _subscriptionId;
         private readonly AzureLocation _location;
         private readonly string _publisherName;
-        private readonly string _type;
-        private readonly string _filter;
-        private readonly int? _top;
-        private readonly string _orderby;
-        private readonly string _expand;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ComputeVirtualMachineExtensionImagesListVersionsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineExtensionImages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="publisherName"></param>
-        /// <param name="type"></param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="top"></param>
-        /// <param name="orderby"></param>
-        /// <param name="expand"> Expand the response to include additional read-only metadata. Allowed values: `properties` — returns extended metadata (`releaseCategory`, `urgencyLevel`, `runProfile`). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComputeVirtualMachineExtensionImagesListVersionsCollectionResultOfT(VirtualMachineExtensionImages client, string subscriptionId, AzureLocation location, string publisherName, string @type, string filter, int? top, string @orderby, string expand, RequestContext context, string diagnosticScope)
+        public VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT(VirtualMachineExtensionImages client, string subscriptionId, AzureLocation location, string publisherName, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _location = location;
             _publisherName = publisherName;
-            _type = @type;
-            _filter = filter;
-            _top = top;
-            _orderby = @orderby;
-            _expand = expand;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ComputeVirtualMachineExtensionImagesListVersionsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ComputeVirtualMachineExtensionImagesListVersionsCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<VirtualMachineExtensionImageData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
@@ -77,7 +62,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetVersionsRequest(_subscriptionId, _location, _publisherName, _type, _filter, _top, _orderby, _expand, _context);
+            HttpMessage message = _client.CreateGetTypesRequest(_subscriptionId, _location, _publisherName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

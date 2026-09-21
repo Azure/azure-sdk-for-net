@@ -1436,7 +1436,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListPublishersAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListPublishersCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetPublishersVirtualMachineImagesEdgeZonesCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListOffersAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesAsyncCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1561,7 +1561,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListOffersCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetOffersVirtualMachineImagesEdgeZonesCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1606,7 +1606,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListSkusAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusAsyncCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1652,7 +1652,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesEdgeZoneOperationGroupListSkusCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageEdgeZoneSkusCollectionResultOfT(
                 VirtualMachineImagesEdgeZoneOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1885,7 +1885,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListPublishersAsyncCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersAsyncCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
         }
 
         /// <summary>
@@ -1914,7 +1914,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListPublishersCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagePublishersCollectionResultOfT(VirtualMachineImagesOperationGroupRestClient, Id.SubscriptionId, location, context, "MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers");
         }
 
         /// <summary>
@@ -1948,7 +1948,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListOffersAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageOffersAsyncCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -1988,7 +1988,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListOffersCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageOffersCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2030,7 +2030,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListSkusAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageSkusAsyncCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2073,7 +2073,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListSkusCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImageSkusCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2122,7 +2122,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListWithPropertiesAsyncCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagesWithPropertiesAsyncCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
@@ -2175,7 +2175,7 @@ namespace Azure.ResourceManager.Compute.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ComputeVirtualMachineImagesOperationGroupListWithPropertiesCollectionResultOfT(
+            return new MockableComputeSubscriptionResourceGetVirtualMachineImagesWithPropertiesCollectionResultOfT(
                 VirtualMachineImagesOperationGroupRestClient,
                 Id.SubscriptionId,
                 location,
