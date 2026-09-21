@@ -103,11 +103,25 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 credential = new RecordingTokenCredential(accessToken);
             }
 
+            // Reuse the certificate fetched through the recording above rather than making an
+            // unrecorded duplicate identity request when the client fails over.
+            var certificateTransport = new MockTransport(request =>
+            {
+                Assert.AreEqual(TestEnvironment.ConfidentialLedgerFailoverIdentityUrl.Host, request.Uri.Host);
+                Assert.AreEqual(
+                    $"/ledgerIdentity/{TestEnvironment.ConfidentialLedgerFailoverSecondaryUrl.Host.Split('.')[0]}",
+                    request.Uri.Path);
+                var response = new MockResponse((int)HttpStatusCode.OK);
+                response.SetContent(JsonSerializer.Serialize(new { ledgerTlsCertificate = secondaryCert.PEM }));
+                return response;
+            });
+
             _client = InstrumentClient(
                 new ConfidentialLedgerClient(
                     TestEnvironment.ConfidentialLedgerFailoverPrimaryUrl,
                     credential: credential,
                     clientCertificate: null,
+                    certificateClientOptions: new ConfidentialLedgerCertificateClientOptions { Transport = certificateTransport },
                     ledgerOptions: options,
                     identityServiceCert: primaryCert.Cert));
         }
