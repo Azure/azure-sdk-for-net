@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
@@ -361,6 +362,39 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
             Assert.IsNotNull(assertionCredential);
             Assert.IsNull(assertionCredential.PopClient, "PopClient must not be created when DisableMtlsProofOfPossession is true.");
             Assert.IsNotNull(assertionCredential.Client);
+        }
+
+        [Test]
+        public void ChainedFederatedIdentity_InnerManagedIdentityUnavailable_SurfacesCredentialUnavailable()
+        {
+            // Regression guard: the ChainedTokenCredentialFactory MSI-FIC path must mark the inner managed
+            // identity as chained so an unreachable IMDS surfaces CredentialUnavailableException (letting an
+            // outer ChainedTokenCredential fall through) rather than AuthenticationFailedException (which aborts
+            // the chain). See ChainedTokenCredentialFactory.CreateManagedIdentityAsFederatedIdentityCredential.
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource"] = "ManagedIdentityAsFederatedIdentityCredential",
+                    ["Credential:TenantId"] = "test-tenant",
+                    ["Credential:ClientId"] = "test-client",
+                    ["Credential:ManagedIdentityIdKind"] = "ClientId",
+                    ["Credential:ManagedIdentityId"] = "test-mi-client-id",
+                    ["Credential:AzureCloud"] = "public",
+                    ["Credential:DisableInstanceDiscovery"] = "true",
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var source = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            source.Retry.MaxRetries = 0;
+            // Simulate an unreachable IMDS endpoint (no HTTP response / connection failure).
+            source.Transport = new MockTransport(_ => throw new RequestFailedException(0, "Simulated IMDS connection failure."));
+
+            var credential = ChainedTokenCredentialFactory.CreateCredential(source);
+
+            Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" }), default),
+                "Inner managed identity must surface CredentialUnavailableException so the chain can fall through.");
         }
 
         [Test]
