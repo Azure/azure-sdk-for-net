@@ -11,21 +11,21 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Values that define the states of operations in Bulkactions. </summary>
+    /// <summary> The current state of a bulk action. </summary>
     public readonly partial struct BulkActionOperationState : IEquatable<BulkActionOperationState>
     {
         private readonly string _value;
-        /// <summary> Operations that have been scheduled. </summary>
+        /// <summary> The operation has been scheduled. </summary>
         private const string ScheduledValue = "Scheduled";
-        /// <summary> Operations that are in the process of being executed. </summary>
+        /// <summary> The operation is in progress. </summary>
         private const string ExecutingValue = "Executing";
-        /// <summary> Operations that succeeded. </summary>
+        /// <summary> The operation completed successfully. </summary>
         private const string SucceededValue = "Succeeded";
-        /// <summary> Operations that have failed. </summary>
+        /// <summary> The operation failed. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> Operations that have been Cancelled by the user. </summary>
+        /// <summary> The operation was canceled by the caller. </summary>
         private const string CancelledValue = "Cancelled";
-        /// <summary> Operations that are blocked. </summary>
+        /// <summary> The operation cannot currently make progress. </summary>
         private const string BlockedValue = "Blocked";
         private const string UnknownValue = "Unknown";
         private const string PendingSchedulingValue = "PendingScheduling";
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Operations that have been scheduled. </summary>
+        /// <summary> The operation has been scheduled. </summary>
         public static BulkActionOperationState Scheduled { get; } = new BulkActionOperationState(ScheduledValue);
 
-        /// <summary> Operations that are in the process of being executed. </summary>
+        /// <summary> The operation is in progress. </summary>
         public static BulkActionOperationState Executing { get; } = new BulkActionOperationState(ExecutingValue);
 
-        /// <summary> Operations that succeeded. </summary>
+        /// <summary> The operation completed successfully. </summary>
         public static BulkActionOperationState Succeeded { get; } = new BulkActionOperationState(SucceededValue);
 
-        /// <summary> Operations that have failed. </summary>
+        /// <summary> The operation failed. </summary>
         public static BulkActionOperationState Failed { get; } = new BulkActionOperationState(FailedValue);
 
-        /// <summary> Operations that have been Cancelled by the user. </summary>
+        /// <summary> The operation was canceled by the caller. </summary>
         public static BulkActionOperationState Cancelled { get; } = new BulkActionOperationState(CancelledValue);
 
-        /// <summary> Operations that are blocked. </summary>
+        /// <summary> The operation cannot currently make progress. </summary>
         public static BulkActionOperationState Blocked { get; } = new BulkActionOperationState(BlockedValue);
 
         /// <summary> Gets the Unknown. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The ExecuteStartRequest request for executeStart operations. </summary>
+    /// <summary> The virtual machines and execution settings for a bulk start action. </summary>
     public partial class ExecuteStartContent : IJsonModel<ExecuteStartContent>
     {
         /// <summary> Initializes a new instance of <see cref="ExecuteStartContent"/> for deserialization. </summary>

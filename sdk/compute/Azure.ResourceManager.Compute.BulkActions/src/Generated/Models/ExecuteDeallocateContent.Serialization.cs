@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The ExecuteDeallocateRequest request for executeDeallocate operations. </summary>
+    /// <summary> The virtual machines and execution settings for a bulk deallocate action. </summary>
     public partial class ExecuteDeallocateContent : IJsonModel<ExecuteDeallocateContent>
     {
         /// <summary> Initializes a new instance of <see cref="ExecuteDeallocateContent"/> for deserialization. </summary>

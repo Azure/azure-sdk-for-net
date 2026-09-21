@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> A zone preference with a zone identifier and rank. </summary>
+    /// <summary> An availability zone and its allocation priority. </summary>
     public partial class ZonePreference : IJsonModel<ZonePreference>
     {
         /// <summary> Initializes a new instance of <see cref="ZonePreference"/> for deserialization. </summary>

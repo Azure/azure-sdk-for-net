@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The zone allocation policy for distributing VMs across availability zones. </summary>
+    /// <summary> The preferences for distributing virtual machines across availability zones. </summary>
     public partial class ZoneAllocationPolicy : IJsonModel<ZoneAllocationPolicy>
     {
         /// <param name="data"> The data to parse. </param>

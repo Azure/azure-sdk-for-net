@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BulkCreateCustomVmSizeProfile"/>. </summary>
-        /// <param name="name"> The name of the VM size, eg Standard_D2ads_v5. </param>
-        /// <param name="rank"> The rank of this VM size in the priority order. </param>
+        /// <param name="name"> The virtual machine SKU, for example `Standard_D2ads_v5`. </param>
+        /// <param name="rank"> The customer-defined priority rank for this virtual machine size. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public BulkCreateCustomVmSizeProfile(string name, int rank)
         {
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BulkCreateCustomVmSizeProfile"/>. </summary>
-        /// <param name="name"> The name of the VM size, eg Standard_D2ads_v5. </param>
-        /// <param name="rank"> The rank of this VM size in the priority order. </param>
+        /// <param name="name"> The virtual machine SKU, for example `Standard_D2ads_v5`. </param>
+        /// <param name="rank"> The customer-defined priority rank for this virtual machine size. </param>
         /// <param name="override"> Optional per-VM-size profile override applied to every VM the service assigns to this size. A size maps to many VMs, so virtualMachineName is not part of this shape. virtualMachineProfile is layered beneath any per-VM override; tags, identity, and plan are merged with the per-VM override, with the per-VM value winning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal BulkCreateCustomVmSizeProfile(string name, int rank, BulkCreateCustomOverrideBase @override, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the VM size, eg Standard_D2ads_v5. </summary>
+        /// <summary> The virtual machine SKU, for example `Standard_D2ads_v5`. </summary>
         public string Name { get; set; }
 
-        /// <summary> The rank of this VM size in the priority order. </summary>
+        /// <summary> The customer-defined priority rank for this virtual machine size. </summary>
         public int Rank { get; set; }
 
         /// <summary> Optional per-VM-size profile override applied to every VM the service assigns to this size. A size maps to many VMs, so virtualMachineName is not part of this shape. virtualMachineProfile is layered beneath any per-VM override; tags, identity, and plan are merged with the per-VM override, with the per-VM value winning. </summary>

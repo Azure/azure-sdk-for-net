@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The response from a Hibernate request. </summary>
+    /// <summary> The result of a bulk hibernate action. </summary>
     public partial class HibernateResourceOperationResult : IJsonModel<HibernateResourceOperationResult>
     {
         /// <summary> Initializes a new instance of <see cref="HibernateResourceOperationResult"/> for deserialization. </summary>
