@@ -88,6 +88,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly bool _isSessionReceiver;
 
         /// <summary>
+        /// Indicates whether a specific session was requested when the receiver was constructed.
+        /// </summary>
+        private readonly bool _isSpecificSessionReceiver;
+
+        /// <summary>
         /// Indicates whether the session is locked exclusively. Only meaningful when <see cref="_isSessionReceiver"/> is <c>true</c>.
         /// </summary>
         private readonly bool _isSessionExclusive;
@@ -218,6 +223,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             _connectionScope = connectionScope;
             _retryPolicy = retryPolicy;
             _isSessionReceiver = isSessionReceiver;
+            _isSpecificSessionReceiver = sessionId != null;
             _isSessionExclusive = isSessionExclusive;
             _sessionLockTokenToPresent = sessionLockToken;
             _isProcessor = isProcessor;
@@ -515,10 +521,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     messagesReceived as IReadOnlyCollection<AmqpMessage> ?? messagesReceived?.ToList() ?? s_emptyAmqpMessageList;
 
                 // If this is a session receiver and we didn't receive all requested messages, we need to drain the credits
-                // to ensure FIFO ordering within each session. We exclude session processors, since those will always receive a single message
-                // at a time.  If there are no messages, the session will be closed unless the processor was configured to receive from specific sessions.
-                // The session won't be closed in the case that MaxConcurrentCallsPerSession > 1, but with concurrency, it is not possible to guarantee ordering.
-                if (_isSessionReceiver && (!_isProcessor || SessionId != null) && messageList.Count < maxMessages)
+                // to ensure FIFO ordering within each session. We exclude processors that originally requested any available session,
+                // since those receive a single message at a time and release idle sessions after active processing and
+                // the SessionClosingAsync callback finish.
+                // Use the original selection intent because opening the link assigns the accepted session's ID to SessionId.
+                // Concurrent processing can delay closure; ordering between concurrent handlers is not guaranteed.
+                if (_isSessionReceiver && (!_isProcessor || _isSpecificSessionReceiver) && messageList.Count < maxMessages)
                 {
                     await SafeDrainLinkAsync(link, cancellationToken).ConfigureAwait(false);
 

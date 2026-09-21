@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Messaging.ServiceBus.Core;
 using Moq;
 using NUnit.Framework;
 
@@ -14,6 +15,60 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 {
     public class SessionProcessorTests
     {
+        /// <summary>
+        ///   A null entry in a configured session list still selects any available session. After an empty
+        ///   receive, that receiver must close even when the list's size allows receivers to stay open.
+        ///   Non-null IDs retain the configured idle policy.
+        /// </summary>
+        [TestCase(null, false, true)]
+        [TestCase(null, true, true)]
+        [TestCase("session", false, true)]
+        [TestCase("session", true, false)]
+        [TestCase("", true, false)]
+        [TestCase(" ", true, false)]
+        public async Task IdleSessionReceiverClosesAccordingToSelection(
+            string requestedSessionId,
+            bool keepOpenOnReceiveTimeout,
+            bool expectClose)
+        {
+            var transport = new Mock<TransportReceiver>();
+            transport.SetupGet(receiver => receiver.SessionId).Returns(requestedSessionId ?? "resolved-session");
+            transport.SetupGet(receiver => receiver.SessionLockedUntil).Returns(DateTimeOffset.UtcNow.AddMinutes(1));
+            transport.Setup(receiver => receiver.ReceiveMessagesAsync(
+                    1, It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Array.Empty<ServiceBusReceivedMessage>());
+
+            await using var processor = new ServiceBusSessionProcessor(
+                ServiceBusTestUtilities.GetMockedReceiverConnection(transport),
+                "entityPath",
+                new ServiceBusSessionProcessorOptions { MaxAutoLockRenewalDuration = TimeSpan.Zero });
+            var closingCount = 0;
+            processor.SessionClosingAsync += args =>
+            {
+                Assert.That(args.SessionId, Is.EqualTo(requestedSessionId ?? "resolved-session"));
+                closingCount++;
+                return Task.CompletedTask;
+            };
+            processor.ProcessErrorAsync += args => throw args.Exception;
+
+            using var semaphore = new SemaphoreSlim(1);
+            var manager = new SessionReceiverManager(
+                processor, requestedSessionId, semaphore, clientDiagnostics: null, keepOpenOnReceiveTimeout);
+            try
+            {
+                await manager.ReceiveAndProcessMessagesAsync(CancellationToken.None);
+
+                Assert.That(closingCount, Is.EqualTo(expectClose ? 1 : 0));
+                Assert.That(manager.Receiver == null, Is.EqualTo(expectClose));
+                transport.Verify(receiver => receiver.CloseAsync(It.IsAny<CancellationToken>()),
+                    Times.Exactly(expectClose ? 1 : 0));
+            }
+            finally
+            {
+                await manager.CloseReceiverIfNeeded(CancellationToken.None);
+            }
+        }
+
         [Test]
         public void CannotAddNullHandler()
         {

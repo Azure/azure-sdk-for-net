@@ -85,8 +85,9 @@ namespace Azure.Messaging.ServiceBus
         ///
         /// <remarks>
         /// If <see cref="SessionIds"/> is populated and <see cref="MaxConcurrentSessions"/> is greater or equal to
-        /// the number of sessions specified in <see cref="SessionIds"/>, the session will not be closed when the idle timeout elapses.
-        /// However, it will still control the amount of time each receive call waits.
+        /// the number of sessions specified in <see cref="SessionIds"/>, a specifically selected session will not be closed when the idle timeout elapses.
+        /// A null entry accepts any available session, which is released when idle.
+        /// The idle timeout still controls the amount of time each receive call waits.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">
         ///   A value that is not positive is attempted to be set for the property.
