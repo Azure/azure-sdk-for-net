@@ -90,7 +90,7 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
-        protected override CSharpType? CreateLastContractModelBase(CSharpType previousBase, InputModelType currentModel)
+        protected override CSharpType? CreateLastContractModelBaseCore(CSharpType previousBase, InputModelType currentModel)
             => currentModel.BaseModel is not null &&
                 KnownManagementTypes.TryGetInheritableSystemType(previousBase, out var knownBase)
                     ? knownBase
