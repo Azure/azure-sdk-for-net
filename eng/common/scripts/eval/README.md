@@ -7,8 +7,32 @@ the committed `package-lock.json` instead of resolved fresh from semver ranges o
 It lives under `eng/common` so it syncs to every repo that consumes the shared eval pipeline
 templates.
 
-- The only dependency should be `@microsoft/vally-cli`, pinned to the version CI should evaluate with.
+- This evaluator package's only dependency is `@microsoft/vally-cli`, pinned to the version CI should evaluate with.
 - `package-lock.json` must be committed so `npm ci` is deterministic.
+- Optional Blob publication is isolated in [publisher](publisher/README.md), with
+  its own small package/lock and tests. Shard evaluator restores do not install it.
+
+## Complete build results and direct Blob publishing
+
+Shards now retain the newest invocation's raw JSONL, JUnit and a completion marker
+via [stage-eval-results.ts](stage-eval-results.ts), including failed evaluations.
+Summary checks the full Prepare matrix and selects each expected shard's highest
+attempt once for Markdown, the Tests tab and bundling. Missing, interrupted or
+corrupt results remain incomplete; later failed attempts never fall back to older
+successful artifacts. No historical build download or reconstruction is involved.
+
+The shared archetype supports opt-in `createDashboardBundle` and
+`publishDashboardResults`, with `storageServiceConnection`/`storageContainerUrl`.
+The workflow entrypoint exposes these for pipeline 8255 and defaults publishing
+to `false`; setting it to `true` writes directly to Blob using `AzureCLI@2`.
+There is no dashboard ZIP upload or enterprise repository checkout.
+
+For a draft-branch end-to-end test, `storageSmokeTest=true` selects two labeled
+synthetic shards with no MCP/LLM/evaluation calls, then uses the real Summary
+publisher. A manual run of the trusted feature branch is required; PR validation
+never receives the publishing task. See [publisher setup and smoke-test steps](publisher/README.md).
+Dashboard synchronization and notification authentication remain separate from
+successful Blob storage and are not enabled by this pipeline change.
 
 ## TypeScript (no build step)
 

@@ -1,0 +1,40 @@
+# Explicit manual test: exercise the SAME staging, artifacts and Summary publisher
+# as a real run, but without Vally CLI, model credentials, MCP or evaluation calls.
+jobs:
+  - job: RunShard
+    displayName: 'Synthetic storage smoke shard'
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    timeoutInMinutes: 10
+    strategy:
+      matrix: $[ stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'] ]
+      maxParallel: 2
+    workspace:
+      clean: all
+    templateContext:
+      outputs:
+        - output: pipelineArtifact
+          displayName: 'Publish synthetic $(shardName) result data'
+          artifactName: 'eval-result-$(shardName)-$(System.JobAttempt)'
+          targetPath: $(Build.ArtifactStagingDirectory)/eval-result
+          condition: always()
+    steps:
+      - checkout: self
+        clean: true
+        fetchDepth: 1
+      - task: UseNode@1
+        inputs:
+          version: 22.x
+      - script: |
+          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/create-storage-smoke-results.ts" \
+            --results-root "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" --shard "$(shardName)"
+        displayName: 'Generate labeled synthetic result (no LLM)'
+      - script: |
+          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/stage-eval-results.ts" \
+            --results-root "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
+            --output-directory "$(Build.ArtifactStagingDirectory)/eval-result" \
+            --shard-name "$(shardName)" --attempt "$(System.JobAttempt)"
+        displayName: 'Stage raw results, JUnit and completeness marker'
+        condition: always()

@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { globFiles } from "./lib/glob.ts";
+import { expectedShardsFromMatrix, selectSummaryResults } from "./lib/shard-results.ts";
 
 // Maps a JUnit file path back to its shard and job attempt. Result artifacts download into
 // folders named `eval-result-<shardName>-<attempt>` (the attempt suffix keeps "Rerun failed
@@ -194,7 +195,7 @@ export function getEvalSummary(resultsRoot) {
  * @param {Record<string, object>} shards Output of getEvalSummary.
  * @returns {string} Markdown.
  */
-export function formatEvalSummaryMarkdown(shards) {
+export function formatEvalSummaryMarkdown(shards, incompleteShards = []) {
   const all = Object.values(shards);
   const shardCount = all.length;
 
@@ -213,7 +214,10 @@ export function formatEvalSummaryMarkdown(shards) {
   // A run that parsed zero testcases is NOT a pass — surface it as a loud NO RESULTS state.
   let overall;
   let overallIcon;
-  if (totalTests === 0) {
+  if (incompleteShards.length) {
+    overall = "INCOMPLETE";
+    overallIcon = "⚠️";
+  } else if (totalTests === 0) {
     overall = "NO RESULTS";
     overallIcon = "⚠️";
   } else if (totalFailed === 0) {
@@ -230,6 +234,13 @@ export function formatEvalSummaryMarkdown(shards) {
 
   lines.push(`## ${overallIcon} Vally eval results — ${overall}`);
   lines.push("");
+
+  if (incompleteShards.length) {
+    lines.push("> Some expected shards are missing or incomplete. The available results below are **not** a complete build result; no dashboard bundle will be uploaded.");
+    lines.push("");
+    for (const shard of incompleteShards) lines.push(`- **${shard.shard}**: ${shard.reason}`);
+    lines.push("");
+  }
 
   if (totalTests === 0) {
     lines.push(`No scenarios were found across ${shardCount} shard(s).`);
@@ -313,16 +324,27 @@ export function formatEvalSummaryMarkdown(shards) {
 function parseArgs(argv) {
   const options = { outputPath: "eval-summary.md" };
   for (let i = 0; i < argv.length; i++) {
-    const next = () => argv[++i];
-    switch (argv[i]) {
+    const arg = argv[i];
+    const next = () => {
+      const value = argv[++i];
+      if (!value || value.startsWith("--")) throw new Error(`Missing value for ${arg}`);
+      return value;
+    };
+    switch (arg) {
       case "--results-root":
         options.resultsRoot = next();
         break;
       case "--output-path":
         options.outputPath = next();
         break;
+      case "--selected-root":
+        options.selectedRoot = next();
+        break;
+      case "--attempts-file":
+        options.attemptsFile = next();
+        break;
       default:
-        throw new Error(`Unknown argument: ${argv[i]}`);
+        throw new Error(`Unknown argument: ${arg}`);
     }
   }
   if (!options.resultsRoot) {
@@ -333,15 +355,64 @@ function parseArgs(argv) {
 
 function main(argv) {
   const options = parseArgs(argv);
-  const shards = getEvalSummary(options.resultsRoot);
-  const markdown = formatEvalSummaryMarkdown(shards);
+  fs.mkdirSync(path.dirname(path.resolve(options.outputPath)), { recursive: true });
+  fs.mkdirSync(options.resultsRoot, { recursive: true });
+  let selection = null;
+  if (options.selectedRoot) {
+    let expectedShards = [];
+    let matrixValid = true;
+    try {
+      expectedShards = expectedShardsFromMatrix(process.env.EVAL_EXPECTED_MATRIX);
+    } catch {
+      matrixValid = false;
+    }
+    // Even a failed Prepare must use an empty destination, not stale selected results.
+    let jobAttempts;
+    if (options.attemptsFile) {
+      try { jobAttempts = JSON.parse(fs.readFileSync(options.attemptsFile, "utf8")); }
+      catch { jobAttempts = { valid: false }; }
+    }
+    selection = selectSummaryResults({ resultsRoot: options.resultsRoot,
+      selectedRoot: options.selectedRoot, expectedShards, jobAttempts });
+    if (!matrixValid) {
+      selection.status.push({ shard: "Prepare", attempt: null, complete: false,
+        reason: "The expected shard matrix is unavailable or invalid; check the Prepare stage." });
+    }
+  }
+  const shards = getEvalSummary(options.selectedRoot ?? options.resultsRoot);
+  if (selection) {
+    for (const entry of selection.status) {
+      if (entry.complete && !shards[entry.shard]?.total) {
+        entry.complete = false;
+        entry.reason = "The selected JUnit contains no evaluation testcases.";
+      }
+    }
+    selection.complete = selection.status.every((entry) => entry.complete);
+    selection.shardInput.complete = selection.complete;
+    fs.writeFileSync(path.join(options.resultsRoot, "shard-index.json"), JSON.stringify(selection.shardInput, null, 2) + "\n");
+  }
+  let markdown = formatEvalSummaryMarkdown(shards, selection?.status.filter((entry) => !entry.complete) ?? []);
+  if (selection) {
+    markdown += "\n### Selected shard attempts\n\n| Shard | Attempt | Result data |\n| --- | ---: | --- |\n";
+    for (const entry of selection.status) markdown += `| ${entry.shard} | ${entry.attempt ?? "—"} | ${entry.complete ? "Complete" : "Incomplete"} |\n`;
+    fs.writeFileSync(path.join(path.dirname(options.outputPath), "eval-summary.json"), JSON.stringify({
+      schemaVersion: 1, complete: selection.complete, shards: selection.status,
+      totals: Object.values(shards).reduce((totals, shard) => ({ scenarios: totals.scenarios + shard.total,
+        failed: totals.failed + shard.failed, skipped: totals.skipped + shard.skipped }), { scenarios: 0, failed: 0, skipped: 0 }),
+    }, null, 2) + "\n");
+  }
   fs.writeFileSync(options.outputPath, markdown, "utf8");
 
   console.log(markdown);
 
   if (process.env.TF_BUILD) {
     console.log(`##vso[task.uploadsummary]${path.resolve(options.outputPath)}`);
+    if (selection) console.log(`##vso[task.setvariable variable=EvalSummaryComplete]${selection.complete}`);
   }
+
+  // Completed evaluation failures remain governed by failOnFailedTests. Missing result
+  // data is an infrastructure failure, reported after retaining a diagnostic summary.
+  if (selection && !selection.complete) process.exitCode = 1;
 
   return shards;
 }
@@ -350,6 +421,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   try {
     main(process.argv.slice(2));
   } catch (error) {
+    if (process.env.TF_BUILD && process.argv.includes("--selected-root")) {
+      console.log("##vso[task.setvariable variable=EvalSummaryComplete]false");
+    }
     console.error(error.message);
     process.exit(1);
   }

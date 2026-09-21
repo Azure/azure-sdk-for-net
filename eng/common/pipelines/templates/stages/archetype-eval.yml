@@ -62,6 +62,36 @@ parameters:
     # Per-shard job timeout, passed to the shard job's timeoutInMinutes. Live tier raises it.
     type: number
     default: 20
+  - name: createDashboardBundle
+    type: boolean
+    default: false
+  - name: publishDashboardResults
+    type: boolean
+    default: false
+  - name: storageServiceConnection
+    type: string
+    default: ''
+  - name: storageContainerUrl
+    type: string
+    default: ''
+  - name: notifyDashboard
+    type: boolean
+    default: false
+  - name: dashboardUrl
+    type: string
+    default: ''
+  - name: dashboardAudience
+    type: string
+    default: ''
+  - name: storageSmokeTest
+    type: boolean
+    default: false
+  - name: summaryPool
+    type: object
+    default:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
 
 extends:
   # 1es-redirect picks Official (internal) vs Unofficial; its Use1ESOfficial defaults true.
@@ -71,36 +101,51 @@ extends:
       - stage: Prepare
         displayName: 'Build MCP'
         jobs:
-          - template: /eng/common/pipelines/templates/jobs/build-mcp.yml
-            parameters:
-              mcpSetupTemplate: ${{ parameters.mcpSetupTemplate }}
-              TestType: ${{ parameters.TestType }}
-              toolsRepo: ${{ parameters.toolsRepo }}
+          - ${{ if parameters.storageSmokeTest }}:
+            - template: /eng/common/pipelines/templates/jobs/eval-storage-smoke-matrix.yml
+          - ${{ else }}:
+            - template: /eng/common/pipelines/templates/jobs/build-mcp.yml
+              parameters:
+                mcpSetupTemplate: ${{ parameters.mcpSetupTemplate }}
+                TestType: ${{ parameters.TestType }}
+                toolsRepo: ${{ parameters.toolsRepo }}
 
-          - template: /eng/common/pipelines/templates/jobs/generate-eval-matrix.yml
-            parameters:
-              vallyRoot: ${{ parameters.vallyRoot }}
-              evalGlobs: ${{ parameters.evalGlobs }}
+            - template: /eng/common/pipelines/templates/jobs/generate-eval-matrix.yml
+              parameters:
+                vallyRoot: ${{ parameters.vallyRoot }}
+                evalGlobs: ${{ parameters.evalGlobs }}
 
       - stage: Eval
         displayName: 'Run eval shards'
         dependsOn: Prepare
         jobs:
-          - template: /eng/common/pipelines/templates/jobs/eval-shard.yml
-            parameters:
-              vallyRoot: ${{ parameters.vallyRoot }}
-              evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
-              UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
-              threshold: ${{ parameters.threshold }}
-              preEvalTemplate: ${{ parameters.preEvalTemplate }}
-              postEvalTemplate: ${{ parameters.postEvalTemplate }}
-              shardTimeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
+          - ${{ if parameters.storageSmokeTest }}:
+            - template: /eng/common/pipelines/templates/jobs/eval-storage-smoke-shard.yml
+          - ${{ else }}:
+            - template: /eng/common/pipelines/templates/jobs/eval-shard.yml
+              parameters:
+                vallyRoot: ${{ parameters.vallyRoot }}
+                evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
+                UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
+                threshold: ${{ parameters.threshold }}
+                preEvalTemplate: ${{ parameters.preEvalTemplate }}
+                postEvalTemplate: ${{ parameters.postEvalTemplate }}
+                shardTimeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
 
       - stage: Summary
         displayName: 'Summarize results'
-        dependsOn: Eval
+        dependsOn: [Prepare, Eval]
         condition: always()
         jobs:
           - template: /eng/common/pipelines/templates/jobs/eval-summarize.yml
             parameters:
               failOnFailedTests: ${{ parameters.failOnFailedTests }}
+              createDashboardBundle: ${{ parameters.createDashboardBundle }}
+              publishDashboardResults: ${{ parameters.publishDashboardResults }}
+              storageServiceConnection: ${{ parameters.storageServiceConnection }}
+              storageContainerUrl: ${{ parameters.storageContainerUrl }}
+              notifyDashboard: ${{ parameters.notifyDashboard }}
+              dashboardUrl: ${{ parameters.dashboardUrl }}
+              dashboardAudience: ${{ parameters.dashboardAudience }}
+              storageSmokeTest: ${{ parameters.storageSmokeTest }}
+              summaryPool: ${{ parameters.summaryPool }}

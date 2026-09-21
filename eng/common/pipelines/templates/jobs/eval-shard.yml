@@ -1,5 +1,5 @@
 # Fan-out shard job: one leg per shard runs its evals against the prebuilt MCP and publishes
-# per-leg JUnit (always) + transcripts (on failure). Pass/fail is the eval VERDICT, not the
+# per-leg raw JSONL + JUnit + completeness (always), and transcripts (on failure). Pass/fail is the eval VERDICT, not the
 # `vally` exit code (vally can exit 1 on a teardown flake after a pass).
 
 parameters:
@@ -41,6 +41,8 @@ jobs:
     # A red shard shouldn't abort its siblings; the rollup gates in Summary.
     continueOnError: true
     timeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
+    workspace:
+      clean: all
     strategy:
       matrix: $[ stageDependencies.Prepare.generate_eval_matrix.outputs['detect.matrix'] ]
       maxParallel: 10
@@ -50,9 +52,9 @@ jobs:
         # name instead of colliding with the prior attempt's artifact (which fails the rerun).
         # The Summary job keeps only the highest attempt per shard so retries supersede cleanly.
         - output: pipelineArtifact
-          displayName: 'Publish $(shardName) JUnit'
+          displayName: 'Publish $(shardName) raw results, JUnit and completeness'
           artifactName: 'eval-result-$(shardName)-$(System.JobAttempt)'
-          targetPath: $(Build.ArtifactStagingDirectory)/junit
+          targetPath: $(Build.ArtifactStagingDirectory)/eval-result
           condition: always()
         - output: pipelineArtifact
           displayName: 'Publish $(shardName) transcripts (on failure)'
@@ -61,6 +63,7 @@ jobs:
           condition: failed()
     steps:
       - checkout: self
+        clean: true
         fetchDepth: 1
 
       - task: UseNode@1
@@ -122,13 +125,15 @@ jobs:
       - ${{ if parameters.postEvalTemplate }}:
         - template: ${{ parameters.postEvalTemplate }}
 
-      # JUnit is tiny — stage it always; heavy transcripts stage separately on failure.
-      # Also create the debug dir here so the failed()-gated debug publish always has a target
-      # (otherwise the publish errors "Path does not exist" when the dir was never created).
+      # Preserve exactly the newest invocation, including completed failed evals.
+      # Even an early failure publishes an incomplete marker; never fall back to stale data.
       - script: |
-          mkdir -p "$(Build.ArtifactStagingDirectory)/junit" "$(Build.ArtifactStagingDirectory)/debug"
-          find "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" -name '*.junit.xml' -exec cp {} "$(Build.ArtifactStagingDirectory)/junit/" \;
-        displayName: 'Collect $(shardName) JUnit'
+          mkdir -p "$(Build.ArtifactStagingDirectory)/debug"
+          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/stage-eval-results.ts" \
+            --results-root "$(Build.SourcesDirectory)/artifacts/vally-results/$(shardName)" \
+            --output-directory "$(Build.ArtifactStagingDirectory)/eval-result" \
+            --shard-name "$(shardName)" --attempt "$(System.JobAttempt)"
+        displayName: 'Collect $(shardName) result data and completeness'
         condition: always()
 
       # On a real failure keep transcripts; strip JUnit so Summary can't double-count it.
