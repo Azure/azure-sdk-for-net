@@ -135,35 +135,67 @@ function Install-Standalone-Tool (
     }
 
     $tag = "${Package}_${Version}"
+    $downloadUrlPrefix = "https://github.com/$Repository/releases/download"
 
     if (!$Version -or $Version -eq "*") {
         Write-Host "Attempting to find latest version for package '$Package'"
         $found = $false
 
-        # First attempt: use git ls-remote on repository tags to avoid GitHub REST API rate limits
-        try {
-            $remoteUrl = "https://github.com/$Repository.git"
-            $rawTags = git ls-remote --tags --refs --sort=-version:refname $remoteUrl "${Package}_*"
-            if ($rawTags) {
-                $matchingTags = @()
-                foreach ($line in $rawTags) {
-                    if ($line -match "refs/tags/(${Package}_(?!.*dev)(.+))$") {
-                        $matchingTags += [PSCustomObject]@{
-                            Tag     = $matches[1]
-                            Version = $matches[2]
-                        }
-                    }
-                }
-                if ($matchingTags.Count -gt 0) {
-                    $latest = $matchingTags[0]
-                    $tag = $latest.Tag
-                    $Version = $latest.Version
+        if ($Package -eq "azsdk") {
+            try {
+                $anonCtx = New-AzStorageContext -StorageAccountName "azuresdkartifacts" -Anonymous
+
+                $Version = Get-AzStorageBlob `
+                    -Context $anonCtx `
+                    -MaxCount 100000 `
+                    -Container "public-azsdk-cli" `
+                    | Select-Object -ExpandProperty Name `
+                    | Select-String -Pattern "^$Package_(?<Version>(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*))/" `
+                    | %{ [semver]$_.Matches.Captures.Groups["Version"].Value } `
+                    | Sort-Object -Descending `
+                    | Get-Unique `
+                    | %{ $_.ToString() } `
+                    | Select-Object -First 1
+
+                if ($Version) {
+                    $tag = "${Package}_${Version}"
+                    $downloadUrlPrefix = "https://azuresdkartifacts.blob.core.windows.net/public-azsdk-cli"
                     $found = $true
+                    Write-Host "Found the latest version of $Package $Version from azuresdkartifacts"
                 }
             }
+            catch {
+                Write-Host "Failed to get latest version from azuresdkartifacts: $_"
+            }
         }
-        catch {
-            Write-Host "git ls-remote failed: $_. Falling back to GitHub REST API."
+
+        if (!$found) {
+            # First attempt: use git ls-remote on repository tags to avoid GitHub REST API rate limits
+            try {
+                $remoteUrl = "https://github.com/$Repository.git"
+                $rawTags = git ls-remote --tags --refs --sort=-version:refname $remoteUrl "${Package}_*"
+                if ($rawTags) {
+                    $matchingTags = @()
+                    foreach ($line in $rawTags) {
+                        if ($line -match "refs/tags/(${Package}_(?!.*dev)(.+))$") {
+                            $matchingTags += [PSCustomObject]@{
+                                Tag     = $matches[1]
+                                Version = $matches[2]
+                            }
+                        }
+                    }
+                    if ($matchingTags.Count -gt 0) {
+                        $latest = $matchingTags[0]
+                        $tag = $latest.Tag
+                        $Version = $latest.Version
+                        $found = $true
+                        Write-Host "Found the latest version of $Package $Version via git ls-remote"
+                    }
+                }
+            }
+            catch {
+                Write-Host "git ls-remote failed: $_. Falling back to GitHub REST API."
+            }
         }
 
         # Fallback: GitHub REST API
@@ -175,6 +207,7 @@ function Install-Standalone-Tool (
                     $tag = $release.tag_name
                     $Version = $release.tag_name -replace "${Package}_", ""
                     $found = $true
+                    Write-Host "Found the latest version of $Package $Version via GitHub REST API"
                     break
                 }
             }
@@ -186,7 +219,7 @@ function Install-Standalone-Tool (
     }
 
     $downloadFolder = Resolve-Path $Directory
-    $downloadUrl = "https://github.com/$Repository/releases/download/$tag/$($systemDetails.file_name)"
+    $downloadUrl = "$downloadUrlPrefix/$tag/$($systemDetails.file_name)"
     $downloadFile = $downloadUrl.Split('/')[-1]
     $downloadLocation = Join-Path $downloadFolder $downloadFile
     $savedVersionTxt = Join-Path $downloadFolder "downloaded_version.txt"
