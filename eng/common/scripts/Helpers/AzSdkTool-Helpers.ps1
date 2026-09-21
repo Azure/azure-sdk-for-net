@@ -150,7 +150,7 @@ function Install-Standalone-Tool (
                     -MaxCount 100000 `
                     -Container "public-azsdk-cli" `
                     | Select-Object -ExpandProperty Name `
-                    | Select-String -Pattern "^$Package_(?<Version>(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*))/" `
+                    | Select-String -Pattern "^${Package}_(?<Version>(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*))/" `
                     | %{ [semver]$_.Matches.Captures.Groups["Version"].Value } `
                     | Sort-Object -Descending `
                     | Get-Unique `
