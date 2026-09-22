@@ -12,8 +12,8 @@ restores these separately locked dependencies when bundle creation is enabled.
 | [notification.mjs](notification.mjs) | Optional authenticated signal to the reviewed dashboard destination |
 | [diagnostics.mjs](diagnostics.mjs) | Bounded error reporting without credentials or result contents |
 
-The separate dashboard owns read-only import, cache, UI and deployment. Its
-local demo helpers are not an alternative production publisher.
+The separate dashboard owns read-only import, cache, UI and deployment. It has
+no publishing or sample-data mode; this package is the only production writer.
 
 ## Flow and contract
 
