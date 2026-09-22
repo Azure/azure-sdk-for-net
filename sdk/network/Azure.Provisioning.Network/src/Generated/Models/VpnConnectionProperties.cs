@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Parameters for VpnConnection. </summary>
     internal partial class VpnConnectionProperties : ProvisionableConstruct
     {
         private NetworkSubResource _remoteVpnSite;

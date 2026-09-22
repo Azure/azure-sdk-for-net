@@ -8,6 +8,7 @@
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
@@ -16,6 +17,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
+        private SystemData _systemData;
         private RouteMapProperties _properties;
         private BicepValue<string> _eTag;
         private ResourceReference<VirtualHub> _parent;
@@ -49,6 +51,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
+        {
+            get
+            {
+                Initialize();
+                return _systemData;
             }
         }
 
@@ -162,6 +174,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RouteMapProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _parent = DefineResource<VirtualHub>(nameof(Parent), new string[] { "parent" }, isRequired: true);

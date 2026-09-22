@@ -13,18 +13,18 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Network
 {
     /// <summary> The Network Manager Connection resource. </summary>
-    public partial class SubscriptionNetworkManagerConnection : ProvisionableResource
+    public partial class NetworkManagerConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
-        private BicepValue<string> _eTag;
-        private NetworkManagerConnectionProperties _properties;
         private SystemData _systemData;
+        private NetworkManagerConnectionProperties _properties;
+        private BicepValue<string> _eTag;
 
-        /// <summary> Creates a new SubscriptionNetworkManagerConnection. </summary>
+        /// <summary> Creates a new NetworkManagerConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SubscriptionNetworkManagerConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkManagerConnections", resourceVersion ?? "2025-05-01")
+        public NetworkManagerConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkManagerConnections", resourceVersion ?? "2025-05-01")
         {
         }
 
@@ -53,13 +53,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
         {
             get
             {
                 Initialize();
-                return _eTag;
+                return _systemData;
             }
         }
 
@@ -78,13 +78,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
+        /// <summary> Gets the ETag. </summary>
+        public BicepValue<string> ETag
         {
             get
             {
                 Initialize();
-                return _systemData;
+                return _eTag;
             }
         }
 
@@ -135,29 +135,29 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for SubscriptionNetworkManagerConnection. </summary>
+        /// <summary> Define all the provisionable properties for NetworkManagerConnection. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _properties = DefineModelProperty<NetworkManagerConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<NetworkManagerConnectionProperties>(nameof(Properties), new string[] { "properties" });
+            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing SubscriptionNetworkManagerConnection. </summary>
+        /// <summary> Creates a reference to an existing NetworkManagerConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static SubscriptionNetworkManagerConnection FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static NetworkManagerConnection FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            SubscriptionNetworkManagerConnection result = new SubscriptionNetworkManagerConnection(bicepIdentifier, resourceVersion);
+            NetworkManagerConnection result = new NetworkManagerConnection(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for SubscriptionNetworkManagerConnection that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for NetworkManagerConnection that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

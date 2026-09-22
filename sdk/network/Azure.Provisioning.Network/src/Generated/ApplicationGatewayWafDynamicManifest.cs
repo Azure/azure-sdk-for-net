@@ -8,6 +8,7 @@
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
@@ -16,6 +17,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
+        private SystemData _systemData;
         private ApplicationGatewayWafDynamicManifestPropertiesResult _properties;
 
         /// <summary> Creates a new ApplicationGatewayWafDynamicManifest. </summary>
@@ -47,6 +49,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
+        {
+            get
+            {
+                Initialize();
+                return _systemData;
             }
         }
 
@@ -93,6 +105,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ApplicationGatewayWafDynamicManifestPropertiesResult>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

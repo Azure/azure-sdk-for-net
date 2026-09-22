@@ -229,23 +229,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the Links. </summary>
-        public BicepList<ExpressRouteLink> Links
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Links;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRoutePortPropertiesFormat();
-                }
-                Properties.Links = value;
-            }
-        }
-
         /// <summary> Gets the Circuits. </summary>
         public BicepList<WritableSubResource> Circuits
         {

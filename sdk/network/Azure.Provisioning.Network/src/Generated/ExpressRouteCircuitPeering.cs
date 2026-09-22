@@ -390,19 +390,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the PeeredConnections. </summary>
-        public BicepList<PeerExpressRouteCircuitConnection> PeeredConnections
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExpressRouteCircuitPeeringPropertiesFormat();
-                }
-                return Properties.PeeredConnections;
-            }
-        }
-
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> RouteFilterId
         {

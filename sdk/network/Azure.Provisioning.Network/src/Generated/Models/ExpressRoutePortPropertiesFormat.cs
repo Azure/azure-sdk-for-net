@@ -12,7 +12,6 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> ExpressRoutePort Properties. </summary>
     internal partial class ExpressRoutePortPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<string> _peeringLocation;

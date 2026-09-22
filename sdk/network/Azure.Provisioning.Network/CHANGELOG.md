@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Preserved the legacy `ExpressRouteLinkData`, `PeerExpressRouteCircuitConnectionData`, `VpnSiteLinkData`, and `VpnSiteLinkConnectionData` model APIs alongside their new child-resource counterparts.
+
 ### Other Changes
 
 ## 1.1.0 (2026-04-16)

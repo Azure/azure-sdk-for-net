@@ -17,9 +17,9 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
-        private BicepValue<string> _eTag;
-        private StaticMemberProperties _properties;
         private SystemData _systemData;
+        private StaticMemberProperties _properties;
+        private BicepValue<string> _eTag;
         private ResourceReference<NetworkGroup> _parent;
 
         /// <summary> Creates a new NetworkGroupStaticMember. </summary>
@@ -54,13 +54,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the ETag. </summary>
-        public BicepValue<string> ETag
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
         {
             get
             {
                 Initialize();
-                return _eTag;
+                return _systemData;
             }
         }
 
@@ -79,13 +79,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the SystemData. </summary>
-        public SystemData SystemData
+        /// <summary> Gets the ETag. </summary>
+        public BicepValue<string> ETag
         {
             get
             {
                 Initialize();
-                return _systemData;
+                return _eTag;
             }
         }
 
@@ -153,9 +153,9 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _properties = DefineModelProperty<StaticMemberProperties>(nameof(Properties), new string[] { "properties" });
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<StaticMemberProperties>(nameof(Properties), new string[] { "properties" });
+            _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _parent = DefineResource<NetworkGroup>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

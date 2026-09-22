@@ -11,15 +11,15 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Identity for the resource. </summary>
-    public partial class NetworkManagedServiceIdentity : ProvisionableConstruct
+    public partial class InternalNetworkManagedServiceIdentity : ProvisionableConstruct
     {
         private BicepValue<string> _principalId;
         private BicepValue<string> _tenantId;
         private BicepValue<ResourceIdentityType> _type;
         private BicepDictionary<ManagedServiceIdentityUserAssignedIdentities> _userAssignedIdentities;
 
-        /// <summary> Creates a new NetworkManagedServiceIdentity. </summary>
-        public NetworkManagedServiceIdentity()
+        /// <summary> Creates a new InternalNetworkManagedServiceIdentity. </summary>
+        public InternalNetworkManagedServiceIdentity()
         {
         }
 
@@ -73,7 +73,7 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for NetworkManagedServiceIdentity. </summary>
+        /// <summary> Define all the provisionable properties for InternalNetworkManagedServiceIdentity. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -84,7 +84,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for NetworkManagedServiceIdentity that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for InternalNetworkManagedServiceIdentity that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

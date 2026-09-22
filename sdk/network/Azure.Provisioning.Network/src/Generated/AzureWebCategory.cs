@@ -9,6 +9,7 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
@@ -17,8 +18,9 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
-        private BicepValue<ETag> _eTag;
+        private SystemData _systemData;
         private AzureWebCategoryPropertiesFormat _properties;
+        private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new AzureWebCategory. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -52,13 +54,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the ETag. </summary>
-        public BicepValue<ETag> ETag
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
         {
             get
             {
                 Initialize();
-                return _eTag;
+                return _systemData;
             }
         }
 
@@ -69,6 +71,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _properties;
+            }
+        }
+
+        /// <summary> Gets the ETag. </summary>
+        public BicepValue<ETag> ETag
+        {
+            get
+            {
+                Initialize();
+                return _eTag;
             }
         }
 
@@ -87,8 +99,9 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AzureWebCategoryPropertiesFormat>(nameof(Properties), new string[] { "properties" });
+            _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

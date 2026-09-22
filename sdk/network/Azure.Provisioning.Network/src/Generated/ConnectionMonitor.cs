@@ -10,6 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
@@ -18,10 +19,11 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
+        private SystemData _systemData;
+        private ConnectionMonitorResultProperties _properties;
         private BicepValue<ETag> _eTag;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
-        private ConnectionMonitorResultProperties _properties;
         private ResourceReference<NetworkWatcher> _parent;
 
         /// <summary> Creates a new ConnectionMonitor. </summary>
@@ -53,6 +55,31 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the SystemData. </summary>
+        public SystemData SystemData
+        {
+            get
+            {
+                Initialize();
+                return _systemData;
+            }
+        }
+
+        /// <summary> Gets or sets the Properties. </summary>
+        internal ConnectionMonitorResultProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -93,21 +120,6 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _tags.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        internal ConnectionMonitorResultProperties Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -337,10 +349,11 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<ConnectionMonitorResultProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _properties = DefineModelProperty<ConnectionMonitorResultProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }

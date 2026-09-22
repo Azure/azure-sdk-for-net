@@ -3,8 +3,7 @@
 This report describes the current state of the
 `Azure.Provisioning.Network` migration to the TypeSpec provisioning emitter.
 It reflects the generated code and API surface in SDK PR
-[Azure/azure-sdk-for-net#63070](https://github.com/Azure/azure-sdk-for-net/pull/63070)
-at commit `418174dada1806d704b21ba88e58e1ec6c917013`.
+[Azure/azure-sdk-for-net#63070](https://github.com/Azure/azure-sdk-for-net/pull/63070).
 
 ## Current generation inputs
 
@@ -46,61 +45,70 @@ unique differences for each target framework:
 
 | Diagnostic | Per framework | Across three frameworks | Meaning |
 |---|---:|---:|---|
-| `CP0001` | 14 | 42 | Removed public types |
-| `CP0002` | 420 | 1,260 | Removed public members |
+| `CP0001` | 11 | 33 | Removed public types |
+| `CP0002` | 412 | 1,236 | Removed public members |
 | `CP0011` | 24 | 72 | Changed public member types |
-| **Total** | **458** | **1,374** | |
+| **Total** | **447** | **1,341** | |
 
 These diagnostics are the remaining provisioning compatibility backlog. They
 are not C# compilation or generation failures.
+
+The non-live test project restores successfully, but tests do not yet execute.
+After bypassing the separately measured ApiCompat gate with
+`RunApiCompat=false`, test compilation reports five migration issues across its
+target frameworks:
+
+- A `WritableSubResource` value cannot be assigned to
+  `BicepValue<NetworkSubResource>`.
+- `SubnetResource.PrivateEndpointNetworkPolicy` is absent.
+- `SubnetResource.PrivateLinkServiceNetworkPolicy` is absent.
+- `FlowLogProperties` is absent.
+- `NetworkSecurityGroup.Id` is now read-only.
+
+No test failures have been observed because compilation stops before test
+execution.
 
 ## Remaining provisioning compatibility work
 
 ### Removed public types
 
-The current generated API has 615 public types, compared with 589 in the
-pre-migration API. It adds 40 public types and removes these 14:
+The current API has 619 public types, compared with 589 in the pre-migration
+API. It adds 41 public types and removes these 11:
 
 - `ConnectionMonitorType`
 - `DdosCustomPolicyTriggerSensitivityOverride`
 - `DdosSettingsProtectionMode`
 - `DdosTrafficType`
-- `ExpressRouteLinkData`
 - `FlowLogProperties`
 - `ManagementGroupNetworkManagerConnection`
-- `PeerExpressRouteCircuitConnectionData`
 - `PropagatedRouteTable`
 - `ProtocolCustomSettings`
 - `RoutingConfiguration`
 - `RoutingConfigurationNfvSubResource`
-- `VpnSiteLinkConnectionData`
-- `VpnSiteLinkData`
+- `SubscriptionNetworkManagerConnection`
 
 Several removed models have clear generated successors:
 
 | Removed type | Current generated type | Current shape |
 |---|---|---|
-| `ExpressRouteLinkData` | `ExpressRouteLink` | Resource |
 | `FlowLogProperties` | `FlowLogPropertiesFormat` | Construct |
-| `PeerExpressRouteCircuitConnectionData` | `PeerExpressRouteCircuitConnection` | Resource |
 | `PropagatedRouteTable` | `PropagatedRouteTableNfv` | Construct |
 | `RoutingConfiguration` / `RoutingConfigurationNfvSubResource` | `RoutingConfigurationNfv` | Construct |
-| `VpnSiteLinkConnectionData` | `VpnSiteLinkConnection` | Resource |
-| `VpnSiteLinkData` | `VpnSiteLink` | Resource |
 
 These successors do not by themselves preserve the released API. Compatibility
 work must decide whether to restore adapters, aliases, or obsolete stubs for
 each removed type.
 
-`ManagementGroupNetworkManagerConnection` remains the highest-priority removed
-resource type. Its ARM resource type,
-`Microsoft.Network/networkManagerConnections`, is still represented by
-`SubscriptionNetworkManagerConnection`, but the released management-group
-resource class is absent.
+`ManagementGroupNetworkManagerConnection` and
+`SubscriptionNetworkManagerConnection` remain the highest-priority removed
+resource types. Their ARM resource type,
+`Microsoft.Network/networkManagerConnections`, is now represented by the
+generated `NetworkManagerConnection`, but the two released scope-specific
+resource classes are absent.
 
 ### Removed and changed members
 
-The remaining 420 `CP0002` and 24 `CP0011` diagnostics per framework cover
+The remaining 412 `CP0002` and 24 `CP0011` diagnostics per framework cover
 removed members and changed property types on otherwise retained public types.
 They have not yet been broadly mitigated. The ApiCompat output should be used
 as the source of truth when this phase begins.
@@ -143,6 +151,31 @@ resources:
 
 This resolves the corresponding `AZC0012` analyzer failures.
 
+### Child-resource model promotions
+
+Four released inline data models now have first-class child-resource
+counterparts:
+
+| Legacy construct | Current resource | Parent |
+|---|---|---|
+| `ExpressRouteLinkData` | `ExpressRouteLink` | `ExpressRoutePort` |
+| `PeerExpressRouteCircuitConnectionData` | `PeerExpressRouteCircuitConnection` | `ExpressRouteCircuitPeering` |
+| `VpnSiteLinkConnectionData` | `VpnSiteLinkConnection` | `VpnConnection` |
+| `VpnSiteLinkData` | `VpnSiteLink` | `VpnSite` |
+
+The released `ProvisionableConstruct` types and their original parent
+collection properties are preserved as hidden, obsolete custom APIs. The
+generated resource collections remain available under distinct names:
+
+- `ExpressRoutePort.LinkResources`
+- `ExpressRouteCircuitPeering.PeeredConnectionResources`
+- `VpnConnection.VpnLinkConnectionResources`
+- `VpnSite.VpnSiteLinkResources`
+
+The old and new collection shapes serialize to the same ARM property paths.
+Callers should use one shape or the other for a given parent. ApiCompat reports
+no remaining diagnostics for these four types or their parent properties.
+
 ### Historical resource versions
 
 The TypeSpec emitter generates the current `V2025_05_01` resource version.
@@ -175,16 +208,16 @@ the duplicate class name.
 The package currently contains:
 
 - 828 generated C# files
-- 31 resource-version/name customization files under `src/Custom`
-- 615 public API types in the `net8.0` API listing
+- 39 customization files under `src/Custom`
+- 619 public API types in the `net8.0` API listing
 
 Compared with SDK `main`, the generated tree contains:
 
-- 575 modified files
-- 253 added files
-- 14 deleted files
+- 574 modified files
+- 252 added files
+- 15 deleted files
 
-The migration adds 40 public types, including 16 resource types:
+The migration adds 41 public types, including 17 resource types:
 
 - `ApplicationGatewayAvailableSslOptionsInfo`
 - `ApplicationGatewayWafDynamicManifest`
@@ -195,6 +228,7 @@ The migration adds 40 public types, including 16 resource types:
 - `ExpressRoutePortsLocation`
 - `ExpressRouteProviderPort`
 - `NetworkSecurityPerimeterLinkReference`
+- `NetworkManagerConnection`
 - `NetworkVirtualApplianceSku`
 - `PeerExpressRouteCircuitConnection`
 - `VirtualMachineScaleSetNetworkInterface`
@@ -208,9 +242,10 @@ The migration adds 40 public types, including 16 resource types:
 The following work remains intentionally deferred until the provisioning API
 compatibility approach is reviewed:
 
-- Mitigation of the 14 removed public types
+- Mitigation of the 11 removed public types
 - Mitigation of the remaining removed and changed members
-- Unit and live test updates required by those compatibility decisions
+- Resolution of the five current test-compilation issues, followed by unit and
+  live test validation
 - Changelog finalization
 
 The current CI failures on the SDK PR are consistent with this unfinished

@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network
 {
-    /// <summary> Properties of the express route circuit peering. </summary>
     internal partial class ExpressRouteCircuitPeeringPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<ExpressRoutePeeringType> _peeringType;
