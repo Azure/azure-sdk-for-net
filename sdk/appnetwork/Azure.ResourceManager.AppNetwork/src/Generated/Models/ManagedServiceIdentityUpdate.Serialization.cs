@@ -8,68 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.AppNetwork;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppNetwork.Models
 {
-    /// <summary> The type used for update operations of the AppLink. </summary>
-    public partial class AppLinkPatch : IJsonModel<AppLinkPatch>
+    /// <summary> The update-specific managed service identity (all fields optional for PATCH). </summary>
+    public partial class ManagedServiceIdentityUpdate : IJsonModel<ManagedServiceIdentityUpdate>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppLinkPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedServiceIdentityUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppLinkPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAppLinkPatch(document.RootElement, options);
+                        return DeserializeManagedServiceIdentityUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppLinkPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppLinkPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAppNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AppLinkPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AppLinkPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedServiceIdentityUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppLinkPatch IPersistableModel<AppLinkPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedServiceIdentityUpdate IPersistableModel<ManagedServiceIdentityUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AppLinkPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="appLinkPatch"> The <see cref="AppLinkPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(AppLinkPatch appLinkPatch)
-        {
-            if (appLinkPatch == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(appLinkPatch, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<ManagedServiceIdentityUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AppLinkPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedServiceIdentityUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,16 +71,21 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppLinkPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppLinkPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (Optional.IsDefined(Type))
             {
-                writer.WritePropertyName("tags"u8);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            {
+                writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartObject();
-                foreach (var item in Tags)
+                foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -97,14 +93,9 @@ namespace Azure.ResourceManager.AppNetwork.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item.Value);
+                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -125,41 +116,50 @@ namespace Azure.ResourceManager.AppNetwork.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AppLinkPatch IJsonModel<AppLinkPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedServiceIdentityUpdate IJsonModel<ManagedServiceIdentityUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AppLinkPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedServiceIdentityUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AppLinkPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentityUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppLinkPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceIdentityUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppLinkPatch(document.RootElement, options);
+            return DeserializeManagedServiceIdentityUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AppLinkPatch DeserializeAppLinkPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedServiceIdentityUpdate DeserializeManagedServiceIdentityUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
-            ManagedServiceIdentityUpdate identity = default;
+            ManagedServiceIdentityType? @type = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("tags"u8))
+                if (prop.NameEquals("type"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    @type = new ManagedServiceIdentityType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("userAssignedIdentities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
                         if (prop0.Value.ValueKind == JsonValueKind.Null)
@@ -168,19 +168,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
                         }
                         else
                         {
-                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop0.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppNetworkContext.Default));
                         }
                     }
-                    tags = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ManagedServiceIdentityUpdate.DeserializeManagedServiceIdentityUpdate(prop.Value, options);
+                    userAssignedIdentities = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +179,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppLinkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, additionalBinaryDataProperties);
+            return new ManagedServiceIdentityUpdate(@type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), additionalBinaryDataProperties);
         }
     }
 }

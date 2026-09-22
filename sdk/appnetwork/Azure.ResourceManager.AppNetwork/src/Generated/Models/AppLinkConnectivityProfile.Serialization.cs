@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 writer.WritePropertyName("privateConnect"u8);
                 writer.WriteObjectValue(PrivateConnect, options);
             }
+            if (Optional.IsDefined(Network))
+            {
+                writer.WritePropertyName("network"u8);
+                writer.WriteStringValue(Network);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             }
             EastWestGatewayProfile eastWestGateway = default;
             PrivateConnectProfile privateConnect = default;
+            string network = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,12 +155,17 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     privateConnect = PrivateConnectProfile.DeserializePrivateConnectProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("network"u8))
+                {
+                    network = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppLinkConnectivityProfile(eastWestGateway, privateConnect, additionalBinaryDataProperties);
+            return new AppLinkConnectivityProfile(eastWestGateway, privateConnect, network, additionalBinaryDataProperties);
         }
     }
 }
