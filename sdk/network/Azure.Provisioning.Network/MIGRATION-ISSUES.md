@@ -1,54 +1,65 @@
-# Azure.Provisioning.Network TypeSpec Migration Report
+# Azure.Provisioning.Network TypeSpec Migration Status
 
-This report tracks migration progress. Remaining issues are listed first, reference and reproduction details are secondary, and completed work is recorded last.
+This report describes the current state of the
+`Azure.Provisioning.Network` migration to the TypeSpec provisioning emitter.
+It reflects the generated code and API surface in SDK PR
+[Azure/azure-sdk-for-net#63070](https://github.com/Azure/azure-sdk-for-net/pull/63070)
+at commit `418174dada1806d704b21ba88e58e1ec6c917013`.
 
-# Remaining issues
+## Current generation inputs
 
-## Build and API export results
+- Spec PR:
+  [Azure/azure-rest-api-specs#46412](https://github.com/Azure/azure-rest-api-specs/pull/46412)
+- Spec commit: `f5132f8a007ad9fd37adbc4bceb8f1281fbab9cb`
+- Provisioning emitter:
+  `@azure-typespec/http-client-csharp-provisioning`
+  `1.0.0-alpha.20260916.3`
+- TypeSpec compiler: `1.15.0`
+- `Microsoft.Network` API version: `2025-05-01`
+- `Microsoft.Compute` API version: `2018-10-01`
 
-The generated C# code compiles for `netstandard2.0`, `net8.0`, and `net10.0`,
-but the normal build still fails on the intentionally unmitigated API
-compatibility differences.
+The spec PR has been updated with the latest `main`. Its `client.tsp` is
+identical to `main`; its only Network-specific diff is `tspconfig.yaml`, which
+adds the provisioning emitter configuration and pins the management and
+provisioning API versions.
 
-API compatibility reports the following diagnostics across the three target
-frameworks:
+Both `Azure.Provisioning.Network` and `Azure.ResourceManager.Network` pin the
+same spec commit. Regenerating both libraries from that commit completed
+without producing additional generated-code changes.
 
-| Diagnostic | Total | Per target framework | Meaning |
+## Validation status
+
+The current generated provisioning source compiles for `netstandard2.0`,
+`net8.0`, and `net10.0`.
+
+The following checks pass:
+
+- TypeSpec validation for the Network project
+- Provisioning and management SDK generation
+- `dotnet format` for both Network SDK projects
+- Network service API export, with zero warnings and errors
+- `git diff --check`
+
+The normal `Azure.Provisioning.Network` package build remains blocked by
+intentional, unmitigated ApiCompat differences. ApiCompat reports the following
+unique differences for each target framework:
+
+| Diagnostic | Per framework | Across three frameworks | Meaning |
 |---|---:|---:|---|
-| `CP0001` | 42 | 14 | Removed public types |
-| `CP0002` | 1,260 | 420 | Removed public members |
-| `CP0011` | 72 | 24 | Changed public member types |
+| `CP0001` | 14 | 42 | Removed public types |
+| `CP0002` | 420 | 1,260 | Removed public members |
+| `CP0011` | 24 | 72 | Changed public member types |
+| **Total** | **458** | **1,374** | |
 
-The standard package-scoped API export succeeded with its normal
-`RunApiCompat=false` setting, producing updated API listings for all three target
-frameworks.
+These diagnostics are the remaining provisioning compatibility backlog. They
+are not C# compilation or generation failures.
 
-## Resource compatibility
+## Remaining provisioning compatibility work
 
-Resource identity was compared by the ARM resource type passed to each
-`ProvisionableResource` constructor, rather than by C# class name.
+### Removed public types
 
-- The baseline has 118 public resource classes representing 117 ARM resource
-  types.
-- The new generation has 133 public resource classes representing 133 ARM
-  resource types.
-- **No baseline ARM resource type is missing.**
-- One baseline resource class is no longer generated because two classes that
-  shared the same ARM resource type were consolidated:
-
-| Missing baseline resource class | Current resource class | ARM resource type |
-|---|---|---|
-| `ManagementGroupNetworkManagerConnection` | `SubscriptionNetworkManagerConnection` | `Microsoft.Network/networkManagerConnections` |
-
-Restoring or otherwise resolving `ManagementGroupNetworkManagerConnection` is
-the highest-priority resource compatibility issue. Although its ARM resource
-type remains represented, the management-group-scoped public resource class is
-missing.
-
-## Missing non-resource models
-
-After separating resources, 13 baseline public non-resource types remain
-missing:
+The current generated API has 615 public types, compared with 589 in the
+pre-migration API. It adds 40 public types and removes these 14:
 
 - `ConnectionMonitorType`
 - `DdosCustomPolicyTriggerSensitivityOverride`
@@ -56,6 +67,7 @@ missing:
 - `DdosTrafficType`
 - `ExpressRouteLinkData`
 - `FlowLogProperties`
+- `ManagementGroupNetworkManagerConnection`
 - `PeerExpressRouteCircuitConnectionData`
 - `PropagatedRouteTable`
 - `ProtocolCustomSettings`
@@ -64,135 +76,87 @@ missing:
 - `VpnSiteLinkConnectionData`
 - `VpnSiteLinkData`
 
-Five have likely replacements. Four former data models now correspond to newly
-generated resources, while one model appears renamed:
+Several removed models have clear generated successors:
 
-| Baseline non-resource model | Likely current replacement | Change |
+| Removed type | Current generated type | Current shape |
 |---|---|---|
-| `ExpressRouteLinkData` | `ExpressRouteLink` | Promoted to resource `Microsoft.Network/ExpressRoutePorts/links` |
-| `FlowLogProperties` | `FlowLogPropertiesFormat` | Model rename |
-| `PeerExpressRouteCircuitConnectionData` | `PeerExpressRouteCircuitConnection` | Promoted to resource `Microsoft.Network/expressRouteCircuits/peerings/peerConnections` |
-| `VpnSiteLinkConnectionData` | `VpnSiteLinkConnection` | Promoted to resource `Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections` |
-| `VpnSiteLinkData` | `VpnSiteLink` | Promoted to resource `Microsoft.Network/vpnSites/vpnSiteLinks` |
+| `ExpressRouteLinkData` | `ExpressRouteLink` | Resource |
+| `FlowLogProperties` | `FlowLogPropertiesFormat` | Construct |
+| `PeerExpressRouteCircuitConnectionData` | `PeerExpressRouteCircuitConnection` | Resource |
+| `PropagatedRouteTable` | `PropagatedRouteTableNfv` | Construct |
+| `RoutingConfiguration` / `RoutingConfigurationNfvSubResource` | `RoutingConfigurationNfv` | Construct |
+| `VpnSiteLinkConnectionData` | `VpnSiteLinkConnection` | Resource |
+| `VpnSiteLinkData` | `VpnSiteLink` | Resource |
 
-These replacements are not yet confirmed to be API-compatible. The other eight
-missing models have no confirmed one-to-one replacement.
+These successors do not by themselves preserve the released API. Compatibility
+work must decide whether to restore adapters, aliases, or obsolete stubs for
+each removed type.
 
-## Work intentionally not performed
+`ManagementGroupNetworkManagerConnection` remains the highest-priority removed
+resource type. Its ARM resource type,
+`Microsoft.Network/networkManagerConnections`, is still represented by
+`SubscriptionNetworkManagerConnection`, but the released management-group
+resource class is absent.
 
-Per the requested stopping point, the following remain pending:
+### Removed and changed members
 
-- Unit and live tests
-- Broad `Azure.Provisioning.Network` breaking-change mitigation
-- Changelog updates
+The remaining 420 `CP0002` and 24 `CP0011` diagnostics per framework cover
+removed members and changed property types on otherwise retained public types.
+They have not yet been broadly mitigated. The ApiCompat output should be used
+as the source of truth when this phase begins.
 
-# Reference details
+## Resolved migration work
 
-## Added resources
+### Management SDK compatibility
 
-The new generation adds 16 ARM resource types:
+The related `Azure.ResourceManager.Network` TypeSpec migration was completed
+and merged through
+[Azure/azure-sdk-for-net#63027](https://github.com/Azure/azure-sdk-for-net/pull/63027).
+The provisioning migration has no management-package code delta from current
+SDK `main`; it changes only the management package's `tsp-location.yaml` pin.
 
-| Public resource class | ARM resource type |
-|---|---|
-| `VirtualMachineScaleSetNetworkInterface` | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces` |
-| `VirtualMachineScaleSetNetworkInterfaceIPConfiguration` | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces/ipConfigurations` |
-| `VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddress` | `Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces/ipconfigurations/publicipaddresses` |
-| `ApplicationGatewayAvailableSslOptionsInfo` | `Microsoft.Network/applicationGatewayAvailableSslOptions` |
-| `AzureWebCategory` | `Microsoft.Network/azureWebCategories` |
-| `CloudServiceSwap` | `Microsoft.Network/cloudServiceSlots` |
-| `PeerExpressRouteCircuitConnection` | `Microsoft.Network/expressRouteCircuits/peerings/peerConnections` |
-| `ExpressRouteLink` | `Microsoft.Network/ExpressRoutePorts/links` |
-| `ExpressRoutePortsLocation` | `Microsoft.Network/ExpressRoutePortsLocations` |
-| `ExpressRouteProviderPort` | `Microsoft.Network/expressRouteProviderPorts` |
-| `ApplicationGatewayWafDynamicManifest` | `Microsoft.Network/locations/applicationGatewayWafDynamicManifests` |
-| `DefaultSecurityRule` | `Microsoft.Network/networkSecurityGroups/defaultSecurityRules` |
-| `NetworkSecurityPerimeterLinkReference` | `Microsoft.Network/networkSecurityPerimeters/linkReferences` |
-| `NetworkVirtualApplianceSku` | `Microsoft.Network/networkVirtualApplianceSkus` |
-| `VpnSiteLinkConnection` | `Microsoft.Network/vpnGateways/vpnConnections/vpnLinkConnections` |
-| `VpnSiteLink` | `Microsoft.Network/vpnSites/vpnSiteLinks` |
+The merged management work includes:
 
-## Added non-resource models
+- Excluding six deprecated Compute-backed Cloud Services operations from C#
+  generation to avoid duplicate `NetworkInterface` resource projections
+- Restoring the released management APIs through hidden, obsolete compatibility
+  customizations
+- Restoring the legacy `BastionHostResource.Update` overloads
+- Preserving the legacy enum-shaped
+  `HubVirtualNetworkConnectionData.EnableOnlyIPv6Peering` API while generating
+  the current Boolean service property
+- Preserving released Network Manager connection APIs and resource hierarchies
 
-The new generation adds 24 public non-resource types:
+Management generation, API export, build, ApiCompat, and tests passed before
+that PR was merged.
 
-- `ApplicationGatewayFirewallManifestRuleSet`
-- `ApplicationGatewayFirewallRule`
-- `ApplicationGatewayFirewallRuleGroup`
-- `ApplicationGatewayForContainersReferenceDefinition`
-- `ApplicationGatewayRuleSetStatusOption`
-- `ApplicationGatewayTierType`
-- `ApplicationGatewayWafRuleActionType`
-- `ApplicationGatewayWafRuleSensitivityType`
-- `ApplicationGatewayWafRuleStateType`
-- `ConnectionMonitorCreateOrUpdateContent`
-- `EndpointType`
-- `ExpressRoutePortsLocationBandwidths`
-- `FlowLogFormatParameters`
-- `FlowLogPropertiesFormat`
-- `InternetIngressPublicIpsProperties`
-- `ManagedServiceIdentityUserAssignedIdentities`
-- `NetworkManagedServiceIdentity`
-- `NetworkSubResource`
-- `NetworkVirtualApplianceSkuInstances`
-- `PacketCaptureCreateOrUpdateContent`
-- `ReferencedPublicIPAddress`
-- `ResourceIdentityType`
-- `SwapSlotType`
-- `NetworkWritableResourceData`
+### Resource names
 
-## Scope
+SDK-side `[CodeGenType]` customizations restore the released names for three
+resources:
 
-This report describes issues observed after fresh TypeSpec generation of
-`Azure.Provisioning.Network` and the related regeneration of
-`Azure.ResourceManager.Network`. Broad provisioning breaking-change mitigation
-remains deferred; only the requested resource-name, resource-version, and
-deprecated management API compatibility changes have been applied.
-
-Generation used:
-
-- `@azure-typespec/http-client-csharp-provisioning` version
-  `1.0.0-alpha.20260914.6`
-- `@typespec/compiler` version `1.15.0`
-- `Microsoft.Network` API version `2025-05-01`
-- `Microsoft.Compute` API version `2018-10-01`
-- Azure REST API specs commit `13c6ef00a1f2f708fc7a90069312f7977a06fe7d`
-- Draft spec PR
-  [Azure/azure-rest-api-specs#46412](https://github.com/Azure/azure-rest-api-specs/pull/46412)
-
-## Generation diagnostics
-
-Generation completed successfully but emitted these diagnostics:
-
-- The temporary TypeSpec dependency installation reported one high-severity npm
-  vulnerability.
-- `grep` was unavailable in the Windows generation environment.
-- `tsp-client` warned that `emitter-output-dir` was missing even though it was
-  present in the local provisioning-emitter options.
-- TypeSpec reported compilation diagnostics but did not print their details
-  without debug logging.
-
-# Resolved work
-
-## Resource names restored
-
-Three SDK-side `[CodeGenType]` customizations restore the shipped resource names:
-
-| TypeSpec-generated name | Restored SDK name |
+| TypeSpec-generated name | Public SDK name |
 |---|---|
 | `Probe` | `ProbeResource` |
 | `Route` | `RouteResource` |
 | `Subnet` | `SubnetResource` |
 
-These customizations eliminate the `AZC0012` analyzer errors.
+This resolves the corresponding `AZC0012` analyzer failures.
 
-## Spec changes required for generation
+### Historical resource versions
 
-The provisioning-emitter configuration and required C# customizations are
-committed in the draft spec PR. Both the provisioning and management SDK
-`tsp-location.yaml` files pin the PR head commit, so generation is reproducible.
+The TypeSpec emitter generates the current `V2025_05_01` resource version.
+Thirty-one partial classes under `src/Custom` restore the historical
+`ResourceVersions` constants for released resource types.
 
-The following six deprecated Compute-backed Cloud Services operations also had
-to be excluded from the C# scope:
+These customizations restore 1,882 legacy constants. The exported API contains
+all 2,000 version fields from the pre-migration API plus 15 fields introduced
+by the new generation. This eliminated 5,646 `CP0002` diagnostics across the
+three target frameworks.
+
+### Cloud Services projection collision
+
+The following operations are excluded from the C# scope:
 
 - `NetworkInterfaces.getCloudServiceNetworkInterface`
 - `NetworkInterfaces.listCloudServiceRoleInstanceNetworkInterfaces`
@@ -201,94 +165,54 @@ to be excluded from the C# scope:
 - `PublicIPAddresses.listCloudServiceRoleInstancePublicIPAddresses`
 - `PublicIPAddressesOperationGroup.listCloudServicePublicIPAddresses`
 
-Without these exclusions, the provisioning emitter crashes because
+Without these exclusions, the provisioning emitter attempts to project both
 `microsoft.Compute/cloudServices/roleInstances/networkInterfaces` and
-`Microsoft.Network/networkInterfaces` both project to the class name
-`NetworkInterface`.
+`Microsoft.Network/networkInterfaces` as `NetworkInterface` and terminates on
+the duplicate class name.
 
-## Generated source churn
+## Current generated-code scope
 
-The fresh generation produced 828 C# files:
+The package currently contains:
 
-- 575 tracked generated files were modified.
-- 14 tracked generated files were deleted.
-- 253 generated files are new and untracked.
-- The new files include 16 top-level resource files, 232 model files, and 5
-  internal generator-support files.
+- 828 generated C# files
+- 31 resource-version/name customization files under `src/Custom`
+- 615 public API types in the `net8.0` API listing
 
-The three checked-in API listings were subsequently exported with API
-compatibility checks disabled. Each framework listing changed by 1,380 additions
-and 2,885 deletions, for a combined 4,140 additions and 8,655 deletions.
+Compared with SDK `main`, the generated tree contains:
 
-## Historical resource versions restored
+- 575 modified files
+- 253 added files
+- 14 deleted files
 
-The TypeSpec emitter generates only `V2025_05_01` for the following existing
-resource classes. SDK-side partial classes restore every previously public
-`ResourceVersions` constant. Each partial class is kept in its own file under
-`src/Custom`, mirroring the corresponding top-level generated resource file.
+The migration adds 40 public types, including 16 resource types:
 
-The listed count is the number of legacy constants restored for each class.
+- `ApplicationGatewayAvailableSslOptionsInfo`
+- `ApplicationGatewayWafDynamicManifest`
+- `AzureWebCategory`
+- `CloudServiceSwap`
+- `DefaultSecurityRule`
+- `ExpressRouteLink`
+- `ExpressRoutePortsLocation`
+- `ExpressRouteProviderPort`
+- `NetworkSecurityPerimeterLinkReference`
+- `NetworkVirtualApplianceSku`
+- `PeerExpressRouteCircuitConnection`
+- `VirtualMachineScaleSetNetworkInterface`
+- `VirtualMachineScaleSetNetworkInterfaceIPConfiguration`
+- `VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddress`
+- `VpnSiteLink`
+- `VpnSiteLinkConnection`
 
-| Resource class | Historical versions removed |
-|---|---:|
-| `ApplicationSecurityGroup` | 56 |
-| `BackendAddressPool` | 69 |
-| `FirewallPolicy` | 40 |
-| `FlowLog` | 56 |
-| `FrontendIPConfiguration` | 69 |
-| `InboundNatRule` | 69 |
-| `LoadBalancer` | 69 |
-| `LoadBalancingRule` | 69 |
-| `NatGateway` | 44 |
-| `NetworkInterface` | 69 |
-| `NetworkInterfaceIPConfiguration` | 69 |
-| `NetworkInterfaceTapConfiguration` | 69 |
-| `NetworkPrivateEndpointConnection` | 46 |
-| `NetworkSecurityGroup` | 69 |
-| `NetworkWatcher` | 69 |
-| `OutboundRule` | 69 |
-| `PrivateDnsZoneGroup` | 42 |
-| `PrivateEndpoint` | 42 |
-| `PrivateLinkService` | 46 |
-| `ProbeResource` | 69 |
-| `PublicIPAddress` | 69 |
-| `PublicIPPrefix` | 47 |
-| `RouteResource` | 69 |
-| `RouteTable` | 69 |
-| `SecurityRule` | 69 |
-| `ServiceEndpointPolicy` | 53 |
-| `ServiceEndpointPolicyDefinition` | 53 |
-| `SubnetResource` | 69 |
-| `VirtualNetwork` | 69 |
-| `VirtualNetworkPeering` | 69 |
-| `VirtualNetworkTap` | 46 |
+## Deferred work
 
-In total, 1,882 legacy constants were restored. The exported API contains all
-2,000 version fields from the pre-migration API and 15 additional fields from
-the new generation. Restoring these constants removed 5,646 `CP0002` failures
-across the three target frameworks.
+The following work remains intentionally deferred until the provisioning API
+compatibility approach is reviewed:
 
-## Management SDK regeneration
+- Mitigation of the 14 removed public types
+- Mitigation of the remaining removed and changed members
+- Unit and live test updates required by those compatibility decisions
+- Changelog finalization
 
-The six Cloud Services exclusions also remove public APIs from
-`Azure.ResourceManager.Network`. Regenerating the management SDK initially
-reported 17 unique `CP0002` removals:
-
-- 14 deprecated Cloud Services extension and mockable-resource-group methods
-- Two legacy `BastionHostResource.Update` overloads accepting
-  `NetworkTagsObject`
-- The legacy `HubVirtualNetworkConnectionData.EnableOnlyIPv6Peering` property
-
-The removed APIs are restored in per-type customization files and marked with
-both `[EditorBrowsable(EditorBrowsableState.Never)]` and `[Obsolete]`. Deprecated
-Cloud Services operations use the package's existing unsupported compatibility
-shim pattern and throw `NotSupportedException`.
-
-The current service model represents `enableOnlyIPv6Peering` as a Boolean. A
-C#-only `@@clientName` customization emits the new property as
-`EnableOnlyIPv6PeeringValue`, allowing the old enum-typed property to remain as
-an obsolete adapter without changing the wire name.
-
-After these changes, the normal `Azure.ResourceManager.Network` build and
-ApiCompat checks succeed for `netstandard2.0`, `net8.0`, and `net10.0`. The
-service-scoped API export also succeeds for both Network packages.
+The current CI failures on the SDK PR are consistent with this unfinished
+compatibility phase; the migration should not be treated as release-ready until
+ApiCompat and the affected tests pass normally.
