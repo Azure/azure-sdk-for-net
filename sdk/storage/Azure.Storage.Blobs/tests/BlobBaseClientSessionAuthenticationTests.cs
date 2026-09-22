@@ -37,7 +37,6 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -111,7 +110,6 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
 
@@ -211,7 +209,6 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -441,7 +438,6 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -521,7 +517,6 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -574,7 +569,6 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -608,7 +602,6 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -653,7 +646,6 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -704,14 +696,15 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
 
-            // Arrange — upload a blob large enough to force multiple parallel range GETs
-            var data = GetRandomBuffer(10 * Constants.KB);
+            const int blobSize = 10 * Constants.KB;
+            const int chunkSize = Constants.KB;
+            const int expectedGetBlobCount = blobSize / chunkSize;
+            var data = GetRandomBuffer(blobSize);
             BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
             using (var stream = new MemoryStream(data))
             {
@@ -727,8 +720,8 @@ namespace Azure.Storage.Blobs.Test
                 {
                     TransferOptions = new StorageTransferOptions
                     {
-                        InitialTransferLength = Constants.KB,
-                        MaximumTransferLength = Constants.KB,
+                        InitialTransferLength = chunkSize,
+                        MaximumTransferLength = chunkSize,
                         MaximumConcurrency = 4
                     }
                 });
@@ -739,7 +732,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Assert — verify that Create Session was called and all parallel GET requests used Session auth
             Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected create session request to be called");
-            Assert.IsTrue(countingPolicy.GetSessionAuthCount > 1, "Expected multiple parallel download requests to use Session authorization");
+            Assert.AreEqual(expectedGetBlobCount, countingPolicy.GetSessionAuthCount, "Expected every parallel download request to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected no GET blob requests to fall back to Bearer authorization");
         }
 
@@ -754,7 +747,6 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -830,7 +822,6 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -1040,7 +1031,6 @@ namespace Azure.Storage.Blobs.Test
                     options.SessionOptions = new SessionOptions()
                     {
                         SessionMode = SessionMode.Enabled,
-                        AccountName = Tenants.TestConfigOAuth.AccountName,
                         SessionProvider = sharedProvider,
                     };
                     options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
@@ -1124,7 +1114,6 @@ namespace Azure.Storage.Blobs.Test
                 options.SessionOptions = new SessionOptions()
                 {
                     SessionMode = SessionMode.Enabled,
-                    AccountName = Tenants.TestConfigOAuth.AccountName,
                     SessionProvider = sharedProvider,
                 };
                 options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
@@ -1179,7 +1168,10 @@ namespace Azure.Storage.Blobs.Test
             // options below force the download into multiple parallel range GETs. Distinct
             // blobs prove the cached session is scoped to the container rather than to any
             // single blob.
-            var data = GetRandomBuffer(10 * Constants.KB);
+            const int blobSize = 10 * Constants.KB;
+            const int chunkSize = Constants.KB;
+            const int expectedGetBlobCountPerBlob = blobSize / chunkSize;
+            var data = GetRandomBuffer(blobSize);
             List<BlockBlobClient> blobs = new List<BlockBlobClient>(4);
             foreach (DisposingContainer test in new[] { testA, testB })
             {
@@ -1195,7 +1187,6 @@ namespace Azure.Storage.Blobs.Test
                     options.SessionOptions = new SessionOptions()
                     {
                         SessionMode = SessionMode.Enabled,
-                        AccountName = Tenants.TestConfigOAuth.AccountName,
                         SessionProvider = sharedProvider,
                     };
                     options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
@@ -1220,8 +1211,8 @@ namespace Azure.Storage.Blobs.Test
                     {
                         TransferOptions = new StorageTransferOptions
                         {
-                            InitialTransferLength = Constants.KB,
-                            MaximumTransferLength = Constants.KB,
+                            InitialTransferLength = chunkSize,
+                            MaximumTransferLength = chunkSize,
                             MaximumConcurrency = 4
                         }
                     }));
@@ -1240,8 +1231,8 @@ namespace Azure.Storage.Blobs.Test
             // container, despite four independent clients and many parallel range GETs.
             Assert.AreEqual(2, countingPolicy.CreateSessionCount,
                 "A shared provider should mint exactly one session per container, even when concurrent partitioned downloads race a cold cache");
-            Assert.IsTrue(countingPolicy.GetSessionAuthCount > blobs.Count,
-                "Expected each download to fan out into multiple range GET requests using Session authorization");
+            Assert.AreEqual(expectedGetBlobCountPerBlob * blobs.Count, countingPolicy.GetSessionAuthCount,
+                "Expected every range GET request from each partitioned download to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount,
                 "Expected no GET blob requests to fall back to Bearer authorization");
 

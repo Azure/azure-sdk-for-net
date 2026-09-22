@@ -268,7 +268,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             options.SessionOptions = new SessionOptions
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = TestConfigHierarchicalNamespace.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
 
@@ -666,7 +665,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             options.SessionOptions = new SessionOptions
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = TestConfigHierarchicalNamespace.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
 
@@ -753,7 +751,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             options.SessionOptions = new SessionOptions
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = TestConfigHierarchicalNamespace.AccountName,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
 
