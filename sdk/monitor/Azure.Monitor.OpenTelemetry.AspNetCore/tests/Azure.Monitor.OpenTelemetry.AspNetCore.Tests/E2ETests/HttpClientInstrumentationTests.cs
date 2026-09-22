@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
@@ -13,6 +14,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Instrumentation.Http;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Tests;
 using OpenTelemetry.Trace;
@@ -23,6 +25,140 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
     [Collection("InstrumentationLibraries")]
     public class HttpClientInstrumentationTests
     {
+#if NET8_0_OR_GREATER
+        [Theory]
+        [InlineData("default", false)]
+        [InlineData("one", false)]
+        [InlineData("one", true)]
+        [InlineData("all", false)]
+        [InlineData("all", true)]
+        [InlineData("drop", false)]
+        [InlineData("drop", true)]
+        [InlineData("customize", false)]
+        [InlineData("customize", true)]
+        public void HttpClientMetricsRespectCustomerViews(string configuration, bool configureBeforeDistro)
+        {
+            var connectionString = $"InstrumentationKey=unitTest-{nameof(HttpClientMetricsRespectCustomerViews)}-{configuration}-{configureBeforeDistro}";
+            Exporter.Internals.TransmitterFactory.Instance.Set(connectionString,
+                new Exporter.Tests.CommonTestFramework.MockTransmitter(new List<TelemetryItem>()));
+            var services = new ServiceCollection();
+            var exportedMetrics = new List<Metric>();
+            Action<MeterProviderBuilder> configureMetrics = metrics => metrics.AddView(instrument =>
+            {
+                if (instrument.Meter.Name != "System.Net.Http")
+                {
+                    return null;
+                }
+
+                if (configuration == "all" || (configuration == "one" && instrument.Name == "http.client.open_connections"))
+                {
+                    return new MetricStreamConfiguration();
+                }
+
+                if (instrument.Name == "http.client.request.duration")
+                {
+                    if (configuration == "drop")
+                    {
+                        return MetricStreamConfiguration.Drop;
+                    }
+
+                    if (configuration == "customize")
+                    {
+                        return new ExplicitBucketHistogramConfiguration
+                        {
+                            Name = "custom.duration",
+                            Boundaries = new[] { 0.05, 0.5 },
+                            TagKeys = new[] { "kept" },
+                        };
+                    }
+                }
+
+                return null;
+            });
+
+            if (configureBeforeDistro)
+            {
+                services.ConfigureOpenTelemetryMeterProvider(configureMetrics);
+            }
+
+            services.AddOpenTelemetry()
+                .UseAzureMonitor(options =>
+                {
+                    options.ConnectionString = connectionString;
+                    options.EnableLiveMetrics = false;
+                })
+                .WithMetrics(metrics => metrics
+                    .SetResourceBuilder(ResourceBuilder.CreateEmpty())
+                    .AddMeter("HttpClientMetrics.Tests", "System.Net.NameResolution")
+                    .AddInMemoryExporter(exportedMetrics));
+
+            if (!configureBeforeDistro)
+            {
+                services.ConfigureOpenTelemetryMeterProvider(configureMetrics);
+            }
+
+            using var serviceProvider = services.BuildServiceProvider();
+            var meterProvider = serviceProvider.GetRequiredService<MeterProvider>();
+            using var meter = new Meter("System.Net.Http", "HttpClientMetrics.Tests");
+            meter.CreateHistogram<double>("http.client.request.duration", "s").Record(
+                0.1, new KeyValuePair<string, object?>("kept", "value"), new KeyValuePair<string, object?>("removed", "value"));
+            foreach (var name in new[]
+            {
+                "http.client.active_requests",
+                "http.client.open_connections",
+                "http.client.connection.duration",
+                "http.client.request.time_in_queue",
+                "http.client.future_metric",
+            })
+            {
+                if (name == "http.client.active_requests" || name == "http.client.open_connections")
+                {
+                    meter.CreateUpDownCounter<long>(name).Add(1);
+                }
+                else
+                {
+                    meter.CreateHistogram<double>(name).Record(1);
+                }
+            }
+
+            using var customMeter = new Meter("HttpClientMetrics.Tests");
+            using var serverMeter = new Meter("Microsoft.AspNetCore.Hosting", "HttpClientMetrics.Tests");
+            using var dnsMeter = new Meter("System.Net.NameResolution", "HttpClientMetrics.Tests");
+            customMeter.CreateCounter<long>("http.client.open_connections").Add(1);
+            serverMeter.CreateUpDownCounter<long>("http.server.active_requests").Add(1);
+            dnsMeter.CreateHistogram<double>("dns.lookup.duration").Record(0.1);
+
+            meterProvider.ForceFlush();
+            var httpMetrics = exportedMetrics.Where(metric => metric.MeterName == meter.Name && metric.MeterVersion == meter.Version).ToList();
+            Assert.Equal(configuration == "all" ? 6 : configuration == "one" ? 2 : configuration == "drop" ? 0 : 1, httpMetrics.Count);
+            if (configuration != "drop")
+            {
+                var durationMetric = Assert.Single(httpMetrics, metric => metric.Name == (configuration == "customize" ? "custom.duration" : "http.client.request.duration"));
+                Assert.Equal("s", durationMetric.Unit);
+                foreach (ref readonly var point in durationMetric.GetMetricPoints())
+                {
+                    Assert.Equal(1, point.GetHistogramCount());
+                    Assert.Equal(0.1, point.GetHistogramSum());
+                    if (configuration == "customize")
+                    {
+                        Assert.Equal(1, point.Tags.Count);
+                        var bounds = new List<double>();
+                        foreach (var bucket in point.GetHistogramBuckets())
+                        {
+                            bounds.Add(bucket.ExplicitBound);
+                        }
+
+                        Assert.Equal(new[] { 0.05, 0.5, double.PositiveInfinity }, bounds);
+                    }
+                }
+            }
+
+            Assert.Contains(exportedMetrics, metric => metric.MeterName == customMeter.Name);
+            Assert.Contains(exportedMetrics, metric => metric.MeterName == serverMeter.Name);
+            Assert.Contains(exportedMetrics, metric => metric.MeterName == dnsMeter.Name);
+        }
+#endif
+
         [Theory]
         [InlineData(null, 200)]
         [InlineData("?key=value", 200)]
@@ -55,6 +191,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 
             // SETUP OPENTELEMETRY WITH AZURE MONITOR DISTRO
             var activities = new List<Activity>();
+            var metrics = new List<Metric>();
             var serviceCollection = new ServiceCollection();
 
             serviceCollection.AddOpenTelemetry()
@@ -65,6 +202,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                     x.TracesPerSecond = null; // Disable rate limited sampler
                 })
                 .WithTracing(x => x.AddInMemoryExporter(activities))
+                .WithMetrics(builder => builder.AddInMemoryExporter(metrics))
                 // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
                 .ConfigureResource(x => x.AddAttributes(SharedTestVars.TestResourceAttributes));
             serviceCollection.Configure<HttpClientTraceInstrumentationOptions>(options =>
@@ -115,10 +253,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             }
 
             // SHUTDOWN
+            serviceProvider.GetRequiredService<MeterProvider>().ForceFlush();
             tracerProvider.ForceFlush();
             tracerProvider.Shutdown();
 
             // ASSERT
+            var httpMetrics = metrics.Where(metric => metric.Name.StartsWith("http.client.", StringComparison.Ordinal)).ToList();
+            Assert.NotEmpty(httpMetrics);
+            Assert.All(httpMetrics, metric => Assert.Equal("http.client.request.duration", metric.Name));
             WaitForActivityExport(telemetryItems, x => x.Name == "RemoteDependency");
             var activity = activities.Single();
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
