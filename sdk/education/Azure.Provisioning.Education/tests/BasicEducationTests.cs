@@ -41,6 +41,7 @@ public class BasicEducationTests
     }
 
     [Test]
+    [Description("https://learn.microsoft.com/rest/api/education/labs/create-or-update?view=rest-education-2021-12-01-preview")]
     public async Task CreateEducationLab()
     {
         await using Trycep test = CreateEducationLabTest();
