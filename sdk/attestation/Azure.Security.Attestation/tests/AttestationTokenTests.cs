@@ -133,8 +133,8 @@ namespace Azure.Security.Attestation.Tests
         [RecordedTest]
         public async Task ParseTokenWithFloatingPointDateClaims()
         {
-            // MAA emits exp/nbf/iat as whole-second integers, but RFC 7519 NumericDate permits
-            // non-integer values, so these claims are modelled as double and must not truncate.
+            // MAA serializes exp/nbf/iat in decimal notation ("1617920651.0"), which long cannot parse,
+            // and RFC 7519 NumericDate permits genuinely fractional values. Hence double, without truncation.
             long whole = DateTimeOffset.Now.AddSeconds(60).ToUnixTimeSeconds();
             string body = FormattableString.Invariant($"{{\"exp\":{whole}.0,\"nbf\":{whole}.0,\"iat\":{whole}.5}}");
 
