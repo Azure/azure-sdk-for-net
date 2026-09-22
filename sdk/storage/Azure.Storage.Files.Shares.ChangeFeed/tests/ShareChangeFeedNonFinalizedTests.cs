@@ -56,6 +56,66 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         [Test]
+        public void BuildOuterToken_IncludeNonFinalizedEventsTrue_SuppressesTokenWithResetState()
+        {
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>();
+            containerClient.Setup(c => c.Uri).Returns(new Uri("https://account.blob.core.windows.net/$fileschangefeed-testguid"));
+
+            string token = ShareChangeFeedPageable.BuildOuterToken(
+                containerClient.Object,
+                innerCursor: null,
+                lastSeenResetId: Guid.NewGuid(),
+                lastSeenResetFileTime: 1,
+                rangeStart: null,
+                rangeEnd: null,
+                isBatched: false,
+                includeNonFinalizedEvents: true);
+
+            string asyncToken = ShareChangeFeedAsyncPageable.BuildOuterToken(
+                containerClient.Object,
+                innerCursor: null,
+                lastSeenResetId: Guid.NewGuid(),
+                lastSeenResetFileTime: 1,
+                rangeStart: null,
+                rangeEnd: null,
+                isBatched: false,
+                includeNonFinalizedEvents: true);
+
+            Assert.IsNull(token);
+            Assert.IsNull(asyncToken);
+        }
+
+        [Test]
+        public void BuildOuterToken_IncludeNonFinalizedEventsFalse_PreservesTokenWithResetState()
+        {
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>();
+            containerClient.Setup(c => c.Uri).Returns(new Uri("https://account.blob.core.windows.net/$fileschangefeed-testguid"));
+
+            string token = ShareChangeFeedPageable.BuildOuterToken(
+                containerClient.Object,
+                innerCursor: null,
+                lastSeenResetId: Guid.NewGuid(),
+                lastSeenResetFileTime: 1,
+                rangeStart: null,
+                rangeEnd: null,
+                isBatched: false,
+                includeNonFinalizedEvents: false);
+
+            string asyncToken = ShareChangeFeedAsyncPageable.BuildOuterToken(
+                containerClient.Object,
+                innerCursor: null,
+                lastSeenResetId: Guid.NewGuid(),
+                lastSeenResetFileTime: 1,
+                rangeStart: null,
+                rangeEnd: null,
+                isBatched: false,
+                includeNonFinalizedEvents: false);
+
+            Assert.IsNotNull(token);
+            Assert.IsNotNull(asyncToken);
+        }
+
+        [Test]
         public async Task BuildChangeFeed_IncludeNonFinalizedEventsTrue_ReturnsSegmentsPastLastConsumable()
         {
             Mock<SegmentFactoryBase<ShareChangeFeedEvent>> segmentFactory = SetupRecordingSegmentFactory();
