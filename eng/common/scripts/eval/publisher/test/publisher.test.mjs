@@ -240,3 +240,26 @@ test("pipeline keeps publication opt-in, blocks PR credentials and shares the re
     assert.match(summary, /condition: always\(\)/);
     assert.doesNotMatch(workflow + steps + archetype, /githubenterprise|msft\.ghe\.com|dashboardRepositoryServiceConnection/);
 });
+
+test("Azure Storage egress requires explicit opt-in and publication on a trusted internal run", async () => {
+    const root = resolve(import.meta.dirname, "../../../..");
+    const workflow = await readFile(join(root, "pipelines/workflow-eval.yml"), "utf8");
+    const archetype = await readFile(join(root, "pipelines/templates/stages/archetype-eval.yml"), "utf8");
+    for (const content of [workflow, archetype]) {
+        assert.match(content, /- name: allowAzureStorageNetworkAccess\n(?:    [^\n]*\n)*?    type: boolean\n    default: false/);
+    }
+    assert.match(workflow, /allowAzureStorageNetworkAccess: \$\{\{ parameters.allowAzureStorageNetworkAccess \}\}/);
+    assert.match(archetype, /\$\{\{ if and\(parameters.allowAzureStorageNetworkAccess, parameters.publishDashboardResults, eq\(variables\['System.TeamProject'\], 'internal'\), ne\(variables\['Build.Reason'\], 'PullRequest'\), not\(startsWith\(variables\['Build.SourceBranch'\], 'refs\/pull\/'\)\)\) \}\}:\s+AllowAzureStorage: true/);
+    assert.equal((archetype.match(/AllowAzureStorage:/g) ?? []).length, 1, "No unconditional parameter forwarded to synced consumers");
+});
+
+test("opted-in redirect retains enforced Default Deny/CFS and preserves other pipeline defaults", async () => {
+    const root = resolve(import.meta.dirname, "../../../..");
+    const redirect = await readFile(join(root, "../pipelines/templates/stages/1es-redirect.yml"), "utf8");
+    assert.match(redirect, /- name: AllowAzureStorage\n(?:  [^\n]*\n)*?  type: boolean\n  default: false/);
+    const guarded = redirect.match(/\$\{\{ if and\(parameters.AllowAzureStorage, parameters.Use1ESOfficial, eq\(variables\['System.TeamProject'\], 'internal'\), ne\(variables\['Build.Reason'\], 'PullRequest'\), not\(startsWith\(variables\['Build.SourceBranch'\], 'refs\/pull\/'\)\)\) \}\}:([\s\S]*?)\$\{\{ elseif/);
+    assert.ok(guarded, "Storage egress must be guarded independently by the redirect");
+    assert.match(guarded[1], /networkIsolationPolicy: DefaultDeny, CFSClean, CFSClean2, CFSClean3, AzureStorage/);
+    assert.doesNotMatch(guarded[1], /Permissive|networkIsolationAdditionalDomainAllowList/);
+    assert.match(redirect, /elseif eq\(variables\['Build.DefinitionName'\], 'net - partner-release'\) \}\}:\s+networkIsolationPolicy: Permissive\s+\$\{\{ else \}\}:\s+networkIsolationPolicy: Permissive, CFSClean/);
+});
