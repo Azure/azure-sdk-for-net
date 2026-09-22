@@ -5,6 +5,7 @@
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    // TODO: Remove this workaround when https://github.com/Azure/azure-sdk-for-net/issues/63264 is fixed.
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("CosmosCassandraDataTransferDataSourceSink", typeof(string), typeof(string))]
     public partial class CosmosCassandraDataTransferDataSourceSink
     {
