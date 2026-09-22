@@ -5,6 +5,16 @@ Azure Blob. It does not contain Vally CLI, the dashboard server, SQLite, MCP or 
 LLM client. The evaluator stays in the parent package; only the Summary job
 restores these separately locked dependencies when bundle creation is enabled.
 
+| Source | Responsibility |
+| --- | --- |
+| [prepare-bundle.mjs](prepare-bundle.mjs), [bundle.mjs](bundle.mjs) | Validate selected attempts and prepare the saved schema-v1 archive |
+| [publish-bundle.mjs](publish-bundle.mjs), [storage.mjs](storage.mjs) | Authenticate the pipeline and publish the exact saved bytes with create-only retries |
+| [notification.mjs](notification.mjs) | Optional authenticated signal to the reviewed dashboard destination |
+| [diagnostics.mjs](diagnostics.mjs) | Bounded error reporting without credentials or result contents |
+
+The separate dashboard owns read-only import, cache, UI and deployment. Its
+local demo helpers are not an alternative production publisher.
+
 ## Flow and contract
 
 1. Every shard retains its newest invocation's raw JSONL, JUnit and a schema-v1
@@ -24,6 +34,9 @@ restores these separately locked dependencies when bundle creation is enabled.
 5. Immutable Blob metadata is `schema: "1"`, `sha256`, `publisher` (SHA-256 of
    tenant ID and principal object ID), and `storedat`. These are integrity and
    provenance fields, not cryptographic attestation. Azure RBAC authorizes writes.
+
+Manifest identity strings must be trimmed. Padding is rejected before storage
+because the reader canonicalizes those fields when checking the archive name.
 
 The format matches the storage-first dashboard's schema-v1 reader. Archive and
 expanded data limits are 32 MiB / 128 MiB, with at most 10,000 ZIP entries and
@@ -181,7 +194,7 @@ The publisher's dependency lock is separate from the evaluator lock, and the
 Summary restore uses the authenticated Azure SDK npm mirror. Do not place keys,
 tokens, local archives, database files, or external dashboard source in this package.
 
-## Diagnosing a failed pilot
+## Diagnosing a failed publication
 
 The result artifact records a bounded failure `operation`, `errorCode` and HTTP
 status when available. Raw Azure SDK exceptions, requests, headers and tokens are
