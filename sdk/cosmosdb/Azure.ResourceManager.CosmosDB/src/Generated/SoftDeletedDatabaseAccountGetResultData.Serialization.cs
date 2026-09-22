@@ -17,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> An Azure Cosmos DB soft-deleted database account. </summary>
+    /// <summary> A Azure Cosmos DB soft-deleted database account. </summary>
     public partial class SoftDeletedDatabaseAccountGetResultData : ResourceData, IJsonModel<SoftDeletedDatabaseAccountGetResultData>
     {
         /// <param name="data"> The data to parse. </param>
