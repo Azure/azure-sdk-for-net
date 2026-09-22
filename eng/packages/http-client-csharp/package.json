@@ -74,7 +74,7 @@
     "rimraf": "~6.1.3",
     "typescript": "~6.0.3",
     "typescript-eslint": "^7.8.0",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.11"
   },
   "azure-sdk/emitter-package-json-pinning": [
     "@azure-tools/typespec-azure-core",
