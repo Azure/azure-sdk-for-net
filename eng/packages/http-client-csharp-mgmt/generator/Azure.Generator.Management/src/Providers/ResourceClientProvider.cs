@@ -554,7 +554,8 @@ namespace Azure.Generator.Management.Providers
                 {
                     // PUT-based tag helpers pass the fetched resource data directly to the update method.
                     // A separate request model cannot be populated safely because its wire shape may differ.
-                    if (!isPatch && !parameter.Type.Equals(ResourceData.Type))
+                    // Ignore nullability because an optional PUT body can still use the resource data model.
+                    if (!isPatch && !IsResourceDataType(parameter.Type.WithNullable(false)))
                     {
                         return false;
                     }

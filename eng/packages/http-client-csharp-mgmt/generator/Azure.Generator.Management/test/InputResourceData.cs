@@ -396,7 +396,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// by the categorization fallback, and tag methods SHOULD be generated using PUT.
         /// This mirrors real SDK resources like CosmosDB CassandraKeyspaceResource.
         /// </summary>
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourceNoPatchOnlyPut(bool useSeparatePutBody = false)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResourceNoPatchOnlyPut(bool useSeparatePutBody = false, bool isPutBodyRequired = true)
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -424,14 +424,14 @@ namespace Azure.Generator.Management.Tests.Common
             var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
             var rgOpParameter = InputFactory.PathParameter("resourceGroupName", InputPrimitiveType.String, isRequired: true);
             var testNameOpParameter = InputFactory.PathParameter("testName", InputPrimitiveType.String, isRequired: true);
-            var dataOpParameter = InputFactory.BodyParameter("data", putBodyModel, isRequired: true);
+            var dataOpParameter = InputFactory.BodyParameter("data", putBodyModel, isRequired: isPutBodyRequired);
             var getOperation = InputFactory.Operation(name: "get", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}");
             // PUT operation WITH body parameter — no PATCH at all
             var createOperation = InputFactory.Operation(name: "createTest", responses: [responseType], parameters: [subsIdOpParameter, rgOpParameter, testNameOpParameter, dataOpParameter], path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Tests/tests/{testName}", httpMethod: "PUT");
             var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
             var resourceGroupParameter = InputFactory.MethodParameter("resourceGroupName", InputPrimitiveType.String, location: InputRequestLocation.Path);
             var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
-            var dataParameter = InputFactory.MethodParameter("data", putBodyModel, location: InputRequestLocation.Body, isRequired: true);
+            var dataParameter = InputFactory.MethodParameter("data", putBodyModel, location: InputRequestLocation.Body, isRequired: isPutBodyRequired);
             var getMethod = InputFactory.BasicServiceMethod("get", getOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
             var createMethod = InputFactory.BasicServiceMethod("createTest", createOperation, parameters: [testNameParameter, subscriptionIdParameter, resourceGroupParameter, dataParameter], crossLanguageDefinitionId: Guid.NewGuid().ToString());
 
