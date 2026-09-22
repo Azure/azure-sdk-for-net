@@ -1407,11 +1407,11 @@ namespace Azure.ResourceManager.Quota.Models
     }
     public partial class QuotaTransferProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferProperties>
     {
-        public QuotaTransferProperties(string displayName, string destinationSubscriptionId, string billingAccountId, string resourceName, long amount) { }
+        public QuotaTransferProperties(string displayName, string destinationSubscriptionId, string resourceName, long amount) { }
         public long Amount { get { throw null; } set { } }
         public Azure.ResourceManager.Quota.Models.ApprovalRecord Approval { get { throw null; } }
         public bool? AutoApprove { get { throw null; } set { } }
-        public string BillingAccountId { get { throw null; } set { } }
+        public string BillingAccountId { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.CancellationRecord Cancellation { get { throw null; } }
         public string Comment { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } }

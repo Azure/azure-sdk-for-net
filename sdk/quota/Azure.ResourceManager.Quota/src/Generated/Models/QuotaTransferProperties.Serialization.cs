@@ -108,8 +108,11 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WritePropertyName("destinationTenantId"u8);
                 writer.WriteStringValue(DestinationTenantId);
             }
-            writer.WritePropertyName("billingAccountId"u8);
-            writer.WriteStringValue(BillingAccountId);
+            if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
+            {
+                writer.WritePropertyName("billingAccountId"u8);
+                writer.WriteStringValue(BillingAccountId);
+            }
             writer.WritePropertyName("resourceName"u8);
             writer.WriteStringValue(ResourceName);
             writer.WritePropertyName("amount"u8);

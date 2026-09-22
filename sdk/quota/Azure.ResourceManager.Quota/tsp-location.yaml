@@ -1,5 +1,5 @@
 directory: specification/quota/resource-manager/Microsoft.Quota/Quota
-commit: 9fc594b02872a9fce4e4852dc831c155320022f1
+commit: 35b6e5452f7b95aa8b5f15f2d92a2466bae87042
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

@@ -20,23 +20,20 @@ namespace Azure.ResourceManager.Quota.Models
         /// <summary> Initializes a new instance of <see cref="QuotaTransferProperties"/>. </summary>
         /// <param name="displayName"> Human-friendly label surfaced on customer GET responses and recipient inbox listings. </param>
         /// <param name="destinationSubscriptionId"> Recipient subscription id. Must differ from the donor subscription. </param>
-        /// <param name="billingAccountId"> Billing account id both donor and recipient subscriptions must roll up to. </param>
         /// <param name="resourceName">
         /// The quota dimension being moved, scoped by the URI's target provider
         /// (for example, `standardDv5Family` under Microsoft.Compute).
         /// </param>
         /// <param name="amount"> Amount to transfer in the resource's native unit (e.g. vCPU count). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="destinationSubscriptionId"/>, <paramref name="billingAccountId"/> or <paramref name="resourceName"/> is null. </exception>
-        public QuotaTransferProperties(string displayName, string destinationSubscriptionId, string billingAccountId, string resourceName, long amount)
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="destinationSubscriptionId"/> or <paramref name="resourceName"/> is null. </exception>
+        public QuotaTransferProperties(string displayName, string destinationSubscriptionId, string resourceName, long amount)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(destinationSubscriptionId, nameof(destinationSubscriptionId));
-            Argument.AssertNotNull(billingAccountId, nameof(billingAccountId));
             Argument.AssertNotNull(resourceName, nameof(resourceName));
 
             DisplayName = displayName;
             DestinationSubscriptionId = destinationSubscriptionId;
-            BillingAccountId = billingAccountId;
             ResourceName = resourceName;
             Amount = amount;
         }
@@ -131,7 +128,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Billing account id both donor and recipient subscriptions must roll up to. </summary>
         [WirePath("billingAccountId")]
-        public string BillingAccountId { get; set; }
+        public string BillingAccountId { get; }
 
         /// <summary>
         /// The quota dimension being moved, scoped by the URI's target provider
