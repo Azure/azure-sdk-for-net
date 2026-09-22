@@ -56,10 +56,9 @@ export function pipelineManifest(env, now = new Date()) {
     const url = new URL(env.SYSTEM_COLLECTIONURI);
     requireValue(url.protocol === "https:" && url.hostname === "dev.azure.com" && !url.username && !url.password &&
         !url.port && !url.search && !url.hash && /^\/[a-z0-9][a-z0-9-]{0,99}\/?$/i.test(url.pathname), "Expected an Azure DevOps organization URL.");
-    const smoke = env.EVAL_PUBLISH_SMOKE_TEST?.toLowerCase() === "true";
     return validateManifest({ schemaVersion: 1, adoOrganization: url.pathname.split("/")[1].toLowerCase(),
         adoProject: env.SYSTEM_TEAMPROJECT, repo: env.BUILD_REPOSITORY_NAME,
-        pipeline: `${env.BUILD_DEFINITIONNAME}${smoke ? " [synthetic storage smoke]" : ""}`,
+        pipeline: env.BUILD_DEFINITIONNAME,
         pipelineDefinitionId: env.SYSTEM_DEFINITIONID, buildId: env.BUILD_BUILDID,
         summaryAttempt: Number(env.SYSTEM_JOBATTEMPT), branch: env.BUILD_SOURCEBRANCH,
         sourceVersion: env.BUILD_SOURCEVERSION, runTimestamp: now.toISOString() });

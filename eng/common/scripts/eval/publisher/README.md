@@ -93,39 +93,9 @@ approval for that scope; a central custom endpoint/process rule remains the
 narrower alternative. Policy changes may create an SFI item per the 1ES guide.
 Do not use `networkIsolationAdditionalDomainAllowList`: that is Agency-only.
 
-The first two synthetic pilots failed because the agent blocked the Node Blob
-connection before any HTTP response. Selecting this documented policy is an
-explicit configuration change, not a retry through another identity or network.
-Verify the effective policy list and upload result in the next approved run.
-
-### Manual no-LLM smoke test for workflow pipeline 8255
-
-After the draft branch is pushed, open the existing workflow pipeline and select
-**Run pipeline**. Select the PR's source branch and use:
-
-| Parameter | Pilot value |
-| --- | --- |
-| `storageSmokeTest` | `true` |
-| `publishDashboardResults` | `true` |
-| `allowAzureStorageNetworkAccess` | `true`, after approving the service-level scope above |
-| `storageServiceConnection` | `eval-dashboard-sc` |
-| `storageContainerUrl` | `https://evaltestsummary.blob.core.windows.net/vally-results` |
-| `notifyDashboard` | `false` |
-
-The smoke path is manual-only. It skips MCP building, evaluator installation,
-eval/model credentials and all model calls. Two explicitly synthetic shards use
-the real shared staging and Summary path. Intentionally failing synthetic trial
-records prove that complete failed evaluations are still packaged; workflow is
-report-only, so their score is not a pipeline gate. The manifest pipeline name
-is suffixed with `[synthetic storage smoke]`; it is never real evaluation history.
-
-The job runs local unit tests, uploads one ZIP using the actual service
-connection, and repeats the upload of the exact same bytes to verify idempotency
-without creating another archive. Check the Summary artifact's
-`storage-publication-result.json`: `status: "stored"`, `retryVerified: true`,
-`notification.status: "not_requested"`. The ZIP and result are retained even if
-a later task fails. The smoke archive remains for inspection; no automatic
-deletion or retention permission is granted to the dashboard.
+Selecting this documented policy is an explicit configuration change, not a
+retry through another identity or network. Verify the effective policy list
+and upload result when onboarding a consumer.
 
 ### Real workflow, skill and live evaluations
 
@@ -142,10 +112,9 @@ results separate; no second dashboard or staging container is required.
 For each deliberate real run, select the feature branch containing the publisher
 and set `publishDashboardResults=true`, `allowAzureStorageNetworkAccess=true`,
 and `notifyDashboard=false`. The default service connection/container above are
-shared. In the workflow entrypoint, keep `storageSmokeTest=false`; skill and live
-do not expose a synthetic mode. These runs execute the existing full eval matrix
-and consume model quota. Workflow and skill use their mock MCP environments but
-still evaluate real model responses, not generated storage-smoke records.
+shared. All entrypoints execute the existing full eval matrix and consume model
+quota. Workflow and skill use their mock MCP environments but still evaluate
+real model responses. Synthetic fixtures are confined to local unit tests.
 
 The live tier retains `UseAzSdkAuthentication=true`, the existing
 `opensource-api-connection` for live MCP calls, `AZSDKTOOLS_AGENT_TESTING=true`,
@@ -161,7 +130,7 @@ template, which defaults off unless called explicitly. Automatic publication
 requires all of the following: organization URL `https://dev.azure.com/azure-sdk/`,
 project `internal`, repository `Azure/azure-sdk-tools`, the entrypoint's exact
 definition ID (8255, 8256 or 8246), branch `refs/heads/main`, and a normal CI,
-scheduled or manual reason. Workflow synthetic smoke mode never auto-publishes.
+scheduled or manual reason.
 
 Both publication and the documented AzureStorage egress policy are selected for
 that scope. Notifications stay off. To disable a production run's publication,
@@ -195,8 +164,10 @@ settings.
 From this directory, run `npm ci --ignore-scripts` followed by `npm test`
 (`npm.cmd` on Windows). Tests use temporary synthetic artifacts and a fake Blob
 client; they do not contact Azure or call an evaluator. The full shared-script
-suite remains `npm test` from the parent directory. A real service-connection
-upload is validated only by the explicitly approved pipeline smoke run above.
+suite remains `npm test` from the parent directory. End-to-end service-connection
+validation uses the real evaluation pipelines; no extra verification upload is
+performed during normal publication. Exact-byte retry/idempotency coverage is
+retained in local tests.
 
 The publisher's dependency lock is separate from the evaluator lock, and the
 Summary restore uses the authenticated Azure SDK npm mirror. Do not place keys,
