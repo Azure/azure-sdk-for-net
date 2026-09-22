@@ -1,16 +1,19 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.8.0 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version from `2025-08-01` to `2026-06-01`. Tag details available at https://github.com/Azure/azure-rest-api-specs/tree/05b9a6fd225397fafb604d9e6882f934c65a0909/specification/storage/Storage.Management.
+    - Supported new `AdvancedPlatformMetricsRuleResource` for managing advanced platform metrics rules on storage accounts.
+    - Supported new `ContextCacheResource` and `ContextCacheContainerResource` for managing context caches and their containers.
+    - Supported new `AllowCrossTenantDelegationSas` property on storage account create/update.
+    - Supported new `RequireUserBoundUserDelegationSas` and `RequireUserBoundUserDelegationSasAction` properties on `StorageAccountSasPolicy`.
+    - Supported new `GuardrailIOScalar` and `GuardrailBandwidthScalar` properties on `FileShareLimits`.
 
 ### Bugs Fixed
 
 - Fixed `StorageAccountResourceAccessRule.TenantId` deserialization to handle empty or invalid string values returned by the service ([#59323](https://github.com/Azure/azure-sdk-for-net/issues/59323)).
-
-### Other Changes
 
 ## 1.7.0 (2026-05-22)
 
