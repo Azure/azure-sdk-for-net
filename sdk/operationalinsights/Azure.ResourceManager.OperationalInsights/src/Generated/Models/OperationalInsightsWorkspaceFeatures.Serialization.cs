@@ -7,7 +7,9 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -123,20 +125,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("dataAuthorizationMode"u8);
                 writer.WriteBooleanValue(DataAuthorizationMode.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            foreach (var item in AdditionalProperties)
             {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
+                writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+                writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
         }
 
@@ -155,6 +154,129 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOperationalInsightsWorkspaceFeatures(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? isDataExportEnabled = default;
+            bool? immediatePurgeDataOn30Days = default;
+            bool? isLogAccessUsingOnlyResourcePermissionsEnabled = default;
+            ResourceIdentifier clusterResourceId = default;
+            bool? isLocalAuthDisabled = default;
+            bool? isUnifiedSentinelBillingOnly = default;
+            IReadOnlyList<string> associations = default;
+            bool? dataAuthorizationMode = default;
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("enableDataExport"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        isDataExportEnabled = null;
+                        continue;
+                    }
+                    isDataExportEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("immediatePurgeDataOn30Days"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        immediatePurgeDataOn30Days = null;
+                        continue;
+                    }
+                    immediatePurgeDataOn30Days = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("enableLogAccessUsingOnlyResourcePermissions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        isLogAccessUsingOnlyResourcePermissionsEnabled = null;
+                        continue;
+                    }
+                    isLogAccessUsingOnlyResourcePermissionsEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("clusterResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("disableLocalAuth"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        isLocalAuthDisabled = null;
+                        continue;
+                    }
+                    isLocalAuthDisabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("unifiedSentinelBillingOnly"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        isUnifiedSentinelBillingOnly = null;
+                        continue;
+                    }
+                    isUnifiedSentinelBillingOnly = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("associations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    associations = array;
+                    continue;
+                }
+                if (prop.NameEquals("dataAuthorizationMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dataAuthorizationMode = null;
+                        continue;
+                    }
+                    dataAuthorizationMode = prop.Value.GetBoolean();
+                    continue;
+                }
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+            }
+            return new OperationalInsightsWorkspaceFeatures(
+                isDataExportEnabled,
+                immediatePurgeDataOn30Days,
+                isLogAccessUsingOnlyResourcePermissionsEnabled,
+                clusterResourceId,
+                isLocalAuthDisabled,
+                isUnifiedSentinelBillingOnly,
+                associations ?? new ChangeTrackingList<string>(),
+                dataAuthorizationMode,
+                additionalProperties);
         }
     }
 }

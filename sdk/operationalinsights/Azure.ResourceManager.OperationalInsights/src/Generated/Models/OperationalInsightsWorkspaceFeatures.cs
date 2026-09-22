@@ -79,5 +79,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Enable Data authorization mode for the workspace. </summary>
         [WirePath("dataAuthorizationMode")]
         public bool? DataAuthorizationMode { get; set; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

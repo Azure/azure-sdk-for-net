@@ -1,14 +1,14 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (2026-09-23)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded the API version to 2026-03-01.
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.62.0.
 
 - Corrected the names of Summary Logs enum types. The previous names remain available as obsolete compatibility APIs.
 
