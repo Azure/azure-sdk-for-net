@@ -304,9 +304,7 @@ namespace Azure.Generator.Tests.Visitors
                 new CSharpType(typeof(Task<>), typeof(Response)),
                 message);
             processMessage.Update(callAsAsync: true);
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             return Static(typeof(AsyncStreamingResult)).Invoke(name, new ScopedApi<Response>(processMessage));
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         private static MethodProvider CreateMethod(CSharpType returnType, params ParameterProvider[] parameters)
@@ -321,10 +319,8 @@ namespace Azure.Generator.Tests.Visitors
             return new TestMethodProvider(signature);
         }
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         private static CSharpType CreateStreamingResponseType()
             => new(typeof(System.ClientModel.AsyncStreamingResult<>), typeof(BinaryData));
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         private class TestStreamingResponseVisitor : StreamingResponseVisitor
         {

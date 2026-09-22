@@ -17,8 +17,6 @@ using Azure.Core.Pipeline;
 using BasicTypeSpec;
 using NUnit.Framework;
 
-#pragma warning disable SCME0005 // Streaming APIs are experimental.
-
 namespace TestProjects.Local.Tests
 {
     public class StreamingCancellationTests
@@ -187,5 +185,3 @@ namespace TestProjects.Local.Tests
         }
     }
 }
-
-#pragma warning restore SCME0005

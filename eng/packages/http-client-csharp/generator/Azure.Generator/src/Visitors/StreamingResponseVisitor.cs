@@ -73,7 +73,6 @@ namespace Azure.Generator.Visitors
             return base.VisitInvokeMethodExpression(expression, method);
         }
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         private static void AddOperationCancellationToken(
             InvokeMethodExpression expression,
             MethodProvider method,
@@ -105,7 +104,6 @@ namespace Azure.Generator.Visitors
             }
             arguments.Add(context.NullConditional().Property(nameof(RequestContext.CancellationToken)).NullCoalesce(Default));
         }
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         private static bool TryGetStreamingResponse(
             MethodBodyStatement statement,
@@ -130,11 +128,9 @@ namespace Azure.Generator.Visitors
             return false;
         }
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         private static bool IsStreamingResponseType(CSharpType? type)
             => UnwrapTask(type) is { IsFrameworkType: true, IsGenericType: true } streamingType &&
                streamingType.GetGenericTypeDefinition().Equals(typeof(AsyncStreamingResult<>));
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         private static bool TryFindAzureResponseMessage(
             ValueExpression expression,
