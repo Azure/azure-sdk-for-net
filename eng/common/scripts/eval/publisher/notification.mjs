@@ -1,22 +1,32 @@
 import { setTimeout as delay } from "node:timers/promises";
 import { PublicationError } from "./bundle.mjs";
 
-export function refreshUrl(value) {
+// Reviewed destination/audience pairs, not queue-time configuration. Onboarding
+// another dashboard requires a source change; arbitrary HTTPS is not trusted.
+export const DASHBOARD_NOTIFICATION_TARGET = Object.freeze({
+    origin: "https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net",
+    audience: "api://258998df-81ec-460c-bdd7-56a9bdde1e48",
+});
+
+export function refreshUrl(value, audience) {
     const url = new URL(value);
     if (url.protocol !== "https:" || url.username || url.password || url.port || url.search || url.hash || url.pathname !== "/") {
         throw new PublicationError("invalid_dashboard", "Use the dashboard HTTPS origin without paths or credentials.");
     }
+    if (url.origin !== DASHBOARD_NOTIFICATION_TARGET.origin || audience !== DASHBOARD_NOTIFICATION_TARGET.audience) {
+        throw new PublicationError("unapproved_notification_target", "The dashboard origin and audience must match a reviewed notification target.");
+    }
     return new URL("/api/refresh", url);
 }
 
-export async function notifyDashboard({ url, target, getToken, fetchImpl = fetch, wait = delay, maxAttempts = 4 }) {
-    const destination = refreshUrl(url), body = JSON.stringify(target);
+export async function notifyDashboard({ url, audience, target, getToken, fetchImpl = fetch, wait = delay, maxAttempts = 4 }) {
+    const destination = refreshUrl(url, audience), body = JSON.stringify(target);
     if (Buffer.byteLength(body) > 2048) throw new PublicationError("invalid_signal", "Refresh signal exceeds 2 KiB.");
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
         let response, permanent = false;
         try {
             response = await fetchImpl(destination, { method: "POST", redirect: "error", signal: AbortSignal.timeout(180_000),
-                headers: { "content-type": "application/json", authorization: `Bearer ${await getToken()}` }, body });
+                headers: { "content-type": "application/json", authorization: `Bearer ${await getToken(audience)}` }, body });
             if (response.status === 200) {
                 const result = await response.json();
                 if (result.status === "succeeded" && result.failureCount === 0) return result;

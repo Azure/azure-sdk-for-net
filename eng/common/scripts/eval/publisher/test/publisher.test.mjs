@@ -8,7 +8,7 @@ import { runInNewContext } from "node:vm";
 import { zipSync, strToU8 } from "fflate";
 import { blobName, boundedFile, pipelineManifest, prepareBundle, selectAttempts, sha256, validateBundle } from "../bundle.mjs";
 import { containerUrl, publisherIdentity, publishBundle } from "../storage.mjs";
-import { notifyDashboard, refreshUrl } from "../notification.mjs";
+import { DASHBOARD_NOTIFICATION_TARGET, notifyDashboard, refreshUrl } from "../notification.mjs";
 import { publicationFailure } from "../diagnostics.mjs";
 
 const manifest = { schemaVersion: 1, adoOrganization: "azure-sdk", adoProject: "internal", repo: "Azure/azure-sdk-tools",
@@ -17,6 +17,7 @@ const trial = { type: "trial-result", itemId: "synthetic", evalName: "synthetic"
 const entries = (extra = {}) => ({ "manifest.json": strToU8(JSON.stringify(manifest)), "results.jsonl": strToU8(JSON.stringify(trial)),
     "eval-summary.md": strToU8("# Synthetic test"), "junit/0.xml": strToU8('<testsuites><testsuite><testcase name="synthetic"/></testsuite></testsuites>'), ...extra });
 const zip = (extra) => zipSync(entries(extra), { mtime: new Date("2020-01-01T00:00:00Z") });
+const dashboardUrl = DASHBOARD_NOTIFICATION_TARGET.origin, dashboardAudience = DASHBOARD_NOTIFICATION_TARGET.audience;
 
 async function fixture(t) {
     const root = await mkdtemp(join(tmpdir(), "eval-publisher-"));
@@ -206,13 +207,15 @@ test("storage and notification URLs never accept embedded credentials or arbitra
     assert.equal(containerUrl("https://evaltestsummary.blob.core.windows.net/vally-results"), "https://evaltestsummary.blob.core.windows.net/vally-results");
     for (const value of ["http://evaltestsummary.blob.core.windows.net/vally-results", "https://evaltestsummary.blob.core.windows.net/vally-results?sig=secret", "https://evil.example/container", "https://user:pass@evaltestsummary.blob.core.windows.net/vally-results", "https://evaltestsummary.blob.core.windows.net/"]) assert.throws(() => containerUrl(value));
     for (const value of ["http://dashboard.example/", "https://user:pass@dashboard.example/", "https://dashboard.example/api/refresh", "https://dashboard.example/?token=secret"]) assert.throws(() => refreshUrl(value));
-    assert.equal(refreshUrl("https://dashboard.example").pathname, "/api/refresh");
+    assert.equal(refreshUrl(dashboardUrl, dashboardAudience).pathname, "/api/refresh");
     assert.throws(() => publisherIdentity("invalid"), { code: "storage_identity" });
 });
 
 test("notification retries small JSON only, honors backpressure and does not retry forbidden access", async () => {
     const calls = [], waits = [], target = { blobName: blobName(manifest), sha256: "a".repeat(64) };
-    await notifyDashboard({ url: "https://dashboard.example", target, getToken: async () => "test-token", wait: async ms => waits.push(ms), fetchImpl: async (url, init) => {
+    await notifyDashboard({ url: dashboardUrl, audience: dashboardAudience, target, getToken: async audience => {
+        assert.equal(audience, dashboardAudience); return "test-token";
+    }, wait: async ms => waits.push(ms), fetchImpl: async (url, init) => {
         calls.push(init); assert.equal(url.pathname, "/api/refresh");
         if (calls.length === 1) return new Response("", { status: 429, headers: { "retry-after": "1" } });
         return Response.json({ status: "succeeded", failureCount: 0 });
@@ -220,8 +223,51 @@ test("notification retries small JSON only, honors backpressure and does not ret
     assert.deepEqual(waits, [1000]); assert.equal(calls[0].body, calls[1].body); assert.ok(Buffer.byteLength(calls[0].body) < 2048);
     assert.equal(calls[0].headers.authorization, "Bearer test-token"); assert.equal(calls[0].redirect, "error");
     let forbidden = 0;
-    await assert.rejects(notifyDashboard({ url: "https://dashboard.example", target, getToken: async () => "test-token", wait: () => assert.fail(), fetchImpl: async () => { forbidden++; return new Response("", { status: 403 }); } }), { code: "notification_failed" });
+    await assert.rejects(notifyDashboard({ url: dashboardUrl, audience: dashboardAudience, target, getToken: async () => "test-token", wait: () => assert.fail(), fetchImpl: async () => { forbidden++; return new Response("", { status: 403 }); } }), { code: "notification_failed" });
     assert.equal(forbidden, 1);
+});
+
+test("notification origin/audience must be approved before any credential or request", async () => {
+    for (const [url, audience] of [["https://attacker.example", dashboardAudience], [dashboardUrl, "api://other"],
+        [dashboardUrl, undefined], [dashboardUrl + ".attacker.example", dashboardAudience],
+        [dashboardUrl + ":444", dashboardAudience], ["http://127.0.0.1:3201", dashboardAudience]]) {
+        let tokens = 0, requests = 0;
+        await assert.rejects(notifyDashboard({ url, audience, target: {}, wait: async () => {},
+            getToken: async () => { tokens++; return "test-token"; }, fetchImpl: async () => {
+                requests++; return Response.json({ status: "succeeded", failureCount: 0 });
+            } }), error => ["invalid_dashboard", "unapproved_notification_target"].includes(error.code));
+        assert.equal(tokens, 0, "Rejected destination cannot acquire a token");
+        assert.equal(requests, 0, "Rejected destination cannot receive a request");
+    }
+});
+
+test("real CLI rejects an unapproved notification pair before acquiring storage credentials", async (t) => {
+    const root = await mkdtemp(join(tmpdir(), "eval-notification-config-"));
+    t.after(() => rm(root, { recursive: true, force: true }));
+    const result = join(root, "result.json");
+    const env = { ...process.env, TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "Manual",
+        BUILD_SOURCEBRANCH: "refs/heads/feature", EVAL_NOTIFY_DASHBOARD: "true",
+        EVAL_STORAGE_CONTAINER_URL: "https://evaltestsummary.blob.core.windows.net/vally-results",
+        EVAL_DASHBOARD_URL: "https://attacker.example", EVAL_DASHBOARD_AUDIENCE: dashboardAudience };
+    delete env.NODE_TEST_CONTEXT;
+    const child = spawnSync(process.execPath, [resolve(import.meta.dirname, "../publish-bundle.mjs"), "--bundle", "unused.zip", "--result", result],
+        { encoding: "utf8", env, timeout: 30_000 });
+    assert.ifError(child.error); assert.equal(child.status, 1);
+    const failure = JSON.parse(await readFile(result, "utf8"));
+    assert.equal(failure.operation, "validate_configuration");
+    assert.equal(failure.errorCode, "unapproved_notification_target");
+    assert.doesNotMatch(child.stdout + child.stderr, /storage identity acquired|attacker\.example/);
+});
+
+test("publisher dependency lock is portable with public URLs and SHA512 integrity", async () => {
+    const lock = JSON.parse(await readFile(resolve(import.meta.dirname, "../package-lock.json"), "utf8"));
+    const entries = Object.entries(lock.packages).filter(([path]) => path);
+    assert.ok(entries.length > 0);
+    for (const [path, entry] of entries) {
+        const name = path.slice(path.lastIndexOf("node_modules/") + "node_modules/".length);
+        assert.equal(entry.resolved, `https://registry.npmjs.org/${name}/-/${name.split("/").at(-1)}-${entry.version}.tgz`);
+        assert.match(entry.integrity, /^sha512-[A-Za-z0-9+/]{86}==$/);
+    }
 });
 
 test("real CLI blocks PR publication before requesting a credential", () => {

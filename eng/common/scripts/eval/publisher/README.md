@@ -150,6 +150,14 @@ with an Entra application token. It saves `status: "stored"` locally before
 waiting for this request. A failed signal is a warning and does not undo or fail
 the durable archive. Retry only the signal, or use startup/manual reconciliation.
 
+The source-reviewed notification target is the exact pair
+`https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net` and
+`api://258998df-81ec-460c-bdd7-56a9bdde1e48`. Both values are checked before any
+credential acquisition or transmission. A queue-time URL, audience or redirect
+cannot authorize a different destination. Adding a destination requires a reviewed
+source change, not a second queue-time allowlist. This policy does not enable
+notifications or provision the application's authentication/role configuration.
+
 Blob permission is not notification permission. The app's expected API audience,
 `Dashboard.Refresh` application role, client-ID allowlist, reader connectivity,
 and agent-to-dashboard route must be configured separately. Preserve existing

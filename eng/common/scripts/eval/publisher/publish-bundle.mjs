@@ -21,10 +21,8 @@ try {
     const destination = containerUrl(process.env.EVAL_STORAGE_CONTAINER_URL);
     const shouldNotify = process.env.EVAL_NOTIFY_DASHBOARD?.toLowerCase() === "true";
     if (shouldNotify) {
-        refreshUrl(process.env.EVAL_DASHBOARD_URL);
-        if (!/^(api:\/\/|https:\/\/)[^\s?#]+$/.test(process.env.EVAL_DASHBOARD_AUDIENCE ?? "")) {
-            throw new PublicationError("invalid_audience", "An application audience is required for notifications.");
-        }
+        // Reject the pair before either storage or notification credentials are acquired.
+        refreshUrl(process.env.EVAL_DASHBOARD_URL, process.env.EVAL_DASHBOARD_AUDIENCE);
     }
     const credential = new AzureCliCredential({ processTimeoutInMs: 30_000 });
     operation = "acquire_storage_token";
@@ -35,8 +33,9 @@ try {
     const result = await publishBundle({ bundlePath: resolve(values.bundle), client, publisherId: identity, onStored: async result => {
         await save(result); stored = true;
     },
-        notify: shouldNotify ? target => notifyDashboard({ url: process.env.EVAL_DASHBOARD_URL, target,
-            getToken: async () => (await credential.getToken(`${process.env.EVAL_DASHBOARD_AUDIENCE.replace(/\/$/, "")}/.default`)).token }) : undefined });
+        notify: shouldNotify ? target => notifyDashboard({ url: process.env.EVAL_DASHBOARD_URL,
+            audience: process.env.EVAL_DASHBOARD_AUDIENCE, target,
+            getToken: async audience => (await credential.getToken(`${audience}/.default`)).token }) : undefined });
     await save(result);
     console.log(`Result archive stored: ${result.blobName} (duplicate: ${result.duplicate}).`);
     if (result.notification.status === "failed") console.warn("##vso[task.logissue type=warning]Blob upload succeeded; dashboard refresh failed. Retry the signal or reconcile the cache later.");
