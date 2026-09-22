@@ -4,9 +4,9 @@
     "AzureClients": {
       "type": "object",
       "properties": {
-        "AttestationClient": {
+        "AttestationServiceClient": {
           "type": "object",
-          "description": "Configuration for AttestationClient.",
+          "description": "Configuration for AttestationServiceClient.",
           "properties": {
             "Endpoint": {
               "type": "string",
@@ -17,7 +17,7 @@
               "$ref": "#/definitions/credential"
             },
             "Options": {
-              "$ref": "#/definitions/attestationClientOptions"
+              "$ref": "#/definitions/attestationServiceClientOptions"
             }
           }
         }
@@ -29,18 +29,10 @@
     }
   },
   "definitions": {
-    "attestationClientOptions": {
+    "attestationServiceClientOptions": {
       "allOf": [
         {
           "$ref": "#/definitions/azureOptions"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "TokenOptions": {
-              "type": "object"
-            }
-          }
         }
       ]
     }

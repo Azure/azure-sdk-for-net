@@ -22,7 +22,7 @@ namespace Azure.Security.Attestation
         /// </summary>
         public DateTimeOffset IssuedAt
         {
-            get => DateTimeOffset.FromUnixTimeSeconds((long)Iat.Value);
+            get => Iat.Value;
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Azure.Security.Attestation
         /// </summary>
         public DateTimeOffset Expiration
         {
-            get => DateTimeOffset.FromUnixTimeSeconds((long)Exp.Value);
+            get => Exp.Value;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Azure.Security.Attestation
         /// </summary>
         public DateTimeOffset NotBefore
         {
-            get => DateTimeOffset.FromUnixTimeSeconds((long)Nbf.Value);
+            get => Nbf.Value;
         }
 
         /// <summary>

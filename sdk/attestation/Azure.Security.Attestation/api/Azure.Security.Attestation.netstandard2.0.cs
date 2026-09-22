@@ -22,32 +22,17 @@ namespace Azure.Security.Attestation
     public partial class AttestationClient
     {
         protected AttestationClient() { }
-        public AttestationClient(Azure.Security.Attestation.AttestationClientSettings settings) { }
         public AttestationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public AttestationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Security.Attestation.AttestationClientOptions options) { }
         public System.Uri Endpoint { get { throw null; } }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestOpenEnclave(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestOpenEnclaveAsync(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult> AttestSgxEnclave(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.Attestation.AttestationResponse<Azure.Security.Attestation.AttestationResult>> AttestSgxEnclaveAsync(Azure.Security.Attestation.AttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.Attestation.TpmAttestationResponse> AttestTpm(Azure.Security.Attestation.TpmAttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.Attestation.TpmAttestationResponse>> AttestTpmAsync(Azure.Security.Attestation.TpmAttestationRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.Attestation.AttestationRestClient GetAttestationRestClient() { throw null; }
-        public virtual Azure.Security.Attestation.MetadataConfigurationRestClient GetMetadataConfigurationRestClient() { throw null; }
-        public virtual Azure.Security.Attestation.PolicyCertificatesRestClient GetPolicyCertificatesRestClient() { throw null; }
-        public virtual Azure.Security.Attestation.PolicyRestClient GetPolicyRestClient() { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner>> GetSigningCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Security.Attestation.AttestationSigner>>> GetSigningCertificatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.Attestation.SigningCertificatesRestClient GetSigningCertificatesRestClient() { throw null; }
-        public virtual Azure.Security.Attestation.TcbBaselinesRestClient GetTcbBaselinesRestClient() { throw null; }
-    }
-    public static partial class AttestationClientHostExtensions
-    {
-        public static System.ClientModel.Primitives.IClientBuilder AddAttestationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddAttestationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Security.Attestation.AttestationClientSettings> configureSettings) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAttestationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
-        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAttestationClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Security.Attestation.AttestationClientSettings> configureSettings) { throw null; }
     }
     public partial class AttestationClientOptions : Azure.Core.ClientOptions
     {
@@ -58,13 +43,6 @@ namespace Azure.Security.Attestation
             V2020_10_01 = 1,
             V2025_06_01 = 2,
         }
-    }
-    public partial class AttestationClientSettings : System.ClientModel.Primitives.ClientSettings
-    {
-        public AttestationClientSettings() { }
-        public System.Uri Endpoint { get { throw null; } set { } }
-        public Azure.Security.Attestation.AttestationClientOptions Options { get { throw null; } set { } }
-        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class AttestationData
     {
@@ -133,9 +111,9 @@ namespace Azure.Security.Attestation
         [System.ObsoleteAttribute("DeprecatedVersion is deprecated, use Version instead")]
         public string DeprecatedVersion { get { throw null; } }
         public System.BinaryData EnclaveHeldData { get { throw null; } }
-        public long? Exp { get { throw null; } }
+        public System.DateTimeOffset? Exp { get { throw null; } }
         public System.DateTimeOffset Expiration { get { throw null; } }
-        public long? Iat { get { throw null; } }
+        public System.DateTimeOffset? Iat { get { throw null; } }
         public object InittimeClaims { get { throw null; } }
         public bool? IsDebuggable { get { throw null; } }
         public string Iss { get { throw null; } }
@@ -144,7 +122,7 @@ namespace Azure.Security.Attestation
         public string Jti { get { throw null; } }
         public string MrEnclave { get { throw null; } }
         public string MrSigner { get { throw null; } }
-        public long? Nbf { get { throw null; } }
+        public System.DateTimeOffset? Nbf { get { throw null; } }
         public string Nonce { get { throw null; } }
         public System.DateTimeOffset NotBefore { get { throw null; } }
         public object PolicyClaims { get { throw null; } }
@@ -166,6 +144,42 @@ namespace Azure.Security.Attestation
         Azure.Security.Attestation.AttestationResult System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AttestationServiceClient
+    {
+        protected AttestationServiceClient() { }
+        public AttestationServiceClient(Azure.Security.Attestation.AttestationServiceClientSettings settings) { }
+        public AttestationServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public AttestationServiceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Security.Attestation.AttestationServiceClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Security.Attestation.AttestationRestClient GetAttestationRestClient() { throw null; }
+        public virtual Azure.Security.Attestation.MetadataConfigurationRestClient GetMetadataConfigurationRestClient() { throw null; }
+        public virtual Azure.Security.Attestation.PolicyCertificatesRestClient GetPolicyCertificatesRestClient() { throw null; }
+        public virtual Azure.Security.Attestation.PolicyRestClient GetPolicyRestClient() { throw null; }
+        public virtual Azure.Security.Attestation.SigningCertificatesRestClient GetSigningCertificatesRestClient() { throw null; }
+        public virtual Azure.Security.Attestation.TcbBaselinesRestClient GetTcbBaselinesRestClient() { throw null; }
+    }
+    public static partial class AttestationServiceClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddAttestationServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddAttestationServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Security.Attestation.AttestationServiceClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAttestationServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedAttestationServiceClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Security.Attestation.AttestationServiceClientSettings> configureSettings) { throw null; }
+    }
+    public partial class AttestationServiceClientOptions : Azure.Core.ClientOptions
+    {
+        public AttestationServiceClientOptions(Azure.Security.Attestation.AttestationServiceClientOptions.ServiceVersion version = Azure.Security.Attestation.AttestationServiceClientOptions.ServiceVersion.V2025_06_01) { }
+        public enum ServiceVersion
+        {
+            V2025_06_01 = 1,
+        }
+    }
+    public partial class AttestationServiceClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public AttestationServiceClientSettings() { }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public Azure.Security.Attestation.AttestationServiceClientOptions Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public partial class AttestationSigner : System.ClientModel.Primitives.IJsonModel<Azure.Security.Attestation.AttestationSigner>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.Attestation.AttestationSigner>
     {

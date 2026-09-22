@@ -8,7 +8,7 @@
 namespace Azure.Security.Attestation
 {
     /// <summary></summary>
-    public partial class AttestationClient
+    public partial class AttestationServiceClient
     {
     }
 }

@@ -89,17 +89,17 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(Iat))
             {
                 writer.WritePropertyName("iat"u8);
-                writer.WriteNumberValue(Iat.Value);
+                writer.WriteNumberValue(Iat.Value, "U");
             }
             if (Optional.IsDefined(Exp))
             {
                 writer.WritePropertyName("exp"u8);
-                writer.WriteNumberValue(Exp.Value);
+                writer.WriteNumberValue(Exp.Value, "U");
             }
             if (Optional.IsDefined(Nbf))
             {
                 writer.WritePropertyName("nbf"u8);
-                writer.WriteNumberValue(Nbf.Value);
+                writer.WriteNumberValue(Nbf.Value, "U");
             }
             if (Optional.IsCollectionDefined(InternalCnf))
             {
@@ -301,9 +301,9 @@ namespace Azure.Security.Attestation
             }
             string jti = default;
             string iss = default;
-            long? iat = default;
-            long? exp = default;
-            long? nbf = default;
+            DateTimeOffset? iat = default;
+            DateTimeOffset? exp = default;
+            DateTimeOffset? nbf = default;
             IDictionary<string, string> internalCnf = default;
             string nonce = default;
             string version = default;
@@ -352,7 +352,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    iat = prop.Value.GetInt64();
+                    iat = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("exp"u8))
@@ -361,7 +361,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    exp = prop.Value.GetInt64();
+                    exp = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("nbf"u8))
@@ -370,7 +370,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    nbf = prop.Value.GetInt64();
+                    nbf = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("cnf"u8))

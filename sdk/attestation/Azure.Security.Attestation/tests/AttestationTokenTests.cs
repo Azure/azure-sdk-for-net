@@ -32,7 +32,7 @@ namespace Azure.Security.Attestation.Tests
         private class JwtTestBody
         {
             [JsonPropertyName("exp")]
-            public long ExpiresAt { get; set; }
+            public double ExpiresAt { get; set; }
 
             [JsonPropertyName("nbf")]
             public double NotBefore { get; set; }
@@ -128,6 +128,26 @@ namespace Azure.Security.Attestation.Tests
 
             // The body is empty regardless of the type requested, so no cached deserialization can leak in.
             Assert.IsNull(parsedToken.GetBody<TestBody>());
+        }
+
+        [RecordedTest]
+        public async Task ParseTokenWithFloatingPointDateClaims()
+        {
+            // MAA emits exp/nbf/iat as whole-second integers, but RFC 7519 NumericDate permits
+            // non-integer values, so these claims are modelled as double and must not truncate.
+            long whole = DateTimeOffset.Now.AddSeconds(60).ToUnixTimeSeconds();
+            string body = FormattableString.Invariant($"{{\"exp\":{whole}.0,\"nbf\":{whole}.0,\"iat\":{whole}.5}}");
+
+            var token = new AttestationToken(BinaryData.FromString(body));
+            var parsedToken = AttestationToken.Deserialize(token.Serialize());
+            await Task.Yield();
+
+            // Whole-valued ".0" claims parse to the exact second (no JsonException, no rounding).
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(whole), parsedToken.ExpirationTime);
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(whole), parsedToken.NotBeforeTime);
+
+            // A fractional claim keeps its sub-second component rather than being truncated.
+            Assert.AreEqual(DateTimeOffset.FromUnixTimeSeconds(0).AddSeconds(whole + 0.5), parsedToken.IssuedAtTime);
         }
 
         [RecordedTest]

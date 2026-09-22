@@ -64,7 +64,7 @@ namespace Azure.Security.Attestation
         /// <param name="deprecatedPolicyHash"> DEPRECATED: Private Preview version of x-ms-policy-hash. </param>
         /// <param name="deprecatedRpData"> DEPRECATED: Private Preview version of nonce. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationResult(string jti, string iss, long? iat, long? exp, long? nbf, IDictionary<string, string> internalCnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, AttestationSigner policySigner, BinaryData policyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, BinaryData enclaveHeldData, object sgxCollateral, string deprecatedVersion, bool? deprecatedIsDebuggable, object deprecatedSgxCollateral, BinaryData deprecatedEnclaveHeldData, BinaryData deprecatedEnclaveHeldData2, float? deprecatedProductId, string deprecatedMrEnclave, string deprecatedMrSigner, float? deprecatedSvn, string deprecatedTee, AttestationSigner deprecatedPolicySigner, BinaryData deprecatedPolicyHash, string deprecatedRpData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestationResult(string jti, string iss, DateTimeOffset? iat, DateTimeOffset? exp, DateTimeOffset? nbf, IDictionary<string, string> internalCnf, string nonce, string version, object runtimeClaims, object inittimeClaims, object policyClaims, string verifierType, AttestationSigner policySigner, BinaryData policyHash, bool? isDebuggable, float? productId, string mrEnclave, string mrSigner, float? svn, BinaryData enclaveHeldData, object sgxCollateral, string deprecatedVersion, bool? deprecatedIsDebuggable, object deprecatedSgxCollateral, BinaryData deprecatedEnclaveHeldData, BinaryData deprecatedEnclaveHeldData2, float? deprecatedProductId, string deprecatedMrEnclave, string deprecatedMrSigner, float? deprecatedSvn, string deprecatedTee, AttestationSigner deprecatedPolicySigner, BinaryData deprecatedPolicyHash, string deprecatedRpData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Jti = jti;
             Iss = iss;
@@ -113,19 +113,19 @@ namespace Azure.Security.Attestation
         /// The time at which the token was issued, in the number of seconds since
         /// 1970-01-0T00:00:00Z UTC
         /// </summary>
-        public long? Iat { get; }
+        public DateTimeOffset? Iat { get; }
 
         /// <summary>
         /// The expiration time after which the token is no longer valid, in the number of
         /// seconds since 1970-01-0T00:00:00Z UTC
         /// </summary>
-        public long? Exp { get; }
+        public DateTimeOffset? Exp { get; }
 
         /// <summary>
         /// The not before time before which the token cannot be considered valid, in the
         /// number of seconds since 1970-01-0T00:00:00Z UTC
         /// </summary>
-        public long? Nbf { get; }
+        public DateTimeOffset? Nbf { get; }
 
         /// <summary> The Nonce input to the attestation request, if provided. </summary>
         public string Nonce { get; }

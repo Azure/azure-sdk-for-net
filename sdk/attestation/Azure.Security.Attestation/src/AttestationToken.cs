@@ -206,7 +206,7 @@ namespace Azure.Security.Attestation
             {
                 if (Payload.ExpirationTime.HasValue)
                 {
-                    return DateTimeOffset.FromUnixTimeSeconds((long)Payload.ExpirationTime.Value);
+                    return DateTimeOffset.FromUnixTimeSeconds(0).AddSeconds(Payload.ExpirationTime.Value);
                 }
                 return null;
             }
@@ -221,7 +221,7 @@ namespace Azure.Security.Attestation
             {
                 if (Payload.NotBeforeTime.HasValue)
                 {
-                    return DateTimeOffset.FromUnixTimeSeconds((long)Payload.NotBeforeTime.Value);
+                    return DateTimeOffset.FromUnixTimeSeconds(0).AddSeconds(Payload.NotBeforeTime.Value);
                 }
                 return null;
             }
@@ -236,7 +236,7 @@ namespace Azure.Security.Attestation
             {
                 if (Payload.IssuedAtTime.HasValue)
                 {
-                    return DateTimeOffset.FromUnixTimeSeconds((long)Payload.IssuedAtTime.Value);
+                    return DateTimeOffset.FromUnixTimeSeconds(0).AddSeconds(Payload.IssuedAtTime.Value);
                 }
                 return null;
             }

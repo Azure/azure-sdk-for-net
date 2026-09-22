@@ -12,15 +12,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> Represents the settings used to configure a <see cref="AttestationClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
+    /// <summary> Represents the settings used to configure a <see cref="AttestationServiceClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
-    public partial class AttestationClientSettings : ClientSettings
+    public partial class AttestationServiceClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the Endpoint. </summary>
         public Uri Endpoint { get; set; }
 
         /// <summary> Gets or sets the Options. </summary>
-        public AttestationClientOptions Options { get; set; }
+        public AttestationServiceClientOptions Options { get; set; }
 
         /// <summary> Binds configuration values from the given section. </summary>
         /// <param name="section"> The configuration section. </param>
@@ -33,7 +33,7 @@ namespace Azure.Security.Attestation
             IConfigurationSection optionsSection = section.GetSection("Options");
             if (optionsSection.Exists())
             {
-                Options = new AttestationClientOptions(optionsSection);
+                Options = new AttestationServiceClientOptions(optionsSection);
             }
         }
     }

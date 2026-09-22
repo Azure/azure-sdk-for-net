@@ -52,11 +52,13 @@ namespace Azure.Security.Attestation
         {
             /// <summary>
             /// Version 2020-10-01 of the Microsoft Azure Attestation Service - corresponds to the General Availability of the MAA service.
+            /// See the <see href="https://github.com/Azure/azure-rest-api-specs/blob/main/specification/attestation/data-plane/Attestation/stable/2020-10-01/attestation.json">API definition</see>.
             /// </summary>
             V2020_10_01 = 1,
 
             /// <summary>
             /// Version 2025-06-01 of the Microsoft Azure Attestation Service. Required for attestation types introduced after 2020-10-01, such as TdxVm.
+            /// See the <see href="https://github.com/Azure/azure-rest-api-specs/blob/main/specification/attestation/data-plane/Attestation/stable/2025-06-01/attestation.json">API definition</see>.
             /// </summary>
             V2025_06_01 = 2,
         };
