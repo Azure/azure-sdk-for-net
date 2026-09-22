@@ -26,9 +26,6 @@ parameters:
   - name: dashboardAudience
     type: string
     default: ''
-  - name: storageSmokeTest
-    type: boolean
-    default: false
   - name: summaryPool
     type: object
     default:
@@ -95,7 +92,7 @@ jobs:
         env:
           EVAL_EXPECTED_MATRIX: $(EvalExpectedMatrix)
 
-      - ${{ if or(parameters.createDashboardBundle, parameters.publishDashboardResults, parameters.storageSmokeTest) }}:
+      - ${{ if or(parameters.createDashboardBundle, parameters.publishDashboardResults) }}:
         - template: ../steps/eval-publish-results.yml
           parameters:
             publishDashboardResults: ${{ parameters.publishDashboardResults }}
@@ -104,7 +101,6 @@ jobs:
             notifyDashboard: ${{ parameters.notifyDashboard }}
             dashboardUrl: ${{ parameters.dashboardUrl }}
             dashboardAudience: ${{ parameters.dashboardAudience }}
-            storageSmokeTest: ${{ parameters.storageSmokeTest }}
 
       # Completed failing evals are useful data: publish BEFORE the evaluation gate.
       - task: PublishTestResults@2

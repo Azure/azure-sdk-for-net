@@ -18,9 +18,6 @@ parameters:
   - name: dashboardAudience
     type: string
     default: ''
-  - name: storageSmokeTest
-    type: boolean
-    default: false
 
 steps:
   - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
@@ -34,12 +31,6 @@ steps:
     workingDirectory: eng/common/scripts/eval/publisher
     condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'))
 
-  - ${{ if parameters.storageSmokeTest }}:
-    - script: npm test
-      displayName: 'Validate bundle and publisher regression tests (no Azure writes)'
-      workingDirectory: eng/common/scripts/eval/publisher
-      condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'))
-
   - script: |
       node "$(Build.SourcesDirectory)/eng/common/scripts/eval/publisher/prepare-bundle.mjs" \
         --index "$(Pipeline.Workspace)/eval-results/shard-index.json" \
@@ -47,8 +38,6 @@ steps:
         --output "$(Build.ArtifactStagingDirectory)/eval-summary/dashboard-bundle.zip"
     displayName: 'Prepare one complete build result bundle'
     condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'))
-    env:
-      EVAL_PUBLISH_SMOKE_TEST: ${{ parameters.storageSmokeTest }}
 
   # Exclude the credential-bearing task from PR validation, not merely its upload.
   # For a draft PR pilot, manually queue the trusted feature BRANCH, not refs/pull/*.
@@ -69,4 +58,3 @@ steps:
         EVAL_NOTIFY_DASHBOARD: ${{ parameters.notifyDashboard }}
         EVAL_DASHBOARD_URL: ${{ parameters.dashboardUrl }}
         EVAL_DASHBOARD_AUDIENCE: ${{ parameters.dashboardAudience }}
-        EVAL_PUBLISH_SMOKE_TEST: ${{ parameters.storageSmokeTest }}

@@ -21,7 +21,7 @@ export function publisherIdentity(token) {
 }
 
 export async function publishBundle({ bundlePath, client, publisherId, onStored = async () => {}, notify,
-    verifyRetry = false, maxAttempts = 4, wait = delay, now = () => new Date() }) {
+    maxAttempts = 4, wait = delay, now = () => new Date() }) {
     if (!Number.isInteger(maxAttempts) || maxAttempts < 1 || maxAttempts > 10) throw new PublicationError("invalid_arguments", "Invalid upload retry count.");
     if (typeof publisherId !== "string" || !publisherId || publisherId.length > 200) throw new PublicationError("storage_identity", "A pipeline publisher identity is required.");
     // Read and validate ONCE. Every transport retry uses the exact saved bytes.
@@ -57,11 +57,6 @@ export async function publishBundle({ bundlePath, client, publisherId, onStored 
     const result = { status: "stored", blobName: name, sha256: hash, duplicate: await store(),
         notification: { status: notify ? "pending" : "not_requested" } };
     await onStored(result);
-    if (verifyRetry) {
-        if (!await store()) throw new PublicationError("retry_verification", "The smoke retry did not find the already-stored archive.");
-        result.retryVerified = true;
-        await onStored(result);
-    }
     if (notify) {
         try { await notify({ blobName: name, sha256: hash }); result.notification = { status: "succeeded" }; }
         catch { result.notification = { status: "failed", errorCode: "notification_failed" }; }

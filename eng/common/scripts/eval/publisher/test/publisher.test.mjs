@@ -48,14 +48,21 @@ function run(script, args, env = {}) {
 test("full shared shard -> summary -> one schema-v1 ZIP -> immutable Blob flow", async (t) => {
     const f = await fixture(t), scripts = resolve(import.meta.dirname, "../..");
     const downloads = join(f.root, "downloads"); await mkdir(downloads);
-    for (const shard of ["smoke_a", "smoke_b"]) {
-        const source = join(f.root, shard);
-        run(join(scripts, "create-storage-smoke-results.ts"), ["--results-root", source, "--shard", shard], { TF_BUILD: "true", BUILD_REASON: "Manual" });
+    for (const shard of ["shard_a", "shard_b"]) {
+        // Local unit fixture only; the production pipeline always runs evaluations.
+        const source = join(f.root, shard), invocation = join(source, "invocation");
+        await mkdir(invocation, { recursive: true });
+        await writeFile(join(invocation, "results.jsonl"), [
+            { ...trial, itemId: shard },
+            { type: "run-summary", evals: [{ name: trial.evalName, stimuliRun: 1, passed: false }] },
+        ].map(record => JSON.stringify(record)).join("\n") + "\n");
+        await writeFile(join(invocation, "eval-results.junit.xml"),
+            `<testsuites><testsuite><testcase name="${shard}"><failure message="Unit test result"/></testcase></testsuite></testsuites>`);
         run(join(scripts, "stage-eval-results.ts"), ["--results-root", source, "--output-directory", join(downloads, `eval-result-${shard}-1`), "--shard-name", shard, "--attempt", "1"]);
     }
     const summary = join(f.root, "summary", "eval-summary.md");
     const summaryRun = run(join(scripts, "build-eval-summary.ts"), ["--results-root", downloads, "--selected-root", join(f.root, "selected"), "--output-path", summary], {
-        TF_BUILD: "true", EVAL_EXPECTED_MATRIX: JSON.stringify({ a: { shardName: "smoke_a" }, b: { shardName: "smoke_b" } }),
+        TF_BUILD: "true", EVAL_EXPECTED_MATRIX: JSON.stringify({ a: { shardName: "shard_a" }, b: { shardName: "shard_b" } }),
     });
     assert.match(summaryRun.stdout, /EvalSummaryComplete\]true/);
     const path = join(f.root, "build.zip");
@@ -66,8 +73,13 @@ test("full shared shard -> summary -> one schema-v1 ZIP -> immutable Blob flow",
     assert.equal(Object.keys(checked.entries).length, 5);
     assert.doesNotMatch(Buffer.from(checked.entries["results.jsonl"]).toString("utf8"), /run-summary/);
     assert.match(Buffer.from(checked.entries["eval-summary.md"]).toString("utf8"), /FAILED/);
-    const saved = await publishBundle({ bundlePath: path, client: f.client, publisherId: "pipeline", verifyRetry: true });
-    assert.equal(saved.status, "stored"); assert.equal(saved.retryVerified, true); assert.equal(f.objects.size, 1);
+    const options = { bundlePath: path, client: f.client, publisherId: "pipeline" };
+    const saved = await publishBundle(options);
+    assert.equal(saved.status, "stored"); assert.equal(saved.duplicate, false);
+    assert.equal(f.requests.length, 1, "Normal publication does not perform a verification upload");
+    const repeated = await publishBundle(options);
+    assert.equal(repeated.duplicate, true); assert.equal(f.objects.size, 1);
+    assert.deepEqual(f.requests[0].bytes, f.requests[1].bytes);
     assert.equal(saved.blobName, "v1/azure-sdk/internal/8255/1001/1/dashboard-bundle.zip");
     assert.equal(saved.notification.status, "not_requested");
     assert.equal(f.requests[0].options.metadata.schema, "1");
@@ -166,12 +178,12 @@ test("ZIP allowlist, bounded records, experiments and extraction bombs are rejec
     assert.throws(() => validateBundle(zip({ "results.jsonl": strToU8('{"secret":"do not log"') })), error => !error.message.includes("secret"));
 });
 
-test("manifest derives canonical identity from the current build and labels smoke data", () => {
+test("manifest preserves canonical identity and the real pipeline name", () => {
     const env = { SYSTEM_COLLECTIONURI: "https://dev.azure.com/azure-sdk/", SYSTEM_TEAMPROJECT: "internal", BUILD_REPOSITORY_NAME: "Azure/azure-sdk-tools",
         BUILD_DEFINITIONNAME: "Azure-sdk-tools-workflow-eval", SYSTEM_DEFINITIONID: "8255", BUILD_BUILDID: "1001", SYSTEM_JOBATTEMPT: "2",
-        BUILD_SOURCEBRANCH: "refs/heads/pilot", BUILD_SOURCEVERSION: "a".repeat(40), EVAL_PUBLISH_SMOKE_TEST: "True" };
+        BUILD_SOURCEBRANCH: "refs/heads/pilot", BUILD_SOURCEVERSION: "a".repeat(40) };
     const result = pipelineManifest(env, new Date("2026-09-21T00:00:00Z"));
-    assert.match(result.pipeline, /\[synthetic storage smoke\]/); assert.equal(result.summaryAttempt, 2);
+    assert.equal(result.pipeline, env.BUILD_DEFINITIONNAME); assert.equal(result.summaryAttempt, 2);
     assert.equal(blobName({ ...result, adoProject: "Test Project" }), "v1/azure-sdk/test%20project/8255/1001/2/dashboard-bundle.zip");
     const realNames = [
         ["8255", "Azure-sdk-tools-workflow-eval"],
@@ -180,7 +192,7 @@ test("manifest derives canonical identity from the current build and labels smok
     ];
     const names = new Set();
     for (const [id, name] of realNames) {
-        const real = pipelineManifest({ ...env, SYSTEM_DEFINITIONID: id, BUILD_DEFINITIONNAME: name, EVAL_PUBLISH_SMOKE_TEST: "False" });
+        const real = pipelineManifest({ ...env, SYSTEM_DEFINITIONID: id, BUILD_DEFINITIONNAME: name });
         assert.equal(real.pipeline, name);
         assert.equal(real.repo, "Azure/azure-sdk-tools");
         assert.equal(real.sourceVersion, env.BUILD_SOURCEVERSION);
@@ -230,14 +242,6 @@ test("failure diagnostics retain operation/code/status but never arbitrary error
     assert.doesNotMatch(JSON.stringify(failure), /secret/);
 });
 
-test("synthetic producer is manual-only and never imports an evaluator", async () => {
-    const script = resolve(import.meta.dirname, "../../create-storage-smoke-results.ts"), env = { ...process.env, TF_BUILD: "true", BUILD_REASON: "IndividualCI" };
-    delete env.NODE_TEST_CONTEXT;
-    const child = spawnSync(process.execPath, ["--experimental-strip-types", script, "--matrix"], { encoding: "utf8", env, timeout: 30_000 });
-    assert.equal(child.status, 1); assert.match(child.stderr, /explicitly queued manually/);
-    assert.doesNotMatch(await readFile(script, "utf8"), /from ["']@microsoft|execFile|spawn\(/);
-});
-
 test("pipeline keeps publication opt-in, blocks PR credentials and shares the real Summary path", async () => {
     const root = resolve(import.meta.dirname, "../../../..");
     const workflow = await readFile(join(root, "pipelines/workflow-eval.yml"), "utf8");
@@ -246,7 +250,10 @@ test("pipeline keeps publication opt-in, blocks PR credentials and shares the re
     const archetype = await readFile(join(root, "pipelines/templates/stages/archetype-eval.yml"), "utf8");
     assert.match(workflow, /name: publishDashboardResults[\s\S]*?default: false/);
     assert.match(workflow, /name: storageServiceConnection\s+type: string\s+default: eval-dashboard-sc/);
-    assert.match(workflow, /if not\(parameters.storageSmokeTest\)/);
+    assert.match(workflow, /- group: AzSDK_Eval_Variable_group/);
+    assert.doesNotMatch(workflow + steps + summary + archetype, /storageSmokeTest|EVAL_PUBLISH_SMOKE_TEST|eval-storage-smoke/);
+    assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/build-mcp.yml/);
+    assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/eval-shard.yml/);
     assert.match(steps, /if and\(parameters.publishDashboardResults.*System.TeamProject.*internal.*PullRequest.*refs\/pull\//);
     assert.match(steps, /azureSubscription: \$\{\{ parameters.storageServiceConnection \}\}/);
     assert.match(summary, /dependsOn:|EvalExpectedMatrix:.*stageDependencies.Prepare.generate_eval_matrix/);
@@ -309,8 +316,8 @@ for (const tier of ["workflow", "skill", "live"]) {
             assert.match(content, /vallyRoot: \.github\/skills/);
             assert.match(content, /'\*\/evals\/\*\.eval\.yaml'/);
         }
-        if (tier !== "workflow") assert.doesNotMatch(content, /storageSmokeTest/);
-        else assert.ok(content.includes("enableAutomaticPublication: ${{ and(parameters.autoPublishDashboardResults, not(parameters.storageSmokeTest)) }}"));
+        assert.doesNotMatch(content, /storageSmokeTest/);
+        assert.ok(content.includes("enableAutomaticPublication: ${{ parameters.autoPublishDashboardResults }}"));
     });
 }
 

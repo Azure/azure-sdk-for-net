@@ -35,12 +35,10 @@ try {
     const result = await publishBundle({ bundlePath: resolve(values.bundle), client, publisherId: identity, onStored: async result => {
         await save(result); stored = true;
     },
-        verifyRetry: process.env.EVAL_PUBLISH_SMOKE_TEST?.toLowerCase() === "true",
         notify: shouldNotify ? target => notifyDashboard({ url: process.env.EVAL_DASHBOARD_URL, target,
             getToken: async () => (await credential.getToken(`${process.env.EVAL_DASHBOARD_AUDIENCE.replace(/\/$/, "")}/.default`)).token }) : undefined });
     await save(result);
     console.log(`Result archive stored: ${result.blobName} (duplicate: ${result.duplicate}).`);
-    if (result.retryVerified) console.log("Smoke test: retrying the same saved ZIP was idempotent; one archive remains.");
     if (result.notification.status === "failed") console.warn("##vso[task.logissue type=warning]Blob upload succeeded; dashboard refresh failed. Retry the signal or reconcile the cache later.");
     else console.log(`Dashboard notification: ${result.notification.status}.`);
 } catch (error) {

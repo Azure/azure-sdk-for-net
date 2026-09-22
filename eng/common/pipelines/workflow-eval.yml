@@ -42,10 +42,6 @@ parameters:
   - name: storageContainerUrl
     type: string
     default: https://evaltestsummary.blob.core.windows.net/vally-results
-  - name: storageSmokeTest
-    displayName: 'Manual synthetic storage test (no MCP, evaluations or LLM calls)'
-    type: boolean
-    default: false
   - name: notifyDashboard
     type: boolean
     default: false
@@ -61,11 +57,10 @@ variables:
   - template: /eng/pipelines/templates/variables/image.yml
   - template: /eng/common/pipelines/templates/variables/eval-dashboard.yml
     parameters:
-      enableAutomaticPublication: ${{ and(parameters.autoPublishDashboardResults, not(parameters.storageSmokeTest)) }}
+      enableAutomaticPublication: ${{ parameters.autoPublishDashboardResults }}
       pipelineDefinitionId: '8255'
   # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
-  - ${{ if not(parameters.storageSmokeTest) }}:
-    - group: AzSDK_Eval_Variable_group
+  - group: AzSDK_Eval_Variable_group
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
@@ -75,7 +70,6 @@ extends:
     allowAzureStorageNetworkAccess: ${{ or(parameters.allowAzureStorageNetworkAccess, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
     storageServiceConnection: ${{ parameters.storageServiceConnection }}
     storageContainerUrl: ${{ parameters.storageContainerUrl }}
-    storageSmokeTest: ${{ parameters.storageSmokeTest }}
     notifyDashboard: ${{ parameters.notifyDashboard }}
     dashboardUrl: ${{ parameters.dashboardUrl }}
     dashboardAudience: ${{ parameters.dashboardAudience }}

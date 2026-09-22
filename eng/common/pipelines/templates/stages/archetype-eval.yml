@@ -88,9 +88,6 @@ parameters:
   - name: dashboardAudience
     type: string
     default: ''
-  - name: storageSmokeTest
-    type: boolean
-    default: false
   - name: summaryPool
     type: object
     default:
@@ -110,36 +107,30 @@ extends:
       - stage: Prepare
         displayName: 'Build MCP'
         jobs:
-          - ${{ if parameters.storageSmokeTest }}:
-            - template: /eng/common/pipelines/templates/jobs/eval-storage-smoke-matrix.yml
-          - ${{ else }}:
-            - template: /eng/common/pipelines/templates/jobs/build-mcp.yml
-              parameters:
-                mcpSetupTemplate: ${{ parameters.mcpSetupTemplate }}
-                TestType: ${{ parameters.TestType }}
-                toolsRepo: ${{ parameters.toolsRepo }}
+          - template: /eng/common/pipelines/templates/jobs/build-mcp.yml
+            parameters:
+              mcpSetupTemplate: ${{ parameters.mcpSetupTemplate }}
+              TestType: ${{ parameters.TestType }}
+              toolsRepo: ${{ parameters.toolsRepo }}
 
-            - template: /eng/common/pipelines/templates/jobs/generate-eval-matrix.yml
-              parameters:
-                vallyRoot: ${{ parameters.vallyRoot }}
-                evalGlobs: ${{ parameters.evalGlobs }}
+          - template: /eng/common/pipelines/templates/jobs/generate-eval-matrix.yml
+            parameters:
+              vallyRoot: ${{ parameters.vallyRoot }}
+              evalGlobs: ${{ parameters.evalGlobs }}
 
       - stage: Eval
         displayName: 'Run eval shards'
         dependsOn: Prepare
         jobs:
-          - ${{ if parameters.storageSmokeTest }}:
-            - template: /eng/common/pipelines/templates/jobs/eval-storage-smoke-shard.yml
-          - ${{ else }}:
-            - template: /eng/common/pipelines/templates/jobs/eval-shard.yml
-              parameters:
-                vallyRoot: ${{ parameters.vallyRoot }}
-                evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
-                UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
-                threshold: ${{ parameters.threshold }}
-                preEvalTemplate: ${{ parameters.preEvalTemplate }}
-                postEvalTemplate: ${{ parameters.postEvalTemplate }}
-                shardTimeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
+          - template: /eng/common/pipelines/templates/jobs/eval-shard.yml
+            parameters:
+              vallyRoot: ${{ parameters.vallyRoot }}
+              evalInvokeTemplate: ${{ parameters.evalInvokeTemplate }}
+              UseAzSdkAuthentication: ${{ parameters.UseAzSdkAuthentication }}
+              threshold: ${{ parameters.threshold }}
+              preEvalTemplate: ${{ parameters.preEvalTemplate }}
+              postEvalTemplate: ${{ parameters.postEvalTemplate }}
+              shardTimeoutInMinutes: ${{ parameters.shardTimeoutInMinutes }}
 
       - stage: Summary
         displayName: 'Summarize results'
@@ -156,5 +147,4 @@ extends:
               notifyDashboard: ${{ parameters.notifyDashboard }}
               dashboardUrl: ${{ parameters.dashboardUrl }}
               dashboardAudience: ${{ parameters.dashboardAudience }}
-              storageSmokeTest: ${{ parameters.storageSmokeTest }}
               summaryPool: ${{ parameters.summaryPool }}
