@@ -44,11 +44,13 @@ the dashboard's identity separate and read-only.
 
 ## Configure a consumer
 
-Pass the following parameters to the shared eval archetype. Publishing defaults
-off for every consumer; this PR does not turn on scheduled production writes.
+Pass the following parameters to the shared eval archetype. Shared publishing
+defaults remain off. The three tools entrypoints additionally enable scoped
+automatic publication for their trusted internal main builds after merge.
 
 | Parameter | Meaning |
 | --- | --- |
+| `autoPublishDashboardResults` | Entrypoint-only; default `true`. Automatically enable publishing and AzureStorage egress only for the tools production definitions below on trusted internal main builds. Set `false` to opt out. |
 | `createDashboardBundle` | Prepare/retain a ZIP even without uploading; enabled in the workflow, skill and live entrypoints |
 | `publishDashboardResults` | Explicitly enable direct Blob publication |
 | `allowAzureStorageNetworkAccess` | Separately opt into the documented `AzureStorage` network-isolation policy for this trusted publishing run; default `false` |
@@ -152,8 +154,25 @@ and its evaluation score gate. The Blob publisher uses the separate
 the gate; missing/incomplete shards still block publication. Do not change scores
 or omit failing scenarios to make a dashboard import pass.
 
-Publishing remains opt-in: manually queued feature-branch runs do not change
-the main-branch schedule or enable automatic production publication after merge.
+### Automatic main-branch publication
+
+The three entrypoints pass `autoPublishDashboardResults` to a shared variable
+template, which defaults off unless called explicitly. Automatic publication
+requires all of the following: organization URL `https://dev.azure.com/azure-sdk/`,
+project `internal`, repository `Azure/azure-sdk-tools`, the entrypoint's exact
+definition ID (8255, 8256 or 8246), branch `refs/heads/main`, and a normal CI,
+scheduled or manual reason. Workflow synthetic smoke mode never auto-publishes.
+
+Both publication and the documented AzureStorage egress policy are selected for
+that scope. Notifications stay off. To disable a production run's publication,
+set `autoPublishDashboardResults=false` and leave both explicit publication/network
+flags false. Feature branches, pull refs, other definitions and synced consumers
+remain off by default; their deliberate manual publication still requires the
+existing explicit flags and trust guards.
+
+This takes effect only after the feature branch is merged. It does not change
+existing CI path filters or the live nightly schedule, and it creates no new
+pipeline, storage account or container.
 
 ## Optional notification and dashboard activation
 

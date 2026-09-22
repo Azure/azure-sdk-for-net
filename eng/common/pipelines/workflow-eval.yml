@@ -18,11 +18,16 @@ trigger:
       - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
       - eng/common/pipelines/templates/steps/eval-publish-results.yml
       - eng/common/pipelines/templates/stages/archetype-eval.yml
+      - eng/common/pipelines/templates/variables/eval-dashboard.yml
       - eng/common/scripts/eval/**
 
 pr: none
 
 parameters:
+  - name: autoPublishDashboardResults
+    displayName: 'Automatically publish trusted tools main builds (disable to opt out)'
+    type: boolean
+    default: true
   - name: publishDashboardResults
     displayName: 'Publish the complete build bundle directly to Blob'
     type: boolean
@@ -54,6 +59,10 @@ parameters:
 variables:
   # Defines LINUXPOOL + LINUXVMIMAGE used by the archetype's jobs.
   - template: /eng/pipelines/templates/variables/image.yml
+  - template: /eng/common/pipelines/templates/variables/eval-dashboard.yml
+    parameters:
+      enableAutomaticPublication: ${{ and(parameters.autoPublishDashboardResults, not(parameters.storageSmokeTest)) }}
+      pipelineDefinitionId: '8255'
   # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
   - ${{ if not(parameters.storageSmokeTest) }}:
     - group: AzSDK_Eval_Variable_group
@@ -62,8 +71,8 @@ extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
     createDashboardBundle: true
-    publishDashboardResults: ${{ parameters.publishDashboardResults }}
-    allowAzureStorageNetworkAccess: ${{ parameters.allowAzureStorageNetworkAccess }}
+    publishDashboardResults: ${{ or(parameters.publishDashboardResults, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
+    allowAzureStorageNetworkAccess: ${{ or(parameters.allowAzureStorageNetworkAccess, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
     storageServiceConnection: ${{ parameters.storageServiceConnection }}
     storageContainerUrl: ${{ parameters.storageContainerUrl }}
     storageSmokeTest: ${{ parameters.storageSmokeTest }}

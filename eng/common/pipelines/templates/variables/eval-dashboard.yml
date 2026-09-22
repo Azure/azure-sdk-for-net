@@ -1,0 +1,13 @@
+# Only the three tools-repo production definitions opt in automatically. This
+# template is synced with eng/common, so foreign repos/definitions must stay off.
+parameters:
+  - name: enableAutomaticPublication
+    type: boolean
+    default: false
+  - name: pipelineDefinitionId
+    type: string
+    default: ''
+
+variables:
+  - name: EvalDashboardAutomaticPublication
+    value: ${{ and(parameters.enableAutomaticPublication, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Repository.Name'], 'Azure/azure-sdk-tools'), eq(variables['System.DefinitionId'], parameters.pipelineDefinitionId), in(parameters.pipelineDefinitionId, '8255', '8256', '8246'), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual')) }}

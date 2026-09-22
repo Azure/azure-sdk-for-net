@@ -14,6 +14,10 @@ schedules:
     always: true             # run even when main has not changed
 
 parameters:
+  - name: autoPublishDashboardResults
+    displayName: 'Automatically publish trusted tools main builds (disable to opt out)'
+    type: boolean
+    default: true
   - name: publishDashboardResults
     displayName: 'Publish the complete build bundle directly to Blob'
     type: boolean
@@ -41,6 +45,10 @@ parameters:
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
   - template: /eng/pipelines/templates/variables/image.yml
+  - template: /eng/common/pipelines/templates/variables/eval-dashboard.yml
+    parameters:
+      enableAutomaticPublication: ${{ parameters.autoPublishDashboardResults }}
+      pipelineDefinitionId: '8246'
   # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
   - group: AzSDK_Eval_Variable_group
 
@@ -48,8 +56,8 @@ extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
     createDashboardBundle: true
-    publishDashboardResults: ${{ parameters.publishDashboardResults }}
-    allowAzureStorageNetworkAccess: ${{ parameters.allowAzureStorageNetworkAccess }}
+    publishDashboardResults: ${{ or(parameters.publishDashboardResults, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
+    allowAzureStorageNetworkAccess: ${{ or(parameters.allowAzureStorageNetworkAccess, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
     storageServiceConnection: ${{ parameters.storageServiceConnection }}
     storageContainerUrl: ${{ parameters.storageContainerUrl }}
     notifyDashboard: ${{ parameters.notifyDashboard }}
