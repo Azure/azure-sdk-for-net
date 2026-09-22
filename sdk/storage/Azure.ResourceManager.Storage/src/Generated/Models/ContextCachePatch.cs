@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="identity"> The managed service identity. </param>
         /// <param name="properties"> The updatable properties of the Context Cache. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContextCachePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ContextCachePropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContextCachePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ContextCachePropertiesPatch properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The updatable properties of the Context Cache. </summary>
         [WirePath("properties")]
-        public ContextCachePropertiesUpdate Properties { get; set; }
+        public ContextCachePropertiesPatch Properties { get; set; }
     }
 }

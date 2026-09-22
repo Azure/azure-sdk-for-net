@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Storage.Tests
             var patch = new ContextCachePatch
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
-                Properties = new ContextCachePropertiesUpdate
+                Properties = new ContextCachePropertiesPatch
                 {
                     Description = "Updated Azure Context Cache account"
                 }
@@ -89,13 +89,12 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsNotNull(contextCache.Data.Identity.TenantId);
             Assert.AreEqual("production", contextCache.Data.Tags["environment"]);
 
-            // Generic tag operations are currently broken for Context Cache.
-            // contextCache = (await contextCache.AddTagAsync("team", "context-cache")).Value;
-            // Assert.AreEqual("context-cache", contextCache.Data.Tags["team"]);
-            // contextCache = (await contextCache.SetTagsAsync(new Dictionary<string, string> { ["environment"] = "production" })).Value;
-            // Assert.AreEqual(1, contextCache.Data.Tags.Count);
-            // contextCache = (await contextCache.RemoveTagAsync("environment")).Value;
-            // Assert.IsEmpty(contextCache.Data.Tags);
+            contextCache = (await contextCache.AddTagAsync("team", "context-cache")).Value;
+            Assert.AreEqual("context-cache", contextCache.Data.Tags["team"]);
+            contextCache = (await contextCache.SetTagsAsync(new Dictionary<string, string> { ["environment"] = "production" })).Value;
+            Assert.AreEqual(1, contextCache.Data.Tags.Count);
+            contextCache = (await contextCache.RemoveTagAsync("environment")).Value;
+            Assert.IsEmpty(contextCache.Data.Tags);
 
             string containerName = Recording.GenerateAssetName("gpt4-prompts");
             ContextCacheContainerCollection containers = contextCache.GetContextCacheContainers();
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             var containerPatch = new ContextCacheContainerPatch
             {
-                Properties = new ContextCacheContainerPropertiesUpdate
+                Properties = new ContextCacheContainerPropertiesPatch
                 {
                     Description = "Updated container for GPT-4 prompt caching",
                     TimeToLive = 14

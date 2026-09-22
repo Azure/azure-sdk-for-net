@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            ContextCacheContainerPropertiesUpdate properties = default;
+            ContextCacheContainerPropertiesPatch properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    properties = ContextCacheContainerPropertiesUpdate.DeserializeContextCacheContainerPropertiesUpdate(prop.Value, options);
+                    properties = ContextCacheContainerPropertiesPatch.DeserializeContextCacheContainerPropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

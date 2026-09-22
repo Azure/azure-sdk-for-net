@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Storage.Tests
             parameters.AllowCrossTenantDelegationSas = true;
             parameters.SasPolicy = new StorageAccountSasPolicy("1.00:00:00", ExpirationAction.Log)
             {
-                RequireUserBoundUserDelegationSas = true,
+                IsUserBoundUserDelegationSasRequired = true,
                 RequireUserBoundUserDelegationSasAction = PolicyViolationAction.Log
             };
 
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsTrue(account.Data.AllowCrossTenantDelegationSas);
             Assert.AreEqual("1.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
             Assert.AreEqual(ExpirationAction.Log, account.Data.SasPolicy.ExpirationAction);
-            Assert.IsTrue(account.Data.SasPolicy.RequireUserBoundUserDelegationSas);
+            Assert.IsTrue(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
             Assert.AreEqual(PolicyViolationAction.Log, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
 
             var patch = new StorageAccountPatch
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 AllowCrossTenantDelegationSas = false,
                 SasPolicy = new StorageAccountSasPolicy("2.00:00:00", ExpirationAction.Block)
                 {
-                    RequireUserBoundUserDelegationSas = true,
+                    IsUserBoundUserDelegationSasRequired = true,
                     RequireUserBoundUserDelegationSasAction = PolicyViolationAction.Block
                 }
             };
@@ -476,14 +476,14 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsFalse(account.Data.AllowCrossTenantDelegationSas);
             Assert.AreEqual("2.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
             Assert.AreEqual(ExpirationAction.Block, account.Data.SasPolicy.ExpirationAction);
-            Assert.IsTrue(account.Data.SasPolicy.RequireUserBoundUserDelegationSas);
+            Assert.IsTrue(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
             Assert.AreEqual(PolicyViolationAction.Block, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
 
             patch = new StorageAccountPatch
             {
                 SasPolicy = new StorageAccountSasPolicy("2.00:00:00", ExpirationAction.Log)
                 {
-                    RequireUserBoundUserDelegationSas = false,
+                    IsUserBoundUserDelegationSasRequired = false,
                     RequireUserBoundUserDelegationSasAction = PolicyViolationAction.None
                 }
             };
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsFalse(account.Data.AllowCrossTenantDelegationSas);
             Assert.AreEqual("2.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
             Assert.AreEqual(ExpirationAction.Log, account.Data.SasPolicy.ExpirationAction);
-            Assert.IsFalse(account.Data.SasPolicy.RequireUserBoundUserDelegationSas);
+            Assert.IsFalse(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
             Assert.AreEqual(PolicyViolationAction.None, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
         }
 

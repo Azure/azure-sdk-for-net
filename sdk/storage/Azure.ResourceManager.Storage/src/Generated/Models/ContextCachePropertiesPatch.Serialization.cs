@@ -13,52 +13,52 @@ using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> (Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled. </summary>
-    public partial class Encryption : IJsonModel<Encryption>
+    /// <summary> Updatable properties of the Context Cache. </summary>
+    public partial class ContextCachePropertiesPatch : IJsonModel<ContextCachePropertiesPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Encryption PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContextCachePropertiesPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Encryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContextCachePropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEncryption(document.RootElement, options);
+                        return DeserializeContextCachePropertiesPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Encryption)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContextCachePropertiesPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Encryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContextCachePropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Encryption)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContextCachePropertiesPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Encryption>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContextCachePropertiesPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Encryption IPersistableModel<Encryption>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContextCachePropertiesPatch IPersistableModel<ContextCachePropertiesPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Encryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContextCachePropertiesPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Encryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContextCachePropertiesPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Encryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContextCachePropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Encryption)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContextCachePropertiesPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(InfrastructureEncryption))
+            if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("infrastructureEncryption"u8);
-                writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CustomerManagedKeyEncryption))
+            if (Optional.IsDefined(Encryption))
             {
-                writer.WritePropertyName("customerManagedKeyEncryption"u8);
-                writer.WriteObjectValue(CustomerManagedKeyEncryption, options);
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +103,46 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Encryption IJsonModel<Encryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContextCachePropertiesPatch IJsonModel<ContextCachePropertiesPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Encryption JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContextCachePropertiesPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Encryption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContextCachePropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Encryption)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContextCachePropertiesPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEncryption(document.RootElement, options);
+            return DeserializeContextCachePropertiesPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Encryption DeserializeEncryption(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContextCachePropertiesPatch DeserializeContextCachePropertiesPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            InfrastructureEncryption? infrastructureEncryption = default;
-            CustomerManagedKeyEncryption customerManagedKeyEncryption = default;
+            string description = default;
+            ArmEncryption encryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("infrastructureEncryption"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    infrastructureEncryption = new InfrastructureEncryption(prop.Value.GetString());
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("customerManagedKeyEncryption"u8))
+                if (prop.NameEquals("encryption"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customerManagedKeyEncryption = CustomerManagedKeyEncryption.DeserializeCustomerManagedKeyEncryption(prop.Value, options);
+                    encryption = ArmEncryption.DeserializeArmEncryption(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +150,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Encryption(infrastructureEncryption, customerManagedKeyEncryption, additionalBinaryDataProperties);
+            return new ContextCachePropertiesPatch(description, encryption, additionalBinaryDataProperties);
         }
     }
 }

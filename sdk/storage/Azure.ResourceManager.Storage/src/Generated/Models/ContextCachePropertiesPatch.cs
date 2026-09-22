@@ -12,21 +12,21 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Updatable properties of the Context Cache. </summary>
-    public partial class ContextCachePropertiesUpdate
+    public partial class ContextCachePropertiesPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContextCachePropertiesUpdate"/>. </summary>
-        public ContextCachePropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="ContextCachePropertiesPatch"/>. </summary>
+        public ContextCachePropertiesPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContextCachePropertiesUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContextCachePropertiesPatch"/>. </summary>
         /// <param name="description"> Account description. </param>
         /// <param name="encryption"> Encryption settings for the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContextCachePropertiesUpdate(string description, Encryption encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContextCachePropertiesPatch(string description, ArmEncryption encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Encryption = encryption;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Encryption settings for the account. </summary>
         [WirePath("encryption")]
-        public Encryption Encryption { get; set; }
+        public ArmEncryption Encryption { get; set; }
     }
 }

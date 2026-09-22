@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Storage.Models
             ContextCacheAccountKind accountKind = default;
             string description = default;
             ContextCacheProvisioningState? provisioningState = default;
-            Encryption encryption = default;
+            ArmEncryption encryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    encryption = Encryption.DeserializeEncryption(prop.Value, options);
+                    encryption = ArmEncryption.DeserializeArmEncryption(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

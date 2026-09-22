@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStringValue(SasExpirationPeriod);
             writer.WritePropertyName("expirationAction"u8);
             writer.WriteStringValue(ExpirationAction.ToString());
-            if (Optional.IsDefined(RequireUserBoundUserDelegationSas))
+            if (Optional.IsDefined(IsUserBoundUserDelegationSasRequired))
             {
                 writer.WritePropertyName("requireUserBoundUserDelegationSas"u8);
-                writer.WriteBooleanValue(RequireUserBoundUserDelegationSas.Value);
+                writer.WriteBooleanValue(IsUserBoundUserDelegationSasRequired.Value);
             }
             if (Optional.IsDefined(RequireUserBoundUserDelegationSasAction))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             string sasExpirationPeriod = default;
             ExpirationAction expirationAction = default;
-            bool? requireUserBoundUserDelegationSas = default;
+            bool? isUserBoundUserDelegationSasRequired = default;
             PolicyViolationAction? requireUserBoundUserDelegationSasAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    requireUserBoundUserDelegationSas = prop.Value.GetBoolean();
+                    isUserBoundUserDelegationSasRequired = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("requireUserBoundUserDelegationSasAction"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageAccountSasPolicy(sasExpirationPeriod, expirationAction, requireUserBoundUserDelegationSas, requireUserBoundUserDelegationSasAction, additionalBinaryDataProperties);
+            return new StorageAccountSasPolicy(sasExpirationPeriod, expirationAction, isUserBoundUserDelegationSasRequired, requireUserBoundUserDelegationSasAction, additionalBinaryDataProperties);
         }
     }
 }

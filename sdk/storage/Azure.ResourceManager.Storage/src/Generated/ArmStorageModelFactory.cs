@@ -487,12 +487,12 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> SasPolicy assigned to the storage account. </summary>
         /// <param name="sasExpirationPeriod"> The SAS expiration period, DD.HH:MM:SS. </param>
         /// <param name="expirationAction"> The SAS Expiration Action defines the action to be performed when sasPolicy.sasExpirationPeriod is violated. The 'Log' action can be used for audit purposes and the 'Block' action can be used to block and deny the usage of SAS tokens that do not adhere to the sas policy expiration period. </param>
-        /// <param name="requireUserBoundUserDelegationSas"> Indicates whether user delegation SAS (shared access signature) tokens are required to be bound to a specific user. The default interpretation is false for this property. </param>
+        /// <param name="isUserBoundUserDelegationSasRequired"> Indicates whether user delegation SAS (shared access signature) tokens are required to be bound to a specific user. The default interpretation is false for this property. </param>
         /// <param name="requireUserBoundUserDelegationSasAction"> The action to perform when a user delegation SAS (shared access signature) token is not bound to a user as required by requireUserBoundUserDelegationSas. </param>
         /// <returns> A new <see cref="Models.StorageAccountSasPolicy"/> instance for mocking. </returns>
-        public static StorageAccountSasPolicy StorageAccountSasPolicy(string sasExpirationPeriod = default, ExpirationAction expirationAction = default, bool? requireUserBoundUserDelegationSas = default, PolicyViolationAction? requireUserBoundUserDelegationSasAction = default)
+        public static StorageAccountSasPolicy StorageAccountSasPolicy(string sasExpirationPeriod = default, ExpirationAction expirationAction = default, bool? isUserBoundUserDelegationSasRequired = default, PolicyViolationAction? requireUserBoundUserDelegationSasAction = default)
         {
-            return new StorageAccountSasPolicy(sasExpirationPeriod, expirationAction, requireUserBoundUserDelegationSas, requireUserBoundUserDelegationSasAction, default);
+            return new StorageAccountSasPolicy(sasExpirationPeriod, expirationAction, isUserBoundUserDelegationSasRequired, requireUserBoundUserDelegationSasAction, default);
         }
 
         /// <summary> Storage account keys creation time. </summary>
@@ -2233,7 +2233,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="encryption"> Encryption settings for the account. </param>
         /// <returns> A new <see cref="Models.ContextCacheProperties"/> instance for mocking. </returns>
-        public static ContextCacheProperties ContextCacheProperties(ContextCacheAccountKind accountKind = default, string description = default, ContextCacheProvisioningState? provisioningState = default, Encryption encryption = default)
+        public static ContextCacheProperties ContextCacheProperties(ContextCacheAccountKind accountKind = default, string description = default, ContextCacheProvisioningState? provisioningState = default, ArmEncryption encryption = default)
         {
             return new ContextCacheProperties(accountKind, description, provisioningState, encryption, default);
         }
@@ -2241,10 +2241,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> (Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled. </summary>
         /// <param name="infrastructureEncryption"> Values are enabled and disabled. </param>
         /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. </param>
-        /// <returns> A new <see cref="Models.Encryption"/> instance for mocking. </returns>
-        public static Encryption Encryption(InfrastructureEncryption? infrastructureEncryption = default, CustomerManagedKeyEncryption customerManagedKeyEncryption = default)
+        /// <returns> A new <see cref="Models.ArmEncryption"/> instance for mocking. </returns>
+        public static ArmEncryption ArmEncryption(InfrastructureEncryption? infrastructureEncryption = default, CustomerManagedKeyEncryption customerManagedKeyEncryption = default)
         {
-            return new Encryption(infrastructureEncryption, customerManagedKeyEncryption, default);
+            return new ArmEncryption(infrastructureEncryption, customerManagedKeyEncryption, default);
         }
 
         /// <summary> Customer-managed key encryption properties for the resource. </summary>
@@ -2272,7 +2272,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="identity"> The managed service identity. </param>
         /// <param name="properties"> The updatable properties of the Context Cache. </param>
         /// <returns> A new <see cref="Models.ContextCachePatch"/> instance for mocking. </returns>
-        public static ContextCachePatch ContextCachePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ContextCachePropertiesUpdate properties = default)
+        public static ContextCachePatch ContextCachePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ContextCachePropertiesPatch properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2282,10 +2282,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Updatable properties of the Context Cache. </summary>
         /// <param name="description"> Account description. </param>
         /// <param name="encryption"> Encryption settings for the account. </param>
-        /// <returns> A new <see cref="Models.ContextCachePropertiesUpdate"/> instance for mocking. </returns>
-        public static ContextCachePropertiesUpdate ContextCachePropertiesUpdate(string description = default, Encryption encryption = default)
+        /// <returns> A new <see cref="Models.ContextCachePropertiesPatch"/> instance for mocking. </returns>
+        public static ContextCachePropertiesPatch ContextCachePropertiesPatch(string description = default, ArmEncryption encryption = default)
         {
-            return new ContextCachePropertiesUpdate(description, encryption, default);
+            return new ContextCachePropertiesPatch(description, encryption, default);
         }
 
         /// <summary> A container resource within a Context Cache. </summary>
@@ -2327,7 +2327,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> The type used for update operations of the Context Cache Container. </summary>
         /// <param name="properties"> The updatable properties of the Context Cache Container. </param>
         /// <returns> A new <see cref="Models.ContextCacheContainerPatch"/> instance for mocking. </returns>
-        public static ContextCacheContainerPatch ContextCacheContainerPatch(ContextCacheContainerPropertiesUpdate properties = default)
+        public static ContextCacheContainerPatch ContextCacheContainerPatch(ContextCacheContainerPropertiesPatch properties = default)
         {
             return new ContextCacheContainerPatch(properties, default);
         }
@@ -2335,10 +2335,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Updatable properties of a container within a Context Cache. </summary>
         /// <param name="description"> Container description. </param>
         /// <param name="timeToLive"> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. </param>
-        /// <returns> A new <see cref="Models.ContextCacheContainerPropertiesUpdate"/> instance for mocking. </returns>
-        public static ContextCacheContainerPropertiesUpdate ContextCacheContainerPropertiesUpdate(string description = default, int? timeToLive = default)
+        /// <returns> A new <see cref="Models.ContextCacheContainerPropertiesPatch"/> instance for mocking. </returns>
+        public static ContextCacheContainerPropertiesPatch ContextCacheContainerPropertiesPatch(string description = default, int? timeToLive = default)
         {
-            return new ContextCacheContainerPropertiesUpdate(description, timeToLive, default);
+            return new ContextCacheContainerPropertiesPatch(description, timeToLive, default);
         }
 
         /// <summary> The advanced platform metrics rule for the storage account. </summary>

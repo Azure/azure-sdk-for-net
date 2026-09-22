@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="ContextCacheContainerPatch"/>. </summary>
         /// <param name="properties"> The updatable properties of the Context Cache Container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContextCacheContainerPatch(ContextCacheContainerPropertiesUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContextCacheContainerPatch(ContextCacheContainerPropertiesPatch properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The updatable properties of the Context Cache Container. </summary>
         [WirePath("properties")]
-        public ContextCacheContainerPropertiesUpdate Properties { get; set; }
+        public ContextCacheContainerPropertiesPatch Properties { get; set; }
     }
 }

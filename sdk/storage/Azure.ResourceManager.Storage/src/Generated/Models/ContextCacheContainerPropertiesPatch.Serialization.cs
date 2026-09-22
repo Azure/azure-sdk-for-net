@@ -13,52 +13,52 @@ using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Updatable properties of the Context Cache. </summary>
-    public partial class ContextCachePropertiesUpdate : IJsonModel<ContextCachePropertiesUpdate>
+    /// <summary> Updatable properties of a container within a Context Cache. </summary>
+    public partial class ContextCacheContainerPropertiesPatch : IJsonModel<ContextCacheContainerPropertiesPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContextCachePropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContextCacheContainerPropertiesPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContextCachePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContextCacheContainerPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContextCachePropertiesUpdate(document.RootElement, options);
+                        return DeserializeContextCacheContainerPropertiesPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContextCachePropertiesUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContextCacheContainerPropertiesPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContextCachePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContextCacheContainerPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContextCachePropertiesUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContextCacheContainerPropertiesPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContextCachePropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContextCacheContainerPropertiesPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContextCachePropertiesUpdate IPersistableModel<ContextCachePropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContextCacheContainerPropertiesPatch IPersistableModel<ContextCacheContainerPropertiesPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContextCachePropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContextCacheContainerPropertiesPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContextCachePropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContextCacheContainerPropertiesPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContextCachePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContextCacheContainerPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContextCachePropertiesUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContextCacheContainerPropertiesPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Optional.IsDefined(TimeToLive))
             {
-                writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
+                writer.WritePropertyName("timeToLive"u8);
+                writer.WriteNumberValue(TimeToLive.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,31 +103,31 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContextCachePropertiesUpdate IJsonModel<ContextCachePropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContextCacheContainerPropertiesPatch IJsonModel<ContextCacheContainerPropertiesPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContextCachePropertiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContextCacheContainerPropertiesPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContextCachePropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContextCacheContainerPropertiesPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContextCachePropertiesUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContextCacheContainerPropertiesPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContextCachePropertiesUpdate(document.RootElement, options);
+            return DeserializeContextCacheContainerPropertiesPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContextCachePropertiesUpdate DeserializeContextCachePropertiesUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContextCacheContainerPropertiesPatch DeserializeContextCacheContainerPropertiesPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string description = default;
-            Encryption encryption = default;
+            int? timeToLive = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,13 +136,13 @@ namespace Azure.ResourceManager.Storage.Models
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("encryption"u8))
+                if (prop.NameEquals("timeToLive"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryption = Encryption.DeserializeEncryption(prop.Value, options);
+                    timeToLive = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContextCachePropertiesUpdate(description, encryption, additionalBinaryDataProperties);
+            return new ContextCacheContainerPropertiesPatch(description, timeToLive, additionalBinaryDataProperties);
         }
     }
 }

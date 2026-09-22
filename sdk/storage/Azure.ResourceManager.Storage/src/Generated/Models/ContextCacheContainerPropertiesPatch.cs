@@ -12,21 +12,21 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Updatable properties of a container within a Context Cache. </summary>
-    public partial class ContextCacheContainerPropertiesUpdate
+    public partial class ContextCacheContainerPropertiesPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ContextCacheContainerPropertiesUpdate"/>. </summary>
-        public ContextCacheContainerPropertiesUpdate()
+        /// <summary> Initializes a new instance of <see cref="ContextCacheContainerPropertiesPatch"/>. </summary>
+        public ContextCacheContainerPropertiesPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContextCacheContainerPropertiesUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContextCacheContainerPropertiesPatch"/>. </summary>
         /// <param name="description"> Container description. </param>
         /// <param name="timeToLive"> The Time to Live (TTL) in days (1–30) for this container. Blobs in the container that have not been accessed within this number of days will be automatically deleted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContextCacheContainerPropertiesUpdate(string description, int? timeToLive, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContextCacheContainerPropertiesPatch(string description, int? timeToLive, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             TimeToLive = timeToLive;

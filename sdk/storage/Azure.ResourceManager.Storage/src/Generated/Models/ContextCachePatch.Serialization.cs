@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
-            ContextCachePropertiesUpdate properties = default;
+            ContextCachePropertiesPatch properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    properties = ContextCachePropertiesUpdate.DeserializeContextCachePropertiesUpdate(prop.Value, options);
+                    properties = ContextCachePropertiesPatch.DeserializeContextCachePropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

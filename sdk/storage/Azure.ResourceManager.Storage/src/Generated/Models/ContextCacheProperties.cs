@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="encryption"> Encryption settings for the account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContextCacheProperties(ContextCacheAccountKind accountKind, string description, ContextCacheProvisioningState? provisioningState, Encryption encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContextCacheProperties(ContextCacheAccountKind accountKind, string description, ContextCacheProvisioningState? provisioningState, ArmEncryption encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountKind = accountKind;
             Description = description;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Encryption settings for the account. </summary>
         [WirePath("encryption")]
-        public Encryption Encryption { get; set; }
+        public ArmEncryption Encryption { get; set; }
     }
 }

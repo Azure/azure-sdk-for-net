@@ -12,21 +12,21 @@ using Azure.ResourceManager.Storage;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> (Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled. </summary>
-    public partial class Encryption
+    public partial class ArmEncryption
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Encryption"/>. </summary>
-        public Encryption()
+        /// <summary> Initializes a new instance of <see cref="ArmEncryption"/>. </summary>
+        public ArmEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Encryption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmEncryption"/>. </summary>
         /// <param name="infrastructureEncryption"> Values are enabled and disabled. </param>
         /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Encryption(InfrastructureEncryption? infrastructureEncryption, CustomerManagedKeyEncryption customerManagedKeyEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmEncryption(InfrastructureEncryption? infrastructureEncryption, CustomerManagedKeyEncryption customerManagedKeyEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InfrastructureEncryption = infrastructureEncryption;
             CustomerManagedKeyEncryption = customerManagedKeyEncryption;
