@@ -4,6 +4,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Mocking;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
@@ -246,43 +248,37 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
         }
 
         [Test]
-        public void Mocking_GetVirtualMachineImagesDoesNotRecurse()
+        public async Task Mocking_GetVirtualMachineImagesDoesNotRecurse()
         {
-            var subscription = new ReproComputeSubscriptionResource();
-
+            const string subscriptionId = "83aa47df-e3e9-49ff-877b-94304bf3d3ad";
+            var options = new ArmClientOptions
+            {
+                Transport = new MockTransport(
+                    new MockResponse(200).SetContent("[]"),
+                    new MockResponse(200).SetContent("[]"))
+            };
+            var client = new ArmClient(new MockCredential(), subscriptionId, options);
+            var subscription = client.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(subscriptionId));
             var location = new Azure.Core.AzureLocation("eastus");
+
             var pageable = subscription.GetVirtualMachineImages(
                 location,
                 "MicrosoftWindowsServer",
                 "WindowsServer",
                 "2022-datacenter-azure-edition-smalldisk");
+            Assert.IsEmpty(pageable);
+
             var asyncPageable = subscription.GetVirtualMachineImagesAsync(
                 location,
                 "MicrosoftWindowsServer",
                 "WindowsServer",
                 "2022-datacenter-azure-edition-smalldisk");
-
-            var options = new SubscriptionResourceGetVirtualMachineImagesOptions(
-                location,
-                "MicrosoftWindowsServer",
-                "WindowsServer",
-                "2022-datacenter-azure-edition-smalldisk");
-            var optionsPageable = subscription.GetVirtualMachineImages(options);
-            var optionsAsyncPageable = subscription.GetVirtualMachineImagesAsync(options);
-
-            Assert.IsNotNull(pageable);
-            Assert.IsNotNull(asyncPageable);
-            Assert.IsNotNull(optionsPageable);
-            Assert.IsNotNull(optionsAsyncPageable);
-        }
-
-        private sealed class ReproComputeSubscriptionResource : MockableComputeSubscriptionResource
-        {
-            public override Pageable<VirtualMachineImageBase> GetVirtualMachineImages(Azure.Core.AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-                => Pageable<VirtualMachineImageBase>.FromPages(Array.Empty<Page<VirtualMachineImageBase>>());
-
-            public override AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(Azure.Core.AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-                => AsyncPageable<VirtualMachineImageBase>.FromPages(Array.Empty<Page<VirtualMachineImageBase>>());
+            var count = 0;
+            await foreach (var image in asyncPageable)
+            {
+                count++;
+            }
+            Assert.AreEqual(0, count);
         }
     }
 }
