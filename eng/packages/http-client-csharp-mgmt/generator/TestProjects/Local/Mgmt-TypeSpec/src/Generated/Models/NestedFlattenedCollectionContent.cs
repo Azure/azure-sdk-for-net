@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
@@ -24,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             Argument.AssertNotNull(resourceValues, nameof(resourceValues));
 
-            Properties = new NestedFlattenedCollectionProperties(resourceValues);
+            Properties = new NestedFlattenedCollectionProperties(resourceValues.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="NestedFlattenedCollectionContent"/>. </summary>
