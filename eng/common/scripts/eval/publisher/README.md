@@ -51,6 +51,7 @@ off for every consumer; this PR does not turn on scheduled production writes.
 | --- | --- |
 | `createDashboardBundle` | Prepare/retain a ZIP even without uploading; enabled in the workflow entrypoint |
 | `publishDashboardResults` | Explicitly enable direct Blob publication |
+| `allowAzureStorageNetworkAccess` | Separately opt into the documented `AzureStorage` network-isolation policy for this trusted publishing run; default `false` |
 | `storageServiceConnection` | Existing Azure Resource Manager service connection; workflow example uses `eval-dashboard-sc` |
 | `storageContainerUrl` | Normal HTTPS container URL, with no SAS or keys |
 | `notifyDashboard` | Optional small cache-refresh signal after durable storage; default `false` |
@@ -66,6 +67,35 @@ Publication is excluded from PR validation, non-internal projects and
 against the trusted **feature branch**, not the PR validation/merge ref. Keep
 Azure DevOps service-connection approvals and checks in place.
 
+### Opt-in network policy
+
+The [1ES Network Isolation guide](https://aka.ms/1es/netiso/pipelinetemplates)
+documents `AzureStorage` as a shared **allow** policy selectable through
+`parameters.settings.networkIsolationPolicy`. On this repository's workflow,
+setting `allowAzureStorageNetworkAccess=true` **and**
+`publishDashboardResults=true` requests:
+
+`DefaultDeny, CFSClean, CFSClean2, CFSClean3, AzureStorage`
+
+Network isolation remains enforced. No `Permissive` fallback, process/proxy
+workaround, extra role grant, storage firewall edit or account key is involved.
+The opt-in is ignored for PR validation, pull refs and non-internal projects.
+Unchanged consumers retain their existing policy lists. Cross-repo consumers
+enabling this option need the matching `AllowAzureStorage` parameter support in
+their repo-owned 1ES redirect; it is not forwarded when the opt-in is off.
+
+**Scope:** this permits network access to Azure Storage generally from **all
+processes in the pipeline**, not only the Summary job, one account or one
+container. It does not grant Azure RBAC access. Obtain the pipeline owner's
+approval for that scope; a central custom endpoint/process rule remains the
+narrower alternative. Policy changes may create an SFI item per the 1ES guide.
+Do not use `networkIsolationAdditionalDomainAllowList`: that is Agency-only.
+
+The first two synthetic pilots failed because the agent blocked the Node Blob
+connection before any HTTP response. Selecting this documented policy is an
+explicit configuration change, not a retry through another identity or network.
+Verify the effective policy list and upload result in the next approved run.
+
 ### Manual no-LLM smoke test for workflow pipeline 8255
 
 After the draft branch is pushed, open the existing workflow pipeline and select
@@ -75,6 +105,7 @@ After the draft branch is pushed, open the existing workflow pipeline and select
 | --- | --- |
 | `storageSmokeTest` | `true` |
 | `publishDashboardResults` | `true` |
+| `allowAzureStorageNetworkAccess` | `true`, after approving the service-level scope above |
 | `storageServiceConnection` | `eval-dashboard-sc` |
 | `storageContainerUrl` | `https://evaltestsummary.blob.core.windows.net/vally-results` |
 | `notifyDashboard` | `false` |
