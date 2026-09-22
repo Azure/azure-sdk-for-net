@@ -13,6 +13,7 @@ using Azure.ResourceManager.TenantActivityLogAlerts;
 
 namespace Azure.ResourceManager.TenantActivityLogAlerts.Models
 {
+    /// <summary> An Azure Activity Log Alert rule. </summary>
     internal partial class AlertRuleProperties : IJsonModel<AlertRuleProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AlertRuleProperties"/> for deserialization. </summary>
