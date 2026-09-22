@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         private async Task<ServiceGroupMemberRelationshipResource> CreateRelationshipAsync(
             ServiceGroupMemberRelationshipCollection collection,
             string name,
-            ResourceIdentifier sourceId,
-            ResourceIdentifier targetId)
+            ResourceIdentifier memberResourceId,
+            ResourceIdentifier serviceGroupId)
         {
             var data = new ServiceGroupMemberRelationshipData
             {
-                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(sourceId, targetId, null, null, null, null)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipPropertiesV2(serviceGroupId, memberResourceId, null, null, null, null)
             };
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             return lro.Value;

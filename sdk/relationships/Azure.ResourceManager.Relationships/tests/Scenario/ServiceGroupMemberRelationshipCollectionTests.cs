@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             }
         }
 
-        private ServiceGroupMemberRelationshipData CreateServiceGroupMemberRelationshipData(ResourceIdentifier sourceId, ResourceIdentifier targetId)
+        private ServiceGroupMemberRelationshipData CreateServiceGroupMemberRelationshipData(ResourceIdentifier memberResourceId, ResourceIdentifier serviceGroupId)
         {
             return new ServiceGroupMemberRelationshipData
             {
-                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(sourceId, targetId)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipPropertiesV2(serviceGroupId, memberResourceId)
             };
         }
 
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.IsNotNull(_relationship.Data);
             Assert.AreEqual(relationshipName, _relationship.Data.Name);
             Assert.AreEqual(ServiceGroupMemberRelationshipResource.ResourceType, _relationship.Data.ResourceType);
-            Assert.AreEqual(_source.Id, _relationship.Data.Properties.SourceId);
-            Assert.AreEqual(_target.Id, _relationship.Data.Properties.TargetId);
+            Assert.AreEqual(_target.Id, _relationship.Data.Properties.SourceId);
+            Assert.AreEqual(_source.Id, _relationship.Data.Properties.TargetId);
         }
 
         [RecordedTest]
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.IsNotNull(relationship.Value.Data);
             Assert.AreEqual(relationshipName, relationship.Value.Data.Name);
             Assert.AreEqual(ServiceGroupMemberRelationshipResource.ResourceType, relationship.Value.Data.ResourceType);
-            Assert.AreEqual(_source.Id, relationship.Value.Data.Properties.SourceId);
-            Assert.AreEqual(_target.Id, relationship.Value.Data.Properties.TargetId);
+            Assert.AreEqual(_target.Id, relationship.Value.Data.Properties.SourceId);
+            Assert.AreEqual(_source.Id, relationship.Value.Data.Properties.TargetId);
         }
 
         [RecordedTest]
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.IsNotNull(_relationship);
             Assert.AreEqual(relationshipName, _relationship.Data.Name);
             Assert.AreEqual(ServiceGroupMemberRelationshipResource.ResourceType, _relationship.Data.ResourceType);
-            Assert.AreEqual(DefaultSubscription.Id, _relationship.Data.Properties.SourceId);
-            Assert.AreEqual(_target.Id, _relationship.Data.Properties.TargetId);
+            Assert.AreEqual(_target.Id, _relationship.Data.Properties.SourceId);
+            Assert.AreEqual(DefaultSubscription.Id, _relationship.Data.Properties.TargetId);
         }
 
         /// <summary>
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.IsNotNull(_relationship);
             Assert.AreEqual(relationshipName, _relationship.Data.Name);
             Assert.AreEqual(ServiceGroupMemberRelationshipResource.ResourceType, _relationship.Data.ResourceType);
-            Assert.AreEqual(vault.Id, _relationship.Data.Properties.SourceId);
-            Assert.AreEqual(_target.Id, _relationship.Data.Properties.TargetId);
+            Assert.AreEqual(_target.Id, _relationship.Data.Properties.SourceId);
+            Assert.AreEqual(vault.Id, _relationship.Data.Properties.TargetId);
         }
 
         /// <summary>
-        /// The service rejects a ServiceGroupMember relationship whose targetId does not point to a
+        /// The service rejects a ServiceGroupMember relationship whose sourceId does not point to a
         /// Service Group resource (InvalidTargetScope).
         /// Corresponds to service-side test: Put_TargetIsNotAServiceGroup_BadRequestAsync.
         /// </summary>
@@ -197,10 +197,10 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             var collection = Client.GetServiceGroupMemberRelationships(_source.Id);
             string relationshipName = Recording.GenerateAssetName("sgm-bad-target-");
 
-            // Pass a resource group ID as targetId — only Service Group IDs are valid targets.
+            // Pass a resource group ID as sourceId - only Service Group IDs are valid sources.
             var data = new ServiceGroupMemberRelationshipData
             {
-                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(_source.Id, _source.Id)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipPropertiesV2(_source.Id, _source.Id)
             };
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         }
 
         /// <summary>
-        /// The service rejects a ServiceGroupMember relationship whose targetId points to a
+        /// The service rejects a ServiceGroupMember relationship whose sourceId points to a
         /// Service Group that does not exist (ServiceGroupNotExist).
         /// Corresponds to service-side test: Put_ServiceGroupNotExist_BadRequestAsync.
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
 
             var data = new ServiceGroupMemberRelationshipData
             {
-                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(_source.Id, nonExistentSgId)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipPropertiesV2(nonExistentSgId, _source.Id)
             };
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
