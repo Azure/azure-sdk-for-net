@@ -1,0 +1,6 @@
+directory: specification/education/resource-manager/Microsoft.Education/Education
+commit: 4564b787ab7787add4900d2cd592cdea6ea39a11
+repo: cxznmhdcxz/azure-rest-api-specs
+additionalDirectories:
+
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
