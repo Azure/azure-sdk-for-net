@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("peerings"u8);
                 writer.WriteStartArray();
-                foreach (PeeringHealth item in Peerings)
+                foreach (ExpressRouteCircuitPeeringHealth item in Peerings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IList<PeeringHealth> peerings = default;
+            IList<ExpressRouteCircuitPeeringHealth> peerings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<PeeringHealth> array = new List<PeeringHealth>();
+                    List<ExpressRouteCircuitPeeringHealth> array = new List<ExpressRouteCircuitPeeringHealth>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PeeringHealth.DeserializePeeringHealth(item, options));
+                        array.Add(ExpressRouteCircuitPeeringHealth.DeserializeExpressRouteCircuitPeeringHealth(item, options));
                     }
                     peerings = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SourcePortStats(peerings ?? new ChangeTrackingList<PeeringHealth>(), additionalBinaryDataProperties);
+            return new SourcePortStats(peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringHealth>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.Network.Mocking
             return new ApplicationSecurityGroupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AuthenticationPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="IdentityIntegrationAuthenticationPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthenticationPolicyResource"/> object. </returns>
-        public virtual AuthenticationPolicyResource GetAuthenticationPolicyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IdentityIntegrationAuthenticationPolicyResource"/> object. </returns>
+        public virtual IdentityIntegrationAuthenticationPolicyResource GetIdentityIntegrationAuthenticationPolicyResource(ResourceIdentifier id)
         {
-            AuthenticationPolicyResource.ValidateResourceId(id);
-            return new AuthenticationPolicyResource(Client, id);
+            IdentityIntegrationAuthenticationPolicyResource.ValidateResourceId(id);
+            return new IdentityIntegrationAuthenticationPolicyResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="AzureFirewallResource"/> along with the instance operations that can be performed on it but with no data. </summary>

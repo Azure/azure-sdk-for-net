@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="AuthenticationPolicyListResult"/>. </summary>
         /// <param name="value"> The AuthenticationPolicy items on this page. </param>
-        internal AuthenticationPolicyListResult(IEnumerable<AuthenticationPolicyData> value)
+        internal AuthenticationPolicyListResult(IEnumerable<IdentityIntegrationAuthenticationPolicyData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="value"> The AuthenticationPolicy items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthenticationPolicyListResult(IList<AuthenticationPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthenticationPolicyListResult(IList<IdentityIntegrationAuthenticationPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The AuthenticationPolicy items on this page. </summary>
         [WirePath("value")]
-        public IList<AuthenticationPolicyData> Value { get; }
+        public IList<IdentityIntegrationAuthenticationPolicyData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

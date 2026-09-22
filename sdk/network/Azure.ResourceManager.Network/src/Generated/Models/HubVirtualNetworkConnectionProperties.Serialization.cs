@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("routingConfiguration"u8);
                 writer.WriteObjectValue(RoutingConfiguration, options);
             }
-            if (Optional.IsDefined(EnableOnlyIPv6PeeringValue))
+            if (Optional.IsDefined(IsOnlyIPv6PeeringEnabled))
             {
                 writer.WritePropertyName("enableOnlyIPv6Peering"u8);
-                writer.WriteBooleanValue(EnableOnlyIPv6PeeringValue.Value);
+                writer.WriteBooleanValue(IsOnlyIPv6PeeringEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource connectionPolicy = default;
             bool? enableInternetSecurity = default;
             RoutingConfigurationNfv routingConfiguration = default;
-            bool? enableOnlyIPv6PeeringValue = default;
+            bool? isOnlyIPv6PeeringEnabled = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    enableOnlyIPv6PeeringValue = prop.Value.GetBoolean();
+                    isOnlyIPv6PeeringEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                 connectionPolicy,
                 enableInternetSecurity,
                 routingConfiguration,
-                enableOnlyIPv6PeeringValue,
+                isOnlyIPv6PeeringEnabled,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

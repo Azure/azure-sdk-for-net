@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("peerings"u8);
                 writer.WriteStartArray();
-                foreach (PeeringHealth item in Peerings)
+                foreach (ExpressRouteCircuitPeeringHealth item in Peerings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
             string status = default;
             string phase = default;
             string failureReason = default;
-            IList<PeeringHealth> peerings = default;
+            IList<ExpressRouteCircuitPeeringHealth> peerings = default;
             string sourcePortId = default;
             SourcePortStats sourcePortStats = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<PeeringHealth> array = new List<PeeringHealth>();
+                    List<ExpressRouteCircuitPeeringHealth> array = new List<ExpressRouteCircuitPeeringHealth>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PeeringHealth.DeserializePeeringHealth(item, options));
+                        array.Add(ExpressRouteCircuitPeeringHealth.DeserializeExpressRouteCircuitPeeringHealth(item, options));
                     }
                     peerings = array;
                     continue;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network.Models
                 status,
                 phase,
                 failureReason,
-                peerings ?? new ChangeTrackingList<PeeringHealth>(),
+                peerings ?? new ChangeTrackingList<ExpressRouteCircuitPeeringHealth>(),
                 sourcePortId,
                 sourcePortStats,
                 additionalBinaryDataProperties);

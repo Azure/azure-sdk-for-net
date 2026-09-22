@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(TargetPeeringLocation);
             writer.WritePropertyName("targetPortMapping"u8);
             writer.WriteStartArray();
-            foreach (PortMapping item in TargetPortMapping)
+            foreach (ExpressRouteCircuitPortMapping item in TargetPortMapping)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,22 +141,22 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string targetPeeringLocation = default;
-            IList<PortMapping> targetPortMapping = default;
+            AzureLocation targetPeeringLocation = default;
+            IList<ExpressRouteCircuitPortMapping> targetPortMapping = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("targetPeeringLocation"u8))
                 {
-                    targetPeeringLocation = prop.Value.GetString();
+                    targetPeeringLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetPortMapping"u8))
                 {
-                    List<PortMapping> array = new List<PortMapping>();
+                    List<ExpressRouteCircuitPortMapping> array = new List<ExpressRouteCircuitPortMapping>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PortMapping.DeserializePortMapping(item, options));
+                        array.Add(ExpressRouteCircuitPortMapping.DeserializeExpressRouteCircuitPortMapping(item, options));
                     }
                     targetPortMapping = array;
                     continue;

@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="SourcePortStats"/>. </summary>
         internal SourcePortStats()
         {
-            Peerings = new ChangeTrackingList<PeeringHealth>();
+            Peerings = new ChangeTrackingList<ExpressRouteCircuitPeeringHealth>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SourcePortStats"/>. </summary>
         /// <param name="peerings"> The peering health information from the source port. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourcePortStats(IList<PeeringHealth> peerings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SourcePortStats(IList<ExpressRouteCircuitPeeringHealth> peerings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Peerings = peerings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The peering health information from the source port. </summary>
         [WirePath("peerings")]
-        public IList<PeeringHealth> Peerings { get; } = new ChangeTrackingList<PeeringHealth>();
+        public IList<ExpressRouteCircuitPeeringHealth> Peerings { get; } = new ChangeTrackingList<ExpressRouteCircuitPeeringHealth>();
     }
 }

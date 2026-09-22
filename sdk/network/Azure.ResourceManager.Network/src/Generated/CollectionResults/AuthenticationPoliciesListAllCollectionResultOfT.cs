@@ -14,7 +14,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    internal partial class AuthenticationPoliciesListAllCollectionResultOfT : Pageable<AuthenticationPolicyData>
+    internal partial class AuthenticationPoliciesListAllCollectionResultOfT : Pageable<IdentityIntegrationAuthenticationPolicyData>
     {
         private readonly AuthenticationPolicies _client;
         private readonly Guid _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AuthenticationPoliciesListAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<AuthenticationPolicyData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<IdentityIntegrationAuthenticationPolicyData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
                 }
                 AuthenticationPolicyListResult result = AuthenticationPolicyListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<AuthenticationPolicyData>.FromValues((IReadOnlyList<AuthenticationPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<IdentityIntegrationAuthenticationPolicyData>.FromValues((IReadOnlyList<IdentityIntegrationAuthenticationPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

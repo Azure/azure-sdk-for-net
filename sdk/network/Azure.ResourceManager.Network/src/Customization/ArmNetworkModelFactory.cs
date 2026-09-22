@@ -15,7 +15,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the ArmNetworkModelFactory type. </summary>
-#pragma warning disable CS0618 // The legacy type is intentionally referenced to suppress and replace its generated overload.
     [CodeGenSuppress("EffectiveBaseSecurityAdminRule", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(IEnumerable<NetworkManagerSecurityGroupItem>), typeof(IEnumerable<NetworkConfigurationGroup>), typeof(string))]
     [CodeGenSuppress("PeerRouteList", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?))]
     [CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(ResourceIdentifier), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IEnumerable<EffectiveNetworkSecurityRule>), typeof(string))]
@@ -23,17 +22,18 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(NetworkSubResource), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IEnumerable<EffectiveNetworkSecurityRule>), typeof(string))]
     // The generated factory signature includes the internal ApplicationGatewayForContainersReferenceDefinition helper type,
     // which would make a public method less accessible than one of its parameters.
+    [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(ETag?))]
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(WebApplicationFirewallPolicyTier?), typeof(ETag?))]
-    [CodeGenSuppress("HubVirtualNetworkConnectionData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(bool?), typeof(bool?), typeof(bool?), typeof(RoutingConfigurationNfv), typeof(EnableOnlyIPv6PeeringState?), typeof(NetworkProvisioningState?), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
-#pragma warning restore CS0618
-        /// <summary> Initializes a legacy hub virtual network connection resource model. </summary>
+        // Restores the released enum-shaped factory overload and delegates it to the canonical overload that accepts
+        // the Boolean IsOnlyIPv6PeeringEnabled value.
+        /// <summary> Initializes a new instance of <see cref="Azure.ResourceManager.Network.HubVirtualNetworkConnectionData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This overload is deprecated and is no longer supported by the service.")]
         public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, EnableOnlyIPv6PeeringState? enableOnlyIPv6Peering = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
         {
-            bool? enableOnlyIPv6PeeringValue = enableOnlyIPv6Peering.HasValue
+            bool? isOnlyIPv6PeeringEnabled = enableOnlyIPv6Peering.HasValue
                 ? enableOnlyIPv6Peering.Value == EnableOnlyIPv6PeeringState.Enabled
                 : default;
 
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
                 allowRemoteVnetToUseHubVnetGateways,
                 enableInternetSecurity,
                 routingConfiguration,
-                enableOnlyIPv6PeeringValue,
+                isOnlyIPv6PeeringEnabled,
                 provisioningState,
                 remoteVirtualNetworkId,
                 connectionPolicyId,
@@ -127,14 +127,22 @@ namespace Azure.ResourceManager.Network.Models
             return new PeerRoute();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Network.NetworkManagerConnectionData"/>. </summary>
+        // Adds the model factory method omitted for the custom canonical shared network manager connection model.
+        /// <summary> Initializes a new instance of <see cref="Azure.ResourceManager.Network.NetworkManagerConnectionData"/>. </summary>
         public static NetworkManagerConnectionData NetworkManagerConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier networkManagerId = default, ScopeConnectionState? connectionState = default, string description = default, ETag? etag = default)
         {
-            return new NetworkManagerConnectionData
-            {
-                NetworkManagerId = networkManagerId,
-                Description = description
-            };
+            var properties = new NetworkManagerConnectionProperties(networkManagerId, connectionState, description, default);
+            return new NetworkManagerConnectionData(id, name, resourceType, systemData, properties, etag, default);
+        }
+
+        // Restores the released subscription-specific factory API over the canonical shared connection model.
+        /// <summary> Initializes a new instance of <see cref="Azure.ResourceManager.Network.SubscriptionNetworkManagerConnectionData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete. Please use NetworkManagerConnectionData instead.")]
+        public static SubscriptionNetworkManagerConnectionData SubscriptionNetworkManagerConnectionData(ResourceIdentifier id = default, string name = default, string type = default, string eTag = default, ResourceIdentifier networkManagerId = default, ScopeConnectionState? connectionState = default, string description = default, SystemData systemData = default)
+        {
+            var properties = new NetworkManagerConnectionProperties(networkManagerId, connectionState, description, default);
+            return new SubscriptionNetworkManagerConnectionData(id, name, type, eTag, default, properties, systemData);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeerRouteList"/>. </summary>
@@ -146,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="asPath"> The route's AS path sequence. </param>
         /// <param name="weight"> The route's weight. </param>
         /// <returns> A new <see cref="Models.PeerRouteList"/> instance for mocking. </returns>
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release, please use `ArmNetworkModelFactory.PeerRoute` instead.", false)]
+        [Obsolete("This method is obsolete and will be removed in a future release, please use `ArmNetworkModelFactory.PeerRoute` instead.", false)]
         public static PeerRouteList PeerRouteList(string localAddress = default, string network = default, string nextHop = default, string sourcePeer = default, string origin = default, string asPath = default, int? weight = default)
         {
             return new PeerRouteList(localAddress, network, nextHop, sourcePeer, origin, asPath, weight, default);

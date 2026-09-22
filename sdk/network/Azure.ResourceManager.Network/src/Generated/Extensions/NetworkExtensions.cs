@@ -119,21 +119,21 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AuthenticationPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="IdentityIntegrationAuthenticationPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetAuthenticationPolicyResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetIdentityIntegrationAuthenticationPolicyResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AuthenticationPolicyResource"/> object. </returns>
-        public static AuthenticationPolicyResource GetAuthenticationPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IdentityIntegrationAuthenticationPolicyResource"/> object. </returns>
+        public static IdentityIntegrationAuthenticationPolicyResource GetIdentityIntegrationAuthenticationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableNetworkArmClient(client).GetAuthenticationPolicyResource(id);
+            return GetMockableNetworkArmClient(client).GetIdentityIntegrationAuthenticationPolicyResource(id);
         }
 
         /// <summary>
@@ -2805,27 +2805,27 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets a collection of AuthenticationPolicies in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of IdentityIntegrationAuthenticationPolicies in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetAuthenticationPolicies()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetIdentityIntegrationAuthenticationPolicies()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of AuthenticationPolicies and their operations over a AuthenticationPolicyResource. </returns>
-        public static AuthenticationPolicyCollection GetAuthenticationPolicies(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of IdentityIntegrationAuthenticationPolicies and their operations over a IdentityIntegrationAuthenticationPolicyResource. </returns>
+        public static IdentityIntegrationAuthenticationPolicyCollection GetIdentityIntegrationAuthenticationPolicies(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAuthenticationPolicies();
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetIdentityIntegrationAuthenticationPolicies();
         }
 
         /// <summary>
         /// Retrieve the authentication policy with specified name within a resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetAuthenticationPolicyAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetIdentityIntegrationAuthenticationPolicyAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2833,18 +2833,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AuthenticationPolicyResource>> GetAuthenticationPolicyAsync(this ResourceGroupResource resourceGroupResource, string authenticationPolicyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IdentityIntegrationAuthenticationPolicyResource>> GetIdentityIntegrationAuthenticationPolicyAsync(this ResourceGroupResource resourceGroupResource, string authenticationPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAuthenticationPolicyAsync(authenticationPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetIdentityIntegrationAuthenticationPolicyAsync(authenticationPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Retrieve the authentication policy with specified name within a resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetAuthenticationPolicy(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetIdentityIntegrationAuthenticationPolicy(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -2852,11 +2852,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AuthenticationPolicyResource> GetAuthenticationPolicy(this ResourceGroupResource resourceGroupResource, string authenticationPolicyName, CancellationToken cancellationToken = default)
+        public static Response<IdentityIntegrationAuthenticationPolicyResource> GetIdentityIntegrationAuthenticationPolicy(this ResourceGroupResource resourceGroupResource, string authenticationPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAuthenticationPolicy(authenticationPolicyName, cancellationToken);
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetIdentityIntegrationAuthenticationPolicy(authenticationPolicyName, cancellationToken);
         }
 
         /// <summary>
@@ -6291,36 +6291,36 @@ namespace Azure.ResourceManager.Network
         /// Gets all the authentication policies in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAuthenticationPoliciesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetIdentityIntegrationAuthenticationPoliciesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AuthenticationPolicyResource> GetAuthenticationPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IdentityIntegrationAuthenticationPolicyResource> GetIdentityIntegrationAuthenticationPoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAuthenticationPoliciesAsync(cancellationToken);
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetIdentityIntegrationAuthenticationPoliciesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Gets all the authentication policies in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetAuthenticationPolicies(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetIdentityIntegrationAuthenticationPolicies(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AuthenticationPolicyResource> GetAuthenticationPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IdentityIntegrationAuthenticationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IdentityIntegrationAuthenticationPolicyResource> GetIdentityIntegrationAuthenticationPolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetAuthenticationPolicies(cancellationToken);
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetIdentityIntegrationAuthenticationPolicies(cancellationToken);
         }
 
         /// <summary>

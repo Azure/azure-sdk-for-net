@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the authentication policy resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the authentication policy resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthenticationPolicyPropertiesFormat(UserTrustProviderType userTrustProviderType, OnUnauthenticatedRequest? onUnauthenticatedRequest, AuthenticationProviderProperties authenticationProperties, IReadOnlyList<string> associatedResources, NetworkProvisioningState? provisioningState, string resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AuthenticationPolicyPropertiesFormat(UserTrustProviderType userTrustProviderType, UnauthenticatedRequestAction? onUnauthenticatedRequest, AuthenticationProviderProperties authenticationProperties, IReadOnlyList<string> associatedResources, NetworkProvisioningState? provisioningState, string resourceGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserTrustProviderType = userTrustProviderType;
             OnUnauthenticatedRequest = onUnauthenticatedRequest;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The action to take when a request is unauthenticated. When omitted, user sign-in policies default to `authenticate` and JWT validation policies default to `deny`. </summary>
         [WirePath("onUnauthenticatedRequest")]
-        public OnUnauthenticatedRequest? OnUnauthenticatedRequest { get; set; }
+        public UnauthenticatedRequestAction? OnUnauthenticatedRequest { get; set; }
 
         /// <summary> The authentication provider configuration for the policy. </summary>
         [WirePath("authenticationProperties")]

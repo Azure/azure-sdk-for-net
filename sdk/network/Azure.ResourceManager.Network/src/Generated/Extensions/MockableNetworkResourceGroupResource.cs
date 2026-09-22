@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.Network.Mocking
             return GetApplicationSecurityGroups().Get(applicationSecurityGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AuthenticationPolicies in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of AuthenticationPolicies and their operations over a AuthenticationPolicyResource. </returns>
-        public virtual AuthenticationPolicyCollection GetAuthenticationPolicies()
+        /// <summary> Gets a collection of IdentityIntegrationAuthenticationPolicies in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of IdentityIntegrationAuthenticationPolicies and their operations over a IdentityIntegrationAuthenticationPolicyResource. </returns>
+        public virtual IdentityIntegrationAuthenticationPolicyCollection GetIdentityIntegrationAuthenticationPolicies()
         {
-            return GetCachedClient(client => new AuthenticationPolicyCollection(client, Id));
+            return GetCachedClient(client => new IdentityIntegrationAuthenticationPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authenticationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AuthenticationPolicyResource>> GetAuthenticationPolicyAsync(string authenticationPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IdentityIntegrationAuthenticationPolicyResource>> GetIdentityIntegrationAuthenticationPolicyAsync(string authenticationPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationPolicyName, nameof(authenticationPolicyName));
 
-            return await GetAuthenticationPolicies().GetAsync(authenticationPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetIdentityIntegrationAuthenticationPolicies().GetAsync(authenticationPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -264,11 +264,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="authenticationPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authenticationPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AuthenticationPolicyResource> GetAuthenticationPolicy(string authenticationPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<IdentityIntegrationAuthenticationPolicyResource> GetIdentityIntegrationAuthenticationPolicy(string authenticationPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authenticationPolicyName, nameof(authenticationPolicyName));
 
-            return GetAuthenticationPolicies().Get(authenticationPolicyName, cancellationToken);
+            return GetIdentityIntegrationAuthenticationPolicies().Get(authenticationPolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AzureFirewalls in the <see cref="ResourceGroupResource"/>. </summary>
