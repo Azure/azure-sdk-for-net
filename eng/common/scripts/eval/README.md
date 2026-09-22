@@ -76,6 +76,7 @@ cd ../../../..
 ./eng/common/scripts/eval/node_modules/.bin/vally lint .
 ```
 
-This matches the CI job step-for-step, so a green local run on the current lockfile means a green CI run.
+This uses the same locked CLI as CI. A passing local run does not validate the
+agent's credentials, network access, artifact permissions or live-service behavior.
 
 A global install (`npm install -g @microsoft/vally-cli@<version>`) still works for ad-hoc iteration, but it won't match the transitive dependency tree CI uses and isn't a substitute for the steps above when validating a version bump.
