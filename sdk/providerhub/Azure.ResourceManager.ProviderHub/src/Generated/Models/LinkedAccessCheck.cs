@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="linkedType"> The linked type. </param>
         /// <param name="options"> The options for the linked access check. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LinkedAccessCheck(string actionName, string linkedProperty, string linkedAction, string linkedActionVerb, string linkedType, LinkedAccessCheckOptions? options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LinkedAccessCheck(string actionName, string linkedProperty, string linkedAction, string linkedActionVerb, string linkedType, LinkedAccessCheckOption? options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionName = actionName;
             LinkedProperty = linkedProperty;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public string LinkedType { get; set; }
 
         /// <summary> The options for the linked access check. </summary>
-        public LinkedAccessCheckOptions? Options { get; }
+        public LinkedAccessCheckOption? Options { get; }
     }
 }

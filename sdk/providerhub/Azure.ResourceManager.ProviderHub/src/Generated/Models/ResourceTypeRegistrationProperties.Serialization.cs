@@ -329,10 +329,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("writeLock"u8);
                 writer.WriteObjectValue(WriteLock, options);
             }
-            if (Optional.IsDefined(SuperScaleEnabled))
+            if (Optional.IsDefined(IsSuperScaleEnabled))
             {
                 writer.WritePropertyName("superScaleEnabled"u8);
-                writer.WriteBooleanValue(SuperScaleEnabled.Value);
+                writer.WriteBooleanValue(IsSuperScaleEnabled.Value);
             }
             if (Optional.IsCollectionDefined(ResourceConcurrencyControlOptions))
             {
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ResourceTypeManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
             PrivateEndpointConfiguration privateEndpointConfiguration = default;
             WriteLockConfiguration writeLock = default;
-            bool? superScaleEnabled = default;
+            bool? isSuperScaleEnabled = default;
             IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions = default;
             ResourceGraphConfiguration resourceGraphConfiguration = default;
             ResourceProviderManagement management = default;
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    superScaleEnabled = prop.Value.GetBoolean();
+                    isSuperScaleEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("resourceConcurrencyControlOptions"u8))
@@ -1661,7 +1661,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 managedResourceGroupConfiguration,
                 privateEndpointConfiguration,
                 writeLock,
-                superScaleEnabled,
+                isSuperScaleEnabled,
                 resourceConcurrencyControlOptions ?? new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>(),
                 resourceGraphConfiguration,
                 management,

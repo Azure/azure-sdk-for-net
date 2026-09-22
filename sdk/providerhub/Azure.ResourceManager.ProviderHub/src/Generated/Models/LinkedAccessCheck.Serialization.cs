@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string linkedAction = default;
             string linkedActionVerb = default;
             string linkedType = default;
-            LinkedAccessCheckOptions? options0 = default;
+            LinkedAccessCheckOption? options0 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    options0 = new LinkedAccessCheckOptions(prop.Value.GetString());
+                    options0 = new LinkedAccessCheckOption(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

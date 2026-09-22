@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExcludeApplicationIdFromManifest))
+            if (Optional.IsDefined(IsApplicationIdExcludedFromManifest))
             {
                 writer.WritePropertyName("excludeApplicationIdFromManifest"u8);
-                writer.WriteBooleanValue(ExcludeApplicationIdFromManifest.Value);
+                writer.WriteBooleanValue(IsApplicationIdExcludedFromManifest.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             ApplicationOwnershipRole role = default;
             IList<string> resourceTypes = default;
-            bool? excludeApplicationIdFromManifest = default;
+            bool? isApplicationIdExcludedFromManifest = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    excludeApplicationIdFromManifest = prop.Value.GetBoolean();
+                    isApplicationIdExcludedFromManifest = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationDataAuthorization(role, resourceTypes ?? new ChangeTrackingList<string>(), excludeApplicationIdFromManifest, additionalBinaryDataProperties);
+            return new ApplicationDataAuthorization(role, resourceTypes ?? new ChangeTrackingList<string>(), isApplicationIdExcludedFromManifest, additionalBinaryDataProperties);
         }
     }
 }
