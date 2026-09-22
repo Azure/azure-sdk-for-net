@@ -49,10 +49,10 @@ off for every consumer; this PR does not turn on scheduled production writes.
 
 | Parameter | Meaning |
 | --- | --- |
-| `createDashboardBundle` | Prepare/retain a ZIP even without uploading; enabled in the workflow entrypoint |
+| `createDashboardBundle` | Prepare/retain a ZIP even without uploading; enabled in the workflow, skill and live entrypoints |
 | `publishDashboardResults` | Explicitly enable direct Blob publication |
 | `allowAzureStorageNetworkAccess` | Separately opt into the documented `AzureStorage` network-isolation policy for this trusted publishing run; default `false` |
-| `storageServiceConnection` | Existing Azure Resource Manager service connection; workflow example uses `eval-dashboard-sc` |
+| `storageServiceConnection` | Existing Azure Resource Manager service connection; tools entrypoints use `eval-dashboard-sc` |
 | `storageContainerUrl` | Normal HTTPS container URL, with no SAS or keys |
 | `notifyDashboard` | Optional small cache-refresh signal after durable storage; default `false` |
 | `dashboardUrl` / `dashboardAudience` | HTTPS origin and Entra API audience for notifications only |
@@ -71,7 +71,7 @@ Azure DevOps service-connection approvals and checks in place.
 
 The [1ES Network Isolation guide](https://aka.ms/1es/netiso/pipelinetemplates)
 documents `AzureStorage` as a shared **allow** policy selectable through
-`parameters.settings.networkIsolationPolicy`. On this repository's workflow,
+`parameters.settings.networkIsolationPolicy`. On this repository's eval entrypoints,
 setting `allowAzureStorageNetworkAccess=true` **and**
 `publishDashboardResults=true` requests:
 
@@ -125,9 +125,35 @@ without creating another archive. Check the Summary artifact's
 a later task fails. The smoke archive remains for inspection; no automatic
 deletion or retention permission is granted to the dashboard.
 
-For a real evaluation pilot, set `storageSmokeTest=false` and keep publication
-enabled. That runs the actual evaluations and may consume model quota; it is a
-separate deliberate run, not part of the synthetic storage test.
+### Real workflow, skill and live evaluations
+
+All three entrypoints can publish to the same account/container. The pipeline
+definition ID in each Blob name and the manifest's pipeline name keep their
+results separate; no second dashboard or staging container is required.
+
+| Pipeline | Definition | Entrypoint |
+| --- | --- | --- |
+| Workflow/tool evals | 8255 | `eng/common/pipelines/workflow-eval.yml` |
+| Skill evals | 8256 | `eng/common/pipelines/skill-eval.yml` |
+| Live workflow evals | 8246 | `eng/common/pipelines/live-eval.yml` |
+
+For each deliberate real run, select the feature branch containing the publisher
+and set `publishDashboardResults=true`, `allowAzureStorageNetworkAccess=true`,
+and `notifyDashboard=false`. The default service connection/container above are
+shared. In the workflow entrypoint, keep `storageSmokeTest=false`; skill and live
+do not expose a synthetic mode. These runs execute the existing full eval matrix
+and consume model quota. Workflow and skill use their mock MCP environments but
+still evaluate real model responses, not generated storage-smoke records.
+
+The live tier retains `UseAzSdkAuthentication=true`, the existing
+`opensource-api-connection` for live MCP calls, `AZSDKTOOLS_AGENT_TESTING=true`,
+and its evaluation score gate. The Blob publisher uses the separate
+`eval-dashboard-sc` connection. Complete failed evaluations are published before
+the gate; missing/incomplete shards still block publication. Do not change scores
+or omit failing scenarios to make a dashboard import pass.
+
+Publishing remains opt-in: manually queued feature-branch runs do not change
+the main-branch schedule or enable automatic production publication after merge.
 
 ## Optional notification and dashboard activation
 
@@ -139,9 +165,11 @@ the durable archive. Retry only the signal, or use startup/manual reconciliation
 Blob permission is not notification permission. The app's expected API audience,
 `Dashboard.Refresh` application role, client-ID allowlist, reader connectivity,
 and agent-to-dashboard route must be configured separately. Preserve existing
-viewer authentication and network restrictions. The deployed web-only dashboard
-currently has sync/notifications disabled, so successful storage publication
-alone does not make new charts visible. This PR does not change hosted settings.
+viewer authentication and network restrictions. Successful storage publication
+alone does not activate the dashboard reader. Configure hosted read-only sync
+separately; startup/manual reconciliation, or its optional slow timer, can import
+results while notifications stay disabled. This package does not change hosted
+settings.
 
 ## Local tests
 
