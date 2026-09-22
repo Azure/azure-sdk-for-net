@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string expressRoutePortAuthorizationApiVersion);
             _expressRoutePortAuthorizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRoutePortAuthorizationsRestClient = new ExpressRoutePortAuthorizations(_expressRoutePortAuthorizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRoutePortAuthorizationApiVersion ?? "2025-09-01");
+            _expressRoutePortAuthorizationsRestClient = new ExpressRoutePortAuthorizations(_expressRoutePortAuthorizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRoutePortAuthorizationApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -286,6 +287,102 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets the authorization key associated with the specified express route port authorization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}/listKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRoutePortAuthorizations_ListKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRoutePortAuthorizationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ExpressRouteAuthorizationKey>> GetKeysAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _expressRoutePortAuthorizationsClientDiagnostics.CreateScope("ExpressRoutePortAuthorizationResource.GetKeys");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExpressRouteAuthorizationKey> response = Response.FromValue(ExpressRouteAuthorizationKey.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the authorization key associated with the specified express route port authorization.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}/listKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRoutePortAuthorizations_ListKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRoutePortAuthorizationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ExpressRouteAuthorizationKey> GetKeys(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _expressRoutePortAuthorizationsClientDiagnostics.CreateScope("ExpressRoutePortAuthorizationResource.GetKeys");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExpressRouteAuthorizationKey> response = Response.FromValue(ExpressRouteAuthorizationKey.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Update a ExpressRoutePortAuthorization.
         /// <list type="bullet">
         /// <item>
@@ -298,7 +395,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -357,7 +454,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
