@@ -6,7 +6,7 @@ import { dirname, join, resolve } from "node:path";
 import { test } from "node:test";
 import { runInNewContext } from "node:vm";
 import { zipSync, strToU8 } from "fflate";
-import { blobName, boundedFile, pipelineManifest, prepareBundle, selectAttempts, sha256, validateBundle } from "../bundle.mjs";
+import { blobName, boundedFile, pipelineManifest, prepareBundle, selectAttempts, sha256, validateBundle, validateManifest } from "../bundle.mjs";
 import { containerUrl, publisherIdentity, publishBundle } from "../storage.mjs";
 import { DASHBOARD_NOTIFICATION_TARGET, notifyDashboard, refreshUrl } from "../notification.mjs";
 import { publicationFailure } from "../diagnostics.mjs";
@@ -149,6 +149,23 @@ test("same identity cannot overwrite different content, size or publisher", asyn
     assert.equal(f.objects.size, 1); assert.deepEqual(original.bytes, await readFile(f.path));
 });
 
+test("existing archives without valid metadata are conflicts, never adopted or overwritten", async (t) => {
+    const f = await fixture(t);
+    const options = { bundlePath: f.path, client: f.client, publisherId: "pipeline" };
+    const result = await publishBundle(options);
+    const saved = f.objects.get(result.blobName), original = structuredClone(saved.metadata);
+    for (const metadata of [undefined, null, {}, { ...original, schema: "2" },
+        { ...original, sha256: undefined }, { ...original, publisher: undefined }, { ...original, storedat: "invalid" }]) {
+        saved.metadata = metadata;
+        const attempts = f.requests.length;
+        await assert.rejects(publishBundle({ ...options, wait: () => assert.fail("Conflicts are not transient"),
+            onStored: () => assert.fail("Invalid archives cannot be reported stored"),
+            notify: () => assert.fail("Invalid archives cannot trigger refresh") }), { code: "submission_conflict" });
+        assert.equal(f.requests.length, attempts + 1);
+        assert.deepEqual(saved.bytes, await readFile(f.path));
+    }
+});
+
 test("permanent storage rejection does not retry, persist success or notify", async (t) => {
     const f = await fixture(t); let calls = 0;
     const client = { getBlockBlobClient() { return { async uploadData() { calls++; throw Object.assign(new Error("Forbidden"), { statusCode: 403 }); } }; } };
@@ -201,6 +218,19 @@ test("manifest preserves canonical identity and the real pipeline name", () => {
     }
     assert.equal(names.size, 3, "Three real pipelines remain distinct within the same container");
     for (const collection of ["http://dev.azure.com/org", "https://example.com/org", "https://dev.azure.com/org?sig=secret"]) assert.throws(() => pipelineManifest({ ...env, SYSTEM_COLLECTIONURI: collection }));
+});
+
+test("producer refuses identities that would produce a different canonical path in the reader", async (t) => {
+    assert.equal(blobName({ ...manifest, adoProject: "Test Project" }), "v1/azure-sdk/test%20project/8255/1001/1/dashboard-bundle.zip");
+    for (const key of ["adoOrganization", "adoProject", "repo", "pipeline", "runTimestamp"]) {
+        for (const padded of [` ${manifest[key]}`, `${manifest[key]} `]) {
+            assert.throws(() => validateManifest({ ...manifest, [key]: padded }), { code: "invalid_bundle" });
+        }
+    }
+    const f = await fixture(t);
+    await writeFile(f.path, zip({ "manifest.json": strToU8(JSON.stringify({ ...manifest, adoProject: " Internal " })) }));
+    await assert.rejects(publishBundle({ bundlePath: f.path, publisherId: "pipeline",
+        client: { getBlockBlobClient() { assert.fail("Invalid identity reached storage"); } } }), { code: "invalid_bundle" });
 });
 
 test("storage and notification URLs never accept embedded credentials or arbitrary paths", () => {

@@ -37,8 +37,11 @@ export function validateManifest(value) {
     requireValue(value?.schemaVersion === 1 && !Array.isArray(value), "A schema-v1 manifest is required.");
     for (const key of ["adoOrganization", "adoProject", "repo", "pipeline", "runTimestamp"]) {
         requireValue(typeof value[key] === "string" && value[key].trim().length > 0 && value[key].length <= 200 &&
-            !/[\u0000-\u001f\u007f]/.test(value[key]), "Manifest identity fields must be bounded non-empty strings.");
+            value[key] === value[key].trim() && !/[\u0000-\u001f\u007f]/.test(value[key]),
+        "Manifest identity fields must be bounded, trimmed non-empty strings.");
     }
+    // The reader trims identity fields before deriving its canonical Blob name.
+    // Reject padding here rather than publishing an archive the reader cannot import.
     requireValue(/^[a-z0-9][a-z0-9-]{0,99}$/.test(value.adoOrganization) &&
         !/[\\/:]/.test(value.adoProject) && !/^\.+$/.test(value.adoProject), "Invalid Azure DevOps organization/project identity.");
     for (const key of ["pipelineDefinitionId", "buildId"]) {
