@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(RecoverableDatabaseResource.ResourceType, out string recoverableDatabaseApiVersion);
             _recoverableDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", RecoverableDatabaseResource.ResourceType.Namespace, Diagnostics);
-            _recoverableDatabasesRestClient = new RecoverableDatabases(_recoverableDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoverableDatabaseApiVersion ?? "2025-02-01-preview");
+            _recoverableDatabasesRestClient = new RecoverableDatabases(_recoverableDatabasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoverableDatabaseApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,7 +204,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,7 +238,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +297,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,7 +356,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,7 +419,7 @@ namespace Azure.ResourceManager.Sql
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -483,5 +484,65 @@ namespace Azure.ResourceManager.Sql
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}Operation IdRecoverableDatabases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken)
+        {
+            return Exists(databaseName: databaseName, expand: default, filter: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}Operation IdRecoverableDatabases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<bool>> ExistsAsync(string databaseName, CancellationToken cancellationToken)
+        {
+            return ExistsAsync(databaseName: databaseName, expand: default, filter: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Gets a recoverable database, which is a resource representing a database's geo backup
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}Operation IdRecoverableDatabases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<RecoverableDatabaseResource> Get(string databaseName, CancellationToken cancellationToken)
+        {
+            return Get(databaseName: databaseName, expand: default, filter: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Gets a recoverable database, which is a resource representing a database's geo backup
+        ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/recoverableDatabases/{databaseName}Operation IdRecoverableDatabases_Get
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<RecoverableDatabaseResource>> GetAsync(string databaseName, CancellationToken cancellationToken)
+        {
+            return GetAsync(databaseName: databaseName, expand: default, filter: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

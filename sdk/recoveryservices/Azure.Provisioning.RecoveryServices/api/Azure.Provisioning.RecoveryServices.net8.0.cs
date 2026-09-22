@@ -35,7 +35,7 @@ namespace Azure.Provisioning.RecoveryServices
     {
         public DeletedVaultProperties() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> PurgeOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> VaultDeletionOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> VaultDeletedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> VaultId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -375,7 +375,7 @@ namespace Azure.Provisioning.RecoveryServices
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CompletedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> OperationId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceResourceId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -401,12 +401,12 @@ namespace Azure.Provisioning.RecoveryServices
     public partial class VaultUpgradeDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VaultUpgradeDetails() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastUpdatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Message { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> OperationId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PreviousResourceId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServices.VaultUpgradeState> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServices.VaultUpgradeTriggerType> TriggerType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> UpgradedResourceId { get { throw null; } }

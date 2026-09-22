@@ -11,7 +11,7 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Configures container network logs ingestion with Azure Monitor. Which network logs to ingest is controlled by the CRD found in the following links. No network logs are ingested by default. More information on container network logs can be found at https://aka.ms/ContainerNetworkLogsDoc. More information on configuring container network log can be found at https://aka.ms/acns/howtoenablecnl. If not specified, the default is Disabled. </summary>
+    /// <summary> Allowed values for container network logs ingestion with Azure Monitor. When `Enabled`, the specific log types ingested are controlled by the associated CRD; defaults to `Disabled`. See https://aka.ms/ContainerNetworkLogsDoc and https://aka.ms/acns/howtoenablecnl for details. </summary>
     public readonly partial struct ContainerNetworkLogs : IEquatable<ContainerNetworkLogs>
     {
         private readonly string _value;

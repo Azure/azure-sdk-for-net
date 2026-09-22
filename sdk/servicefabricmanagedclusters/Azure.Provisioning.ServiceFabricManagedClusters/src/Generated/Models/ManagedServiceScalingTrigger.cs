@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabricManagedClusters
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     /// </summary>
     public partial class ManagedServiceScalingTrigger : ProvisionableConstruct
     {
+        private BicepValue<ServiceScalingTriggerKind> _kind;
+
         /// <summary> Creates a new ManagedServiceScalingTrigger. </summary>
         public ManagedServiceScalingTrigger()
         {
+        }
+
+        /// <summary> Gets the Kind. </summary>
+        internal BicepValue<ServiceScalingTriggerKind> Kind
+        {
+            get
+            {
+                Initialize();
+                return _kind;
+            }
         }
 
         /// <summary> Define all the provisionable properties for ManagedServiceScalingTrigger. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _kind = DefineProperty<ServiceScalingTriggerKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

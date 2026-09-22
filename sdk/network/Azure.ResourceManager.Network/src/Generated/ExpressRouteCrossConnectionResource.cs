@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string expressRouteCrossConnectionApiVersion);
             _expressRouteCrossConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRouteCrossConnectionsRestClient = new ExpressRouteCrossConnections(_expressRouteCrossConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCrossConnectionApiVersion ?? "2025-07-01");
+            _expressRouteCrossConnectionsRestClient = new ExpressRouteCrossConnections(_expressRouteCrossConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCrossConnectionApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -285,6 +285,950 @@ namespace Azure.ResourceManager.Network
                     throw new RequestFailedException(response.GetRawResponse());
                 }
                 return Response.FromValue(new ExpressRouteCrossConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Commits the express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/commitCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_CommitCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to commit the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<MigrateExpressRouteCircuitHealthCheckResult>> CommitCircuitMigrationAsync(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.CommitCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateCommitCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Commits the express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/commitCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_CommitCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to commit the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<MigrateExpressRouteCircuitHealthCheckResult> CommitCircuitMigration(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.CommitCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateCommitCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets migration health information for an express route circuit cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/getCircuitMigrationInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_GetCircuitMigrationInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to get express route circuit migration information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<MigrateExpressRouteCircuitHealthCheckResult>> GetCircuitMigrationInfoAsync(WaitUntil waitUntil, MigrateExpressRouteCircuitValidateAndHealthCheckContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.GetCircuitMigrationInfo");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetCircuitMigrationInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets migration health information for an express route circuit cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/getCircuitMigrationInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_GetCircuitMigrationInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to get express route circuit migration information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<MigrateExpressRouteCircuitHealthCheckResult> GetCircuitMigrationInfo(WaitUntil waitUntil, MigrateExpressRouteCircuitValidateAndHealthCheckContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.GetCircuitMigrationInfo");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateGetCircuitMigrationInfoRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Executes the express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/migrateCircuit. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_MigrateCircuit. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to execute the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<MigrateExpressRouteCircuitHealthCheckResult>> MigrateCircuitAsync(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.MigrateCircuit");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateMigrateCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Executes the express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/migrateCircuit. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_MigrateCircuit. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to execute the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<MigrateExpressRouteCircuitHealthCheckResult> MigrateCircuit(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.MigrateCircuit");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateMigrateCircuitRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Prepares an express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/prepareCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_PrepareCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to prepare the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<MigrateExpressRouteCircuitHealthCheckResult>> PrepareCircuitMigrationAsync(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.PrepareCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreatePrepareCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Prepares an express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/prepareCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_PrepareCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to prepare the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<MigrateExpressRouteCircuitHealthCheckResult> PrepareCircuitMigration(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.PrepareCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreatePrepareCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restores BGP sessions as part of an express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/restoreBgpForCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_RestoreBgpForCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to restore BGP for the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<MigrateExpressRouteCircuitHealthCheckResult>> RestoreBgpForCircuitMigrationAsync(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.RestoreBgpForCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRestoreBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Restores BGP sessions as part of an express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/restoreBgpForCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_RestoreBgpForCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to restore BGP for the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<MigrateExpressRouteCircuitHealthCheckResult> RestoreBgpForCircuitMigration(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.RestoreBgpForCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRestoreBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Rolls back the express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/rollbackCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_RollbackCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to roll back the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<MigrateExpressRouteCircuitHealthCheckResult>> RollbackCircuitMigrationAsync(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.RollbackCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRollbackCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Rolls back the express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/rollbackCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_RollbackCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to roll back the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<MigrateExpressRouteCircuitHealthCheckResult> RollbackCircuitMigration(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.RollbackCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateRollbackCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Shuts down BGP sessions as part of an express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/shutDownBgpForCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_ShutDownBgpForCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to shut down BGP for the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<MigrateExpressRouteCircuitHealthCheckResult>> ShutDownBgpForCircuitMigrationAsync(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.ShutDownBgpForCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateShutDownBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Shuts down BGP sessions as part of an express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/shutDownBgpForCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_ShutDownBgpForCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to shut down BGP for the express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<MigrateExpressRouteCircuitHealthCheckResult> ShutDownBgpForCircuitMigration(WaitUntil waitUntil, MigrateExpressRouteCircuitContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.ShutDownBgpForCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateShutDownBgpForCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitHealthCheckResult>(
+                    new MigrateExpressRouteCircuitHealthCheckResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validates express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/validateCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_ValidateCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to validate express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<MigrateExpressRouteCircuitValidateResult>> ValidateCircuitMigrationAsync(WaitUntil waitUntil, MigrateExpressRouteCircuitValidateAndHealthCheckContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.ValidateCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateValidateCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NetworkArmOperation<MigrateExpressRouteCircuitValidateResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitValidateResult>(
+                    new MigrateExpressRouteCircuitValidateResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Validates express route circuit migration for a cross connection.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}/validateCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteCrossConnections_ValidateCircuitMigration. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteCrossConnectionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters supplied to validate express route circuit migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<MigrateExpressRouteCircuitValidateResult> ValidateCircuitMigration(WaitUntil waitUntil, MigrateExpressRouteCircuitValidateAndHealthCheckContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _expressRouteCrossConnectionsClientDiagnostics.CreateScope("ExpressRouteCrossConnectionResource.ValidateCircuitMigration");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteCrossConnectionsRestClient.CreateValidateCircuitMigrationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, MigrateExpressRouteCircuitValidateAndHealthCheckContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NetworkArmOperation<MigrateExpressRouteCircuitValidateResult> operation = new NetworkArmOperation<MigrateExpressRouteCircuitValidateResult>(
+                    new MigrateExpressRouteCircuitValidateResultOperationSource(),
+                    _expressRouteCrossConnectionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {

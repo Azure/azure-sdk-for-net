@@ -17,6 +17,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new LogSchedulePolicy. </summary>
         public LogSchedulePolicy()
         {
+            SchedulePolicyType.Assign("LogSchedulePolicy");
         }
 
         /// <summary> Gets or sets the ScheduleFrequencyInMins. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("schedulePolicyType", new string[] { "schedulePolicyType" }, defaultValue: "LogSchedulePolicy");
             _scheduleFrequencyInMins = DefineProperty<int>(nameof(ScheduleFrequencyInMins), new string[] { "scheduleFrequencyInMins" });
             DefineAdditionalProperties();
         }

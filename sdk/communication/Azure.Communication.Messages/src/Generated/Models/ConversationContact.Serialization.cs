@@ -14,7 +14,7 @@ namespace Azure.Communication.Messages
 {
     /// <summary>
     /// Details of an external platform contact.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CommunicationContact"/>, <see cref="BotContact"/>, and <see cref="WhatsAppContact"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BotContact"/>, <see cref="CommunicationContact"/>, and <see cref="WhatsAppContact"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConversationContact))]
     public abstract partial class ConversationContact : IJsonModel<ConversationContact>
@@ -132,10 +132,10 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "communication":
-                        return CommunicationContact.DeserializeCommunicationContact(element, options);
                     case "bot":
                         return BotContact.DeserializeBotContact(element, options);
+                    case "communication":
+                        return CommunicationContact.DeserializeCommunicationContact(element, options);
                     case "whatsApp":
                         return WhatsAppContact.DeserializeWhatsAppContact(element, options);
                 }

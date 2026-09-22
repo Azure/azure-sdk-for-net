@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(EndOn))
+            writer.WriteStringValue(StartsOn, "O");
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(PercentComplete))
             {
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string backupName = default;
             string backupMetadata = default;
             PostgreSqlExecutionStatus status = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset? endsOn = default;
             double? percentComplete = default;
             string errorCode = default;
             string errorMessage = default;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("percentComplete"u8))
@@ -256,8 +256,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 backupName,
                 backupMetadata,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 percentComplete,
                 errorCode,
                 errorMessage,

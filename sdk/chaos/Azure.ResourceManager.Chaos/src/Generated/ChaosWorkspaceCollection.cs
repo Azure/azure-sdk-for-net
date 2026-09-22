@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Chaos
         {
             TryGetApiVersion(ChaosWorkspaceResource.ResourceType, out string chaosWorkspaceApiVersion);
             _workspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosWorkspaceApiVersion ?? "2026-05-01-preview");
+            _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosWorkspaceApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Chaos
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

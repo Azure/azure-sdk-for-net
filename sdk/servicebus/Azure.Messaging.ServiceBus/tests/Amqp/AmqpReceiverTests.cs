@@ -120,6 +120,65 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         }
 
         /// <summary>
+        ///   Verifies that <see cref="AmqpReceiver.CloseAsync" /> completes normally under an already-canceled
+        ///   token when no links were ever opened. Both cancellation checks deliberately sit inside the link
+        ///   guards, so a receiver with nothing to tear down has no work to cancel and closes.
+        ///
+        ///   This is an intentional asymmetry with <c>AmqpSender.CloseAsync</c>, which checks the token
+        ///   unconditionally before inspecting its links. Hoisting a check to the top of this method to
+        ///   "complete the mirroring" would break this test, which is the point of pinning it.
+        /// </summary>
+        ///
+        [Test]
+        public void CloseWithCanceledTokenCompletesWhenNoLinksAreOpen()
+        {
+            var receiver = CreateReceiver();
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            Assert.That(async () => await receiver.CloseAsync(cancellationSource.Token),
+                Throws.Nothing,
+                "A receiver with no opened links has no work to cancel and should close.");
+
+            Assert.That(receiver.IsClosed, Is.True,
+                "The receiver should be marked as closed after a close that ran to completion.");
+
+            Assert.That(receiver.RequestResponseLockedMessages.IsDisposed, Is.True,
+                "A close that ran to completion should dispose the set of locked messages.");
+        }
+
+        /// <summary>
+        ///   Verifies that a later <see cref="AmqpReceiver.CloseAsync" /> cannot resurrect a receiver that is
+        ///   already closed: a caller that does not own the close returns through the guard rather than reaching
+        ///   the restore in the catch, so the flag and the disposed set both survive.
+        ///
+        ///   This pins the invariant, not the race. It closes sequentially, so it would also pass the former
+        ///   non-atomic implementation; the interleaving it describes needs two callers inside the claim window
+        ///   at once, which is why the claim is made with <see cref="Interlocked" />. That interleaving is not
+        ///   deterministically reproducible in a unit test.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CloseWithCanceledTokenDoesNotReopenAnAlreadyClosedReceiver()
+        {
+            var receiver = CreateReceiver();
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.Cancel();
+
+            await receiver.CloseAsync(CancellationToken.None);
+
+            Assert.That(async () => await receiver.CloseAsync(cancellationSource.Token),
+                Throws.Nothing,
+                "A close of an already-closed receiver should return through the guard rather than throw.");
+
+            Assert.That(receiver.IsClosed, Is.True,
+                "A canceled close must not clear the closed flag of a receiver that was already closed.");
+
+            Assert.That(receiver.RequestResponseLockedMessages.IsDisposed, Is.True,
+                "The set of locked messages must stay disposed once the close has completed.");
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="AmqpReceiver.ReceiveAsync" />
         ///   method.
         /// </summary>

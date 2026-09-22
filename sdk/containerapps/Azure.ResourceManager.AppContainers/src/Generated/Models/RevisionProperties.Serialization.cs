@@ -109,21 +109,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("trafficWeight"u8);
                 writer.WriteNumberValue(TrafficWeight.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Labels))
-            {
-                writer.WritePropertyName("labels"u8);
-                writer.WriteStartArray();
-                foreach (string item in Labels)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningError))
             {
                 writer.WritePropertyName("provisioningError"u8);
@@ -193,7 +178,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             bool? isActive = default;
             int? replicas = default;
             int? trafficWeight = default;
-            IReadOnlyList<string> labels = default;
             string provisioningError = default;
             ContainerAppRevisionHealthState? healthState = default;
             ContainerAppRevisionProvisioningState? provisioningState = default;
@@ -260,27 +244,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     trafficWeight = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("labels"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    labels = array;
-                    continue;
-                }
                 if (prop.NameEquals("provisioningError"u8))
                 {
                     provisioningError = prop.Value.GetString();
@@ -326,7 +289,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 isActive,
                 replicas,
                 trafficWeight,
-                labels ?? new ChangeTrackingList<string>(),
                 provisioningError,
                 healthState,
                 provisioningState,

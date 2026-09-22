@@ -1,0 +1,396 @@
+{
+  "name": "Response.BodyOrNoContent",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
+    {
+      "$id": "1",
+      "kind": "constant",
+      "name": "GetBodyAccept",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "GetBodyAccept1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "models": [
+    {
+      "$id": "5",
+      "kind": "model",
+      "name": "BlobLayout",
+      "apiVersions": [],
+      "namespace": "Response.BodyOrNoContent",
+      "crossLanguageDefinitionId": "Response.BodyOrNoContent.BlobLayout",
+      "usage": "Output,Json",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "BlobLayout"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "6",
+          "kind": "property",
+          "name": "content",
+          "apiVersions": [],
+          "serializedName": "content",
+          "type": {
+            "$id": "7",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Response.BodyOrNoContent.BlobLayout.content",
+          "serializationOptions": {
+            "json": {
+              "name": "content"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "8",
+      "kind": "client",
+      "name": "BodyOrNoContentClient",
+      "isExactName": false,
+      "namespace": "Response.BodyOrNoContent",
+      "doc": "Test for operations whose successful response is either a model body (200) or no content (204).",
+      "methods": [
+        {
+          "$id": "9",
+          "kind": "basic",
+          "name": "getBody",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "10",
+            "name": "getBody",
+            "isExactName": false,
+            "resourceName": "BodyOrNoContent",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "11",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "1"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Response.BodyOrNoContent.getBody.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "12",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Response.BodyOrNoContent.getBody.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "5"
+                },
+                "headers": [
+                  {
+                    "name": "requestId",
+                    "nameInResponse": "x-ms-request-id",
+                    "type": {
+                      "$id": "13",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    }
+                  }
+                ],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
+              },
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [
+                  {
+                    "name": "requestId",
+                    "nameInResponse": "x-ms-request-id",
+                    "type": {
+                      "$id": "14",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    }
+                  }
+                ],
+                "isErrorResponse": false,
+                "serializationOptions": {}
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/response/body-or-no-content/body",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Response.BodyOrNoContent.getBody",
+            "decorators": [],
+            "namespace": "Response.BodyOrNoContent"
+          },
+          "parameters": [
+            {
+              "$ref": "12"
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "5"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Response.BodyOrNoContent.getBody"
+        },
+        {
+          "$id": "15",
+          "kind": "basic",
+          "name": "getNoContent",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "16",
+            "name": "getNoContent",
+            "isExactName": false,
+            "resourceName": "BodyOrNoContent",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "17",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "3"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Response.BodyOrNoContent.getNoContent.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "18",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "3"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Response.BodyOrNoContent.getNoContent.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "5"
+                },
+                "headers": [
+                  {
+                    "name": "requestId",
+                    "nameInResponse": "x-ms-request-id",
+                    "type": {
+                      "$id": "19",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    }
+                  }
+                ],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
+              },
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [
+                  {
+                    "name": "requestId",
+                    "nameInResponse": "x-ms-request-id",
+                    "type": {
+                      "$id": "20",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    }
+                  }
+                ],
+                "isErrorResponse": false,
+                "serializationOptions": {}
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/response/body-or-no-content/no-content",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Response.BodyOrNoContent.getNoContent",
+            "decorators": [],
+            "namespace": "Response.BodyOrNoContent"
+          },
+          "parameters": [
+            {
+              "$ref": "18"
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "5"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Response.BodyOrNoContent.getNoContent"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "21",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "22",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "23",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Response.BodyOrNoContent.endpoint",
+          "isExactName": false
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Response.BodyOrNoContent",
+      "apiVersions": [],
+      "isMultiServiceClient": false
+    }
+  ]
+}

@@ -348,7 +348,7 @@ namespace Azure.Search.Documents.Models
         int? maxComplexCollectionFieldsPerIndex = null,
         int? maxComplexObjectsInCollectionsPerDocument = null,
         long? maxStoragePerIndexInBytes = null) =>
-        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes, null, additionalBinaryDataProperties: null);
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes, null, null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
         /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
@@ -362,7 +362,7 @@ namespace Azure.Search.Documents.Models
         int? maxFieldNestingDepthPerIndex,
         int? maxComplexCollectionFieldsPerIndex,
         int? maxComplexObjectsInCollectionsPerDocument) =>
-        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes: null, maxCumulativeIndexerRuntimeSeconds: null, additionalBinaryDataProperties: null);
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes: null, maxCumulativeIndexerRuntimeSeconds: null, maxVectorIndexSizePerIndexInBytes: null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
         /// <param name="counters"> Service level resource counters. </param>
@@ -644,6 +644,31 @@ namespace Azure.Search.Documents.Models
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties);
+        }
+
+        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
+        /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. </param>
+        /// <param name="oversampling"> Oversampling factor. </param>
+        /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. </param>
+        /// <param name="kind"> The kind of vector query being performed. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
+        {
+            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, kind: kind);
+        }
+
+        /// <summary> Initializes a new instance of KnowledgeSource. </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> The description of the knowledge source. </param>
+        /// <param name="kind"> The type of the knowledge source. </param>
+        /// <param name="eTag"> A string representing an ETag that can be used to perform optimistic concurrency control. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeSource KnowledgeSource(string name, string description, string kind, ETag? eTag, SearchResourceEncryptionKey encryptionKey)
+        {
+            return KnowledgeSource(name: name, description: description, kind: kind, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey);
         }
 
         /// <summary> Initializes a new instance of KnowledgeBaseActivityRecord. </summary>

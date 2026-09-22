@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             IList<LogicAppWorkflowEnvelopeData> value = default;
-            Uri nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,11 +158,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (prop.NameEquals("nextLink"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    nextLink = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

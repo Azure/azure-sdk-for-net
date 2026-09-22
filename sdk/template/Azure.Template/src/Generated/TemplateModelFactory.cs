@@ -25,11 +25,11 @@ namespace Azure.Template
 
         /// <summary> Faked shared model. </summary>
         /// <param name="tag"> The tag. </param>
-        /// <param name="createdAt"> The created date. </param>
+        /// <param name="createdOn"> The created date. </param>
         /// <returns> A new <see cref="Template.FakedSharedModel"/> instance for mocking. </returns>
-        public static FakedSharedModel FakedSharedModel(string tag = default, DateTimeOffset createdAt = default)
+        public static FakedSharedModel FakedSharedModel(string tag = default, DateTimeOffset createdOn = default)
         {
-            return new FakedSharedModel(tag, createdAt, additionalBinaryDataProperties: null);
+            return new FakedSharedModel(tag, createdOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Provides status details for long running operations. </summary>

@@ -485,7 +485,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    interimResponse = BinaryData.FromString(prop.Value.GetRawText());
+                    interimResponse = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("include"u8))
@@ -529,12 +529,12 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    turnDetection = BinaryData.FromString(prop.Value.GetRawText());
+                    turnDetection = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VoiceLiveSessionOptions(

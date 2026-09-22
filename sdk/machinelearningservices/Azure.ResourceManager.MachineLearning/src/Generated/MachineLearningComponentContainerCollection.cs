@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(MachineLearningComponentContainerResource.ResourceType, out string machineLearningComponentContainerApiVersion);
             _componentContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningComponentContainerResource.ResourceType.Namespace, Diagnostics);
-            _componentContainersRestClient = new ComponentContainers(_componentContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningComponentContainerApiVersion ?? "2026-03-15-preview");
+            _componentContainersRestClient = new ComponentContainers(_componentContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningComponentContainerApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -19,6 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<string> _endTime;
         private BicepValue<string> _startTime;
         private BicepValue<string> _timeZone;
+        private BicepValue<MachineLearningTriggerType> _triggerType;
 
         /// <summary> Creates a new MachineLearningTriggerBase. </summary>
         public MachineLearningTriggerBase()
@@ -70,6 +71,16 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> [Required]. </summary>
+        internal BicepValue<MachineLearningTriggerType> TriggerType
+        {
+            get
+            {
+                Initialize();
+                return _triggerType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for MachineLearningTriggerBase. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -77,6 +88,7 @@ namespace Azure.Provisioning.MachineLearning
             _endTime = DefineProperty<string>(nameof(EndTime), new string[] { "endTime" });
             _startTime = DefineProperty<string>(nameof(StartTime), new string[] { "startTime" });
             _timeZone = DefineProperty<string>(nameof(TimeZone), new string[] { "timeZone" });
+            _triggerType = DefineProperty<MachineLearningTriggerType>(nameof(TriggerType), new string[] { "triggerType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

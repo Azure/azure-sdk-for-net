@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
         /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
         /// <param name="query"> The Prometheus expression query. </param>
-        /// <param name="startOn"> The start evaluation date and time in ISO8601 format. </param>
-        /// <param name="endOn"> The end evaluation date and time in ISO8601 format. </param>
+        /// <param name="startsOn"> The start evaluation date and time in ISO8601 format. </param>
+        /// <param name="endsOn"> The end evaluation date and time in ISO8601 format. </param>
         /// <param name="step"> Query resolution step width in ISO8601 format. </param>
-        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query, DateTimeOffset startOn, DateTimeOffset endOn, string step) : base(title, description, status, linkToApi, datasources, grafanaExplorePath, query)
+        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string linkToApi, IEnumerable<string> datasources, string grafanaExplorePath, string query, DateTimeOffset startsOn, DateTimeOffset endsOn, string step) : base(title, description, status, linkToApi, datasources, grafanaExplorePath, query)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Step = step;
         }
 
@@ -42,21 +42,21 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
         /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
         /// <param name="query"> The Prometheus expression query. </param>
-        /// <param name="startOn"> The start evaluation date and time in ISO8601 format. </param>
-        /// <param name="endOn"> The end evaluation date and time in ISO8601 format. </param>
+        /// <param name="startsOn"> The start evaluation date and time in ISO8601 format. </param>
+        /// <param name="endsOn"> The end evaluation date and time in ISO8601 format. </param>
         /// <param name="step"> Query resolution step width in ISO8601 format. </param>
-        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string errorMessage, AlertsManagementType alertEnrichmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, DateTimeOffset startOn, DateTimeOffset endOn, string step) : base(title, description, status, errorMessage, alertEnrichmentType, additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
+        internal PrometheusRangeQuery(string title, string description, AlertsManagementStatus status, string errorMessage, AlertsManagementType alertEnrichmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string linkToApi, IList<string> datasources, string grafanaExplorePath, string query, DateTimeOffset startsOn, DateTimeOffset endsOn, string step) : base(title, description, status, errorMessage, alertEnrichmentType, additionalBinaryDataProperties, linkToApi, datasources, grafanaExplorePath, query)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Step = step;
         }
 
         /// <summary> The start evaluation date and time in ISO8601 format. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The end evaluation date and time in ISO8601 format. </summary>
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary> Query resolution step width in ISO8601 format. </summary>
         public string Step { get; }

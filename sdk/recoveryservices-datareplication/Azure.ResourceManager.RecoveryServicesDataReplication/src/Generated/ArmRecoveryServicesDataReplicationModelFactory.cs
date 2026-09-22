@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public static partial class ArmRecoveryServicesDataReplicationModelFactory
     {
 
+        /// <summary> Email configuration model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Email configuration model properties. </summary>
         /// <param name="sendToOwners"> Gets or sets a value indicating whether to send email to subscription administrator. </param>
         /// <param name="customEmailAddresses"> Gets or sets the custom email address for sending emails. </param>
         /// <param name="locale"> Gets or sets the locale for the email notification. </param>
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationEmailConfigurationProperties(sendToOwners, (customEmailAddresses ?? new ChangeTrackingList<string>()).ToList(), locale, provisioningState, default);
         }
 
+        /// <summary> Vault model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -73,6 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Vault properties. </summary>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the vault. </param>
         /// <param name="serviceResourceId"> Gets or sets the service resource Id. </param>
         /// <param name="vaultType"> Gets or sets the type of vault. </param>
@@ -82,6 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationVaultProperties(provisioningState, serviceResourceId, vaultType, default);
         }
 
+        /// <summary> Vault model update. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -105,6 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Event model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -122,6 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Event model properties. </summary>
         /// <param name="resourceType"> Gets or sets the resource type. </param>
         /// <param name="resourceName"> Gets or sets the resource name. </param>
         /// <param name="eventType"> Gets or sets the event type. </param>
@@ -153,6 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Health error model. </summary>
         /// <param name="affectedResourceType"> Gets or sets the type of affected resource type. </param>
         /// <param name="affectedResourceCorrelationIds"> Gets or sets the list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue. </param>
         /// <param name="childErrors"> Gets or sets a list of child health errors associated with this error. </param>
@@ -191,6 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Inner health error model. </summary>
         /// <param name="code"> Gets or sets the error code. </param>
         /// <param name="healthCategory"> Gets or sets the health category. </param>
         /// <param name="category"> Gets or sets the error category. </param>
@@ -220,6 +229,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary>
+        /// Event model custom properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HyperVToAzStackHciEventCustomProperties"/> and <see cref="Models.VMwareToAzStackHciEventCustomProperties"/>.
+        /// </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationEventCustomProperties. </param>
         /// <returns> A new <see cref="Models.DataReplicationEventCustomProperties"/> instance for mocking. </returns>
         public static DataReplicationEventCustomProperties DataReplicationEventCustomProperties(string instanceType = default)
@@ -227,6 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new UnknownDataReplicationEventCustomProperties(instanceType, default);
         }
 
+        /// <summary> HyperV to  AzStackHCI event model custom properties. This class provides provider specific details for events of type DataContract.HealthEvents.HealthEventType.ProtectedItemHealth and DataContract.HealthEvents.HealthEventType.AgentHealth. </summary>
         /// <param name="eventSourceFriendlyName"> Gets or sets the friendly name of the source which has raised this health event. </param>
         /// <param name="protectedItemFriendlyName"> Gets or sets the protected item friendly name. </param>
         /// <param name="sourceApplianceName"> Gets or sets the source appliance name. </param>
@@ -245,6 +259,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 serverType);
         }
 
+        /// <summary> VMware to  AzStackHCI event model custom properties. This class provides provider specific details for events of type DataContract.HealthEvents.HealthEventType.ProtectedItemHealth and DataContract.HealthEvents.HealthEventType.AgentHealth. </summary>
         /// <param name="eventSourceFriendlyName"> Gets or sets the friendly name of the source which has raised this health event. </param>
         /// <param name="protectedItemFriendlyName"> Gets or sets the protected item friendly name. </param>
         /// <param name="sourceApplianceName"> Gets or sets the source appliance name. </param>
@@ -263,6 +278,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 serverType);
         }
 
+        /// <summary> Fabric model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -286,6 +302,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Fabric model properties. </summary>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the fabric. </param>
         /// <param name="serviceEndpoint"> Gets or sets the service endpoint. </param>
         /// <param name="serviceResourceId"> Gets or sets the service resource Id. </param>
@@ -307,6 +324,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary>
+        /// Fabric model custom properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzStackHciFabricCustomProperties"/>, <see cref="Models.HyperVMigrateFabricCustomProperties"/>, and <see cref="Models.VMwareMigrateFabricCustomProperties"/>.
+        /// </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationFabricCustomProperties. </param>
         /// <returns> A new <see cref="Models.DataReplicationFabricCustomProperties"/> instance for mocking. </returns>
         public static DataReplicationFabricCustomProperties DataReplicationFabricCustomProperties(string instanceType = default)
@@ -314,6 +335,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new UnknownDataReplicationFabricCustomProperties(instanceType, default);
         }
 
+        /// <summary> AzStackHCI fabric model custom properties. </summary>
         /// <param name="azStackHciSiteId"> Gets or sets the ARM Id of the AzStackHCI site. </param>
         /// <param name="applianceName"> Gets or sets the Appliance name. </param>
         /// <param name="cluster"> AzStackHCI cluster properties. </param>
@@ -338,6 +360,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 migrationHubUri);
         }
 
+        /// <summary> AzStackHCI cluster properties. </summary>
         /// <param name="clusterName"> Gets or sets the AzStackHCICluster FQDN name. </param>
         /// <param name="resourceName"> Gets or sets the AzStackHCICluster resource name. </param>
         /// <param name="storageAccountName"> Gets or sets the Storage account name. </param>
@@ -350,6 +373,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new AzStackHciClusterProperties(clusterName, resourceName, storageAccountName, (storageContainers ?? new ChangeTrackingList<StorageContainerProperties>()).ToList(), default);
         }
 
+        /// <summary> Storage container properties. </summary>
         /// <param name="name"> Gets or sets the Name. </param>
         /// <param name="clusterSharedVolumePath"> Gets or sets the ClusterSharedVolumePath. </param>
         /// <returns> A new <see cref="Models.StorageContainerProperties"/> instance for mocking. </returns>
@@ -358,6 +382,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new StorageContainerProperties(name, clusterSharedVolumePath, default);
         }
 
+        /// <summary> HyperV migrate fabric model custom properties. </summary>
         /// <param name="hyperVSiteId"> Gets or sets the ARM Id of the HyperV site. </param>
         /// <param name="fabricResourceId"> Gets or sets the fabric resource Id. </param>
         /// <param name="fabricContainerId"> Gets or sets the fabric container Id. </param>
@@ -376,6 +401,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 migrationHubUri);
         }
 
+        /// <summary> VMware migrate fabric model custom properties. </summary>
         /// <param name="vmwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
         /// <param name="migrationSolutionId"> Gets or sets the ARM Id of the migration solution. </param>
         /// <returns> A new <see cref="Models.VMwareMigrateFabricCustomProperties"/> instance for mocking. </returns>
@@ -384,6 +410,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareMigrateFabricCustomProperties(default, default, vmwareSiteId, migrationSolutionId);
         }
 
+        /// <summary> Fabric model update. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -405,6 +432,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Fabric agent model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -422,6 +450,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Fabric agent model properties. </summary>
         /// <param name="correlationId"> Gets or sets the fabric agent correlation Id. </param>
         /// <param name="machineId"> Gets or sets the machine Id where fabric agent is running. </param>
         /// <param name="machineName"> Gets or sets the machine name where fabric agent is running. </param>
@@ -453,6 +482,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Identity model. </summary>
         /// <param name="tenantId"> Gets or sets the tenant Id of the SPN with which fabric agent communicates to service. </param>
         /// <param name="applicationId"> Gets or sets the client/application Id of the SPN with which fabric agent communicates to service. </param>
         /// <param name="objectId"> Gets or sets the object Id of the SPN with which fabric agent communicates to service. </param>
@@ -470,6 +500,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary>
+        /// Fabric agent model custom properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.VMwareFabricAgentCustomProperties"/>.
+        /// </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationFabricAgentCustomProperties. </param>
         /// <returns> A new <see cref="Models.DataReplicationFabricAgentCustomProperties"/> instance for mocking. </returns>
         public static DataReplicationFabricAgentCustomProperties DataReplicationFabricAgentCustomProperties(string instanceType = default)
@@ -477,6 +511,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new UnknownDataReplicationFabricAgentCustomProperties(instanceType, default);
         }
 
+        /// <summary> VMware fabric agent model custom properties. </summary>
         /// <param name="biosId"> Gets or sets the BIOS Id of the fabric agent machine. </param>
         /// <param name="marsAuthenticationIdentity"> Identity model. </param>
         /// <returns> A new <see cref="Models.VMwareFabricAgentCustomProperties"/> instance for mocking. </returns>
@@ -485,6 +520,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareFabricAgentCustomProperties(default, default, biosId, marsAuthenticationIdentity);
         }
 
+        /// <summary> Job model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -502,6 +538,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Job model properties. </summary>
         /// <param name="displayName"> Gets or sets the friendly display name. </param>
         /// <param name="state"> Gets or sets the job state. </param>
         /// <param name="startOn"> Gets or sets the start time. </param>
@@ -570,6 +607,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Error model. </summary>
         /// <param name="code"> Gets or sets the error code. </param>
         /// <param name="type"> Gets or sets the error type. </param>
         /// <param name="severity"> Gets or sets the error severity. </param>
@@ -591,6 +629,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary>
+        /// Job model custom properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FailoverJobCustomProperties"/>, <see cref="Models.TestFailoverCleanupJobCustomProperties"/>, and <see cref="Models.TestFailoverJobCustomProperties"/>.
+        /// </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationJobCustomProperties. </param>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <returns> A new <see cref="Models.DataReplicationJobCustomProperties"/> instance for mocking. </returns>
@@ -599,6 +641,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new UnknownDataReplicationJobCustomProperties(instanceType, affectedObjectDetails, default);
         }
 
+        /// <summary> Details of the affected object. </summary>
         /// <param name="description"> Description of the affected object details. </param>
         /// <param name="type"> Type of the affected object details. </param>
         /// <returns> A new <see cref="Models.AffectedObjectDetails"/> instance for mocking. </returns>
@@ -607,6 +650,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new AffectedObjectDetails(description, @type, default);
         }
 
+        /// <summary> Failover job model custom properties. </summary>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <param name="protectedItemDetails"> Gets or sets the failed over protected item details. </param>
         /// <returns> A new <see cref="Models.FailoverJobCustomProperties"/> instance for mocking. </returns>
@@ -617,6 +661,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new FailoverJobCustomProperties(default, affectedObjectDetails, default, (protectedItemDetails ?? new ChangeTrackingList<FailoverProtectedItemProperties>()).ToList());
         }
 
+        /// <summary> Failover properties of the protected item. </summary>
         /// <param name="protectedItemName"> Gets or sets the protected item name. </param>
         /// <param name="vmName"> Gets or sets the VM name. </param>
         /// <param name="testVmName"> Gets or sets the test VM name. </param>
@@ -638,6 +683,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Test failover cleanup job model custom properties. </summary>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <param name="comments"> Gets or sets the test failover cleanup comments. </param>
         /// <returns> A new <see cref="Models.TestFailoverCleanupJobCustomProperties"/> instance for mocking. </returns>
@@ -646,6 +692,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new TestFailoverCleanupJobCustomProperties(default, affectedObjectDetails, default, comments);
         }
 
+        /// <summary> Test failover job model custom properties. </summary>
         /// <param name="affectedObjectDetails"> Gets or sets any custom properties of the affected object. </param>
         /// <param name="protectedItemDetails"> Gets or sets the test VM details. </param>
         /// <returns> A new <see cref="Models.TestFailoverJobCustomProperties"/> instance for mocking. </returns>
@@ -656,6 +703,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new TestFailoverJobCustomProperties(default, affectedObjectDetails, default, (protectedItemDetails ?? new ChangeTrackingList<FailoverProtectedItemProperties>()).ToList());
         }
 
+        /// <summary> Policy model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -673,6 +721,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Policy model properties. </summary>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the policy. </param>
         /// <param name="customProperties"> Policy model custom properties. </param>
         /// <returns> A new <see cref="Models.DataReplicationPolicyProperties"/> instance for mocking. </returns>
@@ -681,6 +730,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationPolicyProperties(provisioningState, customProperties, default);
         }
 
+        /// <summary>
+        /// Policy model custom properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HyperVToAzStackHciPolicyCustomProperties"/> and <see cref="Models.VMwareToAzStackHciPolicyCustomProperties"/>.
+        /// </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationPolicyCustomProperties. </param>
         /// <returns> A new <see cref="Models.DataReplicationPolicyCustomProperties"/> instance for mocking. </returns>
         public static DataReplicationPolicyCustomProperties DataReplicationPolicyCustomProperties(string instanceType = default)
@@ -688,6 +741,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new UnknownDataReplicationPolicyCustomProperties(instanceType, default);
         }
 
+        /// <summary> HyperV To AzStackHCI Policy model custom properties. </summary>
         /// <param name="recoveryPointHistoryInMinutes"> Gets or sets the duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> Gets or sets the crash consistent snapshot frequency (in minutes). </param>
         /// <param name="appConsistentFrequencyInMinutes"> Gets or sets the app consistent snapshot frequency (in minutes). </param>
@@ -697,6 +751,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new HyperVToAzStackHciPolicyCustomProperties(default, default, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
         }
 
+        /// <summary> VMware To AzStackHCI Policy model custom properties. </summary>
         /// <param name="recoveryPointHistoryInMinutes"> Gets or sets the duration in minutes until which the recovery points need to be stored. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> Gets or sets the crash consistent snapshot frequency (in minutes). </param>
         /// <param name="appConsistentFrequencyInMinutes"> Gets or sets the app consistent snapshot frequency (in minutes). </param>
@@ -706,6 +761,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareToAzStackHciPolicyCustomProperties(default, default, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
         }
 
+        /// <summary> Represents private endpoint connection. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -732,6 +788,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationPrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, default);
         }
 
+        /// <summary> Represents Private link service connection state. </summary>
         /// <param name="status"> Gets or sets the status. </param>
         /// <param name="description"> Gets or sets description. </param>
         /// <param name="actionsRequired"> Gets or sets actions required. </param>
@@ -760,6 +817,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Represents private endpoint connection proxy request. </summary>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the private endpoint connection proxy. </param>
         /// <param name="remotePrivateEndpoint"> Represent remote private endpoint information for the private endpoint connection proxy. </param>
         /// <returns> A new <see cref="Models.DataReplicationPrivateEndpointConnectionProxyProperties"/> instance for mocking. </returns>
@@ -768,6 +826,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationPrivateEndpointConnectionProxyProperties(provisioningState, remotePrivateEndpoint, default);
         }
 
+        /// <summary> Represent remote private endpoint information for the private endpoint connection proxy. </summary>
         /// <param name="id"> Gets or sets private link service proxy id. </param>
         /// <param name="privateLinkServiceConnections"> Gets or sets the list of Private Link Service Connections and gets populated for Auto approval flow. </param>
         /// <param name="manualPrivateLinkServiceConnections"> Gets or sets the list of Manual Private Link Service Connections and gets populated for Manual approval flow. </param>
@@ -790,6 +849,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Represents of an NRP private link service connection. </summary>
         /// <param name="name"> Gets or sets private link service connection name. </param>
         /// <param name="groupIds"> Gets or sets group ids. </param>
         /// <param name="requestMessage"> Gets or sets the request message for the private link service connection. </param>
@@ -813,6 +873,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationPrivateLinkServiceProxy(id, remotePrivateLinkServiceConnectionState, remotePrivateEndpointConnectionId is null ? default : new RemotePrivateEndpointConnection(remotePrivateEndpointConnectionId, default), (groupConnectivityInformation ?? new ChangeTrackingList<GroupConnectivityInformation>()).ToList(), default);
         }
 
+        /// <summary> Represents of a connection's group information. </summary>
         /// <param name="groupId"> Gets or sets group id. </param>
         /// <param name="memberName"> Gets or sets member name. </param>
         /// <param name="customerVisibleFqdns"> Gets or sets customer visible FQDNs. </param>
@@ -834,6 +895,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Private endpoint connection details at member level. </summary>
         /// <param name="id"> Gets or sets id. </param>
         /// <param name="privateIPAddress"> Gets or sets private IP address. </param>
         /// <param name="linkIdentifier"> Gets or sets link identifier. </param>
@@ -851,6 +913,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Represents private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -868,6 +931,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Represents private link resource properties. </summary>
         /// <param name="groupId"> Gets or sets the group id. </param>
         /// <param name="requiredMembers"> Gets or sets the required member. This translates to how many Private IPs should be created for each privately linkable resource. </param>
         /// <param name="requiredZoneNames"> Gets or sets the private DNS zone names. </param>
@@ -881,6 +945,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default);
         }
 
+        /// <summary> Protected item model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -898,6 +963,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Protected item model properties. </summary>
         /// <param name="policyName"> Gets or sets the policy name. </param>
         /// <param name="replicationExtensionName"> Gets or sets the replication extension name. </param>
         /// <param name="correlationId"> Gets or sets the protected item correlation Id. </param>
@@ -966,6 +1032,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Protected item job properties. </summary>
         /// <param name="scenarioName"> Gets or sets protection scenario name. </param>
         /// <param name="id"> Gets or sets job Id. </param>
         /// <param name="name"> Gets or sets job name. </param>
@@ -987,6 +1054,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary>
+        /// Protected item model custom properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HyperVToAzStackHciProtectedItemCustomProperties"/> and <see cref="Models.VMwareToAzStackHciProtectedItemCustomProperties"/>.
+        /// </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationProtectedItemCustomProperties. </param>
         /// <returns> A new <see cref="Models.DataReplicationProtectedItemCustomProperties"/> instance for mocking. </returns>
         public static DataReplicationProtectedItemCustomProperties DataReplicationProtectedItemCustomProperties(string instanceType = default)
@@ -994,6 +1065,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new UnknownDataReplicationProtectedItemCustomProperties(instanceType, default);
         }
 
+        /// <summary> HyperV to AzStackHCI Protected item model custom properties. </summary>
         /// <param name="activeLocation"> Gets or sets the location of the protected item. </param>
         /// <param name="targetHciClusterId"> Gets or sets the Target HCI Cluster ARM Id. </param>
         /// <param name="targetArcClusterCustomLocationId"> Gets or sets the Target Arc Cluster Custom Location ARM Id. </param>
@@ -1085,6 +1157,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 lastReplicationUpdateOn);
         }
 
+        /// <summary> HyperVToAzStack disk input. </summary>
         /// <param name="diskId"> Gets or sets the disk Id. </param>
         /// <param name="storageContainerId"> Gets or sets the target storage account ARM Id. </param>
         /// <param name="isDynamic"> Gets or sets a value indicating whether dynamic sizing is enabled on the virtual hard disk. </param>
@@ -1114,6 +1187,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Disk controller. </summary>
         /// <param name="controllerName"> Gets or sets the controller name (IDE,SCSI). </param>
         /// <param name="controllerId"> Gets or sets the controller ID. </param>
         /// <param name="controllerLocation"> Gets or sets the controller Location. </param>
@@ -1123,6 +1197,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationDiskControllerInputs(controllerName, controllerId, controllerLocation, default);
         }
 
+        /// <summary> HyperVToAzStackHCI NIC properties. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="networkName"> Gets or sets the network name. </param>
         /// <param name="targetNetworkId"> Gets or sets the target network Id within AzStackHCI Cluster. </param>
@@ -1144,6 +1219,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Protected item dynamic memory config. </summary>
         /// <param name="maximumMemoryInMegaBytes"> Gets or sets maximum memory in MB. </param>
         /// <param name="minimumMemoryInMegaBytes"> Gets or sets minimum memory in MB. </param>
         /// <param name="targetMemoryBufferPercentage"> Gets or sets target memory buffer in %. </param>
@@ -1153,6 +1229,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new ProtectedItemDynamicMemoryConfig(maximumMemoryInMegaBytes, minimumMemoryInMegaBytes, targetMemoryBufferPercentage, default);
         }
 
+        /// <summary> HyperVToAzStackHCI protected disk properties. </summary>
         /// <param name="storageContainerId"> Gets or sets the ARM Id of the storage container. </param>
         /// <param name="storageContainerLocalPath"> Gets or sets the local path of the storage container. </param>
         /// <param name="sourceDiskId"> Gets or sets the source disk Id. </param>
@@ -1188,6 +1265,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> HyperVToAzStackHCI NIC properties. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="macAddress"> Gets or sets the NIC mac address. </param>
         /// <param name="networkName"> Gets or sets the network name. </param>
@@ -1207,6 +1285,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> VMware to AzStackHCI Protected item model custom properties. </summary>
         /// <param name="activeLocation"> Gets or sets the location of the protected item. </param>
         /// <param name="targetHciClusterId"> Gets or sets the Target HCI Cluster ARM Id. </param>
         /// <param name="targetArcClusterCustomLocationId"> Gets or sets the Target Arc Cluster Custom Location ARM Id. </param>
@@ -1312,6 +1391,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 lastReplicationUpdateOn);
         }
 
+        /// <summary> VMwareToAzStack disk input. </summary>
         /// <param name="diskId"> Gets or sets the disk Id. </param>
         /// <param name="storageContainerId"> Gets or sets the target storage account ARM Id. </param>
         /// <param name="isDynamic"> Gets or sets a value indicating whether dynamic sizing is enabled on the virtual hard disk. </param>
@@ -1341,6 +1421,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> VMwareToAzStackHCI NIC properties. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="label"> Gets or sets the NIC label. </param>
         /// <param name="networkName"> Gets or sets the network name. </param>
@@ -1364,6 +1445,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> VMwareToAzStackHCI protected disk properties. </summary>
         /// <param name="storageContainerId"> Gets or sets the ARM Id of the storage container. </param>
         /// <param name="storageContainerLocalPath"> Gets or sets the local path of the storage container. </param>
         /// <param name="sourceDiskId"> Gets or sets the source disk Id. </param>
@@ -1399,6 +1481,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> VMwareToAzStackHCI NIC properties. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="macAddress"> Gets or sets the NIC mac address. </param>
         /// <param name="label"> Gets or sets the NIC label. </param>
@@ -1439,6 +1522,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary>
+        /// Protected item model custom properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HyperVToAzStackHciProtectedItemCustomPropertiesUpdate"/> and <see cref="Models.VMwareToAzStackHciProtectedItemCustomPropertiesUpdate"/>.
+        /// </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationProtectedItemCustomPropertiesUpdate. </param>
         /// <returns> A new <see cref="Models.DataReplicationProtectedItemCustomPropertiesUpdate"/> instance for mocking. </returns>
         public static DataReplicationProtectedItemCustomPropertiesUpdate DataReplicationProtectedItemCustomPropertiesUpdate(string instanceType = default)
@@ -1446,6 +1533,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new UnknownDataReplicationProtectedItemCustomPropertiesUpdate(instanceType, default);
         }
 
+        /// <summary> HyperV to AzStackHCI Protected item model custom properties. </summary>
         /// <param name="nicsToInclude"> Gets or sets the list of VM NIC to replicate. </param>
         /// <param name="targetCpuCores"> Gets or sets the target CPU cores. </param>
         /// <param name="isDynamicRam"> Gets or sets a value indicating whether memory is dynamical. </param>
@@ -1468,6 +1556,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 osType);
         }
 
+        /// <summary> VMware to AzStackHCI Protected item model custom properties. </summary>
         /// <param name="nicsToInclude"> Gets or sets the list of VM NIC to replicate. </param>
         /// <param name="targetCpuCores"> Gets or sets the target CPU cores. </param>
         /// <param name="isDynamicRam"> Gets or sets a value indicating whether memory is dynamical. </param>
@@ -1498,6 +1587,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new PlannedFailover(plannedFailoverCustomProperties is null ? default : new PlannedFailoverProperties(plannedFailoverCustomProperties, default), default);
         }
 
+        /// <summary> Planned failover model properties. </summary>
         /// <param name="customProperties"> Planned failover model custom properties. </param>
         /// <returns> A new <see cref="Models.PlannedFailoverProperties"/> instance for mocking. </returns>
         public static PlannedFailoverProperties PlannedFailoverProperties(PlannedFailoverCustomProperties customProperties = default)
@@ -1505,6 +1595,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new PlannedFailoverProperties(customProperties, default);
         }
 
+        /// <summary>
+        /// Planned failover model custom properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HyperVToAzStackHciPlannedFailoverCustomProperties"/> and <see cref="Models.VMwareToAzStackHciPlannedFailoverCustomProperties"/>.
+        /// </summary>
         /// <param name="instanceType"> Discriminator property for PlannedFailoverCustomProperties. </param>
         /// <returns> A new <see cref="Models.PlannedFailoverCustomProperties"/> instance for mocking. </returns>
         public static PlannedFailoverCustomProperties PlannedFailoverCustomProperties(string instanceType = default)
@@ -1512,6 +1606,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new UnknownPlannedFailoverCustomProperties(instanceType, default);
         }
 
+        /// <summary> HyperV to AzStackHCI planned failover model custom properties. </summary>
         /// <param name="shutdownSourceVm"> Gets or sets a value indicating whether VM needs to be shut down. </param>
         /// <returns> A new <see cref="Models.HyperVToAzStackHciPlannedFailoverCustomProperties"/> instance for mocking. </returns>
         public static HyperVToAzStackHciPlannedFailoverCustomProperties HyperVToAzStackHciPlannedFailoverCustomProperties(bool shutdownSourceVm = default)
@@ -1519,6 +1614,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new HyperVToAzStackHciPlannedFailoverCustomProperties(default, default, shutdownSourceVm);
         }
 
+        /// <summary> VMware to AzStackHCI planned failover model custom properties. </summary>
         /// <param name="shutdownSourceVm"> Gets or sets a value indicating whether VM needs to be shut down. </param>
         /// <returns> A new <see cref="Models.VMwareToAzStackHciPlannedFailoverCustomProperties"/> instance for mocking. </returns>
         public static VMwareToAzStackHciPlannedFailoverCustomProperties VMwareToAzStackHciPlannedFailoverCustomProperties(bool shutdownSourceVm = default)
@@ -1526,6 +1622,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareToAzStackHciPlannedFailoverCustomProperties(default, default, shutdownSourceVm);
         }
 
+        /// <summary> Recovery point model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1543,6 +1640,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Recovery point model properties. </summary>
         /// <param name="recoveryPointOn"> Gets or sets the recovery point time. </param>
         /// <param name="recoveryPointType"> Gets or sets the recovery point type. </param>
         /// <param name="customProperties"> Recovery point model custom properties. </param>
@@ -1553,6 +1651,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationRecoveryPointProperties(recoveryPointOn, recoveryPointType, customProperties, provisioningState, default);
         }
 
+        /// <summary>
+        /// Recovery point model custom properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HyperVToAzStackHciRecoveryPointCustomProperties"/> and <see cref="Models.VMwareToAzStackHciRecoveryPointCustomProperties"/>.
+        /// </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationRecoveryPointCustomProperties. </param>
         /// <returns> A new <see cref="Models.DataReplicationRecoveryPointCustomProperties"/> instance for mocking. </returns>
         public static DataReplicationRecoveryPointCustomProperties DataReplicationRecoveryPointCustomProperties(string instanceType = default)
@@ -1560,6 +1662,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new UnknownDataReplicationRecoveryPointCustomProperties(instanceType, default);
         }
 
+        /// <summary> HyperV to AzStackHCI recovery point model custom properties. </summary>
         /// <param name="diskIds"> Gets or sets the list of the disk Ids. </param>
         /// <returns> A new <see cref="Models.HyperVToAzStackHciRecoveryPointCustomProperties"/> instance for mocking. </returns>
         public static HyperVToAzStackHciRecoveryPointCustomProperties HyperVToAzStackHciRecoveryPointCustomProperties(IEnumerable<string> diskIds = default)
@@ -1569,6 +1672,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new HyperVToAzStackHciRecoveryPointCustomProperties(default, default, (diskIds ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> VMware to AzStackHCI recovery point model custom properties. </summary>
         /// <param name="diskIds"> Gets or sets the list of the disk Ids. </param>
         /// <returns> A new <see cref="Models.VMwareToAzStackHciRecoveryPointCustomProperties"/> instance for mocking. </returns>
         public static VMwareToAzStackHciRecoveryPointCustomProperties VMwareToAzStackHciRecoveryPointCustomProperties(IEnumerable<string> diskIds = default)
@@ -1578,6 +1682,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new VMwareToAzStackHciRecoveryPointCustomProperties(default, default, (diskIds ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> Replication extension model. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1595,6 +1700,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 default);
         }
 
+        /// <summary> Replication extension model properties. </summary>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the replication extension. </param>
         /// <param name="customProperties"> Replication extension model custom properties. </param>
         /// <returns> A new <see cref="Models.DataReplicationExtensionProperties"/> instance for mocking. </returns>
@@ -1603,6 +1709,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationExtensionProperties(provisioningState, customProperties, default);
         }
 
+        /// <summary>
+        /// Replication extension model custom properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.HyperVToAzStackHciReplicationExtensionCustomProperties"/> and <see cref="Models.VMwareToAzStackHciReplicationExtensionCustomProperties"/>.
+        /// </summary>
         /// <param name="instanceType"> Discriminator property for DataReplicationExtensionCustomProperties. </param>
         /// <returns> A new <see cref="Models.DataReplicationExtensionCustomProperties"/> instance for mocking. </returns>
         public static DataReplicationExtensionCustomProperties DataReplicationExtensionCustomProperties(string instanceType = default)
@@ -1610,6 +1720,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new UnknownDataReplicationExtensionCustomProperties(instanceType, default);
         }
 
+        /// <summary> HyperV to AzStackHCI Replication extension model custom properties. </summary>
         /// <param name="hyperVFabricArmId"> Gets or sets the ARM Id of the source HyperV fabric. </param>
         /// <param name="hyperVSiteId"> Gets or sets the ARM Id of the HyperV site. </param>
         /// <param name="azStackHciFabricArmId"> Gets or sets the ARM Id of the target AzStackHCI fabric. </param>
@@ -1650,6 +1761,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 resourceGroup);
         }
 
+        /// <summary> VMware to AzStackHCI Replication extension model custom properties. </summary>
         /// <param name="vmwareFabricArmId"> Gets or sets the ARM Id of the source VMware fabric. </param>
         /// <param name="vmwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
         /// <param name="azStackHciFabricArmId"> Gets or sets the ARM Id of the target AzStackHCI fabric. </param>
@@ -1690,6 +1802,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 resourceGroup);
         }
 
+        /// <summary> Check name availability model. </summary>
         /// <param name="name"> Gets or sets the resource name. </param>
         /// <param name="type"> Gets or sets the resource type. </param>
         /// <returns> A new <see cref="Models.DataReplicationNameAvailabilityContent"/> instance for mocking. </returns>
@@ -1698,6 +1811,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationNameAvailabilityContent(name, @type, default);
         }
 
+        /// <summary> Check name availability response model. </summary>
         /// <param name="isNameAvailable"> Gets or sets a value indicating whether resource name is available or not. </param>
         /// <param name="reason"> Gets or sets the reason for resource name unavailability. </param>
         /// <param name="message"> Gets or sets the message for resource name unavailability. </param>
@@ -1707,6 +1821,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
+        /// <summary> Deployment preflight model. </summary>
         /// <param name="resources"> Gets or sets the list of resources. </param>
         /// <returns> A new <see cref="Models.DeploymentPreflight"/> instance for mocking. </returns>
         public static DeploymentPreflight DeploymentPreflight(IEnumerable<DeploymentPreflightResourceInfo> resources = default)
@@ -1716,6 +1831,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DeploymentPreflight((resources ?? new ChangeTrackingList<DeploymentPreflightResourceInfo>()).ToList(), default);
         }
 
+        /// <summary> Deployment preflight resource. </summary>
         /// <param name="name"> Gets or sets the resource name. </param>
         /// <param name="type"> Gets or sets the resource type. </param>
         /// <param name="location"> Gets or sets the location of the resource. </param>

@@ -5,6 +5,14 @@ description: |
   is actionable for Copilot, and either comments, closes clear service-side issues, or assigns
   Copilot to implementation work.
 
+imports:
+  - shared/copilot-cli-version-probe-guard.md
+  - shared/agent-output-validation.md
+
+engine:
+  id: copilot
+  version: "1.0.80"
+
 on:
   workflow_dispatch:
     inputs:
@@ -67,6 +75,7 @@ tools:
   # With github.min-integrity none, strict mode requires bash to be explicit.
   # These agents use only web-fetch and the github issues toolset, no shell.
   bash: false
+  cli-proxy: false
   web-fetch:
   github:
     toolsets: [issues]

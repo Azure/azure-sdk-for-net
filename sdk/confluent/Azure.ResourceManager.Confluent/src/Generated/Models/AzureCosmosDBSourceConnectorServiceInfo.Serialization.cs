@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Confluent.Models
                 writer.WritePropertyName("cosmosContainersTopicMapping"u8);
                 writer.WriteStringValue(CosmosContainersTopicMapping);
             }
-            if (Optional.IsDefined(CosmosMessageKeyEnabled))
+            if (Optional.IsDefined(IsCosmosMessageKeyEnabled))
             {
                 writer.WritePropertyName("cosmosMessageKeyEnabled"u8);
-                writer.WriteBooleanValue(CosmosMessageKeyEnabled.Value);
+                writer.WriteBooleanValue(IsCosmosMessageKeyEnabled.Value);
             }
             if (Optional.IsDefined(CosmosMessageKeyField))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Confluent.Models
             string cosmosMasterKey = default;
             string cosmosConnectionEndpoint = default;
             string cosmosContainersTopicMapping = default;
-            bool? cosmosMessageKeyEnabled = default;
+            bool? isCosmosMessageKeyEnabled = default;
             string cosmosMessageKeyField = default;
             string cosmosIncludeAllContainers = default;
             foreach (var prop in element.EnumerateObject())
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    cosmosMessageKeyEnabled = prop.Value.GetBoolean();
+                    isCosmosMessageKeyEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("cosmosMessageKeyField"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 cosmosMasterKey,
                 cosmosConnectionEndpoint,
                 cosmosContainersTopicMapping,
-                cosmosMessageKeyEnabled,
+                isCosmosMessageKeyEnabled,
                 cosmosMessageKeyField,
                 cosmosIncludeAllContainers);
         }

@@ -48,16 +48,16 @@ public class BasicContainerRegistryTests
 
             resource registry 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
               name: take('registry${uniqueString(resourceGroup().id)}', 50)
-              tags: {
-                displayName: 'ContainerRegistry'
-                'container.registry': take('registry${uniqueString(resourceGroup().id)}', 50)
-              }
               location: location
               properties: {
                 adminUserEnabled: false
               }
               sku: {
                 name: 'Standard'
+              }
+              tags: {
+                'container.registry': take('registry${uniqueString(resourceGroup().id)}', 50)
+                displayName: 'ContainerRegistry'
               }
             }
 
