@@ -12,7 +12,18 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>
+      $(NoWarn);
+      AZC0034;
+      AZC0035;
+    </NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" Condition="$(UseProjectReferenceToAzureClients) == 'true'" />
   </ItemGroup>
 </Project>

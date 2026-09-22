@@ -16,6 +16,8 @@ dotnet add package Azure.Provisioning.Databricks --prerelease
 
 > You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
+### Authenticate the Client
+
 ## Key concepts
 
 This library lets you define Azure Databricks infrastructure declaratively in .NET and deploy it with Azure Developer CLI.
@@ -40,6 +42,8 @@ infra.Add(workspace);
 ## Troubleshooting
 
 - File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+
+## Next steps
 
 ## Contributing
 
