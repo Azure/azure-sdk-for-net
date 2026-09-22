@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.TenantActivityLogAlerts.Models;
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.TenantActivityLogAlerts
         {
             Argument.AssertNotNull(conditionAllOf, nameof(conditionAllOf));
 
-            Properties = new AlertRuleProperties(conditionAllOf);
+            Properties = new AlertRuleProperties(conditionAllOf.ToList());
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
