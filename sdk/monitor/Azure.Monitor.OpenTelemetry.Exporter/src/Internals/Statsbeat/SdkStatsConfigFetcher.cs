@@ -228,9 +228,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             settings.TryGetValue(
                 StatsbeatConstants.OneSettingsDefaultStatsConnectionString,
                 out var defaultConnectionString);
-            settings.TryGetValue(
-                StatsbeatConstants.OneSettingsDefaultSdkStatsEndpoint,
-                out var defaultEndpoint);
             var region = GetRegion(ingestionEndpoint);
             if (region != null
                 && settings.TryGetValue(
@@ -251,35 +248,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                             out var boundaryConnectionString)
                         && IsValidConnectionString(boundaryConnectionString))
                     {
-                        settings.TryGetValue(boundary + "_SDK_STATS_ENDPOINT", out var boundaryEndpoint);
-                        return ApplySdkStatsEndpoint(
-                            boundaryConnectionString,
-                            boundaryEndpoint ?? defaultEndpoint);
+                        return boundaryConnectionString;
                     }
                 }
             }
 
-            return IsValidConnectionString(defaultConnectionString)
-                ? ApplySdkStatsEndpoint(defaultConnectionString!, defaultEndpoint)
-                : null;
-        }
-
-        private static string ApplySdkStatsEndpoint(string connectionString, string? endpoint)
-        {
-            if (!Uri.TryCreate(endpoint, UriKind.Absolute, out var endpointUri)
-                || !string.Equals(endpointUri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
-            {
-                return connectionString;
-            }
-
-            var fields = connectionString.Split(';')
-                .Where(field => !field.TrimStart().StartsWith(
-                    Constants.IngestionExplicitEndpointKey + "=",
-                    StringComparison.OrdinalIgnoreCase))
-                .Where(field => !string.IsNullOrWhiteSpace(field))
-                .ToList();
-            fields.Add(Constants.IngestionExplicitEndpointKey + "=" + endpointUri.AbsoluteUri);
-            return string.Join(";", fields);
+            return IsValidConnectionString(defaultConnectionString) ? defaultConnectionString : null;
         }
 
         private static string? GetRegion(string ingestionEndpoint)

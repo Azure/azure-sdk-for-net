@@ -15,7 +15,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         internal const string OneSettingsConfigUrl = "https://settings.sdk.monitor.azure.com/AzMonSDKDynamicConfiguration?namespaces=dotnet";
         internal const string OneSettingsFeatureSdkStats = "FEATURE_SDK_STATS";
         internal const string OneSettingsDefaultStatsConnectionString = "DEFAULT_STATS_CONNECTION_STRING";
-        internal const string OneSettingsDefaultSdkStatsEndpoint = "DEFAULT_SDK_STATS_ENDPOINT";
         internal const string OneSettingsSupportedDataBoundaries = "SUPPORTED_DATA_BOUNDARIES";
         internal const string SdkStatsConfigUrl_NonEU = OneSettingsConfigUrl;
         internal const string SdkStatsConfigUrl_EU = OneSettingsConfigUrl;

@@ -37,8 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 + "\"FEATURE_SDK_STATS\":\"{\\\"default\\\":\\\"enabled\\\"}\","
                 + "\"SUPPORTED_DATA_BOUNDARIES\":\"[\\\"EU\\\"]\","
                 + "\"EU_REGIONS\":\"[\\\"westeurope\\\"]\","
-                + "\"EU_STATS_CONNECTION_STRING\":\"" + connectionString + "\","
-                + "\"EU_SDK_STATS_ENDPOINT\":\"https://eu.collector.example.com/\"}}";
+                + "\"EU_STATS_CONNECTION_STRING\":\"" + connectionString + "\"}}";
             var handler = new StubHandler(req => OkJson(payload));
 
             var result = await SdkStatsConfigFetcher.FetchAsync(
@@ -47,24 +46,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 handler);
 
             Assert.Equal(SdkStatsConfigStatus.UseConnectionString, result.Status);
-            Assert.Equal(
-                "InstrumentationKey=11111111-1111-1111-1111-111111111111;"
-                    + "IngestionEndpoint=https://eu.collector.example.com/",
-                result.ConnectionString);
-        }
-
-        [Fact]
-        public async Task FetchAsync_InvalidEndpoint_PreservesConnectionStringEndpoint()
-        {
-            const string connectionString =
-                "InstrumentationKey=11111111-1111-1111-1111-111111111111;IngestionEndpoint=https://eu.stats.example.com/";
-            var payload = "{\"settings\":{"
-                + "\"DEFAULT_STATS_CONNECTION_STRING\":\"" + connectionString + "\","
-                + "\"DEFAULT_SDK_STATS_ENDPOINT\":\"not-a-url\"}}";
-            var handler = new StubHandler(req => OkJson(payload));
-
-            var result = await SdkStatsConfigFetcher.FetchAsync(TestConfigUrl, handler);
-
             Assert.Equal(connectionString, result.ConnectionString);
         }
 
