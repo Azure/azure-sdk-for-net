@@ -250,27 +250,38 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
         {
             var subscription = new ReproComputeSubscriptionResource();
 
+            var location = new Azure.Core.AzureLocation("eastus");
             var pageable = subscription.GetVirtualMachineImages(
-                new Azure.Core.AzureLocation("eastus"),
+                location,
                 "MicrosoftWindowsServer",
                 "WindowsServer",
                 "2022-datacenter-azure-edition-smalldisk");
             var asyncPageable = subscription.GetVirtualMachineImagesAsync(
-                new Azure.Core.AzureLocation("eastus"),
+                location,
                 "MicrosoftWindowsServer",
                 "WindowsServer",
                 "2022-datacenter-azure-edition-smalldisk");
 
+            var options = new SubscriptionResourceGetVirtualMachineImagesOptions(
+                location,
+                "MicrosoftWindowsServer",
+                "WindowsServer",
+                "2022-datacenter-azure-edition-smalldisk");
+            var optionsPageable = subscription.GetVirtualMachineImages(options);
+            var optionsAsyncPageable = subscription.GetVirtualMachineImagesAsync(options);
+
             Assert.IsNotNull(pageable);
             Assert.IsNotNull(asyncPageable);
+            Assert.IsNotNull(optionsPageable);
+            Assert.IsNotNull(optionsAsyncPageable);
         }
 
         private sealed class ReproComputeSubscriptionResource : MockableComputeSubscriptionResource
         {
-            public override Pageable<VirtualMachineImageBase> GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+            public override Pageable<VirtualMachineImageBase> GetVirtualMachineImages(Azure.Core.AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
                 => Pageable<VirtualMachineImageBase>.FromPages(Array.Empty<Page<VirtualMachineImageBase>>());
 
-            public override AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
+            public override AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(Azure.Core.AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
                 => AsyncPageable<VirtualMachineImageBase>.FromPages(Array.Empty<Page<VirtualMachineImageBase>>());
         }
     }
