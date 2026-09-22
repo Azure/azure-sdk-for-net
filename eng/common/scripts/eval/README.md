@@ -27,6 +27,13 @@ The workflow entrypoint exposes these for pipeline 8255 and defaults publishing
 to `false`; setting it to `true` writes directly to Blob using `AzureCLI@2`.
 There is no dashboard ZIP upload or enterprise repository checkout.
 
+For an approved storage publishing run, `allowAzureStorageNetworkAccess=true`
+selects the documented `AzureStorage` network-isolation allow policy while
+retaining Default Deny and all CFS policies. It defaults off and only reaches the
+repo-owned 1ES redirect for internal, non-PR publishing runs. This is pipeline-wide
+Azure Storage egress, not a single-container grant; see the publisher guide for
+scope and cross-repo redirect compatibility. Other pipelines' defaults are unchanged.
+
 For a draft-branch end-to-end test, `storageSmokeTest=true` selects two labeled
 synthetic shards with no MCP/LLM/evaluation calls, then uses the real Summary
 publisher. A manual run of the trusted feature branch is required; PR validation

@@ -68,6 +68,11 @@ parameters:
   - name: publishDashboardResults
     type: boolean
     default: false
+  - name: allowAzureStorageNetworkAccess
+    # Opt into the documented AzureStorage NI policy for this publishing run.
+    # A consumer that enables this needs the matching repo-owned redirect support.
+    type: boolean
+    default: false
   - name: storageServiceConnection
     type: string
     default: ''
@@ -97,6 +102,10 @@ extends:
   # 1es-redirect picks Official (internal) vs Unofficial; its Use1ESOfficial defaults true.
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
+    # Do not forward a new redirect parameter to other synced consumers unless
+    # they explicitly opt into storage egress AND publication on a trusted run.
+    ${{ if and(parameters.allowAzureStorageNetworkAccess, parameters.publishDashboardResults, eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest'), not(startsWith(variables['Build.SourceBranch'], 'refs/pull/'))) }}:
+      AllowAzureStorage: true
     stages:
       - stage: Prepare
         displayName: 'Build MCP'
