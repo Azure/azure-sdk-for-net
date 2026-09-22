@@ -172,6 +172,20 @@ test("manifest derives canonical identity from the current build and labels smok
     const result = pipelineManifest(env, new Date("2026-09-21T00:00:00Z"));
     assert.match(result.pipeline, /\[synthetic storage smoke\]/); assert.equal(result.summaryAttempt, 2);
     assert.equal(blobName({ ...result, adoProject: "Test Project" }), "v1/azure-sdk/test%20project/8255/1001/2/dashboard-bundle.zip");
+    const realNames = [
+        ["8255", "Azure-sdk-tools-workflow-eval"],
+        ["8256", "azure-sdk-tools - eval-skills"],
+        ["8246", "live-eval - azure-sdk-tools - nightly"],
+    ];
+    const names = new Set();
+    for (const [id, name] of realNames) {
+        const real = pipelineManifest({ ...env, SYSTEM_DEFINITIONID: id, BUILD_DEFINITIONNAME: name, EVAL_PUBLISH_SMOKE_TEST: "False" });
+        assert.equal(real.pipeline, name);
+        assert.equal(real.repo, "Azure/azure-sdk-tools");
+        assert.equal(real.sourceVersion, env.BUILD_SOURCEVERSION);
+        names.add(blobName(real));
+    }
+    assert.equal(names.size, 3, "Three real pipelines remain distinct within the same container");
     for (const collection of ["http://dev.azure.com/org", "https://example.com/org", "https://dev.azure.com/org?sig=secret"]) assert.throws(() => pipelineManifest({ ...env, SYSTEM_COLLECTIONURI: collection }));
 });
 
@@ -263,3 +277,30 @@ test("opted-in redirect retains enforced Default Deny/CFS and preserves other pi
     assert.doesNotMatch(guarded[1], /Permissive|networkIsolationAdditionalDomainAllowList/);
     assert.match(redirect, /elseif eq\(variables\['Build.DefinitionName'\], 'net - partner-release'\) \}\}:\s+networkIsolationPolicy: Permissive\s+\$\{\{ else \}\}:\s+networkIsolationPolicy: Permissive, CFSClean/);
 });
+
+for (const tier of ["workflow", "skill", "live"]) {
+    test(`${tier} real eval consumer forwards opt-in publishing without changing its evaluation tier`, async () => {
+        const root = resolve(import.meta.dirname, "../../../..");
+        const content = await readFile(join(root, `pipelines/${tier}-eval.yml`), "utf8");
+        assert.match(content, /createDashboardBundle: true/);
+        for (const name of ["publishDashboardResults", "allowAzureStorageNetworkAccess", "notifyDashboard"]) {
+            assert.match(content, new RegExp(`- name: ${name}\\n(?:    [^\\n]*\\n)*?    type: boolean\\n    default: false`));
+        }
+        assert.match(content, /name: storageServiceConnection\s+type: string\s+default: eval-dashboard-sc/);
+        assert.match(content, /name: storageContainerUrl\s+type: string\s+default: https:\/\/evaltestsummary\.blob\.core\.windows\.net\/vally-results/);
+        for (const name of ["publishDashboardResults", "allowAzureStorageNetworkAccess", "storageServiceConnection", "storageContainerUrl", "notifyDashboard", "dashboardUrl", "dashboardAudience"]) {
+            assert.ok(content.includes(name + ": ${{ parameters." + name + " }}"));
+        }
+        assert.match(content, /group: AzSDK_Eval_Variable_group/);
+        assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
+        if (tier === "live") {
+            assert.match(content, /UseAzSdkAuthentication: true/);
+            assert.match(content, /failOnFailedTests: true/);
+            assert.match(content, /workflows\/live\/\*\.eval\.yaml/);
+        } else if (tier === "skill") {
+            assert.match(content, /vallyRoot: \.github\/skills/);
+            assert.match(content, /'\*\/evals\/\*\.eval\.yaml'/);
+        }
+        if (tier !== "workflow") assert.doesNotMatch(content, /storageSmokeTest/);
+    });
+}

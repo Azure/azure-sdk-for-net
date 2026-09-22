@@ -13,10 +13,36 @@ trigger:
       - eng/common/pipelines/templates/jobs/**
       - eng/common/pipelines/templates/steps/eval-invoke.yml
       - eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+      - eng/common/pipelines/templates/steps/eval-publish-results.yml
       - eng/common/pipelines/templates/stages/archetype-eval.yml
       - eng/common/scripts/eval/**
 
 pr: none
+
+parameters:
+  - name: publishDashboardResults
+    displayName: 'Publish the complete build bundle directly to Blob'
+    type: boolean
+    default: false
+  - name: allowAzureStorageNetworkAccess
+    displayName: 'Allow Azure Storage network access for this publishing pipeline (all processes)'
+    type: boolean
+    default: false
+  - name: storageServiceConnection
+    type: string
+    default: eval-dashboard-sc
+  - name: storageContainerUrl
+    type: string
+    default: https://evaltestsummary.blob.core.windows.net/vally-results
+  - name: notifyDashboard
+    type: boolean
+    default: false
+  - name: dashboardUrl
+    type: string
+    default: ''
+  - name: dashboardAudience
+    type: string
+    default: ''
 
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
@@ -27,6 +53,14 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-eval.yml
   parameters:
+    createDashboardBundle: true
+    publishDashboardResults: ${{ parameters.publishDashboardResults }}
+    allowAzureStorageNetworkAccess: ${{ parameters.allowAzureStorageNetworkAccess }}
+    storageServiceConnection: ${{ parameters.storageServiceConnection }}
+    storageContainerUrl: ${{ parameters.storageContainerUrl }}
+    notifyDashboard: ${{ parameters.notifyDashboard }}
+    dashboardUrl: ${{ parameters.dashboardUrl }}
+    dashboardAudience: ${{ parameters.dashboardAudience }}
     # Shared mock/live builder; select the mock tier.
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: mock
