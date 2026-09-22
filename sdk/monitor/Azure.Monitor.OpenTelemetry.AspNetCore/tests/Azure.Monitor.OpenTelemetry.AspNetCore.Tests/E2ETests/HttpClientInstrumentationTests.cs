@@ -129,6 +129,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             dnsMeter.CreateHistogram<double>("dns.lookup.duration").Record(0.1);
 
             meterProvider.ForceFlush();
+
+            // Meter version isolates this test's synthetic instruments from any real System.Net.Http meter in the process.
             var httpMetrics = exportedMetrics.Where(metric => metric.MeterName == meter.Name && metric.MeterVersion == meter.Version).ToList();
             Assert.Equal(configuration == "all" ? 6 : configuration == "one" ? 2 : configuration == "drop" ? 0 : 1, httpMetrics.Count);
             if (configuration != "drop")
@@ -156,6 +158,50 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             Assert.Contains(exportedMetrics, metric => metric.MeterName == customMeter.Name);
             Assert.Contains(exportedMetrics, metric => metric.MeterName == serverMeter.Name);
             Assert.Contains(exportedMetrics, metric => metric.MeterName == dnsMeter.Name);
+        }
+
+        [Fact]
+        public async Task HttpClientMetricsCollectOnlyRequestDurationFromRealRequests()
+        {
+            using var testHttpServer = TestHttpServer.RunServer(
+                action: (ctx) =>
+                {
+                    ctx.Response.StatusCode = 200;
+                    ctx.Response.OutputStream.Close();
+                },
+                host: out var host,
+                port: out var port);
+
+            var testConnectionString = $"InstrumentationKey=unitTest-{nameof(HttpClientMetricsCollectOnlyRequestDurationFromRealRequests)}";
+            Exporter.Internals.TransmitterFactory.Instance.Set(testConnectionString,
+                new Exporter.Tests.CommonTestFramework.MockTransmitter(new List<TelemetryItem>()));
+
+            var exportedMetrics = new List<Metric>();
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddOpenTelemetry()
+                .UseAzureMonitor(x =>
+                {
+                    x.ConnectionString = testConnectionString;
+                    x.EnableLiveMetrics = false;
+                })
+                .WithMetrics(x => x
+                    .SetResourceBuilder(ResourceBuilder.CreateEmpty())
+                    .AddInMemoryExporter(exportedMetrics));
+
+            using var serviceProvider = serviceCollection.BuildServiceProvider();
+            var meterProvider = serviceProvider.GetRequiredService<MeterProvider>();
+
+            using (var httpClient = new HttpClient())
+            {
+                using var response = await httpClient.GetAsync($"http://{host}:{port}/probe");
+            }
+
+            meterProvider.ForceFlush();
+
+            // Catches the distro's instrument name drifting from the name the runtime actually emits.
+            Assert.Equal(
+                new[] { "http.client.request.duration" },
+                exportedMetrics.Where(metric => metric.MeterName == "System.Net.Http").Select(metric => metric.Name).Distinct().ToArray());
         }
 #endif
 
@@ -191,7 +237,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 
             // SETUP OPENTELEMETRY WITH AZURE MONITOR DISTRO
             var activities = new List<Activity>();
-            var metrics = new List<Metric>();
             var serviceCollection = new ServiceCollection();
 
             serviceCollection.AddOpenTelemetry()
@@ -202,7 +247,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                     x.TracesPerSecond = null; // Disable rate limited sampler
                 })
                 .WithTracing(x => x.AddInMemoryExporter(activities))
-                .WithMetrics(builder => builder.AddInMemoryExporter(metrics))
                 // Custom resources must be added AFTER AzureMonitor to override the included ResourceDetectors.
                 .ConfigureResource(x => x.AddAttributes(SharedTestVars.TestResourceAttributes));
             serviceCollection.Configure<HttpClientTraceInstrumentationOptions>(options =>
@@ -253,14 +297,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             }
 
             // SHUTDOWN
-            serviceProvider.GetRequiredService<MeterProvider>().ForceFlush();
             tracerProvider.ForceFlush();
             tracerProvider.Shutdown();
 
             // ASSERT
-            var httpMetrics = metrics.Where(metric => metric.Name.StartsWith("http.client.", StringComparison.Ordinal)).ToList();
-            Assert.NotEmpty(httpMetrics);
-            Assert.All(httpMetrics, metric => Assert.Equal("http.client.request.duration", metric.Name));
             WaitForActivityExport(telemetryItems, x => x.Name == "RemoteDependency");
             var activity = activities.Single();
             Assert.True(telemetryItems.Any(), "Unit test failed to collect telemetry.");
