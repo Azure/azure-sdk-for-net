@@ -188,7 +188,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                     nextFileTime,
                     rangeStart,
                     rangeEnd,
-                    isBatched);
+                    isBatched,
+                    _includeNonFinalizedEvents);
 
                 yield return new ChangeFeedEventPageBase<ShareChangeFeedEvent>(events, outerToken);
             }
@@ -205,7 +206,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                     pointer.LatestResetFileTime,
                     rangeStart,
                     rangeEnd,
-                    isBatched);
+                    isBatched,
+                    _includeNonFinalizedEvents);
                 yield return new ChangeFeedEventPageBase<ShareChangeFeedEvent>(tail, outerToken);
             }
         }
@@ -214,16 +216,18 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// Wraps the inner Common change-feed cursor in the Files-only outer envelope so that
         /// the last-seen reset marker travels alongside the underlying position.
         /// </summary>
-        private static string BuildOuterToken(
+        internal static string BuildOuterToken(
             BlobContainerClient containerClient,
             ChangeFeedCursor innerCursor,
             Guid? lastSeenResetId,
             long? lastSeenResetFileTime,
             DateTimeOffset? rangeStart,
             DateTimeOffset? rangeEnd,
-            bool isBatched)
+            bool isBatched,
+            bool includeNonFinalizedEvents)
         {
-            if (innerCursor == null && !lastSeenResetId.HasValue && !lastSeenResetFileTime.HasValue)
+            if (includeNonFinalizedEvents
+                || (innerCursor == null && !lastSeenResetId.HasValue && !lastSeenResetFileTime.HasValue))
             {
                 // Terminal / non-finalized read: the underlying feed suppresses its own token
                 // and no reset state to carry forward — mirror the Common contract.
