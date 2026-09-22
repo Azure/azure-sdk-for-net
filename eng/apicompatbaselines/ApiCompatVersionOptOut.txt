@@ -13,4 +13,3 @@
 #
 # One project name per line. Lines starting with '#' are comments.
 Azure.AI.Extensions.OpenAI
-Azure.ResourceManager.ProviderHub
