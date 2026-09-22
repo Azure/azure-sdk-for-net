@@ -301,10 +301,25 @@ namespace Azure.Identity
             }
 
             string tokenScope = TranslateCloudToTokenScope(source.AzureCloud);
-            var managedIdentityCredential = new ManagedIdentityCredential(managedIdentityId);
-            var tokenContext = new TokenRequestContext(new[] { tokenScope });
+            var managedIdentityOptions = source.Clone<DefaultAzureCredentialOptions>();
+            // This factory builds sources for a ChainedTokenCredential, so mark the inner managed identity
+            // as chained. When IMDS is unreachable it then surfaces CredentialUnavailableException (which the
+            // wrapping ClientAssertionCredential preserves), allowing an outer ChainedTokenCredential to fall
+            // through to the next source instead of aborting with AuthenticationFailedException. Unlike the
+            // regular managed identity source, InitialImdsConnectionTimeout is deliberately left unset so
+            // discovery is not truncated at one second - only the exception classification changes.
+            managedIdentityOptions.IsChainedCredential = true;
+            var managedIdentityCredential = new ManagedIdentityCredential(new ManagedIdentityClient(new ManagedIdentityClientOptions
+            {
+                ManagedIdentityId = managedIdentityId,
+                Pipeline = CredentialPipeline.GetInstance(managedIdentityOptions, IsManagedIdentityCredential: true),
+                Options = managedIdentityOptions,
+                IsForceRefreshEnabled = managedIdentityOptions.IsForceRefreshEnabled,
+                DisableMtlsProofOfPossession = managedIdentityOptions.DisableMtlsProofOfPossession,
+            }));
 
-            var assertionOptions = new ClientAssertionCredentialOptions();
+            var assertionOptions = source.Clone<ClientAssertionCredentialOptions>();
+            assertionOptions.DisableMtlsProofOfPossession = managedIdentityOptions.DisableMtlsProofOfPossession;
 
             if (source.AdditionallyAllowedTenants?.Count > 0)
             {
@@ -317,7 +332,8 @@ namespace Azure.Identity
             return new ClientAssertionCredential(
                 source.TenantId,
                 source.ClientId,
-                async _ => (await managedIdentityCredential.GetTokenAsync(tokenContext).ConfigureAwait(false)).Token,
+                managedIdentityCredential,
+                tokenScope,
                 assertionOptions);
         }
 
