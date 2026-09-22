@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DataAuthorizationMode))
+            if (Optional.IsDefined(IsDataAuthorizationMode))
             {
                 writer.WritePropertyName("dataAuthorizationMode"u8);
-                writer.WriteBooleanValue(DataAuthorizationMode.Value);
+                writer.WriteBooleanValue(IsDataAuthorizationMode.Value);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             bool? isLocalAuthDisabled = default;
             bool? isUnifiedSentinelBillingOnly = default;
             IReadOnlyList<string> associations = default;
-            bool? dataAuthorizationMode = default;
+            bool? isDataAuthorizationMode = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -259,10 +259,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataAuthorizationMode = null;
+                        isDataAuthorizationMode = null;
                         continue;
                     }
-                    dataAuthorizationMode = prop.Value.GetBoolean();
+                    isDataAuthorizationMode = prop.Value.GetBoolean();
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 isLocalAuthDisabled,
                 isUnifiedSentinelBillingOnly,
                 associations ?? new ChangeTrackingList<string>(),
-                dataAuthorizationMode,
+                isDataAuthorizationMode,
                 additionalProperties);
         }
     }

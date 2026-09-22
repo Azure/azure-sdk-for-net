@@ -267,10 +267,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="isLocalAuthDisabled"> Disable Non-AAD based Auth. </param>
         /// <param name="isUnifiedSentinelBillingOnly"> An indication if the specify workspace is limited to sentinel's unified billing model only. </param>
         /// <param name="associations"> List of associations for the workspace. Indicates if the workspace is associated with any of the following experiences: MDC, Sentinel, SentinelGraph, etc. </param>
-        /// <param name="dataAuthorizationMode"> Enable Data authorization mode for the workspace. </param>
+        /// <param name="isDataAuthorizationMode"> Enable Data authorization mode for the workspace. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.OperationalInsightsWorkspaceFeatures"/> instance for mocking. </returns>
-        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, bool? isUnifiedSentinelBillingOnly, IEnumerable<string> associations, bool? dataAuthorizationMode, IDictionary<string, BinaryData> additionalProperties)
+        public static OperationalInsightsWorkspaceFeatures OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, bool? isUnifiedSentinelBillingOnly, IEnumerable<string> associations, bool? isDataAuthorizationMode, IDictionary<string, BinaryData> additionalProperties)
         {
             associations ??= new ChangeTrackingList<string>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 isLocalAuthDisabled,
                 isUnifiedSentinelBillingOnly,
                 (associations ?? new ChangeTrackingList<string>()).ToList(),
-                dataAuthorizationMode,
+                isDataAuthorizationMode,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 

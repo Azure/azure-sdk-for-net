@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="isLocalAuthDisabled"> Disable Non-AAD based Auth. </param>
         /// <param name="isUnifiedSentinelBillingOnly"> An indication if the specify workspace is limited to sentinel's unified billing model only. </param>
         /// <param name="associations"> List of associations for the workspace. Indicates if the workspace is associated with any of the following experiences: MDC, Sentinel, SentinelGraph, etc. </param>
-        /// <param name="dataAuthorizationMode"> Enable Data authorization mode for the workspace. </param>
+        /// <param name="isDataAuthorizationMode"> Enable Data authorization mode for the workspace. </param>
         /// <param name="additionalProperties"></param>
-        internal OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, bool? isUnifiedSentinelBillingOnly, IReadOnlyList<string> associations, bool? dataAuthorizationMode, IDictionary<string, BinaryData> additionalProperties)
+        internal OperationalInsightsWorkspaceFeatures(bool? isDataExportEnabled, bool? immediatePurgeDataOn30Days, bool? isLogAccessUsingOnlyResourcePermissionsEnabled, ResourceIdentifier clusterResourceId, bool? isLocalAuthDisabled, bool? isUnifiedSentinelBillingOnly, IReadOnlyList<string> associations, bool? isDataAuthorizationMode, IDictionary<string, BinaryData> additionalProperties)
         {
             IsDataExportEnabled = isDataExportEnabled;
             ImmediatePurgeDataOn30Days = immediatePurgeDataOn30Days;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             IsLocalAuthDisabled = isLocalAuthDisabled;
             IsUnifiedSentinelBillingOnly = isUnifiedSentinelBillingOnly;
             Associations = associations;
-            DataAuthorizationMode = dataAuthorizationMode;
+            IsDataAuthorizationMode = isDataAuthorizationMode;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Enable Data authorization mode for the workspace. </summary>
         [WirePath("dataAuthorizationMode")]
-        public bool? DataAuthorizationMode { get; set; }
+        public bool? IsDataAuthorizationMode { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
