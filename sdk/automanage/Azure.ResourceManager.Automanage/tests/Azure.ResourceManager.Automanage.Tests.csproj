@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Compute" />
     <PackageReference Include="Azure.ResourceManager.Resources" />
+    <PackageReference Include="Azure.ResourceManager.Resources.Deployments" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />

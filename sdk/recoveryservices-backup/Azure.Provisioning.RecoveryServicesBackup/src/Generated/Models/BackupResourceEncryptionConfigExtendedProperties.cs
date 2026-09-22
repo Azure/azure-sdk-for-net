@@ -5,23 +5,16 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary> The BackupResourceEncryptionConfigExtendedProperties. </summary>
-    public partial class BackupResourceEncryptionConfigExtendedProperties : ProvisionableConstruct
+    public partial class BackupResourceEncryptionConfigExtendedProperties : BackupResourceEncryptionConfig
     {
         private BicepValue<ResourceIdentifier> _userAssignedIdentity;
         private BicepValue<bool> _useSystemAssignedIdentity;
-        private BicepValue<BackupEncryptionAtRestType> _encryptionAtRestType;
-        private BicepValue<Uri> _keyUri;
-        private BicepValue<string> _subscriptionId;
-        private BicepValue<LastUpdateStatus> _lastUpdateStatus;
-        private BicepValue<InfrastructureEncryptionState> _infrastructureEncryptionState;
 
         /// <summary> Creates a new BackupResourceEncryptionConfigExtendedProperties. </summary>
         public BackupResourceEncryptionConfigExtendedProperties()
@@ -58,92 +51,12 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             }
         }
 
-        /// <summary> Gets or sets the EncryptionAtRestType. </summary>
-        public BicepValue<BackupEncryptionAtRestType> EncryptionAtRestType
-        {
-            get
-            {
-                Initialize();
-                return _encryptionAtRestType;
-            }
-            set
-            {
-                Initialize();
-                _encryptionAtRestType.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the KeyUri. </summary>
-        public BicepValue<Uri> KeyUri
-        {
-            get
-            {
-                Initialize();
-                return _keyUri;
-            }
-            set
-            {
-                Initialize();
-                _keyUri.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the SubscriptionId. </summary>
-        public BicepValue<string> SubscriptionId
-        {
-            get
-            {
-                Initialize();
-                return _subscriptionId;
-            }
-            set
-            {
-                Initialize();
-                _subscriptionId.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the LastUpdateStatus. </summary>
-        public BicepValue<LastUpdateStatus> LastUpdateStatus
-        {
-            get
-            {
-                Initialize();
-                return _lastUpdateStatus;
-            }
-            set
-            {
-                Initialize();
-                _lastUpdateStatus.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the InfrastructureEncryptionState. </summary>
-        public BicepValue<InfrastructureEncryptionState> InfrastructureEncryptionState
-        {
-            get
-            {
-                Initialize();
-                return _infrastructureEncryptionState;
-            }
-            set
-            {
-                Initialize();
-                _infrastructureEncryptionState.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for BackupResourceEncryptionConfigExtendedProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _userAssignedIdentity = DefineProperty<ResourceIdentifier>(nameof(UserAssignedIdentity), new string[] { "userAssignedIdentity" });
             _useSystemAssignedIdentity = DefineProperty<bool>(nameof(UseSystemAssignedIdentity), new string[] { "useSystemAssignedIdentity" });
-            _encryptionAtRestType = DefineProperty<BackupEncryptionAtRestType>(nameof(EncryptionAtRestType), new string[] { "encryptionAtRestType" });
-            _keyUri = DefineProperty<Uri>(nameof(KeyUri), new string[] { "keyUri" });
-            _subscriptionId = DefineProperty<string>(nameof(SubscriptionId), new string[] { "subscriptionId" });
-            _lastUpdateStatus = DefineProperty<LastUpdateStatus>(nameof(LastUpdateStatus), new string[] { "lastUpdateStatus" });
-            _infrastructureEncryptionState = DefineProperty<InfrastructureEncryptionState>(nameof(InfrastructureEncryptionState), new string[] { "infrastructureEncryptionState" });
             DefineAdditionalProperties();
         }
 

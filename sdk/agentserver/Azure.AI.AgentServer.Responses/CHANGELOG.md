@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.8 (Unreleased)
+## 1.0.0-beta.8 (2026-08-12)
 
 ### Features Added
 - Resilient responses. Resilient background responses (`ResponsesServerOptions.ResilientBackground`)
@@ -15,8 +15,6 @@
     a superseding turn enqueues and drains against the active turn, observable through
     `ResponseContext.IsSteeredTurn` and `ResponseContext.PendingInputCount`; fork, lock, and
     queue-full conflicts map to `409 Conflict`.
-  - Durable per-conversation developer metadata via `ResponseContext.ConversationChainMetadata`
-    (namespaced, with explicit `FlushAsync`) keyed on a stable `ResponseContext.ConversationChainId`.
   - Internal metadata is persisted for recovery and stripped on egress so it never leaks to clients.
   - Fail-loud composition validation: misconfigured resilient setups fail at startup with actionable
     errors instead of silently degrading.
@@ -35,14 +33,17 @@
     the draining steered turn (FR-053).
 
 ### Breaking Changes
+- Removed `ConversationChainMetadata`, `ConversationChainMetadataNamespace`,
+  `ResponseContext.ConversationChainMetadata`, and `ResponseContextExtensions.MetadataNamespace`.
+  Durable application state now belongs in an explicit
+  `Azure.AI.AgentServer.Core.Storage.FoundryStateStore` scoped with
+  `ResponseContext.ConversationChainId`.
 - Removed the public `ResponsesStreamProvider` abstract class and the public `IAsyncObserver<T>`
   interface. SSE streaming is now composed on the `Azure.AI.AgentServer.Core` event-stream
   primitive (`IEventStreamRegistry` / `IEventStream`) rather than a Responses-owned stream
   provider, matching the Python implementation. The local default event-stream backing is
   in-memory replay, upgraded automatically to durable file-backed replay when resilient
   background is enabled outside a hosted environment.
-
-### Bugs Fixed
 
 ### Other Changes
 - Retired the interim .NET ↔ Python resilience parity reports now that the port has

@@ -14,10 +14,11 @@ namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary>
     /// Base class for backup items.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileshareProtectedItem"/>, <see cref="IaasClassicComputeVmProtectedItem"/>, <see cref="IaasVmProtectedItem"/>, <see cref="IaasComputeVmProtectedItem"/>, <see cref="SqlProtectedItem"/>, <see cref="VmWorkloadProtectedItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="DpmProtectedItem"/>, <see cref="GenericProtectedItem"/>, and <see cref="MabFileFolderProtectedItem"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="FileshareProtectedItem"/>, <see cref="IaasClassicComputeVmProtectedItem"/>, <see cref="IaasVmProtectedItem"/>, <see cref="IaasComputeVmProtectedItem"/>, <see cref="SqlProtectedItem"/>, <see cref="VmWorkloadProtectedItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="DpmProtectedItem"/>, <see cref="GenericProtectedItem"/>, and <see cref="MabFileFolderProtectedItem"/>.
     /// </summary>
     public partial class BackupGenericProtectedItem : ProvisionableConstruct
     {
+        private BicepValue<string> _protectedItemType;
         private BicepValue<BackupManagementType> _backupManagementType;
         private BicepValue<BackupDataSourceType> _workloadType;
         private BicepValue<string> _containerName;
@@ -40,6 +41,16 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new BackupGenericProtectedItem. </summary>
         public BackupGenericProtectedItem()
         {
+        }
+
+        /// <summary> backup item type. </summary>
+        internal BicepValue<string> ProtectedItemType
+        {
+            get
+            {
+                Initialize();
+                return _protectedItemType;
+            }
         }
 
         /// <summary> Gets the BackupManagementType. </summary>
@@ -301,6 +312,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _protectedItemType = DefineProperty<string>(nameof(ProtectedItemType), new string[] { "protectedItemType" }, isRequired: true);
             _backupManagementType = DefineProperty<BackupManagementType>(nameof(BackupManagementType), new string[] { "backupManagementType" }, isOutput: true);
             _workloadType = DefineProperty<BackupDataSourceType>(nameof(WorkloadType), new string[] { "workloadType" }, isOutput: true);
             _containerName = DefineProperty<string>(nameof(ContainerName), new string[] { "containerName" });

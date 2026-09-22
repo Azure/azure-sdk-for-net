@@ -25,20 +25,20 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of <see cref="FreeServicesProperties"/>. </summary>
         /// <param name="productCode"> This is the catalog UPN for the product. </param>
         /// <param name="status"> Current status of the free services. </param>
-        /// <param name="startOn"> Date and time when the free services become active. </param>
-        /// <param name="endOn"> Expiration date and time of the free services. </param>
+        /// <param name="startsOn"> Date and time when the free services become active. </param>
+        /// <param name="endsOn"> Expiration date and time of the free services. </param>
         /// <param name="provisioningState"> Provisioning state of Free Services as assigned by RPaaS. This indicates the last operation's status. For all practical purposes, this can be ignored. For current status of Free Services resource, refer to FreeServicesStatus. </param>
         /// <param name="billingAccountResourceId"> Billing account resource id where the free services metadata is present. </param>
         /// <param name="billingProfileResourceId"> Billing profile resource id where the free services are scoped to. </param>
         /// <param name="customerResourceId"> Customer resource id where the free services are scoped to. </param>
         /// <param name="systemId"> This is the globally unique identifier of the free services which will not change for its lifetime. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FreeServicesProperties(string productCode, FreeServicesStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string provisioningState, ResourceIdentifier billingAccountResourceId, ResourceIdentifier billingProfileResourceId, ResourceIdentifier customerResourceId, string systemId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FreeServicesProperties(string productCode, FreeServicesStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string provisioningState, ResourceIdentifier billingAccountResourceId, ResourceIdentifier billingProfileResourceId, ResourceIdentifier customerResourceId, string systemId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProductCode = productCode;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ProvisioningState = provisioningState;
             BillingAccountResourceId = billingAccountResourceId;
             BillingProfileResourceId = billingProfileResourceId;
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public FreeServicesStatus? Status { get; set; }
 
         /// <summary> Date and time when the free services become active. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> Expiration date and time of the free services. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Provisioning state of Free Services as assigned by RPaaS. This indicates the last operation's status. For all practical purposes, this can be ignored. For current status of Free Services resource, refer to FreeServicesStatus. </summary>
         public string ProvisioningState { get; }

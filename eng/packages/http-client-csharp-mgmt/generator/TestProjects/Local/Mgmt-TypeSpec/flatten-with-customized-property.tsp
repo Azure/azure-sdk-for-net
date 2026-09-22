@@ -1,9 +1,12 @@
 import "@azure-tools/typespec-azure-core";
+import "@azure-tools/typespec-client-generator-core";
+import "@typespec/http-client-csharp";
 import "./foo.tsp";
 
 using TypeSpec.Http;
 using TypeSpec.Rest;
 using Azure.ResourceManager;
+using Azure.ClientGenerator.Core;
 using Azure.Core;
 
 namespace MgmtTypeSpec;
@@ -27,7 +30,13 @@ union FlattenChannel {
   Stable: "Stable",
 }
 
-/** Properties model with a safe-flattened sub-model and a customized property. */
+/**
+ * Properties model with a safe-flattened sub-model and a customized property.
+ * Also marked with @useSystemTextJsonConverter so the generated JsonConverter.Read
+ * is verified to call the dynamic-model deserialization overload that takes the raw payload.
+ */
+@TypeSpec.HttpClient.CSharp.dynamicModel
+@useSystemTextJsonConverter("csharp")
 model MultiFlattenProperties {
   /** Required property that will be customized via [CodeGenMember] to change its position. */
   channel: FlattenChannel;

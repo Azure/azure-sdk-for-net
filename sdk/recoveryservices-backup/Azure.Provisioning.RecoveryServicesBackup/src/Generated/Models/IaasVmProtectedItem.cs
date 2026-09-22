@@ -11,10 +11,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// IaaS VM workload-specific backup item.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IaasClassicComputeVmProtectedItem"/> and <see cref="IaasComputeVmProtectedItem"/>.
-    /// </summary>
+    /// <summary> IaaS VM workload-specific backup item. </summary>
     public partial class IaasVmProtectedItem : BackupGenericProtectedItem
     {
         private BicepValue<string> _friendlyName;
@@ -34,6 +31,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new IaasVmProtectedItem. </summary>
         public IaasVmProtectedItem()
         {
+            ProtectedItemType.Assign("AzureIaaSVMProtectedItem");
         }
 
         /// <summary> Gets the FriendlyName. </summary>
@@ -205,7 +203,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectedItemType", new string[] { "protectedItemType" }, defaultValue: "AzureIaaSVMProtectedItem");
             _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" }, isOutput: true);
             _virtualMachineId = DefineProperty<ResourceIdentifier>(nameof(VirtualMachineId), new string[] { "virtualMachineId" }, isOutput: true);
             _protectionStatus = DefineProperty<string>(nameof(ProtectionStatus), new string[] { "protectionStatus" });

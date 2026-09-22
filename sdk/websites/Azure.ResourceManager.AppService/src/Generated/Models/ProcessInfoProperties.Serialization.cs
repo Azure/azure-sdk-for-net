@@ -194,10 +194,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("thread_count"u8);
                 writer.WriteNumberValue(ThreadCount.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("start_time"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsDefined(TotalCpuTime))
             {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.AppService.Models
             int? handleCount = default;
             int? moduleCount = default;
             int? threadCount = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             string totalCpuTime = default;
             string userCpuTime = default;
             string privilegedCpuTime = default;
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("total_cpu_time"u8))
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.AppService.Models
                 handleCount,
                 moduleCount,
                 threadCount,
-                startOn,
+                startsOn,
                 totalCpuTime,
                 userCpuTime,
                 privilegedCpuTime,

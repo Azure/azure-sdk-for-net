@@ -65,7 +65,11 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("metrics", paramStr, true);
+                    }
                 }
             }
             uri.AppendQuery("dateTimeBegin", TypeFormatters.ConvertToString(dateTimeBegin, SerializationFormat.DateTime_RFC3339), true);
@@ -75,7 +79,11 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in groupBy)
                 {
-                    uri.AppendQuery("groupBy", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("groupBy", paramStr, true);
+                    }
                 }
             }
             if (continents != null && !(continents is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
@@ -134,14 +142,22 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in rankings)
                 {
-                    uri.AppendQuery("rankings", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("rankings", paramStr, true);
+                    }
                 }
             }
             if (metrics != null && !(metrics is ChangeTrackingList<LogRankingMetric> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("metrics", paramStr, true);
+                    }
                 }
             }
             uri.AppendQuery("maxRanking", TypeFormatters.ConvertToString(maxRanking), true);
@@ -230,7 +246,11 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("metrics", paramStr, true);
+                    }
                 }
             }
             uri.AppendQuery("dateTimeBegin", TypeFormatters.ConvertToString(dateTimeBegin, SerializationFormat.DateTime_RFC3339), true);
@@ -240,21 +260,33 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in actions)
                 {
-                    uri.AppendQuery("actions", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("actions", paramStr, true);
+                    }
                 }
             }
             if (groupBy != null && !(groupBy is ChangeTrackingList<WafRankingGroupBy> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var @param in groupBy)
                 {
-                    uri.AppendQuery("groupBy", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("groupBy", paramStr, true);
+                    }
                 }
             }
             if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var @param in ruleTypes)
                 {
-                    uri.AppendQuery("ruleTypes", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("ruleTypes", paramStr, true);
+                    }
                 }
             }
             HttpMessage message = Pipeline.CreateMessage();
@@ -285,7 +317,11 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in metrics)
                 {
-                    uri.AppendQuery("metrics", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("metrics", paramStr, true);
+                    }
                 }
             }
             uri.AppendQuery("dateTimeBegin", TypeFormatters.ConvertToString(dateTimeBegin, SerializationFormat.DateTime_RFC3339), true);
@@ -295,21 +331,33 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var @param in rankings)
                 {
-                    uri.AppendQuery("rankings", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("rankings", paramStr, true);
+                    }
                 }
             }
             if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var @param in actions)
                 {
-                    uri.AppendQuery("actions", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("actions", paramStr, true);
+                    }
                 }
             }
             if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var @param in ruleTypes)
                 {
-                    uri.AppendQuery("ruleTypes", @param.ToString(), true);
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("ruleTypes", paramStr, true);
+                    }
                 }
             }
             HttpMessage message = Pipeline.CreateMessage();

@@ -12,7 +12,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningOnlineDeploymentProperties. </summary>
+    /// <summary>
+    /// The MachineLearningOnlineDeploymentProperties.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningKubernetesOnlineDeployment"/> and <see cref="MachineLearningManagedOnlineDeployment"/>.
+    /// </summary>
     public partial class MachineLearningOnlineDeploymentProperties : MachineLearningEndpointDeploymentProperties, IJsonModel<MachineLearningOnlineDeploymentProperties>
     {
         /// <param name="data"> The data to parse. </param>

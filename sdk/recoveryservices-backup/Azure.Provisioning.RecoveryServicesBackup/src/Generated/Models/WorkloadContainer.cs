@@ -11,10 +11,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// Container for the workloads running inside Azure Compute or Classic Compute.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SqlAvailabilityGroupWorkloadProtectionContainer"/> and <see cref="VmAppContainerProtectionContainer"/>.
-    /// </summary>
+    /// <summary> Container for the workloads running inside Azure Compute or Classic Compute. </summary>
     public partial class WorkloadContainer : BackupGenericProtectionContainer
     {
         private BicepValue<ResourceIdentifier> _sourceResourceId;
@@ -26,6 +23,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new WorkloadContainer. </summary>
         public WorkloadContainer()
         {
+            ContainerType.Assign(ProtectableContainerType.AzureWorkloadContainer);
         }
 
         /// <summary> Gets or sets the SourceResourceId. </summary>
@@ -107,7 +105,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("containerType", new string[] { "containerType" }, defaultValue: "AzureWorkloadContainer");
             _sourceResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceResourceId), new string[] { "sourceResourceId" });
             _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTime" }, format: "O");
             _extendedInfo = DefineModelProperty<WorkloadContainerExtendedInfo>(nameof(ExtendedInfo), new string[] { "extendedInfo" });

@@ -18,6 +18,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new BanditPolicy. </summary>
         public BanditPolicy()
         {
+            PolicyType.Assign(EarlyTerminationPolicyType.Bandit);
         }
 
         /// <summary> Gets or sets the SlackAmount. </summary>
@@ -54,7 +55,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("policyType", new string[] { "policyType" }, defaultValue: "Bandit");
             _slackAmount = DefineProperty<float>(nameof(SlackAmount), new string[] { "slackAmount" });
             _slackFactor = DefineProperty<float>(nameof(SlackFactor), new string[] { "slackFactor" });
             DefineAdditionalProperties();

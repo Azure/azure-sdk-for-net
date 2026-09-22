@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core.Storage;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
@@ -33,7 +34,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.E2E.ResilienceContract;
 /// <item>20: a concurrent steered turn enqueues (<c>queued</c>) then drains as a steered re-entry
 /// (<c>IsSteeredTurn</c>).</item>
 /// <item>22: a serial (non-steering) conversation chain accumulates per-turn state across turns via
-/// durable chain metadata + framework history.</item>
+/// an explicit State Store + framework history.</item>
 /// </list>
 /// Determinism is gated with <see cref="TaskCompletionSource"/> — no arbitrary sleeps for
 /// correctness. Each test isolates its Core task/response stores in a fresh temp directory.
@@ -123,7 +124,9 @@ public sealed class ResilienceSampleParityEndToEndTests
         }
 
         string[] phaseOrder = { "analyze", "generate", "refine" };
-        int start = NextPhaseIndex(context, phaseOrder);
+        int start = context.IsRecovery
+            ? Math.Min(context.PersistedResponse?.Output?.Count ?? 0, phaseOrder.Length)
+            : 0;
         for (int i = start; i < phaseOrder.Length; i++)
         {
             string phase = phaseOrder[i];
@@ -133,28 +136,11 @@ public sealed class ResilienceSampleParityEndToEndTests
                 yield return evt;
             }
 
-            // Durable watermark + phase checkpoint (no-op unless resilient background).
-            context.ConversationChainMetadata.Set("stream", "phase_complete", phase);
-            await context.ConversationChainMetadata.FlushAsync(ct);
+            // The durable response snapshot is the phase watermark.
             yield return stream.Checkpoint();
         }
 
         yield return stream.EmitCompleted();
-    }
-
-    private static int NextPhaseIndex(ResponseContext context, string[] phaseOrder)
-    {
-        if (context.ConversationChainMetadata.TryGet("stream", "phase_complete", out var done)
-            && done is not null)
-        {
-            int idx = Array.IndexOf(phaseOrder, done);
-            if (idx >= 0)
-            {
-                return idx + 1;
-            }
-        }
-
-        return 0;
     }
 
     // ==========================================================================================
@@ -288,7 +274,7 @@ public sealed class ResilienceSampleParityEndToEndTests
             await WaitForStatusAsync(client, turn1Id, "completed", TimeSpan.FromSeconds(15));
 
             // Turn 2 references the previous turn; the handler asserts it sees turn_count == 2, which
-            // is only possible if the durable chain metadata from turn 1 survived into turn 2. Turn 1's
+            // is only possible if the explicit State Store value from turn 1 survived into turn 2. Turn 1's
             // response is already "completed", but the Core multi-turn task may still hold the chain
             // lock for a moment while it suspends — poll-retry until the lock is released so a slow CI
             // agent does not observe a transient 409 conversation_locked.
@@ -329,25 +315,53 @@ public sealed class ResilienceSampleParityEndToEndTests
         var response = new ResponseObject(context.ResponseId, request.Model ?? "chat");
         yield return new ResponseCreatedEvent(0, response);
 
-        int turnCount = 1;
-        if (context.ConversationChainMetadata.TryGet("state", "turn_count", out var raw)
-            && int.TryParse(raw, out var prior))
-        {
-            turnCount = prior + 1;
-        }
+        FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+            $"responses/resilient-multiturn/{context.ConversationChainId}",
+            description: "State for the resilient multi-turn response sample",
+            cancellationToken: CancellationToken.None);
+        StateStoreItem? item = await store.GetItemAsync(
+            "state",
+            cancellationToken: CancellationToken.None);
+        IDictionary<string, BinaryData> state = item?.Value
+            ?? new Dictionary<string, BinaryData>(StringComparer.Ordinal);
 
-        // Accumulate the per-turn counter durably (published sample: cross-turn watermark).
-        context.ConversationChainMetadata.Set("state", "turn_count", turnCount.ToString());
-        await context.ConversationChainMetadata.FlushAsync(ct);
+        bool repeatedResponse =
+            state.TryGetValue("last_response_id", out BinaryData? responseIdData)
+            && responseIdData.ToObjectFromJson<string>() == context.ResponseId;
+        int turnCount;
+        if (repeatedResponse)
+        {
+            turnCount = state.TryGetValue("turn_count", out BinaryData? existingTurnData)
+                ? existingTurnData.ToObjectFromJson<int>()
+                : 1;
+        }
+        else
+        {
+            turnCount = state.TryGetValue("turn_count", out BinaryData? priorTurnData)
+                ? priorTurnData.ToObjectFromJson<int>() + 1
+                : 1;
+            await store.SetItemAsync(
+                "state",
+                new Dictionary<string, BinaryData>
+                {
+                    ["turn_count"] = BinaryData.FromObjectAsJson(turnCount),
+                    ["last_response_id"] = BinaryData.FromObjectAsJson(context.ResponseId),
+                },
+                cancellationToken: CancellationToken.None);
+        }
 
         // Second turn must observe the accumulated state; otherwise the chain did not persist.
         if (turnCount >= 2)
         {
-            if (!context.ConversationChainMetadata.TryGet("state", "turn_count", out var back)
-                || back != turnCount.ToString())
+            StateStoreItem? persisted = await store.GetItemAsync(
+                "state",
+                cancellationToken: CancellationToken.None);
+            if (persisted is null
+                || !persisted.Value.TryGetValue("turn_count", out BinaryData? persistedTurnData)
+                || persistedTurnData.ToObjectFromJson<int>() != turnCount)
             {
                 throw new InvalidOperationException(
-                    "Multi-turn chain metadata did not accumulate across turns — durability broken.");
+                    "Multi-turn State Store value did not accumulate across turns — durability broken.");
             }
         }
 

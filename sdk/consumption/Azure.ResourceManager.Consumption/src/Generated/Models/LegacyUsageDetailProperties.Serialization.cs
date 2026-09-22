@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("billingAccountName"u8);
                 writer.WriteStringValue(BillingAccountName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingPeriodStartOn))
+            if (options.Format != "W" && Optional.IsDefined(BillingPeriodStartsOn))
             {
                 writer.WritePropertyName("billingPeriodStartDate"u8);
-                writer.WriteStringValue(BillingPeriodStartOn.Value, "O");
+                writer.WriteStringValue(BillingPeriodStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingPeriodEndOn))
+            if (options.Format != "W" && Optional.IsDefined(BillingPeriodEndsOn))
             {
                 writer.WritePropertyName("billingPeriodEndDate"u8);
-                writer.WriteStringValue(BillingPeriodEndOn.Value, "O");
+                writer.WriteStringValue(BillingPeriodEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
             {
@@ -348,8 +348,8 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             string billingAccountId = default;
             string billingAccountName = default;
-            DateTimeOffset? billingPeriodStartOn = default;
-            DateTimeOffset? billingPeriodEndOn = default;
+            DateTimeOffset? billingPeriodStartsOn = default;
+            DateTimeOffset? billingPeriodEndsOn = default;
             string billingProfileId = default;
             string billingProfileName = default;
             string accountOwnerId = default;
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    billingPeriodStartOn = prop.Value.GetDateTimeOffset("O");
+                    billingPeriodStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("billingPeriodEndDate"u8))
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    billingPeriodEndOn = prop.Value.GetDateTimeOffset("O");
+                    billingPeriodEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("billingProfileId"u8))
@@ -681,8 +681,8 @@ namespace Azure.ResourceManager.Consumption.Models
             return new LegacyUsageDetailProperties(
                 billingAccountId,
                 billingAccountName,
-                billingPeriodStartOn,
-                billingPeriodEndOn,
+                billingPeriodStartsOn,
+                billingPeriodEndsOn,
                 billingProfileId,
                 billingProfileName,
                 accountOwnerId,

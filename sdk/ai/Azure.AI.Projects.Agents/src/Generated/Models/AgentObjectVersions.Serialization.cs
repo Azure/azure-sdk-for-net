@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The AgentObjectVersions. </summary>
-    internal partial class AgentObjectVersions : IJsonModel<AgentObjectVersions>
+    public partial class AgentObjectVersions : IJsonModel<AgentObjectVersions>
     {
         /// <summary> Initializes a new instance of <see cref="AgentObjectVersions"/> for deserialization. </summary>
         internal AgentObjectVersions()
@@ -130,7 +130,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AgentObjectVersions(latest, additionalBinaryDataProperties);

@@ -109,7 +109,7 @@ namespace Azure.Provisioning.ContainerService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ContainerServiceMachineProperties>(nameof(Properties), new string[] { "properties" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" }, isOutput: true);
-            _parent = DefineResource<ContainerServiceAgentPool>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerServiceAgentPool>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

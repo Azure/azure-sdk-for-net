@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Fabric.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
+            if (Optional.IsDefined(Overage))
+            {
+                writer.WritePropertyName("overage"u8);
+                writer.WriteObjectValue(Overage, options);
+            }
             writer.WritePropertyName("administration"u8);
             writer.WriteObjectValue(Administration, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -135,6 +140,7 @@ namespace Azure.ResourceManager.Fabric.Models
             }
             FabricProvisioningState? provisioningState = default;
             FabricResourceState? state = default;
+            CapacityOverageProperties overage = default;
             FabricCapacityAdministration administration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,6 +163,15 @@ namespace Azure.ResourceManager.Fabric.Models
                     state = new FabricResourceState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("overage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    overage = CapacityOverageProperties.DeserializeCapacityOverageProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("administration"u8))
                 {
                     administration = FabricCapacityAdministration.DeserializeFabricCapacityAdministration(prop.Value, options);
@@ -167,7 +182,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FabricCapacityProperties(provisioningState, state, administration, additionalBinaryDataProperties);
+            return new FabricCapacityProperties(provisioningState, state, overage, administration, additionalBinaryDataProperties);
         }
     }
 }

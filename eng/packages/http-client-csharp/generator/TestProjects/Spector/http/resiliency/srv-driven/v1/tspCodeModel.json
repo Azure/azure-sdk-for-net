@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "v1"
+      ],
       "crossLanguageDefinitionId": "Resiliency.ServiceDriven.Versions",
       "valueType": {
         "$id": "2",

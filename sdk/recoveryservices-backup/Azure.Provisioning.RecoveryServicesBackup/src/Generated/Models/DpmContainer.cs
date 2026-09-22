@@ -10,10 +10,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// DPM workload-specific protection container.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupServerContainer"/>.
-    /// </summary>
+    /// <summary> DPM workload-specific protection container. </summary>
     public partial class DpmContainer : BackupGenericProtectionContainer
     {
         private BicepValue<bool> _canReRegister;
@@ -28,6 +25,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new DpmContainer. </summary>
         public DpmContainer()
         {
+            ContainerType.Assign(ProtectableContainerType.DPMContainer);
         }
 
         /// <summary> Gets or sets the CanReRegister. </summary>
@@ -171,7 +169,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("containerType", new string[] { "containerType" }, defaultValue: "DPMContainer");
             _canReRegister = DefineProperty<bool>(nameof(CanReRegister), new string[] { "canReRegister" });
             _containerId = DefineProperty<string>(nameof(ContainerId), new string[] { "containerId" });
             _protectedItemCount = DefineProperty<long>(nameof(ProtectedItemCount), new string[] { "protectedItemCount" });

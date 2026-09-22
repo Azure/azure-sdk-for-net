@@ -11,7 +11,8 @@ Key concepts:
 
 - `ResilientBackground = true`, `SteerableConversations = false`.
 - Conversation history via `context.GetHistoryAsync()` (framework-managed).
-- Durable per-turn state via `context.ConversationChainMetadata` (turn counter).
+- Durable per-turn state via an explicit `FoundryStateStore` (turn counter and
+  recovery idempotency marker).
 - Crash recovery: the handler is re-invoked with the same input + history, so it
   produces the same output.
 
@@ -19,9 +20,11 @@ Key concepts:
 
 ```C# Snippet:Responses_Sample22_ResilientMultiTurnHandler
 // Sample 22 — serial multi-turn (no steering). Durable per-conversation state is
-// written through a MetadataNamespace on the stable ConversationChainId.
+// written to an explicit State Store scoped by the stable ConversationChainId.
 public class ResilientMultiTurnHandler : ResponseHandler
 {
+    private static readonly DefaultAzureCredential s_credential = new();
+
     public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
         CreateResponse request,
         ResponseContext context,
@@ -31,19 +34,64 @@ public class ResilientMultiTurnHandler : ResponseHandler
         {
             string inputText = await context.GetInputTextAsync(cancellationToken: ct);
 
-            // Durable per-conversation state is scoped to the stable chain id.
-            ConversationChainMetadataNamespace state = context.MetadataNamespace("state");
             string chainId = context.ConversationChainId;
+            FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+                $"responses/resilient-multiturn/{chainId}",
+                s_credential,
+                description: "State for the resilient multi-turn response sample",
+                cancellationToken: CancellationToken.None);
+            StateStoreItem? item = await store.GetItemAsync(
+                "state",
+                cancellationToken: CancellationToken.None);
+            IDictionary<string, BinaryData> state = item?.Value
+                ?? new Dictionary<string, BinaryData>(StringComparer.Ordinal);
 
-            int turnCount = 1;
-            if (state.TryGet("turn_count", out var raw) && int.TryParse(raw, out var prior))
+            if (state.TryGetValue("terminated", out BinaryData? terminatedData)
+                && terminatedData.ToObjectFromJson<bool>()
+                && (!state.TryGetValue("last_response_id", out BinaryData? terminatedResponseData)
+                    || terminatedResponseData.ToObjectFromJson<string>() != context.ResponseId))
             {
-                turnCount = prior + 1;
+                state = new Dictionary<string, BinaryData>(StringComparer.Ordinal);
             }
+
+            bool repeatedResponse =
+                state.TryGetValue("last_response_id", out BinaryData? responseIdData)
+                && responseIdData.ToObjectFromJson<string>() == context.ResponseId;
+            int turnCount = repeatedResponse
+                ? state.TryGetValue("turn_count", out BinaryData? existingTurnData)
+                    ? existingTurnData.ToObjectFromJson<int>()
+                    : 1
+                : state.TryGetValue("turn_count", out BinaryData? priorTurnData)
+                    ? priorTurnData.ToObjectFromJson<int>() + 1
+                    : 1;
 
             if (string.Equals(inputText.Trim(), "done", StringComparison.OrdinalIgnoreCase))
             {
-                return $"Done! Session complete after {turnCount - 1} turns on {chainId}. Goodbye!";
+                int completedTurns;
+                if (repeatedResponse
+                    && state.TryGetValue("terminated", out BinaryData? repeatedTerminatedData)
+                    && repeatedTerminatedData.ToObjectFromJson<bool>())
+                {
+                    completedTurns = state.TryGetValue("completed_turns", out BinaryData? completedData)
+                        ? completedData.ToObjectFromJson<int>()
+                        : 0;
+                }
+                else
+                {
+                    completedTurns = Math.Max(turnCount - 1, 0);
+                    await store.SetItemAsync(
+                        "state",
+                        new Dictionary<string, BinaryData>
+                        {
+                            ["turn_count"] = BinaryData.FromObjectAsJson(completedTurns),
+                            ["last_response_id"] = BinaryData.FromObjectAsJson(context.ResponseId),
+                            ["terminated"] = BinaryData.FromObjectAsJson(true),
+                            ["completed_turns"] = BinaryData.FromObjectAsJson(completedTurns),
+                        },
+                        cancellationToken: CancellationToken.None);
+                }
+
+                return $"Done! Session complete after {completedTurns} turns on {chainId}. Goodbye!";
             }
 
             // Framework-managed conversation history.
@@ -53,8 +101,14 @@ public class ResilientMultiTurnHandler : ResponseHandler
                 $"Turn {turnCount}: You said '{inputText}'. " +
                 $"I have {history.Count} items of conversation context.";
 
-            state.Set("turn_count", turnCount.ToString());
-            await state.FlushAsync(ct);
+            await store.SetItemAsync(
+                "state",
+                new Dictionary<string, BinaryData>
+                {
+                    ["turn_count"] = BinaryData.FromObjectAsJson(turnCount),
+                    ["last_response_id"] = BinaryData.FromObjectAsJson(context.ResponseId),
+                },
+                cancellationToken: CancellationToken.None);
 
             return reply;
         });
@@ -103,13 +157,13 @@ curl -X POST http://localhost:8088/responses \
 ## Recovery behavior
 
 Because the reply is a deterministic function of the input text and the
-framework-managed history, a crash mid-turn is fully recoverable with zero extra
-handler work: on restart the handler is re-invoked with the identical request and
-history and produces the identical reply. The `turn_count` watermark is persisted
-through `ConversationChainMetadata.FlushAsync()` so it survives the crash.
+framework-managed history, a crash mid-turn is fully recoverable: on restart the
+handler is re-invoked with the identical request and history, and the State Store's
+`last_response_id` prevents the recovered attempt from incrementing the turn count
+twice.
 
 > **Verified.** The published flow of this sample — a serial (non-steering)
-> conversation chain that accumulates per-turn state across turns via durable
-> chain metadata + framework history — is exercised end-to-end against the real
+> conversation chain that accumulates per-turn state across turns via an explicit
+> State Store + framework history — is exercised end-to-end against the real
 > Core-composed engine by
 > `ResilienceSampleParityEndToEndTests.Sample22_ResilientMultiTurn_AccumulatesStateAcrossTurns`.

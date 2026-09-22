@@ -10,10 +10,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// IaaS VM workload-specific container.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="IaasClassicComputeVmContainer"/> and <see cref="IaasComputeVmContainer"/>.
-    /// </summary>
+    /// <summary> IaaS VM workload-specific container. </summary>
     public partial class IaasVmContainer : BackupGenericProtectionContainer
     {
         private BicepValue<ResourceIdentifier> _virtualMachineId;
@@ -23,6 +20,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new IaasVmContainer. </summary>
         public IaasVmContainer()
         {
+            ContainerType.Assign(ProtectableContainerType.IaasVMContainer);
         }
 
         /// <summary> Gets or sets the VirtualMachineId. </summary>
@@ -74,7 +72,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("containerType", new string[] { "containerType" }, defaultValue: "IaasVMContainer");
             _virtualMachineId = DefineProperty<ResourceIdentifier>(nameof(VirtualMachineId), new string[] { "virtualMachineId" });
             _virtualMachineVersion = DefineProperty<string>(nameof(VirtualMachineVersion), new string[] { "virtualMachineVersion" });
             _resourceGroup = DefineProperty<string>(nameof(ResourceGroup), new string[] { "resourceGroup" });

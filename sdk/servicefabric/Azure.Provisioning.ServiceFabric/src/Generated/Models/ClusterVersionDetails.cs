@@ -15,7 +15,7 @@ namespace Azure.Provisioning.ServiceFabric
     public partial class ClusterVersionDetails : ProvisionableConstruct
     {
         private BicepValue<string> _codeVersion;
-        private BicepValue<DateTimeOffset> _supportExpireOn;
+        private BicepValue<DateTimeOffset> _supportExpiresOn;
         private BicepValue<ClusterEnvironment> _environment;
 
         /// <summary> Creates a new ClusterVersionDetails. </summary>
@@ -33,13 +33,13 @@ namespace Azure.Provisioning.ServiceFabric
             }
         }
 
-        /// <summary> Gets the SupportExpireOn. </summary>
-        public BicepValue<DateTimeOffset> SupportExpireOn
+        /// <summary> Gets the SupportExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> SupportExpiresOn
         {
             get
             {
                 Initialize();
-                return _supportExpireOn;
+                return _supportExpiresOn;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.Provisioning.ServiceFabric
         {
             base.DefineProvisionableProperties();
             _codeVersion = DefineProperty<string>(nameof(CodeVersion), new string[] { "codeVersion" });
-            _supportExpireOn = DefineProperty<DateTimeOffset>(nameof(SupportExpireOn), new string[] { "supportExpiryUtc" }, format: "O");
+            _supportExpiresOn = DefineProperty<DateTimeOffset>(nameof(SupportExpiresOn), new string[] { "supportExpiryUtc" }, format: "O");
             _environment = DefineProperty<ClusterEnvironment>(nameof(Environment), new string[] { "environment" });
             DefineAdditionalProperties();
         }

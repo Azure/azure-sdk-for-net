@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 throw new FormatException($"The model {nameof(BulkActionExecutionParameterDetail)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OptimizationPreference))
-            {
-                writer.WritePropertyName("optimizationPreference"u8);
-                writer.WriteStringValue(OptimizationPreference.Value.ToString());
-            }
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
@@ -88,6 +83,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 writer.WritePropertyName("verifyVmAgentHealth"u8);
                 writer.WriteBooleanValue(ShouldVerifyVmAgentHealth.Value);
+            }
+            if (Optional.IsDefined(CapacityRecommendationParameters))
+            {
+                writer.WritePropertyName("capacityRecommendationParameters"u8);
+                writer.WriteObjectValue(CapacityRecommendationParameters, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,21 +131,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            OptimizationPreference? optimizationPreference = default;
             BulkOperationRetryPolicy retryPolicy = default;
             bool? shouldVerifyVmAgentHealth = default;
+            BulkActionsCapacityRecommendationParametersContent capacityRecommendationParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("optimizationPreference"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    optimizationPreference = new OptimizationPreference(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("retryPolicy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -164,12 +155,21 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     shouldVerifyVmAgentHealth = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("capacityRecommendationParameters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityRecommendationParameters = BulkActionsCapacityRecommendationParametersContent.DeserializeBulkActionsCapacityRecommendationParametersContent(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkActionExecutionParameterDetail(optimizationPreference, retryPolicy, shouldVerifyVmAgentHealth, additionalBinaryDataProperties);
+            return new BulkActionExecutionParameterDetail(retryPolicy, shouldVerifyVmAgentHealth, capacityRecommendationParameters, additionalBinaryDataProperties);
         }
     }
 }

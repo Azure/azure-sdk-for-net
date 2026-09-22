@@ -108,6 +108,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(CertificateAuthorityBundle))
+            {
+                writer.WritePropertyName("certificateAuthorityBundle"u8);
+                writer.WriteStringValue(CertificateAuthorityBundle);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -155,6 +160,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<ManagedClusterJwtAuthenticatorValidationRule> claimValidationRules = default;
             ManagedClusterJwtAuthenticatorClaimMappings claimMappings = default;
             IList<ManagedClusterJwtAuthenticatorValidationRule> userValidationRules = default;
+            string certificateAuthorityBundle = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -205,6 +211,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                     userValidationRules = array;
                     continue;
                 }
+                if (prop.NameEquals("certificateAuthorityBundle"u8))
+                {
+                    certificateAuthorityBundle = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -216,6 +227,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 claimValidationRules ?? new ChangeTrackingList<ManagedClusterJwtAuthenticatorValidationRule>(),
                 claimMappings,
                 userValidationRules ?? new ChangeTrackingList<ManagedClusterJwtAuthenticatorValidationRule>(),
+                certificateAuthorityBundle,
                 additionalBinaryDataProperties);
         }
     }

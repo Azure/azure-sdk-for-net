@@ -13,10 +13,11 @@ namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary>
     /// Base class for backup ProtectionIntent.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryServiceVaultProtectionIntent"/>, <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, and <see cref="WorkloadSqlAutoProtectionIntent"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="RecoveryServiceVaultProtectionIntent"/>, <see cref="ResourceProtectionIntent"/>, <see cref="WorkloadContainerAutoProtectionIntent"/>, <see cref="WorkloadAutoProtectionIntent"/>, and <see cref="WorkloadSqlAutoProtectionIntent"/>.
     /// </summary>
     public partial class BackupGenericProtectionIntent : ProvisionableConstruct
     {
+        private BicepValue<ProtectionIntentItemType> _protectionIntentItemType;
         private BicepValue<BackupManagementType> _backupManagementType;
         private BicepValue<ResourceIdentifier> _sourceResourceId;
         private BicepValue<ResourceIdentifier> _itemId;
@@ -26,6 +27,16 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new BackupGenericProtectionIntent. </summary>
         public BackupGenericProtectionIntent()
         {
+        }
+
+        /// <summary> backup protectionIntent type. </summary>
+        internal BicepValue<ProtectionIntentItemType> ProtectionIntentItemType
+        {
+            get
+            {
+                Initialize();
+                return _protectionIntentItemType;
+            }
         }
 
         /// <summary> Gets or sets the BackupManagementType. </summary>
@@ -107,6 +118,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _protectionIntentItemType = DefineProperty<ProtectionIntentItemType>(nameof(ProtectionIntentItemType), new string[] { "protectionIntentItemType" }, isRequired: true);
             _backupManagementType = DefineProperty<BackupManagementType>(nameof(BackupManagementType), new string[] { "backupManagementType" });
             _sourceResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceResourceId), new string[] { "sourceResourceId" });
             _itemId = DefineProperty<ResourceIdentifier>(nameof(ItemId), new string[] { "itemId" });

@@ -12,6 +12,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
     internal static class StorageHelper
     {
         internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey)
+            => GetStorageDirectory(platform, configuredStorageDirectory, instrumentationKey, omitInstrumentationKey: false);
+
+        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey, bool omitInstrumentationKey)
         {
             // get root directory
             var rootDirectory = configuredStorageDirectory
@@ -22,7 +25,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
             var userName = platform.GetEnvironmentUserName();
             var processName = platform.GetCurrentProcessName();
             var applicationDirectory = platform.GetApplicationBaseDirectory();
-            string subDirectory = HashHelper.GetSHA256Hash($"{instrumentationKey};{userName};{processName};{applicationDirectory}");
+
+            // The caller decides, never the value: a configured connection string can legitimately
+            // trim to an empty key, and inferring from that would move an existing directory and
+            // strand the backlog inside it.
+            string seed = omitInstrumentationKey
+                ? $"{userName};{processName};{applicationDirectory}"
+                : $"{instrumentationKey};{userName};{processName};{applicationDirectory}";
+
+            string subDirectory = HashHelper.GetSHA256Hash(seed);
 
             return Path.Combine(rootDirectory, subDirectory);
         }

@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="billingAccountId"> Fully-qualified identifier of the billing account where the benefit is applied. Present only for Enterprise Agreement customers. </param>
         /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
         /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
-        /// <param name="expireOn"> Expiry date time. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the savings plan benefit started. </param>
+        /// <param name="expiresOn"> Expiry date time. </param>
+        /// <param name="benefitStartsOn"> This is the DateTime when the savings plan benefit started. </param>
         /// <param name="planInformation"> Information describing the type of billing plan for this savings plan. </param>
         /// <param name="savingsPlans"></param>
         /// <param name="extendedStatusInfo"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanOrderModelProperties(string displayName, BillingBenefitsProvisioningState? provisioningState, ResourceIdentifier billingScopeId, ResourceIdentifier billingProfileId, ResourceIdentifier customerId, ResourceIdentifier billingAccountId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, DateTimeOffset? expireOn, DateTimeOffset? benefitStartOn, BillingPlanInformation planInformation, IList<string> savingsPlans, BillingBenefitsExtendedStatusInfo extendedStatusInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SavingsPlanOrderModelProperties(string displayName, BillingBenefitsProvisioningState? provisioningState, ResourceIdentifier billingScopeId, ResourceIdentifier billingProfileId, ResourceIdentifier customerId, ResourceIdentifier billingAccountId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, DateTimeOffset? expiresOn, DateTimeOffset? benefitStartsOn, BillingPlanInformation planInformation, IList<string> savingsPlans, BillingBenefitsExtendedStatusInfo extendedStatusInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             ProvisioningState = provisioningState;
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             BillingAccountId = billingAccountId;
             Term = term;
             BillingPlan = billingPlan;
-            ExpireOn = expireOn;
-            BenefitStartOn = benefitStartOn;
+            ExpiresOn = expiresOn;
+            BenefitStartsOn = benefitStartsOn;
             PlanInformation = planInformation;
             SavingsPlans = savingsPlans;
             ExtendedStatusInfo = extendedStatusInfo;
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsBillingPlan? BillingPlan { get; set; }
 
         /// <summary> Expiry date time. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> This is the DateTime when the savings plan benefit started. </summary>
-        public DateTimeOffset? BenefitStartOn { get; set; }
+        public DateTimeOffset? BenefitStartsOn { get; set; }
 
         /// <summary> Information describing the type of billing plan for this savings plan. </summary>
         public BillingPlanInformation PlanInformation { get; set; }

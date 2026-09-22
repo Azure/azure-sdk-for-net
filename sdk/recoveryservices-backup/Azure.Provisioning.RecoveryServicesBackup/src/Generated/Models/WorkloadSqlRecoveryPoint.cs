@@ -7,10 +7,7 @@
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// SQL specific recoverypoint, specifically encapsulates full/diff recoverypoint along with extended info
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>.
-    /// </summary>
+    /// <summary> SQL specific recoverypoint, specifically encapsulates full/diff recoverypoint along with extended info. </summary>
     public partial class WorkloadSqlRecoveryPoint : WorkloadRecoveryPoint
     {
         private WorkloadSqlRecoveryPointExtendedInfo _extendedInfo;
@@ -18,6 +15,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new WorkloadSqlRecoveryPoint. </summary>
         public WorkloadSqlRecoveryPoint()
         {
+            ObjectType.Assign("AzureWorkloadSQLRecoveryPoint");
         }
 
         /// <summary> Gets the ExtendedInfo. </summary>
@@ -34,7 +32,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("objectType", new string[] { "objectType" }, defaultValue: "AzureWorkloadSQLRecoveryPoint");
             _extendedInfo = DefineModelProperty<WorkloadSqlRecoveryPointExtendedInfo>(nameof(ExtendedInfo), new string[] { "extendedInfo" });
             DefineAdditionalProperties();
         }

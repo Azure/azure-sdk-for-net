@@ -87,6 +87,8 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             {
                 throw new FormatException($"The model {nameof(ComputeSkuMixPlacementGenerateResult)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("placementChoices"u8);
             writer.WriteStartArray();
             foreach (ComputeSkuMixPlacementDeploymentChoice item in PlacementChoices)
@@ -101,6 +103,16 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             }
             writer.WritePropertyName("partialFulfillmentReason"u8);
             writer.WriteStringValue(PartialFulfillmentReason.ToString());
+            if (Optional.IsCollectionDefined(CapacityLimits))
+            {
+                writer.WritePropertyName("capacityLimits"u8);
+                writer.WriteStartArray();
+                foreach (ComputeSkuMixPlacementCapacityLimit item in CapacityLimits)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -143,12 +155,19 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             {
                 return null;
             }
+            string id = default;
             IList<ComputeSkuMixPlacementDeploymentChoice> placementChoices = default;
             DateTimeOffset? validUntilOn = default;
             SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason = default;
+            IList<ComputeSkuMixPlacementCapacityLimit> capacityLimits = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("placementChoices"u8))
                 {
                     List<ComputeSkuMixPlacementDeploymentChoice> array = new List<ComputeSkuMixPlacementDeploymentChoice>();
@@ -173,12 +192,32 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     partialFulfillmentReason = new SkuMixPlacementPartialFulfillmentReason(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("capacityLimits"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ComputeSkuMixPlacementCapacityLimit> array = new List<ComputeSkuMixPlacementCapacityLimit>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ComputeSkuMixPlacementCapacityLimit.DeserializeComputeSkuMixPlacementCapacityLimit(item, options));
+                    }
+                    capacityLimits = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeSkuMixPlacementGenerateResult(placementChoices, validUntilOn, partialFulfillmentReason, additionalBinaryDataProperties);
+            return new ComputeSkuMixPlacementGenerateResult(
+                id,
+                placementChoices,
+                validUntilOn,
+                partialFulfillmentReason,
+                capacityLimits ?? new ChangeTrackingList<ComputeSkuMixPlacementCapacityLimit>(),
+                additionalBinaryDataProperties);
         }
     }
 }

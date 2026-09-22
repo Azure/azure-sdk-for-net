@@ -24,24 +24,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceProperties"/>. </summary>
         /// <param name="maintenanceType"> A string defines maintenance type. </param>
         /// <param name="maintenanceState"> A string describes the maintenance status. </param>
-        /// <param name="maintenanceStartOn"> The start time for a maintenance. </param>
-        /// <param name="maintenanceEndOn"> The end time for a maintenance. </param>
-        /// <param name="maintenanceExecutionStartOn"> The start time for a maintenance execution. </param>
-        /// <param name="maintenanceExecutionEndOn"> The end time for a maintenance execution. </param>
+        /// <param name="maintenanceStartsOn"> The start time for a maintenance. </param>
+        /// <param name="maintenanceEndsOn"> The end time for a maintenance. </param>
+        /// <param name="maintenanceExecutionStartsOn"> The start time for a maintenance execution. </param>
+        /// <param name="maintenanceExecutionEndsOn"> The end time for a maintenance execution. </param>
         /// <param name="maintenanceAvailableScheduleMinOn"> The min time the maintenance can be rescheduled. </param>
         /// <param name="maintenanceAvailableScheduleMaxOn"> The max time the maintenance can be rescheduled. </param>
         /// <param name="maintenanceTitle"> The maintenance title. </param>
         /// <param name="maintenanceDescription"> The maintenance description. </param>
         /// <param name="provisioningState"> Provisioning state of the Maintenance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceProperties(MySqlFlexibleServerMaintenanceType? maintenanceType, MySqlFlexibleServerMaintenanceState? maintenanceState, DateTimeOffset? maintenanceStartOn, DateTimeOffset? maintenanceEndOn, DateTimeOffset? maintenanceExecutionStartOn, DateTimeOffset? maintenanceExecutionEndOn, DateTimeOffset? maintenanceAvailableScheduleMinOn, DateTimeOffset? maintenanceAvailableScheduleMaxOn, string maintenanceTitle, string maintenanceDescription, MySqlFlexibleServerMaintenanceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceProperties(MySqlFlexibleServerMaintenanceType? maintenanceType, MySqlFlexibleServerMaintenanceState? maintenanceState, DateTimeOffset? maintenanceStartsOn, DateTimeOffset? maintenanceEndsOn, DateTimeOffset? maintenanceExecutionStartsOn, DateTimeOffset? maintenanceExecutionEndsOn, DateTimeOffset? maintenanceAvailableScheduleMinOn, DateTimeOffset? maintenanceAvailableScheduleMaxOn, string maintenanceTitle, string maintenanceDescription, MySqlFlexibleServerMaintenanceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaintenanceType = maintenanceType;
             MaintenanceState = maintenanceState;
-            MaintenanceStartOn = maintenanceStartOn;
-            MaintenanceEndOn = maintenanceEndOn;
-            MaintenanceExecutionStartOn = maintenanceExecutionStartOn;
-            MaintenanceExecutionEndOn = maintenanceExecutionEndOn;
+            MaintenanceStartsOn = maintenanceStartsOn;
+            MaintenanceEndsOn = maintenanceEndsOn;
+            MaintenanceExecutionStartsOn = maintenanceExecutionStartsOn;
+            MaintenanceExecutionEndsOn = maintenanceExecutionEndsOn;
             MaintenanceAvailableScheduleMinOn = maintenanceAvailableScheduleMinOn;
             MaintenanceAvailableScheduleMaxOn = maintenanceAvailableScheduleMaxOn;
             MaintenanceTitle = maintenanceTitle;
@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public MySqlFlexibleServerMaintenanceState? MaintenanceState { get; }
 
         /// <summary> The start time for a maintenance. </summary>
-        public DateTimeOffset? MaintenanceStartOn { get; set; }
+        public DateTimeOffset? MaintenanceStartsOn { get; set; }
 
         /// <summary> The end time for a maintenance. </summary>
-        public DateTimeOffset? MaintenanceEndOn { get; }
+        public DateTimeOffset? MaintenanceEndsOn { get; }
 
         /// <summary> The start time for a maintenance execution. </summary>
-        public DateTimeOffset? MaintenanceExecutionStartOn { get; }
+        public DateTimeOffset? MaintenanceExecutionStartsOn { get; }
 
         /// <summary> The end time for a maintenance execution. </summary>
-        public DateTimeOffset? MaintenanceExecutionEndOn { get; }
+        public DateTimeOffset? MaintenanceExecutionEndsOn { get; }
 
         /// <summary> The min time the maintenance can be rescheduled. </summary>
         public DateTimeOffset? MaintenanceAvailableScheduleMinOn { get; }

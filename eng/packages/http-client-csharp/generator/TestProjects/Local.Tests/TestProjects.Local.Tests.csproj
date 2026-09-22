@@ -12,6 +12,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Azure.Core.Expressions.DataFactory" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +47,7 @@
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/TaskExtensions.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/TrimmingAttribute.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/AzurePipelineResponse.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/NoValueResponseOfT.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/VoidValue.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/IXmlSerializable.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)../../../../../../sdk/core/Azure.Core/src/Shared/XmlWriterContent.cs" LinkBase="Shared/Core" />

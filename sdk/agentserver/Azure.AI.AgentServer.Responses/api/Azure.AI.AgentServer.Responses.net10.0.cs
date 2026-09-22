@@ -15,27 +15,6 @@ namespace Azure.AI.AgentServer.Responses
         public string? Code { get { throw null; } }
         public string? ParamName { get { throw null; } }
     }
-    public partial class ConversationChainMetadata
-    {
-        public const string DefaultNamespaceName = "default";
-        public ConversationChainMetadata() { }
-        public static Azure.AI.AgentServer.Responses.ConversationChainMetadata Empty { get { throw null; } }
-        public virtual System.Threading.Tasks.Task FlushAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AI.AgentServer.Responses.ConversationChainMetadataNamespace ForNamespace(string namespaceName = "default") { throw null; }
-        public virtual System.Collections.Generic.IReadOnlyDictionary<string, string> GetNamespace(string namespaceName) { throw null; }
-        public virtual void Set(string namespaceName, string key, string value) { }
-        protected internal System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IReadOnlyDictionary<string, string>> Snapshot() { throw null; }
-        public virtual bool TryGet(string namespaceName, string key, out string? value) { throw null; }
-    }
-    public sealed partial class ConversationChainMetadataNamespace
-    {
-        internal ConversationChainMetadataNamespace() { }
-        public string Name { get { throw null; } }
-        public System.Threading.Tasks.Task FlushAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void Set(string key, string value) { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, string> Snapshot() { throw null; }
-        public bool TryGet(string key, out string? value) { throw null; }
-    }
     public sealed partial class CreateResponseRequest
     {
         public CreateResponseRequest(Azure.AI.AgentServer.Responses.Models.ResponseObject response, System.Collections.Generic.IEnumerable<Azure.AI.AgentServer.Responses.Models.OutputItem>? inputItems, System.Collections.Generic.IEnumerable<string>? historyItemIds) { }
@@ -218,7 +197,6 @@ namespace Azure.AI.AgentServer.Responses
         public virtual bool ClientCancelled { get { throw null; } }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, string> ClientHeaders { get { throw null; } }
         public virtual string ConversationChainId { get { throw null; } }
-        public virtual Azure.AI.AgentServer.Responses.ConversationChainMetadata ConversationChainMetadata { get { throw null; } }
         public virtual bool IsRecovery { get { throw null; } }
         public bool IsShutdownRequested { get { throw null; } set { } }
         public virtual bool IsSteeredTurn { get { throw null; } }
@@ -236,7 +214,6 @@ namespace Azure.AI.AgentServer.Responses
     }
     public static partial class ResponseContextExtensions
     {
-        public static Azure.AI.AgentServer.Responses.ConversationChainMetadataNamespace MetadataNamespace(this Azure.AI.AgentServer.Responses.ResponseContext context, string namespaceName = "default") { throw null; }
         public static string NewApplyPatchCallItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewApplyPatchCallOutputItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }
         public static string NewCodeInterpreterCallItemId(this Azure.AI.AgentServer.Responses.ResponseContext context) { throw null; }

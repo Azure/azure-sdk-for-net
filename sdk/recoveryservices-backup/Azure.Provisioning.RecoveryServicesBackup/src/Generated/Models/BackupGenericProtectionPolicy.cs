@@ -12,11 +12,12 @@ namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary>
     /// Base class for backup policy. Workload-specific backup policies are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmWorkloadProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/>, and <see cref="MabProtectionPolicy"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="VmWorkloadProtectionPolicy"/>, <see cref="FileShareProtectionPolicy"/>, <see cref="IaasVmProtectionPolicy"/>, <see cref="SqlProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/>, and <see cref="MabProtectionPolicy"/>.
     /// </summary>
     public partial class BackupGenericProtectionPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _protectedItemsCount;
+        private BicepValue<string> _backupManagementType;
         private BicepList<string> _resourceGuardOperationRequests;
 
         /// <summary> Creates a new BackupGenericProtectionPolicy. </summary>
@@ -36,6 +37,16 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             {
                 Initialize();
                 _protectedItemsCount.Assign(value);
+            }
+        }
+
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        internal BicepValue<string> BackupManagementType
+        {
+            get
+            {
+                Initialize();
+                return _backupManagementType;
             }
         }
 
@@ -59,6 +70,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         {
             base.DefineProvisionableProperties();
             _protectedItemsCount = DefineProperty<int>(nameof(ProtectedItemsCount), new string[] { "protectedItemsCount" });
+            _backupManagementType = DefineProperty<string>(nameof(BackupManagementType), new string[] { "backupManagementType" }, isRequired: true);
             _resourceGuardOperationRequests = DefineListProperty<string>(nameof(ResourceGuardOperationRequests), new string[] { "resourceGuardOperationRequests" });
             DefineAdditionalProperties();
         }

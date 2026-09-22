@@ -1004,12 +1004,9 @@ namespace Azure.Core.Pipeline
     public partial class BearerTokenAuthenticationPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes) { }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
         public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { }
         public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, string scope) { }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
         public BearerTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, string scope, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
         public event System.Action<Azure.Core.Pipeline.HttpPipelineTransportOptions>? TransportOptionsChanged { add { } remove { } }
         protected void AuthenticateAndAuthorizeRequest(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { }
         protected System.Threading.Tasks.ValueTask AuthenticateAndAuthorizeRequestAsync(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { throw null; }
@@ -1017,7 +1014,6 @@ namespace Azure.Core.Pipeline
         protected virtual System.Threading.Tasks.ValueTask AuthorizeRequestAsync(Azure.Core.HttpMessage message) { throw null; }
         protected virtual bool AuthorizeRequestOnChallenge(Azure.Core.HttpMessage message) { throw null; }
         protected virtual System.Threading.Tasks.ValueTask<bool> AuthorizeRequestOnChallengeAsync(Azure.Core.HttpMessage message) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
         protected virtual void OnTransportOptionsChanged(Azure.Core.Pipeline.HttpPipelineTransportOptions options) { }
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
@@ -1284,7 +1280,9 @@ namespace Azure.Identity
     public sealed partial class AzureCredentialResolver : System.ClientModel.Primitives.CredentialResolver
     {
         public AzureCredentialResolver() { }
+        public static Azure.Identity.AzureCredentialResolver Default { get { throw null; } }
         public override bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
+        protected override bool TryResolveCore(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider?> resolveChild, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]
     [System.Runtime.Versioning.UnsupportedOSPlatformAttribute("browser")]
@@ -1606,7 +1604,6 @@ namespace Azure.Identity
     public partial class ManagedIdentityCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public ManagedIdentityCredentialOptions(Azure.Identity.ManagedIdentityId managedIdentityId = null) { }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AZID0004")]
         public bool DisableMtlsProofOfPossession { get { throw null; } set { } }
     }
     [System.Runtime.CompilerServices.TypeForwardedFromAttribute("Azure.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8")]

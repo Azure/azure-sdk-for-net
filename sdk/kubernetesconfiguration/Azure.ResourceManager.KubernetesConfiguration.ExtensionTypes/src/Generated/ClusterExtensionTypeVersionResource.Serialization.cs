@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
 {
     /// <summary></summary>
-    public partial class ClusterExtensionTypeVersionResource : IJsonModel<ExtensionTypeVersionForReleaseTrainData>
+    public partial class ClusterExtensionTypeVersionResource : IJsonModel<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData>
     {
-        private static IJsonModel<ExtensionTypeVersionForReleaseTrainData> s_dataDeserializationInstance;
+        private static IJsonModel<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ExtensionTypeVersionForReleaseTrainData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ExtensionTypeVersionForReleaseTrainData();
+        private static IJsonModel<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> DataDeserializationInstance => s_dataDeserializationInstance ??= new KubernetesConfigurationExtensionTypeVersionForReleaseTrainData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExtensionTypeVersionForReleaseTrainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExtensionTypeVersionForReleaseTrainData>)Data).Write(writer, options);
+        void IJsonModel<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtensionTypeVersionForReleaseTrainData IJsonModel<ExtensionTypeVersionForReleaseTrainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        KubernetesConfigurationExtensionTypeVersionForReleaseTrainData IJsonModel<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExtensionTypeVersionForReleaseTrainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExtensionTypeVersionForReleaseTrainData>(Data, options, AzureResourceManagerKubernetesConfigurationExtensionTypesContext.Default);
+        BinaryData IPersistableModel<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData>(Data, options, AzureResourceManagerKubernetesConfigurationExtensionTypesContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtensionTypeVersionForReleaseTrainData IPersistableModel<ExtensionTypeVersionForReleaseTrainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtensionTypeVersionForReleaseTrainData>(data, options, AzureResourceManagerKubernetesConfigurationExtensionTypesContext.Default);
+        KubernetesConfigurationExtensionTypeVersionForReleaseTrainData IPersistableModel<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData>(data, options, AzureResourceManagerKubernetesConfigurationExtensionTypesContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExtensionTypeVersionForReleaseTrainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

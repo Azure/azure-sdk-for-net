@@ -9,10 +9,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// Recovery point specific to PointInTime
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/> and <see cref="WorkloadSapAsePointInTimeRecoveryPoint"/>.
-    /// </summary>
+    /// <summary> Recovery point specific to PointInTime. </summary>
     public partial class WorkloadPointInTimeRecoveryPoint : WorkloadRecoveryPoint
     {
         private BicepList<PointInTimeRange> _timeRanges;
@@ -20,6 +17,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new WorkloadPointInTimeRecoveryPoint. </summary>
         public WorkloadPointInTimeRecoveryPoint()
         {
+            ObjectType.Assign("AzureWorkloadPointInTimeRecoveryPoint");
         }
 
         /// <summary> Gets the TimeRanges. </summary>
@@ -36,7 +34,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("objectType", new string[] { "objectType" }, defaultValue: "AzureWorkloadPointInTimeRecoveryPoint");
             _timeRanges = DefineListProperty<PointInTimeRange>(nameof(TimeRanges), new string[] { "timeRanges" });
             DefineAdditionalProperties();
         }

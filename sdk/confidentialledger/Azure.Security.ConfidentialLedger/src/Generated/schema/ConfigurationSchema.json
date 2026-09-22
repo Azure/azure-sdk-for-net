@@ -49,6 +49,15 @@
             },
             "UseLedgerGateway": {
               "type": "boolean"
+            },
+            "EnableArchivedCollectionFallback": {
+              "type": "boolean"
+            },
+            "Failover": {
+              "type": "string"
+            },
+            "FailoverNetworkTimeout": {
+              "type": "string"
             }
           }
         }

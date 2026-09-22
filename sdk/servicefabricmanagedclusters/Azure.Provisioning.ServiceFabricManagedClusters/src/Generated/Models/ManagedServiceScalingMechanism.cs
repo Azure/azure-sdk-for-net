@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabricManagedClusters
 {
     /// <summary>
     /// Describes the mechanism for performing a scaling operation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NamedPartitionAddOrRemoveScalingMechanism"/> and <see cref="PartitionInstanceCountScalingMechanism"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NamedPartitionAddOrRemoveScalingMechanism"/> and <see cref="PartitionInstanceCountScalingMechanism"/>.
     /// </summary>
     public partial class ManagedServiceScalingMechanism : ProvisionableConstruct
     {
+        private BicepValue<ServiceScalingMechanismKind> _kind;
+
         /// <summary> Creates a new ManagedServiceScalingMechanism. </summary>
         public ManagedServiceScalingMechanism()
         {
+        }
+
+        /// <summary> Gets the Kind. </summary>
+        internal BicepValue<ServiceScalingMechanismKind> Kind
+        {
+            get
+            {
+                Initialize();
+                return _kind;
+            }
         }
 
         /// <summary> Define all the provisionable properties for ManagedServiceScalingMechanism. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _kind = DefineProperty<ServiceScalingMechanismKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

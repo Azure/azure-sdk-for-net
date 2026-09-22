@@ -10,10 +10,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
-    /// <summary>
-    /// Azure VM workload-specific protected item.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, and <see cref="VmWorkloadSqlDatabaseProtectedItem"/>.
-    /// </summary>
+    /// <summary> Azure VM workload-specific protected item. </summary>
     public partial class VmWorkloadProtectedItem : BackupGenericProtectedItem
     {
         private BicepValue<string> _friendlyName;
@@ -34,6 +31,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new VmWorkloadProtectedItem. </summary>
         public VmWorkloadProtectedItem()
         {
+            ProtectedItemType.Assign("AzureVmWorkloadProtectedItem");
         }
 
         /// <summary> Gets the FriendlyName. </summary>
@@ -240,7 +238,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectedItemType", new string[] { "protectedItemType" }, defaultValue: "AzureVmWorkloadProtectedItem");
             _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" }, isOutput: true);
             _serverName = DefineProperty<string>(nameof(ServerName), new string[] { "serverName" });
             _parentName = DefineProperty<string>(nameof(ParentName), new string[] { "parentName" });

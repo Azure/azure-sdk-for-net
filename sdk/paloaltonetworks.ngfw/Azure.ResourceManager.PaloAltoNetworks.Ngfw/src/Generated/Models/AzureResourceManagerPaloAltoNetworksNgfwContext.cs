@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
@@ -23,6 +24,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(CertificateObjectGlobalRulestackResourceListResult))]
     [ModelReaderWriterBuildable(typeof(CertificateObjectLocalRulestackResourceListResult))]
     [ModelReaderWriterBuildable(typeof(CloudManagerTenantList))]
+    [ModelReaderWriterBuildable(typeof(CustomCaptureConfigurationsFilter))]
+    [ModelReaderWriterBuildable(typeof(CustomCaptureConfigurationsFirewallData))]
+    [ModelReaderWriterBuildable(typeof(CustomCaptureConfigurationsFirewallResource))]
+    [ModelReaderWriterBuildable(typeof(CustomCaptureConfigurationsProperties))]
     [ModelReaderWriterBuildable(typeof(DestinationAddressInfo))]
     [ModelReaderWriterBuildable(typeof(EdlMatchCategory))]
     [ModelReaderWriterBuildable(typeof(EventHubConfiguration))]
@@ -76,17 +81,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(LocalRulestackRuleData))]
     [ModelReaderWriterBuildable(typeof(LocalRulestackRuleResource))]
     [ModelReaderWriterBuildable(typeof(LocalRulestackUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(LogIngestionSettingsData))]
+    [ModelReaderWriterBuildable(typeof(LogIngestionSettingsProperties))]
+    [ModelReaderWriterBuildable(typeof(LogIngestionSettingsResource))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MetricsObject))]
     [ModelReaderWriterBuildable(typeof(MetricsObjectFirewallData))]
     [ModelReaderWriterBuildable(typeof(MetricsObjectFirewallResource))]
     [ModelReaderWriterBuildable(typeof(MonitorLogConfiguration))]
     [ModelReaderWriterBuildable(typeof(NameDescriptionObject))]
+    [ModelReaderWriterBuildable(typeof(PaloAltoNetworksDcrLogDestination))]
     [ModelReaderWriterBuildable(typeof(PaloAltoNetworksFirewallData))]
     [ModelReaderWriterBuildable(typeof(PaloAltoNetworksFirewallPatch))]
     [ModelReaderWriterBuildable(typeof(PaloAltoNetworksFirewallResource))]
     [ModelReaderWriterBuildable(typeof(PaloAltoNetworksFirewallStatusData))]
     [ModelReaderWriterBuildable(typeof(PaloAltoNetworksFirewallStatusResource))]
+    [ModelReaderWriterBuildable(typeof(PaloAltoNetworksMonitorDcrLog))]
     [ModelReaderWriterBuildable(typeof(PanFirewallMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(PostRulesResourceListResult))]
     [ModelReaderWriterBuildable(typeof(PostRulestackRuleData))]
@@ -101,6 +111,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     [ModelReaderWriterBuildable(typeof(PreRulestackRuleResource))]
     [ModelReaderWriterBuildable(typeof(ProductSerialNumberRequestStatus))]
     [ModelReaderWriterBuildable(typeof(ProductSerialNumberStatus))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RuleEntry))]
     [ModelReaderWriterBuildable(typeof(RulestackAppIdListResult))]
     [ModelReaderWriterBuildable(typeof(RulestackChangelog))]

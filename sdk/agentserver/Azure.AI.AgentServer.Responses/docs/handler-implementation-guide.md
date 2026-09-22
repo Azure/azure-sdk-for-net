@@ -315,7 +315,7 @@ public abstract class ResponseHandler
 | Parameter | Description |
 |-----------|-------------|
 | `request` | The deserialized `CreateResponse` body from the client (model, input, tools, instructions, etc.) |
-| `context` | The handler-facing `ResponseContext` — request-scoped state, input/history helpers, forwarded headers, shutdown/recovery/steering flags, and durable conversation-chain metadata. |
+| `context` | The handler-facing `ResponseContext` — request-scoped state, input/history helpers, forwarded headers, and shutdown/recovery/steering flags. |
 | `cancellationToken` | The cooperative cancellation signal for the current execution. It is triggered by explicit cancel, foreground client disconnect, shutdown, steering pressure, or certain pre-creation persistence failures. |
 
 Handlers override `CreateAsync` and return an `IAsyncEnumerable<ResponseStreamEvent>`.
@@ -516,7 +516,6 @@ For resilient and steerable deployments, the concrete runtime context also expos
 | `IsRecovery` | `true` when this invocation re-enters after a crash. |
 | `PersistedResponse` | The last durable response snapshot from the prior lifetime, if any. |
 | `ConversationChainId` | Stable id shared across every turn/attempt of a conversation chain. |
-| `ConversationChainMetadata` | Durable, explicitly-flushed per-chain metadata. |
 | `IsSteeredTurn` | `true` on the drain re-entry that follows a steering input. |
 | `PendingInputCount` | Steering inputs queued behind the current turn. |
 | `ClientCancelled` | `true` when the client explicitly cancelled, distinct from shutdown. |
@@ -1092,13 +1091,13 @@ have cancelled. Check shutdown first, then inspect `context.ClientCancelled` and
 steering-only pre-entry, emitting `EmitCompleted()` lets the superseded turn end
 cleanly and the queued turn drain.
 
-### Metadata Usage in Cancellation
+### Durable State During Cancellation
 
-`context.ConversationChainMetadata` is appropriate for lightweight progress
-signals that help on re-entry — for example a `last_processed_item_id`, a phase
-index, or a checkpoint reference. Do not store full conversation history, LLM
-outputs, or large framework checkpoints there; keep those in the upstream
-framework or your own store.
+Use an explicit `FoundryStateStore`, scoped with `context.ConversationChainId`,
+for progress signals that must survive re-entry — for example a
+`last_processed_item_id`, phase index, or checkpoint reference. Keep writes
+idempotent by recording `context.ResponseId`, and do not use the handler
+cancellation token for a final checkpoint after cancellation has already fired.
 
 ### TextResponse Handlers
 
@@ -1649,8 +1648,8 @@ Three layers, each owning a specific slice of state:
 
 | Layer | Owns | On crash recovery, surfaces / provides |
 |---|---|---|
-| **Library** (this SDK) | Persisted SSE event stream and selected response snapshots. The library persists the response object at `response.created`, at each successful `stream.Checkpoint()`, and at the terminal event. | Re-invokes the handler. Surfaces `context.IsRecovery`, `context.PersistedResponse`, `context.IsSteeredTurn`, `context.PendingInputCount`, and `context.ConversationChainMetadata`. Replays persisted events to reconnecting clients and rebuilds the `ResponseContext` with the same `ResponseId`. |
-| **Handler** (your code) | The decision about what was safely committed, plus side-effect watermarks in `context.ConversationChainMetadata`. | Decides the resumption point. Constructs the resumption response. Emits a fresh `response.in_progress` carrying it. Continues producing new output items. |
+| **Library** (this library) | Persisted SSE event stream and selected response snapshots. The library persists the response object at `response.created`, at each successful `stream.Checkpoint()`, and at the terminal event. | Re-invokes the handler. Surfaces `context.IsRecovery`, `context.PersistedResponse`, `context.IsSteeredTurn`, and `context.PendingInputCount`. Replays persisted events to reconnecting clients and rebuilds the `ResponseContext` with the same `ResponseId`. |
+| **Handler** (your code) | The decision about what was safely committed, plus application checkpoints and side-effect watermarks in an explicit `FoundryStateStore`. | Decides the resumption point. Constructs the resumption response. Emits a fresh `response.in_progress` carrying it. Continues producing new output items. |
 | **Upstream framework** (Copilot SDK, LangGraph, your LLM client, or your store) | Conversational / graph / agent state that has to outlive a process death. | Provides its own resume facility that the handler calls. |
 
 You do **not** own response event resilience — that is the library. The library
@@ -1662,7 +1661,7 @@ them together.
 When the server restarts after a crash and your handler is re-invoked:
 
 1. The library calls your handler with `context.IsRecovery == true`.
-2. You query upstream and your own `context.ConversationChainMetadata` watermarks to determine the **resumption point** — the most recent state you are confident is persisted.
+2. You query upstream and your own `FoundryStateStore` watermarks to determine the **resumption point** — the most recent state you are confident is persisted.
 3. You build or select a **resumption response** reflecting only the output items you trust at that point. In-flight items from the crashed attempt are excluded.
 4. You construct `ResponseEventStream` from that resumption response when appropriate, or from the request for a fresh/naive restart.
 5. You emit `response.created` exactly as on a fresh attempt — the framework deduplicates the response-store write across recovery attempts.
@@ -1677,7 +1676,7 @@ in-progress view with that payload before applying later output events.
 - Persists every SSE event in order. The recovered handler's duplicate `response.created` is suppressed on the durable stream so replay sees it exactly once.
 - Persists the response object at `response.created`, each successful `stream.Checkpoint()`, and terminal events.
 - Rebuilds `ResponseContext` on recovery with the same request-scoped data and the same `ResponseId`.
-- Surfaces flat recovery + steering classifiers on `ResponseContext`: `context.IsRecovery`, `context.PersistedResponse`, `context.IsSteeredTurn`, `context.PendingInputCount`, and `context.ConversationChainMetadata`.
+- Surfaces flat recovery + steering classifiers on `ResponseContext`: `context.IsRecovery`, `context.PersistedResponse`, `context.IsSteeredTurn`, and `context.PendingInputCount`.
 - Treats `response.in_progress` after recovery as a snapshot reset.
 - Replays persisted events to reconnecting clients using `starting_after` cursors.
 - Marks non-resilient interrupted responses as `failed` rather than re-invoking the handler.
@@ -1685,10 +1684,10 @@ in-progress view with that payload before applying later output events.
 ### What the Handler Does
 
 - Branches on `context.IsRecovery` to choose fresh-entry vs recovered-entry code paths.
-- Builds the resumption response from upstream state plus its own metadata watermarks, excluding in-flight items.
+- Builds the resumption response from upstream state plus its own State Store watermarks, excluding in-flight items.
 - Emits `EmitCreated()` unconditionally and emits `EmitInProgress()` early in the recovered path so clients get a reset point.
 - Uses the upstream framework's native resume facility before repeating side-effecting work.
-- Watermarks any upstream side-effecting call by writing a small marker to `context.ConversationChainMetadata` before the call and clearing it after the upstream commit. Use `FlushAsync()` when the marker must survive a crash before the next lifecycle boundary.
+- Watermarks any upstream side-effecting call by writing a marker to an explicit `FoundryStateStore` before the call and clearing it after the upstream commit.
 
 ### Stream Checkpoints
 
@@ -1731,10 +1730,10 @@ but never sent to clients.
 |---|---|---|---|
 | `ResponseObject.Metadata` | Single response; client-owned | **Yes** | Values the caller set and expects back on the response. |
 | `internal_metadata` | Single turn; framework-internal | **No** — stripped on egress | Per-turn bookkeeping you want persisted with the response for recovery. |
-| `context.ConversationChainMetadata` | Whole conversation chain; survives crash and spans turns | **No** | Cross-turn / cross-crash resume state: phase watermarks, turn counts, side-effect fences. |
+| `FoundryStateStore` | Application-defined scope; survives crash and spans turns | **No** | Cross-turn / cross-crash resume state: phase watermarks, turn counts, side-effect fences. |
 
 **Rule of thumb:** need it in a later turn or recovery →
-`ConversationChainMetadata`; need it only to reconstruct this response on crash
+`FoundryStateStore`; need it only to reconstruct this response on crash
 recovery → `internal_metadata` plus `stream.Checkpoint()`; need it visible to the
 client → `ResponseObject.Metadata`.
 
@@ -1773,15 +1772,15 @@ watermark.
 
 ### Watermark Pattern (fallback when upstream exposes no persisted history)
 
-When the upstream SDK does not expose its committed log, stamp a small marker in
-`context.ConversationChainMetadata` before the side-effecting call and clear it
-after the upstream commit. The strict at-most-once pattern is:
+When the upstream SDK does not expose its committed log, stamp a marker in an
+explicit `FoundryStateStore` before the side-effecting call and clear it after
+the upstream commit. The strict at-most-once pattern is:
 
 1. write marker;
-2. `FlushAsync()`;
+2. persist the State Store item;
 3. perform the side effect;
 4. clear marker;
-5. `FlushAsync()`.
+5. persist the cleared State Store item.
 
 On recovery, a set marker means the prior attempt reached the upstream call;
 use the upstream resume facility instead of issuing the call again. A missing or
@@ -1798,7 +1797,7 @@ items you trust before resuming.
 
 Signals you can use to decide what to keep include upstream checkpoint state,
 item-level `internal_metadata`, response-level `internal_metadata`, and
-`context.ConversationChainMetadata` watermarks.
+application State Store watermarks.
 
 ### Recovery × Cancellation Composition
 
@@ -2049,8 +2048,8 @@ response from upstream state.
 
 If a recovered handler blindly calls an upstream side-effecting API again, it can
 duplicate messages, tool calls, or other effects in the upstream session. Prefer
-an upstream history check when available; otherwise use
-`context.ConversationChainMetadata` watermarks and `FlushAsync()` fences.
+an upstream history check when available; otherwise use explicit
+`FoundryStateStore` watermarks.
 
 ### Emitting `response.created` Without `response.in_progress` on Recovery
 
@@ -2059,12 +2058,11 @@ On recovery, `EmitInProgress()` is the client-visible reset point. Emit
 so reconnecting clients replace pre-crash partial state with the resumption
 response.
 
-### Storing Conversation History in `context.ConversationChainMetadata`
+### Storing Conversation History
 
-Conversation-chain metadata is for small watermarks and references, not full
-conversation history or LLM outputs. Store bulk state in the upstream framework
-or your own backing store and keep only a session/checkpoint reference in
-`ConversationChainMetadata`.
+Store application-owned conversation history, checkpoints, and references in
+an upstream framework or an explicit `FoundryStateStore`. Scope the store with
+`context.ConversationChainId` when the state must follow the response chain.
 
 ---
 

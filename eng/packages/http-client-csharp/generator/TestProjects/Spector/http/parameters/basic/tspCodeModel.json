@@ -43,6 +43,7 @@
       "$id": "5",
       "kind": "model",
       "name": "User",
+      "apiVersions": [],
       "namespace": "Parameters.Basic.ExplicitBody",
       "crossLanguageDefinitionId": "Parameters.Basic.ExplicitBody.User",
       "usage": "Input,Json",
@@ -59,6 +60,7 @@
           "$id": "6",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "7",
@@ -87,6 +89,7 @@
       "$id": "8",
       "kind": "model",
       "name": "SimpleRequest",
+      "apiVersions": [],
       "namespace": "Parameters.Basic.ImplicitBody",
       "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.Request.anonymous",
       "usage": "Spread,Json",
@@ -102,6 +105,7 @@
           "$id": "9",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "10",

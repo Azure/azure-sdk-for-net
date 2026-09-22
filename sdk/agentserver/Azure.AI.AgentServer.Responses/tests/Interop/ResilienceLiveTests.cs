@@ -270,7 +270,6 @@ public class ResilienceLiveTests
             yield return evt;
         }
 
-        await context.ConversationChainMetadata.FlushAsync(ct);
         yield return stream.EmitCompleted();
     }
 

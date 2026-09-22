@@ -126,5 +126,18 @@ namespace Azure.ResourceManager.ContainerService
         [WirePath("properties.disableLocalAccounts")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? DisableLocalAccounts { get => IsLocalAccountsDisabled; set => IsLocalAccountsDisabled = value; }
+
+        // TODO: Remove when https://github.com/Azure/azure-sdk-for-net/pull/62632 is available in the generator.
+        /// <summary> The profile for Linux VMs in the Managed Cluster. </summary>
+        [WirePath("properties.linuxProfile")]
+        public ContainerServiceLinuxProfile LinuxProfile
+        {
+            get => Properties?.LinuxProfile;
+            set
+            {
+                Properties ??= new ManagedClusterProperties();
+                Properties.LinuxProfile = value;
+            }
+        }
     }
 }

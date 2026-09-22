@@ -82,9 +82,6 @@
         $(MSBuildProjectName) == 'Azure.Monitor.OpenTelemetry.Exporter.Tests' or
         $(MSBuildProjectName) == 'Azure.Monitor.Query.Logs.Tests' or
         $(MSBuildProjectName) == 'Azure.Monitor.Query.Metrics.Tests' or
-        $(MSBuildProjectName) == 'Azure.Projects.AI.Tests' or
-        $(MSBuildProjectName) == 'Azure.Projects.Provisioning.Tests' or
-        $(MSBuildProjectName) == 'Azure.Projects.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Advisor.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AgFoodPlatform.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.AgriculturePlatform.Tests' or
@@ -99,7 +96,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.AppService.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.ArizeAIObservabilityEval.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.ArtifactSigning.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.Astro.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Attestation.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Authorization.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Automanage.Tests' or
@@ -201,10 +197,8 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.Kubernetes.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.Extensions.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.KubernetesConfiguration.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Kusto.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LabServices.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.LambdaTestHyperExecute.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.LargeInstance.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Logic.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.MachineLearning.Tests' or
@@ -237,7 +231,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.Orbital.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.PaloAltoNetworks.Ngfw.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Peering.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.PineconeVectorDB.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Playwright.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.PolicyInsights.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.PortalServicesCopilot.Tests' or
@@ -304,7 +297,6 @@
         $(MSBuildProjectName) == 'Azure.ResourceManager.VirtualEnclaves.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.VoiceServices.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.WebPubSub.Tests' or
-        $(MSBuildProjectName) == 'Azure.ResourceManager.WeightsAndBiases.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.WorkloadMonitor.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.WorkloadOrchestration.Tests' or
         $(MSBuildProjectName) == 'Azure.ResourceManager.Workloads.Tests' or

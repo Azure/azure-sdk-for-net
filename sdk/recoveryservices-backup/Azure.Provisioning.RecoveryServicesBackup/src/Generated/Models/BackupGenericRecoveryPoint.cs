@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary>
     /// Base class for backup copies. Workload-specific backup copies are derived from this class.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileShareRecoveryPoint"/>, <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="WorkloadSapAseRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="WorkloadSqlRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/>, and <see cref="IaasVmRecoveryPoint"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="FileShareRecoveryPoint"/>, <see cref="WorkloadPointInTimeRecoveryPoint"/>, <see cref="WorkloadRecoveryPoint"/>, <see cref="WorkloadSapHanaPointInTimeRecoveryPoint"/>, <see cref="WorkloadSapHanaRecoveryPoint"/>, <see cref="WorkloadSapAsePointInTimeRecoveryPoint"/>, <see cref="WorkloadSapAseRecoveryPoint"/>, <see cref="WorkloadSqlPointInTimeRecoveryPoint"/>, <see cref="WorkloadSqlRecoveryPoint"/>, <see cref="GenericRecoveryPoint"/>, and <see cref="IaasVmRecoveryPoint"/>.
     /// </summary>
     public partial class BackupGenericRecoveryPoint : ProvisionableConstruct
     {
+        private BicepValue<string> _objectType;
+
         /// <summary> Creates a new BackupGenericRecoveryPoint. </summary>
         public BackupGenericRecoveryPoint()
         {
+        }
+
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        internal BicepValue<string> ObjectType
+        {
+            get
+            {
+                Initialize();
+                return _objectType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for BackupGenericRecoveryPoint. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _objectType = DefineProperty<string>(nameof(ObjectType), new string[] { "objectType" });
             DefineAdditionalProperties();
         }
 

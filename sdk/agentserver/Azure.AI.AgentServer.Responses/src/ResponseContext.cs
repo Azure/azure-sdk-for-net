@@ -174,15 +174,6 @@ public class ResponseContext
     public virtual string ConversationChainId => ResponseId;
 
     /// <summary>
-    /// Gets the named-namespace metadata facade for durable, explicitly-flushed
-    /// per-conversation-chain metadata. Values are buffered until
-    /// <see cref="ConversationChainMetadata.FlushAsync"/> is called, at which point they are
-    /// persisted into the response snapshot so they survive crash/recovery. Names and keys
-    /// beginning with <c>_</c> are reserved and rejected.
-    /// </summary>
-    public virtual ConversationChainMetadata ConversationChainMetadata { get; } = new ConversationChainMetadata();
-
-    /// <summary>
     /// Gets whether the current invocation is draining steering input (additional input that
     /// arrived mid-turn for the same conversation) rather than starting a fresh turn. Only
     /// meaningful when <see cref="ResponsesServerOptions.SteerableConversations"/> is enabled.

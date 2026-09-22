@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Relay.Models;
 
@@ -17,6 +18,8 @@ namespace Azure.ResourceManager.Relay
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AuthorizationRuleListResult))]
     [ModelReaderWriterBuildable(typeof(AuthorizationRuleProperties))]
+    [ModelReaderWriterBuildable(typeof(AvailableRelayClusterRegion))]
+    [ModelReaderWriterBuildable(typeof(AvailableRelayClustersList))]
     [ModelReaderWriterBuildable(typeof(HybridConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(HybridConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(NetworkRuleSetProperties))]
@@ -25,6 +28,17 @@ namespace Azure.ResourceManager.Relay
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesListResult))]
     [ModelReaderWriterBuildable(typeof(RelayAccessKeys))]
     [ModelReaderWriterBuildable(typeof(RelayAuthorizationRuleData))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterData))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterListResult))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterPatch))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterProperties))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterResource))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterSku))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterSkuCapacity))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterSkuDetails))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterSkuInfo))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterSkuListResult))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterSkuPatch))]
     [ModelReaderWriterBuildable(typeof(RelayHybridConnectionAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(RelayHybridConnectionData))]
     [ModelReaderWriterBuildable(typeof(RelayHybridConnectionResource))]
@@ -32,9 +46,11 @@ namespace Azure.ResourceManager.Relay
     [ModelReaderWriterBuildable(typeof(RelayNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(RelayNamespaceAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(RelayNamespaceData))]
+    [ModelReaderWriterBuildable(typeof(RelayNamespaceIdListResult))]
     [ModelReaderWriterBuildable(typeof(RelayNamespaceListResult))]
     [ModelReaderWriterBuildable(typeof(RelayNamespacePatch))]
     [ModelReaderWriterBuildable(typeof(RelayNamespaceProperties))]
+    [ModelReaderWriterBuildable(typeof(RelayNamespaceReference))]
     [ModelReaderWriterBuildable(typeof(RelayNamespaceResource))]
     [ModelReaderWriterBuildable(typeof(RelayNetworkRuleSetData))]
     [ModelReaderWriterBuildable(typeof(RelayNetworkRuleSetIPRule))]
@@ -48,6 +64,7 @@ namespace Azure.ResourceManager.Relay
     [ModelReaderWriterBuildable(typeof(RelayPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(RelayRegenerateAccessKeyContent))]
     [ModelReaderWriterBuildable(typeof(RelaySku))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(WcfRelayAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(WcfRelayData))]

@@ -6,17 +6,14 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
 {
     /// <summary> RecoveryPoint Tier Information V2. </summary>
-    public partial class RecoveryPointTierInformationV2 : ProvisionableConstruct
+    public partial class RecoveryPointTierInformationV2 : RecoveryPointTierInformation
     {
         private BicepValue<RecoveryPointTierType> _type;
         private BicepValue<RecoveryPointTierStatus> _status;
-        private BicepValue<RecoveryPointTierType> _tierType;
-        private BicepDictionary<string> _extendedInfo;
 
         /// <summary> Creates a new RecoveryPointTierInformationV2. </summary>
         public RecoveryPointTierInformationV2()
@@ -34,32 +31,12 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         }
 
         /// <summary> Gets the Status. </summary>
-        public BicepValue<RecoveryPointTierStatus> Status
+        public new BicepValue<RecoveryPointTierStatus> Status
         {
             get
             {
                 Initialize();
                 return _status;
-            }
-        }
-
-        /// <summary> Gets the TierType. </summary>
-        public BicepValue<RecoveryPointTierType> TierType
-        {
-            get
-            {
-                Initialize();
-                return _tierType;
-            }
-        }
-
-        /// <summary> Gets the ExtendedInfo. </summary>
-        public BicepDictionary<string> ExtendedInfo
-        {
-            get
-            {
-                Initialize();
-                return _extendedInfo;
             }
         }
 
@@ -69,8 +46,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             base.DefineProvisionableProperties();
             _type = DefineProperty<RecoveryPointTierType>(nameof(Type), new string[] { "type" });
             _status = DefineProperty<RecoveryPointTierStatus>(nameof(Status), new string[] { "status" });
-            _tierType = DefineProperty<RecoveryPointTierType>(nameof(TierType), new string[] { "type" });
-            _extendedInfo = DefineDictionaryProperty<string>(nameof(ExtendedInfo), new string[] { "extendedInfo" });
             DefineAdditionalProperties();
         }
 

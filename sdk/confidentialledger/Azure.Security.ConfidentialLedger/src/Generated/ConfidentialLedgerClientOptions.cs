@@ -20,7 +20,7 @@ namespace Azure.Security.ConfidentialLedger
         [Experimental("SCME0002")]
         internal ConfidentialLedgerClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "V2024_12_09_Preview";
+            Version = "2026-02-23";
             if (section is null || !section.Exists())
             {
                 return;
@@ -40,6 +40,18 @@ namespace Azure.Security.ConfidentialLedger
             if (bool.TryParse(section["UseLedgerGateway"], out bool useLedgerGateway))
             {
                 UseLedgerGateway = useLedgerGateway;
+            }
+            if (bool.TryParse(section["EnableArchivedCollectionFallback"], out bool enableArchivedCollectionFallback))
+            {
+                EnableArchivedCollectionFallback = enableArchivedCollectionFallback;
+            }
+            if (Enum.TryParse(section["Failover"], out FailoverSelection failover))
+            {
+                Failover = failover;
+            }
+            if (TimeSpan.TryParse(section["FailoverNetworkTimeout"], out TimeSpan failoverNetworkTimeout))
+            {
+                FailoverNetworkTimeout = failoverNetworkTimeout;
             }
             ConfigureLogging();
         }

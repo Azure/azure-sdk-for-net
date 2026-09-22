@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
@@ -29,6 +30,7 @@ namespace Azure.ResourceManager.Avs
     [ModelReaderWriterBuildable(typeof(AvsClusterZoneListResult))]
     [ModelReaderWriterBuildable(typeof(AvsEncryptionKeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(AvsHostData))]
+    [ModelReaderWriterBuildable(typeof(AvsHostPatch))]
     [ModelReaderWriterBuildable(typeof(AvsHostProperties))]
     [ModelReaderWriterBuildable(typeof(AvsHostResource))]
     [ModelReaderWriterBuildable(typeof(AvsLicenseData))]
@@ -110,14 +112,21 @@ namespace Azure.ResourceManager.Avs
     [ModelReaderWriterBuildable(typeof(HcxEnterpriseSiteList))]
     [ModelReaderWriterBuildable(typeof(HcxEnterpriseSiteProperties))]
     [ModelReaderWriterBuildable(typeof(HcxEnterpriseSiteResource))]
+    [ModelReaderWriterBuildable(typeof(HostLicense))]
     [ModelReaderWriterBuildable(typeof(HostListResult))]
+    [ModelReaderWriterBuildable(typeof(HostUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ImpactedMaintenanceResourceDetails))]
     [ModelReaderWriterBuildable(typeof(ImpactedMaintenanceResourceError))]
     [ModelReaderWriterBuildable(typeof(IscsiPathData))]
     [ModelReaderWriterBuildable(typeof(IscsiPathProperties))]
     [ModelReaderWriterBuildable(typeof(IscsiPathResource))]
     [ModelReaderWriterBuildable(typeof(LicenseListResult))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceActivity))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceGroup))]
     [ModelReaderWriterBuildable(typeof(MaintenanceListResult))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceRecommendation))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceRelationships))]
+    [ModelReaderWriterBuildable(typeof(MaintenanceWindowRecommendation))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetAppVolume))]
     [ModelReaderWriterBuildable(typeof(PagedResourceSku))]
@@ -134,6 +143,8 @@ namespace Azure.ResourceManager.Avs
     [ModelReaderWriterBuildable(typeof(ProvisionedNetworkListResult))]
     [ModelReaderWriterBuildable(typeof(PSCredentialExecutionParameterDetails))]
     [ModelReaderWriterBuildable(typeof(PureStoragePolicyListResult))]
+    [ModelReaderWriterBuildable(typeof(ReschedulingWindowConstraint))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScriptCmdletData))]
     [ModelReaderWriterBuildable(typeof(ScriptCmdletProperties))]
     [ModelReaderWriterBuildable(typeof(ScriptCmdletResource))]
@@ -159,6 +170,7 @@ namespace Azure.ResourceManager.Avs
     [ModelReaderWriterBuildable(typeof(UnknownAvsMaintenanceManagementOperation))]
     [ModelReaderWriterBuildable(typeof(UnknownAvsRescheduleOperationConstraint))]
     [ModelReaderWriterBuildable(typeof(UnknownAvsScheduleOperationConstraint))]
+    [ModelReaderWriterBuildable(typeof(UnknownHostLicense))]
     [ModelReaderWriterBuildable(typeof(UnknownPlacementPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(UnknownScriptExecutionParameter))]
     [ModelReaderWriterBuildable(typeof(UnknownVcfLicense))]
@@ -171,6 +183,9 @@ namespace Azure.ResourceManager.Avs
     [ModelReaderWriterBuildable(typeof(VmHostPlacementPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(VmPlacementPolicyProperties))]
     [ModelReaderWriterBuildable(typeof(VMwareFirewallLicenseProperties))]
+    [ModelReaderWriterBuildable(typeof(WeekendReschedulingConstraint))]
+    [ModelReaderWriterBuildable(typeof(WeekendSchedulingConstraint))]
+    [ModelReaderWriterBuildable(typeof(WindowsServerLicense))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkData))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkDhcpData))]
     [ModelReaderWriterBuildable(typeof(WorkloadNetworkDhcpEntity))]

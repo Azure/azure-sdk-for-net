@@ -36,7 +36,6 @@ internal sealed class ResponseContextImpl : ResponseContext
     private readonly Func<int>? _pendingInputCountProvider;
     private readonly ResponseObject? _persistedResponse;
     private readonly Lazy<string> _conversationChainId;
-    private ConversationChainMetadata _conversationChainMetadata = null!;
 
     /// <summary>
     /// Initializes a new instance of <see cref="ResponseContextImpl"/>.
@@ -53,7 +52,6 @@ internal sealed class ResponseContextImpl : ResponseContext
     /// <param name="persistedResponse">The last durable response snapshot from the prior lifetime, exposed via <see cref="ResponseContext.PersistedResponse"/> during recovery.</param>
     /// <param name="isSteeredTurn">Whether this invocation is the drain re-entry following a steering input.</param>
     /// <param name="pendingInputCountProvider">Live provider for the count of queued steering inputs behind this turn, or <c>null</c> when steering is not in effect.</param>
-    /// <param name="conversationChainMetadata">The chain-metadata facade to expose; defaults to a fresh in-memory (non-durable) facade when <c>null</c>.</param>
     public ResponseContextImpl(
         string responseId,
         ResponsesProvider provider,
@@ -66,8 +64,7 @@ internal sealed class ResponseContextImpl : ResponseContext
         bool isRecovery = false,
         ResponseObject? persistedResponse = null,
         bool isSteeredTurn = false,
-        Func<int>? pendingInputCountProvider = null,
-        ConversationChainMetadata? conversationChainMetadata = null)
+        Func<int>? pendingInputCountProvider = null)
         : base(responseId)
     {
         _rawBody = rawBody;
@@ -84,7 +81,6 @@ internal sealed class ResponseContextImpl : ResponseContext
         _steerable = options?.Value.SteerableConversations ?? false;
         _resilientBackground = options?.Value.ResilientBackground ?? false;
         _conversationChainId = new Lazy<string>(DeriveConversationChainId);
-        _conversationChainMetadata = conversationChainMetadata ?? new ConversationChainMetadata();
         _inputItemsResolved = new Lazy<Task<IReadOnlyList<Item>>>(() => ResolveInputItemsAsync(resolveReferences: true));
         _inputItemsUnresolved = new Lazy<Task<IReadOnlyList<Item>>>(() => ResolveInputItemsAsync(resolveReferences: false));
         _historyItemIds = new Lazy<Task<IReadOnlyList<string>>>(ResolveHistoryItemIdsAsync);
@@ -117,21 +113,6 @@ internal sealed class ResponseContextImpl : ResponseContext
 
     /// <inheritdoc/>
     public override string ConversationChainId => _conversationChainId.Value;
-
-    /// <inheritdoc/>
-    public override ConversationChainMetadata ConversationChainMetadata => _conversationChainMetadata;
-
-    /// <summary>
-    /// Swaps in a durable, Core-<c>TaskMetadata</c>-backed metadata facade before the handler runs.
-    /// Used by the resilient one-shot path where the endpoint pre-created this context (with a plain,
-    /// non-durable facade) for the <c>response.created</c> bridge: the running task owns the durable
-    /// checkpoint store, so the handler attaches it here so <see cref="ConversationChainMetadata.FlushAsync"/>
-    /// actually persists into the task record. Safe because it runs before any handler write.
-    /// </summary>
-    internal void AttachDurableConversationChainMetadata(Core.Tasks.TaskMetadata metadata)
-    {
-        _conversationChainMetadata = new Resilience.DurableConversationChainMetadata(metadata);
-    }
 
     private string DeriveConversationChainId()
     {

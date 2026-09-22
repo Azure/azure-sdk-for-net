@@ -162,16 +162,25 @@ namespace Azure.Security.ConfidentialLedger
     }
     public partial class ConfidentialLedgerClientOptions : Azure.Core.ClientOptions
     {
-        public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V2024_12_09_Preview) { }
+        public ConfidentialLedgerClientOptions(Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion version = Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.ServiceVersion.V2026_02_23) { }
         public System.Uri CertificateEndpoint { get { throw null; } set { } }
+        public bool EnableArchivedCollectionFallback { get { throw null; } set { } }
+        public Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions.FailoverSelection Failover { get { throw null; } set { } }
+        public System.TimeSpan? FailoverNetworkTimeout { get { throw null; } set { } }
         public bool UseLedgerGateway { get { throw null; } set { } }
         public bool VerifyConnection { get { throw null; } set { } }
+        public enum FailoverSelection
+        {
+            Ordered = 0,
+            Random = 1,
+        }
         public enum ServiceVersion
         {
             V2022_05_13 = 1,
             V2024_01_26_Preview = 2,
             V2024_08_22_Preview = 3,
             V2024_12_09_Preview = 4,
+            V2026_02_23 = 5,
         }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
