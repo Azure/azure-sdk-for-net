@@ -30,7 +30,7 @@ namespace Azure.Security.Attestation
         /// A monotonically increasing sequence number changed when Intel updates the
         /// content of the TCB evaluation data set. SGX TEE specific property
         /// </param>
-        /// <param name="tcbReleaseDate"> Date and time when the Tcb is released. SGX TEE specific property. </param>
+        /// <param name="tcbReleaseOn"> Date and time when the Tcb is released. SGX TEE specific property. </param>
         /// <param name="minimumPswLinuxVersion">
         /// Minimum Linux PSW version required to support the corresponding Tcb baseline.
         /// SGX TEE specific property
@@ -44,11 +44,11 @@ namespace Azure.Security.Attestation
         /// attestation request if set to true
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TcbBaseline(string tcbIdentifier, int? tcbEvaluationDataNumber, DateTimeOffset? tcbReleaseDate, string minimumPswLinuxVersion, string minimumPswWindowsVersion, bool? isSelectedTcb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TcbBaseline(string tcbIdentifier, int? tcbEvaluationDataNumber, DateTimeOffset? tcbReleaseOn, string minimumPswLinuxVersion, string minimumPswWindowsVersion, bool? isSelectedTcb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TcbIdentifier = tcbIdentifier;
             TcbEvaluationDataNumber = tcbEvaluationDataNumber;
-            TcbReleaseDate = tcbReleaseDate;
+            TcbReleaseOn = tcbReleaseOn;
             MinimumPswLinuxVersion = minimumPswLinuxVersion;
             MinimumPswWindowsVersion = minimumPswWindowsVersion;
             IsSelectedTcb = isSelectedTcb;
@@ -65,7 +65,7 @@ namespace Azure.Security.Attestation
         public int? TcbEvaluationDataNumber { get; }
 
         /// <summary> Date and time when the Tcb is released. SGX TEE specific property. </summary>
-        public DateTimeOffset? TcbReleaseDate { get; }
+        public DateTimeOffset? TcbReleaseOn { get; }
 
         /// <summary>
         /// Minimum Linux PSW version required to support the corresponding Tcb baseline.

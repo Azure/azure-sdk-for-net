@@ -86,10 +86,10 @@ namespace Azure.Security.Attestation
                 writer.WritePropertyName("tcbEvaluationDataNumber"u8);
                 writer.WriteNumberValue(TcbEvaluationDataNumber.Value);
             }
-            if (Optional.IsDefined(TcbReleaseDate))
+            if (Optional.IsDefined(TcbReleaseOn))
             {
                 writer.WritePropertyName("tcbReleaseDate"u8);
-                writer.WriteStringValue(TcbReleaseDate.Value, "O");
+                writer.WriteStringValue(TcbReleaseOn.Value, "O");
             }
             if (Optional.IsDefined(MinimumPswLinuxVersion))
             {
@@ -150,7 +150,7 @@ namespace Azure.Security.Attestation
             }
             string tcbIdentifier = default;
             int? tcbEvaluationDataNumber = default;
-            DateTimeOffset? tcbReleaseDate = default;
+            DateTimeOffset? tcbReleaseOn = default;
             string minimumPswLinuxVersion = default;
             string minimumPswWindowsVersion = default;
             bool? isSelectedTcb = default;
@@ -177,7 +177,7 @@ namespace Azure.Security.Attestation
                     {
                         continue;
                     }
-                    tcbReleaseDate = prop.Value.GetDateTimeOffset("O");
+                    tcbReleaseOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("minimumPswLinuxVersion"u8))
@@ -201,13 +201,13 @@ namespace Azure.Security.Attestation
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TcbBaseline(
                 tcbIdentifier,
                 tcbEvaluationDataNumber,
-                tcbReleaseDate,
+                tcbReleaseOn,
                 minimumPswLinuxVersion,
                 minimumPswWindowsVersion,
                 isSelectedTcb,

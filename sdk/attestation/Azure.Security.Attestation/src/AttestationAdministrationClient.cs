@@ -206,6 +206,7 @@ namespace Azure.Security.Attestation
         /// // verify that the hash of the policy document returned from the Attestation Service matches the hash
         /// // of an attestation token created locally.
         /// TokenSigningKey signingKey = new TokenSigningKey(&lt;Customer provided signing key&gt;, &lt;Customer provided certificate&gt;)
+        /// AttestationTokenSigningKey signingKey = new AttestationTokenSigningKey(policyTokenKey, policyTokenCertificate);
         /// var policySetToken = new AttestationToken(
         ///     BinaryData.FromObjectAsJson(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }),
         ///     signingKey);
@@ -290,6 +291,7 @@ namespace Azure.Security.Attestation
         /// // verify that the hash of the policy document returned from the Attestation Service matches the hash
         /// // of an attestation token created locally.
         /// TokenSigningKey signingKey = new TokenSigningKey(&lt;Customer provided signing key&gt;, &lt;Customer provided certificate&gt;)
+        /// AttestationTokenSigningKey signingKey = new AttestationTokenSigningKey(policyTokenKey, policyTokenCertificate);
         /// var policySetToken = new AttestationToken(
         ///     BinaryData.FromObjectAsJson(new StoredAttestationPolicy { AttestationPolicy = attestationPolicy }),
         ///     signingKey);
