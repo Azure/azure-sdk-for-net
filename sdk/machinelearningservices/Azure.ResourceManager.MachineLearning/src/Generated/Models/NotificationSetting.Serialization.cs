@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NotificationSetting(emailOn ?? new ChangeTrackingList<EmailNotificationEnableType>(), emails ?? new ChangeTrackingList<string>(), webhooks ?? new ChangeTrackingDictionary<string, MachineLearningWebhook>(), additionalBinaryDataProperties);

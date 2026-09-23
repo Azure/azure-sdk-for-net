@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         stackMetaLearnerKWargs = null;
                         continue;
                     }
-                    stackMetaLearnerKWargs = BinaryData.FromString(prop.Value.GetRawText());
+                    stackMetaLearnerKWargs = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("stackMetaLearnerTrainPercentage"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MachineLearningStackEnsembleSettings(stackMetaLearnerKWargs, stackMetaLearnerTrainPercentage, stackMetaLearnerType, additionalBinaryDataProperties);
