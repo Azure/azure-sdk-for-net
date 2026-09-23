@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The base definition of the custom setup.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CmdkeySetup"/>, <see cref="EnvironmentVariableSetup"/>, <see cref="ComponentSetup"/>, and <see cref="AzPowerShellSetup"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzPowerShellSetup"/>, <see cref="CmdkeySetup"/>, <see cref="ComponentSetup"/>, and <see cref="EnvironmentVariableSetup"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCustomSetupBase))]
     public abstract partial class CustomSetupBase : IJsonModel<CustomSetupBase>
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CmdkeySetup":
-                        return CmdkeySetup.DeserializeCmdkeySetup(element, options);
-                    case "EnvironmentVariableSetup":
-                        return EnvironmentVariableSetup.DeserializeEnvironmentVariableSetup(element, options);
-                    case "ComponentSetup":
-                        return ComponentSetup.DeserializeComponentSetup(element, options);
                     case "AzPowerShellSetup":
                         return AzPowerShellSetup.DeserializeAzPowerShellSetup(element, options);
+                    case "CmdkeySetup":
+                        return CmdkeySetup.DeserializeCmdkeySetup(element, options);
+                    case "ComponentSetup":
+                        return ComponentSetup.DeserializeComponentSetup(element, options);
+                    case "EnvironmentVariableSetup":
+                        return EnvironmentVariableSetup.DeserializeEnvironmentVariableSetup(element, options);
                 }
             }
             return UnknownCustomSetupBase.DeserializeUnknownCustomSetupBase(element, options);

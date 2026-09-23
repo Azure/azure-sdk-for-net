@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadFilePattern(prop, ref filePattern);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new JsonWriteSettings(formatWriteSettingsType, additionalProperties, filePattern);
         }

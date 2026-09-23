@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadFileName(prop, ref fileName);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new FileServerLocation(datasetLocationType, folderPath, fileName, additionalProperties);
         }
