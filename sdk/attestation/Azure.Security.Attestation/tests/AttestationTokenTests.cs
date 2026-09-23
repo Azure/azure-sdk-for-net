@@ -133,8 +133,8 @@ namespace Azure.Security.Attestation.Tests
         [RecordedTest]
         public async Task ParseTokenWithFloatingPointDateClaims()
         {
-            // MAA serializes exp/nbf/iat in decimal notation ("1617920651.0"), which long cannot parse,
-            // and RFC 7519 NumericDate permits genuinely fractional values. Hence double, without truncation.
+            // AttestationToken parses arbitrary JWTs, and RFC 7519 NumericDate may be non-integral,
+            // so these claims are read as double and must not be truncated.
             long whole = DateTimeOffset.Now.AddSeconds(60).ToUnixTimeSeconds();
             string body = FormattableString.Invariant($"{{\"exp\":{whole}.0,\"nbf\":{whole}.0,\"iat\":{whole}.5}}");
 
