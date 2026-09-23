@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.HybridConnectivity
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -155,6 +160,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             PublicCloudConnectorProperties properties = default;
+            PublicCloudHostType? kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -225,6 +231,15 @@ namespace Azure.ResourceManager.HybridConnectivity
                     properties = PublicCloudConnectorProperties.DeserializePublicCloudConnectorProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("kind"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new PublicCloudHostType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -238,6 +253,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                kind,
                 additionalBinaryDataProperties);
         }
     }

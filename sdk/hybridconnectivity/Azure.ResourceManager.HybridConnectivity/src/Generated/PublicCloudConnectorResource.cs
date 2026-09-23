@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         {
             TryGetApiVersion(ResourceType, out string publicCloudConnectorApiVersion);
             _publicCloudConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity", ResourceType.Namespace, Diagnostics);
-            _publicCloudConnectorsRestClient = new PublicCloudConnectors(_publicCloudConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudConnectorApiVersion ?? "2024-12-01");
+            _publicCloudConnectorsRestClient = new PublicCloudConnectors(_publicCloudConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicCloudConnectorApiVersion ?? "2027-01-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-12-01. </description>
+        /// <description> 2027-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
