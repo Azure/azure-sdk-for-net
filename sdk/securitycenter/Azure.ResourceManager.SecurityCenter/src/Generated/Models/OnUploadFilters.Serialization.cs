@@ -213,12 +213,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         excludeBlobsLargerThan = null;
                         continue;
                     }
-                    excludeBlobsLargerThan = BinaryData.FromString(prop.Value.GetRawText());
+                    excludeBlobsLargerThan = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new OnUploadFilters(excludeBlobsWithPrefix ?? new ChangeTrackingList<string>(), excludeBlobsWithSuffix ?? new ChangeTrackingList<string>(), excludeBlobsLargerThan, additionalBinaryDataProperties);

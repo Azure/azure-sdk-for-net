@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// Alert rule.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MLBehaviorAnalyticsAlertRule"/>, <see cref="SecurityInsightsFusionAlertRule"/>, <see cref="ThreatIntelligenceAlertRule"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>, <see cref="SecurityInsightsScheduledAlertRule"/>, and <see cref="NrtAlertRule"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MLBehaviorAnalyticsAlertRule"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>, <see cref="NrtAlertRule"/>, <see cref="SecurityInsightsFusionAlertRule"/>, <see cref="SecurityInsightsScheduledAlertRule"/>, and <see cref="ThreatIntelligenceAlertRule"/>.
     /// </summary>
     public partial class SecurityInsightsAlertRuleData : ResourceData, IJsonModel<SecurityInsightsAlertRuleData>
     {
@@ -152,16 +152,16 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     case "MLBehaviorAnalytics":
                         return MLBehaviorAnalyticsAlertRule.DeserializeMLBehaviorAnalyticsAlertRule(element, options);
-                    case "Fusion":
-                        return SecurityInsightsFusionAlertRule.DeserializeSecurityInsightsFusionAlertRule(element, options);
-                    case "ThreatIntelligence":
-                        return ThreatIntelligenceAlertRule.DeserializeThreatIntelligenceAlertRule(element, options);
                     case "MicrosoftSecurityIncidentCreation":
                         return MicrosoftSecurityIncidentCreationAlertRule.DeserializeMicrosoftSecurityIncidentCreationAlertRule(element, options);
-                    case "Scheduled":
-                        return SecurityInsightsScheduledAlertRule.DeserializeSecurityInsightsScheduledAlertRule(element, options);
                     case "NRT":
                         return NrtAlertRule.DeserializeNrtAlertRule(element, options);
+                    case "Fusion":
+                        return SecurityInsightsFusionAlertRule.DeserializeSecurityInsightsFusionAlertRule(element, options);
+                    case "Scheduled":
+                        return SecurityInsightsScheduledAlertRule.DeserializeSecurityInsightsScheduledAlertRule(element, options);
+                    case "ThreatIntelligence":
+                        return ThreatIntelligenceAlertRule.DeserializeThreatIntelligenceAlertRule(element, options);
                 }
             }
             return UnknownSecurityInsightsAlertRule.DeserializeUnknownSecurityInsightsAlertRule(element, options);
