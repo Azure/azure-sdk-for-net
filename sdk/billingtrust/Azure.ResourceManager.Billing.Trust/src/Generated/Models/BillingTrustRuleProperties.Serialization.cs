@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
 {
     /// <summary>
     /// Base properties of a Rule resource. Polymorphic by `kind` — kind-specific writable fields live on derived models.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EduQualificationRuleProperties"/> and <see cref="BusinessVerificationRuleProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BusinessVerificationRuleProperties"/> and <see cref="EduQualificationRuleProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownBillingTrustRuleProperties))]
     public abstract partial class BillingTrustRuleProperties : IJsonModel<BillingTrustRuleProperties>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "eduQualification":
-                        return EduQualificationRuleProperties.DeserializeEduQualificationRuleProperties(element, options);
                     case "businessVerification":
                         return BusinessVerificationRuleProperties.DeserializeBusinessVerificationRuleProperties(element, options);
+                    case "eduQualification":
+                        return EduQualificationRuleProperties.DeserializeEduQualificationRuleProperties(element, options);
                 }
             }
             return UnknownBillingTrustRuleProperties.DeserializeUnknownBillingTrustRuleProperties(element, options);

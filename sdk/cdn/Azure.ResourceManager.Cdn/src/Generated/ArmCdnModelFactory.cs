@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// A condition for the delivery rule.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeliveryRuleRemoteAddressCondition"/>, <see cref="Models.DeliveryRuleRequestMethodCondition"/>, <see cref="Models.DeliveryRuleQueryStringCondition"/>, <see cref="Models.DeliveryRulePostArgsCondition"/>, <see cref="Models.DeliveryRuleRequestUriCondition"/>, <see cref="Models.DeliveryRuleRequestHeaderCondition"/>, <see cref="Models.DeliveryRuleRequestBodyCondition"/>, <see cref="Models.DeliveryRuleRequestSchemeCondition"/>, <see cref="Models.DeliveryRuleUriPathCondition"/>, <see cref="Models.DeliveryRuleUriFileExtensionCondition"/>, <see cref="Models.DeliveryRuleUriFileNameCondition"/>, <see cref="Models.DeliveryRuleHttpVersionCondition"/>, <see cref="Models.DeliveryRuleCookiesCondition"/>, <see cref="Models.DeliveryRuleIsDeviceCondition"/>, <see cref="Models.DeliveryRuleSocketAddressCondition"/>, <see cref="Models.DeliveryRuleClientPortCondition"/>, <see cref="Models.DeliveryRuleServerPortCondition"/>, <see cref="Models.DeliveryRuleHostNameCondition"/>, and <see cref="Models.DeliveryRuleSslProtocolCondition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DeliveryRuleClientPortCondition"/>, <see cref="Models.DeliveryRuleCookiesCondition"/>, <see cref="Models.DeliveryRuleHostNameCondition"/>, <see cref="Models.DeliveryRuleHttpVersionCondition"/>, <see cref="Models.DeliveryRuleIsDeviceCondition"/>, <see cref="Models.DeliveryRulePostArgsCondition"/>, <see cref="Models.DeliveryRuleQueryStringCondition"/>, <see cref="Models.DeliveryRuleRemoteAddressCondition"/>, <see cref="Models.DeliveryRuleRequestBodyCondition"/>, <see cref="Models.DeliveryRuleRequestHeaderCondition"/>, <see cref="Models.DeliveryRuleRequestMethodCondition"/>, <see cref="Models.DeliveryRuleRequestSchemeCondition"/>, <see cref="Models.DeliveryRuleRequestUriCondition"/>, <see cref="Models.DeliveryRuleServerPortCondition"/>, <see cref="Models.DeliveryRuleSocketAddressCondition"/>, <see cref="Models.DeliveryRuleSslProtocolCondition"/>, <see cref="Models.DeliveryRuleUriFileExtensionCondition"/>, <see cref="Models.DeliveryRuleUriFileNameCondition"/>, and <see cref="Models.DeliveryRuleUriPathCondition"/>.
         /// </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <returns> A new <see cref="Models.DeliveryRuleCondition"/> instance for mocking. </returns>
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Defines the parameters for delivery rule match conditions
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RemoteAddressMatchCondition"/>, <see cref="Models.RequestMethodMatchCondition"/>, <see cref="Models.QueryStringMatchCondition"/>, <see cref="Models.PostArgsMatchCondition"/>, <see cref="Models.RequestUriMatchCondition"/>, <see cref="Models.RequestHeaderMatchCondition"/>, <see cref="Models.RequestBodyMatchCondition"/>, <see cref="Models.RequestSchemeMatchCondition"/>, <see cref="Models.UriPathMatchCondition"/>, <see cref="Models.UriFileExtensionMatchCondition"/>, <see cref="Models.UriFileNameMatchCondition"/>, <see cref="Models.HttpVersionMatchCondition"/>, <see cref="Models.CookiesMatchCondition"/>, <see cref="Models.IsDeviceMatchCondition"/>, <see cref="Models.SocketAddressMatchCondition"/>, <see cref="Models.ClientPortMatchCondition"/>, <see cref="Models.ServerPortMatchCondition"/>, <see cref="Models.HostNameMatchCondition"/>, and <see cref="Models.DeliveryRuleSslProtocolMatchCondition"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ClientPortMatchCondition"/>, <see cref="Models.CookiesMatchCondition"/>, <see cref="Models.DeliveryRuleSslProtocolMatchCondition"/>, <see cref="Models.HostNameMatchCondition"/>, <see cref="Models.HttpVersionMatchCondition"/>, <see cref="Models.IsDeviceMatchCondition"/>, <see cref="Models.PostArgsMatchCondition"/>, <see cref="Models.QueryStringMatchCondition"/>, <see cref="Models.RemoteAddressMatchCondition"/>, <see cref="Models.RequestBodyMatchCondition"/>, <see cref="Models.RequestHeaderMatchCondition"/>, <see cref="Models.RequestMethodMatchCondition"/>, <see cref="Models.RequestSchemeMatchCondition"/>, <see cref="Models.RequestUriMatchCondition"/>, <see cref="Models.ServerPortMatchCondition"/>, <see cref="Models.SocketAddressMatchCondition"/>, <see cref="Models.UriFileExtensionMatchCondition"/>, <see cref="Models.UriFileNameMatchCondition"/>, and <see cref="Models.UriPathMatchCondition"/>.
         /// </summary>
         /// <param name="typeName"></param>
         /// <returns> A new <see cref="Models.DeliveryRuleConditionProperties"/> instance for mocking. </returns>
@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// An action for the delivery rule.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FrontDoorUrlSigningAction"/>, <see cref="Models.UriRedirectAction"/>, <see cref="Models.UriSigningAction"/>, <see cref="Models.OriginGroupOverrideAction"/>, <see cref="Models.CdnEdgeAction"/>, <see cref="Models.UriRewriteAction"/>, <see cref="Models.DeliveryRuleRequestHeaderAction"/>, <see cref="Models.DeliveryRuleResponseHeaderAction"/>, <see cref="Models.DeliveryRuleCacheExpirationAction"/>, <see cref="Models.DeliveryRuleCacheKeyQueryStringAction"/>, and <see cref="Models.DeliveryRuleRouteConfigurationOverrideAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CdnEdgeAction"/>, <see cref="Models.DeliveryRuleCacheExpirationAction"/>, <see cref="Models.DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="Models.DeliveryRuleRequestHeaderAction"/>, <see cref="Models.DeliveryRuleResponseHeaderAction"/>, <see cref="Models.DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="Models.FrontDoorUrlSigningAction"/>, <see cref="Models.OriginGroupOverrideAction"/>, <see cref="Models.UriRedirectAction"/>, <see cref="Models.UriRewriteAction"/>, and <see cref="Models.UriSigningAction"/>.
         /// </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <returns> A new <see cref="Models.DeliveryRuleAction"/> instance for mocking. </returns>
@@ -1506,7 +1506,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Defines the parameters for delivery rule actions
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.UriRedirectActionProperties"/>, <see cref="Models.UriSigningActionProperties"/>, <see cref="Models.OriginGroupOverrideActionProperties"/>, <see cref="Models.DeliveryRuleEdgeActionProperties"/>, <see cref="Models.UriRewriteActionProperties"/>, <see cref="Models.HeaderActionProperties"/>, <see cref="Models.CacheExpirationActionProperties"/>, <see cref="Models.CacheKeyQueryStringActionProperties"/>, and <see cref="Models.RouteConfigurationOverrideActionProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CacheExpirationActionProperties"/>, <see cref="Models.CacheKeyQueryStringActionProperties"/>, <see cref="Models.DeliveryRuleEdgeActionProperties"/>, <see cref="Models.HeaderActionProperties"/>, <see cref="Models.OriginGroupOverrideActionProperties"/>, <see cref="Models.RouteConfigurationOverrideActionProperties"/>, <see cref="Models.UriRedirectActionProperties"/>, <see cref="Models.UriRewriteActionProperties"/>, and <see cref="Models.UriSigningActionProperties"/>.
         /// </summary>
         /// <param name="typeName"></param>
         /// <returns> A new <see cref="Models.DeliveryRuleActionProperties"/> instance for mocking. </returns>
@@ -1726,7 +1726,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// The json object containing security policy parameters
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy"/> and <see cref="Models.SecurityPolicyWebApplicationFirewall"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SecurityPolicyWebApplicationFirewall"/> and <see cref="Models.SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy"/>.
         /// </summary>
         /// <param name="policyType"> The type of the Security policy to create. </param>
         /// <returns> A new <see cref="Models.SecurityPolicyProperties"/> instance for mocking. </returns>
@@ -2012,7 +2012,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// The json object containing secret parameters
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.UriSigningKeyProperties"/>, <see cref="Models.ManagedCertificateProperties"/>, <see cref="Models.CustomerCertificateProperties"/>, <see cref="Models.AzureFirstPartyManagedCertificateProperties"/>, and <see cref="Models.FrontDoorSecretMtlsCertificateChain"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureFirstPartyManagedCertificateProperties"/>, <see cref="Models.CustomerCertificateProperties"/>, <see cref="Models.FrontDoorSecretMtlsCertificateChain"/>, <see cref="Models.ManagedCertificateProperties"/>, and <see cref="Models.UriSigningKeyProperties"/>.
         /// </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
         /// <returns> A new <see cref="Models.FrontDoorSecretProperties"/> instance for mocking. </returns>
@@ -2192,7 +2192,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Deployment change under the profile
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CdnDeploymentVersionRouteChange"/>, <see cref="Models.CdnDeploymentVersionFrontDoorOriginGroupChange"/>, <see cref="Models.CdnDeploymentVersionFrontDoorOriginChange"/>, <see cref="Models.CdnDeploymentVersionRuleSetChange"/>, <see cref="Models.CdnDeploymentVersionRuleChange"/>, and <see cref="Models.CdnDeploymentVersionSecurityPolicyChange"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CdnDeploymentVersionFrontDoorOriginChange"/>, <see cref="Models.CdnDeploymentVersionFrontDoorOriginGroupChange"/>, <see cref="Models.CdnDeploymentVersionRouteChange"/>, <see cref="Models.CdnDeploymentVersionRuleChange"/>, <see cref="Models.CdnDeploymentVersionRuleSetChange"/>, and <see cref="Models.CdnDeploymentVersionSecurityPolicyChange"/>.
         /// </summary>
         /// <param name="resourceType"> Resource type supported by preview. </param>
         /// <param name="resourceId"></param>
@@ -2990,7 +2990,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary>
         /// Contains the properties to configure mutual TLS for a custom domain with FQDN. Mutual TLS cannot be configured for custom domains with wildcard host names.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ClientCertificateRequiredAndValidatedAdvancedSettings"/>, <see cref="Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings"/>, <see cref="Models.ClientCertificateValidatedIfPresentedAdvancedSettings"/>, and <see cref="Models.CompleteMtlsPassthroughToOriginAdvancedSettings"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ClientCertificateRequiredAndOriginValidatesAdvancedSettings"/>, <see cref="Models.ClientCertificateRequiredAndValidatedAdvancedSettings"/>, <see cref="Models.ClientCertificateValidatedIfPresentedAdvancedSettings"/>, and <see cref="Models.CompleteMtlsPassthroughToOriginAdvancedSettings"/>.
         /// </summary>
         /// <param name="scenario"> Supported scenarios for establishing mTLS connection. </param>
         /// <returns> A new <see cref="Models.FrontDoorCustomDomainMtlsSettings"/> instance for mocking. </returns>
