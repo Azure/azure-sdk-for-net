@@ -12,7 +12,13 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/):
 dotnet add package Azure.Provisioning.Fabric --prerelease
 ```
 
-### Key concepts
+### Prerequisites
+
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
+
+### Authenticate the Client
+
+## Key concepts
 
 This library allows you to define Microsoft Fabric infrastructure declaratively in .NET and deploy it with Azure Developer CLI.
 
@@ -31,6 +37,8 @@ infra.Add(capacity);
 ## Troubleshooting
 
 - File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
+
+## Next steps
 
 ## Contributing
 
