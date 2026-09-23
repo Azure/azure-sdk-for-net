@@ -1,4 +1,4 @@
 directory: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/HealthcareApis
-commit: e11cfc7848b068c6f12b50de8819569fa9d1ecb9
+commit: 4102d0db55d0179acda11417789344f9aeeadec2
 repo: cxznmhdcxz/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
