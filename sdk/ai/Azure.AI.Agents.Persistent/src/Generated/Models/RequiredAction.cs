@@ -12,7 +12,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a required action for an agent thread run to continue.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SubmitToolOutputsAction"/> and <see cref="SubmitToolApprovalAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SubmitToolApprovalAction"/> and <see cref="SubmitToolOutputsAction"/>.
     /// </summary>
     public abstract partial class RequiredAction
     {
@@ -33,6 +33,11 @@ namespace Azure.AI.Agents.Persistent
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequiredAction"/>. </summary>
+        protected RequiredAction() : this(default)
+        {
         }
 
         /// <summary> The object type. </summary>

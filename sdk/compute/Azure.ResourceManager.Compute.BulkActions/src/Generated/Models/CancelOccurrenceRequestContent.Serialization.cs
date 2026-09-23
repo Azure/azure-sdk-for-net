@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The request to cancel an occurrence. </summary>
+    /// <summary> Request body for canceling a scheduled action occurrence. </summary>
     public partial class CancelOccurrenceRequestContent : IJsonModel<CancelOccurrenceRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="CancelOccurrenceRequestContent"/> for deserialization. </summary>

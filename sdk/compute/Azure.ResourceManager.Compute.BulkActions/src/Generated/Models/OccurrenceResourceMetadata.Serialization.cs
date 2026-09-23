@@ -16,7 +16,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Represents an scheduled action resource metadata. </summary>
+    /// <summary> Scheduling and status details for a resource included in a scheduled action occurrence. </summary>
     public partial class OccurrenceResourceMetadata : IJsonModel<OccurrenceResourceMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="OccurrenceResourceMetadata"/> for deserialization. </summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             ResourceIdentifier resourceId = default;
             IList<NotificationProperties> notificationSettings = default;
             DateTimeOffset scheduledOn = default;
-            ResourceProvisioningState? provisioningState = default;
+            OccurrenceResourceProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(prop.Value.GetString());
+                    provisioningState = new OccurrenceResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorDetails"u8))

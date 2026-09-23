@@ -79,8 +79,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             {
                 throw new FormatException($"The model {nameof(ComputeSkuMixPlacementDeploymentChoice)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
             writer.WritePropertyName("score"u8);
             writer.WriteNumberValue(Score);
             writer.WritePropertyName("skuSplit"u8);
@@ -132,17 +130,11 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             {
                 return null;
             }
-            string id = default;
             int score = default;
             IList<ComputeSkuMixPlacementItem> skuSplit = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("score"u8))
                 {
                     score = prop.Value.GetInt32();
@@ -163,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeSkuMixPlacementDeploymentChoice(id, score, skuSplit, additionalBinaryDataProperties);
+            return new ComputeSkuMixPlacementDeploymentChoice(score, skuSplit, additionalBinaryDataProperties);
         }
     }
 }

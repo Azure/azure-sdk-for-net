@@ -15,12 +15,14 @@ namespace Azure.AI.Projects
             FoundryFeaturesOptInKeys.SchedulesV1Preview => "Schedules=V1Preview",
             FoundryFeaturesOptInKeys.RedTeamsV1Preview => "RedTeams=V1Preview",
             FoundryFeaturesOptInKeys.InsightsV1Preview => "Insights=V1Preview",
+            FoundryFeaturesOptInKeys.AgentInsightsV1Preview => "AgentInsights=V1Preview",
             FoundryFeaturesOptInKeys.MemoryStoresV1Preview => "MemoryStores=V1Preview",
-            FoundryFeaturesOptInKeys.RoutinesV1Preview => "Routines=V1Preview",
+            FoundryFeaturesOptInKeys.RoutinesV2Preview => "Routines=V2Preview",
             FoundryFeaturesOptInKeys.SkillsV1Preview => "Skills=V1Preview",
             FoundryFeaturesOptInKeys.DataGenerationJobsV1Preview => "DataGenerationJobs=V1Preview",
             FoundryFeaturesOptInKeys.ModelsV1Preview => "Models=V1Preview",
             FoundryFeaturesOptInKeys.AgentsOptimizationV2Preview => "AgentsOptimization=V2Preview",
+            FoundryFeaturesOptInKeys.ModelRouterControlsV1Preview => "ModelRouterControls=V1Preview",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.")
         };
 
@@ -43,13 +45,17 @@ namespace Azure.AI.Projects
             {
                 return FoundryFeaturesOptInKeys.InsightsV1Preview;
             }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AgentInsights=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.AgentInsightsV1Preview;
+            }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "MemoryStores=V1Preview"))
             {
                 return FoundryFeaturesOptInKeys.MemoryStoresV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Routines=V1Preview"))
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Routines=V2Preview"))
             {
-                return FoundryFeaturesOptInKeys.RoutinesV1Preview;
+                return FoundryFeaturesOptInKeys.RoutinesV2Preview;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skills=V1Preview"))
             {
@@ -66,6 +72,10 @@ namespace Azure.AI.Projects
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AgentsOptimization=V2Preview"))
             {
                 return FoundryFeaturesOptInKeys.AgentsOptimizationV2Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ModelRouterControls=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.ModelRouterControlsV1Preview;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.");
         }

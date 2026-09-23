@@ -862,7 +862,7 @@ namespace Azure.Provisioning.CognitiveServices
     public partial class CognitiveServicesManagedNetworkConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CognitiveServicesManagedNetworkConfiguration() { }
-        public Azure.Provisioning.BicepValue<string> FirewallPublicIpAddress { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> FirewallPublicIPAddress { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesFirewallSku> FirewallSku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesIsolationMode> IsolationMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CognitiveServices.CognitiveServicesManagedNetworkKind> ManagedNetworkKind { get { throw null; } set { } }

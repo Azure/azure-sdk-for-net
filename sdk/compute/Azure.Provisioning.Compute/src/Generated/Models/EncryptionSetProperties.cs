@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Compute
         private BicepList<KeyForDiskEncryptionSet> _previousKeys;
         private BicepValue<string> _provisioningState;
         private BicepValue<bool> _rotationToLatestKeyVersionEnabled;
-        private BicepValue<DateTimeOffset> _lastKeyRotationTimestamp;
+        private BicepValue<DateTimeOffset> _lastKeyRotationOn;
         private ComputeApiError _autoKeyRotationError;
         private BicepValue<string> _federatedClientId;
 
@@ -93,13 +93,13 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the LastKeyRotationTimestamp. </summary>
-        public BicepValue<DateTimeOffset> LastKeyRotationTimestamp
+        /// <summary> Gets the LastKeyRotationOn. </summary>
+        public BicepValue<DateTimeOffset> LastKeyRotationOn
         {
             get
             {
                 Initialize();
-                return _lastKeyRotationTimestamp;
+                return _lastKeyRotationOn;
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.Provisioning.Compute
             _previousKeys = DefineListProperty<KeyForDiskEncryptionSet>(nameof(PreviousKeys), new string[] { "previousKeys" }, isOutput: true);
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _rotationToLatestKeyVersionEnabled = DefineProperty<bool>(nameof(RotationToLatestKeyVersionEnabled), new string[] { "rotationToLatestKeyVersionEnabled" });
-            _lastKeyRotationTimestamp = DefineProperty<DateTimeOffset>(nameof(LastKeyRotationTimestamp), new string[] { "lastKeyRotationTimestamp" }, isOutput: true, format: "O");
+            _lastKeyRotationOn = DefineProperty<DateTimeOffset>(nameof(LastKeyRotationOn), new string[] { "lastKeyRotationTimestamp" }, isOutput: true, format: "O");
             _autoKeyRotationError = DefineModelProperty<ComputeApiError>(nameof(AutoKeyRotationError), new string[] { "autoKeyRotationError" }, isOutput: true);
             _federatedClientId = DefineProperty<string>(nameof(FederatedClientId), new string[] { "federatedClientId" });
             DefineAdditionalProperties();

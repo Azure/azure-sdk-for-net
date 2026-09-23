@@ -1,6 +1,24 @@
 # Release History
 
-## 3.0.0-beta.1 (Unreleased)
+## 3.0.0-beta.3 (2026-09-16)
+
+### Features Added
+- Added `ProjectsRealtimeClient` and `ProjectsRealtimeSessionClient` to work with voice agents. `AIProjectClient.ProjectsRealtimeClient` gets a `ProjectsRealtimeClient`; calling `StartSessionAsync(model, intent, options, cancellationToken)` on it -- the same method used with OpenAI's own `RealtimeClient` -- connects a `ProjectsRealtimeSessionClient` to the named voice agent's realtime endpoint (`/agents/{agentName}/endpoint/protocols/voice`). Pass `store=true`/`store=false` via `options.QueryString` to control whether the session's conversation is persisted. `ProjectsRealtimeClient` is also available when `AIProjectClient` is constructed from an `AIProjectClientSettings` whose credential resolves a token provider.
+
+### Breaking Changes
+- `MaxSamples` member was removed from `DataGenerationJobOptions`.
+- `AIProjectClient.GetProjectsRealtimeSessionClient(string, string)` and its replacement `GetProjectsRealtimeSessionClientAsync(string, string, bool?, CancellationToken)` were both removed in favor of `AIProjectClient.ProjectsRealtimeClient.StartSessionAsync(string, string, RealtimeSessionClientOptions, CancellationToken)`, reusing OpenAI's own `RealtimeClient.StartSessionAsync` method rather than introducing a separate one.
+- `ProjectsRealtimeSessionClient`'s public constructor was removed. An instance constructed through it could never become connected (its `ConnectAsync` override is only reachable through `ProjectsRealtimeClient.StartSessionAsync`), so it offered no working standalone use; call `AIProjectClient.ProjectsRealtimeClient.StartSessionAsync` to obtain an already-connected instance instead.
+
+### Sample Updates
+- Added `Sample_VoiceAgent`, showing how to create a voice agent and exchange a realtime text turn with it, and `Sample_VoiceAgent_ReadConversation`, showing how to persist a realtime session's conversation with `store: true` and read it back afterward through `BetaVoiceAgentsConversations`.
+
+## 3.0.0-beta.2 (2026-09-03)
+
+### Features Added
+- Added `AgentInsightMonitors` sub-client.
+
+## 3.0.0-beta.1 (2026-08-24)
 
 ### Features Added
 - Enabled the Model weights subclient.
@@ -8,11 +26,11 @@
 - Added distributed tracing support.
 
 ### Breaking Changes
+- The `GetConnectionAsync` and `GetConnection` methods of `AIProjectConnectionsOperations` are now returning `Task<ClientResult<AIProjectConnection>>` and `ClientResult<AIProjectConnection>` respectively.
+- The Routines and routine runs listing has been changed: the parameter `before` was removed from both `GetRoutineRuns` and `GetRoutines` methods. In the `GetRoutineRuns` the parameter `name` was replaced by `routineName`. The same changes were done for asynchronous methods.
 
 ### Bugs Fixed
 - Fix the Foundry-Features header, resulting in 400 error during Agent optimization jobs submission.
-
-### Other Changes
 
 ### Sample Updates
 - Added sample for Model weights.

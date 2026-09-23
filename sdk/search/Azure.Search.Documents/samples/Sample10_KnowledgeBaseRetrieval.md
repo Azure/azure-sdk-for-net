@@ -137,8 +137,8 @@ string openAIKey = Environment.GetEnvironmentVariable("OPENAI_KEY");
             {
                 ResourceUri = new Uri(openAIEndpoint),
                 ApiKey = openAIKey,
-                DeploymentName = "gpt-5-mini",
-                ModelName = AzureOpenAIModelName.Gpt5Mini
+                DeploymentName = "gpt-5.4-mini",
+                ModelName = AzureOpenAIModelName.Gpt54Mini
             }));
 
 await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);

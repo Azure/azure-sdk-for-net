@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ReportStartOn;
+                return Properties is null ? default : Properties.ReportStartsOn;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ReportEndOn;
+                return Properties is null ? default : Properties.ReportEndsOn;
             }
         }
 

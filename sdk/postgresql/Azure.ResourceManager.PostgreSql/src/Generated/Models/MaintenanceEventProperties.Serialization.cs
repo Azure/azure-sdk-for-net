@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn, "O");
+                writer.WriteStringValue(StartsOn, "O");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn, "O");
+                writer.WriteStringValue(EndsOn, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(EstimatedDowntime))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("originalStartTime"u8);
-                writer.WriteStringValue(OriginalStartOn, "O");
+                writer.WriteStringValue(OriginalStartsOn, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerMaintenanceType maintenanceType = default;
             string description = default;
             MaintenanceEventStatus status = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset endsOn = default;
             string estimatedDowntime = default;
             bool isDeferrable = default;
             DateTimeOffset? deferralDeadlineOn = default;
             DateTimeOffset? rescheduledFromOn = default;
             DateTimeOffset? lastUpdatedOn = default;
-            DateTimeOffset originalStartOn = default;
+            DateTimeOffset originalStartsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -214,12 +214,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("estimatedDowntime"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (prop.NameEquals("originalStartTime"u8))
                 {
-                    originalStartOn = prop.Value.GetDateTimeOffset("O");
+                    originalStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -274,14 +274,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 maintenanceType,
                 description,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 estimatedDowntime,
                 isDeferrable,
                 deferralDeadlineOn,
                 rescheduledFromOn,
                 lastUpdatedOn,
-                originalStartOn,
+                originalStartsOn,
                 additionalBinaryDataProperties);
         }
     }

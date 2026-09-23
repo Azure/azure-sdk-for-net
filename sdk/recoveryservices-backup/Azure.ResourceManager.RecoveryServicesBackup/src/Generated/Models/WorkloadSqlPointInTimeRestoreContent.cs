@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlPointInTimeRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        private protected WorkloadSqlPointInTimeRestoreContent(string objectType) : base("AzureWorkloadSQLPointInTimeRestoreRequest")
+        private protected WorkloadSqlPointInTimeRestoreContent(string objectType) : base(objectType)
         {
         }
 

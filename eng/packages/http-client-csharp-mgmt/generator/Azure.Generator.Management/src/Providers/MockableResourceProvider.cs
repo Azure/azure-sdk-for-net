@@ -321,26 +321,30 @@ namespace Azure.Generator.Management.Providers
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
 
             // If the user provided a @@clientName(.., "csharp") on the underlying tsp method,
-            // honor it instead of fabricating from (kind, ResourceName). The TCGC name on
-            // resourceMethod.InputMethod.Name already reflects the override.
+            // honor it instead of fabricating from (kind, ResourceName). Resolve the name through
+            // the final provider so an already-shipped name is preserved by back compatibility.
             // Scope: only List operations for now. Other kinds (Read/Create/Update/Delete/Action)
             // can be opted into in a follow-up.
             if (methodName != null
                 && resourceMethod.Kind == ResourceOperationKind.List
                 && ManagementClientGenerator.Instance.InputLibrary.ClientNameOverriddenMethods.Contains(resourceMethod.InputMethod))
             {
-                var baseName = resourceMethod.InputMethod.Name;
-                methodName = isAsync ? $"{baseName}Async" : baseName;
+                methodName = GetConvenienceMethodName();
             }
 
-            // Only fall back to the raw SDK method name when no standard name was generated.
+            // Only fall back to the SDK method name when no standard name was generated.
             // This handles non-CRUD operations (e.g., GetReports, GetReport) that don't map to
-            // standard CRUD method naming patterns.
+            // standard CRUD method naming patterns. Resolve through the final provider rather than
+            // reading InputMethod.Name, which may already contain a normalized breaking rename.
             if (methodName == null)
             {
-                var baseName = resourceMethod.InputMethod.Name;
-                methodName = isAsync ? $"{baseName}Async" : baseName;
+                methodName = GetConvenienceMethodName();
             }
+
+            string GetConvenienceMethodName() => _clientInfos[resourceMethod.InputClient]
+                .RestClientProvider
+                .GetConvenienceMethodByOperation(resourceMethod.InputMethod.Operation, isAsync, this)
+                .Signature.Name;
 
             return BuildServiceMethodWithContext(resourceMethod.InputMethod, resourceMethod.InputClient, operationContext, isAsync, methodName, resource, scopeParameter);
         }

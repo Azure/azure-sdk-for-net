@@ -21,9 +21,10 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         private BicepValue<BackupManagementType> _backupManagementType;
         private BicepValue<string> _operation;
         private BicepValue<string> _status;
-        private BicepValue<DateTimeOffset> _startOn;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<string> _activityId;
+        private BicepValue<string> _jobType;
 
         /// <summary> Creates a new BackupGenericJob. </summary>
         public BackupGenericJob()
@@ -70,23 +71,23 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
         }
 
@@ -100,6 +101,16 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             }
         }
 
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        internal BicepValue<string> JobType
+        {
+            get
+            {
+                Initialize();
+                return _jobType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for BackupGenericJob. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -108,9 +119,10 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _backupManagementType = DefineProperty<BackupManagementType>(nameof(BackupManagementType), new string[] { "backupManagementType" });
             _operation = DefineProperty<string>(nameof(Operation), new string[] { "operation" });
             _status = DefineProperty<string>(nameof(Status), new string[] { "status" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" }, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endTime" }, format: "O");
             _activityId = DefineProperty<string>(nameof(ActivityId), new string[] { "activityId" });
+            _jobType = DefineProperty<string>(nameof(JobType), new string[] { "jobType" });
             DefineAdditionalProperties();
         }
 

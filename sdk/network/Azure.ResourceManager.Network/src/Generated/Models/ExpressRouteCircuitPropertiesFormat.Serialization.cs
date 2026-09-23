@@ -129,6 +129,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("expressRoutePort"u8);
                 writer.WriteObjectValue(ExpressRoutePort, options);
             }
+            if (Optional.IsDefined(ExpressRouteLag))
+            {
+                writer.WritePropertyName("expressRouteLag"u8);
+                writer.WriteObjectValue(ExpressRouteLag, options);
+            }
             if (Optional.IsDefined(BandwidthInGbps))
             {
                 writer.WritePropertyName("bandwidthInGbps"u8);
@@ -138,6 +143,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("stag"u8);
                 writer.WriteNumberValue(STag.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResiliencyLevel))
+            {
+                writer.WritePropertyName("resiliencyLevel"u8);
+                writer.WriteStringValue(ResiliencyLevel.Value.ToString());
+            }
+            if (Optional.IsDefined(PartnerAccountId))
+            {
+                writer.WritePropertyName("partnerAccountId"u8);
+                writer.WriteStringValue(PartnerAccountId);
+            }
+            if (Optional.IsDefined(ActivationKey))
+            {
+                writer.WritePropertyName("activationKey"u8);
+                writer.WriteStringValue(ActivationKey);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -220,8 +240,12 @@ namespace Azure.ResourceManager.Network.Models
             string serviceProviderNotes = default;
             ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default;
             NetworkSubResource expressRoutePort = default;
+            NetworkSubResource expressRouteLag = default;
             float? bandwidthInGbps = default;
             int? sTag = default;
+            ExpressRouteCircuitResiliencyLevel? resiliencyLevel = default;
+            string partnerAccountId = default;
+            string activationKey = default;
             NetworkProvisioningState? provisioningState = default;
             string gatewayManagerETag = default;
             bool? globalReachEnabled = default;
@@ -310,6 +334,15 @@ namespace Azure.ResourceManager.Network.Models
                     expressRoutePort = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("expressRouteLag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expressRouteLag = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("bandwidthInGbps"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -326,6 +359,25 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     sTag = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("resiliencyLevel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resiliencyLevel = new ExpressRouteCircuitResiliencyLevel(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("partnerAccountId"u8))
+                {
+                    partnerAccountId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("activationKey"u8))
+                {
+                    activationKey = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -385,8 +437,12 @@ namespace Azure.ResourceManager.Network.Models
                 serviceProviderNotes,
                 serviceProviderProperties,
                 expressRoutePort,
+                expressRouteLag,
                 bandwidthInGbps,
                 sTag,
+                resiliencyLevel,
+                partnerAccountId,
+                activationKey,
                 provisioningState,
                 gatewayManagerETag,
                 globalReachEnabled,

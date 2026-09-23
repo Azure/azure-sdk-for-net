@@ -9,6 +9,10 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2021-01-01-preview",
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "Server.Versions.Versioned.Versions",
       "valueType": {
         "$id": "2",

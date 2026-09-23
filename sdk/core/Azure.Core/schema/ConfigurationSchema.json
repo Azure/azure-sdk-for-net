@@ -628,6 +628,10 @@
                   }
                 ]
               },
+              "DisableMtlsProofOfPossession": {
+                "type": "boolean",
+                "description": "Disables mTLS proof-of-possession for both token exchanges in the managed identity federated identity flow."
+              },
               "Retry": {
                 "$ref": "#/definitions/retry"
               },
@@ -1152,6 +1156,10 @@
                     "type": "string"
                   }
                 ]
+              },
+              "DisableMtlsProofOfPossession": {
+                "type": "boolean",
+                "description": "Disables mTLS proof-of-possession for both token exchanges in the managed identity federated identity flow."
               }
             }
           }
