@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Route SDK statistics with OneSettings data-boundary connection strings, falling back to the existing Breeze endpoint when configuration is unavailable or invalid.
+
 ## 1.10.0-beta.1 (2026-09-16)
 
 ### Features Added
