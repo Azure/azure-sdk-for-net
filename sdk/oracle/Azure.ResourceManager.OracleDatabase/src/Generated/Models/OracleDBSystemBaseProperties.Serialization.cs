@@ -242,6 +242,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dataCollectionOptions"u8);
                 writer.WriteObjectValue(DataCollectionOptions, options);
             }
+            if (Optional.IsDefined(CharacterSet))
+            {
+                writer.WritePropertyName("characterSet"u8);
+                writer.WriteStringValue(CharacterSet);
+            }
+            if (Optional.IsDefined(NcharacterSet))
+            {
+                writer.WritePropertyName("ncharacterSet"u8);
+                writer.WriteStringValue(NcharacterSet);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

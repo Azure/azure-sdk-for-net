@@ -52,8 +52,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="computeModel"> The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy. </param>
         /// <param name="computeCount"> The number of compute servers for the DB system. </param>
         /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the Base DB. </param>
+        /// <param name="characterSet"> The character set for the DB system. The default is AL32UTF8. </param>
+        /// <param name="ncharacterSet"> The national character set for the DB system. The default is AL16UTF16. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDBSystemBaseProperties(DBSystemSourceType? source, OracleDatabaseProvisioningState? provisioningState, Uri ociUri, ResourceIdentifier resourceAnchorId, ResourceIdentifier networkAnchorId, string clusterName, string displayName, int? initialDataStorageSizeInGb, int? dataStorageSizeInGbs, OracleDBSystemOptions dbSystemOptions, DBSystemDiskRedundancyType? diskRedundancy, string domainV2, string gridImageOcid, string hostname, string ocid, OracleLicenseModel? licenseModelV2, string lifecycleDetails, DBSystemLifecycleState? lifecycleState, int? listenerPort, int? memorySizeInGbs, int? nodeCount, string scanDnsName, IReadOnlyList<string> scanIPs, string shape, IList<string> sshPublicKeys, StorageVolumePerformanceMode? storageVolumePerformanceMode, string timeZone, string version, OracleDatabaseComputeModel? computeModel, int? computeCount, DiagnosticCollectionConfig dataCollectionOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OracleDBSystemBaseProperties(DBSystemSourceType? source, OracleDatabaseProvisioningState? provisioningState, Uri ociUri, ResourceIdentifier resourceAnchorId, ResourceIdentifier networkAnchorId, string clusterName, string displayName, int? initialDataStorageSizeInGb, int? dataStorageSizeInGbs, OracleDBSystemOptions dbSystemOptions, DBSystemDiskRedundancyType? diskRedundancy, string domainV2, string gridImageOcid, string hostname, string ocid, OracleLicenseModel? licenseModelV2, string lifecycleDetails, DBSystemLifecycleState? lifecycleState, int? listenerPort, int? memorySizeInGbs, int? nodeCount, string scanDnsName, IReadOnlyList<string> scanIPs, string shape, IList<string> sshPublicKeys, StorageVolumePerformanceMode? storageVolumePerformanceMode, string timeZone, string version, OracleDatabaseComputeModel? computeModel, int? computeCount, DiagnosticCollectionConfig dataCollectionOptions, string characterSet, string ncharacterSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             ProvisioningState = provisioningState;
@@ -86,6 +88,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ComputeModel = computeModel;
             ComputeCount = computeCount;
             DataCollectionOptions = dataCollectionOptions;
+            CharacterSet = characterSet;
+            NcharacterSet = ncharacterSet;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -181,6 +185,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Indicates user preferences for the various diagnostic collection options for the Base DB. </summary>
         public DiagnosticCollectionConfig DataCollectionOptions { get; set; }
+
+        /// <summary> The character set for the DB system. The default is AL32UTF8. </summary>
+        public string CharacterSet { get; set; }
+
+        /// <summary> The national character set for the DB system. The default is AL16UTF16. </summary>
+        public string NcharacterSet { get; set; }
 
         /// <summary> The storage option used in DB system. ASM - Automatic storage management, LVM - Logical Volume management. </summary>
         public StorageManagementType? DbSystemOptionsStorageManagement

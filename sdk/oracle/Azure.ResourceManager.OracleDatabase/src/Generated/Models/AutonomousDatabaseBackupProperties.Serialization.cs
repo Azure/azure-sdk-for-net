@@ -154,6 +154,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(BackupDestination))
+            {
+                writer.WritePropertyName("backupDestination"u8);
+                writer.WriteStringValue(BackupDestination.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -212,6 +217,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string timeEnded = default;
             AutonomousDatabaseBackupType? backupType = default;
             OracleDatabaseProvisioningState? provisioningState = default;
+            BackupDestinationType? backupDestination = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -331,6 +337,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     provisioningState = new OracleDatabaseProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("backupDestination"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupDestination = new BackupDestinationType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -353,6 +368,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 timeEnded,
                 backupType,
                 provisioningState,
+                backupDestination,
                 additionalBinaryDataProperties);
         }
     }

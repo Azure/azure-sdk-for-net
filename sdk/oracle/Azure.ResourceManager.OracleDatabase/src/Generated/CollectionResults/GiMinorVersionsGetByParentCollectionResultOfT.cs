@@ -22,6 +22,9 @@ namespace Azure.ResourceManager.OracleDatabase
         private readonly string _giversionname;
         private readonly string _shapeFamily;
         private readonly string _zone;
+        private readonly string _shape;
+        private readonly bool? _isGiVersionForProvisioning;
+        private readonly string _sortOrder;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -32,9 +35,12 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="giversionname"> GiVersion name. </param>
         /// <param name="shapeFamily"> If provided, filters the results to the set of database versions which are supported for the given shape family. </param>
         /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
+        /// <param name="shape"> If provided, filters the results to the set of GI minor versions supported for the given shape. </param>
+        /// <param name="isGiVersionForProvisioning"> If true, filters the results to GI minor versions supported during VM cluster provisioning. </param>
+        /// <param name="sortOrder"> Sort order for the returned GI minor versions. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public GiMinorVersionsGetByParentCollectionResultOfT(GiMinorVersions client, Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public GiMinorVersionsGetByParentCollectionResultOfT(GiMinorVersions client, Guid subscriptionId, AzureLocation location, string giversionname, string shapeFamily, string zone, string shape, bool? isGiVersionForProvisioning, string sortOrder, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,6 +48,9 @@ namespace Azure.ResourceManager.OracleDatabase
             _giversionname = giversionname;
             _shapeFamily = shapeFamily;
             _zone = zone;
+            _shape = shape;
+            _isGiVersionForProvisioning = isGiVersionForProvisioning;
+            _sortOrder = sortOrder;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -75,7 +84,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByParentRequest(nextLink, _subscriptionId, _location, _giversionname, _shapeFamily, _zone, _context) : _client.CreateGetByParentRequest(_subscriptionId, _location, _giversionname, _shapeFamily, _zone, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByParentRequest(nextLink, _subscriptionId, _location, _giversionname, _shapeFamily, _zone, _shape, _isGiVersionForProvisioning, _sortOrder, _context) : _client.CreateGetByParentRequest(_subscriptionId, _location, _giversionname, _shapeFamily, _zone, _shape, _isGiVersionForProvisioning, _sortOrder, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

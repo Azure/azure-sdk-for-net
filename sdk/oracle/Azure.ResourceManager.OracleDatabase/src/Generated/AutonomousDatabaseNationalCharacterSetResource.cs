@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string autonomousDatabaseNationalCharacterSetApiVersion);
             _autonomousDatabaseNationalCharacterSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _autonomousDatabaseNationalCharacterSetsRestClient = new AutonomousDatabaseNationalCharacterSets(_autonomousDatabaseNationalCharacterSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autonomousDatabaseNationalCharacterSetApiVersion ?? "2025-11-01-preview");
+            _autonomousDatabaseNationalCharacterSetsRestClient = new AutonomousDatabaseNationalCharacterSets(_autonomousDatabaseNationalCharacterSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, autonomousDatabaseNationalCharacterSetApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

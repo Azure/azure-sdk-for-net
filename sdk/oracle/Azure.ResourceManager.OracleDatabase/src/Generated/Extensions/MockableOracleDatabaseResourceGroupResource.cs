@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -549,6 +549,136 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
             Argument.AssertNotNullOrEmpty(dbSystemName, nameof(dbSystemName));
 
             return GetOracleDBSystems().Get(dbSystemName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GoldenGateConnections in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of GoldenGateConnections and their operations over a GoldenGateConnectionResource. </returns>
+        public virtual GoldenGateConnectionCollection GetGoldenGateConnections()
+        {
+            return GetCachedClient(client => new GoldenGateConnectionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a GoldenGateConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/goldenGateConnections/{goldenGateConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GoldenGateConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="goldenGateConnectionName"> The name of the GoldenGateConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="goldenGateConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="goldenGateConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GoldenGateConnectionResource>> GetGoldenGateConnectionAsync(string goldenGateConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(goldenGateConnectionName, nameof(goldenGateConnectionName));
+
+            return await GetGoldenGateConnections().GetAsync(goldenGateConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a GoldenGateConnection
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/goldenGateConnections/{goldenGateConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GoldenGateConnections_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="goldenGateConnectionName"> The name of the GoldenGateConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="goldenGateConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="goldenGateConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GoldenGateConnectionResource> GetGoldenGateConnection(string goldenGateConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(goldenGateConnectionName, nameof(goldenGateConnectionName));
+
+            return GetGoldenGateConnections().Get(goldenGateConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of GoldenGateDeployments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of GoldenGateDeployments and their operations over a GoldenGateDeploymentResource. </returns>
+        public virtual GoldenGateDeploymentCollection GetGoldenGateDeployments()
+        {
+            return GetCachedClient(client => new GoldenGateDeploymentCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a GoldenGateDeployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/goldenGateDeployments/{goldenGateDeploymentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GoldenGateDeployments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="goldenGateDeploymentName"> The name of the GoldenGateDeployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="goldenGateDeploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="goldenGateDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GoldenGateDeploymentResource>> GetGoldenGateDeploymentAsync(string goldenGateDeploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(goldenGateDeploymentName, nameof(goldenGateDeploymentName));
+
+            return await GetGoldenGateDeployments().GetAsync(goldenGateDeploymentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a GoldenGateDeployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/goldenGateDeployments/{goldenGateDeploymentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GoldenGateDeployments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="goldenGateDeploymentName"> The name of the GoldenGateDeployment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="goldenGateDeploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="goldenGateDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GoldenGateDeploymentResource> GetGoldenGateDeployment(string goldenGateDeploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(goldenGateDeploymentName, nameof(goldenGateDeploymentName));
+
+            return GetGoldenGateDeployments().Get(goldenGateDeploymentName, cancellationToken);
         }
     }
 }
