@@ -1,5 +1,5 @@
 directory: specification/maintenance/resource-manager/Microsoft.Maintenance/Maintenance
-commit: f4eee8aea9ad8cf95d8070c62711c0a344bda58c
+commit: 40c224af7b9fd00cc1a62dac094aeb54c25bfdfc
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
