@@ -18,7 +18,7 @@ namespace Azure.Security.Attestation
         }
 
         // Settable in the shipped 1.0.0 API; the generator emits these output-model properties as get-only.
-        /// <summary> SHA256 Hash of the binary representation certificate which was added or removed. </summary>
+        /// <summary> Hex-encoded SHA-1 thumbprint of the certificate which was added or removed. </summary>
         [CodeGenMember("CertificateThumbprint")]
         public string CertificateThumbprint { get; set; }
 

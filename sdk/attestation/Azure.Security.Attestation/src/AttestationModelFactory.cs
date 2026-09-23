@@ -12,6 +12,7 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// Factory class for creating Attestation Service Model types, used for Mocking.
     /// </summary>
+    // Suppress generated overloads that would sit beside the hand-written 1.0.0 factory methods below, exposing internal parameter names.
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationResult", typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(IDictionary<string, string>), typeof(string), typeof(string), typeof(object), typeof(object), typeof(object), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(bool?), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(BinaryData), typeof(object), typeof(string), typeof(bool?), typeof(object), typeof(BinaryData), typeof(BinaryData), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(string))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("PolicyCertificatesModificationResult", typeof(string), typeof(PolicyCertificateResolution?))]
     public static partial class AttestationModelFactory

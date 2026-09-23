@@ -44,6 +44,7 @@ namespace Azure.Security.Attestation
             }
         }
 
+        // Nullable backing member keeps "x-ms-policy-result" optional on the wire; the generated non-nullable one always writes it.
         [CodeGenMember("PolicyResolution")]
         internal PolicyModification? BasePolicyResolution { get; }
 
