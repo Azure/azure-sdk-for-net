@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
 {
     /// <summary>
     /// Describes a unit of in-VM validation of image
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplateShellValidator"/>, <see cref="ImageTemplatePowerShellValidator"/>, and <see cref="ImageTemplateFileValidator"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ImageTemplateFileValidator"/>, <see cref="ImageTemplatePowerShellValidator"/>, and <see cref="ImageTemplateShellValidator"/>.
     /// </summary>
     public abstract partial class ImageTemplateInVMValidator
     {
