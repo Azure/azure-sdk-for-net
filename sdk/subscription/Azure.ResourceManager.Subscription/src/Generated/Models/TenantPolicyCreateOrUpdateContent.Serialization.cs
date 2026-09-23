@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new TenantPolicyCreateOrUpdateContent(blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, exemptedPrincipals ?? new ChangeTrackingList<Guid>(), additionalBinaryDataProperties);

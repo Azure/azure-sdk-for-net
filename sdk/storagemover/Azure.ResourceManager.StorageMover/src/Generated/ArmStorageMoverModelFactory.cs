@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary>
         /// The resource specific properties for the Storage Mover resource.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureStorageBlobContainerEndpointProperties"/>, <see cref="Models.NfsMountEndpointProperties"/>, <see cref="Models.S3WithHmacEndpointProperties"/>, <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/>, <see cref="Models.SmbMountEndpointProperties"/>, <see cref="Models.AzureStorageNfsFileShareEndpointProperties"/>, and <see cref="Models.AzureMultiCloudConnectorEndpointProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureMultiCloudConnectorEndpointProperties"/>, <see cref="Models.AzureStorageBlobContainerEndpointProperties"/>, <see cref="Models.AzureStorageNfsFileShareEndpointProperties"/>, <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/>, <see cref="Models.NfsMountEndpointProperties"/>, <see cref="Models.S3WithHmacEndpointProperties"/>, and <see cref="Models.SmbMountEndpointProperties"/>.
         /// </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary>
         /// The Endpoint resource, which contains information about file sources and targets.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="Models.S3WithHmacEndpointUpdateProperties"/>, <see cref="Models.NfsMountEndpointUpdateProperties"/>, <see cref="Models.AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="Models.AzureStorageNfsFileShareEndpointUpdateProperties"/>, <see cref="Models.AzureMultiCloudConnectorEndpointUpdateProperties"/>, and <see cref="Models.SmbMountEndpointUpdateProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureMultiCloudConnectorEndpointUpdateProperties"/>, <see cref="Models.AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="Models.AzureStorageNfsFileShareEndpointUpdateProperties"/>, <see cref="Models.AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="Models.NfsMountEndpointUpdateProperties"/>, <see cref="Models.S3WithHmacEndpointUpdateProperties"/>, and <see cref="Models.SmbMountEndpointUpdateProperties"/>.
         /// </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
