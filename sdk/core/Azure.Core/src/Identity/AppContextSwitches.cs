@@ -14,25 +14,25 @@ namespace Azure.Identity
     internal static class AppContextSwitches
     {
         /// <summary>
-        /// The <see cref="System.AppContext"/> switch name that disables mTLS proof-of-possession token
+        /// The <see cref="System.AppContext"/> switch name that enables mTLS proof-of-possession token
         /// acquisition for <see cref="ClientCertificateCredential"/>.
         /// </summary>
-        internal const string DisableClientCertificateMtlsProofOfPossessionSwitchName = "Azure.Identity.DisableClientCertificateMtlsProofOfPossession";
+        internal const string EnableClientCertificateMtlsProofOfPossessionSwitchName = "Azure.Identity.EnableClientCertificateMtlsProofOfPossession";
 
         /// <summary>
-        /// The environment variable that disables mTLS proof-of-possession token acquisition for
+        /// The environment variable that enables mTLS proof-of-possession token acquisition for
         /// <see cref="ClientCertificateCredential"/>.
         /// </summary>
-        internal const string DisableClientCertificateMtlsProofOfPossessionEnvVar = "AZURE_IDENTITY_DISABLE_CLIENT_CERTIFICATE_MTLS_POP";
+        internal const string EnableClientCertificateMtlsProofOfPossessionEnvVar = "AZURE_IDENTITY_ENABLE_CLIENT_CERTIFICATE_MTLS_POP";
 
         /// <summary>
-        /// When <c>true</c>, <see cref="ClientCertificateCredential"/> requests a bearer token even when
-        /// proof-of-possession was requested by the caller. Intended for first-party callers only. The
+        /// When <c>true</c>, <see cref="ClientCertificateCredential"/> can request an mTLS proof-of-possession
+        /// token when proof-of-possession was requested by the caller. Intended for first-party callers only. The
         /// <see cref="System.AppContext"/> switch takes priority over the environment variable.
         /// </summary>
-        public static bool DisableClientCertificateMtlsProofOfPossession
+        public static bool EnableClientCertificateMtlsProofOfPossession
             => AppContextSwitchHelper.GetConfigValue(
-                DisableClientCertificateMtlsProofOfPossessionSwitchName,
-                DisableClientCertificateMtlsProofOfPossessionEnvVar);
+                EnableClientCertificateMtlsProofOfPossessionSwitchName,
+                EnableClientCertificateMtlsProofOfPossessionEnvVar);
     }
 }

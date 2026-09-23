@@ -288,7 +288,8 @@ namespace Azure.Core.Tests.Identity
 
         [TestCase(false)]
         [TestCase(true)]
-        public async Task SelectsClientBasedOnProofOfPossession(bool isProofOfPossessionEnabled)
+        [NonParallelizable]
+        public async Task EnableSwitchSelectsClientBasedOnProofOfPossession(bool isProofOfPossessionEnabled)
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 #if NET9_0_OR_GREATER
@@ -304,17 +305,31 @@ namespace Azure.Core.Tests.Identity
             var credential = new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, bearerClient, popClient);
             var requestContext = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: isProofOfPossessionEnabled);
 
-            AccessToken token = IsAsync
-                ? await credential.GetTokenAsync(requestContext)
-                : credential.GetToken(requestContext);
+            using (new TestAppContextSwitch(AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionSwitchName, "true"))
+            {
+                AccessToken token = IsAsync
+                    ? await credential.GetTokenAsync(requestContext)
+                    : credential.GetToken(requestContext);
 
-            Assert.AreEqual(isProofOfPossessionEnabled ? "pop-token" : "bearer-token", token.Token);
-            Assert.AreSame(isProofOfPossessionEnabled ? mockCert : null, token.BindingCertificate);
+                Assert.AreEqual(isProofOfPossessionEnabled ? "pop-token" : "bearer-token", token.Token);
+                Assert.AreSame(isProofOfPossessionEnabled ? mockCert : null, token.BindingCertificate);
+            }
+        }
+
+        [Test]
+        public void MtlsProofOfPossessionSwitchUsesOptInNames()
+        {
+            Assert.AreEqual(
+                "Azure.Identity.EnableClientCertificateMtlsProofOfPossession",
+                AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionSwitchName);
+            Assert.AreEqual(
+                "AZURE_IDENTITY_ENABLE_CLIENT_CERTIFICATE_MTLS_POP",
+                AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionEnvVar);
         }
 
         [Test]
         [NonParallelizable]
-        public async Task DisableSwitchForcesBearerTokenWhenProofOfPossessionRequested()
+        public async Task UsesBearerTokenByDefaultWhenProofOfPossessionRequested()
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 #if NET9_0_OR_GREATER
@@ -330,23 +345,15 @@ namespace Azure.Core.Tests.Identity
             var credential = new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, bearerClient, popClient);
             var requestContext = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
 
-            string switchName = AppContextSwitches.DisableClientCertificateMtlsProofOfPossessionSwitchName;
-            bool hadSwitch = AppContext.TryGetSwitch(switchName, out bool previous);
-            AppContext.SetSwitch(switchName, true);
-            try
-            {
-                AccessToken token = IsAsync
-                    ? await credential.GetTokenAsync(requestContext)
-                    : credential.GetToken(requestContext);
+            using var enableSwitch = new TestAppContextSwitch(
+                AppContextSwitches.EnableClientCertificateMtlsProofOfPossessionSwitchName,
+                "false");
+            AccessToken token = IsAsync
+                ? await credential.GetTokenAsync(requestContext)
+                : credential.GetToken(requestContext);
 
-                // The first-party disable switch forces a bearer token even though proof-of-possession was requested.
-                Assert.AreEqual("bearer-token", token.Token);
-                Assert.IsNull(token.BindingCertificate);
-            }
-            finally
-            {
-                AppContext.SetSwitch(switchName, hadSwitch && previous);
-            }
+            Assert.AreEqual("bearer-token", token.Token);
+            Assert.IsNull(token.BindingCertificate);
         }
 
         [Test]
