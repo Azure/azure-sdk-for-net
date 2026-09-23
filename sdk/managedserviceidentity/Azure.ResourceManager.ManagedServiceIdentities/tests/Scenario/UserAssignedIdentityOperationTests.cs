@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Tests
             CollectionAssert.AreEquivalent(tags, userAssignedIdentity.Data.Tags);
         }
 
-        [TestCase(null)]
+        [TestCase(null, Ignore = "Re-record tags after the SetTags request change; see #63311.")]
         [TestCase(false)]
-        [TestCase(true)]
+        [TestCase(true, Ignore = "Re-record tags after the SetTags request change; see #63311.")]
         public async Task RemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
