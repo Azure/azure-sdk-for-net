@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "testApplicationOid": {
+      "type": "string",
+      "metadata": {
+        "description": "The object ID of the test identity."
+      }
+    },
+    "sandboxLocation": {
+      "type": "string",
+      "defaultValue": "eastus2",
+      "metadata": {
+        "description": "A region where Azure Container Apps Sandboxes are available."
+      }
+    }
+  },
+  "variables": {
+    "sandboxGroupName": "[format('sdk-net-{0}', uniqueString(subscription().id, resourceGroup().id))]",
+    "sandboxDataOwnerRoleId": "c24cf47c-5077-412d-a19c-45202126392c",
+    "sandboxDataOwnerRoleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('sandboxDataOwnerRoleId'))]",
+    "roleAssignmentName": "[guid(resourceGroup().id, variables('sandboxGroupName'), parameters('testApplicationOid'), variables('sandboxDataOwnerRoleId'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.App/sandboxGroups",
+      "apiVersion": "2026-07-01",
+      "name": "[variables('sandboxGroupName')]",
+      "location": "[parameters('sandboxLocation')]",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.App/sandboxGroups/providers/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[format('{0}/Microsoft.Authorization/{1}', variables('sandboxGroupName'), variables('roleAssignmentName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.App/sandboxGroups', variables('sandboxGroupName'))]"
+      ],
+      "properties": {
+        "roleDefinitionId": "[variables('sandboxDataOwnerRoleDefinitionId')]",
+        "principalId": "[parameters('testApplicationOid')]"
+      }
+    }
+  ],
+  "outputs": {
+    "CONTAINERAPPS_SANDBOX_ENDPOINT": {
+      "type": "string",
+      "value": "[format('https://management.{0}.azuredevcompute.io', parameters('sandboxLocation'))]"
+    },
+    "CONTAINERAPPS_SANDBOX_GROUP_NAME": {
+      "type": "string",
+      "value": "[variables('sandboxGroupName')]"
+    }
+  }
+}
