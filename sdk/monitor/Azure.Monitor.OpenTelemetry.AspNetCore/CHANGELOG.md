@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fixed App Service resource detection overriding `OTEL_SERVICE_NAME` with the App Service site name.
+
 ### Other Changes
 
 ## 1.6.0 (2026-07-27)
