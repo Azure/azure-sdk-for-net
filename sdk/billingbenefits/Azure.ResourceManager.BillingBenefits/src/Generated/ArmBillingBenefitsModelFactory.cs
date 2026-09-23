@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary>
         /// This defines the conditions for a given discount type.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DiscountTypeProductFamily"/>, <see cref="Models.DiscountTypeProduct"/>, <see cref="Models.DiscountTypeProductSku"/>, <see cref="Models.DiscountTypeCustomPrice"/>, and <see cref="Models.DiscountTypeCustomPriceMultiCurrency"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DiscountTypeCustomPrice"/>, <see cref="Models.DiscountTypeCustomPriceMultiCurrency"/>, <see cref="Models.DiscountTypeProduct"/>, <see cref="Models.DiscountTypeProductFamily"/>, and <see cref="Models.DiscountTypeProductSku"/>.
         /// </summary>
         /// <param name="discountType"> Defines the type of discount. Supported values are ProductFamily, Product, Sku, CustomPrice, and CustomPriceMultiCurrency. </param>
         /// <param name="applyDiscountOn"> The customer action on which the discount is applied. Supported values are Purchase, Consume, and Renew. Validation: Required, one of supported values. </param>
