@@ -82,7 +82,7 @@ namespace Azure.Storage.Blobs.Models
             Uri endpoint = GetServiceEndpoint(serviceUri);
 
             _serviceClient = new Lazy<BlobServiceClient>(
-                () => CreateServiceClient(endpoint, credential, options),
+                () => new BlobServiceClient(endpoint, credential, options),
                 LazyThreadSafetyMode.ExecutionAndPublication);
         }
 
@@ -171,16 +171,6 @@ namespace Azure.Storage.Blobs.Models
                 Sas = null,
                 Query = null,
             }.ToUri();
-
-        /// <summary>
-        /// Builds the <see cref="BlobServiceClient"/> used to issue Create Session
-        /// requests, honoring the caller's <see cref="BlobClientOptions"/> when provided.
-        /// Create Session is a container-level request and is never session-eligible,
-        /// so the client's session configuration (if any) never affects this path.
-        /// </summary>
-        private static BlobServiceClient CreateServiceClient(
-            Uri serviceUri, TokenCredential credential, BlobClientOptions options)
-            => new BlobServiceClient(serviceUri, credential, options ?? new BlobClientOptions());
 
         /// <summary>
         /// Parses the container name that scopes the session cache from the request URI.
