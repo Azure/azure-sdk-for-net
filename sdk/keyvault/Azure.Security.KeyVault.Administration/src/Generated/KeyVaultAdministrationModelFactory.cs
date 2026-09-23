@@ -61,6 +61,26 @@ namespace Azure.Security.KeyVault.Administration
             return new GetSettingsResult(settings.ToList(), additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A EkmConnection model object. </summary>
+        /// <param name="hostName"> EKM proxy FQDN (Fully Qualified Domain Name). Only allowed characters are a-z, A-Z, 0-9, hyphen (-), dot (.), and colon (:). </param>
+        /// <param name="pathPrefix"> Optional path prefix for the EKM proxy (if any). </param>
+        /// <param name="serverCaCertificates"> The root CA certificate chain that issued the proxy server's certificate. An array of certificates in the certificate chain, each in DER format and base64 encoded. </param>
+        /// <param name="serverSubjectCommonName"> The subject common name of the server certificate of EKM Proxy. </param>
+        /// <param name="connectivityMode"> The connectivity mode used to reach the EKM proxy. Defaults to "Public". In "PrivateEndpoint" mode, the host field holds the name of a private endpoint (peName) instead of a DNS name or IP address. </param>
+        /// <returns> A new <see cref="Administration.KeyVaultEkmConnection"/> instance for mocking. </returns>
+        public static KeyVaultEkmConnection KeyVaultEkmConnection(string hostName = default, string pathPrefix = default, IEnumerable<BinaryData> serverCaCertificates = default, string serverSubjectCommonName = default, EkmConnectivityMode? connectivityMode = default)
+        {
+            serverCaCertificates ??= new ChangeTrackingList<BinaryData>();
+
+            return new KeyVaultEkmConnection(
+                hostName,
+                pathPrefix,
+                serverCaCertificates.ToList(),
+                serverSubjectCommonName,
+                connectivityMode,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> EKM proxy client certificate information. </summary>
         /// <param name="caCertificates"> The client root CA certificate chain to authenticate to the EKM proxy. An array of certificates in the certificate chain, each in DER format and base64 encoded. </param>
         /// <param name="subjectCommonName"> The subject common name of the client certificate used to authenticate to the EKM proxy. </param>

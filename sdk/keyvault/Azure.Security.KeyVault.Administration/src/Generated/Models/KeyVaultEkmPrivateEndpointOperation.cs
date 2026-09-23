@@ -28,19 +28,19 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="operationType"> The type of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="statusDetails"> The status details of the operation. </param>
-        /// <param name="startTime"> The start time of the operation in UTC. </param>
-        /// <param name="endTime"> The end time of the operation in UTC. </param>
+        /// <param name="startsOn"> The start time of the operation in UTC. </param>
+        /// <param name="endsOn"> The end time of the operation in UTC. </param>
         /// <param name="error"> Error encountered, if any, during the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultEkmPrivateEndpointOperation(string jobId, string privateEndpointName, KeyVaultEkmPrivateEndpointOperationType? operationType, KeyVaultEkmPrivateEndpointOperationStatus? status, string statusDetails, DateTimeOffset? startTime, DateTimeOffset? endTime, KeyVaultServiceError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultEkmPrivateEndpointOperation(string jobId, string privateEndpointName, KeyVaultEkmPrivateEndpointOperationType? operationType, KeyVaultEkmPrivateEndpointOperationStatus? status, string statusDetails, DateTimeOffset? startsOn, DateTimeOffset? endsOn, KeyVaultServiceError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobId = jobId;
             PrivateEndpointName = privateEndpointName;
             OperationType = operationType;
             Status = status;
             StatusDetails = statusDetails;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -61,9 +61,9 @@ namespace Azure.Security.KeyVault.Administration
         public string StatusDetails { get; }
 
         /// <summary> The start time of the operation in UTC. </summary>
-        public DateTimeOffset? StartTime { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the operation in UTC. </summary>
-        public DateTimeOffset? EndTime { get; }
+        public DateTimeOffset? EndsOn { get; }
     }
 }

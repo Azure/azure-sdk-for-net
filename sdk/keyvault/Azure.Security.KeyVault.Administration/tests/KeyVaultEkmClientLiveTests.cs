@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
-using Azure.Security.KeyVault.Administration.Models;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests

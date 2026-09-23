@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The connectivity mode used to reach the EKM proxy. </summary>
     public readonly partial struct EkmConnectivityMode : IEquatable<EkmConnectivityMode>
@@ -21,8 +21,11 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <summary> Initializes a new instance of <see cref="EkmConnectivityMode"/>. </summary>
         /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EkmConnectivityMode(string value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
             _value = value;
         }
 

@@ -107,15 +107,15 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WritePropertyName("statusDetails"u8);
                 writer.WriteStringValue(StatusDetails);
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteNumberValue(StartTime.Value, "U");
+                writer.WriteNumberValue(StartsOn.Value, "U");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteNumberValue(EndTime.Value, "U");
+                writer.WriteNumberValue(EndsOn.Value, "U");
             }
             if (Optional.IsDefined(Error))
             {
@@ -169,8 +169,8 @@ namespace Azure.Security.KeyVault.Administration
             KeyVaultEkmPrivateEndpointOperationType? operationType = default;
             KeyVaultEkmPrivateEndpointOperationStatus? status = default;
             string statusDetails = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             KeyVaultServiceError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -214,7 +214,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         continue;
                     }
-                    startTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -223,7 +223,7 @@ namespace Azure.Security.KeyVault.Administration
                     {
                         continue;
                     }
-                    endTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -238,7 +238,7 @@ namespace Azure.Security.KeyVault.Administration
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KeyVaultEkmPrivateEndpointOperation(
@@ -247,8 +247,8 @@ namespace Azure.Security.KeyVault.Administration
                 operationType,
                 status,
                 statusDetails,
-                startTime,
-                endTime,
+                startsOn,
+                endsOn,
                 error,
                 additionalBinaryDataProperties);
         }
