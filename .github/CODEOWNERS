@@ -151,10 +151,10 @@
 # ServiceOwners: @quentinRobinson @sarkar-rajarshi
 
 # PRLabel: %Cognitive - Content Safety
-/sdk/contentsafety/Azure.AI.ContentSafety/    @bojunehsu @changjian-wang
+/sdk/contentsafety/Azure.AI.ContentSafety/    @Azure/azure-sdk-write-contentsafety
 
 # ServiceLabel: %Cognitive - Content Safety
-# ServiceOwners: @bojunehsu @changjian-wang
+# ServiceOwners: @Azure/azure-sdk-write-contentsafety
 
 # PRLabel: %Cognitive - Content Understanding
 /sdk/contentunderstanding/    @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
@@ -758,9 +758,6 @@
 # PRLabel: %HybridConnectivity
 /sdk/hybridconnectivity/Azure.ResourceManager.*/                   @ArcturusZhang @ArthurMa1978
 
-# PRLabel: %LambdaTest HyperExecute
-/sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @ArcturusZhang @ArthurMa1978
-
 # PRLabel: %Impact Reporting
 /sdk/impactreporting/Azure.ResourceManager.*/                      @adityareddy305
 
@@ -836,9 +833,6 @@
 # ServiceLabel: %Oracle %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
-# PRLabel: %Pinecone
-/sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
-
 # PRLabel: %Planetary Computer
 /sdk/planetarycomputer/Azure.ResourceManager.*/                    @chahibi @karthick-rn @mandarinamdar
 
@@ -901,9 +895,6 @@
 
 # ServiceLabel: %SQL - VM %Mgmt
 # ServiceOwners:                                                   @ericshape
-
-# PRLabel: %Weights & Biases %Mgmt
-/sdk/weightsandbiases/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Workload Orchestration %Mgmt
 /sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
@@ -1010,5 +1001,5 @@
 /**/*.py                                                           @jsquire @m-nash @JoshLove-msft
 
 # Add owners for NPM configuration
-/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @ArcturusZhang @ArthurMa1978 @mikeharder
-/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @mikeharder
+/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @ArcturusZhang @ArthurMa1978
+/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire

@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Avs.Models
     [CodeGenSuppress("AvsManagementCluster", typeof(int?), typeof(AvsPrivateCloudClusterProvisioningState?), typeof(int?), typeof(IEnumerable<string>), typeof(string))]
     [CodeGenSuppress("AvsManagementCluster", typeof(int?), typeof(AvsPrivateCloudClusterProvisioningState?), typeof(int?), typeof(IEnumerable<string>))]
     [CodeGenSuppress("CommonClusterProperties", typeof(int?), typeof(AvsPrivateCloudClusterProvisioningState?), typeof(int?), typeof(IEnumerable<string>))]
+    [CodeGenSuppress("AvsHostProperties", typeof(string), typeof(AvsHostProvisioningState?), typeof(string), typeof(string), typeof(string), typeof(AvsHostMaintenance?), typeof(string))]
     public static partial class ArmAvsModelFactory
     {
         /// <summary> The properties of a management cluster. </summary>
@@ -50,6 +51,33 @@ namespace Azure.ResourceManager.Avs.Models
             hosts ??= new ChangeTrackingList<string>();
 
             return new CommonClusterProperties(clusterSize, provisioningState, clusterId, hosts.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The properties of a host.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.GeneralAvsHostProperties"/> and <see cref="Models.SpecializedAvsHostProperties"/>.
+        /// </summary>
+        /// <param name="kind"> The kind of host. </param>
+        /// <param name="provisioningState"> The state of the host provisioning. </param>
+        /// <param name="displayName"> Display name of the host in VMware vCenter. </param>
+        /// <param name="moRefId"> vCenter managed object reference ID of the host. </param>
+        /// <param name="fqdn"> Fully qualified domain name of the host. </param>
+        /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
+        /// <param name="faultDomain"></param>
+        /// <returns> A new <see cref="Models.AvsHostProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsHostProperties AvsHostProperties(string kind = default, AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
+        {
+            return new UnknownAvsHostProperties(
+                default,
+                provisioningState,
+                displayName,
+                moRefId,
+                fqdn,
+                maintenance,
+                faultDomain,
+                new ChangeTrackingList<HostLicense>(),
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudData"/>. </summary>

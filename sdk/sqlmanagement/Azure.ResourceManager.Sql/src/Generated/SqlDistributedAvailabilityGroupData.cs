@@ -197,6 +197,24 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary> Specifies whether the link operates in single-database or multi-database mode. </summary>
+        [WirePath("properties.linkMode")]
+        public LinkModeType? LinkMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DistributedAvailabilityGroupProperties();
+                }
+                Properties.LinkMode = value;
+            }
+        }
+
         /// <summary> Databases in the distributed availability group. </summary>
         [WirePath("properties.databases")]
         public IList<DistributedAvailabilityGroupDatabase> Databases

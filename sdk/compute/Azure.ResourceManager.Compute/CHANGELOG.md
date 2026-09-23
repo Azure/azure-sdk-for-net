@@ -1,5 +1,17 @@
 # Release History
 
+## 1.18.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed an infinite recursion issue in the `GetVirtualMachineImages` and `GetVirtualMachineImagesAsync` overloads that accept an `AzureLocation`.
+
+### Other Changes
+
 ## 1.17.0 (2026-09-14)
 
 ### Features Added

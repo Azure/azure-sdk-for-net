@@ -1,16 +1,16 @@
 # Release History
 
-## 12.13.0-beta.1 (Unreleased)
+## 12.13.0 (2026-09-23)
 
-### Features Added
+### Acknowledgments
 
-### Breaking Changes
+Thank you to our developer community members who helped to make Azure Tables better with their contributions to this release:
+
+- Jamie Rees _([GitHub](https://github.com/tidusjar))_
 
 ### Bugs Fixed
 
 - Fixed an issue where combined `[Flags]` enum values written as comma-separated names were skipped during strongly typed table entity deserialization, while continuing to reject comma-separated values for non-`[Flags]` enums. ([#62508](https://github.com/Azure/azure-sdk-for-net/issues/62508))
-
-### Other Changes
 
 ## 12.12.0 (2026-08-21)
 

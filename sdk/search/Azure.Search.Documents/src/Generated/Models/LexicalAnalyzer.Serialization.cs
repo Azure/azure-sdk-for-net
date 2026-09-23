@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Base type for analyzers.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CustomAnalyzer"/>, <see cref="PatternAnalyzer"/>, <see cref="LuceneStandardAnalyzer"/>, and <see cref="StopAnalyzer"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CustomAnalyzer"/>, <see cref="LuceneStandardAnalyzer"/>, <see cref="PatternAnalyzer"/>, and <see cref="StopAnalyzer"/>.
     /// </summary>
     public partial class LexicalAnalyzer : IJsonModel<LexicalAnalyzer>
     {
@@ -133,10 +133,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     case "#Microsoft.Azure.Search.CustomAnalyzer":
                         return CustomAnalyzer.DeserializeCustomAnalyzer(element, options);
-                    case "#Microsoft.Azure.Search.PatternAnalyzer":
-                        return PatternAnalyzer.DeserializePatternAnalyzer(element, options);
                     case "#Microsoft.Azure.Search.StandardAnalyzer":
                         return LuceneStandardAnalyzer.DeserializeLuceneStandardAnalyzer(element, options);
+                    case "#Microsoft.Azure.Search.PatternAnalyzer":
+                        return PatternAnalyzer.DeserializePatternAnalyzer(element, options);
                     case "#Microsoft.Azure.Search.StopAnalyzer":
                         return StopAnalyzer.DeserializeStopAnalyzer(element, options);
                 }

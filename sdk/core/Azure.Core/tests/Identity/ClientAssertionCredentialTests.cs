@@ -3,15 +3,16 @@
 
 using System;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Identity.Mock;
-using NUnit.Framework;
-
 using Azure.Identity;
+using Microsoft.Identity.Client;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     public class ClientAssertionCredentialTests : CredentialTestBase<ClientAssertionCredentialOptions>
@@ -97,6 +98,144 @@ namespace Azure.Core.Tests.Identity
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
             Assert.AreEqual(expectedToken, token.Token, "Should be the expected token value");
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task SelectsClientBasedOnProofOfPossession(bool isProofOfPossessionEnabled)
+        {
+            var bearerClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create("bearer-token"));
+            var popClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create("pop-token"));
+            var credential = CreatePopCredential(bearerClient, popClient);
+
+            AccessToken token = await GetTokenAsync(credential, isProofOfPossessionEnabled);
+
+            Assert.AreEqual(isProofOfPossessionEnabled ? "pop-token" : "bearer-token", token.Token);
+        }
+
+        [Test]
+        public void DoesNotFallBackToBearerWhenProofOfPossessionExplicitlyRequested()
+        {
+            int bearerCalls = 0;
+            var bearerClient = new MockMsalConfidentialClient().WithClientFactory((_, _, _, _) =>
+            {
+                bearerCalls++;
+                return AuthenticationResultFactory.Create("bearer-token");
+            });
+            var popClient = new MockMsalConfidentialClient(new MsalClientException(MsalError.MtlsCertificateNotProvided, "No binding certificate."));
+            var credential = CreatePopCredential(bearerClient, popClient);
+
+            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await GetTokenAsync(credential, isProofOfPossessionEnabled: true));
+            Assert.AreEqual(0, bearerCalls, "Bearer client must not be invoked when proof-of-possession is explicitly requested.");
+        }
+
+        [Test]
+        public void DoesNotFallBackForOtherPopFailures()
+        {
+            int bearerCalls = 0;
+            var bearerClient = new MockMsalConfidentialClient().WithClientFactory((_, _, _, _) =>
+            {
+                bearerCalls++;
+                return AuthenticationResultFactory.Create("bearer-token");
+            });
+            var popClient = new MockMsalConfidentialClient(new MsalClientException("pop_failure", "PoP acquisition failed."));
+            var credential = CreatePopCredential(bearerClient, popClient);
+
+            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await GetTokenAsync(credential, isProofOfPossessionEnabled: true));
+            Assert.AreEqual(0, bearerCalls);
+        }
+
+        [Test]
+        public void FailsClosedWhenAssertionHasNoBindingCertificate()
+        {
+            // Exercises the real PoP MsalConfidentialClient (rather than an injected exception): the assertion
+            // source returns a token with no binding certificate, so MSAL rejects the mTLS proof-of-possession
+            // request with MtlsCertificateNotProvided. The credential must fail closed (AuthenticationFailedException
+            // with the proof-of-possession diagnostic) and must not issue a bearer token request.
+            int bearerCalls = 0;
+            var bearerClient = new MockMsalConfidentialClient().WithClientFactory((_, _, _, _) =>
+            {
+                bearerCalls++;
+                return AuthenticationResultFactory.Create("bearer-token");
+            });
+            var assertionSource = new MockTokenCredential
+            {
+                // Returns a token but no binding certificate (BindingCertificate defaults to null).
+                TokenFactory = (context, cancellationToken) => new AccessToken("assertion-token", DateTimeOffset.UtcNow.AddHours(1)),
+            };
+            var options = new ClientAssertionCredentialOptions
+            {
+                MsalClient = bearerClient,        // mock bearer client, to prove it is never invoked
+                DisableInstanceDiscovery = true,  // avoid network for authority instance discovery
+                Pipeline = CredentialPipeline.GetInstance(null),
+            };
+            // PopMsalClient is intentionally not set, so a real mTLS PoP MsalConfidentialClient is created.
+            var credential = new ClientAssertionCredential(TenantId, ClientId, assertionSource, "api://AzureADTokenExchange/.default", options);
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await GetTokenAsync(credential, isProofOfPossessionEnabled: true));
+            Assert.That(ex.Message, Does.Contain("binding certificate"));
+            Assert.AreEqual(0, bearerCalls, "Bearer client must not be invoked when the proof-of-possession assertion lacks a binding certificate.");
+        }
+
+        [Test]
+        public async Task PopAssertionPropagatesContextCancellationAndCertificate()
+        {
+#pragma warning disable SYSLIB0026 // Empty certificate is sufficient to verify reference propagation.
+            using var certificate = new X509Certificate2();
+#pragma warning restore SYSLIB0026
+            TokenRequestContext capturedContext = default;
+            CancellationToken capturedCancellationToken = default;
+            var assertionCredential = new MockTokenCredential
+            {
+                TokenFactory = (context, cancellationToken) =>
+                {
+                    capturedContext = context;
+                    capturedCancellationToken = cancellationToken;
+                    return new AccessToken("assertion", DateTimeOffset.UtcNow.AddMinutes(10), null, "PoP", certificate);
+                }
+            };
+            var correlationId = Guid.NewGuid();
+            var assertionOptions = new AssertionRequestOptions
+            {
+                Claims = "claims",
+                ClientCapabilities = new[] { "CP1" },
+                CorrelationId = correlationId,
+            };
+            using var cancellationSource = new CancellationTokenSource();
+
+            ClientSignedAssertion assertion = await ClientAssertionCredential.GetPopAssertionAsync(
+                assertionCredential,
+                "api://AzureADTokenExchange/.default",
+                assertionOptions,
+                cancellationSource.Token);
+
+            Assert.AreEqual("assertion", assertion.Assertion);
+            Assert.AreSame(certificate, assertion.TokenBindingCertificate);
+            Assert.True(capturedContext.IsProofOfPossessionEnabled);
+            Assert.True(capturedContext.IsCaeEnabled);
+            Assert.AreEqual("claims", capturedContext.Claims);
+            Assert.AreEqual(correlationId.ToString(), capturedContext.ParentRequestId);
+            Assert.AreEqual(cancellationSource.Token, capturedCancellationToken);
+        }
+
+        private ClientAssertionCredential CreatePopCredential(MsalConfidentialClient bearerClient, MsalConfidentialClient popClient)
+        {
+            var credentialOptions = new ClientAssertionCredentialOptions
+            {
+                MsalClient = bearerClient,
+                PopMsalClient = popClient,
+                Pipeline = CredentialPipeline.GetInstance(null),
+            };
+            return new ClientAssertionCredential(TenantId, ClientId, new MockTokenCredential(), "assertion-scope", credentialOptions);
+        }
+
+        private async Task<AccessToken> GetTokenAsync(ClientAssertionCredential credential, bool isProofOfPossessionEnabled)
+        {
+            var requestContext = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: isProofOfPossessionEnabled);
+            return IsAsync
+                ? await credential.GetTokenAsync(requestContext)
+                : credential.GetToken(requestContext);
         }
     }
 }

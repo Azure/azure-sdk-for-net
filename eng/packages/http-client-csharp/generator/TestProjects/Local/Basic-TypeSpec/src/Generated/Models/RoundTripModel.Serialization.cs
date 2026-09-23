@@ -132,9 +132,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("requiredCollection"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "requiredCollection"u8);
                 for (int i = 0; i < RequiredCollection.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.requiredCollection[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.requiredCollection[{i}]")))
                     {
                         continue;
                     }
@@ -147,25 +148,37 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("requiredDictionary"u8);
                 writer.WriteStartObject();
-#if NET8_0_OR_GREATER
-                global::System.Span<byte> buffer = stackalloc byte[256];
-#endif
-                foreach (var item in RequiredDictionary)
+                bool hasPatch = Patch.Contains("$"u8, "requiredDictionary"u8);
+                if (hasPatch)
                 {
 #if NET8_0_OR_GREATER
-                    int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
-                    bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.requiredDictionary"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.requiredDictionary"u8, buffer.Slice(0, bytesWritten));
-#else
-                    bool patchContains = Patch.Contains("$.requiredDictionary"u8, Encoding.UTF8.GetBytes(item.Key));
+                    global::System.Span<byte> buffer = stackalloc byte[256];
 #endif
-                    if (!patchContains)
+                    foreach (var item in RequiredDictionary)
+                    {
+#if NET8_0_OR_GREATER
+                        int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
+                        bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.requiredDictionary"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.requiredDictionary"u8, buffer.Slice(0, bytesWritten));
+#else
+                        bool patchContains = Patch.Contains("$.requiredDictionary"u8, Encoding.UTF8.GetBytes(item.Key));
+#endif
+                        if (!patchContains)
+                        {
+                            writer.WritePropertyName(item.Key);
+                            writer.WriteStringValue(item.Value.ToString());
+                        }
+                    }
+
+                    Patch.WriteTo(writer, "$.requiredDictionary"u8);
+                }
+                else
+                {
+                    foreach (var item in RequiredDictionary)
                     {
                         writer.WritePropertyName(item.Key);
                         writer.WriteStringValue(item.Value.ToString());
                     }
                 }
-
-                Patch.WriteTo(writer, "$.requiredDictionary"u8);
                 writer.WriteEndObject();
             }
             if (!Patch.Contains("$.requiredModel"u8))
@@ -190,9 +203,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("intExtensibleEnumCollection"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "intExtensibleEnumCollection"u8);
                 for (int i = 0; i < IntExtensibleEnumCollection.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.intExtensibleEnumCollection[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.intExtensibleEnumCollection[{i}]")))
                     {
                         continue;
                     }
@@ -223,9 +237,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("floatExtensibleEnumCollection"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "floatExtensibleEnumCollection"u8);
                 for (int i = 0; i < FloatExtensibleEnumCollection.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.floatExtensibleEnumCollection[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.floatExtensibleEnumCollection[{i}]")))
                     {
                         continue;
                     }
@@ -256,9 +271,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("floatFixedEnumCollection"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "floatFixedEnumCollection"u8);
                 for (int i = 0; i < FloatFixedEnumCollection.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.floatFixedEnumCollection[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.floatFixedEnumCollection[{i}]")))
                     {
                         continue;
                     }
@@ -284,9 +300,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("intFixedEnumCollection"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "intFixedEnumCollection"u8);
                 for (int i = 0; i < IntFixedEnumCollection.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.intFixedEnumCollection[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.intFixedEnumCollection[{i}]")))
                     {
                         continue;
                     }
@@ -328,18 +345,44 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("requiredRecordUnknown"u8);
                 writer.WriteStartObject();
-#if NET8_0_OR_GREATER
-                global::System.Span<byte> buffer = stackalloc byte[256];
-#endif
-                foreach (var item in RequiredRecordUnknown)
+                bool hasPatch = Patch.Contains("$"u8, "requiredRecordUnknown"u8);
+                if (hasPatch)
                 {
 #if NET8_0_OR_GREATER
-                    int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
-                    bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.requiredRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.requiredRecordUnknown"u8, buffer.Slice(0, bytesWritten));
-#else
-                    bool patchContains = Patch.Contains("$.requiredRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
+                    global::System.Span<byte> buffer = stackalloc byte[256];
 #endif
-                    if (!patchContains)
+                    foreach (var item in RequiredRecordUnknown)
+                    {
+#if NET8_0_OR_GREATER
+                        int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
+                        bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.requiredRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.requiredRecordUnknown"u8, buffer.Slice(0, bytesWritten));
+#else
+                        bool patchContains = Patch.Contains("$.requiredRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
+#endif
+                        if (!patchContains)
+                        {
+                            writer.WritePropertyName(item.Key);
+                            if (item.Value == null)
+                            {
+                                writer.WriteNullValue();
+                                continue;
+                            }
+#if NET6_0_OR_GREATER
+                            writer.WriteRawValue(item.Value);
+#else
+                            using (JsonDocument document = JsonDocument.Parse(item.Value))
+                            {
+                                JsonSerializer.Serialize(writer, document.RootElement);
+                            }
+#endif
+                        }
+                    }
+
+                    Patch.WriteTo(writer, "$.requiredRecordUnknown"u8);
+                }
+                else
+                {
+                    foreach (var item in RequiredRecordUnknown)
                     {
                         writer.WritePropertyName(item.Key);
                         if (item.Value == null)
@@ -357,26 +400,50 @@ namespace BasicTypeSpec
 #endif
                     }
                 }
-
-                Patch.WriteTo(writer, "$.requiredRecordUnknown"u8);
                 writer.WriteEndObject();
             }
             if (Optional.IsCollectionDefined(OptionalRecordUnknown) && !Patch.Contains("$.optionalRecordUnknown"u8))
             {
                 writer.WritePropertyName("optionalRecordUnknown"u8);
                 writer.WriteStartObject();
-#if NET8_0_OR_GREATER
-                global::System.Span<byte> buffer = stackalloc byte[256];
-#endif
-                foreach (var item in OptionalRecordUnknown)
+                bool hasPatch = Patch.Contains("$"u8, "optionalRecordUnknown"u8);
+                if (hasPatch)
                 {
 #if NET8_0_OR_GREATER
-                    int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
-                    bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.optionalRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.optionalRecordUnknown"u8, buffer.Slice(0, bytesWritten));
-#else
-                    bool patchContains = Patch.Contains("$.optionalRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
+                    global::System.Span<byte> buffer = stackalloc byte[256];
 #endif
-                    if (!patchContains)
+                    foreach (var item in OptionalRecordUnknown)
+                    {
+#if NET8_0_OR_GREATER
+                        int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
+                        bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.optionalRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.optionalRecordUnknown"u8, buffer.Slice(0, bytesWritten));
+#else
+                        bool patchContains = Patch.Contains("$.optionalRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
+#endif
+                        if (!patchContains)
+                        {
+                            writer.WritePropertyName(item.Key);
+                            if (item.Value == null)
+                            {
+                                writer.WriteNullValue();
+                                continue;
+                            }
+#if NET6_0_OR_GREATER
+                            writer.WriteRawValue(item.Value);
+#else
+                            using (JsonDocument document = JsonDocument.Parse(item.Value))
+                            {
+                                JsonSerializer.Serialize(writer, document.RootElement);
+                            }
+#endif
+                        }
+                    }
+
+                    Patch.WriteTo(writer, "$.optionalRecordUnknown"u8);
+                }
+                else
+                {
+                    foreach (var item in OptionalRecordUnknown)
                     {
                         writer.WritePropertyName(item.Key);
                         if (item.Value == null)
@@ -394,26 +461,50 @@ namespace BasicTypeSpec
 #endif
                     }
                 }
-
-                Patch.WriteTo(writer, "$.optionalRecordUnknown"u8);
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && !Patch.Contains("$.readOnlyRequiredRecordUnknown"u8))
             {
                 writer.WritePropertyName("readOnlyRequiredRecordUnknown"u8);
                 writer.WriteStartObject();
-#if NET8_0_OR_GREATER
-                global::System.Span<byte> buffer = stackalloc byte[256];
-#endif
-                foreach (var item in ReadOnlyRequiredRecordUnknown)
+                bool hasPatch = Patch.Contains("$"u8, "readOnlyRequiredRecordUnknown"u8);
+                if (hasPatch)
                 {
 #if NET8_0_OR_GREATER
-                    int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
-                    bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.readOnlyRequiredRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.readOnlyRequiredRecordUnknown"u8, buffer.Slice(0, bytesWritten));
-#else
-                    bool patchContains = Patch.Contains("$.readOnlyRequiredRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
+                    global::System.Span<byte> buffer = stackalloc byte[256];
 #endif
-                    if (!patchContains)
+                    foreach (var item in ReadOnlyRequiredRecordUnknown)
+                    {
+#if NET8_0_OR_GREATER
+                        int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
+                        bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.readOnlyRequiredRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.readOnlyRequiredRecordUnknown"u8, buffer.Slice(0, bytesWritten));
+#else
+                        bool patchContains = Patch.Contains("$.readOnlyRequiredRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
+#endif
+                        if (!patchContains)
+                        {
+                            writer.WritePropertyName(item.Key);
+                            if (item.Value == null)
+                            {
+                                writer.WriteNullValue();
+                                continue;
+                            }
+#if NET6_0_OR_GREATER
+                            writer.WriteRawValue(item.Value);
+#else
+                            using (JsonDocument document = JsonDocument.Parse(item.Value))
+                            {
+                                JsonSerializer.Serialize(writer, document.RootElement);
+                            }
+#endif
+                        }
+                    }
+
+                    Patch.WriteTo(writer, "$.readOnlyRequiredRecordUnknown"u8);
+                }
+                else
+                {
+                    foreach (var item in ReadOnlyRequiredRecordUnknown)
                     {
                         writer.WritePropertyName(item.Key);
                         if (item.Value == null)
@@ -431,26 +522,50 @@ namespace BasicTypeSpec
 #endif
                     }
                 }
-
-                Patch.WriteTo(writer, "$.readOnlyRequiredRecordUnknown"u8);
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ReadOnlyOptionalRecordUnknown) && !Patch.Contains("$.readOnlyOptionalRecordUnknown"u8))
             {
                 writer.WritePropertyName("readOnlyOptionalRecordUnknown"u8);
                 writer.WriteStartObject();
-#if NET8_0_OR_GREATER
-                global::System.Span<byte> buffer = stackalloc byte[256];
-#endif
-                foreach (var item in ReadOnlyOptionalRecordUnknown)
+                bool hasPatch = Patch.Contains("$"u8, "readOnlyOptionalRecordUnknown"u8);
+                if (hasPatch)
                 {
 #if NET8_0_OR_GREATER
-                    int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
-                    bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.readOnlyOptionalRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.readOnlyOptionalRecordUnknown"u8, buffer.Slice(0, bytesWritten));
-#else
-                    bool patchContains = Patch.Contains("$.readOnlyOptionalRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
+                    global::System.Span<byte> buffer = stackalloc byte[256];
 #endif
-                    if (!patchContains)
+                    foreach (var item in ReadOnlyOptionalRecordUnknown)
+                    {
+#if NET8_0_OR_GREATER
+                        int bytesWritten = global::System.Text.Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
+                        bool patchContains = (bytesWritten == 256) ? Patch.Contains("$.readOnlyOptionalRecordUnknown"u8, global::System.Text.Encoding.UTF8.GetBytes(item.Key)) : Patch.Contains("$.readOnlyOptionalRecordUnknown"u8, buffer.Slice(0, bytesWritten));
+#else
+                        bool patchContains = Patch.Contains("$.readOnlyOptionalRecordUnknown"u8, Encoding.UTF8.GetBytes(item.Key));
+#endif
+                        if (!patchContains)
+                        {
+                            writer.WritePropertyName(item.Key);
+                            if (item.Value == null)
+                            {
+                                writer.WriteNullValue();
+                                continue;
+                            }
+#if NET6_0_OR_GREATER
+                            writer.WriteRawValue(item.Value);
+#else
+                            using (JsonDocument document = JsonDocument.Parse(item.Value))
+                            {
+                                JsonSerializer.Serialize(writer, document.RootElement);
+                            }
+#endif
+                        }
+                    }
+
+                    Patch.WriteTo(writer, "$.readOnlyOptionalRecordUnknown"u8);
+                }
+                else
+                {
+                    foreach (var item in ReadOnlyOptionalRecordUnknown)
                     {
                         writer.WritePropertyName(item.Key);
                         if (item.Value == null)
@@ -468,8 +583,6 @@ namespace BasicTypeSpec
 #endif
                     }
                 }
-
-                Patch.WriteTo(writer, "$.readOnlyOptionalRecordUnknown"u8);
                 writer.WriteEndObject();
             }
             if (!Patch.Contains("$.modelWithRequiredNullable"u8))

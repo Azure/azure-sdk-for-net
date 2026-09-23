@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Models
 {
     /// <summary>
     /// The threshold used for vector queries.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VectorSimilarityThreshold"/> and <see cref="SearchScoreThreshold"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SearchScoreThreshold"/> and <see cref="VectorSimilarityThreshold"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVectorThreshold))]
     public abstract partial class VectorThreshold : IJsonModel<VectorThreshold>
@@ -130,10 +130,10 @@ namespace Azure.Search.Documents.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "vectorSimilarity":
-                        return VectorSimilarityThreshold.DeserializeVectorSimilarityThreshold(element, options);
                     case "searchScore":
                         return SearchScoreThreshold.DeserializeSearchScoreThreshold(element, options);
+                    case "vectorSimilarity":
+                        return VectorSimilarityThreshold.DeserializeVectorSimilarityThreshold(element, options);
                 }
             }
             return UnknownVectorThreshold.DeserializeUnknownVectorThreshold(element, options);
