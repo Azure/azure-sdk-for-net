@@ -1,5 +1,5 @@
 import { parseArgs } from "node:util";
-import { pipelineManifest, prepareBundle, PublicationError } from "./bundle.mjs";
+import { pipelineManifest, prepareBundle, PublicationError } from "./bundle.ts";
 
 try {
     const { values } = parseArgs({ options: { index: { type: "string" }, summary: { type: "string" }, output: { type: "string" } } });

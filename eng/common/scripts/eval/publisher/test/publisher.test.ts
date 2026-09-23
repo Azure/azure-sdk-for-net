@@ -6,10 +6,10 @@ import { dirname, join, resolve } from "node:path";
 import { test } from "node:test";
 import { runInNewContext } from "node:vm";
 import { zipSync, strToU8 } from "fflate";
-import { blobName, boundedFile, pipelineManifest, prepareBundle, selectAttempts, sha256, validateBundle, validateManifest } from "../bundle.mjs";
-import { containerUrl, publisherIdentity, publishBundle } from "../storage.mjs";
-import { DASHBOARD_NOTIFICATION_TARGET, notifyDashboard, refreshUrl } from "../notification.mjs";
-import { publicationFailure } from "../diagnostics.mjs";
+import { blobName, boundedFile, pipelineManifest, prepareBundle, selectAttempts, sha256, validateBundle, validateManifest } from "../bundle.ts";
+import { containerUrl, publisherIdentity, publishBundle } from "../storage.ts";
+import { DASHBOARD_NOTIFICATION_TARGET, notifyDashboard, refreshUrl } from "../notification.ts";
+import { publicationFailure } from "../diagnostics.ts";
 
 const manifest = { schemaVersion: 1, adoOrganization: "azure-sdk", adoProject: "internal", repo: "Azure/azure-sdk-tools",
     pipeline: "synthetic", pipelineDefinitionId: "8255", buildId: "1001", summaryAttempt: 1, runTimestamp: "2026-09-21T00:00:00.000Z" };
@@ -280,7 +280,7 @@ test("real CLI rejects an unapproved notification pair before acquiring storage 
         EVAL_STORAGE_CONTAINER_URL: "https://evaltestsummary.blob.core.windows.net/vally-results",
         EVAL_DASHBOARD_URL: "https://attacker.example", EVAL_DASHBOARD_AUDIENCE: dashboardAudience };
     delete env.NODE_TEST_CONTEXT;
-    const child = spawnSync(process.execPath, [resolve(import.meta.dirname, "../publish-bundle.mjs"), "--bundle", "unused.zip", "--result", result],
+    const child = spawnSync(process.execPath, ["--experimental-strip-types", resolve(import.meta.dirname, "../publish-bundle.ts"), "--bundle", "unused.zip", "--result", result],
         { encoding: "utf8", env, timeout: 30_000 });
     assert.ifError(child.error); assert.equal(child.status, 1);
     const failure = JSON.parse(await readFile(result, "utf8"));
@@ -301,9 +301,9 @@ test("publisher dependency lock is portable with public URLs and SHA512 integrit
 });
 
 test("real CLI blocks PR publication before requesting a credential", () => {
-    const script = resolve(import.meta.dirname, "../publish-bundle.mjs"), env = { ...process.env, TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "PullRequest", BUILD_SOURCEBRANCH: "refs/pull/1/merge" };
+    const script = resolve(import.meta.dirname, "../publish-bundle.ts"), env = { ...process.env, TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "PullRequest", BUILD_SOURCEBRANCH: "refs/pull/1/merge" };
     delete env.NODE_TEST_CONTEXT;
-    const child = spawnSync(process.execPath, [script, "--bundle", "unused.zip", "--result", "unused.json"], { encoding: "utf8", env, timeout: 30_000 });
+    const child = spawnSync(process.execPath, ["--experimental-strip-types", script, "--bundle", "unused.zip", "--result", "unused.json"], { encoding: "utf8", env, timeout: 30_000 });
     assert.equal(child.status, 1); assert.match(child.stderr, /trusted internal, non-PR/);
 });
 

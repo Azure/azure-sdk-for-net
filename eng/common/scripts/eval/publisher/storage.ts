@@ -1,5 +1,5 @@
 import { setTimeout as delay } from "node:timers/promises";
-import { boundedFile, blobName, MAX_ZIP_BYTES, PublicationError, sha256, validateBundle } from "./bundle.mjs";
+import { boundedFile, blobName, MAX_ZIP_BYTES, PublicationError, sha256, validateBundle } from "./bundle.ts";
 
 export function containerUrl(value) {
     const url = new URL(value);

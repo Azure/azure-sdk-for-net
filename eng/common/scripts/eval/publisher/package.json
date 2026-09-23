@@ -8,7 +8,7 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "test": "node --test test/*.test.mjs"
+    "test": "node --experimental-strip-types --test test/*.test.ts"
   },
   "dependencies": {
     "@azure/identity": "4.13.3",
