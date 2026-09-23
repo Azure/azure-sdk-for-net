@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 await collection.CreateOrUpdateAsync(WaitUntil.Completed, relationshipName, data));
-            Assert.AreEqual(403, ex.Status);
+            Assert.AreEqual(400, ex.Status);
         }
     }
 }

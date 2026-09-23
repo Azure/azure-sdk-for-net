@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.IsNotNull(retrieved.Value.Data);
             Assert.AreEqual(relationshipName, retrieved.Value.Data.Name);
             Assert.AreEqual(ServiceGroupMemberRelationshipResource.ResourceType, retrieved.Value.Data.ResourceType);
-            Assert.AreEqual(_source.Id, retrieved.Value.Data.Properties.SourceId);
-            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.TargetId);
+            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.SourceId);
+            Assert.AreEqual(_source.Id, retrieved.Value.Data.Properties.TargetId);
         }
 
         [RecordedTest]
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.IsNotNull(retrieved.Value);
             Assert.AreEqual(relationshipName, retrieved.Value.Data.Name);
             Assert.AreEqual(ServiceGroupMemberRelationshipResource.ResourceType, retrieved.Value.Data.ResourceType);
-            Assert.AreEqual(DefaultSubscription.Id, retrieved.Value.Data.Properties.SourceId);
-            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.TargetId);
+            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.SourceId);
+            Assert.AreEqual(DefaultSubscription.Id, retrieved.Value.Data.Properties.TargetId);
         }
 
         /// <summary>
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.IsNotNull(retrieved.Value);
             Assert.AreEqual(relationshipName, retrieved.Value.Data.Name);
             Assert.AreEqual(ServiceGroupMemberRelationshipResource.ResourceType, retrieved.Value.Data.ResourceType);
-            Assert.AreEqual(vault.Id, retrieved.Value.Data.Properties.SourceId);
-            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.TargetId);
+            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.SourceId);
+            Assert.AreEqual(vault.Id, retrieved.Value.Data.Properties.TargetId);
         }
     }
 }
