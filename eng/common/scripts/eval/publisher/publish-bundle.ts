@@ -3,10 +3,10 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { AzureCliCredential } from "@azure/identity";
 import { ContainerClient } from "@azure/storage-blob";
-import { PublicationError } from "./bundle.mjs";
-import { containerUrl, publisherIdentity, publishBundle } from "./storage.mjs";
-import { notifyDashboard, refreshUrl } from "./notification.mjs";
-import { publicationFailure } from "./diagnostics.mjs";
+import { PublicationError } from "./bundle.ts";
+import { containerUrl, publisherIdentity, publishBundle } from "./storage.ts";
+import { notifyDashboard, refreshUrl } from "./notification.ts";
+import { publicationFailure } from "./diagnostics.ts";
 
 let operation = "validate_configuration", save, stored = false;
 try {

@@ -32,7 +32,7 @@ steps:
     condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'))
 
   - script: |
-      node "$(Build.SourcesDirectory)/eng/common/scripts/eval/publisher/prepare-bundle.mjs" \
+      node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/publisher/prepare-bundle.ts" \
         --index "$(Pipeline.Workspace)/eval-results/shard-index.json" \
         --summary "$(Build.ArtifactStagingDirectory)/eval-summary/eval-summary.md" \
         --output "$(Build.ArtifactStagingDirectory)/eval-summary/dashboard-bundle.zip"
@@ -50,7 +50,7 @@ steps:
         scriptType: bash
         scriptLocation: inlineScript
         inlineScript: |
-          node "$(Build.SourcesDirectory)/eng/common/scripts/eval/publisher/publish-bundle.mjs" \
+          node --experimental-strip-types "$(Build.SourcesDirectory)/eng/common/scripts/eval/publisher/publish-bundle.ts" \
             --bundle "$(Build.ArtifactStagingDirectory)/eval-summary/dashboard-bundle.zip" \
             --result "$(Build.ArtifactStagingDirectory)/eval-summary/storage-publication-result.json"
       env:

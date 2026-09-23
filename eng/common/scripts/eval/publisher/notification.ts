@@ -1,5 +1,5 @@
 import { setTimeout as delay } from "node:timers/promises";
-import { PublicationError } from "./bundle.mjs";
+import { PublicationError } from "./bundle.ts";
 
 // Reviewed destination/audience pairs, not queue-time configuration. Onboarding
 // another dashboard requires a source change; arbitrary HTTPS is not trusted.
