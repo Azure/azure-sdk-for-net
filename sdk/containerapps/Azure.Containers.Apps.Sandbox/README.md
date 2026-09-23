@@ -1,4 +1,4 @@
-# Azure.Containers.Apps.Sandbox client library for .NET
+# Azure Container Apps Sandbox client library for .NET
 
 Azure.Containers.Apps.Sandbox is a client library for developing .NET applications with rich experience.
 
@@ -15,6 +15,10 @@ dotnet add package Azure.Containers.Apps.Sandbox --prerelease
 ### Prerequisites
 
 - You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+
+### Authenticate the client
+
+Azure Container Apps Sandbox uses Microsoft Entra ID authentication. Install the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package and create a `ContainerAppsSandboxClient` with a `TokenCredential`, such as `DefaultAzureCredential`.
 
 ## Key concepts
 
