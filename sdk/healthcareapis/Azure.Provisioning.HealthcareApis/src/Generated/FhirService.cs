@@ -242,7 +242,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<HealthcareApisPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {

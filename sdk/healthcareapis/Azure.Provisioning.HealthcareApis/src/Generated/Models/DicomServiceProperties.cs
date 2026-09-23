@@ -18,7 +18,7 @@ namespace Azure.Provisioning.HealthcareApis
         private DicomServiceAuthenticationConfiguration _authenticationConfiguration;
         private DicomServiceCorsConfiguration _corsConfiguration;
         private BicepValue<Uri> _serviceUri;
-        private BicepList<HealthcareApisPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<HealthcareApisServicePrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<HealthcareApisPublicNetworkAccess> _publicNetworkAccess;
         private BicepValue<FhirServiceEventState> _eventState;
         private Encryption _encryption;
@@ -81,7 +81,7 @@ namespace Azure.Provisioning.HealthcareApis
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<HealthcareApisPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -185,7 +185,7 @@ namespace Azure.Provisioning.HealthcareApis
             _authenticationConfiguration = DefineModelProperty<DicomServiceAuthenticationConfiguration>(nameof(AuthenticationConfiguration), new string[] { "authenticationConfiguration" });
             _corsConfiguration = DefineModelProperty<DicomServiceCorsConfiguration>(nameof(CorsConfiguration), new string[] { "corsConfiguration" });
             _serviceUri = DefineProperty<Uri>(nameof(ServiceUri), new string[] { "serviceUrl" }, isOutput: true);
-            _privateEndpointConnections = DefineListProperty<HealthcareApisPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<HealthcareApisServicePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<HealthcareApisPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _eventState = DefineProperty<FhirServiceEventState>(nameof(EventState), new string[] { "eventState" }, isOutput: true);
             _encryption = DefineModelProperty<Encryption>(nameof(Encryption), new string[] { "encryption" });
