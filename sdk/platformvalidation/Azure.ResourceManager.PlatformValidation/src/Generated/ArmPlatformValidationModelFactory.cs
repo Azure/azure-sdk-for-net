@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
     public static partial class ArmPlatformValidationModelFactory
     {
 
+        /// <summary> Cloud Validation Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             return new CloudValidationProperties(description, provisioningState, error, managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<PlatformValidationMoboBrokerResourceInfo>()).ToList(), default), default);
         }
 
+        /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
         /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
         /// <returns> A new <see cref="Models.PlatformValidationMoboBrokerResourceInfo"/> instance for mocking. </returns>
         public static PlatformValidationMoboBrokerResourceInfo PlatformValidationMoboBrokerResourceInfo(ResourceIdentifier id = default)
@@ -69,6 +71,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             return new CloudValidationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), cloudValidationUpdateDescription is null ? default : new CloudValidationUpdateProperties(cloudValidationUpdateDescription, default), default);
         }
 
+        /// <summary> Validation Test Execution Plan. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -92,6 +95,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> Validation Test Execution Plan properties. </summary>
         /// <param name="description"> The description of the resource. </param>
         /// <param name="planConfigurationUri">
         /// URI where the configuration of the execution plan is defined.
@@ -120,6 +124,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the ValidationExecutionPlan. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ValidationExecutionPlanPatch"/> instance for mocking. </returns>
@@ -130,6 +135,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             return new ValidationExecutionPlanPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the ValidationExecutionPlan. </summary>
         /// <param name="description"> The description of the resource. </param>
         /// <param name="planConfigurationUri">
         /// URI where the configuration of the execution plan is defined.
@@ -150,6 +156,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             return new ValidationExecutionPlanUpdateProperties(description, planConfigurationUri, planConfigurationJson, default);
         }
 
+        /// <summary> The properties of the execution plan run. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -167,6 +174,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> The properties of the execution plan run. </summary>
         /// <param name="description"> The description of the resource. </param>
         /// <param name="status"> The status of the execution plan run. </param>
         /// <param name="error"> Error details. Populated when status is Failed, TimedOut, or Unknown. </param>
@@ -196,6 +204,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> Execution summary details for a validation test run collection. </summary>
         /// <param name="totalTests"> Total number of tests executed. </param>
         /// <param name="passedTests"> Number of passed tests. </param>
         /// <param name="failedTests"> Number of failed tests. </param>
@@ -215,6 +224,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> Validation Test Run represents execution instance(s) of a Validation Test instance under execution plan. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -232,6 +242,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> Validation Test Run properties. </summary>
         /// <param name="status"> The overall status of the test run. </param>
         /// <param name="error"> Error details. Populated when status is Error. </param>
         /// <param name="provisioningState"> The state of the test run. </param>
@@ -265,6 +276,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> Detailed information about test pass. </summary>
         /// <param name="resultCode"> Result code categorizing the type of pass. </param>
         /// <param name="testName"> test name which passed. </param>
         /// <param name="resultDetails"> Detailed information about the passed test. </param>
@@ -274,6 +286,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             return new ValidationTestPassDetails(resultCode, testName, resultDetails, default);
         }
 
+        /// <summary> Detailed information about test failure. </summary>
         /// <param name="errorCode"> Error code categorizing the type of failure. </param>
         /// <param name="errorMessage"> Human-readable error message describing the failure. </param>
         /// <param name="details"> Detailed information about the failure. </param>
@@ -293,6 +306,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> Validation test catalog entry. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -310,6 +324,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> Validation test catalog properties. </summary>
         /// <param name="displayName"> Display name of the validation test. </param>
         /// <param name="description"> Validation test description. </param>
         /// <param name="audience"> Audience visibility of this validation test. </param>
@@ -348,6 +363,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> A named declared input parameter for a validation test contract. </summary>
         /// <param name="name"> The input parameter name. </param>
         /// <param name="definition"> The declared contract for this input parameter. </param>
         /// <returns> A new <see cref="Models.ValidationTestInput"/> instance for mocking. </returns>
@@ -356,6 +372,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             return new ValidationTestInput(name, definition, default);
         }
 
+        /// <summary> Declared contract for a validation test input parameter. </summary>
         /// <param name="description"> Description of the declared input parameter. </param>
         /// <param name="type"> The data type expected for this input parameter. </param>
         /// <param name="required"> Whether this input parameter is required. </param>
@@ -375,6 +392,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> Validation test version catalog entry. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -392,6 +410,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> Validation test version catalog properties. </summary>
         /// <param name="displayName"> Display name of the validation test version. </param>
         /// <param name="description"> Validation test description. </param>
         /// <param name="audience"> Audience visibility of this validation test version. </param>
@@ -426,6 +445,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> Validation test category catalog entry. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -443,6 +463,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <summary> Validation test category properties. </summary>
         /// <param name="displayName"> Display name of the validation test category. </param>
         /// <param name="description"> Validation test category description. </param>
         /// <param name="audience"> Audience visibility of this validation test category. </param>
