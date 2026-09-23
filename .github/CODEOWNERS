@@ -96,19 +96,10 @@
 # ServiceOwners: @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
 
 # PRLabel: %AI Model Inference %AI Projects
-/sdk/ai/    @dargilco @glharper @nick863 @trangevi @Azure/ai-foundry-devex
+/sdk/ai/    @Azure/ai-foundry-devex
 
-# PRLabel: %AI Model Inference
-/sdk/ai/Azure.AI.Inference/    @dargilco @glharper @trangevi @Azure/ai-foundry-devex
-
-# ServiceLabel: %AI Model Inference
-# ServiceOwners: @dargilco @glharper @trangevi
-
-# PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects/    @dargilco @nick863 @rhurey @trangevi @Azure/ai-foundry-devex
-
-# ServiceLabel: %AI Projects
-# ServiceOwners: @dargilco @nick863 @trangevi
+# ServiceLabel: %AI Model Inference %AI Projects
+# ServiceOwners: @Azure/ai-foundry-devex
 
 # PRLabel: %App Configuration
 /sdk/appconfiguration/    @avanigupta @jimmyca15 @linglingye001 @mrm9084 @zhiyuanliang-ms
@@ -405,10 +396,10 @@
 # ServiceOwners: @Azure/azure-sdk-write-onlineexperimentation
 
 # PRLabel: %OpenAI
-/sdk/openai/    @joseharriaga @jpalvarezl @m-nash
+/sdk/openai/    @joseharriaga @m-nash @Azure/ai-foundry-devex
 
 # ServiceLabel: %OpenAI
-# ServiceOwners: @jpalvarezl 
+# ServiceOwners: @Azure/ai-foundry-devex
 
 # PRLabel: %Planetary Computer
 /sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/    @chahibi @karthick-rn @mandarinamdar
