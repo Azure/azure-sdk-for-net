@@ -134,6 +134,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
         }
 
         [Test]
+        [Ignore("Re-record tags after the SetTags request change; see #63311.")]
         public async Task AzureTrafficCollectorResource_TagOperation()
         {
             var accountName = Recording.GenerateAssetName("azureTrafficCollector");
