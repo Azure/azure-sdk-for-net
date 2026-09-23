@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics VipSwapClientDiagnostics => _vipSwapClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VipSwap VipSwapRestClient => _vipSwapRestClient ??= new VipSwap(VipSwapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+        private VipSwap VipSwapRestClient => _vipSwapRestClient ??= new VipSwap(VipSwapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-01-01");
 
         /// <summary> Gets an object representing a <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -73,6 +73,15 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             ApplicationSecurityGroupResource.ValidateResourceId(id);
             return new ApplicationSecurityGroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="IdentityIntegrationAuthenticationPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IdentityIntegrationAuthenticationPolicyResource"/> object. </returns>
+        public virtual IdentityIntegrationAuthenticationPolicyResource GetIdentityIntegrationAuthenticationPolicyResource(ResourceIdentifier id)
+        {
+            IdentityIntegrationAuthenticationPolicyResource.ValidateResourceId(id);
+            return new IdentityIntegrationAuthenticationPolicyResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="AzureFirewallResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -1347,7 +1356,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1395,7 +1404,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

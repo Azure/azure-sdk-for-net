@@ -129,6 +129,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("expressRoutePort"u8);
                 writer.WriteObjectValue(ExpressRoutePort, options);
             }
+            if (Optional.IsDefined(ExpressRouteLag))
+            {
+                writer.WritePropertyName("expressRouteLag"u8);
+                writer.WriteObjectValue(ExpressRouteLag, options);
+            }
             if (Optional.IsDefined(BandwidthInGbps))
             {
                 writer.WritePropertyName("bandwidthInGbps"u8);
@@ -235,6 +240,7 @@ namespace Azure.ResourceManager.Network.Models
             string serviceProviderNotes = default;
             ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default;
             NetworkSubResource expressRoutePort = default;
+            NetworkSubResource expressRouteLag = default;
             float? bandwidthInGbps = default;
             int? sTag = default;
             ExpressRouteCircuitResiliencyLevel? resiliencyLevel = default;
@@ -326,6 +332,15 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     expressRoutePort = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("expressRouteLag"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expressRouteLag = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("bandwidthInGbps"u8))
@@ -422,6 +437,7 @@ namespace Azure.ResourceManager.Network.Models
                 serviceProviderNotes,
                 serviceProviderProperties,
                 expressRoutePort,
+                expressRouteLag,
                 bandwidthInGbps,
                 sTag,
                 resiliencyLevel,

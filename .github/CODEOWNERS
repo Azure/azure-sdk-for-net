@@ -1001,5 +1001,5 @@
 /**/*.py                                                           @jsquire @m-nash @JoshLove-msft
 
 # Add owners for NPM configuration
-/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @ArcturusZhang @ArthurMa1978 @mikeharder
-/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @mikeharder
+/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @ArcturusZhang @ArthurMa1978
+/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string bastionHostApiVersion);
             _bastionHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _bastionHostsRestClient = new BastionHosts(_bastionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bastionHostApiVersion ?? "2025-09-01");
+            _bastionHostsRestClient = new BastionHosts(_bastionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, bastionHostApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Updates Tags for BastionHost resource
+        /// Updates Tags or identity for BastionHost resource
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -198,11 +198,11 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BastionHosts_UpdateTags. </description>
+        /// <description> BastionHosts_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="networkTagsObject"> Parameters supplied to update BastionHost tags. </param>
+        /// <param name="patch"> Parameters supplied to update BastionHost tags or identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
-        public virtual async Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, BastionHostPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _bastionHostsClientDiagnostics.CreateScope("BastionHostResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                HttpMessage message = _bastionHostsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionHostPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<BastionHostResource> operation = new NetworkArmOperation<BastionHostResource>(
                     new BastionHostResourceOperationSource(Client),
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Updates Tags for BastionHost resource
+        /// Updates Tags or identity for BastionHost resource
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -257,11 +257,11 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BastionHosts_UpdateTags. </description>
+        /// <description> BastionHosts_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="networkTagsObject"> Parameters supplied to update BastionHost tags. </param>
+        /// <param name="patch"> Parameters supplied to update BastionHost tags or identity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
-        public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _bastionHostsClientDiagnostics.CreateScope("BastionHostResource.Update");
             scope.Start();
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bastionHostsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetworkTagsObject.ToRequestContent(networkTagsObject), context);
+                HttpMessage message = _bastionHostsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BastionHostPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<BastionHostResource> operation = new NetworkArmOperation<BastionHostResource>(
                     new BastionHostResourceOperationSource(Client),
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     BastionHostData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkTagsObject patch = new NetworkTagsObject();
+                    BastionHostPatch patch = new BastionHostPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     BastionHostData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkTagsObject patch = new NetworkTagsObject();
+                    BastionHostPatch patch = new BastionHostPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     BastionHostData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkTagsObject patch = new NetworkTagsObject();
+                    BastionHostPatch patch = new BastionHostPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<BastionHostResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1180,7 +1180,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     BastionHostData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkTagsObject patch = new NetworkTagsObject();
+                    BastionHostPatch patch = new BastionHostPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<BastionHostResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1222,7 +1222,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     BastionHostData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NetworkTagsObject patch = new NetworkTagsObject();
+                    BastionHostPatch patch = new BastionHostPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1268,7 +1268,7 @@ namespace Azure.ResourceManager.Network
                 else
                 {
                     BastionHostData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NetworkTagsObject patch = new NetworkTagsObject();
+                    BastionHostPatch patch = new BastionHostPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

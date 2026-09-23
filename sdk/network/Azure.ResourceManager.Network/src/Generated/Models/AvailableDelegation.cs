@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 
@@ -25,25 +26,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailableDelegation"/>. </summary>
-        /// <param name="name"> The name of the AvailableDelegation resource. </param>
-        /// <param name="id"> A unique identifier of the AvailableDelegation resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="serviceName"> The name of the service and resource. </param>
         /// <param name="actions"> The actions permitted to the service upon delegation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableDelegation(string name, string id, string @type, string serviceName, IReadOnlyList<string> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailableDelegation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceName, IReadOnlyList<string> actions, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Name = name;
-            Id = id;
-            Type = @type;
             ServiceName = serviceName;
             Actions = actions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Resource type. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> The name of the service and resource. </summary>
         [WirePath("serviceName")]
