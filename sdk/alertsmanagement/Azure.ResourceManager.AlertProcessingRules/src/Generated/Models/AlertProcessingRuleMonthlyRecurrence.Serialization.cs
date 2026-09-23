@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AlertProcessingRuleMonthlyRecurrence(recurrenceType, startOn, endOn, additionalBinaryDataProperties, daysOfMonth);
