@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.PlatformValidation.Models
 {
     /// <summary> The updatable properties of the CloudValidation. </summary>
-    public partial class CloudValidationUpdateProperties
+    internal partial class CloudValidationUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,19 +23,14 @@ namespace Azure.ResourceManager.PlatformValidation.Models
 
         /// <summary> Initializes a new instance of <see cref="CloudValidationUpdateProperties"/>. </summary>
         /// <param name="description"> The description of the resource. </param>
-        /// <param name="overallState"> The overall state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudValidationUpdateProperties(string description, CloudValidationOverallState? overallState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudValidationUpdateProperties(string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
-            OverallState = overallState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The description of the resource. </summary>
         public string Description { get; set; }
-
-        /// <summary> The overall state of the resource. </summary>
-        public CloudValidationOverallState? OverallState { get; set; }
     }
 }

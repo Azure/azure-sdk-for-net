@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="planConfigurationUri">
         /// URI where the configuration of the execution plan is defined.
         /// Either this property or `planConfigurationJson` is mandatory while creating; they are mutually exclusive.
+        /// This must be a plain, non-SAS reference (no embedded credentials, tokens, or query-string secrets);
+        /// the service reads the referenced content using its managed identity.
         /// This value is returned as-is in get responses, so it must not contain credentials or other secrets.
         /// </param>
         /// <param name="planConfigurationJson">
@@ -37,16 +39,14 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="error"> Error details. Populated when provisioningState is Failed or Canceled. </param>
-        /// <param name="overallState"> The overall state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationExecutionPlanProperties(string description, string planConfigurationUri, string planConfigurationJson, ValidationExecutionPlanProvisioningState? provisioningState, ResponseError error, ValidationExecutionPlanOverallState? overallState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidationExecutionPlanProperties(string description, string planConfigurationUri, string planConfigurationJson, ValidationExecutionPlanProvisioningState? provisioningState, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             PlanConfigurationUri = planConfigurationUri;
             PlanConfigurationJson = planConfigurationJson;
             ProvisioningState = provisioningState;
             Error = error;
-            OverallState = overallState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,6 +56,8 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <summary>
         /// URI where the configuration of the execution plan is defined.
         /// Either this property or `planConfigurationJson` is mandatory while creating; they are mutually exclusive.
+        /// This must be a plain, non-SAS reference (no embedded credentials, tokens, or query-string secrets);
+        /// the service reads the referenced content using its managed identity.
         /// This value is returned as-is in get responses, so it must not contain credentials or other secrets.
         /// </summary>
         public string PlanConfigurationUri { get; set; }
@@ -73,8 +75,5 @@ namespace Azure.ResourceManager.PlatformValidation.Models
 
         /// <summary> Error details. Populated when provisioningState is Failed or Canceled. </summary>
         public ResponseError Error { get; }
-
-        /// <summary> The overall state of the resource. </summary>
-        public ValidationExecutionPlanOverallState? OverallState { get; set; }
     }
 }

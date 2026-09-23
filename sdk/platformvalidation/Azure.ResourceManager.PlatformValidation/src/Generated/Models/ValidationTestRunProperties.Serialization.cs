@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.PlatformValidation;
 
 namespace Azure.ResourceManager.PlatformValidation.Models
@@ -106,12 +107,12 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 writer.WritePropertyName("reportedAt"u8);
                 writer.WriteStringValue(ReportedOn.Value, "O");
             }
-            if (Optional.IsDefined(TestId))
+            if (options.Format != "W" && Optional.IsDefined(TestId))
             {
                 writer.WritePropertyName("testId"u8);
                 writer.WriteStringValue(TestId);
             }
-            if (Optional.IsDefined(InputsJson))
+            if (options.Format != "W" && Optional.IsDefined(InputsJson))
             {
                 writer.WritePropertyName("inputsJson"u8);
                 writer.WriteStringValue(InputsJson);
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             DateTimeOffset? startedOn = default;
             DateTimeOffset? completedOn = default;
             DateTimeOffset? reportedOn = default;
-            string testId = default;
+            ResourceIdentifier testId = default;
             string inputsJson = default;
             IReadOnlyList<ValidationTestPassDetails> passDetails = default;
             IReadOnlyList<ValidationTestFailureDetails> failureDetails = default;
@@ -247,7 +248,11 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 }
                 if (prop.NameEquals("testId"u8))
                 {
-                    testId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("inputsJson"u8))

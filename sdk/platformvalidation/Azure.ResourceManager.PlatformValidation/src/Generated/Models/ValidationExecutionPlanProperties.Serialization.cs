@@ -101,11 +101,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 writer.WritePropertyName("error"u8);
                 ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
-            if (Optional.IsDefined(OverallState))
-            {
-                writer.WritePropertyName("overallState"u8);
-                writer.WriteStringValue(OverallState.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -153,7 +148,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             string planConfigurationJson = default;
             ValidationExecutionPlanProvisioningState? provisioningState = default;
             ResponseError error = default;
-            ValidationExecutionPlanOverallState? overallState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -190,15 +184,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                     error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPlatformValidationContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("overallState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    overallState = new ValidationExecutionPlanOverallState(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -210,7 +195,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 planConfigurationJson,
                 provisioningState,
                 error,
-                overallState,
                 additionalBinaryDataProperties);
         }
     }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.PlatformValidation;
 
 namespace Azure.ResourceManager.PlatformValidation.Models
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="startedOn"> The start time of the test run. </param>
         /// <param name="completedOn"> The completion time of the test run. </param>
         /// <param name="reportedOn"> The time at which the test run result was reported. </param>
-        /// <param name="testId"> The name of the validation test (ValidationTest resource name, not an ARM resource ID) in the validation test catalog. </param>
+        /// <param name="testId"> The resource ID of the validation test in the validation test catalog. </param>
         /// <param name="inputsJson">
         /// Validation test run inputs json, conforming to the input contract declared by `ValidationTestInput` on the corresponding validation test.
         /// This value is returned as-is in get responses, so it must not contain credentials or other secrets.
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="passDetails"> Detailed pass information when the test passes. </param>
         /// <param name="failureDetails"> Detailed failure information when the test fails. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationTestRunProperties(ValidationTestRunStatus? status, ResponseError error, ValidationTestRunProvisioningState? provisioningState, DateTimeOffset? startedOn, DateTimeOffset? completedOn, DateTimeOffset? reportedOn, string testId, string inputsJson, IReadOnlyList<ValidationTestPassDetails> passDetails, IReadOnlyList<ValidationTestFailureDetails> failureDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidationTestRunProperties(ValidationTestRunStatus? status, ResponseError error, ValidationTestRunProvisioningState? provisioningState, DateTimeOffset? startedOn, DateTimeOffset? completedOn, DateTimeOffset? reportedOn, ResourceIdentifier testId, string inputsJson, IReadOnlyList<ValidationTestPassDetails> passDetails, IReadOnlyList<ValidationTestFailureDetails> failureDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Error = error;
@@ -73,8 +74,8 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <summary> The time at which the test run result was reported. </summary>
         public DateTimeOffset? ReportedOn { get; }
 
-        /// <summary> The name of the validation test (ValidationTest resource name, not an ARM resource ID) in the validation test catalog. </summary>
-        public string TestId { get; }
+        /// <summary> The resource ID of the validation test in the validation test catalog. </summary>
+        public ResourceIdentifier TestId { get; }
 
         /// <summary>
         /// Validation test run inputs json, conforming to the input contract declared by `ValidationTestInput` on the corresponding validation test.

@@ -89,11 +89,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 writer.WritePropertyName("planConfigurationJson"u8);
                 writer.WriteStringValue(PlanConfigurationJson);
             }
-            if (Optional.IsDefined(OverallState))
-            {
-                writer.WritePropertyName("overallState"u8);
-                writer.WriteStringValue(OverallState.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,7 +134,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             string description = default;
             string planConfigurationUri = default;
             string planConfigurationJson = default;
-            ValidationExecutionPlanOverallState? overallState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,21 +152,12 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                     planConfigurationJson = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("overallState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    overallState = new ValidationExecutionPlanOverallState(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ValidationExecutionPlanUpdateProperties(description, planConfigurationUri, planConfigurationJson, overallState, additionalBinaryDataProperties);
+            return new ValidationExecutionPlanUpdateProperties(description, planConfigurationUri, planConfigurationJson, additionalBinaryDataProperties);
         }
     }
 }

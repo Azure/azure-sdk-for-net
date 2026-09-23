@@ -91,11 +91,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 writer.WritePropertyName("error"u8);
                 ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
-            if (Optional.IsDefined(OverallState))
-            {
-                writer.WritePropertyName("overallState"u8);
-                writer.WriteStringValue(OverallState.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(ManagedOnBehalfOfConfiguration))
             {
                 writer.WritePropertyName("managedOnBehalfOfConfiguration"u8);
@@ -146,7 +141,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             string description = default;
             ProvisioningState? provisioningState = default;
             ResponseError error = default;
-            CloudValidationOverallState? overallState = default;
             ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -174,15 +168,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                     error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPlatformValidationContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("overallState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    overallState = new CloudValidationOverallState(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("managedOnBehalfOfConfiguration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -197,13 +182,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CloudValidationProperties(
-                description,
-                provisioningState,
-                error,
-                overallState,
-                managedOnBehalfOfConfiguration,
-                additionalBinaryDataProperties);
+            return new CloudValidationProperties(description, provisioningState, error, managedOnBehalfOfConfiguration, additionalBinaryDataProperties);
         }
     }
 }

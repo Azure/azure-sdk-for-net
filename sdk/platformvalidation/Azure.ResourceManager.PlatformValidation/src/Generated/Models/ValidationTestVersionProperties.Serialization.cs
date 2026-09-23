@@ -74,12 +74,17 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             {
                 throw new FormatException($"The model {nameof(ValidationTestVersionProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Description))
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Audience))
+            if (options.Format != "W" && Optional.IsDefined(Audience))
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience.Value.ToString());
@@ -89,7 +94,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(CategoryIds))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CategoryIds))
             {
                 writer.WritePropertyName("categoryIds"u8);
                 writer.WriteStartArray();
@@ -104,12 +109,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OverallState))
-            {
-                writer.WritePropertyName("overallState"u8);
-                writer.WriteStringValue(OverallState.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Owners))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Owners))
             {
                 writer.WritePropertyName("owners"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Inputs))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Inputs))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -134,15 +134,15 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContentHash))
+            if (options.Format != "W" && Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
                 writer.WriteStringValue(ContentHash);
             }
-            if (Optional.IsDefined(TestStoreUri))
+            if (options.Format != "W" && Optional.IsDefined(TestStoreUri))
             {
                 writer.WritePropertyName("testStoreUri"u8);
-                writer.WriteStringValue(TestStoreUri);
+                writer.WriteStringValue(TestStoreUri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -186,18 +186,23 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             {
                 return null;
             }
+            string displayName = default;
             string description = default;
             CatalogAudience? audience = default;
             ResourceProvisioningState? provisioningState = default;
-            IList<string> categoryIds = default;
-            ValidationTestOverallState? overallState = default;
-            IList<string> owners = default;
-            IList<ValidationTestInput> inputs = default;
+            IReadOnlyList<string> categoryIds = default;
+            IReadOnlyList<string> owners = default;
+            IReadOnlyList<ValidationTestInput> inputs = default;
             string contentHash = default;
-            string testStoreUri = default;
+            Uri testStoreUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("displayName"u8))
+                {
+                    displayName = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("description"u8))
                 {
                     description = prop.Value.GetString();
@@ -242,15 +247,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                     categoryIds = array;
                     continue;
                 }
-                if (prop.NameEquals("overallState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    overallState = new ValidationTestOverallState(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("owners"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -293,7 +289,11 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 }
                 if (prop.NameEquals("testStoreUri"u8))
                 {
-                    testStoreUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testStoreUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -302,11 +302,11 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 }
             }
             return new ValidationTestVersionProperties(
+                displayName,
                 description,
                 audience,
                 provisioningState,
                 categoryIds ?? new ChangeTrackingList<string>(),
-                overallState,
                 owners ?? new ChangeTrackingList<string>(),
                 inputs ?? new ChangeTrackingList<ValidationTestInput>(),
                 contentHash,

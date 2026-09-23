@@ -35,12 +35,13 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// and a category must not reference itself as its own parent.
         /// </param>
         /// <param name="owners">
-        /// Owners of the validation test category, expressed as email aliases or Microsoft Entra object IDs.
+        /// Owners of the validation test category, expressed as team or distribution list aliases.
+        /// Individual user aliases and directory object identifiers are not published in this field.
         /// Only catalog publishers set this value through an internal publishing process; end users of the validation
         /// service consume catalog entries read-only through Get/List and cannot modify it.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationTestCategoryProperties(string displayName, string description, CatalogAudience? audience, ResourceProvisioningState? provisioningState, string parentCategoryId, IList<string> owners, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidationTestCategoryProperties(string displayName, string description, CatalogAudience? audience, ResourceProvisioningState? provisioningState, string parentCategoryId, IReadOnlyList<string> owners, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -72,10 +73,11 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         public string ParentCategoryId { get; }
 
         /// <summary>
-        /// Owners of the validation test category, expressed as email aliases or Microsoft Entra object IDs.
+        /// Owners of the validation test category, expressed as team or distribution list aliases.
+        /// Individual user aliases and directory object identifiers are not published in this field.
         /// Only catalog publishers set this value through an internal publishing process; end users of the validation
         /// service consume catalog entries read-only through Get/List and cannot modify it.
         /// </summary>
-        public IList<string> Owners { get; }
+        public IReadOnlyList<string> Owners { get; }
     }
 }

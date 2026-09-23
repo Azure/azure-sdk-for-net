@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.PlatformValidation;
 
 namespace Azure.ResourceManager.PlatformValidation.Models
@@ -26,13 +27,14 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidationTestProperties"/>. </summary>
+        /// <param name="displayName"> Display name of the validation test. </param>
         /// <param name="description"> Validation test description. </param>
         /// <param name="audience"> Audience visibility of this validation test. </param>
         /// <param name="provisioningState"> Provisioning state of the validation test catalog resource. </param>
         /// <param name="categoryIds"> The names of the validation test categories (ValidationTestCategory resource names, not ARM resource IDs) associated with this test. </param>
-        /// <param name="overallState"> Overall state of the validation test. </param>
         /// <param name="owners">
-        /// Owners of the validation test definition, expressed as aliases.
+        /// Owners of the validation test definition, expressed as team or distribution list aliases.
+        /// Individual user aliases and directory object identifiers are not published in this field.
         /// Only catalog publishers(limited to microsoft internal only) set this value through an internal publishing process; end users of the validation
         /// service consume catalog entries read-only through Get/List and cannot modify it.
         /// </param>
@@ -42,13 +44,13 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="latestPublishedVersion"> The resource ID of the latest published version snapshot. </param>
         /// <param name="lastPublishedOn"> Timestamp of the last version publication. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationTestProperties(string description, CatalogAudience? audience, ResourceProvisioningState? provisioningState, IList<string> categoryIds, ValidationTestOverallState? overallState, IList<string> owners, IList<ValidationTestInput> inputs, string testStoreUri, string currentVersion, string latestPublishedVersion, DateTimeOffset? lastPublishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidationTestProperties(string displayName, string description, CatalogAudience? audience, ResourceProvisioningState? provisioningState, IReadOnlyList<string> categoryIds, IReadOnlyList<string> owners, IReadOnlyList<ValidationTestInput> inputs, Uri testStoreUri, ResourceIdentifier currentVersion, ResourceIdentifier latestPublishedVersion, DateTimeOffset? lastPublishedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            DisplayName = displayName;
             Description = description;
             Audience = audience;
             ProvisioningState = provisioningState;
             CategoryIds = categoryIds;
-            OverallState = overallState;
             Owners = owners;
             Inputs = inputs;
             TestStoreUri = testStoreUri;
@@ -57,6 +59,9 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             LastPublishedOn = lastPublishedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Display name of the validation test. </summary>
+        public string DisplayName { get; }
 
         /// <summary> Validation test description. </summary>
         public string Description { get; }
@@ -68,29 +73,27 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         public ResourceProvisioningState? ProvisioningState { get; }
 
         /// <summary> The names of the validation test categories (ValidationTestCategory resource names, not ARM resource IDs) associated with this test. </summary>
-        public IList<string> CategoryIds { get; }
-
-        /// <summary> Overall state of the validation test. </summary>
-        public ValidationTestOverallState? OverallState { get; }
+        public IReadOnlyList<string> CategoryIds { get; }
 
         /// <summary>
-        /// Owners of the validation test definition, expressed as aliases.
+        /// Owners of the validation test definition, expressed as team or distribution list aliases.
+        /// Individual user aliases and directory object identifiers are not published in this field.
         /// Only catalog publishers(limited to microsoft internal only) set this value through an internal publishing process; end users of the validation
         /// service consume catalog entries read-only through Get/List and cannot modify it.
         /// </summary>
-        public IList<string> Owners { get; }
+        public IReadOnlyList<string> Owners { get; }
 
         /// <summary> Declared input contract for this validation test. </summary>
-        public IList<ValidationTestInput> Inputs { get; }
+        public IReadOnlyList<ValidationTestInput> Inputs { get; }
 
         /// <summary> URI of the location where the test artifact is stored. </summary>
-        public string TestStoreUri { get; }
+        public Uri TestStoreUri { get; }
 
         /// <summary> The resource ID of the current immutable version snapshot. </summary>
-        public string CurrentVersion { get; }
+        public ResourceIdentifier CurrentVersion { get; }
 
         /// <summary> The resource ID of the latest published version snapshot. </summary>
-        public string LatestPublishedVersion { get; }
+        public ResourceIdentifier LatestPublishedVersion { get; }
 
         /// <summary> Timestamp of the last version publication. </summary>
         public DateTimeOffset? LastPublishedOn { get; }

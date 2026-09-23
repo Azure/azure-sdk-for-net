@@ -26,15 +26,13 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="description"> The description of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="error"> Error details. Populated when provisioningState is Failed or Canceled. </param>
-        /// <param name="overallState"> The overall state of the resource. </param>
         /// <param name="managedOnBehalfOfConfiguration"> Managed On Behalf Of Configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudValidationProperties(string description, ProvisioningState? provisioningState, ResponseError error, CloudValidationOverallState? overallState, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudValidationProperties(string description, ProvisioningState? provisioningState, ResponseError error, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ProvisioningState = provisioningState;
             Error = error;
-            OverallState = overallState;
             ManagedOnBehalfOfConfiguration = managedOnBehalfOfConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,9 +45,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
 
         /// <summary> Error details. Populated when provisioningState is Failed or Canceled. </summary>
         public ResponseError Error { get; }
-
-        /// <summary> The overall state of the resource. </summary>
-        public CloudValidationOverallState? OverallState { get; set; }
 
         /// <summary> Managed On Behalf Of Configuration. </summary>
         internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration { get; }

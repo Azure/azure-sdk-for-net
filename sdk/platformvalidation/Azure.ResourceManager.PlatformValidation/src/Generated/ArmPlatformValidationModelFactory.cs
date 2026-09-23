@@ -45,18 +45,11 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="description"> The description of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="error"> Error details. Populated when provisioningState is Failed or Canceled. </param>
-        /// <param name="overallState"> The overall state of the resource. </param>
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
         /// <returns> A new <see cref="Models.CloudValidationProperties"/> instance for mocking. </returns>
-        public static CloudValidationProperties CloudValidationProperties(string description = default, ProvisioningState? provisioningState = default, ResponseError error = default, CloudValidationOverallState? overallState = default, IEnumerable<PlatformValidationMoboBrokerResourceInfo> managedOnBehalfOfMoboBrokerResources = default)
+        public static CloudValidationProperties CloudValidationProperties(string description = default, ProvisioningState? provisioningState = default, ResponseError error = default, IEnumerable<PlatformValidationMoboBrokerResourceInfo> managedOnBehalfOfMoboBrokerResources = default)
         {
-            return new CloudValidationProperties(
-                description,
-                provisioningState,
-                error,
-                overallState,
-                managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<PlatformValidationMoboBrokerResourceInfo>()).ToList(), default),
-                default);
+            return new CloudValidationProperties(description, provisioningState, error, managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<PlatformValidationMoboBrokerResourceInfo>()).ToList(), default), default);
         }
 
         /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
@@ -67,21 +60,13 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         }
 
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="cloudValidationUpdateDescription"> The description of the resource. </param>
         /// <returns> A new <see cref="Models.CloudValidationPatch"/> instance for mocking. </returns>
-        public static CloudValidationPatch CloudValidationPatch(IDictionary<string, string> tags = default, CloudValidationUpdateProperties properties = default)
+        public static CloudValidationPatch CloudValidationPatch(IDictionary<string, string> tags = default, string cloudValidationUpdateDescription = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CloudValidationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
-        }
-
-        /// <param name="description"> The description of the resource. </param>
-        /// <param name="overallState"> The overall state of the resource. </param>
-        /// <returns> A new <see cref="Models.CloudValidationUpdateProperties"/> instance for mocking. </returns>
-        public static CloudValidationUpdateProperties CloudValidationUpdateProperties(string description = default, CloudValidationOverallState? overallState = default)
-        {
-            return new CloudValidationUpdateProperties(description, overallState, default);
+            return new CloudValidationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), cloudValidationUpdateDescription is null ? default : new CloudValidationUpdateProperties(cloudValidationUpdateDescription, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -111,6 +96,8 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="planConfigurationUri">
         /// URI where the configuration of the execution plan is defined.
         /// Either this property or `planConfigurationJson` is mandatory while creating; they are mutually exclusive.
+        /// This must be a plain, non-SAS reference (no embedded credentials, tokens, or query-string secrets);
+        /// the service reads the referenced content using its managed identity.
         /// This value is returned as-is in get responses, so it must not contain credentials or other secrets.
         /// </param>
         /// <param name="planConfigurationJson">
@@ -121,9 +108,8 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="error"> Error details. Populated when provisioningState is Failed or Canceled. </param>
-        /// <param name="overallState"> The overall state of the resource. </param>
         /// <returns> A new <see cref="Models.ValidationExecutionPlanProperties"/> instance for mocking. </returns>
-        public static ValidationExecutionPlanProperties ValidationExecutionPlanProperties(string description = default, string planConfigurationUri = default, string planConfigurationJson = default, ValidationExecutionPlanProvisioningState? provisioningState = default, ResponseError error = default, ValidationExecutionPlanOverallState? overallState = default)
+        public static ValidationExecutionPlanProperties ValidationExecutionPlanProperties(string description = default, string planConfigurationUri = default, string planConfigurationJson = default, ValidationExecutionPlanProvisioningState? provisioningState = default, ResponseError error = default)
         {
             return new ValidationExecutionPlanProperties(
                 description,
@@ -131,7 +117,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 planConfigurationJson,
                 provisioningState,
                 error,
-                overallState,
                 default);
         }
 
@@ -149,6 +134,8 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="planConfigurationUri">
         /// URI where the configuration of the execution plan is defined.
         /// Either this property or `planConfigurationJson` is mandatory while creating; they are mutually exclusive.
+        /// This must be a plain, non-SAS reference (no embedded credentials, tokens, or query-string secrets);
+        /// the service reads the referenced content using its managed identity.
         /// This value is returned as-is in get responses, so it must not contain credentials or other secrets.
         /// </param>
         /// <param name="planConfigurationJson">
@@ -157,11 +144,10 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// In get, always return the entire json configuration.
         /// This value is returned as-is in get responses, so it must not contain credentials or other secrets.
         /// </param>
-        /// <param name="overallState"> The overall state of the resource. </param>
         /// <returns> A new <see cref="Models.ValidationExecutionPlanUpdateProperties"/> instance for mocking. </returns>
-        public static ValidationExecutionPlanUpdateProperties ValidationExecutionPlanUpdateProperties(string description = default, string planConfigurationUri = default, string planConfigurationJson = default, ValidationExecutionPlanOverallState? overallState = default)
+        public static ValidationExecutionPlanUpdateProperties ValidationExecutionPlanUpdateProperties(string description = default, string planConfigurationUri = default, string planConfigurationJson = default)
         {
-            return new ValidationExecutionPlanUpdateProperties(description, planConfigurationUri, planConfigurationJson, overallState, default);
+            return new ValidationExecutionPlanUpdateProperties(description, planConfigurationUri, planConfigurationJson, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -252,7 +238,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="startedOn"> The start time of the test run. </param>
         /// <param name="completedOn"> The completion time of the test run. </param>
         /// <param name="reportedOn"> The time at which the test run result was reported. </param>
-        /// <param name="testId"> The name of the validation test (ValidationTest resource name, not an ARM resource ID) in the validation test catalog. </param>
+        /// <param name="testId"> The resource ID of the validation test in the validation test catalog. </param>
         /// <param name="inputsJson">
         /// Validation test run inputs json, conforming to the input contract declared by `ValidationTestInput` on the corresponding validation test.
         /// This value is returned as-is in get responses, so it must not contain credentials or other secrets.
@@ -260,7 +246,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="passDetails"> Detailed pass information when the test passes. </param>
         /// <param name="failureDetails"> Detailed failure information when the test fails. </param>
         /// <returns> A new <see cref="Models.ValidationTestRunProperties"/> instance for mocking. </returns>
-        public static ValidationTestRunProperties ValidationTestRunProperties(ValidationTestRunStatus? status = default, ResponseError error = default, ValidationTestRunProvisioningState? provisioningState = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, DateTimeOffset? reportedOn = default, string testId = default, string inputsJson = default, IEnumerable<ValidationTestPassDetails> passDetails = default, IEnumerable<ValidationTestFailureDetails> failureDetails = default)
+        public static ValidationTestRunProperties ValidationTestRunProperties(ValidationTestRunStatus? status = default, ResponseError error = default, ValidationTestRunProvisioningState? provisioningState = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, DateTimeOffset? reportedOn = default, ResourceIdentifier testId = default, string inputsJson = default, IEnumerable<ValidationTestPassDetails> passDetails = default, IEnumerable<ValidationTestFailureDetails> failureDetails = default)
         {
             passDetails ??= new ChangeTrackingList<ValidationTestPassDetails>();
             failureDetails ??= new ChangeTrackingList<ValidationTestFailureDetails>();
@@ -324,13 +310,14 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <param name="displayName"> Display name of the validation test. </param>
         /// <param name="description"> Validation test description. </param>
         /// <param name="audience"> Audience visibility of this validation test. </param>
         /// <param name="provisioningState"> Provisioning state of the validation test catalog resource. </param>
         /// <param name="categoryIds"> The names of the validation test categories (ValidationTestCategory resource names, not ARM resource IDs) associated with this test. </param>
-        /// <param name="overallState"> Overall state of the validation test. </param>
         /// <param name="owners">
-        /// Owners of the validation test definition, expressed as aliases.
+        /// Owners of the validation test definition, expressed as team or distribution list aliases.
+        /// Individual user aliases and directory object identifiers are not published in this field.
         /// Only catalog publishers(limited to microsoft internal only) set this value through an internal publishing process; end users of the validation
         /// service consume catalog entries read-only through Get/List and cannot modify it.
         /// </param>
@@ -340,18 +327,18 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="latestPublishedVersion"> The resource ID of the latest published version snapshot. </param>
         /// <param name="lastPublishedOn"> Timestamp of the last version publication. </param>
         /// <returns> A new <see cref="Models.ValidationTestProperties"/> instance for mocking. </returns>
-        public static ValidationTestProperties ValidationTestProperties(string description = default, CatalogAudience? audience = default, ResourceProvisioningState? provisioningState = default, IEnumerable<string> categoryIds = default, ValidationTestOverallState? overallState = default, IEnumerable<string> owners = default, IEnumerable<ValidationTestInput> inputs = default, string testStoreUri = default, string currentVersion = default, string latestPublishedVersion = default, DateTimeOffset? lastPublishedOn = default)
+        public static ValidationTestProperties ValidationTestProperties(string displayName = default, string description = default, CatalogAudience? audience = default, ResourceProvisioningState? provisioningState = default, IEnumerable<string> categoryIds = default, IEnumerable<string> owners = default, IEnumerable<ValidationTestInput> inputs = default, Uri testStoreUri = default, ResourceIdentifier currentVersion = default, ResourceIdentifier latestPublishedVersion = default, DateTimeOffset? lastPublishedOn = default)
         {
             categoryIds ??= new ChangeTrackingList<string>();
             owners ??= new ChangeTrackingList<string>();
             inputs ??= new ChangeTrackingList<ValidationTestInput>();
 
             return new ValidationTestProperties(
+                displayName,
                 description,
                 audience,
                 provisioningState,
                 (categoryIds ?? new ChangeTrackingList<string>()).ToList(),
-                overallState,
                 (owners ?? new ChangeTrackingList<string>()).ToList(),
                 (inputs ?? new ChangeTrackingList<ValidationTestInput>()).ToList(),
                 testStoreUri,
@@ -405,13 +392,14 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 default);
         }
 
+        /// <param name="displayName"> Display name of the validation test version. </param>
         /// <param name="description"> Validation test description. </param>
         /// <param name="audience"> Audience visibility of this validation test version. </param>
         /// <param name="provisioningState"> Provisioning state of the validation test version catalog resource. </param>
         /// <param name="categoryIds"> The names of the validation test categories (ValidationTestCategory resource names, not ARM resource IDs) associated with this test version. </param>
-        /// <param name="overallState"> Overall state of the validation test. </param>
         /// <param name="owners">
-        /// Owners of the validation test version definition, expressed as email aliases or Microsoft Entra object IDs.
+        /// Owners of the validation test version definition, expressed as team or distribution list aliases.
+        /// Individual user aliases and directory object identifiers are not published in this field.
         /// Only catalog publishers set this value through an internal publishing process; end users of the validation
         /// service consume catalog entries read-only through Get/List and cannot modify it.
         /// </param>
@@ -419,18 +407,18 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// <param name="contentHash"> SHA-256 hash of the version content used for integrity and deduplication. </param>
         /// <param name="testStoreUri"> URI of the location where the test artifact is stored. </param>
         /// <returns> A new <see cref="Models.ValidationTestVersionProperties"/> instance for mocking. </returns>
-        public static ValidationTestVersionProperties ValidationTestVersionProperties(string description = default, CatalogAudience? audience = default, ResourceProvisioningState? provisioningState = default, IEnumerable<string> categoryIds = default, ValidationTestOverallState? overallState = default, IEnumerable<string> owners = default, IEnumerable<ValidationTestInput> inputs = default, string contentHash = default, string testStoreUri = default)
+        public static ValidationTestVersionProperties ValidationTestVersionProperties(string displayName = default, string description = default, CatalogAudience? audience = default, ResourceProvisioningState? provisioningState = default, IEnumerable<string> categoryIds = default, IEnumerable<string> owners = default, IEnumerable<ValidationTestInput> inputs = default, string contentHash = default, Uri testStoreUri = default)
         {
             categoryIds ??= new ChangeTrackingList<string>();
             owners ??= new ChangeTrackingList<string>();
             inputs ??= new ChangeTrackingList<ValidationTestInput>();
 
             return new ValidationTestVersionProperties(
+                displayName,
                 description,
                 audience,
                 provisioningState,
                 (categoryIds ?? new ChangeTrackingList<string>()).ToList(),
-                overallState,
                 (owners ?? new ChangeTrackingList<string>()).ToList(),
                 (inputs ?? new ChangeTrackingList<ValidationTestInput>()).ToList(),
                 contentHash,
@@ -466,7 +454,8 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         /// and a category must not reference itself as its own parent.
         /// </param>
         /// <param name="owners">
-        /// Owners of the validation test category, expressed as email aliases or Microsoft Entra object IDs.
+        /// Owners of the validation test category, expressed as team or distribution list aliases.
+        /// Individual user aliases and directory object identifiers are not published in this field.
         /// Only catalog publishers set this value through an internal publishing process; end users of the validation
         /// service consume catalog entries read-only through Get/List and cannot modify it.
         /// </param>

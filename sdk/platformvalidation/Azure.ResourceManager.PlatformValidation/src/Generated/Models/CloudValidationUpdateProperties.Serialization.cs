@@ -14,7 +14,7 @@ using Azure.ResourceManager.PlatformValidation;
 namespace Azure.ResourceManager.PlatformValidation.Models
 {
     /// <summary> The updatable properties of the CloudValidation. </summary>
-    public partial class CloudValidationUpdateProperties : IJsonModel<CloudValidationUpdateProperties>
+    internal partial class CloudValidationUpdateProperties : IJsonModel<CloudValidationUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,11 +79,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(OverallState))
-            {
-                writer.WritePropertyName("overallState"u8);
-                writer.WriteStringValue(OverallState.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,7 +122,6 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 return null;
             }
             string description = default;
-            CloudValidationOverallState? overallState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,21 +130,12 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("overallState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    overallState = new CloudValidationOverallState(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CloudValidationUpdateProperties(description, overallState, additionalBinaryDataProperties);
+            return new CloudValidationUpdateProperties(description, additionalBinaryDataProperties);
         }
     }
 }

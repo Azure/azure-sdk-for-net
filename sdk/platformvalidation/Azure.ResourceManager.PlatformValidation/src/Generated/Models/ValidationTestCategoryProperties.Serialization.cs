@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             {
                 throw new FormatException($"The model {nameof(ValidationTestCategoryProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Audience))
+            if (options.Format != "W" && Optional.IsDefined(Audience))
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience.Value.ToString());
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.PlatformValidation.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ParentCategoryId))
+            if (options.Format != "W" && Optional.IsDefined(ParentCategoryId))
             {
                 writer.WritePropertyName("parentCategoryId"u8);
                 writer.WriteStringValue(ParentCategoryId);
             }
-            if (Optional.IsCollectionDefined(Owners))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Owners))
             {
                 writer.WritePropertyName("owners"u8);
                 writer.WriteStartArray();
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PlatformValidation.Models
             CatalogAudience? audience = default;
             ResourceProvisioningState? provisioningState = default;
             string parentCategoryId = default;
-            IList<string> owners = default;
+            IReadOnlyList<string> owners = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

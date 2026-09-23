@@ -38,6 +38,23 @@ namespace Azure.ResourceManager.PlatformValidation.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public CloudValidationUpdateProperties Properties { get; set; }
+        internal CloudValidationUpdateProperties Properties { get; set; }
+
+        /// <summary> The description of the resource. </summary>
+        public string CloudValidationUpdateDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudValidationUpdateProperties();
+                }
+                Properties.Description = value;
+            }
+        }
     }
 }
