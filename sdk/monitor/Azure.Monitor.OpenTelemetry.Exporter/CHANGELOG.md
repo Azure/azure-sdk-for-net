@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 - SDK statistics sent to the Microsoft OpenTelemetry distro's configured ingestion endpoint (the `Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint` AppContext switch) now carry the same region-matched SDK statistics instrumentation key as the existing SDK statistics endpoint, instead of an all-zero placeholder. Only the destination differs on the distro path.
+  ([#63342](https://github.com/Azure/azure-sdk-for-net/pull/63342))
 
 ### Other Changes
 
