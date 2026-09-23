@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// Dataflow OpenTelemetry authentication properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/>, <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>, and <see cref="DataflowOpenTelemetryAnonymousAuthentication"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowOpenTelemetryAnonymousAuthentication"/>, <see cref="DataflowOpenTelemetryServiceAccountAuthentication"/>, and <see cref="DataflowOpenTelemetryX509CertificateAuthentication"/>.
     /// </summary>
     public abstract partial class DataflowOpenTelemetryAuthentication
     {

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// AkriConnectorsRegistrySettings properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AkriConnectorsRegistryEndpointRef"/> and <see cref="AkriConnectorsContainerRegistry"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AkriConnectorsContainerRegistry"/> and <see cref="AkriConnectorsRegistryEndpointRef"/>.
     /// </summary>
     public abstract partial class AkriConnectorsRegistrySettings
     {
