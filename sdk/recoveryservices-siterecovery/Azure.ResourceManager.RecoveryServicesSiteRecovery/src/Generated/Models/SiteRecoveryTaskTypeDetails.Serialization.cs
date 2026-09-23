@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Task details based on specific task type.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="SiteRecoveryVmTaskDetails"/>, and <see cref="VmNicUpdatesTaskDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="SiteRecoveryJobTaskDetails"/>, <see cref="SiteRecoveryVmTaskDetails"/>, and <see cref="VmNicUpdatesTaskDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTaskTypeDetails))]
     public abstract partial class SiteRecoveryTaskTypeDetails : IJsonModel<SiteRecoveryTaskTypeDetails>
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return ConsistencyCheckTaskDetails.DeserializeConsistencyCheckTaskDetails(element, options);
                     case "FabricReplicationGroupTaskDetails":
                         return FabricReplicationGroupTaskDetails.DeserializeFabricReplicationGroupTaskDetails(element, options);
-                    case "JobTaskDetails":
-                        return SiteRecoveryJobTaskDetails.DeserializeSiteRecoveryJobTaskDetails(element, options);
                     case "ManualActionTaskDetails":
                         return ManualActionTaskDetails.DeserializeManualActionTaskDetails(element, options);
                     case "ScriptActionTaskDetails":
                         return ScriptActionTaskDetails.DeserializeScriptActionTaskDetails(element, options);
+                    case "JobTaskDetails":
+                        return SiteRecoveryJobTaskDetails.DeserializeSiteRecoveryJobTaskDetails(element, options);
                     case "VirtualMachineTaskDetails":
                         return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element, options);
                     case "VmNicUpdatesTaskDetails":
