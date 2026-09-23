@@ -2942,6 +2942,9 @@ namespace Azure.Containers.Apps.Sandbox
     {
         protected SandboxGroupSandboxStreams() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual System.Threading.Tasks.Task<Azure.Containers.Apps.Sandbox.SandboxStream> ConnectToSandboxExecStreamAsync(Azure.Core.TokenCredential credential, string containerName = null, string user = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Containers.Apps.Sandbox.SandboxStream> ConnectToSandboxLogStreamAsync(Azure.Core.TokenCredential credential, int? tailLines = default(int?), int? logFormat = default(int?), bool? follow = default(bool?), string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Containers.Apps.Sandbox.SandboxStream> ConnectToSandboxProcessesStreamAsync(Azure.Core.TokenCredential credential, string containerName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSandboxExecStream(string containerName, string user, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response GetSandboxExecStream(string containerName = null, string user = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSandboxExecStreamAsync(string containerName, string user, Azure.RequestContext context) { throw null; }
@@ -3343,6 +3346,29 @@ namespace Azure.Containers.Apps.Sandbox
         Azure.Containers.Apps.Sandbox.SandboxStatsResult System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.SandboxStatsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.SandboxStatsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Containers.Apps.Sandbox.SandboxStatsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SandboxStream : System.IAsyncDisposable, System.IDisposable
+    {
+        protected SandboxStream() { }
+        public virtual System.Threading.Tasks.Task CloseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public void Dispose() { }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Containers.Apps.Sandbox.SandboxStreamMessage> ReceiveMessageAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task SendMessageAsync(System.BinaryData data, Azure.Containers.Apps.Sandbox.SandboxStreamMessageType messageType = Azure.Containers.Apps.Sandbox.SandboxStreamMessageType.Text, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class SandboxStreamMessage
+    {
+        internal SandboxStreamMessage() { }
+        public int? CloseStatus { get { throw null; } }
+        public string CloseStatusDescription { get { throw null; } }
+        public System.BinaryData Data { get { throw null; } }
+        public Azure.Containers.Apps.Sandbox.SandboxStreamMessageType MessageType { get { throw null; } }
+    }
+    public enum SandboxStreamMessageType
+    {
+        Text = 0,
+        Binary = 1,
+        Close = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SandboxSuspendMode : System.IEquatable<Azure.Containers.Apps.Sandbox.SandboxSuspendMode>
