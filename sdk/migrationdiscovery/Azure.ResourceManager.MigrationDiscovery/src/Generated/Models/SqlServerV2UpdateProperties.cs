@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="isHighAvailabilityEnabled"> Gets or sets a value indicating whether High Availability is enabled or not. </param>
         /// <param name="isClustered"> Gets or sets a value indicating whether failover cluster is configured or not. </param>
         /// <param name="hyperthreadRatio"> Gets or sets the Hyper thread ratio. </param>
-        /// <param name="sqlStartOn"> Gets or sets the SQL start time. </param>
+        /// <param name="sqlStartsOn"> Gets or sets the SQL start time. </param>
         /// <param name="runAsAccountId"> Gets or sets the run as account ID of the SQL server. </param>
         /// <param name="hydratedRunAsAccountId"> Gets or sets the hydrated run as account ID of the SQL server. </param>
         /// <param name="hostName"> Gets or sets hostname. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="status"> Gets or sets the powered on status. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerV2UpdateProperties(int? numberOfAgDatabases, SqlFciProperties sqlFciProperties, ProductSupportStatus productSupportStatus, string version, int? numberOfUserDatabases, float? sumOfUserDatabasesSizeInMb, float? tempDBSizeInMb, float? maxServerMemoryInUseInMb, int? visibleOnlineCoreCount, int? numOfLogins, float? physicalCpuCount, int? logicalCpuCount, string engineEdition, string edition, bool? isHighAvailabilityEnabled, bool? isClustered, int? hyperthreadRatio, DateTimeOffset? sqlStartOn, string runAsAccountId, string hydratedRunAsAccountId, string hostName, string sqlServerName, int? portNumber, IDictionary<string, BinaryData> tags, bool? isDeleted, string createdTimestamp, string updatedTimestamp, SqlServerStatus? status, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerV2UpdateProperties(int? numberOfAgDatabases, SqlFciProperties sqlFciProperties, ProductSupportStatus productSupportStatus, string version, int? numberOfUserDatabases, float? sumOfUserDatabasesSizeInMb, float? tempDBSizeInMb, float? maxServerMemoryInUseInMb, int? visibleOnlineCoreCount, int? numOfLogins, float? physicalCpuCount, int? logicalCpuCount, string engineEdition, string edition, bool? isHighAvailabilityEnabled, bool? isClustered, int? hyperthreadRatio, DateTimeOffset? sqlStartsOn, string runAsAccountId, string hydratedRunAsAccountId, string hostName, string sqlServerName, int? portNumber, IDictionary<string, BinaryData> tags, bool? isDeleted, string createdTimestamp, string updatedTimestamp, SqlServerStatus? status, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NumberOfAgDatabases = numberOfAgDatabases;
             SqlFciProperties = sqlFciProperties;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             IsHighAvailabilityEnabled = isHighAvailabilityEnabled;
             IsClustered = isClustered;
             HyperthreadRatio = hyperthreadRatio;
-            SqlStartOn = sqlStartOn;
+            SqlStartsOn = sqlStartsOn;
             RunAsAccountId = runAsAccountId;
             HydratedRunAsAccountId = hydratedRunAsAccountId;
             HostName = hostName;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public int? HyperthreadRatio { get; set; }
 
         /// <summary> Gets or sets the SQL start time. </summary>
-        public DateTimeOffset? SqlStartOn { get; set; }
+        public DateTimeOffset? SqlStartsOn { get; set; }
 
         /// <summary> Gets or sets the run as account ID of the SQL server. </summary>
         public string RunAsAccountId { get; set; }

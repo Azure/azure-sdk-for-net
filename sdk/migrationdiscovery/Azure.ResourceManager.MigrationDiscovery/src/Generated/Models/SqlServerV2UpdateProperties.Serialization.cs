@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("hyperthreadRatio"u8);
                 writer.WriteNumberValue(HyperthreadRatio.Value);
             }
-            if (Optional.IsDefined(SqlStartOn))
+            if (Optional.IsDefined(SqlStartsOn))
             {
                 writer.WritePropertyName("sqlStartTime"u8);
-                writer.WriteStringValue(SqlStartOn.Value, "O");
+                writer.WriteStringValue(SqlStartsOn.Value, "O");
             }
             if (Optional.IsDefined(RunAsAccountId))
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             bool? isHighAvailabilityEnabled = default;
             bool? isClustered = default;
             int? hyperthreadRatio = default;
-            DateTimeOffset? sqlStartOn = default;
+            DateTimeOffset? sqlStartsOn = default;
             string runAsAccountId = default;
             string hydratedRunAsAccountId = default;
             string hostName = default;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    sqlStartOn = prop.Value.GetDateTimeOffset("O");
+                    sqlStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("runAsAccountId"u8))
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 isHighAvailabilityEnabled,
                 isClustered,
                 hyperthreadRatio,
-                sqlStartOn,
+                sqlStartsOn,
                 runAsAccountId,
                 hydratedRunAsAccountId,
                 hostName,

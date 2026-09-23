@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="numberOfServersImported"> Gets the Number of servers imported. </param>
         /// <param name="numberOfDatabasesImported"> Gets the Number of databases imported. </param>
         /// <param name="numberOfAvailabilityGroupsImported"> Gets the Number of availability groups imported. </param>
-        /// <param name="blobCreationTimeStamp"> Gets the Blob creation time stamp. </param>
+        /// <param name="blobCreatedOn"> Gets the Blob creation time stamp. </param>
         /// <param name="errorSummary"> Gets the Job Error Summary. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportSqlInventoryJobProperties(string blobName, string blobSasUri, ImportSqlInventoryJobResult? jobResult, int? numberOfServersImported, int? numberOfDatabasesImported, int? numberOfAvailabilityGroupsImported, DateTimeOffset? blobCreationTimeStamp, SqlImportJobErrorSummary errorSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportSqlInventoryJobProperties(string blobName, string blobSasUri, ImportSqlInventoryJobResult? jobResult, int? numberOfServersImported, int? numberOfDatabasesImported, int? numberOfAvailabilityGroupsImported, DateTimeOffset? blobCreatedOn, SqlImportJobErrorSummary errorSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobName = blobName;
             BlobSasUri = blobSasUri;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             NumberOfServersImported = numberOfServersImported;
             NumberOfDatabasesImported = numberOfDatabasesImported;
             NumberOfAvailabilityGroupsImported = numberOfAvailabilityGroupsImported;
-            BlobCreationTimeStamp = blobCreationTimeStamp;
+            BlobCreatedOn = blobCreatedOn;
             ErrorSummary = errorSummary;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public int? NumberOfAvailabilityGroupsImported { get; }
 
         /// <summary> Gets the Blob creation time stamp. </summary>
-        public DateTimeOffset? BlobCreationTimeStamp { get; }
+        public DateTimeOffset? BlobCreatedOn { get; }
     }
 }

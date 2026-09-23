@@ -90,15 +90,15 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("serverPort"u8);
                 writer.WriteNumberValue(ServerPort.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(Filters))
             {
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 return null;
             }
             int? serverPort = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("filters"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(serverPort, startOn, endOn, filters, additionalBinaryDataProperties);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(serverPort, startsOn, endsOn, filters, additionalBinaryDataProperties);
         }
     }
 }

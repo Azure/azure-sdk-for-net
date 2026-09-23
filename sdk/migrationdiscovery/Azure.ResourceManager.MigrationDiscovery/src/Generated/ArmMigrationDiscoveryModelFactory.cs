@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Class for site properties. </summary>
         /// <param name="tenantId">
         /// Gets or sets the tenant Id for the service principal with which the
         /// on-premise
@@ -103,6 +104,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Class for site agent properties. </summary>
         /// <param name="id"> Gets the ID of the agent. </param>
         /// <param name="version"> Gets the version of the agent. </param>
         /// <param name="lastHeartBeatUtc"> Gets the last heartbeat time of the agent in UTC. </param>
@@ -120,6 +122,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Class for site appliance properties. </summary>
         /// <param name="servicePrincipalIdentityDetails"> Gets or sets the service principal identity details used by agent for  communication              to the service. </param>
         /// <param name="agentDetails"> Gets or sets the on-premises agent details. </param>
         /// <param name="applianceName"> Gets or sets the Appliance Name. </param>
@@ -162,6 +165,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Error contract returned when some exception occurs in Rest API. </summary>
         /// <param name="code"> Gets the error code. </param>
         /// <param name="message"> Gets the error message. </param>
         /// <param name="possibleCauses"> Gets the possible causes of error. </param>
@@ -252,6 +256,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary>
+        /// Second-level object for identification of application units in a web site
+        /// hosted on IIS.
+        /// </summary>
         /// <param name="applicationPoolName"> Gets or sets the path of the directory. </param>
         /// <param name="managedPipelineMode"> Gets or sets the managed pipeline mode. </param>
         /// <param name="runtimeVersion"> Gets or sets the runtime version. </param>
@@ -276,6 +284,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Second level entity for virtual directories. </summary>
         /// <param name="virtual"> Gets or sets the virtual path for the directory. </param>
         /// <param name="physical"> Gets or sets the physical path of the directory on the web server. </param>
         /// <returns> A new <see cref="Models.DirectoryPath"/> instance for mocking. </returns>
@@ -284,6 +293,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new DirectoryPath(@virtual, physical, default);
         }
 
+        /// <summary>
+        /// Second-level object for identification of virtual applications in a web site
+        /// hosted on IIS.
+        /// </summary>
         /// <param name="isVirtualDirectory"> Gets a value indicating whether the application corresponds to a directory. </param>
         /// <param name="path"> Gets or sets the path of the directory. </param>
         /// <param name="directories"> Gets or sets the list of directories. </param>
@@ -295,6 +308,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new IisVirtualApplicationUnit(isVirtualDirectory, path, (directories ?? new ChangeTrackingList<DirectoryPath>()).ToList(), default);
         }
 
+        /// <summary> Frontend bindings for a web application. </summary>
         /// <param name="protocol"> Gets or sets the Binding protocol. </param>
         /// <param name="hostName"> Gets or sets the Host name. </param>
         /// <param name="port"> Gets or sets the Port number. </param>
@@ -305,6 +319,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new FrontEndBinding(protocol, hostName, port, ipAddress, default);
         }
 
+        /// <summary> Framework specific data for a web application. </summary>
         /// <param name="name"> Gets or sets Name of the framework. </param>
         /// <param name="version"> Gets or sets Version of the framework. </param>
         /// <returns> A new <see cref="Models.WebApplicationFramework"/> instance for mocking. </returns>
@@ -313,6 +328,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new WebApplicationFramework(name, version, default);
         }
 
+        /// <summary> Web Application configuration unit. </summary>
         /// <param name="name"> Gets or sets the configuration name. </param>
         /// <param name="filePath"> Gets or sets the configuration file path. </param>
         /// <param name="localFilePath"> Gets or sets the configuration local file path. </param>
@@ -339,6 +355,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Web Application directory unit. </summary>
         /// <param name="id"> Gets or sets the unique id corresponding to the application directory. </param>
         /// <param name="isEditable">
         /// Gets or sets a value indicating whether the directory object is editable.
@@ -365,6 +382,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Error contract returned when some exception occurs in Rest API. </summary>
         /// <param name="message"> Gets the error message. </param>
         /// <param name="messageParameters"> Gets the message parameters. </param>
         /// <param name="applianceName"> Gets the appliance name. </param>
@@ -375,11 +393,11 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="severity"> Gets the error severity. </param>
         /// <param name="summaryMessage"> Gets the error summary message. </param>
         /// <param name="source"> Gets the error source. </param>
-        /// <param name="updatedTimeStamp"> Gets the time stamp when the error was updated. </param>
+        /// <param name="updatedOn"> Gets the time stamp when the error was updated. </param>
         /// <param name="runAsAccountId"> Gets run as account id used while performing discovery             of entity. </param>
         /// <param name="discoveryScope"> Gets discovery scope for which             error is encountered. </param>
         /// <returns> A new <see cref="Models.HealthErrorDetails"/> instance for mocking. </returns>
-        public static HealthErrorDetails HealthErrorDetails(string message = default, IReadOnlyDictionary<string, string> messageParameters = default, string applianceName = default, long? id = default, string code = default, string possibleCauses = default, string recommendedAction = default, string severity = default, string summaryMessage = default, HealthErrorDetailsSource? source = default, DateTimeOffset? updatedTimeStamp = default, string runAsAccountId = default, HealthErrorDetailsDiscoveryScope? discoveryScope = default)
+        public static HealthErrorDetails HealthErrorDetails(string message = default, IReadOnlyDictionary<string, string> messageParameters = default, string applianceName = default, long? id = default, string code = default, string possibleCauses = default, string recommendedAction = default, string severity = default, string summaryMessage = default, HealthErrorDetailsSource? source = default, DateTimeOffset? updatedOn = default, string runAsAccountId = default, HealthErrorDetailsDiscoveryScope? discoveryScope = default)
         {
             messageParameters ??= new ChangeTrackingDictionary<string, string>();
 
@@ -394,7 +412,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 severity,
                 summaryMessage,
                 source,
-                updatedTimeStamp,
+                updatedOn,
                 runAsAccountId,
                 discoveryScope,
                 default);
@@ -584,6 +602,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Tomcat service data. </summary>
         /// <param name="name"> Gets or sets the name of the service. </param>
         /// <param name="connectors"> Gets or sets the connectors defined for the service component. </param>
         /// <param name="engine"> Gets or sets the engine defined for the service component. </param>
@@ -595,6 +614,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new TomcatServiceUnit(name, (connectors ?? new ChangeTrackingList<ConnectorUnit>()).ToList(), engine, default);
         }
 
+        /// <summary> The connectors of the web server. </summary>
         /// <param name="bindings"> Gets or sets the bindings for the connector. </param>
         /// <returns> A new <see cref="Models.ConnectorUnit"/> instance for mocking. </returns>
         public static ConnectorUnit ConnectorUnit(IEnumerable<FrontEndBinding> bindings = default)
@@ -604,6 +624,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new ConnectorUnit((bindings ?? new ChangeTrackingList<FrontEndBinding>()).ToList(), default);
         }
 
+        /// <summary> Tomcat engine data. </summary>
         /// <param name="name"> Gets or sets the name of the engine. </param>
         /// <param name="hosts"> Gets or sets the hosts defined for the engine. </param>
         /// <returns> A new <see cref="Models.TomcatEngineUnit"/> instance for mocking. </returns>
@@ -614,6 +635,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new TomcatEngineUnit(name, (hosts ?? new ChangeTrackingList<TomcatHostUnit>()).ToList(), default);
         }
 
+        /// <summary> Tomcat host data. </summary>
         /// <param name="name"> Gets or sets the name of the host. </param>
         /// <param name="appBasePath"> Gets or sets the app base path for the host. </param>
         /// <param name="appBase"> Gets or sets the app base value configured for the host. </param>
@@ -623,6 +645,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new TomcatHostUnit(name, appBasePath, appBase, default);
         }
 
+        /// <summary> Second level object returned as part of Machine REST resource. </summary>
         /// <param name="osType"> Gets or sets the type of the operating system. </param>
         /// <param name="osName"> Gets or sets the Name of the operating system. </param>
         /// <param name="osVersion"> Gets or sets the Version of the operating system. </param>
@@ -681,6 +704,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new ImportSitePatch(tags ?? new ChangeTrackingDictionary<string, string>(), discoverySolutionId is null && provisioningState is null ? default : new ImportSiteUpdateProperties(discoverySolutionId, provisioningState, default), default);
         }
 
+        /// <summary> Import URI response class. </summary>
         /// <param name="jobArmId"> Gets or sets the job ARM ID. </param>
         /// <param name="uri"> Gets or sets the SAS URI. </param>
         /// <param name="importType"> Gets or sets the import type. </param>
@@ -752,10 +776,11 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null ? default : new PrivateEndpointConnectionPropertiesV2((groupIds ?? new ChangeTrackingList<string>()).ToList(), provisioningState, new ResourceId(privateEndpointId, default), privateLinkServiceConnectionState, default),
+                groupIds is null && provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null ? default : new PrivateEndpointConnectionPropertiesV2((groupIds ?? new ChangeTrackingList<string>()).ToList(), provisioningState, privateEndpointId is null ? default : new ResourceId(privateEndpointId, default), privateLinkServiceConnectionState, default),
                 default);
         }
 
+        /// <summary> Service Connection State. </summary>
         /// <param name="status"> state status. </param>
         /// <param name="description"> description string. </param>
         /// <param name="actionsRequired"> actions required. </param>
@@ -785,6 +810,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MasterSitePatch(tags ?? new ChangeTrackingDictionary<string, string>(), publicNetworkAccess is null && allowMultipleSites is null && sites is null && customerStorageAccountArmId is null ? default : new MasterSiteUpdateProperties(publicNetworkAccess, allowMultipleSites, (sites ?? new ChangeTrackingList<string>()).ToList(), customerStorageAccountArmId, default), default);
         }
 
+        /// <summary> ErrorSummaryRequest body. </summary>
         /// <param name="applianceName"> Gets or sets the Appliance Name. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryErrorSummaryRequestContent"/> instance for mocking. </returns>
         public static MigrationDiscoveryErrorSummaryRequestContent MigrationDiscoveryErrorSummaryRequestContent(string applianceName = default)
@@ -792,6 +818,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MigrationDiscoveryErrorSummaryRequestContent(applianceName, default);
         }
 
+        /// <summary> Site error summary. </summary>
         /// <param name="applianceName"> Appliance Name. </param>
         /// <param name="discoveryScopeErrorSummaries"> Gets the error message. </param>
         /// <param name="nextLink"> The link to fetch more models. </param>
@@ -801,6 +828,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new SiteErrorSummary(applianceName, discoveryScopeErrorSummaries, nextLink, default);
         }
 
+        /// <summary> The site error summary model. </summary>
         /// <param name="affectedResourceType"> Gets or sets the affected resource type. </param>
         /// <param name="affectedObjectsCount"> Count of affected objects. </param>
         /// <param name="discoveryScope"> Gets or sets the count of affected objects. </param>
@@ -836,6 +864,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Class for operation status errors. </summary>
         /// <param name="code"> Gets the error code. </param>
         /// <param name="message"> Gets the error message. </param>
         /// <returns> A new <see cref="Models.OperationStatusError"/> instance for mocking. </returns>
@@ -887,6 +916,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Properties for defining Arc scope. </summary>
         /// <param name="locations"> Locations to discover Arc resources from. </param>
         /// <param name="scopeType"> The type of scope, currently supporting SubscriptionOrResourceGroupIds only. </param>
         /// <param name="subscriptionOrResourceGroupIds"> List of subscription or resource group ARM IDs. Allowed only if scopeType is SubscriptionOrResourceGroupIds. </param>
@@ -935,6 +965,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default), default);
         }
 
+        /// <summary> Properties for defining Arc scope. </summary>
         /// <param name="locations"> Locations to discover Arc resources from. </param>
         /// <param name="scopeType"> The type of scope, currently supporting SubscriptionOrResourceGroupIds only. </param>
         /// <param name="subscriptionOrResourceGroupIds"> List of subscription or resource group ARM IDs. Allowed only if scopeType is SubscriptionOrResourceGroupIds. </param>
@@ -955,6 +986,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> The properties of ServerSiteUsageResponse. </summary>
         /// <param name="runAsAccounts"> Gets or sets the number of run as accounts in the site. </param>
         /// <param name="serverCount"> Gets or sets the number of servers part of the site. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryServerSiteUsageResult"/> instance for mocking. </returns>
@@ -970,6 +1002,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MigrationDiscoveryExportMachineErrorsRequestContent(requestExportMachineErrorsDiscoveryScope is null ? default : new RequestExportMachineErrorsProperties(requestExportMachineErrorsDiscoveryScope, default), default);
         }
 
+        /// <summary> Collection of SiteHealthSummary. </summary>
         /// <param name="value"> The SiteHealthSummary items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoverySiteHealthSummaryList"/> instance for mocking. </returns>
@@ -980,6 +1013,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MigrationDiscoverySiteHealthSummaryList((value ?? new ChangeTrackingList<SiteHealthSummary>()).ToList(), nextLink, default);
         }
 
+        /// <summary> The properties of ServerSiteResource. </summary>
         /// <param name="applianceName"> Gets the appliance name. </param>
         /// <param name="errorMessage"> Gets the error message. </param>
         /// <param name="summaryMessage"> Gets the summary message. </param>
@@ -1014,6 +1048,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Server site usage. </summary>
         /// <param name="runAsAccountCount"> Gets or sets the number of run as accounts in the site. </param>
         /// <param name="serverCount"> Gets or sets the number of servers part of the site. </param>
         /// <returns> A new <see cref="Models.ServerSiteUsage"/> instance for mocking. </returns>
@@ -1022,6 +1057,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new ServerSiteUsage(runAsAccountCount, serverCount, default);
         }
 
+        /// <summary>
+        /// Defines class that represents input to enable or disable DMP on machine
+        /// for cosmos entity operation.
+        /// </summary>
         /// <param name="machines"> Gets or sets the machine collection. </param>
         /// <returns> A new <see cref="Models.UpdateMachineDepMapStatus"/> instance for mocking. </returns>
         public static UpdateMachineDepMapStatus UpdateMachineDepMapStatus(IEnumerable<DependencyMapMachineInput> machines = default)
@@ -1031,6 +1070,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new UpdateMachineDepMapStatus((machines ?? new ChangeTrackingList<DependencyMapMachineInput>()).ToList(), default);
         }
 
+        /// <summary> Machine class. </summary>
         /// <param name="machineId"> Gets or sets the ARM id of the machine. </param>
         /// <param name="isDependencyMapToBeEnabled">
         /// Gets or sets a value indicating whether
@@ -1043,6 +1083,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new DependencyMapMachineInput(machineId, isDependencyMapToBeEnabled, default);
         }
 
+        /// <summary> The list of Machine MetaData. </summary>
         /// <param name="value"> The list of Machine MetaData. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryMachineMetadataList"/> instance for mocking. </returns>
         public static MigrationDiscoveryMachineMetadataList MigrationDiscoveryMachineMetadataList(IEnumerable<MachineMetadata> value = default)
@@ -1052,6 +1093,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MigrationDiscoveryMachineMetadataList((value ?? new ChangeTrackingList<MachineMetadata>()).ToList(), default);
         }
 
+        /// <summary> The properties of Machine MetaData. </summary>
         /// <param name="machineArmId"> arm id of the machine. </param>
         /// <param name="dependencyMapping"> value representing state of dependency mapping (enabled/disabled). </param>
         /// <param name="tags"> machine tags. </param>
@@ -1063,25 +1105,27 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MachineMetadata(machineArmId, dependencyMapping, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> DependencyMap ServiceMap extensions Client GroupMembers Request. </summary>
         /// <param name="machineId"> id of machine. </param>
         /// <param name="processGroupName"> process group name. </param>
         /// <param name="processName"> name of process. </param>
-        /// <param name="startOn"> start time. </param>
-        /// <param name="endOn"> end time. </param>
+        /// <param name="startsOn"> start time. </param>
+        /// <param name="endsOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent"/> instance for mocking. </returns>
-        public static MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent(string machineId = default, string processGroupName = default, string processName = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
+        public static MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent(string machineId = default, string processGroupName = default, string processName = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
         {
             return new MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent(
                 machineId,
                 processGroupName,
                 processName,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 filters,
                 default);
         }
 
+        /// <summary> DependencyMap Service Map extensions Dependency Map Request Filters. </summary>
         /// <param name="machineIds"> array of machine ids. </param>
         /// <param name="processIds"> array of process Ids. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters"/> instance for mocking. </returns>
@@ -1093,41 +1137,45 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters((machineIds ?? new ChangeTrackingList<string>()).ToList(), (processIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <param name="startOn"> start time. </param>
-        /// <param name="endOn"> end time. </param>
+        /// <summary> DependencyMap ServiceMap extensions ExportDependencies Request. </summary>
+        /// <param name="startsOn"> start time. </param>
+        /// <param name="endsOn"> end time. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent"/> instance for mocking. </returns>
-        public static MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
+        public static MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default)
         {
-            return new MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent(startOn, endOn, default);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent(startsOn, endsOn, default);
         }
 
-        /// <param name="startOn"> start time. </param>
-        /// <param name="endOn"> end time. </param>
+        /// <summary> DependencyMap ServiceMapextensions Scope MapRequest. </summary>
+        /// <param name="startsOn"> start time. </param>
+        /// <param name="endsOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent"/> instance for mocking. </returns>
-        public static MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
+        public static MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
         {
-            return new MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent(startOn, endOn, filters, default);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent(startsOn, endsOn, filters, default);
         }
 
+        /// <summary> DependencyMap ServiceMap extensions SingleMachine DetailedMap Request. </summary>
         /// <param name="machineId"> id of machine. </param>
-        /// <param name="startOn"> start time. </param>
-        /// <param name="endOn"> end time. </param>
+        /// <param name="startsOn"> start time. </param>
+        /// <param name="endsOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent"/> instance for mocking. </returns>
-        public static MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(string machineId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
+        public static MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(string machineId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
         {
-            return new MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(machineId, startOn, endOn, filters, default);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(machineId, startsOn, endsOn, filters, default);
         }
 
+        /// <summary> DependencyMap ServiceMap extensions ServerGroup Members Request. </summary>
         /// <param name="serverPort"> port of server. </param>
-        /// <param name="startOn"> start time. </param>
-        /// <param name="endOn"> end time. </param>
+        /// <param name="startsOn"> start time. </param>
+        /// <param name="endsOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent"/> instance for mocking. </returns>
-        public static MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(int? serverPort = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
+        public static MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(int? serverPort = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
         {
-            return new MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(serverPort, startOn, endOn, filters, default);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(serverPort, startsOn, endsOn, filters, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1203,6 +1251,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default), default);
         }
 
+        /// <summary> VMware site usage. </summary>
         /// <param name="machineCount"> Gets or sets the number of machines discovered in the site. </param>
         /// <param name="runAsAccountCount"> Gets or sets the number of run as accounts in the site. </param>
         /// <param name="vCenterCount"> Gets or sets the number of vCenters part of the site. </param>
@@ -1212,6 +1261,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new VmwareSiteUsage(machineCount, runAsAccountCount, vCenterCount, default);
         }
 
+        /// <summary> ExportMachinesRequest body. </summary>
         /// <param name="filter"> filter options. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryExportMachinesRequestContent"/> instance for mocking. </returns>
         public static MigrationDiscoveryExportMachinesRequestContent MigrationDiscoveryExportMachinesRequestContent(string filter = default)
@@ -1219,6 +1269,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MigrationDiscoveryExportMachinesRequestContent(filter, default);
         }
 
+        /// <summary>
+        /// Defines class that represents input to update RunAsAccount on machine
+        /// for cosmos entity operation.
+        /// </summary>
         /// <param name="machines"> Gets or sets the machine collection. </param>
         /// <returns> A new <see cref="Models.UpdateMachineRunAsAccount"/> instance for mocking. </returns>
         public static UpdateMachineRunAsAccount UpdateMachineRunAsAccount(IEnumerable<RunAsAccountMachineInput> machines = default)
@@ -1228,6 +1282,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new UpdateMachineRunAsAccount((machines ?? new ChangeTrackingList<RunAsAccountMachineInput>()).ToList(), default);
         }
 
+        /// <summary> Machine class. </summary>
         /// <param name="machineId"> Gets or sets the ARM id of the machine. </param>
         /// <param name="runAsAccountId"> run as AccountId. </param>
         /// <returns> A new <see cref="Models.RunAsAccountMachineInput"/> instance for mocking. </returns>
@@ -1236,6 +1291,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new RunAsAccountMachineInput(machineId, runAsAccountId, default);
         }
 
+        /// <summary>
+        /// Defines class that represents input to update Tags on machine
+        /// for cosmos entity operation.
+        /// </summary>
         /// <param name="machines"> Gets or sets the machine collection. </param>
         /// <returns> A new <see cref="Models.UpdateMachineTags"/> instance for mocking. </returns>
         public static UpdateMachineTags UpdateMachineTags(IEnumerable<TagsMachineInput> machines = default)
@@ -1245,6 +1304,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new UpdateMachineTags((machines ?? new ChangeTrackingList<TagsMachineInput>()).ToList(), default);
         }
 
+        /// <summary> Machine class. </summary>
         /// <param name="machineId"> Gets or sets the ARM id of the machine. </param>
         /// <param name="tags"> run as AccountId. </param>
         /// <returns> A new <see cref="Models.TagsMachineInput"/> instance for mocking. </returns>
@@ -1281,6 +1341,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default), default);
         }
 
+        /// <summary> Hyper-V site usage. </summary>
         /// <param name="machineCount"> Gets or sets the number of machines discovered in the site. </param>
         /// <param name="runAsAccountCount"> Gets or sets the number of run as accounts in the site. </param>
         /// <param name="hostCount"> Gets or sets the number of hosts part of the site. </param>
@@ -1338,7 +1399,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="numberOfApplications"> Number of applications installed in the guest VM. </param>
         /// <param name="numberOfSoftware"> Number of software installed in the guest VM. </param>
         /// <param name="numberOfSecurityRisks"> Number of security risks identified on the guest VM. </param>
-        /// <param name="guestDetailsDiscoveryTimestamp">
+        /// <param name="guestDetailsDiscoveryOn">
         /// The last time at which the Guest Details was discovered
         /// or the
         /// error while discovering guest details based discovery
@@ -1354,7 +1415,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// for
         /// the VM.
         /// </param>
-        /// <param name="dependencyMappingStartOn"> Gets or sets when dependency mapping collection is last started. </param>
+        /// <param name="dependencyMappingStartsOn"> Gets or sets when dependency mapping collection is last started. </param>
         /// <param name="dependencyMappingEndTime"> Gets or sets when dependency mapping collection was last disabled. </param>
         /// <param name="runAsAccountId"> Gets or sets the run as account ID of the machine. </param>
         /// <param name="applianceNames"> Gets the appliance names. </param>
@@ -1387,14 +1448,14 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="arcDiscovery"> Gets the data related to Azure arc discovery. </param>
         /// <returns> A new <see cref="MigrationDiscovery.HypervMachineData"/> instance for mocking. </returns>
-        public static HypervMachineData HypervMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string instanceUuid = default, string hostFqdn = default, string hostId = default, int? generation = default, string version = default, HighAvailability? highAvailability = default, string clusterFqdn = default, string clusterId = default, int? maxMemoryMb = default, bool? isDynamicMemoryEnabled = default, IEnumerable<HypervDisk> disks = default, IEnumerable<HypervNetworkAdapter> networkAdapters = default, string managementServerType = default, string secureBootTemplateId = default, bool? secureBootEnabled = default, string secureBootTemplate = default, bool? tpmEnabled = default, bool? ksdEnabled = default, bool? shieldingRequested = default, bool? dataProtectionRequested = default, bool? encryptStateAndVmMigrationTraffic = default, bool? virtualizationBasedSecurityOptOut = default, string powerStatus = default, string vmFqdn = default, string vmConfigurationFileLocation = default, string firmware = default, GuestOSDetails guestOSDetails = default, int? numberOfApplications = default, int? numberOfSoftware = default, int? numberOfSecurityRisks = default, DateTimeOffset? guestDetailsDiscoveryTimestamp = default, bool? isGuestDetailsDiscoveryInProgress = default, string dependencyMapping = default, DateTimeOffset? dependencyMappingStartOn = default, string dependencyMappingEndTime = default, string runAsAccountId = default, IEnumerable<string> applianceNames = default, IEnumerable<HealthErrorDetails> errors = default, ApplicationDiscovery applicationDiscovery = default, DependencyMapDiscovery dependencyMapDiscovery = default, StaticDiscovery staticDiscovery = default, SqlDiscovery sqlDiscovery = default, WebAppDiscovery webAppDiscovery = default, OracleDiscovery oracleDiscovery = default, SpringBootDiscovery springBootDiscovery = default, WebAppDiscovery iisDiscovery = default, WebAppDiscovery tomcatDiscovery = default, AppsAndRoles appsAndRoles = default, ProductSupportStatus productSupportStatus = default, int? numberOfProcessorCore = default, double? allocatedMemoryInMb = default, OperatingSystem operatingSystemDetails = default, string biosSerialNumber = default, string biosGuid = default, string displayName = default, bool? isDeleted = default, string createdTimestamp = default, IDictionary<string, string> tags = default, string updatedTimestamp = default, ProvisioningState? provisioningState = default, ArcDiscovery arcDiscovery = default)
+        public static HypervMachineData HypervMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string instanceUuid = default, string hostFqdn = default, string hostId = default, int? generation = default, string version = default, HighAvailability? highAvailability = default, string clusterFqdn = default, string clusterId = default, int? maxMemoryMb = default, bool? isDynamicMemoryEnabled = default, IEnumerable<HypervDisk> disks = default, IEnumerable<HypervNetworkAdapter> networkAdapters = default, string managementServerType = default, string secureBootTemplateId = default, bool? secureBootEnabled = default, string secureBootTemplate = default, bool? tpmEnabled = default, bool? ksdEnabled = default, bool? shieldingRequested = default, bool? dataProtectionRequested = default, bool? encryptStateAndVmMigrationTraffic = default, bool? virtualizationBasedSecurityOptOut = default, string powerStatus = default, string vmFqdn = default, string vmConfigurationFileLocation = default, string firmware = default, GuestOSDetails guestOSDetails = default, int? numberOfApplications = default, int? numberOfSoftware = default, int? numberOfSecurityRisks = default, DateTimeOffset? guestDetailsDiscoveryOn = default, bool? isGuestDetailsDiscoveryInProgress = default, string dependencyMapping = default, DateTimeOffset? dependencyMappingStartsOn = default, string dependencyMappingEndTime = default, string runAsAccountId = default, IEnumerable<string> applianceNames = default, IEnumerable<HealthErrorDetails> errors = default, ApplicationDiscovery applicationDiscovery = default, DependencyMapDiscovery dependencyMapDiscovery = default, StaticDiscovery staticDiscovery = default, SqlDiscovery sqlDiscovery = default, WebAppDiscovery webAppDiscovery = default, OracleDiscovery oracleDiscovery = default, SpringBootDiscovery springBootDiscovery = default, WebAppDiscovery iisDiscovery = default, WebAppDiscovery tomcatDiscovery = default, AppsAndRoles appsAndRoles = default, ProductSupportStatus productSupportStatus = default, int? numberOfProcessorCore = default, double? allocatedMemoryInMb = default, OperatingSystem operatingSystemDetails = default, string biosSerialNumber = default, string biosGuid = default, string displayName = default, bool? isDeleted = default, string createdTimestamp = default, IDictionary<string, string> tags = default, string updatedTimestamp = default, ProvisioningState? provisioningState = default, ArcDiscovery arcDiscovery = default)
         {
             return new HypervMachineData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                instanceUuid is null && hostFqdn is null && hostId is null && generation is null && version is null && highAvailability is null && clusterFqdn is null && clusterId is null && maxMemoryMb is null && isDynamicMemoryEnabled is null && disks is null && networkAdapters is null && managementServerType is null && secureBootTemplateId is null && secureBootEnabled is null && secureBootTemplate is null && tpmEnabled is null && ksdEnabled is null && shieldingRequested is null && dataProtectionRequested is null && encryptStateAndVmMigrationTraffic is null && virtualizationBasedSecurityOptOut is null && powerStatus is null && vmFqdn is null && vmConfigurationFileLocation is null && firmware is null && guestOSDetails is null && numberOfApplications is null && numberOfSoftware is null && numberOfSecurityRisks is null && guestDetailsDiscoveryTimestamp is null && isGuestDetailsDiscoveryInProgress is null && dependencyMapping is null && dependencyMappingStartOn is null && dependencyMappingEndTime is null && runAsAccountId is null && applianceNames is null && errors is null && applicationDiscovery is null && dependencyMapDiscovery is null && staticDiscovery is null && sqlDiscovery is null && webAppDiscovery is null && oracleDiscovery is null && springBootDiscovery is null && iisDiscovery is null && tomcatDiscovery is null && appsAndRoles is null && productSupportStatus is null && numberOfProcessorCore is null && allocatedMemoryInMb is null && operatingSystemDetails is null && biosSerialNumber is null && biosGuid is null && displayName is null && isDeleted is null && createdTimestamp is null && tags is null && updatedTimestamp is null && provisioningState is null && arcDiscovery is null ? default : new HypervMachineProperties(
+                instanceUuid is null && hostFqdn is null && hostId is null && generation is null && version is null && highAvailability is null && clusterFqdn is null && clusterId is null && maxMemoryMb is null && isDynamicMemoryEnabled is null && disks is null && networkAdapters is null && managementServerType is null && secureBootTemplateId is null && secureBootEnabled is null && secureBootTemplate is null && tpmEnabled is null && ksdEnabled is null && shieldingRequested is null && dataProtectionRequested is null && encryptStateAndVmMigrationTraffic is null && virtualizationBasedSecurityOptOut is null && powerStatus is null && vmFqdn is null && vmConfigurationFileLocation is null && firmware is null && guestOSDetails is null && numberOfApplications is null && numberOfSoftware is null && numberOfSecurityRisks is null && guestDetailsDiscoveryOn is null && isGuestDetailsDiscoveryInProgress is null && dependencyMapping is null && dependencyMappingStartsOn is null && dependencyMappingEndTime is null && runAsAccountId is null && applianceNames is null && errors is null && applicationDiscovery is null && dependencyMapDiscovery is null && staticDiscovery is null && sqlDiscovery is null && webAppDiscovery is null && oracleDiscovery is null && springBootDiscovery is null && iisDiscovery is null && tomcatDiscovery is null && appsAndRoles is null && productSupportStatus is null && numberOfProcessorCore is null && allocatedMemoryInMb is null && operatingSystemDetails is null && biosSerialNumber is null && biosGuid is null && displayName is null && isDeleted is null && createdTimestamp is null && tags is null && updatedTimestamp is null && provisioningState is null && arcDiscovery is null ? default : new HypervMachineProperties(
                     instanceUuid,
                     hostFqdn,
                     hostId,
@@ -1425,10 +1486,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     numberOfApplications,
                     numberOfSoftware,
                     numberOfSecurityRisks,
-                    guestDetailsDiscoveryTimestamp,
+                    guestDetailsDiscoveryOn,
                     isGuestDetailsDiscoveryInProgress,
                     dependencyMapping,
-                    dependencyMappingStartOn,
+                    dependencyMappingStartsOn,
                     dependencyMappingEndTime,
                     runAsAccountId,
                     (applianceNames ?? new ChangeTrackingList<string>()).ToList(),
@@ -1460,6 +1521,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Second level object returned as part of Machine REST resource. </summary>
         /// <param name="instanceId"> Id of the disk. </param>
         /// <param name="vhdId"> VHD Id of the disk. </param>
         /// <param name="maxSizeInBytes"> Gets or sets Bytes allocated for the disk. </param>
@@ -1483,6 +1545,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Second level object represented in responses as part of Machine REST resource. </summary>
         /// <param name="networkId"> Network Id. </param>
         /// <param name="subnetName"> Name of the VM subnet within the virtual network the NIC is attached to. </param>
         /// <param name="staticIPAddress"> Static IP address. </param>
@@ -1510,6 +1573,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Second level object.  Data related to a machine's operating system.             Serialized and stored as part of Machine Rest object. </summary>
         /// <param name="osType"> Gets or sets the type of the operating system. </param>
         /// <param name="osName"> Gets or sets the Name of the operating system. </param>
         /// <param name="osVersion"> Gets or sets the Version of the operating system. </param>
@@ -1533,6 +1597,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Contains data related application and roles discovery scope. </summary>
         /// <param name="discoveryScopeStatus"> Gets discovery scope status. </param>
         /// <param name="errors"> Gets errors for discovery scope. </param>
         /// <param name="hydratedRunAsAccountId">
@@ -1547,6 +1612,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new ApplicationDiscovery(discoveryScopeStatus, (errors ?? new ChangeTrackingList<HealthErrorDetails>()).ToList(), hydratedRunAsAccountId, default);
         }
 
+        /// <summary> Contains data related dependency map discovery scope. </summary>
         /// <param name="discoveryScopeStatus"> Gets discovery scope status. </param>
         /// <param name="errors"> Gets errors for discovery scope. </param>
         /// <param name="hydratedRunAsAccountId">
@@ -1561,6 +1627,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new DependencyMapDiscovery(discoveryScopeStatus, (errors ?? new ChangeTrackingList<HealthErrorDetails>()).ToList(), hydratedRunAsAccountId, default);
         }
 
+        /// <summary> Contains data related static data discovery scope. </summary>
         /// <param name="discoveryScopeStatus"> Gets discovery scope status. </param>
         /// <param name="errors"> Gets errors for discovery scope. </param>
         /// <param name="hydratedRunAsAccountId">
@@ -1575,6 +1642,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new StaticDiscovery(discoveryScopeStatus, (errors ?? new ChangeTrackingList<HealthErrorDetails>()).ToList(), hydratedRunAsAccountId, default);
         }
 
+        /// <summary> Contains data related SQL discovery. </summary>
         /// <param name="successfullyDiscoveredServerCount"> successfully Discovered ServerCount. </param>
         /// <param name="totalServerCount"> total Server Count. </param>
         /// <param name="sqlMetadataHydratedRunAsAccountId"> sql Metadata Hydrated RunAsAccountId. </param>
@@ -1592,6 +1660,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Data related to a machine's WebApps discovery. </summary>
         /// <param name="totalWebServerCount"> Gets or sets number of successfully discovered web servers.. </param>
         /// <param name="totalWebApplicationCount"> Gets or sets number of successfully discovered web applications. </param>
         /// <param name="discoveryScopeStatus"> Gets or sets status of partner discovery. </param>
@@ -1601,6 +1670,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new WebAppDiscovery(totalWebServerCount, totalWebApplicationCount, discoveryScopeStatus, default);
         }
 
+        /// <summary> Data related to a machine's Oracle discovery. </summary>
         /// <param name="totalInstanceCount"> Gets or sets number of successfully discovered instances. </param>
         /// <param name="totalDatabaseCount"> Gets or sets number of successfully discovered databases. </param>
         /// <param name="shallowDiscoveryStatus"> Gets or sets status of partner shallow discovery. </param>
@@ -1611,6 +1681,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new OracleDiscovery(totalInstanceCount, totalDatabaseCount, shallowDiscoveryStatus, discoveryScopeStatus, default);
         }
 
+        /// <summary> Data related to a machine's spring boot discovery. </summary>
         /// <param name="totalInstanceCount"> Gets or sets number of successfully discovered instances. </param>
         /// <param name="totalApplicationCount"> Gets or sets number of successfully discovered applications. </param>
         /// <param name="shallowDiscoveryStatus"> Gets or sets status of partner shallow discovery. </param>
@@ -1621,6 +1692,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new SpringBootDiscovery(totalInstanceCount, totalApplicationCount, shallowDiscoveryStatus, discoveryScopeStatus, default);
         }
 
+        /// <summary> AppsAndRoles in the guest virtual machine. </summary>
         /// <param name="applications"> Gets or sets Applications of the AppsAndRoles. </param>
         /// <param name="webApplications"> Gets or sets WebApplications of the AppsAndRoles. </param>
         /// <param name="features"> Gets or sets Features of the AppsAndRoles. </param>
@@ -1656,6 +1728,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Application in the guest virtual machine. </summary>
         /// <param name="name"> Gets or sets Name of the Application. </param>
         /// <param name="version"> Gets or sets Version of the Application. </param>
         /// <param name="provider"> Gets or sets Provider of the Application. </param>
@@ -1665,6 +1738,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new Application(name, version, provider, default);
         }
 
+        /// <summary> WebApplication in the guest virtual machine. </summary>
         /// <param name="name"> Gets or sets Name of the WebApplication. </param>
         /// <param name="status"> Gets or sets Status of the WebApplication. </param>
         /// <param name="platform"> Gets or sets Platform of the WebApplication. </param>
@@ -1684,6 +1758,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Feature in the guest virtual machine. </summary>
         /// <param name="name"> Gets or sets Name of the Feature. </param>
         /// <param name="featureType"> Gets or sets FeatureType of the Feature. </param>
         /// <param name="parent"> Gets or sets Parent of the Feature. </param>
@@ -1694,6 +1769,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new Feature(name, featureType, parent, status, default);
         }
 
+        /// <summary> SQLServer in the guest virtual machine. </summary>
         /// <param name="name"> Gets or sets Name of the SQLServer. </param>
         /// <param name="edition"> Gets or sets Edition of the SQLServer. </param>
         /// <param name="servicePack"> Gets or sets ServicePack of the SQLServer. </param>
@@ -1727,6 +1803,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> SharePointServer in the guest virtual machine. </summary>
         /// <param name="productName"> Gets or sets ProductName of the SharePointServer. </param>
         /// <param name="isEnterprise"> Gets or sets a value indicating whether the SharePointServer is Enterprise. </param>
         /// <param name="status"> Gets or sets Status of the SharePointServer. </param>
@@ -1737,6 +1814,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new SharePointServer(productName, isEnterprise, status, version, default);
         }
 
+        /// <summary> SystemCenter in the guest virtual machine. </summary>
         /// <param name="productName"> Gets or sets ProductName of the SystemCenter. </param>
         /// <param name="status"> Gets or sets Status of the SystemCenter. </param>
         /// <param name="version"> Gets or sets Version of the SystemCenter. </param>
@@ -1746,6 +1824,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new SystemCenter(productName, status, version, default);
         }
 
+        /// <summary> BizTalkServer in the guest virtual machine. </summary>
         /// <param name="productName"> Gets or sets ProductName of the BizTalkServer. </param>
         /// <param name="status"> Gets or sets Status of the BizTalkServer. </param>
         /// <returns> A new <see cref="Models.BizTalkServer"/> instance for mocking. </returns>
@@ -1754,6 +1833,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new BizTalkServer(productName, status, default);
         }
 
+        /// <summary> ExchangeServer in the guest virtual machine. </summary>
         /// <param name="productName"> Gets or sets ProductName of the ExchangeServer. </param>
         /// <param name="edition"> Gets or sets Edition of the ExchangeServer. </param>
         /// <param name="roles"> Gets or sets Roles of the ExchangeServer. </param>
@@ -1771,6 +1851,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> OtherDatabase in the guest virtual machine. </summary>
         /// <param name="databaseType"> Gets or sets DatabaseType of the OtherDatabase. </param>
         /// <param name="instance"> Gets or sets Instance of the OtherDatabase. </param>
         /// <param name="version"> Gets or sets Version of the OtherDatabase. </param>
@@ -1780,23 +1861,25 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new OtherDatabase(databaseType, instance, version, default);
         }
 
+        /// <summary> product support status. </summary>
         /// <param name="currentVersion"> current version. </param>
         /// <param name="esuStatus"> esu status. </param>
         /// <param name="supportStatus"> support status. </param>
-        /// <param name="supportEndOn"> support end date. </param>
+        /// <param name="supportEndsOn"> support end date. </param>
         /// <param name="esuYear"> esu year. </param>
         /// <returns> A new <see cref="Models.ProductSupportStatus"/> instance for mocking. </returns>
-        public static ProductSupportStatus ProductSupportStatus(string currentVersion = default, EsuStatus? esuStatus = default, SupportStatus? supportStatus = default, DateTimeOffset? supportEndOn = default, EsuYear? esuYear = default)
+        public static ProductSupportStatus ProductSupportStatus(string currentVersion = default, EsuStatus? esuStatus = default, SupportStatus? supportStatus = default, DateTimeOffset? supportEndsOn = default, EsuYear? esuYear = default)
         {
             return new ProductSupportStatus(
                 currentVersion,
                 esuStatus,
                 supportStatus,
-                supportEndOn,
+                supportEndsOn,
                 esuYear,
                 default);
         }
 
+        /// <summary> Contains data related to Azure arc discovery. </summary>
         /// <param name="status"> AzureArc status indicates whether arc discovery has successfully completed or not. </param>
         /// <param name="machineResourceId"> Machine Resource Id. </param>
         /// <returns> A new <see cref="Models.ArcDiscovery"/> instance for mocking. </returns>
@@ -1986,6 +2069,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Export machines job REST resource. </summary>
         /// <param name="id"> Gets or sets the relative ARM name to get job. </param>
         /// <param name="name"> Gets or sets the Job ID. </param>
         /// <param name="type"> Type name for export job. </param>
@@ -2009,6 +2093,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 displayName);
         }
 
+        /// <summary> Export Imported Machines JobEntity Properties. </summary>
         /// <param name="blobName"> blob name. </param>
         /// <param name="sasUri"> sas uri. </param>
         /// <returns> A new <see cref="Models.ExportImportedMachinesJobEntityProperties"/> instance for mocking. </returns>
@@ -2017,6 +2102,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new ExportImportedMachinesJobEntityProperties(blobName, sasUri, default);
         }
 
+        /// <summary> The MigrationDiscoveryJobBaseInfo. </summary>
         /// <param name="id"> Gets or sets the relative ARM name to get job. </param>
         /// <param name="name"> Gets or sets the Job ID. </param>
         /// <param name="type"> Type name for export job. </param>
@@ -2026,6 +2112,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MigrationDiscoveryJobBaseInfo(id, name, @type, default);
         }
 
+        /// <summary> Import machines Job REST Resource. </summary>
         /// <param name="id"> Gets or sets the relative ARM name to get job. </param>
         /// <param name="name"> Gets or sets the Job ID. </param>
         /// <param name="type"> Type name for export job. </param>
@@ -2049,25 +2136,27 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 displayName);
         }
 
+        /// <summary> ImportMachines JobProperties. </summary>
         /// <param name="blobName"> blob name. </param>
         /// <param name="blobSasUri"> blob sasUri. </param>
         /// <param name="jobResult"> job Result. </param>
         /// <param name="numberOfMachinesImported"> number Of Machines Imported. </param>
-        /// <param name="blobCreationTimeStamp"> blob Creation TimeStamp. </param>
+        /// <param name="blobCreatedOn"> blob Creation TimeStamp. </param>
         /// <param name="errorSummary"> error summary. </param>
         /// <returns> A new <see cref="Models.ImportMachinesJobProperties"/> instance for mocking. </returns>
-        public static ImportMachinesJobProperties ImportMachinesJobProperties(string blobName = default, string blobSasUri = default, JobResult? jobResult = default, int? numberOfMachinesImported = default, DateTimeOffset? blobCreationTimeStamp = default, JobErrorSummary errorSummary = default)
+        public static ImportMachinesJobProperties ImportMachinesJobProperties(string blobName = default, string blobSasUri = default, JobResult? jobResult = default, int? numberOfMachinesImported = default, DateTimeOffset? blobCreatedOn = default, JobErrorSummary errorSummary = default)
         {
             return new ImportMachinesJobProperties(
                 blobName,
                 blobSasUri,
                 jobResult,
                 numberOfMachinesImported,
-                blobCreationTimeStamp,
+                blobCreatedOn,
                 errorSummary,
                 default);
         }
 
+        /// <summary> Summary of errors and warnings encountered during a job execution. </summary>
         /// <param name="errors"> List of error messages encountered during job execution. </param>
         /// <param name="errorCount"> Total number of errors encountered during job execution. </param>
         /// <param name="warningCount"> Total number of warnings generated during job execution. </param>
@@ -2199,6 +2288,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Class representing the imported machine web model. </summary>
         /// <param name="megabytesPerSecondOfRead"> Disk read throughput. </param>
         /// <param name="megabytesPerSecondOfWrite"> Disk write throughput. </param>
         /// <param name="numberOfReadOperationsPerSecond"> Disk read IOPS. </param>
@@ -2224,6 +2314,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Second level object returned as part of Machine REST resource. </summary>
         /// <param name="osType"> Gets or sets the type of the operating system. </param>
         /// <param name="osName"> Gets or sets the Name of the operating system. </param>
         /// <param name="osVersion"> Gets or sets the Version of the operating system. </param>
@@ -2296,6 +2387,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new SqlSitePatch(siteAppliancePropertiesCollection is null && discoveryScenario is null && arcScope is null ? default : new SqlSiteUpdateProperties((siteAppliancePropertiesCollection ?? new ChangeTrackingList<SiteApplianceProperties>()).ToList(), discoveryScenario, arcScope, default), default);
         }
 
+        /// <summary> SQL Inventory Import URI response object model. </summary>
         /// <param name="jobArmId"> Gets or sets the job ARM ID. </param>
         /// <param name="uri"> Gets or sets the SAS URI. </param>
         /// <param name="importType"> Gets or sets the import type. </param>
@@ -2305,6 +2397,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new SqlInventoryImportContent(jobArmId, uri, importType, default);
         }
 
+        /// <summary> ExportSqlServerRequest body. </summary>
         /// <param name="applianceName"> Gets or sets the Appliance Name. </param>
         /// <param name="filter"> filter options. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryExportSqlServersRequestContent"/> instance for mocking. </returns>
@@ -2313,6 +2406,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MigrationDiscoveryExportSqlServersRequestContent(applianceName, filter, default);
         }
 
+        /// <summary> SQL site refresh. </summary>
         /// <param name="applianceName"> Gets or sets the appliance name of the agent in the site. </param>
         /// <returns> A new <see cref="Models.SqlSiteRefreshContent"/> instance for mocking. </returns>
         public static SqlSiteRefreshContent SqlSiteRefreshContent(string applianceName = default)
@@ -2320,6 +2414,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new SqlSiteRefreshContent(applianceName, default);
         }
 
+        /// <summary> SQL site usage. </summary>
         /// <param name="serverCount"> Gets or sets the number of servers discovered in the site. </param>
         /// <param name="databaseCount"> Gets or sets the number of databases discovered in the site. </param>
         /// <param name="runAsAccountCount"> Gets or sets the number of run as accounts in the site. </param>
@@ -2347,6 +2442,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Import SQL inventory job REST Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2480,6 +2576,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Class for SQL Server availability replica properties. </summary>
         /// <param name="availabilityReplicaName"> Gets or sets the SQL Availability Replica Name. </param>
         /// <param name="availabilityReplicaId"> Gets or sets the SQL Availability Replica Id. </param>
         /// <param name="replicaType"> Gets or sets the replica type of the availability group. </param>
@@ -2517,6 +2614,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary>
+        /// Class which represents the SQL availability replica properties of type
+        /// databases.
+        /// </summary>
         /// <param name="hostName"> Gets or sets the host name of the availability replica. </param>
         /// <param name="sqlServerName"> Gets or sets the SQL Server name of the availability replica. </param>
         /// <param name="sqlServerArmId"> Gets or sets the SQL Server name of the availability replica. </param>
@@ -2526,6 +2627,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new SqlDatabaseReplicaInfo(hostName, sqlServerName, sqlServerArmId, default);
         }
 
+        /// <summary> Class which represents the SQL availability replica properties of type AG. </summary>
         /// <param name="clusterName"> Gets or sets the name of the cluster on which this replica is hosted. </param>
         /// <param name="availabilityGroupName"> Gets or sets the name of the availability replica. </param>
         /// <param name="availabilityGroupArmId"> Gets or sets the AG ARM ID which are part of this Replica. </param>
@@ -2535,6 +2637,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new SqlAvailabilityGroupReplicaInfo(clusterName, availabilityGroupName, availabilityGroupArmId, default);
         }
 
+        /// <summary> Web model for SQL replica overview. </summary>
         /// <param name="replicaState"> Gets or sets the state of the availability replica. </param>
         /// <param name="availabilityReplicaId">
         /// Gets or sets the SQL Availability Replica Id within the Availability Group this
@@ -2553,6 +2656,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new SqlAvailabilityReplicaOverview(replicaState, availabilityReplicaId, availabilityGroupArmId, availabilityGroupName, default);
         }
 
+        /// <summary> Contains data related to Azure Generic Arc Discovery. </summary>
         /// <param name="status"> AzureArc status indicates whether arc discovery has successfully completed or not. </param>
         /// <param name="resourceId"> Resource Id. </param>
         /// <returns> A new <see cref="Models.GenericArcDiscovery"/> instance for mocking. </returns>
@@ -2612,6 +2716,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> File Metadata web model. </summary>
         /// <param name="logicalName"> Gets or sets the logical name of the file. </param>
         /// <param name="physicalFullName"> Gets or sets the operating-system full path of the file. </param>
         /// <param name="fileType"> Gets or sets the database file type. </param>
@@ -2629,6 +2734,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> The properties of a server machine tracked resource. </summary>
         /// <param name="message"> Gets the error message. </param>
         /// <param name="messageParameters"> Gets the message parameters. </param>
         /// <param name="applianceName"> Gets the appliance name. </param>
@@ -2639,11 +2745,11 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="severity"> Gets the error severity. </param>
         /// <param name="summaryMessage"> Gets the error summary message. </param>
         /// <param name="source"> Gets the error source. </param>
-        /// <param name="updatedTimeStamp"> Gets the time stamp when the error was updated. </param>
+        /// <param name="updatedOn"> Gets the time stamp when the error was updated. </param>
         /// <param name="runAsAccountId"> Gets run as account id used while performing discovery             of entity. </param>
         /// <param name="discoveryScope"> Gets discovery scope for which             error is encountered. </param>
         /// <returns> A new <see cref="Models.Errors"/> instance for mocking. </returns>
-        public static Errors Errors(string message = default, IReadOnlyDictionary<string, string> messageParameters = default, string applianceName = default, int? id = default, string code = default, string possibleCauses = default, string recommendedAction = default, string severity = default, string summaryMessage = default, MicrosoftAzureFDSWebRoleHealthErrorDetailsSource? source = default, DateTimeOffset? updatedTimeStamp = default, string runAsAccountId = default, HealthErrorDetailsDiscoveryScope? discoveryScope = default)
+        public static Errors Errors(string message = default, IReadOnlyDictionary<string, string> messageParameters = default, string applianceName = default, int? id = default, string code = default, string possibleCauses = default, string recommendedAction = default, string severity = default, string summaryMessage = default, MicrosoftAzureFDSWebRoleHealthErrorDetailsSource? source = default, DateTimeOffset? updatedOn = default, string runAsAccountId = default, HealthErrorDetailsDiscoveryScope? discoveryScope = default)
         {
             messageParameters ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2658,7 +2764,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 severity,
                 summaryMessage,
                 source,
-                updatedTimeStamp,
+                updatedOn,
                 runAsAccountId,
                 discoveryScope,
                 default);
@@ -2686,7 +2792,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="isHighAvailabilityEnabled"> Gets or sets a value indicating whether High Availability is enabled or not. </param>
         /// <param name="isClustered"> Gets or sets a value indicating whether failover cluster is configured or not. </param>
         /// <param name="hyperthreadRatio"> Gets or sets the Hyper thread ratio. </param>
-        /// <param name="sqlStartOn"> Gets or sets the SQL start time. </param>
+        /// <param name="sqlStartsOn"> Gets or sets the SQL start time. </param>
         /// <param name="machineArmIds"> Gets the list of machine ARM Ids on which the SQL server is deployed. </param>
         /// <param name="runAsAccountId"> Gets or sets the run as account ID of the SQL server. </param>
         /// <param name="hydratedRunAsAccountId"> Gets or sets the hydrated run as account ID of the SQL server. </param>
@@ -2703,14 +2809,14 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="arcDiscovery"> Gets the data related to Azure arc discovery. </param>
         /// <param name="discoverySource"> Gets the discovery source. </param>
         /// <returns> A new <see cref="MigrationDiscovery.SqlServerV2Data"/> instance for mocking. </returns>
-        public static SqlServerV2Data SqlServerV2Data(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<SqlMachineOverview> machineOverviewList = default, int? numberOfAgDatabases = default, SqlFciProperties sqlFciProperties = default, ProductSupportStatus productSupportStatus = default, string version = default, int? numberOfUserDatabases = default, float? sumOfUserDatabasesSizeInMb = default, float? tempDBSizeInMb = default, float? maxServerMemoryInUseInMb = default, int? visibleOnlineCoreCount = default, int? numOfLogins = default, float? physicalCpuCount = default, int? logicalCpuCount = default, string engineEdition = default, string edition = default, bool? isHighAvailabilityEnabled = default, bool? isClustered = default, int? hyperthreadRatio = default, DateTimeOffset? sqlStartOn = default, IEnumerable<string> machineArmIds = default, string runAsAccountId = default, string hydratedRunAsAccountId = default, string hostName = default, string sqlServerName = default, int? portNumber = default, IEnumerable<Errors> errors = default, IDictionary<string, BinaryData> tags = default, bool? isDeleted = default, string createdTimestamp = default, string updatedTimestamp = default, SqlServerStatus? status = default, ProvisioningState? provisioningState = default, GenericArcDiscovery arcDiscovery = default, DiscoverySource? discoverySource = default)
+        public static SqlServerV2Data SqlServerV2Data(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<SqlMachineOverview> machineOverviewList = default, int? numberOfAgDatabases = default, SqlFciProperties sqlFciProperties = default, ProductSupportStatus productSupportStatus = default, string version = default, int? numberOfUserDatabases = default, float? sumOfUserDatabasesSizeInMb = default, float? tempDBSizeInMb = default, float? maxServerMemoryInUseInMb = default, int? visibleOnlineCoreCount = default, int? numOfLogins = default, float? physicalCpuCount = default, int? logicalCpuCount = default, string engineEdition = default, string edition = default, bool? isHighAvailabilityEnabled = default, bool? isClustered = default, int? hyperthreadRatio = default, DateTimeOffset? sqlStartsOn = default, IEnumerable<string> machineArmIds = default, string runAsAccountId = default, string hydratedRunAsAccountId = default, string hostName = default, string sqlServerName = default, int? portNumber = default, IEnumerable<Errors> errors = default, IDictionary<string, BinaryData> tags = default, bool? isDeleted = default, string createdTimestamp = default, string updatedTimestamp = default, SqlServerStatus? status = default, ProvisioningState? provisioningState = default, GenericArcDiscovery arcDiscovery = default, DiscoverySource? discoverySource = default)
         {
             return new SqlServerV2Data(
                 id,
                 name,
                 resourceType,
                 systemData,
-                machineOverviewList is null && numberOfAgDatabases is null && sqlFciProperties is null && productSupportStatus is null && version is null && numberOfUserDatabases is null && sumOfUserDatabasesSizeInMb is null && tempDBSizeInMb is null && maxServerMemoryInUseInMb is null && visibleOnlineCoreCount is null && numOfLogins is null && physicalCpuCount is null && logicalCpuCount is null && engineEdition is null && edition is null && isHighAvailabilityEnabled is null && isClustered is null && hyperthreadRatio is null && sqlStartOn is null && machineArmIds is null && runAsAccountId is null && hydratedRunAsAccountId is null && hostName is null && sqlServerName is null && portNumber is null && errors is null && tags is null && isDeleted is null && createdTimestamp is null && updatedTimestamp is null && status is null && provisioningState is null && arcDiscovery is null && discoverySource is null ? default : new SqlServerProperties(
+                machineOverviewList is null && numberOfAgDatabases is null && sqlFciProperties is null && productSupportStatus is null && version is null && numberOfUserDatabases is null && sumOfUserDatabasesSizeInMb is null && tempDBSizeInMb is null && maxServerMemoryInUseInMb is null && visibleOnlineCoreCount is null && numOfLogins is null && physicalCpuCount is null && logicalCpuCount is null && engineEdition is null && edition is null && isHighAvailabilityEnabled is null && isClustered is null && hyperthreadRatio is null && sqlStartsOn is null && machineArmIds is null && runAsAccountId is null && hydratedRunAsAccountId is null && hostName is null && sqlServerName is null && portNumber is null && errors is null && tags is null && isDeleted is null && createdTimestamp is null && updatedTimestamp is null && status is null && provisioningState is null && arcDiscovery is null && discoverySource is null ? default : new SqlServerProperties(
                     (machineOverviewList ?? new ChangeTrackingList<SqlMachineOverview>()).ToList(),
                     numberOfAgDatabases,
                     sqlFciProperties,
@@ -2729,7 +2835,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     isHighAvailabilityEnabled,
                     isClustered,
                     hyperthreadRatio,
-                    sqlStartOn,
+                    sqlStartsOn,
                     (machineArmIds ?? new ChangeTrackingList<string>()).ToList(),
                     runAsAccountId,
                     hydratedRunAsAccountId,
@@ -2749,6 +2855,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Gets or sets SQL machine overview data. </summary>
         /// <param name="machineArmId"> Gets or sets SQL machine ARM ID. </param>
         /// <param name="displayName"> Gets or sets SQL machine display name. </param>
         /// <param name="fciRole"> Gets or sets SQL machine FCI role. </param>
@@ -2758,6 +2865,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new SqlMachineOverview(machineArmId, displayName, fciRole, default);
         }
 
+        /// <summary> The class representing the properties for an FCI instance. </summary>
         /// <param name="state"> Gets or sets the state of the FCI instance. </param>
         /// <param name="networkName"> Gets or sets the FCI Network Name used to connect to this FCI instance. </param>
         /// <param name="isMultiSubnet">
@@ -2788,7 +2896,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="isHighAvailabilityEnabled"> Gets or sets a value indicating whether High Availability is enabled or not. </param>
         /// <param name="isClustered"> Gets or sets a value indicating whether failover cluster is configured or not. </param>
         /// <param name="hyperthreadRatio"> Gets or sets the Hyper thread ratio. </param>
-        /// <param name="sqlStartOn"> Gets or sets the SQL start time. </param>
+        /// <param name="sqlStartsOn"> Gets or sets the SQL start time. </param>
         /// <param name="runAsAccountId"> Gets or sets the run as account ID of the SQL server. </param>
         /// <param name="hydratedRunAsAccountId"> Gets or sets the hydrated run as account ID of the SQL server. </param>
         /// <param name="hostName"> Gets or sets hostname. </param>
@@ -2801,9 +2909,9 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="status"> Gets or sets the powered on status. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.SqlServerV2Patch"/> instance for mocking. </returns>
-        public static SqlServerV2Patch SqlServerV2Patch(int? numberOfAgDatabases = default, SqlFciProperties sqlFciProperties = default, ProductSupportStatus productSupportStatus = default, string version = default, int? numberOfUserDatabases = default, float? sumOfUserDatabasesSizeInMb = default, float? tempDBSizeInMb = default, float? maxServerMemoryInUseInMb = default, int? visibleOnlineCoreCount = default, int? numOfLogins = default, float? physicalCpuCount = default, int? logicalCpuCount = default, string engineEdition = default, string edition = default, bool? isHighAvailabilityEnabled = default, bool? isClustered = default, int? hyperthreadRatio = default, DateTimeOffset? sqlStartOn = default, string runAsAccountId = default, string hydratedRunAsAccountId = default, string hostName = default, string sqlServerName = default, int? portNumber = default, IDictionary<string, BinaryData> tags = default, bool? isDeleted = default, string createdTimestamp = default, string updatedTimestamp = default, SqlServerStatus? status = default, ProvisioningState? provisioningState = default)
+        public static SqlServerV2Patch SqlServerV2Patch(int? numberOfAgDatabases = default, SqlFciProperties sqlFciProperties = default, ProductSupportStatus productSupportStatus = default, string version = default, int? numberOfUserDatabases = default, float? sumOfUserDatabasesSizeInMb = default, float? tempDBSizeInMb = default, float? maxServerMemoryInUseInMb = default, int? visibleOnlineCoreCount = default, int? numOfLogins = default, float? physicalCpuCount = default, int? logicalCpuCount = default, string engineEdition = default, string edition = default, bool? isHighAvailabilityEnabled = default, bool? isClustered = default, int? hyperthreadRatio = default, DateTimeOffset? sqlStartsOn = default, string runAsAccountId = default, string hydratedRunAsAccountId = default, string hostName = default, string sqlServerName = default, int? portNumber = default, IDictionary<string, BinaryData> tags = default, bool? isDeleted = default, string createdTimestamp = default, string updatedTimestamp = default, SqlServerStatus? status = default, ProvisioningState? provisioningState = default)
         {
-            return new SqlServerV2Patch(numberOfAgDatabases is null && sqlFciProperties is null && productSupportStatus is null && version is null && numberOfUserDatabases is null && sumOfUserDatabasesSizeInMb is null && tempDBSizeInMb is null && maxServerMemoryInUseInMb is null && visibleOnlineCoreCount is null && numOfLogins is null && physicalCpuCount is null && logicalCpuCount is null && engineEdition is null && edition is null && isHighAvailabilityEnabled is null && isClustered is null && hyperthreadRatio is null && sqlStartOn is null && runAsAccountId is null && hydratedRunAsAccountId is null && hostName is null && sqlServerName is null && portNumber is null && tags is null && isDeleted is null && createdTimestamp is null && updatedTimestamp is null && status is null && provisioningState is null ? default : new SqlServerV2UpdateProperties(
+            return new SqlServerV2Patch(numberOfAgDatabases is null && sqlFciProperties is null && productSupportStatus is null && version is null && numberOfUserDatabases is null && sumOfUserDatabasesSizeInMb is null && tempDBSizeInMb is null && maxServerMemoryInUseInMb is null && visibleOnlineCoreCount is null && numOfLogins is null && physicalCpuCount is null && logicalCpuCount is null && engineEdition is null && edition is null && isHighAvailabilityEnabled is null && isClustered is null && hyperthreadRatio is null && sqlStartsOn is null && runAsAccountId is null && hydratedRunAsAccountId is null && hostName is null && sqlServerName is null && portNumber is null && tags is null && isDeleted is null && createdTimestamp is null && updatedTimestamp is null && status is null && provisioningState is null ? default : new SqlServerV2UpdateProperties(
                 numberOfAgDatabases,
                 sqlFciProperties,
                 productSupportStatus,
@@ -2821,7 +2929,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 isHighAvailabilityEnabled,
                 isClustered,
                 hyperthreadRatio,
-                sqlStartOn,
+                sqlStartsOn,
                 runAsAccountId,
                 hydratedRunAsAccountId,
                 hostName,
@@ -2870,6 +2978,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new WebAppSitePatch(siteAppliancePropertiesCollection is null && discoveryScenario is null ? default : new WebAppSiteUpdateProperties((siteAppliancePropertiesCollection ?? new ChangeTrackingList<SiteApplianceProperties>()).ToList(), discoveryScenario, default), default);
         }
 
+        /// <summary> ExportWebAppsRequest body. </summary>
         /// <param name="filter"> filter options. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryExportWebAppsRequestContent"/> instance for mocking. </returns>
         public static MigrationDiscoveryExportWebAppsRequestContent MigrationDiscoveryExportWebAppsRequestContent(string filter = default)
@@ -2877,6 +2986,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MigrationDiscoveryExportWebAppsRequestContent(filter, default);
         }
 
+        /// <summary> Request body for Proxy site refresh action. </summary>
         /// <param name="applianceName"> Gets or sets the appliance name of the agent in the site. </param>
         /// <returns> A new <see cref="Models.ProxySiteRefreshContent"/> instance for mocking. </returns>
         public static ProxySiteRefreshContent ProxySiteRefreshContent(string applianceName = default)
@@ -2884,6 +2994,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new ProxySiteRefreshContent(applianceName, default);
         }
 
+        /// <summary> Web app site usage. </summary>
         /// <param name="webServerCount"> Gets or sets the number of web servers discovered in the site. </param>
         /// <param name="webApplicationCount"> Gets or sets the number of web applications discovered in the site. </param>
         /// <param name="runAsAccountCount"> Gets or sets the number of run as accounts in the site. </param>
@@ -2893,6 +3004,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new WebAppSiteUsage(webServerCount, webApplicationCount, runAsAccountCount, default);
         }
 
+        /// <summary> Collection of web app properties. </summary>
         /// <param name="webApps"> Gets or sets the list of web app properties. </param>
         /// <returns> A new <see cref="Models.MigrationDiscoveryWebAppPropertiesList"/> instance for mocking. </returns>
         public static MigrationDiscoveryWebAppPropertiesList MigrationDiscoveryWebAppPropertiesList(IEnumerable<WebAppProperties> webApps = default)
@@ -2902,6 +3014,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             return new MigrationDiscoveryWebAppPropertiesList((webApps ?? new ChangeTrackingList<WebAppProperties>()).ToList(), default);
         }
 
+        /// <summary> Class representing web app properties web model. </summary>
         /// <param name="webAppArmId"> Gets or sets the arm id of the web app. </param>
         /// <param name="tags"> Gets or sets Tags. </param>
         /// <returns> A new <see cref="Models.WebAppProperties"/> instance for mocking. </returns>
@@ -3162,7 +3275,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="numberOfApplications"> Number of applications installed in the guest VM. </param>
         /// <param name="numberOfSoftware"> Number of software installed in the guest VM. </param>
         /// <param name="numberOfSecurityRisks"> Number of security risks identified on the guest VM. </param>
-        /// <param name="guestDetailsDiscoveryTimestamp">
+        /// <param name="guestDetailsDiscoveryOn">
         /// The last time at which the Guest Details was discovered
         /// or the
         /// error while discovering guest details based discovery
@@ -3178,7 +3291,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// for
         /// the VM.
         /// </param>
-        /// <param name="dependencyMappingStartOn"> Gets or sets when dependency mapping collection is last started. </param>
+        /// <param name="dependencyMappingStartsOn"> Gets or sets when dependency mapping collection is last started. </param>
         /// <param name="dependencyMappingEndTime"> Gets or sets when dependency mapping collection was last disabled. </param>
         /// <param name="runAsAccountId"> Gets or sets the run as account ID of the machine. </param>
         /// <param name="applianceNames"> Gets the appliance names. </param>
@@ -3212,14 +3325,14 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="discoverySource"> Gets the discovery state of the server. </param>
         /// <param name="hypervisor"> Gets or sets the hypervisor type of the server. </param>
         /// <returns> A new <see cref="MigrationDiscovery.ServerData"/> instance for mocking. </returns>
-        public static ServerData ServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string fqdn = default, IEnumerable<ServerNetworkAdapter> networkAdapters = default, string hydratedFqdn = default, IEnumerable<ServerDisk> disks = default, string validationRequired = default, ProcessorInfo processorInfo = default, string firmware = default, bool? secureBootEnabled = default, GuestOSDetails guestOSDetails = default, int? numberOfApplications = default, int? numberOfSoftware = default, int? numberOfSecurityRisks = default, DateTimeOffset? guestDetailsDiscoveryTimestamp = default, bool? isGuestDetailsDiscoveryInProgress = default, string dependencyMapping = default, DateTimeOffset? dependencyMappingStartOn = default, string dependencyMappingEndTime = default, string runAsAccountId = default, IEnumerable<string> applianceNames = default, IEnumerable<HealthErrorDetails> errors = default, ApplicationDiscovery applicationDiscovery = default, DependencyMapDiscovery dependencyMapDiscovery = default, StaticDiscovery staticDiscovery = default, SqlDiscovery sqlDiscovery = default, WebAppDiscovery webAppDiscovery = default, OracleDiscovery oracleDiscovery = default, SpringBootDiscovery springBootDiscovery = default, WebAppDiscovery iisDiscovery = default, WebAppDiscovery tomcatDiscovery = default, AppsAndRoles appsAndRoles = default, ProductSupportStatus productSupportStatus = default, int? numberOfProcessorCore = default, float? allocatedMemoryInMb = default, OperatingSystem operatingSystemDetails = default, string biosSerialNumber = default, string biosGuid = default, bool? isDeleted = default, string createdTimestamp = default, IDictionary<string, BinaryData> tags = default, string updatedTimestamp = default, ProvisioningState? provisioningState = default, ArcDiscovery arcDiscovery = default, DiscoverySource? discoverySource = default, string hypervisor = default)
+        public static ServerData ServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string fqdn = default, IEnumerable<ServerNetworkAdapter> networkAdapters = default, string hydratedFqdn = default, IEnumerable<ServerDisk> disks = default, string validationRequired = default, ProcessorInfo processorInfo = default, string firmware = default, bool? secureBootEnabled = default, GuestOSDetails guestOSDetails = default, int? numberOfApplications = default, int? numberOfSoftware = default, int? numberOfSecurityRisks = default, DateTimeOffset? guestDetailsDiscoveryOn = default, bool? isGuestDetailsDiscoveryInProgress = default, string dependencyMapping = default, DateTimeOffset? dependencyMappingStartsOn = default, string dependencyMappingEndTime = default, string runAsAccountId = default, IEnumerable<string> applianceNames = default, IEnumerable<HealthErrorDetails> errors = default, ApplicationDiscovery applicationDiscovery = default, DependencyMapDiscovery dependencyMapDiscovery = default, StaticDiscovery staticDiscovery = default, SqlDiscovery sqlDiscovery = default, WebAppDiscovery webAppDiscovery = default, OracleDiscovery oracleDiscovery = default, SpringBootDiscovery springBootDiscovery = default, WebAppDiscovery iisDiscovery = default, WebAppDiscovery tomcatDiscovery = default, AppsAndRoles appsAndRoles = default, ProductSupportStatus productSupportStatus = default, int? numberOfProcessorCore = default, float? allocatedMemoryInMb = default, OperatingSystem operatingSystemDetails = default, string biosSerialNumber = default, string biosGuid = default, bool? isDeleted = default, string createdTimestamp = default, IDictionary<string, BinaryData> tags = default, string updatedTimestamp = default, ProvisioningState? provisioningState = default, ArcDiscovery arcDiscovery = default, DiscoverySource? discoverySource = default, string hypervisor = default)
         {
             return new ServerData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName is null && fqdn is null && networkAdapters is null && hydratedFqdn is null && disks is null && validationRequired is null && processorInfo is null && firmware is null && secureBootEnabled is null && guestOSDetails is null && numberOfApplications is null && numberOfSoftware is null && numberOfSecurityRisks is null && guestDetailsDiscoveryTimestamp is null && isGuestDetailsDiscoveryInProgress is null && dependencyMapping is null && dependencyMappingStartOn is null && dependencyMappingEndTime is null && runAsAccountId is null && applianceNames is null && errors is null && applicationDiscovery is null && dependencyMapDiscovery is null && staticDiscovery is null && sqlDiscovery is null && webAppDiscovery is null && oracleDiscovery is null && springBootDiscovery is null && iisDiscovery is null && tomcatDiscovery is null && appsAndRoles is null && productSupportStatus is null && numberOfProcessorCore is null && allocatedMemoryInMb is null && operatingSystemDetails is null && biosSerialNumber is null && biosGuid is null && isDeleted is null && createdTimestamp is null && tags is null && updatedTimestamp is null && provisioningState is null && arcDiscovery is null && discoverySource is null && hypervisor is null ? default : new ServerProperties(
+                displayName is null && fqdn is null && networkAdapters is null && hydratedFqdn is null && disks is null && validationRequired is null && processorInfo is null && firmware is null && secureBootEnabled is null && guestOSDetails is null && numberOfApplications is null && numberOfSoftware is null && numberOfSecurityRisks is null && guestDetailsDiscoveryOn is null && isGuestDetailsDiscoveryInProgress is null && dependencyMapping is null && dependencyMappingStartsOn is null && dependencyMappingEndTime is null && runAsAccountId is null && applianceNames is null && errors is null && applicationDiscovery is null && dependencyMapDiscovery is null && staticDiscovery is null && sqlDiscovery is null && webAppDiscovery is null && oracleDiscovery is null && springBootDiscovery is null && iisDiscovery is null && tomcatDiscovery is null && appsAndRoles is null && productSupportStatus is null && numberOfProcessorCore is null && allocatedMemoryInMb is null && operatingSystemDetails is null && biosSerialNumber is null && biosGuid is null && isDeleted is null && createdTimestamp is null && tags is null && updatedTimestamp is null && provisioningState is null && arcDiscovery is null && discoverySource is null && hypervisor is null ? default : new ServerProperties(
                     displayName,
                     fqdn,
                     (networkAdapters ?? new ChangeTrackingList<ServerNetworkAdapter>()).ToList(),
@@ -3233,10 +3346,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     numberOfApplications,
                     numberOfSoftware,
                     numberOfSecurityRisks,
-                    guestDetailsDiscoveryTimestamp,
+                    guestDetailsDiscoveryOn,
                     isGuestDetailsDiscoveryInProgress,
                     dependencyMapping,
-                    dependencyMappingStartOn,
+                    dependencyMappingStartsOn,
                     dependencyMappingEndTime,
                     runAsAccountId,
                     (applianceNames ?? new ChangeTrackingList<string>()).ToList(),
@@ -3269,6 +3382,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Second level object represented in responses as part of Machine REST resource. </summary>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>
         /// <param name="macAddress"> Gets or sets Mac address of the NIC. </param>
         /// <param name="ipAddressList"> Gets IP addresses for the machine. </param>
@@ -3288,6 +3402,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Server disk details. </summary>
         /// <param name="id"> Gets or sets Id of the disk. </param>
         /// <param name="generatedId"> Gets or sets generated Id of the disk. </param>
         /// <param name="maxSizeInBytes"> Gets or sets Bytes allocated for the disk. </param>
@@ -3313,6 +3428,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Processor Information. </summary>
         /// <param name="name"> Gets or sets the name\model of a processor. </param>
         /// <param name="numberOfSockets"> Gets or sets the number of sockets. </param>
         /// <param name="numberOfCoresPerSocket"> Gets or sets the total number of cores in a socket. </param>
@@ -3441,6 +3557,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Second level object returned as part of VMware host REST resource. </summary>
         /// <param name="uuid"> Data store UUID. </param>
         /// <param name="capacityInGb"> Capacity of the data store. </param>
         /// <param name="freeSpaceInGb"> Free space of the data store. </param>
@@ -3527,7 +3644,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="numberOfApplications"> Number of applications installed in the guest VM. </param>
         /// <param name="numberOfSoftware"> Number of software installed in the guest VM. </param>
         /// <param name="numberOfSecurityRisks"> Number of security risks identified on the guest VM. </param>
-        /// <param name="guestDetailsDiscoveryTimestamp">
+        /// <param name="guestDetailsDiscoveryOn">
         /// The last time at which the Guest Details was discovered
         /// or the
         /// error while discovering guest details based discovery
@@ -3543,7 +3660,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// for
         /// the VM.
         /// </param>
-        /// <param name="dependencyMappingStartOn"> Gets or sets when dependency mapping collection is last started. </param>
+        /// <param name="dependencyMappingStartsOn"> Gets or sets when dependency mapping collection is last started. </param>
         /// <param name="dependencyMappingEndTime"> Gets or sets when dependency mapping collection was last disabled. </param>
         /// <param name="runAsAccountId"> Gets or sets the run as account ID of the machine. </param>
         /// <param name="applianceNames"> Gets the appliance names. </param>
@@ -3576,14 +3693,14 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="arcDiscovery"> Gets the data related to Azure arc discovery. </param>
         /// <returns> A new <see cref="MigrationDiscovery.MachineResourceData"/> instance for mocking. </returns>
-        public static MachineResourceData MachineResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vCenterFqdn = default, string vCenterId = default, string instanceUuid = default, string dataCenterScope = default, string description = default, IEnumerable<VmwareDisk> disks = default, bool? hostInMaintenanceMode = default, string hostName = default, string hostPowerState = default, string hostVersion = default, IEnumerable<VmwareNetworkAdapter> networkAdapters = default, string vMwareToolsStatus = default, string vMwareToolsVersion = default, bool? changeTrackingSupported = default, bool? changeTrackingEnabled = default, bool? secureBootEnabled = default, int? maxSnapshots = default, string diskEnabledUuid = default, int? numberOfSnapshots = default, string altGuestName = default, string powerStatus = default, string vmFqdn = default, string vmConfigurationFileLocation = default, string firmware = default, GuestOSDetails guestOSDetails = default, int? numberOfApplications = default, int? numberOfSoftware = default, int? numberOfSecurityRisks = default, DateTimeOffset? guestDetailsDiscoveryTimestamp = default, bool? isGuestDetailsDiscoveryInProgress = default, string dependencyMapping = default, DateTimeOffset? dependencyMappingStartOn = default, string dependencyMappingEndTime = default, string runAsAccountId = default, IEnumerable<string> applianceNames = default, IEnumerable<HealthErrorDetails> errors = default, ApplicationDiscovery applicationDiscovery = default, DependencyMapDiscovery dependencyMapDiscovery = default, StaticDiscovery staticDiscovery = default, SqlDiscovery sqlDiscovery = default, WebAppDiscovery webAppDiscovery = default, OracleDiscovery oracleDiscovery = default, SpringBootDiscovery springBootDiscovery = default, WebAppDiscovery iisDiscovery = default, WebAppDiscovery tomcatDiscovery = default, AppsAndRoles appsAndRoles = default, ProductSupportStatus productSupportStatus = default, int? numberOfProcessorCore = default, double? allocatedMemoryInMb = default, OperatingSystem operatingSystemDetails = default, string biosSerialNumber = default, string biosGuid = default, string displayName = default, bool? isDeleted = default, string createdTimestamp = default, IDictionary<string, string> tags = default, string updatedTimestamp = default, ProvisioningState? provisioningState = default, ArcDiscovery arcDiscovery = default)
+        public static MachineResourceData MachineResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vCenterFqdn = default, string vCenterId = default, string instanceUuid = default, string dataCenterScope = default, string description = default, IEnumerable<VmwareDisk> disks = default, bool? hostInMaintenanceMode = default, string hostName = default, string hostPowerState = default, string hostVersion = default, IEnumerable<VmwareNetworkAdapter> networkAdapters = default, string vMwareToolsStatus = default, string vMwareToolsVersion = default, bool? changeTrackingSupported = default, bool? changeTrackingEnabled = default, bool? secureBootEnabled = default, int? maxSnapshots = default, string diskEnabledUuid = default, int? numberOfSnapshots = default, string altGuestName = default, string powerStatus = default, string vmFqdn = default, string vmConfigurationFileLocation = default, string firmware = default, GuestOSDetails guestOSDetails = default, int? numberOfApplications = default, int? numberOfSoftware = default, int? numberOfSecurityRisks = default, DateTimeOffset? guestDetailsDiscoveryOn = default, bool? isGuestDetailsDiscoveryInProgress = default, string dependencyMapping = default, DateTimeOffset? dependencyMappingStartsOn = default, string dependencyMappingEndTime = default, string runAsAccountId = default, IEnumerable<string> applianceNames = default, IEnumerable<HealthErrorDetails> errors = default, ApplicationDiscovery applicationDiscovery = default, DependencyMapDiscovery dependencyMapDiscovery = default, StaticDiscovery staticDiscovery = default, SqlDiscovery sqlDiscovery = default, WebAppDiscovery webAppDiscovery = default, OracleDiscovery oracleDiscovery = default, SpringBootDiscovery springBootDiscovery = default, WebAppDiscovery iisDiscovery = default, WebAppDiscovery tomcatDiscovery = default, AppsAndRoles appsAndRoles = default, ProductSupportStatus productSupportStatus = default, int? numberOfProcessorCore = default, double? allocatedMemoryInMb = default, OperatingSystem operatingSystemDetails = default, string biosSerialNumber = default, string biosGuid = default, string displayName = default, bool? isDeleted = default, string createdTimestamp = default, IDictionary<string, string> tags = default, string updatedTimestamp = default, ProvisioningState? provisioningState = default, ArcDiscovery arcDiscovery = default)
         {
             return new MachineResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                vCenterFqdn is null && vCenterId is null && instanceUuid is null && dataCenterScope is null && description is null && disks is null && hostInMaintenanceMode is null && hostName is null && hostPowerState is null && hostVersion is null && networkAdapters is null && vMwareToolsStatus is null && vMwareToolsVersion is null && changeTrackingSupported is null && changeTrackingEnabled is null && secureBootEnabled is null && maxSnapshots is null && diskEnabledUuid is null && numberOfSnapshots is null && altGuestName is null && powerStatus is null && vmFqdn is null && vmConfigurationFileLocation is null && firmware is null && guestOSDetails is null && numberOfApplications is null && numberOfSoftware is null && numberOfSecurityRisks is null && guestDetailsDiscoveryTimestamp is null && isGuestDetailsDiscoveryInProgress is null && dependencyMapping is null && dependencyMappingStartOn is null && dependencyMappingEndTime is null && runAsAccountId is null && applianceNames is null && errors is null && applicationDiscovery is null && dependencyMapDiscovery is null && staticDiscovery is null && sqlDiscovery is null && webAppDiscovery is null && oracleDiscovery is null && springBootDiscovery is null && iisDiscovery is null && tomcatDiscovery is null && appsAndRoles is null && productSupportStatus is null && numberOfProcessorCore is null && allocatedMemoryInMb is null && operatingSystemDetails is null && biosSerialNumber is null && biosGuid is null && displayName is null && isDeleted is null && createdTimestamp is null && tags is null && updatedTimestamp is null && provisioningState is null && arcDiscovery is null ? default : new VmwareMachineProperties(
+                vCenterFqdn is null && vCenterId is null && instanceUuid is null && dataCenterScope is null && description is null && disks is null && hostInMaintenanceMode is null && hostName is null && hostPowerState is null && hostVersion is null && networkAdapters is null && vMwareToolsStatus is null && vMwareToolsVersion is null && changeTrackingSupported is null && changeTrackingEnabled is null && secureBootEnabled is null && maxSnapshots is null && diskEnabledUuid is null && numberOfSnapshots is null && altGuestName is null && powerStatus is null && vmFqdn is null && vmConfigurationFileLocation is null && firmware is null && guestOSDetails is null && numberOfApplications is null && numberOfSoftware is null && numberOfSecurityRisks is null && guestDetailsDiscoveryOn is null && isGuestDetailsDiscoveryInProgress is null && dependencyMapping is null && dependencyMappingStartsOn is null && dependencyMappingEndTime is null && runAsAccountId is null && applianceNames is null && errors is null && applicationDiscovery is null && dependencyMapDiscovery is null && staticDiscovery is null && sqlDiscovery is null && webAppDiscovery is null && oracleDiscovery is null && springBootDiscovery is null && iisDiscovery is null && tomcatDiscovery is null && appsAndRoles is null && productSupportStatus is null && numberOfProcessorCore is null && allocatedMemoryInMb is null && operatingSystemDetails is null && biosSerialNumber is null && biosGuid is null && displayName is null && isDeleted is null && createdTimestamp is null && tags is null && updatedTimestamp is null && provisioningState is null && arcDiscovery is null ? default : new VmwareMachineProperties(
                     vCenterFqdn,
                     vCenterId,
                     instanceUuid,
@@ -3612,10 +3729,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     numberOfApplications,
                     numberOfSoftware,
                     numberOfSecurityRisks,
-                    guestDetailsDiscoveryTimestamp,
+                    guestDetailsDiscoveryOn,
                     isGuestDetailsDiscoveryInProgress,
                     dependencyMapping,
-                    dependencyMappingStartOn,
+                    dependencyMappingStartsOn,
                     dependencyMappingEndTime,
                     runAsAccountId,
                     (applianceNames ?? new ChangeTrackingList<string>()).ToList(),
@@ -3647,6 +3764,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Second level object returned as part of Machine REST resource. </summary>
         /// <param name="uuid"> Disk UUID. </param>
         /// <param name="label"> Label of the disk. </param>
         /// <param name="diskProvisioningPolicy">
@@ -3686,6 +3804,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 default);
         }
 
+        /// <summary> Second level object represented in responses as part of Machine REST resource. </summary>
         /// <param name="label"> Label of the NIC. </param>
         /// <param name="adapterType"> Gets or sets the adapter type. </param>
         /// <param name="nicId"> Gets or sets the NIC Id. </param>

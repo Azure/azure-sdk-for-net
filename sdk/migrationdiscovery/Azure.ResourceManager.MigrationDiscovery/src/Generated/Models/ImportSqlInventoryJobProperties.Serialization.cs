@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("numberOfAvailabilityGroupsImported"u8);
                 writer.WriteNumberValue(NumberOfAvailabilityGroupsImported.Value);
             }
-            if (Optional.IsDefined(BlobCreationTimeStamp))
+            if (Optional.IsDefined(BlobCreatedOn))
             {
                 writer.WritePropertyName("blobCreationTimeStamp"u8);
-                writer.WriteStringValue(BlobCreationTimeStamp.Value, "O");
+                writer.WriteStringValue(BlobCreatedOn.Value, "O");
             }
             if (Optional.IsDefined(ErrorSummary))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             int? numberOfServersImported = default;
             int? numberOfDatabasesImported = default;
             int? numberOfAvailabilityGroupsImported = default;
-            DateTimeOffset? blobCreationTimeStamp = default;
+            DateTimeOffset? blobCreatedOn = default;
             SqlImportJobErrorSummary errorSummary = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    blobCreationTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    blobCreatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("errorSummary"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 numberOfServersImported,
                 numberOfDatabasesImported,
                 numberOfAvailabilityGroupsImported,
-                blobCreationTimeStamp,
+                blobCreatedOn,
                 errorSummary,
                 additionalBinaryDataProperties);
         }

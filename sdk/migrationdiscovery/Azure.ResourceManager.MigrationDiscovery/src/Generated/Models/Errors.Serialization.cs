@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedTimeStamp))
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTimeStamp"u8);
-                writer.WriteStringValue(UpdatedTimeStamp.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(RunAsAccountId))
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             string severity = default;
             string summaryMessage = default;
             MicrosoftAzureFDSWebRoleHealthErrorDetailsSource? source = default;
-            DateTimeOffset? updatedTimeStamp = default;
+            DateTimeOffset? updatedOn = default;
             string runAsAccountId = default;
             HealthErrorDetailsDiscoveryScope? discoveryScope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    updatedTimeStamp = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("runAsAccountId"u8))
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 severity,
                 summaryMessage,
                 source,
-                updatedTimeStamp,
+                updatedOn,
                 runAsAccountId,
                 discoveryScope,
                 additionalBinaryDataProperties);

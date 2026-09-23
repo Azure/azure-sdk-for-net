@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="machineId"> id of machine. </param>
         /// <param name="processGroupName"> process group name. </param>
         /// <param name="processName"> name of process. </param>
-        /// <param name="startOn"> start time. </param>
-        /// <param name="endOn"> end time. </param>
+        /// <param name="startsOn"> start time. </param>
+        /// <param name="endsOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent(string machineId, string processGroupName, string processName, DateTimeOffset? startOn, DateTimeOffset? endOn, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent(string machineId, string processGroupName, string processName, DateTimeOffset? startsOn, DateTimeOffset? endsOn, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MachineId = machineId;
             ProcessGroupName = processGroupName;
             ProcessName = processName;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Filters = filters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public string ProcessName { get; set; }
 
         /// <summary> start time. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> end time. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> optional filters. </summary>
         public MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters Filters { get; set; }

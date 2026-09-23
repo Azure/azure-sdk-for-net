@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("numberOfSecurityRisks"u8);
                 writer.WriteNumberValue(NumberOfSecurityRisks.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(GuestDetailsDiscoveryTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(GuestDetailsDiscoveryOn))
             {
                 writer.WritePropertyName("guestDetailsDiscoveryTimestamp"u8);
-                writer.WriteStringValue(GuestDetailsDiscoveryTimestamp.Value, "O");
+                writer.WriteStringValue(GuestDetailsDiscoveryOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsGuestDetailsDiscoveryInProgress))
             {
@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("dependencyMapping"u8);
                 writer.WriteStringValue(DependencyMapping);
             }
-            if (options.Format != "W" && Optional.IsDefined(DependencyMappingStartOn))
+            if (options.Format != "W" && Optional.IsDefined(DependencyMappingStartsOn))
             {
                 writer.WritePropertyName("dependencyMappingStartTime"u8);
-                writer.WriteStringValue(DependencyMappingStartOn.Value, "O");
+                writer.WriteStringValue(DependencyMappingStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(DependencyMappingEndTime))
             {
@@ -475,10 +475,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             int? numberOfApplications = default;
             int? numberOfSoftware = default;
             int? numberOfSecurityRisks = default;
-            DateTimeOffset? guestDetailsDiscoveryTimestamp = default;
+            DateTimeOffset? guestDetailsDiscoveryOn = default;
             bool? isGuestDetailsDiscoveryInProgress = default;
             string dependencyMapping = default;
-            DateTimeOffset? dependencyMappingStartOn = default;
+            DateTimeOffset? dependencyMappingStartsOn = default;
             string dependencyMappingEndTime = default;
             string runAsAccountId = default;
             IReadOnlyList<string> applianceNames = default;
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    guestDetailsDiscoveryTimestamp = prop.Value.GetDateTimeOffset("O");
+                    guestDetailsDiscoveryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isGuestDetailsDiscoveryInProgress"u8))
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    dependencyMappingStartOn = prop.Value.GetDateTimeOffset("O");
+                    dependencyMappingStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("dependencyMappingEndTime"u8))
@@ -1017,10 +1017,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 numberOfApplications,
                 numberOfSoftware,
                 numberOfSecurityRisks,
-                guestDetailsDiscoveryTimestamp,
+                guestDetailsDiscoveryOn,
                 isGuestDetailsDiscoveryInProgress,
                 dependencyMapping,
-                dependencyMappingStartOn,
+                dependencyMappingStartsOn,
                 dependencyMappingEndTime,
                 runAsAccountId,
                 applianceNames ?? new ChangeTrackingList<string>(),

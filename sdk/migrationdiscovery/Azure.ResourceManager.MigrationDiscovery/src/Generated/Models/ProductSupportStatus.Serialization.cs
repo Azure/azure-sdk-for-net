@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 writer.WritePropertyName("supportStatus"u8);
                 writer.WriteStringValue(SupportStatus.Value.ToString());
             }
-            if (Optional.IsDefined(SupportEndOn))
+            if (Optional.IsDefined(SupportEndsOn))
             {
                 writer.WritePropertyName("supportEndDate"u8);
-                writer.WriteStringValue(SupportEndOn.Value, "O");
+                writer.WriteStringValue(SupportEndsOn.Value, "O");
             }
             if (Optional.IsDefined(EsuYear))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
             string currentVersion = default;
             EsuStatus? esuStatus = default;
             SupportStatus? supportStatus = default;
-            DateTimeOffset? supportEndOn = default;
+            DateTimeOffset? supportEndsOn = default;
             EsuYear? esuYear = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    supportEndOn = prop.Value.GetDateTimeOffset("O");
+                    supportEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("esuYear"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 currentVersion,
                 esuStatus,
                 supportStatus,
-                supportEndOn,
+                supportEndsOn,
                 esuYear,
                 additionalBinaryDataProperties);
         }

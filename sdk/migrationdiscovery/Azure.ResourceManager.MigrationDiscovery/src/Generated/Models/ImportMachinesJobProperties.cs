@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="blobSasUri"> blob sasUri. </param>
         /// <param name="jobResult"> job Result. </param>
         /// <param name="numberOfMachinesImported"> number Of Machines Imported. </param>
-        /// <param name="blobCreationTimeStamp"> blob Creation TimeStamp. </param>
+        /// <param name="blobCreatedOn"> blob Creation TimeStamp. </param>
         /// <param name="errorSummary"> error summary. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportMachinesJobProperties(string blobName, string blobSasUri, JobResult? jobResult, int? numberOfMachinesImported, DateTimeOffset? blobCreationTimeStamp, JobErrorSummary errorSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportMachinesJobProperties(string blobName, string blobSasUri, JobResult? jobResult, int? numberOfMachinesImported, DateTimeOffset? blobCreatedOn, JobErrorSummary errorSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobName = blobName;
             BlobSasUri = blobSasUri;
             JobResult = jobResult;
             NumberOfMachinesImported = numberOfMachinesImported;
-            BlobCreationTimeStamp = blobCreationTimeStamp;
+            BlobCreatedOn = blobCreatedOn;
             ErrorSummary = errorSummary;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public int? NumberOfMachinesImported { get; }
 
         /// <summary> blob Creation TimeStamp. </summary>
-        public DateTimeOffset? BlobCreationTimeStamp { get; }
+        public DateTimeOffset? BlobCreatedOn { get; }
 
         /// <summary> error summary. </summary>
         public JobErrorSummary ErrorSummary { get; }
