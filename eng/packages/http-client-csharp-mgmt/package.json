@@ -38,7 +38,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260918.3",
+    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260922.2",
     "@typespec/http-client-csharp": "1.0.0-alpha.20260918.2"
   },
   "devDependencies": {
@@ -59,8 +59,8 @@
     "@typespec/http-specs": "0.1.0-alpha.43",
     "@typespec/openapi": "1.16.0",
     "@typespec/rest": "0.86.0",
-    "@typespec/spec-api": "0.1.0-alpha.15",
-    "@typespec/spector": "0.1.0-alpha.26",
+    "@typespec/spec-api": "0.1.0-alpha.17",
+    "@typespec/spector": "0.1.0-alpha.29",
     "@typespec/sse": "0.86.0",
     "@typespec/streams": "0.86.0",
     "@typespec/tspd": "0.77.0",
