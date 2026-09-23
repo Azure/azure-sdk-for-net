@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net.ServerSentEvents;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Streaming;
@@ -12,6 +14,32 @@ namespace Azure.AI.AgentServer.Core.Tests.Streaming;
 [TestFixture]
 public sealed class EventStreamRegistryTests
 {
+    [Test]
+    public async Task OptionsConfiguredAfterRegistrationDetermineBacking()
+    {
+        var services = new ServiceCollection();
+        services.AddAgentEventStreams();
+        services.Configure<AgentEventStreamOptions>(options =>
+            options.UseInMemoryReplay());
+
+        await using ServiceProvider provider = services.BuildServiceProvider();
+        AgentEventStreamRegistry registry =
+            provider.GetRequiredService<AgentEventStreamRegistry>();
+        AgentEventStream stream = await registry.GetOrCreateAsync("late-options");
+        await stream.EmitAsync(
+            new SseItem<string>("retained") { EventId = "1" },
+            close: true);
+
+        var retained = new List<SseItem<string>>();
+        await foreach (SseItem<string> item in stream.Subscribe())
+        {
+            retained.Add(item);
+        }
+
+        Assert.That(retained, Has.Count.EqualTo(1));
+        Assert.That(retained[0].Data, Is.EqualTo("retained"));
+    }
+
     [Test]
     public async Task DeleteUnknownStreamIdIsNoOp()
     {

@@ -116,13 +116,20 @@ namespace Azure.Generator.Management.Visitors
                 a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ObsoleteAttribute));
         }
 
-        private static bool IsFlattenableProperty(PropertyProvider property)
+        private static bool IsPublicModelProperty(PropertyProvider property)
         {
-            // Infrastructure-only properties such as Patch have no wire representation and must not be flattened.
             return property.Modifiers.HasFlag(MethodSignatureModifiers.Public)
-                && property.WireInfo is not null
-                && !IsObsoleteProperty(property);
+                && !IsObsoleteProperty(property)
+                && !IsJsonPatchProperty(property);
         }
+
+#pragma warning disable SCME0001 // JsonPatch is experimental.
+        private static bool IsJsonPatchProperty(PropertyProvider property)
+            => property.Type.Equals(typeof(System.ClientModel.Primitives.JsonPatch));
+#pragma warning restore SCME0001
+
+        private static bool IsFlattenableProperty(PropertyProvider property)
+            => IsPublicModelProperty(property) && property.WireInfo is not null;
 
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
         {
@@ -575,9 +582,10 @@ namespace Azure.Generator.Management.Visitors
                         continue;
                     }
 
-                    // only safe flatten single public property (excluding obsolete ones)
-                    var publicPropertyCount = innerProperties.Count(IsFlattenableProperty);
-                    if (publicPropertyCount != 1)
+                    // Only safe flatten a model with one effective public property. JsonPatch is an
+                    // infrastructure property and does not contribute to the model's public data shape.
+                    var publicProperties = innerProperties.Where(IsPublicModelProperty).ToArray();
+                    if (publicProperties.Length != 1 || !IsFlattenableProperty(publicProperties[0]))
                     {
                         continue;
                     }
@@ -652,7 +660,7 @@ namespace Azure.Generator.Management.Visitors
                 var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
                 var shouldPreserveSetter = ShouldPreserveLastContractSetter(model, flattenPropertyName);
                 var flattenPropertyBody = new MethodPropertyBody(
-                    PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, propertyModel, innerProperty),
+                    PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, propertyModel, innerProperty, shouldLiftToNullable),
                     !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty, shouldLiftToNullable, shouldPreserveSetter)
                 );
 
@@ -738,7 +746,7 @@ namespace Azure.Generator.Management.Visitors
             var shouldEmitCollectionSetter = shouldPreserveSetter
                 || IsFlattenedIntoParentWithLastContractSetter(model, flattenPropertyName);
             var flattenPropertyBody = new MethodPropertyBody(
-                PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty),
+                PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty, shouldLiftToNullable),
                 // Emit collection setters only when compatibility or parent delegation requires them.
                 isFlattenedPropertyReadOnly || (innerProperty.Type.IsCollection && !shouldEmitCollectionSetter) ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, shouldLiftToNullable)
             );

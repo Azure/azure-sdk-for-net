@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 throw new FormatException($"The model {nameof(EntityHistoryContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startAt"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endAt"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(Top))
             {
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             int? top = default;
             string nextMarker = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endAt"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("top"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EntityHistoryContent(startOn, endOn, top, nextMarker, additionalBinaryDataProperties);
+            return new EntityHistoryContent(startsOn, endsOn, top, nextMarker, additionalBinaryDataProperties);
         }
     }
 }

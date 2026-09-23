@@ -14,8 +14,8 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources.Azure;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Resources.Azure;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
@@ -188,6 +188,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         {
             return Environment.Version.Major >= 8 ?
                 meterProviderBuilder.AddMeter("Microsoft.AspNetCore.Hosting").AddMeter("System.Net.Http")
+                    .AddView(instrument =>
+                        string.Equals(instrument.Meter.Name, "System.Net.Http", StringComparison.Ordinal)
+                        && !string.Equals(instrument.Name, "http.client.request.duration", StringComparison.Ordinal)
+                            ? MetricStreamConfiguration.Drop
+                            : null)
                 : meterProviderBuilder.AddAspNetCoreInstrumentation().AddHttpClientInstrumentation();
         }
     }

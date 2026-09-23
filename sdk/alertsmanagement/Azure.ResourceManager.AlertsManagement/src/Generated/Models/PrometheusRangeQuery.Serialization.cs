@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("start"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("end"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("step"u8);
             writer.WriteStringValue(Step);
         }
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             IList<string> datasources = default;
             string grafanaExplorePath = default;
             string query = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset endsOn = default;
             string step = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (prop.NameEquals("start"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("end"u8))
                 {
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("step"u8))
@@ -216,8 +216,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 datasources,
                 grafanaExplorePath,
                 query,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 step);
         }
     }
