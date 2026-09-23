@@ -7,10 +7,10 @@ restores these separately locked dependencies when bundle creation is enabled.
 
 | Source | Responsibility |
 | --- | --- |
-| [prepare-bundle.mjs](prepare-bundle.mjs), [bundle.mjs](bundle.mjs) | Validate selected attempts and prepare the saved schema-v1 archive |
-| [publish-bundle.mjs](publish-bundle.mjs), [storage.mjs](storage.mjs) | Authenticate the pipeline and publish the exact saved bytes with create-only retries |
-| [notification.mjs](notification.mjs) | Optional authenticated signal to the reviewed dashboard destination |
-| [diagnostics.mjs](diagnostics.mjs) | Bounded error reporting without credentials or result contents |
+| [prepare-bundle.ts](prepare-bundle.ts), [bundle.ts](bundle.ts) | Validate selected attempts and prepare the saved schema-v1 archive |
+| [publish-bundle.ts](publish-bundle.ts), [storage.ts](storage.ts) | Authenticate the pipeline and publish the exact saved bytes with create-only retries |
+| [notification.ts](notification.ts) | Optional authenticated signal to the reviewed dashboard destination |
+| [diagnostics.ts](diagnostics.ts) | Bounded error reporting without credentials or result contents |
 
 The separate dashboard owns read-only import, cache, UI and deployment. It has
 no publishing or sample-data mode; this package is the only production writer.
@@ -25,10 +25,10 @@ no publishing or sample-data mode; this package is the only production writer.
    It reads **this build's** timeline with `System.AccessToken` to detect newer
    retries that published no artifact. Failure to verify those attempts prevents
    publication while retaining diagnostics; no dashboard/ADO discovery is added.
-3. `prepare-bundle.mjs` packages the selected streams into one saved ZIP:
+3. `prepare-bundle.ts` packages the selected streams into one saved ZIP:
    `manifest.json`, merged `results.jsonl`, `eval-summary.md` and `junit/*.xml`.
    Other artifacts, MCP binaries, debug files and signing files are excluded.
-4. `publish-bundle.mjs` runs inside `AzureCLI@2`, using that task's federated
+4. `publish-bundle.ts` runs inside `AzureCLI@2`, using that task's federated
    identity via `AzureCliCredential`. It uploads the ZIP with `ifNoneMatch: *` to
    `v1/<org>/<lowercase-encoded-project>/<definition>/<build>/<Summary-attempt>/dashboard-bundle.zip`.
 5. Immutable Blob metadata is `schema: "1"`, `sha256`, `publisher` (SHA-256 of

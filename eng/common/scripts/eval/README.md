@@ -48,6 +48,7 @@ no `enum`/`namespace`/parameter properties, no emit). CI pins Node `22.x`, which
 unflagged on `>=22.18`; the pipeline `node` invocations and the `npm test` script pass
 `--experimental-strip-types` so the same sources also run on older local Node (`>=22.6`), which
 prints a harmless `ExperimentalWarning`. Relative imports use explicit `.ts` specifiers, as Node requires.
+The standalone Blob publisher uses the same execution model; it adds no compiler or TypeScript runtime dependency.
 
 ## Vendored files
 
