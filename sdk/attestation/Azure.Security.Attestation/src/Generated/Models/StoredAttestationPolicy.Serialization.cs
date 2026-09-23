@@ -76,7 +76,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(AttestationPolicy))
             {
                 writer.WritePropertyName("AttestationPolicy"u8);
-                writer.WriteStringValue(AttestationPolicy);
+                SerializeAttestationPolicy(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.Security.Attestation
             {
                 if (prop.NameEquals("AttestationPolicy"u8))
                 {
-                    attestationPolicy = prop.Value.GetString();
+                    DeserializeAttestationPolicy(prop, ref attestationPolicy);
                     continue;
                 }
                 if (options.Format != "W")
