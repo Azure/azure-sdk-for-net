@@ -42,6 +42,13 @@ internal sealed class FileBackedReplayEventStream :
     private int _evictionsSinceCompaction;
     private bool _disposed;
     private string? _taskId;
+    private bool _failNextDurableFlushForTest;
+
+    // Test-only seam: arms a single fail-after-write on the next durable flush. The written bytes are
+    // pushed through to the OS (so another handle's IsFileTerminated peek can read the terminal
+    // marker) and the durability flush then throws once, reproducing a close whose marker became
+    // readable but whose fsync failed. Never used outside tests.
+    internal void FailNextDurableFlushForTest() => _failNextDurableFlushForTest = true;
 
     public FileBackedReplayEventStream(
         string id,
@@ -675,6 +682,17 @@ internal sealed class FileBackedReplayEventStream :
 
                 _rollbackPosition = fs.Position;
                 fs.Write(bytes, 0, bytes.Length);
+                if (_failNextDurableFlushForTest)
+                {
+                    _failNextDurableFlushForTest = false;
+
+                    // Make the written bytes readable to other handles (mirrors a real close whose
+                    // page-cache write is already visible) before failing the durability flush, so
+                    // _rollbackPosition is left set for the next append to repair.
+                    fs.Flush(flushToDisk: false);
+                    throw new IOException("Injected durable-flush failure (test-only).");
+                }
+
                 fs.Flush(flushToDisk: true);
                 _rollbackPosition = null;
             }

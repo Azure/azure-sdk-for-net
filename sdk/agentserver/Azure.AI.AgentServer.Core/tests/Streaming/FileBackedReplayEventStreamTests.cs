@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.ServerSentEvents;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Streaming.Backings;
@@ -532,5 +533,45 @@ public sealed class FileBackedReplayEventStreamTests
         string path = Path.Combine(_dir, "only-terminal.jsonl");
         File.WriteAllText(path, TerminalLine + "\n", NoBom);
         Assert.That(FileBackedReplayEventStream.IsFileTerminated(path), Is.True);
+    }
+
+    [Test]
+    public async Task OrphanSweepCompletesCloseAfterTerminalWriteFlushFails()
+    {
+        // Regression for the fail-AFTER-write close: the terminal marker becomes readable but its
+        // durability flush throws. A readable marker is not proof the close published, so the retry
+        // must complete it rather than let the IsFileTerminated peek skip it on the next pass.
+        var options = new AgentEventStreamOptions();
+        options.UseFileBackedReplay(storageDirectory: _dir, ttl: TimeSpan.FromMinutes(10));
+        var registry = new InMemoryEventStreamRegistry(options);
+
+        var stream = (FileBackedReplayEventStream)await registry.GetOrCreateTaskStreamAsync("t", "orphan");
+        await stream.EmitAsync(new SseItem<string>("first") { EventId = "1" });
+        string file = Path.Combine(_dir, "orphan.jsonl");
+
+        // Arm the fail-after-write: the next close writes a readable terminal marker, then throws.
+        stream.FailNextDurableFlushForTest();
+
+        int firstPass = await registry.CloseOrphanTaskStreamsAsync((_, _) => new ValueTask<bool>(true));
+        Assert.That(firstPass, Is.EqualTo(1), "The failed close must be reported so the caller retries.");
+        Assert.That(FileBackedReplayEventStream.IsFileTerminated(file), Is.True,
+            "The terminal marker is readable on disk even though its durability flush failed.");
+
+        // Second pass: the peek alone would skip the now-'terminated' file, but the retry re-closes
+        // the cached instance directly (repairing its unacknowledged tail) and completes it.
+        int secondPass = await registry.CloseOrphanTaskStreamsAsync((_, _) => new ValueTask<bool>(true));
+        Assert.That(secondPass, Is.EqualTo(0), "The retry completes the close with no remaining failures.");
+
+        // The stream is genuinely closed and published: replay reaches EOF instead of hanging, and
+        // the marker is durable.
+        var replayed = new List<string>();
+        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(15));
+        await foreach (SseItem<string> item in stream.Subscribe(cancellationToken: cts.Token))
+        {
+            replayed.Add(item.Data);
+        }
+
+        Assert.That(replayed, Is.EqualTo(new[] { "first" }));
+        Assert.That(FileBackedReplayEventStream.IsFileTerminated(file), Is.True);
     }
 }

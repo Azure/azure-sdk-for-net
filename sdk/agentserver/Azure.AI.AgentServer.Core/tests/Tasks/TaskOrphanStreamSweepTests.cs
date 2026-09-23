@@ -5,10 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.ServerSentEvents;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
+using Azure.AI.AgentServer.Core.Streaming.Backings;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
+using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
 using NUnit.Framework;
 
@@ -98,6 +101,68 @@ public class TaskOrphanStreamSweepTests
             int cleanFailures = await registry.CloseOrphanTaskStreamsAsync(
                 (_, inputId) => new ValueTask<bool>(inputId == "orphan"));
             Assert.That(cleanFailures, Is.EqualTo(0), "A pass that closes every candidate reports no failures.");
+        }
+        finally
+        {
+            if (Directory.Exists(root))
+            { Directory.Delete(root, recursive: true); }
+        }
+    }
+
+    [Test]
+    public async Task EngineSweepCompletesCloseAfterTerminalWriteFlushFails()
+    {
+        // Engine-level regression for the fail-AFTER-write close: the terminal marker is written and
+        // readable, but its durability flush fails once. A single cold-start scan must still complete
+        // the close via the bounded in-place retry, not leave the stream half-closed behind a
+        // readable-but-unpublished marker that the peek would skip.
+        string root = Path.Combine(Path.GetTempPath(), "agentserver-orphan-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            using TaskTestHost host = TaskTestHost.Create(
+                sharedDir: Path.Combine(root, "tasks"),
+                configureStreams: o => o.UseFileBackedReplay(Path.Combine(root, "streams"), TimeSpan.FromMinutes(10)));
+            var registry = (ITaskEventStreamRegistry)host.Streams;
+
+            var stream = (FileBackedReplayEventStream)await registry.GetOrCreateTaskStreamAsync("t", "orphan");
+            await stream.EmitAsync(new SseItem<string>("first") { EventId = "1" });
+
+            // A suspended record whose only input 'orphan' is retired (not queued): the sweep decides
+            // to close its stream. Suspended is not a valid create status, so create in_progress then
+            // transition (records start life in_progress and are suspended on turn end).
+            await host.Store.CreateAsync(new TaskCreateRequest
+            {
+                Id = "t",
+                AgentName = host.AgentName,
+                SessionId = host.SessionId,
+                Title = "orphaned",
+                Status = TaskWireKeys.StatusInProgress,
+                Payload = new JsonObject
+                {
+                    [TaskWireKeys.PayloadSchemaVersion] = TaskWireKeys.SchemaVersionValue,
+                    [TaskWireKeys.PayloadLastInputId] = "orphan",
+                },
+                Source = new JsonObject
+                {
+                    [TaskWireKeys.SourceType] = TaskWireKeys.SourceTypeValue,
+                    [TaskWireKeys.SourceName] = "orphaned",
+                    [TaskWireKeys.SourceServerVersion] = "test",
+                },
+            });
+            await host.Store.PatchAsync("t", new TaskPatchRequest { Status = TaskWireKeys.StatusSuspended }, ifMatch: null);
+
+            // Fail the terminal flush on the first close; the engine's bounded retry must complete the
+            // close within this single cold-start scan.
+            stream.FailNextDurableFlushForTest();
+            await host.Engine.ScanAndRecoverAsync();
+
+            // Genuinely closed and published: replay reaches EOF instead of hanging, marker durable.
+            List<string> replayed = await ReadToEndAsync(stream);
+            Assert.That(replayed, Is.EqualTo(new[] { "first" }));
+            Assert.That(
+                FileBackedReplayEventStream.IsFileTerminated(Path.Combine(root, "streams", "orphan.jsonl")),
+                Is.True);
         }
         finally
         {
