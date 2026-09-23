@@ -401,13 +401,13 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
-        public void ConstructorAndClone_PreserveDisableMtlsProofOfPossession()
+        public void ConstructorAndClone_PreserveEnableMtlsProofOfPossession()
         {
             IConfiguration config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
                     ["Credential:CredentialSource"] = "ManagedIdentityAsFederatedIdentityCredential",
-                    ["Credential:DisableMtlsProofOfPossession"] = "true",
+                    ["Credential:EnableMtlsProofOfPossession"] = "true",
                 })
                 .Build();
             var section = config.GetSection("Credential");
@@ -415,8 +415,8 @@ namespace Azure.Core.Tests.Identity
 
             var clone = options.Clone<DefaultAzureCredentialOptions>();
 
-            Assert.IsTrue(options.DisableMtlsProofOfPossession);
-            Assert.IsTrue(clone.DisableMtlsProofOfPossession);
+            Assert.IsTrue(options.EnableMtlsProofOfPossession);
+            Assert.IsTrue(clone.EnableMtlsProofOfPossession);
         }
 
         [TestCase(nameof(VisualStudioCredential))]
