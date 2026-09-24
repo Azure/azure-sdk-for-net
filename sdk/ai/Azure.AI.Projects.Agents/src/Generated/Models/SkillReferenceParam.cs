@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Agents;
+using OpenAI;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> The SkillReferenceParam. </summary>
     public partial class SkillReferenceParam : ContainerSkill

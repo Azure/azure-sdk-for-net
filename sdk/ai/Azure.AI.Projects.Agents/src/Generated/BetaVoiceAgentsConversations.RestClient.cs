@@ -3,8 +3,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.AI.Projects.Agents;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Projects.Agents._Beta.VoiceAgents
 {
     /// <summary></summary>
     public partial class BetaVoiceAgentsConversations

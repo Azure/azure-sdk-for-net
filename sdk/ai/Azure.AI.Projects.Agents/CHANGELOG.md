@@ -6,7 +6,17 @@
 
 ### Breaking Changes
 
+- `OpenAI.RealtimeClientEventType` has been removed. The affected property now uses the existing `OpenAI.Realtime.RealtimeClientCommandKind` type instead.
+
 ### Bugs Fixed
+
+- Fixed a bug where several Voice Agents-related types were incorrectly generated into the `OpenAI` namespace instead of `Azure.AI.Projects.Agents`:
+  - `VoiceResponseBaseStatus`
+  - `VoiceResponseBaseOutputModality`
+  - `MCPToolboxToolConnectorId`
+  - `VoiceAgentAudioInputConfigTranscriptionDelay`
+  - `VoiceAgentSemanticVadTurnDetectionEagerness`
+  - `WebSearchToolSearchContextSize`
 
 ### Other Changes
 

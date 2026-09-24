@@ -7,6 +7,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Threading;
+using Azure.AI.Projects.Agents._Beta;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -23,6 +24,7 @@ namespace Azure.AI.Projects.Agents
             }
         };
         private readonly string _apiVersion;
+        private Beta _cachedBeta;
         private AgentAdministrationClient _cachedAgentAdministrationClient;
         private AgentToolboxes _cachedAgentToolboxes;
         private AgentSessionFiles _cachedAgentSessionFiles;
@@ -75,6 +77,12 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary> Initializes a new instance of Beta. </summary>
+        public virtual Beta GetBetaClient()
+        {
+            return Volatile.Read(ref _cachedBeta) ?? Interlocked.CompareExchange(ref _cachedBeta, new Beta(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedBeta;
+        }
 
         /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
         public virtual AgentAdministrationClient GetAgentAdministrationClient()

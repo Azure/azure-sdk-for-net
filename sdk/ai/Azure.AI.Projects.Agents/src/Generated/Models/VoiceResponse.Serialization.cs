@@ -7,7 +7,6 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
