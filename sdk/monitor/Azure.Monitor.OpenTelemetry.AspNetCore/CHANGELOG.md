@@ -10,7 +10,7 @@
 
 ### Bugs Fixed
 
-- Fixed App Service resource detection overriding `OTEL_SERVICE_NAME` with the App Service site name.
+- `OTEL_SERVICE_NAME` and `OTEL_RESOURCE_ATTRIBUTES` now take precedence over resource attributes detected by the Azure App Service, Container Apps, and VM resource detectors. Applications that set these variables will see Cloud Role Name and/or Cloud Role Instance change in Application Insights to the configured values.
 
 ### Other Changes
 

@@ -86,6 +86,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 .AddDetector(new AppServiceResourceDetector())
                 .AddDetector(new AzureVMResourceDetector())
                 .AddDetector(new AzureContainerAppsResourceDetector())
+                // ResourceBuilder.CreateDefault() already includes the env var detector, but the Azure detectors above
+                // override service.name / service.instance.id. Re-applying it last ensures OTEL_SERVICE_NAME and
+                // OTEL_RESOURCE_ATTRIBUTES take precedence over detected values. Do not remove or reorder.
                 .AddEnvironmentVariableDetector();
 
             builder.ConfigureResource(configureResource);
