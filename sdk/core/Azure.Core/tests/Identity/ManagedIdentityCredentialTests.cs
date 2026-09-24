@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
@@ -68,7 +69,10 @@ namespace Azure.Core.Tests.Identity
             bool isForceRefreshEnabled = true,
             bool isManagedIdentityPipeline = false,
             bool preserveTransport = true,
-            Action<MockMsalManagedIdentityClient> configureMockMsal = null)
+            Action<MockMsalManagedIdentityClient> configureMockMsal = null,
+            bool instrument = true,
+            TimeSpan? initialImdsConnectionTimeout = null,
+            bool disableMtlsProofOfPossession = false)
         {
             var pipeline = CredentialPipeline.GetInstance(options, isManagedIdentityPipeline);
             var clientOptions = new ManagedIdentityClientOptions
@@ -77,7 +81,9 @@ namespace Azure.Core.Tests.Identity
                 ManagedIdentityId = managedIdentityId,
                 IsForceRefreshEnabled = isForceRefreshEnabled,
                 PreserveTransport = preserveTransport,
-                Options = options
+                Options = options,
+                InitialImdsConnectionTimeout = initialImdsConnectionTimeout,
+                DisableMtlsProofOfPossession = disableMtlsProofOfPossession
             };
             // Inject a mock MSAL client that:
             // 1. Uses the static GetManagedIdentitySource() for source detection (no network probe)
@@ -87,9 +93,14 @@ namespace Azure.Core.Tests.Identity
             var mockMsal = new MockMsalManagedIdentityClient(clientOptions);
             configureMockMsal?.Invoke(mockMsal);
             clientOptions.MsalManagedIdentityClientOverride = mockMsal;
-            return InstrumentClient(new ManagedIdentityCredential(
-                new ManagedIdentityClient(clientOptions)));
+            var credential = new ManagedIdentityCredential(new ManagedIdentityClient(clientOptions));
+            return instrument ? InstrumentClient(credential) : credential;
         }
+
+        private async Task<AccessToken> GetTokenAsync(TokenCredential credential, TokenRequestContext context, CancellationToken cancellationToken = default)
+            => IsAsync
+                ? await credential.GetTokenAsync(context, cancellationToken)
+                : credential.GetToken(context, cancellationToken);
 
         #endregion
 
@@ -243,6 +254,181 @@ namespace Azure.Core.Tests.Identity
             ApplicationBase.ResetStateForTest();
         }
 
+        [Test]
+        public async Task OrdinaryChainedRequestUsesFastImdsProbe()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }, { "AZURE_FEDERATED_TOKEN_FILE", null } });
+            var timeout = TimeSpan.FromMilliseconds(10);
+            int capabilityCalls = 0;
+            int probeCalls = 0;
+            var transport = MockTransport.FromMessageCallback(message =>
+            {
+                Assert.AreEqual(timeout, message.NetworkTimeout);
+                probeCalls++;
+                throw new TaskCanceledException();
+            });
+            transport.ExpectSyncPipeline = !IsAsync;
+            var managedIdentity = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = transport, IsChainedCredential = true },
+                ManagedIdentityId.SystemAssigned,
+                isManagedIdentityPipeline: true,
+                configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                {
+                    capabilityCalls++;
+                    throw new MsalClientException("managed_identity_request_failed", "Bearer requests must not discover PoP capabilities.");
+                },
+                instrument: false,
+                initialImdsConnectionTimeout: timeout);
+            var credential = new ChainedTokenCredential(managedIdentity, new MockCredential());
+
+            AccessToken token = await GetTokenAsync(credential, new TokenRequestContext(MockScopes.Default));
+
+            Assert.That(token.Token, Does.StartWith("TEST TOKEN"));
+            Assert.AreEqual(1, probeCalls);
+            Assert.Zero(capabilityCalls);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task BearerAcquisitionUnavailableContinuesChain(bool afterSuccessfulAcquisition)
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }, { "AZURE_FEDERATED_TOKEN_FILE", null } });
+            int acquisitionCalls = 0;
+            int capabilityCalls = 0;
+            int fallbackCalls = 0;
+            var transport = new MockTransport(_ => CreateErrorMockResponse(400, "Required metadata header not specified"));
+            var managedIdentity = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = transport, IsChainedCredential = true },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                    {
+                        capabilityCalls++;
+                        throw new MsalClientException("managed_identity_request_failed", "Unexpected capability discovery.");
+                    };
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) =>
+                    {
+                        acquisitionCalls++;
+                        if (afterSuccessfulAcquisition && acquisitionCalls == 1)
+                        {
+                            return AuthenticationResultFactory.Create(ExpectedToken);
+                        }
+                        throw new MsalClientException(MsalError.ManagedIdentityAllSourcesUnavailable, "All managed identity sources are unavailable.");
+                    };
+                },
+                instrument: false);
+            var context = new TokenRequestContext(MockScopes.Default);
+            if (afterSuccessfulAcquisition)
+            {
+                Assert.AreEqual(ExpectedToken, (await GetTokenAsync(managedIdentity, context)).Token);
+            }
+            var credential = new ChainedTokenCredential(
+                managedIdentity,
+                new MockCredential { GetTokenCallback = (_, _) => fallbackCalls++ });
+
+            AccessToken token = await GetTokenAsync(credential, context);
+
+            Assert.That(token.Token, Does.StartWith("TEST TOKEN"));
+            Assert.AreEqual(afterSuccessfulAcquisition ? 2 : 1, acquisitionCalls);
+            Assert.AreEqual(1, transport.Requests.Count);
+            Assert.IsFalse(transport.Requests[0].Headers.TryGetValue("Metadata", out _));
+            Assert.AreEqual(1, fallbackCalls);
+            Assert.Zero(capabilityCalls);
+        }
+
+        [Test]
+        public void UnrelatedBearerAcquisitionFailureDoesNotContinueChain()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }, { "AZURE_FEDERATED_TOKEN_FILE", null } });
+            var failure = new MsalClientException(MsalError.ManagedIdentityRequestFailed, "Token acquisition failed.");
+            int fallbackCalls = 0;
+            var managedIdentity = BuildManagedIdentityCredential(
+                new TokenCredentialOptions
+                {
+                    Transport = new MockTransport(_ => CreateErrorMockResponse(400, "Required metadata header not specified")),
+                    IsChainedCredential = true
+                },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock => mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => throw failure,
+                instrument: false);
+            var credential = new ChainedTokenCredential(
+                managedIdentity,
+                new MockCredential { GetTokenCallback = (_, _) => fallbackCalls++ });
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await GetTokenAsync(credential, new TokenRequestContext(MockScopes.Default)));
+
+            Assert.AreSame(failure, ex.InnerException.InnerException);
+            Assert.Zero(fallbackCalls);
+        }
+
+        [Test]
+        public void StandaloneBearerAcquisitionUnavailableRemainsAuthenticationFailure()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }, { "AZURE_FEDERATED_TOKEN_FILE", null } });
+            var failure = new MsalClientException(MsalError.ManagedIdentityAllSourcesUnavailable, "All managed identity sources are unavailable.");
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport() },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock => mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => throw failure,
+                instrument: false);
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await GetTokenAsync(credential, new TokenRequestContext(MockScopes.Default)));
+
+            Assert.IsNotInstanceOf<CredentialUnavailableException>(ex);
+            Assert.AreSame(failure, ex.InnerException);
+        }
+
+        [Test]
+        public void BearerAcquisitionPreservesCallerCancellation()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }, { "AZURE_FEDERATED_TOKEN_FILE", null } });
+            using var cancellation = new CancellationTokenSource();
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport() },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock => mock.AcquireTokenForManagedIdentityAsyncFactory = (_, token) =>
+                {
+                    cancellation.Cancel();
+                    token.ThrowIfCancellationRequested();
+                    throw new AssertionException("Expected caller cancellation.");
+                },
+                instrument: false);
+
+            Assert.CatchAsync<OperationCanceledException>(
+                async () => await GetTokenAsync(credential, new TokenRequestContext(MockScopes.Default), cancellation.Token));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ProofOfPossessionCapabilityDiscoveryIsPreserved(bool disableMtlsProofOfPossession)
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }, { "AZURE_FEDERATED_TOKEN_FILE", null } });
+            int capabilityCalls = 0;
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport() },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mock.GetManagedIdentityCapabilitiesFactory = (context, _) =>
+                    {
+                        Assert.IsTrue(context.IsProofOfPossessionEnabled);
+                        capabilityCalls++;
+                        return MockMsalManagedIdentityClient.CreateCapabilities(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None);
+                    };
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(ExpectedToken);
+                },
+                instrument: false,
+                disableMtlsProofOfPossession: disableMtlsProofOfPossession);
+
+            AccessToken token = await GetTokenAsync(credential, new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true));
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.AreEqual(1, capabilityCalls);
+        }
+
         // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/59961
         // When the MSAL-based managed identity source/capability detection fails (for example, because the
         // IMDS endpoint is unreachable on a developer machine running in Visual Studio), a chained
@@ -264,7 +450,7 @@ namespace Azure.Core.Tests.Identity
                 configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesFactory = (_, _) => throw probeFailure);
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(
-                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true), default));
             Assert.AreSame(probeFailure, ex.InnerException);
         }
 
@@ -287,7 +473,7 @@ namespace Azure.Core.Tests.Identity
                 configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesFactory = (_, _) => throw probeFailure);
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
-                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true), default));
             Assert.IsNotInstanceOf<CredentialUnavailableException>(ex);
         }
 
@@ -317,7 +503,7 @@ namespace Azure.Core.Tests.Identity
                 });
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(
-                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true), default));
             Assert.AreSame(acquireFailure, ex.InnerException);
         }
 
@@ -344,7 +530,7 @@ namespace Azure.Core.Tests.Identity
                 });
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
-                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true), default));
             Assert.IsNotInstanceOf<CredentialUnavailableException>(ex);
         }
 
