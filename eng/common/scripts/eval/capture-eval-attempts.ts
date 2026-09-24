@@ -1,3 +1,4 @@
+// Records the current build's latest shard attempts; failed verification prevents publication.
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { parseArgs } from "node:util";
@@ -9,7 +10,7 @@ const path = resolve(values.output); await mkdir(dirname(path), { recursive: tru
 let result = { schemaVersion: 1, valid: false, attempts: {} };
 try {
     const base = new URL(process.env.SYSTEM_COLLECTIONURI);
-    if (base.protocol !== "https:" || base.hostname !== "dev.azure.com" || base.username || base.password || base.search || base.hash ||
+    if (base.protocol !== "https:" || base.hostname !== "dev.azure.com" || base.port || base.username || base.password || base.search || base.hash ||
         !/^\/[a-z0-9][a-z0-9-]{0,99}\/$/i.test(base.pathname) || !process.env.SYSTEM_ACCESSTOKEN ||
         !/^[a-f0-9-]{36}$/i.test(process.env.SYSTEM_TEAMPROJECTID ?? "") || !/^[1-9][0-9]*$/.test(process.env.BUILD_BUILDID ?? "")) {
         throw new Error("Current build identity/token missing.");

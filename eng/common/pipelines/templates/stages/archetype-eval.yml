@@ -73,15 +73,6 @@ parameters:
     # A consumer that enables this needs the matching repo-owned redirect support.
     type: boolean
     default: false
-  - name: notifyDashboard
-    type: boolean
-    default: false
-  - name: summaryPool
-    type: object
-    default:
-      name: $(LINUXPOOL)
-      image: $(LINUXVMIMAGE)
-      os: linux
 
 extends:
   # 1es-redirect picks Official (internal) vs Unofficial; its Use1ESOfficial defaults true.
@@ -130,5 +121,3 @@ extends:
               failOnFailedTests: ${{ parameters.failOnFailedTests }}
               createDashboardBundle: ${{ parameters.createDashboardBundle }}
               publishDashboardResults: ${{ parameters.publishDashboardResults }}
-              notifyDashboard: ${{ parameters.notifyDashboard }}
-              summaryPool: ${{ parameters.summaryPool }}

@@ -1,39 +1,18 @@
+// Sends a bounded authenticated refresh signal only to the reviewed production dashboard.
 import { setTimeout as delay } from "node:timers/promises";
 import { PublicationError } from "./bundle.ts";
 
-// Reviewed destination/audience pairs, not queue-time configuration. Onboarding
-// another dashboard requires a source change; arbitrary HTTPS is not trusted.
+// Changing the destination or token resource requires a reviewed source change.
 export const DASHBOARD_NOTIFICATION_TARGET = Object.freeze({
     origin: "https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net",
     audience: "api://258998df-81ec-460c-bdd7-56a9bdde1e48",
 });
 
-export function readNotificationConfig(env) {
-    if (env.EVAL_NOTIFY_DASHBOARD?.toLowerCase() !== "true") return null;
-    const config = {
-        url: env.EVAL_DASHBOARD_URL ?? DASHBOARD_NOTIFICATION_TARGET.origin,
-        audience: env.EVAL_DASHBOARD_AUDIENCE ?? DASHBOARD_NOTIFICATION_TARGET.audience,
-    };
-    // Existing explicit settings remain validated; only absent settings use the reviewed defaults.
-    refreshUrl(config.url, config.audience);
-    return config;
-}
-
-export function refreshUrl(value, audience) {
-    const url = new URL(value);
-    if (url.protocol !== "https:" || url.username || url.password || url.port || url.search || url.hash || url.pathname !== "/") {
-        throw new PublicationError("invalid_dashboard", "Use the dashboard HTTPS origin without paths or credentials.");
-    }
-    if (url.origin !== DASHBOARD_NOTIFICATION_TARGET.origin || audience !== DASHBOARD_NOTIFICATION_TARGET.audience) {
-        throw new PublicationError("unapproved_notification_target", "The dashboard origin and audience must match a reviewed notification target.");
-    }
-    return new URL("/api/refresh", url);
-}
-
-export async function notifyDashboard({ url, audience, target, getToken, fetchImpl = fetch, wait = delay, maxAttempts = 4 }) {
-    const destination = refreshUrl(url, audience), body = JSON.stringify(target);
+export async function notifyDashboard({ target, getToken, fetchImpl = fetch, wait = delay }) {
+    const { origin, audience } = DASHBOARD_NOTIFICATION_TARGET;
+    const destination = new URL("/api/refresh", origin), body = JSON.stringify(target);
     if (Buffer.byteLength(body) > 2048) throw new PublicationError("invalid_signal", "Refresh signal exceeds 2 KiB.");
-    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    for (let attempt = 0; attempt < 4; attempt++) {
         let response, permanent = false;
         try {
             response = await fetchImpl(destination, { method: "POST", redirect: "error", signal: AbortSignal.timeout(180_000),
@@ -44,7 +23,7 @@ export async function notifyDashboard({ url, audience, target, getToken, fetchIm
             } else permanent = ![408, 429, 500, 502, 503, 504].includes(response.status);
         } catch { /* Timeout/lost response/token outage: retry only the small signal. */ }
         finally { await response?.body?.cancel().catch(() => {}); }
-        if (permanent || attempt + 1 === maxAttempts) break;
+        if (permanent || attempt === 3) break;
         const header = response?.headers.get("retry-after"), seconds = Number(header);
         const milliseconds = header && Number.isFinite(seconds) ? seconds * 1000 : header ? Date.parse(header) - Date.now() : NaN;
         await wait(Math.min(60_000, Math.max(0, Number.isFinite(milliseconds) ? milliseconds : 1000 * 2 ** attempt)));

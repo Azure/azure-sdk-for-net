@@ -6,9 +6,9 @@ import { dirname, join, resolve } from "node:path";
 import { test } from "node:test";
 import { runInNewContext } from "node:vm";
 import { zipSync, strToU8 } from "fflate";
-import { blobName, boundedFile, pipelineManifest, prepareBundle, selectAttempts, sha256, validateBundle, validateManifest } from "../bundle.ts";
+import { blobName, boundedFile, isUtcTimestamp, pipelineManifest, prepareBundle, selectAttempts, sha256, validateBundle, validateManifest } from "../bundle.ts";
 import { containerUrl, publisherIdentity, publishBundle } from "../storage.ts";
-import { DASHBOARD_NOTIFICATION_TARGET, notifyDashboard, readNotificationConfig, refreshUrl } from "../notification.ts";
+import { DASHBOARD_NOTIFICATION_TARGET, notifyDashboard } from "../notification.ts";
 import { publicationFailure } from "../diagnostics.ts";
 
 const manifest = { schemaVersion: 1, adoOrganization: "azure-sdk", adoProject: "internal", repo: "Azure/azure-sdk-tools",
@@ -34,7 +34,10 @@ async function fixture(t) {
         },
         async getProperties() { return objects.get(name); },
     }; } };
-    return { root, path, client, requests, objects, failAfterStore(callback) { afterStore = callback; } };
+    const notifications = [];
+    const options = { bundlePath: path, client, publisherId: "pipeline", onStored: async () => {},
+        notify: async target => { notifications.push(target); } };
+    return { root, path, client, requests, objects, options, notifications, failAfterStore(callback) { afterStore = callback; } };
 }
 
 function run(script, args, env = {}) {
@@ -62,7 +65,10 @@ test("full shared shard -> summary -> one schema-v1 ZIP -> immutable Blob flow",
         run(join(scripts, "stage-eval-results.ts"), ["--results-root", source, "--output-directory", join(downloads, `eval-result-${shard}-1`), "--shard-name", shard, "--attempt", "1"]);
     }
     const summary = join(f.root, "summary", "eval-summary.md");
-    const summaryRun = run(join(scripts, "build-eval-summary.ts"), ["--results-root", downloads, "--selected-root", join(f.root, "selected"), "--output-path", summary], {
+    const attempts = join(f.root, "job-attempts.json");
+    await writeFile(attempts, JSON.stringify({ schemaVersion: 1, valid: true,
+        attempts: { shard_a: { attempt: 1, complete: true }, shard_b: { attempt: 1, complete: true } } }));
+    const summaryRun = run(join(scripts, "build-eval-summary.ts"), ["--results-root", downloads, "--selected-root", join(f.root, "selected"), "--attempts-file", attempts, "--output-path", summary], {
         TF_BUILD: "true", EVAL_EXPECTED_MATRIX: JSON.stringify({ a: { shardName: "shard_a" }, b: { shardName: "shard_b" } }),
     });
     assert.match(summaryRun.stdout, /EvalSummaryComplete\]true/);
@@ -74,7 +80,7 @@ test("full shared shard -> summary -> one schema-v1 ZIP -> immutable Blob flow",
     assert.equal(Object.keys(checked.entries).length, 5);
     assert.doesNotMatch(Buffer.from(checked.entries["results.jsonl"]).toString("utf8"), /run-summary/);
     assert.match(Buffer.from(checked.entries["eval-summary.md"]).toString("utf8"), /FAILED/);
-    const options = { bundlePath: path, client: f.client, publisherId: "pipeline" };
+    const options = { ...f.options, bundlePath: path };
     const saved = await publishBundle(options);
     assert.equal(saved.status, "stored"); assert.equal(saved.duplicate, false);
     assert.equal(f.requests.length, 1, "Normal publication does not perform a verification upload");
@@ -82,7 +88,8 @@ test("full shared shard -> summary -> one schema-v1 ZIP -> immutable Blob flow",
     assert.equal(repeated.duplicate, true); assert.equal(f.objects.size, 1);
     assert.deepEqual(f.requests[0].bytes, f.requests[1].bytes);
     assert.equal(saved.blobName, "v1/azure-sdk/internal/8255/1001/1/dashboard-bundle.zip");
-    assert.equal(saved.notification.status, "not_requested");
+    assert.equal(saved.notification.status, "succeeded");
+    assert.deepEqual(f.notifications, [saved, repeated].map(({ blobName, sha256 }) => ({ blobName, sha256 })));
     assert.equal(f.requests[0].options.metadata.schema, "1");
     assert.equal(f.requests[0].options.metadata.publisher, sha256(Buffer.from("pipeline")));
     assert.equal(f.requests[0].options.metadata.sha256, sha256(await readFile(path)));
@@ -91,7 +98,7 @@ test("full shared shard -> summary -> one schema-v1 ZIP -> immutable Blob flow",
 test("lost storage response retries the identical saved ZIP and retains original metadata", async (t) => {
     const f = await fixture(t); let calls = 0;
     f.failAfterStore(() => { calls++; throw new Error("Lost response after storing"); });
-    const result = await publishBundle({ bundlePath: f.path, client: f.client, publisherId: "pipeline", wait: async () => {} });
+    const result = await publishBundle({ ...f.options, wait: async () => {} });
     assert.equal(calls, 1); assert.equal(result.duplicate, true); assert.equal(f.objects.size, 1);
     assert.equal(f.requests.length, 2); assert.deepEqual(f.requests[0].bytes, f.requests[1].bytes);
     assert.deepEqual(f.requests[0].options.metadata, f.requests[1].options.metadata);
@@ -116,7 +123,7 @@ test("skipped executor-incompatible records do not reject a completed mixed-resu
 
 test("storage result is persisted before notification; failed signal does not fail stored result", async (t) => {
     const f = await fixture(t); let persisted;
-    const result = await publishBundle({ bundlePath: f.path, client: f.client, publisherId: "pipeline",
+    const result = await publishBundle({ ...f.options,
         onStored: async value => { persisted = structuredClone(value); }, notify: async target => {
             assert.equal(persisted.status, "stored"); assert.equal(persisted.notification.status, "pending");
             assert.deepEqual(Object.keys(target).sort(), ["blobName", "sha256"]); assert.equal(f.objects.size, 1);
@@ -125,21 +132,39 @@ test("storage result is persisted before notification; failed signal does not fa
     assert.equal(result.status, "stored"); assert.equal(result.notification.status, "failed");
 });
 
+test("failed storage-result persistence never sends a notification", async (t) => {
+    const f = await fixture(t);
+    await assert.rejects(publishBundle({ ...f.options, onStored: async () => { throw new Error("Result artifact unavailable"); } }), /Result artifact unavailable/);
+    assert.equal(f.objects.size, 1); assert.equal(f.notifications.length, 0);
+});
+
+test("upload failures stop after four attempts without reporting success or notifying", async (t) => {
+    const f = await fixture(t), waits = [], bytes = [];
+    const client = { getBlockBlobClient() { return { async uploadData(value) {
+        bytes.push(Buffer.from(value)); throw Object.assign(new Error("Offline"), { statusCode: 503 });
+    } }; } };
+    await assert.rejects(publishBundle({ ...f.options, client, wait: async value => { waits.push(value); },
+        onStored: () => assert.fail("Failed uploads cannot be reported stored") }), { statusCode: 503 });
+    assert.equal(bytes.length, 4); assert.deepEqual(waits, [1000, 2000, 4000]);
+    for (const value of bytes) assert.deepEqual(value, await readFile(f.path));
+    assert.equal(f.notifications.length, 0);
+});
+
 test("transient properties failure after an upload collision stays inside the retry budget", async (t) => {
     const f = await fixture(t); const original = f.client.getBlockBlobClient.bind(f.client);
-    await publishBundle({ bundlePath: f.path, client: f.client, publisherId: "pipeline" });
+    await publishBundle(f.options);
     let reads = 0;
     const client = { getBlockBlobClient(name) { const blob = original(name); return { ...blob, async getProperties() {
         reads++; if (reads === 1) throw Object.assign(new Error("Properties unavailable"), { statusCode: 503 });
         return blob.getProperties();
     } }; } };
-    const result = await publishBundle({ bundlePath: f.path, client, publisherId: "pipeline", wait: async () => {} });
+    const result = await publishBundle({ ...f.options, client, wait: async () => {} });
     assert.equal(result.duplicate, true); assert.equal(reads, 2); assert.equal(f.objects.size, 1);
 });
 
 test("same identity cannot overwrite different content, size or publisher", async (t) => {
     const f = await fixture(t);
-    const options = { bundlePath: f.path, client: f.client, publisherId: "pipeline" };
+    const options = f.options;
     const result = await publishBundle(options), original = f.objects.get(result.blobName);
     await assert.rejects(publishBundle({ ...options, publisherId: "other" }), { code: "submission_conflict" });
     const changed = join(f.root, "changed.zip"); await writeFile(changed, zip({ "eval-summary.md": strToU8("Different") }));
@@ -151,11 +176,13 @@ test("same identity cannot overwrite different content, size or publisher", asyn
 
 test("existing archives without valid metadata are conflicts, never adopted or overwritten", async (t) => {
     const f = await fixture(t);
-    const options = { bundlePath: f.path, client: f.client, publisherId: "pipeline" };
+    const options = f.options;
     const result = await publishBundle(options);
     const saved = f.objects.get(result.blobName), original = structuredClone(saved.metadata);
     for (const metadata of [undefined, null, {}, { ...original, schema: "2" },
-        { ...original, sha256: undefined }, { ...original, publisher: undefined }, { ...original, storedat: "invalid" }]) {
+        { ...original, sha256: undefined }, { ...original, publisher: undefined },
+        ...[undefined, null, "invalid", "2026-02-30T00:00:00Z", "2026-01-01T24:00:00Z", "2026-01-01T00:00:00+00:00"]
+            .map(storedat => ({ ...original, storedat }))]) {
         saved.metadata = metadata;
         const attempts = f.requests.length;
         await assert.rejects(publishBundle({ ...options, wait: () => assert.fail("Conflicts are not transient"),
@@ -169,7 +196,7 @@ test("existing archives without valid metadata are conflicts, never adopted or o
 test("permanent storage rejection does not retry, persist success or notify", async (t) => {
     const f = await fixture(t); let calls = 0;
     const client = { getBlockBlobClient() { return { async uploadData() { calls++; throw Object.assign(new Error("Forbidden"), { statusCode: 403 }); } }; } };
-    await assert.rejects(publishBundle({ bundlePath: f.path, client, publisherId: "pipeline", onStored: () => assert.fail(), notify: () => assert.fail(), wait: () => assert.fail() }), { statusCode: 403 });
+    await assert.rejects(publishBundle({ ...f.options, client, onStored: () => assert.fail(), notify: () => assert.fail(), wait: () => assert.fail() }), { statusCode: 403 });
     assert.equal(calls, 1);
 });
 
@@ -227,35 +254,62 @@ test("producer refuses identities that would produce a different canonical path 
             assert.throws(() => validateManifest({ ...manifest, [key]: padded }), { code: "invalid_bundle" });
         }
     }
+    for (const branch of [" ", " refs/heads/main", "refs/heads/main "]) {
+        assert.throws(() => validateManifest({ ...manifest, branch }), { code: "invalid_bundle" });
+    }
+    assert.throws(() => blobName({ ...manifest, adoProject: "\u754c".repeat(200) }), { code: "invalid_bundle" });
     const f = await fixture(t);
     await writeFile(f.path, zip({ "manifest.json": strToU8(JSON.stringify({ ...manifest, adoProject: " Internal " })) }));
-    await assert.rejects(publishBundle({ bundlePath: f.path, publisherId: "pipeline",
+    await assert.rejects(publishBundle({ ...f.options,
         client: { getBlockBlobClient() { assert.fail("Invalid identity reached storage"); } } }), { code: "invalid_bundle" });
 });
 
-test("storage and notification URLs never accept embedded credentials or arbitrary paths", () => {
+test("publication timestamps match the reader's UTC calendar validation", async (t) => {
+    for (const timestamp of ["2024-02-29T23:59:59Z", "2026-09-24T12:34:56.1234567Z", "2026-01-01T00:00:00Z"]) {
+        assert.equal(isUtcTimestamp(timestamp), true);
+        assert.equal(validateManifest({ ...manifest, runTimestamp: timestamp }).runTimestamp, timestamp);
+    }
+    const f = await fixture(t);
+    for (const timestamp of ["2026-02-30T00:00:00Z", "2026-02-29T00:00:00Z", "2026-04-31T00:00:00Z",
+        "2026-01-01T24:00:00Z", "2026-01-01T00:00:00+00:00", "2026-01-01T00:00:00", "not a date", null]) {
+        assert.equal(isUtcTimestamp(timestamp), false);
+        await writeFile(f.path, zip({ "manifest.json": strToU8(JSON.stringify({ ...manifest, runTimestamp: timestamp })) }));
+        await assert.rejects(publishBundle({ ...f.options,
+            client: { getBlockBlobClient() { assert.fail("Invalid dates cannot reach storage"); } } }), { code: "invalid_bundle" });
+    }
+    assert.equal(f.notifications.length, 0);
+});
+
+test("storage URLs never accept embedded credentials or arbitrary paths", () => {
     assert.equal(containerUrl("https://evaltestsummary.blob.core.windows.net/vally-results"), "https://evaltestsummary.blob.core.windows.net/vally-results");
     for (const value of ["http://evaltestsummary.blob.core.windows.net/vally-results", "https://evaltestsummary.blob.core.windows.net/vally-results?sig=secret", "https://evil.example/container", "https://user:pass@evaltestsummary.blob.core.windows.net/vally-results", "https://evaltestsummary.blob.core.windows.net/"]) assert.throws(() => containerUrl(value));
-    for (const value of ["http://dashboard.example/", "https://user:pass@dashboard.example/", "https://dashboard.example/api/refresh", "https://dashboard.example/?token=secret"]) assert.throws(() => refreshUrl(value));
-    assert.equal(refreshUrl(dashboardUrl, dashboardAudience).pathname, "/api/refresh");
     assert.throws(() => publisherIdentity("invalid"), { code: "storage_identity" });
 });
 
-test("enabled notifications use the reviewed target by default without permitting explicit destination changes", () => {
-    assert.equal(readNotificationConfig({}), null);
-    assert.equal(readNotificationConfig({ EVAL_NOTIFY_DASHBOARD: "false", EVAL_DASHBOARD_URL: "https://attacker.example" }), null);
-    assert.deepEqual(readNotificationConfig({ EVAL_NOTIFY_DASHBOARD: "true" }), { url: dashboardUrl, audience: dashboardAudience });
-    assert.deepEqual(readNotificationConfig({ EVAL_NOTIFY_DASHBOARD: "true", EVAL_DASHBOARD_URL: dashboardUrl,
-        EVAL_DASHBOARD_AUDIENCE: dashboardAudience }), { url: dashboardUrl, audience: dashboardAudience });
-    for (const overrides of [{ EVAL_DASHBOARD_URL: "https://attacker.example" }, { EVAL_DASHBOARD_AUDIENCE: "api://other" },
-        { EVAL_DASHBOARD_URL: "" }, { EVAL_DASHBOARD_AUDIENCE: "" }]) {
-        assert.throws(() => readNotificationConfig({ EVAL_NOTIFY_DASHBOARD: "true", ...overrides }));
+test("notification destination and audience are fixed even when obsolete environment overrides exist", async () => {
+    const overrides = { EVAL_NOTIFY_DASHBOARD: "false", EVAL_DASHBOARD_URL: "https://attacker.example", EVAL_DASHBOARD_AUDIENCE: "api://other" };
+    const previous = Object.fromEntries(Object.keys(overrides).map(key => [key, process.env[key]]));
+    Object.assign(process.env, overrides);
+    let requests = 0;
+    try {
+        await notifyDashboard({ target: { blobName: blobName(manifest), sha256: "a".repeat(64) },
+            getToken: async audience => { assert.equal(audience, dashboardAudience); return "test-token"; },
+            fetchImpl: async (url, request) => {
+                requests++; assert.equal(url.href, `${dashboardUrl}/api/refresh`);
+                assert.equal(request.headers.authorization, "Bearer test-token"); assert.equal(request.redirect, "error");
+                return Response.json({ status: "succeeded", failureCount: 0 });
+            } });
+        assert.equal(requests, 1);
+    } finally {
+        for (const [key, value] of Object.entries(previous)) {
+            if (value === undefined) delete process.env[key]; else process.env[key] = value;
+        }
     }
 });
 
 test("notification retries small JSON only, honors backpressure and does not retry forbidden access", async () => {
     const calls = [], waits = [], target = { blobName: blobName(manifest), sha256: "a".repeat(64) };
-    await notifyDashboard({ url: dashboardUrl, audience: dashboardAudience, target, getToken: async audience => {
+    await notifyDashboard({ target, getToken: async audience => {
         assert.equal(audience, dashboardAudience); return "test-token";
     }, wait: async ms => waits.push(ms), fetchImpl: async (url, init) => {
         calls.push(init); assert.equal(url.pathname, "/api/refresh");
@@ -264,41 +318,26 @@ test("notification retries small JSON only, honors backpressure and does not ret
     } });
     assert.deepEqual(waits, [1000]); assert.equal(calls[0].body, calls[1].body); assert.ok(Buffer.byteLength(calls[0].body) < 2048);
     assert.equal(calls[0].headers.authorization, "Bearer test-token"); assert.equal(calls[0].redirect, "error");
-    let forbidden = 0;
-    await assert.rejects(notifyDashboard({ url: dashboardUrl, audience: dashboardAudience, target, getToken: async () => "test-token", wait: () => assert.fail(), fetchImpl: async () => { forbidden++; return new Response("", { status: 403 }); } }), { code: "notification_failed" });
-    assert.equal(forbidden, 1);
-});
-
-test("notification origin/audience must be approved before any credential or request", async () => {
-    for (const [url, audience] of [["https://attacker.example", dashboardAudience], [dashboardUrl, "api://other"],
-        [dashboardUrl, undefined], [dashboardUrl + ".attacker.example", dashboardAudience],
-        [dashboardUrl + ":444", dashboardAudience], ["http://127.0.0.1:3201", dashboardAudience]]) {
-        let tokens = 0, requests = 0;
-        await assert.rejects(notifyDashboard({ url, audience, target: {}, wait: async () => {},
-            getToken: async () => { tokens++; return "test-token"; }, fetchImpl: async () => {
-                requests++; return Response.json({ status: "succeeded", failureCount: 0 });
-            } }), error => ["invalid_dashboard", "unapproved_notification_target"].includes(error.code));
-        assert.equal(tokens, 0, "Rejected destination cannot acquire a token");
-        assert.equal(requests, 0, "Rejected destination cannot receive a request");
+    for (const status of [302, 401, 403]) {
+        let calls = 0;
+        await assert.rejects(notifyDashboard({ target, getToken: async () => "test-token", wait: () => assert.fail(),
+            fetchImpl: async () => { calls++; return new Response("", { status }); } }), { code: "notification_failed" });
+        assert.equal(calls, 1);
     }
 });
 
-test("real CLI rejects an unapproved notification pair before acquiring storage credentials", async (t) => {
-    const root = await mkdtemp(join(tmpdir(), "eval-notification-config-"));
-    t.after(() => rm(root, { recursive: true, force: true }));
-    const result = join(root, "result.json");
-    const env = { ...process.env, TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "Manual",
-        BUILD_SOURCEBRANCH: "refs/heads/feature", EVAL_NOTIFY_DASHBOARD: "true",
-        EVAL_STORAGE_CONTAINER_URL: "https://evaltestsummary.blob.core.windows.net/vally-results",
-        EVAL_DASHBOARD_URL: "https://attacker.example", EVAL_DASHBOARD_AUDIENCE: dashboardAudience };
-    delete env.NODE_TEST_CONTEXT;
-    const child = spawnSync(process.execPath, ["--experimental-strip-types", resolve(import.meta.dirname, "../publish-bundle.ts"), "--bundle", "unused.zip", "--result", result],
-        { encoding: "utf8", env, timeout: 30_000 });
-    assert.ifError(child.error); assert.equal(child.status, 1);
-    const failure = JSON.parse(await readFile(result, "utf8"));
-    assert.equal(failure.operation, "validate_configuration");
-    assert.equal(failure.errorCode, "unapproved_notification_target");
-    assert.doesNotMatch(child.stdout + child.stderr, /storage identity acquired|attacker\.example/);
+test("notification rejects oversized signals before acquiring a token", async () => {
+    await assert.rejects(notifyDashboard({ target: { blobName: "x".repeat(2048), sha256: "a".repeat(64) },
+        getToken: () => assert.fail("Oversized signals cannot acquire a token"),
+        fetchImpl: () => assert.fail("Oversized signals cannot send a request") }), { code: "invalid_signal" });
+});
+
+test("notification retries are bounded even when every response is transient", async () => {
+    let calls = 0; const waits = [];
+    await assert.rejects(notifyDashboard({ target: { blobName: blobName(manifest), sha256: "a".repeat(64) },
+        getToken: async () => "test-token", wait: async value => { waits.push(value); },
+        fetchImpl: async () => { calls++; return new Response("", { status: 503 }); } }), { code: "notification_failed" });
+    assert.equal(calls, 4); assert.deepEqual(waits, [1000, 2000, 4000]);
 });
 
 test("publisher dependency lock is portable with public URLs and SHA512 integrity", async () => {
@@ -344,15 +383,13 @@ test("pipeline keeps publication opt-in, blocks PR credentials and shares the re
     const archetype = await readFile(join(root, "pipelines/templates/stages/archetype-eval.yml"), "utf8");
     assert.match(workflow, /name: publishDashboardResults[\s\S]*?default: false/);
     assert.match(workflow, /- group: AzSDK_Eval_Variable_group/);
-    assert.doesNotMatch(workflow + steps + summary + archetype, /storageSmokeTest|EVAL_PUBLISH_SMOKE_TEST|eval-storage-smoke/);
     assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/build-mcp.yml/);
     assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/eval-shard.yml/);
     for (const content of [steps, summary, archetype]) {
         assert.match(content, /name: publishDashboardResults\s+type: boolean\s+default: false/);
-        assert.match(content, /name: notifyDashboard\s+type: boolean\s+default: false/);
-        assert.doesNotMatch(content, /parameters\.dashboard(?:Url|Audience)|name: dashboard(?:Url|Audience)/);
-        assert.doesNotMatch(content, /storageServiceConnection|storageContainerUrl/);
+        assert.doesNotMatch(content, /notifyDashboard|summaryPool|storageServiceConnection|storageContainerUrl|dashboardUrl|dashboardAudience/);
     }
+    assert.match(summary, /pool:\s+name: \$\(LINUXPOOL\)\s+image: \$\(LINUXVMIMAGE\)\s+os: linux/);
     assert.match(steps, /if and\(parameters.publishDashboardResults.*System.TeamProject.*internal.*PullRequest.*refs\/pull\//);
     assert.match(steps, /azureSubscription: eval-dashboard-sc/);
     assert.match(steps, /EVAL_STORAGE_CONTAINER_URL: https:\/\/evaltestsummary\.blob\.core\.windows\.net\/vally-results/);
@@ -394,15 +431,12 @@ for (const tier of ["workflow", "skill", "live"]) {
         for (const name of ["publishDashboardResults", "allowAzureStorageNetworkAccess"]) {
             assert.match(content, new RegExp(`- name: ${name}\\n(?:    [^\\n]*\\n)*?    type: boolean\\n    default: false`));
         }
-        assert.match(content, /name: notifyDashboard\n(?:    [^\n]*\n)*?    type: boolean\n    default: true/);
-        assert.doesNotMatch(content, /parameters\.dashboard(?:Url|Audience)|name: dashboard(?:Url|Audience)/);
-        assert.doesNotMatch(content, /storageServiceConnection|storageContainerUrl|pipelineDefinitionId/);
+        assert.doesNotMatch(content, /notifyDashboard|summaryPool|storageServiceConnection|storageContainerUrl|pipelineDefinitionId|dashboardUrl|dashboardAudience/);
         assert.match(content, /name: autoPublishDashboardResults\n(?:    [^\n]*\n)*?    type: boolean\n    default: true/);
         assert.match(content, /template: \/eng\/common\/pipelines\/templates\/variables\/eval-dashboard.yml/);
         for (const name of ["publishDashboardResults", "allowAzureStorageNetworkAccess"]) {
             assert.ok(content.includes(name + ": ${{ or(parameters." + name + ", eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}"));
         }
-        assert.ok(content.includes("notifyDashboard: ${{ parameters.notifyDashboard }}"));
         assert.match(content, /group: AzSDK_Eval_Variable_group/);
         assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
         if (tier === "live") {
@@ -413,7 +447,6 @@ for (const tier of ["workflow", "skill", "live"]) {
             assert.match(content, /vallyRoot: \.github\/skills/);
             assert.match(content, /'\*\/evals\/\*\.eval\.yaml'/);
         }
-        assert.doesNotMatch(content, /storageSmokeTest/);
         assert.ok(content.includes("enableAutomaticPublication: ${{ parameters.autoPublishDashboardResults }}"));
     });
 }
