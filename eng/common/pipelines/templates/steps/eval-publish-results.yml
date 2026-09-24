@@ -12,12 +12,6 @@ parameters:
   - name: notifyDashboard
     type: boolean
     default: false
-  - name: dashboardUrl
-    type: string
-    default: ''
-  - name: dashboardAudience
-    type: string
-    default: ''
 
 steps:
   - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
@@ -56,5 +50,3 @@ steps:
       env:
         EVAL_STORAGE_CONTAINER_URL: ${{ parameters.storageContainerUrl }}
         EVAL_NOTIFY_DASHBOARD: ${{ parameters.notifyDashboard }}
-        EVAL_DASHBOARD_URL: ${{ parameters.dashboardUrl }}
-        EVAL_DASHBOARD_AUDIENCE: ${{ parameters.dashboardAudience }}

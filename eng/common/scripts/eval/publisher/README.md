@@ -9,7 +9,7 @@ restores these separately locked dependencies when bundle creation is enabled.
 | --- | --- |
 | [prepare-bundle.ts](prepare-bundle.ts), [bundle.ts](bundle.ts) | Validate selected attempts and prepare the saved schema-v1 archive |
 | [publish-bundle.ts](publish-bundle.ts), [storage.ts](storage.ts) | Authenticate the pipeline and publish the exact saved bytes with create-only retries |
-| [notification.ts](notification.ts) | Optional authenticated signal to the reviewed dashboard destination |
+| [notification.ts](notification.ts) | Reviewed notification defaults and authenticated targeted cache-refresh signals |
 | [diagnostics.ts](diagnostics.ts) | Bounded error reporting without credentials or result contents |
 
 The separate dashboard owns read-only import, cache, UI and deployment. It has
@@ -69,8 +69,7 @@ automatic publication for their trusted internal main builds after merge.
 | `allowAzureStorageNetworkAccess` | Separately opt into the documented `AzureStorage` network-isolation policy for this trusted publishing run; default `false` |
 | `storageServiceConnection` | Existing Azure Resource Manager service connection; tools entrypoints use `eval-dashboard-sc` |
 | `storageContainerUrl` | Normal HTTPS container URL, with no SAS or keys |
-| `notifyDashboard` | Optional small cache-refresh signal after durable storage; default `false` |
-| `dashboardUrl` / `dashboardAudience` | HTTPS origin and Entra API audience for notifications only |
+| `notifyDashboard` | Targeted cache-refresh signal after durable storage; default `true` in the three tools entrypoints, `false` in shared templates; set `false` to opt out |
 | `summaryPool` | Linux agent pool with routes to Blob and optionally the dashboard |
 
 These are YAML parameters, not ordinary pipeline variables or App Service
@@ -123,9 +122,10 @@ results separate; no second dashboard or staging container is required.
 | Live workflow evals | 8246 | `eng/common/pipelines/live-eval.yml` |
 
 For each deliberate real run, select the feature branch containing the publisher
-and set `publishDashboardResults=true`, `allowAzureStorageNetworkAccess=true`,
-and `notifyDashboard=false`. The default service connection/container above are
-shared. All entrypoints execute the existing full eval matrix and consume model
+and set `publishDashboardResults=true` and `allowAzureStorageNetworkAccess=true`.
+Notifications default on after a successful upload; set `notifyDashboard=false`
+for a storage-only run. The default service connection/container above are shared.
+All entrypoints execute the existing full eval matrix and consume model
 quota. Workflow and skill use their mock MCP environments but still evaluate
 real model responses. Synthetic fixtures are confined to local unit tests.
 
@@ -146,7 +146,8 @@ definition ID (8255, 8256 or 8246), branch `refs/heads/main`, and a normal CI,
 scheduled or manual reason.
 
 Both publication and the documented AzureStorage egress policy are selected for
-that scope. Notifications stay off. To disable a production run's publication,
+that scope. Successful publication sends a targeted notification unless
+`notifyDashboard=false`; it does not require a full archive listing. To disable a production run's publication,
 set `autoPublishDashboardResults=false` and leave both explicit publication/network
 flags false. Feature branches, pull refs, other definitions and synced consumers
 remain off by default; their deliberate manual publication still requires the
@@ -156,29 +157,37 @@ This takes effect only after the feature branch is merged. It does not change
 existing CI path filters or the live nightly schedule, and it creates no new
 pipeline, storage account or container.
 
-## Optional notification and dashboard activation
+## Notification-first refresh and recovery
 
 When enabled, the publisher sends only `{blobName, sha256}` to `POST /api/refresh`,
 with an Entra application token. It saves `status: "stored"` locally before
 waiting for this request. A failed signal is a warning and does not undo or fail
-the durable archive. Retry only the signal, or use startup/manual reconciliation.
+the durable archive. Retry only the signal, not the upload. The dashboard also
+checks Blob on browser reload and startup, with **once-daily reconciliation** as
+a missed-notification/retention fallback instead of 30-minute polling.
 
-The source-reviewed notification target is the exact pair
+The source-reviewed notification defaults are the exact pair
 `https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net` and
-`api://258998df-81ec-460c-bdd7-56a9bdde1e48`. Both values are checked before any
-credential acquisition or transmission. A queue-time URL, audience or redirect
-cannot authorize a different destination. Adding a destination requires a reviewed
-source change, not a second queue-time allowlist. This policy does not enable
-notifications or provision the application's authentication/role configuration.
+`api://258998df-81ec-460c-bdd7-56a9bdde1e48`. They live together in `notification.ts`,
+not as queue-time YAML parameters. Existing explicit `EVAL_DASHBOARD_URL` and
+`EVAL_DASHBOARD_AUDIENCE` settings must still match that pair; empty or different
+values are rejected before any credentials are acquired. Redirects remain disabled.
+Adding a destination requires a reviewed source change.
 
 Blob permission is not notification permission. The app's expected API audience,
 `Dashboard.Refresh` application role, client-ID allowlist, reader connectivity,
-and agent-to-dashboard route must be configured separately. Preserve existing
-viewer authentication and network restrictions. Successful storage publication
-alone does not activate the dashboard reader. Configure hosted read-only sync
-separately; startup/manual reconciliation, or its optional slow timer, can import
-results while notifications stay disabled. This package does not change hosted
-settings.
+and agent-to-dashboard route must be configured separately. Request tokens for
+`api://258998df-81ec-460c-bdd7-56a9bdde1e48/.default`; the server validates the Entra
+v2 token's `aud` as the API client ID `258998df-81ec-460c-bdd7-56a9bdde1e48`.
+The role is application-only and is assigned to the existing `eval-dashboard-sc`
+identity, not the dashboard's read-only Blob identity. Easy Auth must allow that
+caller too. Preserve viewer authentication and all network restrictions; the
+AzureStorage policy does not itself prove dashboard connectivity.
+
+The receiver was configured for authenticated notifications and a `86400`-second
+fallback on 2026-09-24. These pipeline defaults take effect after this PR is merged;
+confirm a successful notification on the next approved run from the real agent
+pool. No evaluation run is needed merely to change the receiver's settings.
 
 ## Local tests
 

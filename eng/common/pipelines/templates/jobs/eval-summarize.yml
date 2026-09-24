@@ -20,12 +20,6 @@ parameters:
   - name: notifyDashboard
     type: boolean
     default: false
-  - name: dashboardUrl
-    type: string
-    default: ''
-  - name: dashboardAudience
-    type: string
-    default: ''
   - name: summaryPool
     type: object
     default:
@@ -99,8 +93,6 @@ jobs:
             storageServiceConnection: ${{ parameters.storageServiceConnection }}
             storageContainerUrl: ${{ parameters.storageContainerUrl }}
             notifyDashboard: ${{ parameters.notifyDashboard }}
-            dashboardUrl: ${{ parameters.dashboardUrl }}
-            dashboardAudience: ${{ parameters.dashboardAudience }}
 
       # Completed failing evals are useful data: publish BEFORE the evaluation gate.
       - task: PublishTestResults@2

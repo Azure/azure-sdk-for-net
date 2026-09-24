@@ -33,14 +33,9 @@ parameters:
     type: string
     default: https://evaltestsummary.blob.core.windows.net/vally-results
   - name: notifyDashboard
+    displayName: 'Notify the dashboard after successful Blob publication'
     type: boolean
-    default: false
-  - name: dashboardUrl
-    type: string
-    default: ''
-  - name: dashboardAudience
-    type: string
-    default: ''
+    default: true
 
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
@@ -61,8 +56,6 @@ extends:
     storageServiceConnection: ${{ parameters.storageServiceConnection }}
     storageContainerUrl: ${{ parameters.storageContainerUrl }}
     notifyDashboard: ${{ parameters.notifyDashboard }}
-    dashboardUrl: ${{ parameters.dashboardUrl }}
-    dashboardAudience: ${{ parameters.dashboardAudience }}
     # Shared mock/live builder; select the live tier (real Cli MCP).
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: live

@@ -5,7 +5,7 @@ import { AzureCliCredential } from "@azure/identity";
 import { ContainerClient } from "@azure/storage-blob";
 import { PublicationError } from "./bundle.ts";
 import { containerUrl, publisherIdentity, publishBundle } from "./storage.ts";
-import { notifyDashboard, refreshUrl } from "./notification.ts";
+import { notifyDashboard, readNotificationConfig } from "./notification.ts";
 import { publicationFailure } from "./diagnostics.ts";
 
 let operation = "validate_configuration", save, stored = false;
@@ -19,11 +19,8 @@ try {
     const output = resolve(values.result); await mkdir(dirname(output), { recursive: true });
     save = result => writeFile(output, JSON.stringify(result, null, 2) + "\n");
     const destination = containerUrl(process.env.EVAL_STORAGE_CONTAINER_URL);
-    const shouldNotify = process.env.EVAL_NOTIFY_DASHBOARD?.toLowerCase() === "true";
-    if (shouldNotify) {
-        // Reject the pair before either storage or notification credentials are acquired.
-        refreshUrl(process.env.EVAL_DASHBOARD_URL, process.env.EVAL_DASHBOARD_AUDIENCE);
-    }
+    // Validate the reviewed target before acquiring either storage or notification credentials.
+    const notification = readNotificationConfig(process.env);
     const credential = new AzureCliCredential({ processTimeoutInMs: 30_000 });
     operation = "acquire_storage_token";
     const identity = publisherIdentity((await credential.getToken("https://storage.azure.com/.default")).token);
@@ -33,8 +30,7 @@ try {
     const result = await publishBundle({ bundlePath: resolve(values.bundle), client, publisherId: identity, onStored: async result => {
         await save(result); stored = true;
     },
-        notify: shouldNotify ? target => notifyDashboard({ url: process.env.EVAL_DASHBOARD_URL,
-            audience: process.env.EVAL_DASHBOARD_AUDIENCE, target,
+        notify: notification ? target => notifyDashboard({ ...notification, target,
             getToken: async audience => (await credential.getToken(`${audience}/.default`)).token }) : undefined });
     await save(result);
     console.log(`Result archive stored: ${result.blobName} (duplicate: ${result.duplicate}).`);
