@@ -278,6 +278,50 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         [Test]
+        public void ShareChangeFeedCursor_SerializeThenDeserialize_ResetOnly_PreservesResetState()
+        {
+            ShareChangeFeedCursor original = new ShareChangeFeedCursor(
+                urlHost: ChangeFeedContainerUri.Host,
+                innerCursor: null,
+                lastSeenResetId: ResetIdFixture,
+                lastSeenResetFileTime: ResetFileTimeFixture);
+
+            string serialized = ShareChangeFeedCursorSerializer.Serialize(original);
+            ShareChangeFeedCursor round = ShareChangeFeedCursorSerializer.Deserialize(serialized);
+
+            Assert.IsNull(round.InnerCursor);
+            Assert.AreEqual(ResetIdFixture, round.LastSeenResetId);
+            Assert.AreEqual(ResetFileTimeFixture, round.LastSeenResetFileTime);
+        }
+
+        [Test]
+        public void ShareChangeFeedCursor_Deserialize_NullInnerWithoutCompleteResetState_Throws()
+        {
+            ShareChangeFeedCursor noResetState = new ShareChangeFeedCursor(
+                urlHost: ChangeFeedContainerUri.Host,
+                innerCursor: null,
+                lastSeenResetId: null,
+                lastSeenResetFileTime: null);
+            ShareChangeFeedCursor missingResetId = new ShareChangeFeedCursor(
+                urlHost: ChangeFeedContainerUri.Host,
+                innerCursor: null,
+                lastSeenResetId: null,
+                lastSeenResetFileTime: ResetFileTimeFixture);
+            ShareChangeFeedCursor missingResetFileTime = new ShareChangeFeedCursor(
+                urlHost: ChangeFeedContainerUri.Host,
+                innerCursor: null,
+                lastSeenResetId: ResetIdFixture,
+                lastSeenResetFileTime: null);
+
+            Assert.Throws<ArgumentException>(() =>
+                ShareChangeFeedCursorSerializer.Deserialize(ShareChangeFeedCursorSerializer.Serialize(noResetState)));
+            Assert.Throws<ArgumentException>(() =>
+                ShareChangeFeedCursorSerializer.Deserialize(ShareChangeFeedCursorSerializer.Serialize(missingResetId)));
+            Assert.Throws<ArgumentException>(() =>
+                ShareChangeFeedCursorSerializer.Deserialize(ShareChangeFeedCursorSerializer.Serialize(missingResetFileTime)));
+        }
+
+        [Test]
         public void ShareChangeFeedCursor_Deserialize_OlderTokenWithoutRangeFields_DefaultsToNullAndFalse()
         {
             // A token produced before RangeStart/RangeEnd/IsBatched were added must still
@@ -298,7 +342,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         {
             Assert.Throws<ArgumentNullException>(() => ShareChangeFeedCursorSerializer.Deserialize(null));
             Assert.Throws<ArgumentException>(() => ShareChangeFeedCursorSerializer.Deserialize("not-a-json-doc"));
-            // Valid JSON but missing required InnerCursor / UrlHost.
+            // Valid JSON but missing required cursor state / UrlHost.
             Assert.Throws<ArgumentException>(() => ShareChangeFeedCursorSerializer.Deserialize("{}"));
         }
 

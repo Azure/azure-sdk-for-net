@@ -137,14 +137,15 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                     cancellationToken: default)
                     .ConfigureAwait(false)
                 : await factory.BuildChangeFeed(
-                    _startTime,
-                    _endTime,
+                    rangeStart,
+                    rangeEnd,
                     continuation: null,
                     async: true,
                     cancellationToken: default)
                     .ConfigureAwait(false);
 
             bool resetEmitted = false;
+            ChangeFeedCursor lastInnerCursor = innerCursor;
             int pageSize = pageSizeHint ?? Constants.ChangeFeed.DefaultPageSize;
 
             while (changeFeed.HasNext())
@@ -176,6 +177,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 ChangeFeedCursor typedInner = rawPage.ContinuationToken != null
                     ? changeFeed.GetCursor()
                     : null;
+                if (typedInner != null)
+                {
+                    lastInnerCursor = typedInner;
+                }
 
                 string outerToken = BuildOuterToken(
                     containerClient,
@@ -195,7 +200,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 List<ShareChangeFeedEvent> tail = new List<ShareChangeFeedEvent> { resetToEmit };
                 string outerToken = BuildOuterToken(
                     containerClient,
-                    innerCursor: null,
+                    lastInnerCursor,
                     pointer.LatestResetId,
                     pointer.LatestResetFileTime,
                     rangeStart,

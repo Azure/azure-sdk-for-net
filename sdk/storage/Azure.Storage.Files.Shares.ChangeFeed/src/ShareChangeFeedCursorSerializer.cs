@@ -38,7 +38,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 throw ShareChangeFeedErrors.InvalidCursorEnvelope(nameof(continuationToken), ex);
             }
 
-            if (cursor == null || string.IsNullOrEmpty(cursor.UrlHost) || cursor.InnerCursor == null)
+            if (cursor == null
+                || string.IsNullOrEmpty(cursor.UrlHost)
+                || (cursor.InnerCursor == null
+                    && (!cursor.LastSeenResetId.HasValue || !cursor.LastSeenResetFileTime.HasValue)))
             {
                 throw ShareChangeFeedErrors.InvalidCursorEnvelope(nameof(continuationToken));
             }
