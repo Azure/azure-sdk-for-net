@@ -9,6 +9,29 @@ namespace Azure.Provisioning.Sql.Tests;
 
 public class BasicSqlTests
 {
+    [TestCase(null, "2025-08-01-preview")]
+    [TestCase("2021-11-01", "2021-11-01")]
+    public void ResourceApiVersions(string resourceVersion, string expectedVersion)
+    {
+        Assert.Multiple(() =>
+        {
+            Assert.That(new SqlServer("server", resourceVersion).ResourceVersion, Is.EqualTo(expectedVersion));
+            Assert.That(new SqlDatabase("database", resourceVersion).ResourceVersion, Is.EqualTo(expectedVersion));
+            Assert.That(new ManagedInstance("instance", resourceVersion).ResourceVersion, Is.EqualTo(expectedVersion));
+            Assert.That(new ManagedDatabase("managedDatabase", resourceVersion).ResourceVersion, Is.EqualTo(expectedVersion));
+        });
+    }
+
+    [TestCase(SqlPrivateEndpointProvisioningState.Approving, 0)]
+    [TestCase(SqlPrivateEndpointProvisioningState.Ready, 1)]
+    [TestCase(SqlPrivateEndpointProvisioningState.Dropping, 2)]
+    [TestCase(SqlPrivateEndpointProvisioningState.Failed, 3)]
+    [TestCase(SqlPrivateEndpointProvisioningState.Rejecting, 4)]
+    public void PrivateEndpointStateCompatibility(SqlPrivateEndpointProvisioningState state, int expectedValue)
+    {
+        Assert.That((int)state, Is.EqualTo(expectedValue));
+    }
+
     [Test]
     public void CompatibilityResourcesAreUsable()
     {

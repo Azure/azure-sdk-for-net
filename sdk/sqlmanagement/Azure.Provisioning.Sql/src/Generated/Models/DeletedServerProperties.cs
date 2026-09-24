@@ -18,7 +18,9 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _version;
         private BicepValue<DateTimeOffset> _deletedOn;
         private BicepValue<ResourceIdentifier> _originalId;
+        private BicepValue<string> _originalResourceGroup;
         private BicepValue<string> _fullyQualifiedDomainName;
+        private BicepValue<DateTimeOffset> _scheduledPurgeOn;
 
         /// <summary> Creates a new DeletedServerProperties. </summary>
         public DeletedServerProperties()
@@ -55,6 +57,16 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets the OriginalResourceGroup. </summary>
+        public BicepValue<string> OriginalResourceGroup
+        {
+            get
+            {
+                Initialize();
+                return _originalResourceGroup;
+            }
+        }
+
         /// <summary> Gets the FullyQualifiedDomainName. </summary>
         public BicepValue<string> FullyQualifiedDomainName
         {
@@ -65,6 +77,16 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets the ScheduledPurgeOn. </summary>
+        public BicepValue<DateTimeOffset> ScheduledPurgeOn
+        {
+            get
+            {
+                Initialize();
+                return _scheduledPurgeOn;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for DeletedServerProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -72,7 +94,9 @@ namespace Azure.Provisioning.Sql
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" }, isOutput: true);
             _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletionTime" }, isOutput: true, format: "O");
             _originalId = DefineProperty<ResourceIdentifier>(nameof(OriginalId), new string[] { "originalId" }, isOutput: true);
+            _originalResourceGroup = DefineProperty<string>(nameof(OriginalResourceGroup), new string[] { "originalResourceGroup" }, isOutput: true);
             _fullyQualifiedDomainName = DefineProperty<string>(nameof(FullyQualifiedDomainName), new string[] { "fullyQualifiedDomainName" }, isOutput: true);
+            _scheduledPurgeOn = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeOn), new string[] { "scheduledPurgeTime" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 
