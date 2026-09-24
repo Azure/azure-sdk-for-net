@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -50,15 +51,32 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         }
 
         protected SandboxGroup CreateSandboxGroupClient()
-        {
-            ContainerAppsSandboxClientOptions options = InstrumentClientOptions(new ContainerAppsSandboxClientOptions());
-            ContainerAppsSandboxClient client = InstrumentClient(
-                new ContainerAppsSandboxClient(new Uri(TestEnvironment.Endpoint), TestEnvironment.Credential, options));
-
-            return InstrumentClient(client.GetSandboxGroupClient(
+            => CreateSandboxGroupClient(
+                TestEnvironment.Credential,
                 TestEnvironment.SubscriptionId,
                 TestEnvironment.ResourceGroup,
-                TestEnvironment.SandboxGroupName));
+                TestEnvironment.SandboxGroupName);
+
+        protected SandboxGroup CreateSandboxGroupClient(
+            TokenCredential credential,
+            string subscriptionId,
+            string resourceGroup,
+            string sandboxGroupName,
+            bool disableRetries = false)
+        {
+            ContainerAppsSandboxClientOptions options = InstrumentClientOptions(new ContainerAppsSandboxClientOptions());
+            if (disableRetries)
+            {
+                options.Retry.MaxRetries = 0;
+            }
+
+            ContainerAppsSandboxClient client = InstrumentClient(
+                new ContainerAppsSandboxClient(new Uri(TestEnvironment.Endpoint), credential, options));
+
+            return InstrumentClient(client.GetSandboxGroupClient(
+                subscriptionId,
+                resourceGroup,
+                sandboxGroupName));
         }
 
         protected async Task<ContainerAppsSandbox> CreateSandboxAsync(
