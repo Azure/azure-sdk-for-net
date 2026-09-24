@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// DataflowGraph node properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowGraphSourceNode"/>, <see cref="DataflowGraphGraphNode"/>, and <see cref="DataflowGraphDestinationNode"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowGraphDestinationNode"/>, <see cref="DataflowGraphGraphNode"/>, and <see cref="DataflowGraphSourceNode"/>.
     /// </summary>
     public abstract partial class DataflowGraphNode
     {

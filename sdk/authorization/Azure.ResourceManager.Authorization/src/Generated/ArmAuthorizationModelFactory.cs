@@ -1665,7 +1665,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary>
         /// Target of the decision.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessReviewDecisionUserIdentity"/> and <see cref="Models.AccessReviewDecisionServicePrincipalIdentity"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessReviewDecisionServicePrincipalIdentity"/> and <see cref="Models.AccessReviewDecisionUserIdentity"/>.
         /// </summary>
         /// <param name="type"> The type of decision target : User/ServicePrincipal. </param>
         /// <param name="id"> The id of principal whose access was reviewed. </param>

@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("searchSpace"u8))
                 {
-                    searchSpace = BinaryData.FromString(prop.Value.GetRawText());
+                    searchSpace = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("trial"u8))
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MachineLearningSweepJob(

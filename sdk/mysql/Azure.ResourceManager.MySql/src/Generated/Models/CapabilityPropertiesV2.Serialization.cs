@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CapabilityPropertiesV2(supportedGeoBackupRegions ?? new ChangeTrackingList<string>(), supportedFlexibleServerEditions ?? new ChangeTrackingList<ServerEditionCapabilityV2>(), supportedServerVersions ?? new ChangeTrackingList<ServerVersionCapabilityV2>(), supportedFeatures ?? new ChangeTrackingList<MySqlFlexibleServerFeatureProperty>(), additionalBinaryDataProperties);

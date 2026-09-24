@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Specific entity.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SecurityInsightsAlert"/>, <see cref="SecurityInsightsHuntingBookmark"/>, <see cref="SecurityInsightsAccountEntity"/>, <see cref="SecurityInsightsAzureResourceEntity"/>, <see cref="SecurityInsightsCloudApplicationEntity"/>, <see cref="SecurityInsightsDnsEntity"/>, <see cref="SecurityInsightsFileEntity"/>, <see cref="SecurityInsightsFileHashEntity"/>, <see cref="SecurityInsightsHostEntity"/>, <see cref="SecurityInsightsIotDeviceEntity"/>, <see cref="SecurityInsightsIPEntity"/>, <see cref="SecurityInsightsMailboxEntity"/>, <see cref="SecurityInsightsMailClusterEntity"/>, <see cref="SecurityInsightsMailMessageEntity"/>, <see cref="SecurityInsightsMalwareEntity"/>, <see cref="SecurityInsightsProcessEntity"/>, <see cref="SecurityInsightsRegistryKeyEntity"/>, <see cref="SecurityInsightsRegistryValueEntity"/>, <see cref="SecurityInsightsGroupEntity"/>, <see cref="SecurityInsightsSubmissionMailEntity"/>, <see cref="SecurityInsightsUriEntity"/>, and <see cref="NicEntity"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NicEntity"/>, <see cref="SecurityInsightsAccountEntity"/>, <see cref="SecurityInsightsAlert"/>, <see cref="SecurityInsightsAzureResourceEntity"/>, <see cref="SecurityInsightsCloudApplicationEntity"/>, <see cref="SecurityInsightsDnsEntity"/>, <see cref="SecurityInsightsFileEntity"/>, <see cref="SecurityInsightsFileHashEntity"/>, <see cref="SecurityInsightsGroupEntity"/>, <see cref="SecurityInsightsHostEntity"/>, <see cref="SecurityInsightsHuntingBookmark"/>, <see cref="SecurityInsightsIPEntity"/>, <see cref="SecurityInsightsIotDeviceEntity"/>, <see cref="SecurityInsightsMailClusterEntity"/>, <see cref="SecurityInsightsMailMessageEntity"/>, <see cref="SecurityInsightsMailboxEntity"/>, <see cref="SecurityInsightsMalwareEntity"/>, <see cref="SecurityInsightsProcessEntity"/>, <see cref="SecurityInsightsRegistryKeyEntity"/>, <see cref="SecurityInsightsRegistryValueEntity"/>, <see cref="SecurityInsightsSubmissionMailEntity"/>, and <see cref="SecurityInsightsUriEntity"/>.
     /// </summary>
     public partial class SecurityInsightsEntity : ResourceData, IJsonModel<SecurityInsightsEntity>
     {
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SecurityAlert":
-                        return SecurityInsightsAlert.DeserializeSecurityInsightsAlert(element, options);
-                    case "Bookmark":
-                        return SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(element, options);
+                    case "Nic":
+                        return NicEntity.DeserializeNicEntity(element, options);
                     case "Account":
                         return SecurityInsightsAccountEntity.DeserializeSecurityInsightsAccountEntity(element, options);
+                    case "SecurityAlert":
+                        return SecurityInsightsAlert.DeserializeSecurityInsightsAlert(element, options);
                     case "AzureResource":
                         return SecurityInsightsAzureResourceEntity.DeserializeSecurityInsightsAzureResourceEntity(element, options);
                     case "CloudApplication":
@@ -150,18 +150,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return SecurityInsightsFileEntity.DeserializeSecurityInsightsFileEntity(element, options);
                     case "FileHash":
                         return SecurityInsightsFileHashEntity.DeserializeSecurityInsightsFileHashEntity(element, options);
+                    case "SecurityGroup":
+                        return SecurityInsightsGroupEntity.DeserializeSecurityInsightsGroupEntity(element, options);
                     case "Host":
                         return SecurityInsightsHostEntity.DeserializeSecurityInsightsHostEntity(element, options);
-                    case "IoTDevice":
-                        return SecurityInsightsIotDeviceEntity.DeserializeSecurityInsightsIotDeviceEntity(element, options);
+                    case "Bookmark":
+                        return SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(element, options);
                     case "Ip":
                         return SecurityInsightsIPEntity.DeserializeSecurityInsightsIPEntity(element, options);
-                    case "Mailbox":
-                        return SecurityInsightsMailboxEntity.DeserializeSecurityInsightsMailboxEntity(element, options);
+                    case "IoTDevice":
+                        return SecurityInsightsIotDeviceEntity.DeserializeSecurityInsightsIotDeviceEntity(element, options);
                     case "MailCluster":
                         return SecurityInsightsMailClusterEntity.DeserializeSecurityInsightsMailClusterEntity(element, options);
                     case "MailMessage":
                         return SecurityInsightsMailMessageEntity.DeserializeSecurityInsightsMailMessageEntity(element, options);
+                    case "Mailbox":
+                        return SecurityInsightsMailboxEntity.DeserializeSecurityInsightsMailboxEntity(element, options);
                     case "Malware":
                         return SecurityInsightsMalwareEntity.DeserializeSecurityInsightsMalwareEntity(element, options);
                     case "Process":
@@ -170,14 +174,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return SecurityInsightsRegistryKeyEntity.DeserializeSecurityInsightsRegistryKeyEntity(element, options);
                     case "RegistryValue":
                         return SecurityInsightsRegistryValueEntity.DeserializeSecurityInsightsRegistryValueEntity(element, options);
-                    case "SecurityGroup":
-                        return SecurityInsightsGroupEntity.DeserializeSecurityInsightsGroupEntity(element, options);
                     case "SubmissionMail":
                         return SecurityInsightsSubmissionMailEntity.DeserializeSecurityInsightsSubmissionMailEntity(element, options);
                     case "Url":
                         return SecurityInsightsUriEntity.DeserializeSecurityInsightsUriEntity(element, options);
-                    case "Nic":
-                        return NicEntity.DeserializeNicEntity(element, options);
                 }
             }
             return UnknownSecurityInsightsEntity.DeserializeUnknownSecurityInsightsEntity(element, options);

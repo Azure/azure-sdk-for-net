@@ -1346,7 +1346,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary>
         /// Java Component common properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SpringBootAdminComponent"/>, <see cref="Models.SpringCloudEurekaComponent"/>, and <see cref="Models.SpringCloudConfigComponent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SpringBootAdminComponent"/>, <see cref="Models.SpringCloudConfigComponent"/>, and <see cref="Models.SpringCloudEurekaComponent"/>.
         /// </summary>
         /// <param name="componentType"> Type of the Java Component. </param>
         /// <param name="provisioningState"> Provisioning state of the Java Component. </param>

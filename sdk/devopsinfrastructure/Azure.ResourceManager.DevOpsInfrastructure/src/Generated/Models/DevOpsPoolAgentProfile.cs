@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary>
     /// The agent profile of the machines in the pool.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DevOpsStatelessAgentProfile"/> and <see cref="DevOpsStateful"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DevOpsStateful"/> and <see cref="DevOpsStatelessAgentProfile"/>.
     /// </summary>
     public abstract partial class DevOpsPoolAgentProfile
     {

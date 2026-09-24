@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    coreConfiguration = BinaryData.FromString(prop.Value.GetRawText());
+                    coreConfiguration = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("hBaseConfiguration"u8))
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    hBaseConfiguration = BinaryData.FromString(prop.Value.GetRawText());
+                    hBaseConfiguration = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("hdfsConfiguration"u8))
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    hdfsConfiguration = BinaryData.FromString(prop.Value.GetRawText());
+                    hdfsConfiguration = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("hiveConfiguration"u8))
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    hiveConfiguration = BinaryData.FromString(prop.Value.GetRawText());
+                    hiveConfiguration = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("mapReduceConfiguration"u8))
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    mapReduceConfiguration = BinaryData.FromString(prop.Value.GetRawText());
+                    mapReduceConfiguration = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("oozieConfiguration"u8))
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    oozieConfiguration = BinaryData.FromString(prop.Value.GetRawText());
+                    oozieConfiguration = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("stormConfiguration"u8))
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    stormConfiguration = BinaryData.FromString(prop.Value.GetRawText());
+                    stormConfiguration = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("yarnConfiguration"u8))
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    yarnConfiguration = BinaryData.FromString(prop.Value.GetRawText());
+                    yarnConfiguration = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    headNodeSize = BinaryData.FromString(prop.Value.GetRawText());
+                    headNodeSize = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("dataNodeSize"u8))
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataNodeSize = BinaryData.FromString(prop.Value.GetRawText());
+                    dataNodeSize = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("zookeeperNodeSize"u8))
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    zookeeperNodeSize = BinaryData.FromString(prop.Value.GetRawText());
+                    zookeeperNodeSize = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("scriptActions"u8))
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HDInsightOnDemandLinkedServiceTypeProperties(

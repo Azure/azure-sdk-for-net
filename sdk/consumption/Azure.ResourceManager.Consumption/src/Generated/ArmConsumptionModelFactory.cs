@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary>
         /// The properties of the reservation recommendation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LegacySingleScopeReservationRecommendationProperties"/> and <see cref="Models.LegacySharedScopeReservationRecommendationProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LegacySharedScopeReservationRecommendationProperties"/> and <see cref="Models.LegacySingleScopeReservationRecommendationProperties"/>.
         /// </summary>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary>
         /// The properties of the reservation recommendation.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ModernSingleScopeReservationRecommendationProperties"/> and <see cref="Models.ModernSharedScopeReservationRecommendationProperties"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ModernSharedScopeReservationRecommendationProperties"/> and <see cref="Models.ModernSingleScopeReservationRecommendationProperties"/>.
         /// </summary>
         /// <param name="location"> Resource Location. </param>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
