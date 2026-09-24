@@ -1,14 +1,29 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.4 (2026-09-25)
 
 ### Features Added
 
+- Added `AdditionalCreateParameters` to `BulkActionExecutionParameterDetail`, an extensible dictionary of create-time parameters forwarded to the underlying virtual machine create request.
+
 ### Breaking Changes
 
-### Bugs Fixed
+The following types shipped in `1.2.0-beta.3` and have been removed. They are no longer part of the `2026-10-06-preview` API surface.
+
+- Removed the `AllocationStrategy`, `BulkCreateCustomAllocationStrategy`, `DistributionStrategy`, and `BulkCreateCustomDistributionStrategy` enums.
+- Removed the `ZoneAllocationPolicy`, `BulkCreateCustomZoneAllocationPolicy`, and `ZonePreference` models.
+- Removed the `BulkCreateVmSizeProfile` and `BulkCreateCustomVmSizeProfile` models.
+- Removed the `BulkCreateCustomOverrideBase` model.
+
+Consequently, the following members were also removed:
+
+- `PriorityProfile.AllocationStrategy` and `BulkCreateCustomPriorityProfile.AllocationStrategy`.
+- `BulkCreateProperties.VmSizesProfile`, `BulkCreateProperties.ZoneAllocationPolicy`, `BulkCreateCustomProperties.VmSizesProfile`, and `BulkCreateCustomProperties.ZoneAllocationPolicy`.
+- The corresponding optional parameters on the `ArmComputeBulkActionsModelFactory.PriorityProfile`, `BulkCreateCustomPriorityProfile`, `BulkCreateProperties`, and `BulkCreateCustomProperties` factory methods.
 
 ### Other Changes
+
+- Updated the client to target API version `2026-10-06-preview`.
 
 ## 1.2.0-beta.3 (2026-09-15)
 
