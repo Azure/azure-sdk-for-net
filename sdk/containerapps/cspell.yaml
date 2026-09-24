@@ -6,3 +6,5 @@ overrides:
       - azprovision
       - Nacos
       - Resiliencies
+      - rootfs
+      - upserts

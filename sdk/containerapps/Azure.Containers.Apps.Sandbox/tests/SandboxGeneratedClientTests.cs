@@ -34,6 +34,65 @@ namespace Azure.Containers.Apps.Sandbox.Tests
         }
 
         [Test]
+        public void ScopedClientsExposeCapturedIdentifiers()
+        {
+            MockTransport transport = new MockTransport();
+            SandboxGroup sandboxGroup = SandboxClientTestHelpers.CreateSandboxGroupClient(transport);
+            SandboxGroupSandbox sandbox = sandboxGroup.GetSandboxGroupSandboxClient("sandbox-id");
+
+            Assert.That(sandboxGroup.SubscriptionId, Is.EqualTo(SandboxClientTestHelpers.SubscriptionId));
+            Assert.That(sandboxGroup.ResourceGroupName, Is.EqualTo(SandboxClientTestHelpers.ResourceGroupName));
+            Assert.That(sandboxGroup.Name, Is.EqualTo(SandboxClientTestHelpers.SandboxGroupName));
+            Assert.That(
+                sandboxGroup.Id.ToString(),
+                Is.EqualTo(
+                    $"/subscriptions/{SandboxClientTestHelpers.SubscriptionId}" +
+                    $"/resourceGroups/{SandboxClientTestHelpers.ResourceGroupName}" +
+                    $"/providers/Microsoft.App/sandboxGroups/{SandboxClientTestHelpers.SandboxGroupName}"));
+            Assert.That(sandbox.Id, Is.EqualTo("sandbox-id"));
+        }
+
+        [Test]
+        public void GetSandboxGroupClientAcceptsResourceIdentifier()
+        {
+            MockTransport transport = new MockTransport();
+            ContainerAppsSandboxClientOptions options = new ContainerAppsSandboxClientOptions
+            {
+                Transport = transport
+            };
+            ContainerAppsSandboxClient client = new ContainerAppsSandboxClient(
+                new Uri(SandboxClientTestHelpers.Endpoint),
+                new MockCredential(),
+                options);
+            ResourceIdentifier sandboxGroupId = new ResourceIdentifier(
+                $"/subscriptions/{SandboxClientTestHelpers.SubscriptionId}" +
+                $"/resourceGroups/{SandboxClientTestHelpers.ResourceGroupName}" +
+                $"/providers/Microsoft.App/sandboxGroups/{SandboxClientTestHelpers.SandboxGroupName}");
+
+            SandboxGroup sandboxGroup = client.GetSandboxGroupClient(sandboxGroupId);
+
+            Assert.That(sandboxGroup.Id, Is.EqualTo(sandboxGroupId));
+        }
+
+        [Test]
+        public void GetSandboxGroupClientRejectsInvalidResourceType()
+        {
+            ContainerAppsSandboxClient client = new ContainerAppsSandboxClient(
+                new Uri(SandboxClientTestHelpers.Endpoint),
+                new MockCredential());
+            ResourceIdentifier invalidId = new ResourceIdentifier(
+                $"/subscriptions/{SandboxClientTestHelpers.SubscriptionId}" +
+                $"/resourceGroups/{SandboxClientTestHelpers.ResourceGroupName}" +
+                "/providers/Microsoft.App/containerApps/not-a-sandbox-group");
+
+            ArgumentException exception = Assert.Throws<ArgumentException>(
+                () => client.GetSandboxGroupClient(invalidId));
+
+            Assert.That(exception.ParamName, Is.EqualTo("sandboxGroupId"));
+            Assert.That(exception.Message, Does.Contain("Microsoft.App/sandboxGroups"));
+        }
+
+        [Test]
         public void SyncListSandboxesHandlesContinuationAndFilters()
         {
             string nextLink = CreateSandboxesNextLink("page-2");
