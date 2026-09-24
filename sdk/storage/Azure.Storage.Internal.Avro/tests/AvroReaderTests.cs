@@ -141,6 +141,46 @@ namespace Azure.Storage.Internal.Avro.Tests
             StringAssert.Contains("Codecs are not supported", ex.Message);
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task Resume_BlockOffsetRemainsAbsolute(bool seekable)
+        {
+            string filePath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}{Path.DirectorySeparatorChar}Resources{Path.DirectorySeparatorChar}test_null_5.avro";
+            byte[] avro = File.ReadAllBytes(filePath);
+            long blockOffset;
+            long nextBlockOffset;
+
+            using (AvroReader initialReader = new AvroReader(new MemoryStream(avro)))
+            {
+                await initialReader.Initalize(async: true);
+                blockOffset = initialReader.BlockOffset;
+                Assert.AreEqual(1234L, await initialReader.Next(async: true));
+                nextBlockOffset = initialReader.BlockOffset;
+            }
+
+            Stream dataStream;
+            if (seekable)
+            {
+                dataStream = new MemoryStream(avro) { Position = blockOffset };
+            }
+            else
+            {
+                byte[] partialAvro = new byte[avro.Length - (int)blockOffset];
+                Buffer.BlockCopy(avro, (int)blockOffset, partialAvro, 0, partialAvro.Length);
+                dataStream = new NonSeekableMemoryStream(partialAvro);
+            }
+
+            using AvroReader resumedReader = new AvroReader(
+                dataStream,
+                new MemoryStream(avro),
+                blockOffset,
+                indexWithinCurrentBlock: 0);
+
+            await resumedReader.Initalize(async: true);
+            Assert.AreEqual(1234L, await resumedReader.Next(async: true));
+            Assert.AreEqual(nextBlockOffset, resumedReader.BlockOffset);
+        }
+
         /// <summary>
         /// Writes an Avro-encoded string: zigzag long length prefix followed by UTF-8 bytes.
         /// Only handles values whose length fits in a single zigzag byte (≤ 63 bytes), which is
