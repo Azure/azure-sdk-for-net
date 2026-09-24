@@ -10,7 +10,7 @@ namespace Azure.Provisioning.Expressions;
 /// </summary>
 /// <param name="op">The unary operator.</param>
 /// <param name="value">The operand expression.</param>
-public class UnaryExpression(UnaryBicepOperator op, BicepExpression value) : BicepExpression
+public partial class UnaryExpression(UnaryBicepOperator op, BicepExpression value) : BicepExpression
 {
     /// <summary>
     /// Gets the unary operator.

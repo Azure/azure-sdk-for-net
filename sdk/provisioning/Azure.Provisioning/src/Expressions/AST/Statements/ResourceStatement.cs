@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Expressions;
 /// <param name="name">The resource symbolic name.</param>
 /// <param name="type">The resource type expression.</param>
 /// <param name="body">The resource body expression.</param>
-public class ResourceStatement(string name, BicepExpression type, BicepExpression body) : BicepStatement
+public partial class ResourceStatement(string name, BicepExpression type, BicepExpression body) : BicepStatement
 {
     /// <summary>
     /// Gets the resource symbolic name.

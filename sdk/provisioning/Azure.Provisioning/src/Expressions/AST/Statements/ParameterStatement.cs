@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Expressions;
 /// <param name="name">The parameter name.</param>
 /// <param name="type">The parameter type expression.</param>
 /// <param name="defaultValue">An optional default value expression.</param>
-public class ParameterStatement(string name, BicepExpression type, BicepExpression? defaultValue) : BicepStatement
+public partial class ParameterStatement(string name, BicepExpression type, BicepExpression? defaultValue) : BicepStatement
 {
     /// <summary>
     /// Gets the parameter name.

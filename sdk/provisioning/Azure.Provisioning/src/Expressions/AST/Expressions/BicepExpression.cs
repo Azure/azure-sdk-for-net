@@ -1,12 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
+
 namespace Azure.Provisioning.Expressions;
 
 /// <summary>
 /// Base class for all Bicep expression AST nodes.
 /// </summary>
-public abstract class BicepExpression
+[PersistableModelProxy(typeof(UnknownBicepExpression))]
+public abstract partial class BicepExpression
 {
     internal abstract BicepWriter Write(BicepWriter writer);
     /// <inheritdoc />

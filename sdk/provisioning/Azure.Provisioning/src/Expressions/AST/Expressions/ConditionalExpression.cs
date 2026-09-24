@@ -9,7 +9,7 @@ namespace Azure.Provisioning.Expressions;
 /// <param name="condition">The condition expression.</param>
 /// <param name="consequent">The expression returned when the condition is true.</param>
 /// <param name="alternate">The expression returned when the condition is false.</param>
-public class ConditionalExpression(BicepExpression condition, BicepExpression consequent, BicepExpression alternate) : BicepExpression
+public partial class ConditionalExpression(BicepExpression condition, BicepExpression consequent, BicepExpression alternate) : BicepExpression
 {
     /// <summary>
     /// Gets the condition expression.

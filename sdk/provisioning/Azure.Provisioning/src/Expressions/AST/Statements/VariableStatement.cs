@@ -10,7 +10,7 @@ namespace Azure.Provisioning.Expressions;
 /// </summary>
 /// <param name="name">The variable name.</param>
 /// <param name="value">The variable value expression.</param>
-public class VariableStatement(string name, BicepExpression value) : BicepStatement
+public partial class VariableStatement(string name, BicepExpression value) : BicepStatement
 {
     /// <summary>
     /// Gets the variable name.

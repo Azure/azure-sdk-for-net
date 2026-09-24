@@ -8,7 +8,7 @@ namespace Azure.Provisioning.Expressions;
 /// </summary>
 /// <param name="function">The expression identifying the function to call.</param>
 /// <param name="arguments">The arguments to pass to the function.</param>
-public class FunctionCallExpression(BicepExpression function, params BicepExpression[] arguments) : BicepExpression
+public partial class FunctionCallExpression(BicepExpression function, params BicepExpression[] arguments) : BicepExpression
 {
     /// <summary>
     /// Gets the expression identifying the function to call.

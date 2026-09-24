@@ -7,7 +7,7 @@ namespace Azure.Provisioning.Expressions;
 /// Represents a Bicep <c>targetScope</c> statement.
 /// </summary>
 /// <param name="scope">The target scope expression.</param>
-public class TargetScopeStatement(BicepExpression scope) : BicepStatement
+public partial class TargetScopeStatement(BicepExpression scope) : BicepStatement
 {
     /// <summary>
     /// Gets the target scope expression.
