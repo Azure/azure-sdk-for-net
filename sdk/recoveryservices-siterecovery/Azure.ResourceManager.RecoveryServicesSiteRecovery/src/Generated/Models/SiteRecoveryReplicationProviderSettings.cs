@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Replication provider specific settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VmmVmDetails"/>, and <see cref="VMwareVmDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HyperVVmDetails"/>, <see cref="ReplicationGroupDetails"/>, <see cref="VMwareVmDetails"/>, and <see cref="VmmVmDetails"/>.
     /// </summary>
     public abstract partial class SiteRecoveryReplicationProviderSettings
     {
