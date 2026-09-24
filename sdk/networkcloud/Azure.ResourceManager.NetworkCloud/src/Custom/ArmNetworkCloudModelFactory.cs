@@ -9,12 +9,83 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
+    // The generated NetworkCloudClusterPatch and NetworkCloudVirtualMachinePatch factory overloads
+    // reference the internal "*Patch" nested types (e.g. NetworkCloudRackDefinitionPatch), which are
+    // no longer part of the public surface because NetworkCloudClusterPatch/NetworkCloudVirtualMachinePatch
+    // expose the classic (pre-1.4.0) public types for backward compatibility. Suppress those generated
+    // overloads and replace them with ones that use the classic public types below.
+    [CodeGenSuppress("NetworkCloudClusterPatch", typeof(ManagedServiceIdentity), typeof(NetworkCloudRackDefinitionPatch), typeof(AnalyticsOutputSettings), typeof(string), typeof(ServicePrincipalInformationPatch), typeof(CommandOutputSettings), typeof(ValidationThresholdPatch), typeof(IEnumerable<NetworkCloudRackDefinitionPatch>), typeof(RuntimeProtectionConfigurationPatch), typeof(ClusterSecretArchivePatch), typeof(SecretArchiveSettings), typeof(ClusterUpdateStrategyPatch), typeof(VulnerabilityScanningSettingsContainerScan?), typeof(IDictionary<string, string>))]
+    [CodeGenSuppress("NetworkCloudVirtualMachinePatch", typeof(ManagedServiceIdentity), typeof(ImageRepositoryCredentialsPatch), typeof(IDictionary<string, string>))]
     public static partial class ArmNetworkCloudModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkCloudClusterPatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
+        /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
+        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
+        /// <param name="clusterServicePrincipal"> Field Deprecated: Use managed identity to provide cluster privileges. The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
+        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
+        /// <param name="computeRackDefinitions"> The list of rack definitions for the compute racks in a multi-rack cluster, or an empty list in a single-rack cluster. </param>
+        /// <param name="runtimeProtectionConfiguration"> The settings for cluster runtime protection. </param>
+        /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
+        /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
+        /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
+        /// <param name="vulnerabilityScanningContainerScan"> The mode selection for container vulnerability scanning. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.NetworkCloudClusterPatch"/> instance for mocking. </returns>
+        public static NetworkCloudClusterPatch NetworkCloudClusterPatch(ManagedServiceIdentity identity = default, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default, AnalyticsOutputSettings analyticsOutputSettings = default, string clusterLocation = default, ServicePrincipalInformation clusterServicePrincipal = default, CommandOutputSettings commandOutputSettings = default, ValidationThreshold computeDeploymentThreshold = default, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = default, RuntimeProtectionConfigurationPatch runtimeProtectionConfiguration = default, ClusterSecretArchive secretArchive = default, SecretArchiveSettings secretArchiveSettings = default, ClusterUpdateStrategy updateStrategy = default, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new Dictionary<string, string>();
+            computeRackDefinitions ??= new List<NetworkCloudRackDefinition>();
+
+            var result = new NetworkCloudClusterPatch { Identity = identity };
+            foreach (var tag in tags)
+            {
+                result.Tags[tag.Key] = tag.Value;
+            }
+            result.AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
+            result.AnalyticsOutputSettings = analyticsOutputSettings;
+            result.ClusterLocation = clusterLocation;
+            result.ClusterServicePrincipal = clusterServicePrincipal;
+            result.CommandOutputSettings = commandOutputSettings;
+            result.ComputeDeploymentThreshold = computeDeploymentThreshold;
+            foreach (var rack in computeRackDefinitions)
+            {
+                result.ComputeRackDefinitions.Add(rack);
+            }
+            result.RuntimeProtectionConfiguration = runtimeProtectionConfiguration;
+            result.SecretArchive = secretArchive;
+            result.SecretArchiveSettings = secretArchiveSettings;
+            result.UpdateStrategy = updateStrategy;
+            result.VulnerabilityScanningContainerScan = vulnerabilityScanningContainerScan;
+            return result;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkCloudVirtualMachinePatch"/>. </summary>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.NetworkCloudVirtualMachinePatch"/> instance for mocking. </returns>
+        public static NetworkCloudVirtualMachinePatch NetworkCloudVirtualMachinePatch(ManagedServiceIdentity identity = default, ImageRepositoryCredentials vmImageRepositoryCredentials = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            var result = new NetworkCloudVirtualMachinePatch { Identity = identity };
+            foreach (var tag in tags)
+            {
+                result.Tags[tag.Key] = tag.Value;
+            }
+            result.VmImageRepositoryCredentials = vmImageRepositoryCredentials;
+            return result;
+        }
+
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudAgentPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
