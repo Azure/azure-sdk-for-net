@@ -19,7 +19,9 @@ via [stage-eval-results.ts](stage-eval-results.ts), including failed evaluations
 Summary checks the full Prepare matrix and selects each expected shard's highest
 attempt once for Markdown, the Tests tab and bundling. Missing, interrupted or
 corrupt results remain incomplete; later failed attempts never fall back to older
-successful artifacts. No historical build download or reconstruction is involved.
+successful artifacts. The selected-results path requires valid current-build
+timeline evidence; omitting it cannot authorize publication. The legacy JUnit-only
+summary remains supported. No historical build download or reconstruction is involved.
 
 The shared archetype supports opt-in `createDashboardBundle` and
 `publishDashboardResults`. The shared publishing step defines the reviewed
@@ -40,8 +42,8 @@ scope and cross-repo redirect compatibility. Other pipelines' defaults are uncha
 All entrypoints run their normal evaluation matrix; there is no separate
 synthetic publication mode. PR validation never receives the publishing task.
 See [publisher setup and real-run parameters](publisher/README.md).
-These entrypoints send targeted notifications by default after successful storage;
-the reviewed URL/audience pair stays together in the publisher. Receiver
+Every successful publication sends a targeted notification to the fixed reviewed
+URL/audience pair. There is no notification toggle or Summary-pool override. Receiver
 authentication and network access are onboarded separately, and a failed signal
 does not fail the durable upload.
 

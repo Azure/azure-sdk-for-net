@@ -26,10 +26,6 @@ parameters:
     displayName: 'Allow Azure Storage network access for this publishing pipeline (all processes)'
     type: boolean
     default: false
-  - name: notifyDashboard
-    displayName: 'Notify the dashboard after successful Blob publication'
-    type: boolean
-    default: true
 
 variables:
   # Managed-pool image selection (LINUXPOOL/LINUXVMIMAGE). Repo-local.
@@ -46,7 +42,6 @@ extends:
     createDashboardBundle: true
     publishDashboardResults: ${{ or(parameters.publishDashboardResults, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
     allowAzureStorageNetworkAccess: ${{ or(parameters.allowAzureStorageNetworkAccess, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
-    notifyDashboard: ${{ parameters.notifyDashboard }}
     # Shared mock/live builder; select the live tier (real Cli MCP).
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
     TestType: live

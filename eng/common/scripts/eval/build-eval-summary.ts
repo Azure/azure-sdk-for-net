@@ -367,10 +367,10 @@ function main(argv) {
       matrixValid = false;
     }
     // Even a failed Prepare must use an empty destination, not stale selected results.
-    let jobAttempts;
+    let jobAttempts = { valid: false };
     if (options.attemptsFile) {
       try { jobAttempts = JSON.parse(fs.readFileSync(options.attemptsFile, "utf8")); }
-      catch { jobAttempts = { valid: false }; }
+      catch { /* Keep diagnostic results, but missing or invalid timeline evidence cannot authorize publication. */ }
     }
     selection = selectSummaryResults({ resultsRoot: options.resultsRoot,
       selectedRoot: options.selectedRoot, expectedShards, jobAttempts });

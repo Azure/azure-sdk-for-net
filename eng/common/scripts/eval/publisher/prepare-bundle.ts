@@ -1,3 +1,4 @@
+// Validates the selected shard artifacts and saves one immutable build bundle without uploading it.
 import { parseArgs } from "node:util";
 import { pipelineManifest, prepareBundle, PublicationError } from "./bundle.ts";
 

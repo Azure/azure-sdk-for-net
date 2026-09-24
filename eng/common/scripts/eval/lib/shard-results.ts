@@ -172,8 +172,8 @@ export function selectSummaryResults({ resultsRoot, selectedRoot, expectedShards
             }
             if (!complete && metadata.complete === false) reason = "The latest shard attempt did not produce a complete invocation.";
         } catch { /* Retain available JUnit below, but do not adopt an incomplete artifact for upload. */ }
-        if (jobAttempts !== undefined && (jobAttempts?.valid !== true || jobAttempts.schemaVersion !== 1 ||
-            jobAttempts.attempts?.[shard]?.attempt !== selectedAttempt.attempt || jobAttempts.attempts[shard].complete !== true)) {
+        if (jobAttempts?.valid !== true || jobAttempts.schemaVersion !== 1 ||
+            jobAttempts.attempts?.[shard]?.attempt !== selectedAttempt.attempt || jobAttempts.attempts[shard].complete !== true) {
             complete = false;
             reason = "The latest timeline job attempt has no matching complete artifact, or its status could not be verified.";
         }
