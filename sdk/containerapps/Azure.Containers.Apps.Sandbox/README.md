@@ -1,6 +1,6 @@
 # Azure Container Apps Sandbox client library for .NET
 
-Azure.Containers.Apps.Sandbox is a client library for developing .NET applications with rich experience.
+The Azure Container Apps Sandbox client library provides data-plane operations for creating and managing sandboxes and their files, networking, storage, connections, credentials, and supporting resources.
 
 ## Getting started
 
@@ -10,23 +10,134 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.Containers.Apps.Sandbox --prerelease
+dotnet add package Azure.Identity
 ```
 
 ### Prerequisites
 
 - You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+- An Azure Container Apps sandbox group and its data-plane endpoint.
+- The `Container Apps SandboxGroup Data Owner` role, or equivalent permissions, on the sandbox group.
 
 ### Authenticate the client
 
 Azure Container Apps Sandbox uses Microsoft Entra ID authentication. Install the [Azure.Identity](https://www.nuget.org/packages/Azure.Identity) package and create a `ContainerAppsSandboxClient` with a `TokenCredential`, such as `DefaultAzureCredential`.
 
+```csharp
+using System.IO;
+using Azure.Containers.Apps.Sandbox;
+using Azure.Identity;
+
+Uri endpoint = new Uri("<sandbox-group-endpoint>");
+ContainerAppsSandboxClient client = new ContainerAppsSandboxClient(
+    endpoint,
+    new DefaultAzureCredential());
+```
+
 ## Key concepts
+
+- **Top-level client:** `ContainerAppsSandboxClient` authenticates requests and creates clients scoped to a sandbox group.
+- **Sandbox group client:** `SandboxGroup` uses the subscription ID, resource group name, and sandbox group name to perform collection operations and create resource-specific subclients.
+- **Sandbox client:** `SandboxGroupSandbox` is scoped to a sandbox ID and provides lifecycle, command, statistics, storage, networking, and file subclients.
+- **Supporting resource clients:** A sandbox group exposes clients for connections, content packages, credentials, disk images, egress policies, secrets, snapshots, and volumes.
+- **Models:** Request and response models are available in the `Azure.Containers.Apps.Sandbox.Models` namespace.
 
 ## Examples
 
+The following examples assume that `client` was created as shown in [Authenticate the client](#authenticate-the-client).
+
+### Get sandbox group and sandbox clients
+
+Create a sandbox group client from its Azure resource scope, then create a client for an existing sandbox:
+
+```csharp
+SandboxGroup sandboxGroup = client.GetSandboxGroupClient(
+    "<subscription-id>",
+    "<resource-group-name>",
+    "<sandbox-group-name>");
+
+SandboxGroupSandbox sandbox = sandboxGroup.GetSandboxGroupSandboxClient("<sandbox-id>");
+```
+
+### Get sandbox properties
+
+Use the sandbox-scoped client to retrieve the current sandbox properties:
+
+```csharp
+var response = await sandbox.GetPropertiesAsync();
+
+Console.WriteLine($"Sandbox ID: {response.Value.Id}");
+Console.WriteLine($"State: {response.Value.State}");
+```
+
+### List sandboxes
+
+Sandbox collection operations are pageable:
+
+```csharp
+await foreach (var item in sandboxGroup.GetSandboxesAsync())
+{
+    Console.WriteLine($"{item.Id}: {item.State}");
+}
+```
+
+### Get file metadata
+
+Obtain the file subclient from a sandbox and retrieve metadata for a file:
+
+```csharp
+SandboxGroupSandboxFiles files = sandbox.GetSandboxGroupSandboxFilesClient();
+var response = await files.GetSandboxFileMetadataAsync("/tmp/example.txt");
+
+Console.WriteLine($"Path: {response.Value.Path}");
+Console.WriteLine($"Size: {response.Value.Size} bytes");
+```
+
+### Upload and download a file as a stream
+
+Upload streams must be readable and seekable so the client can replay the request if the pipeline retries it. Upload starts at the stream's current position, and the client leaves the stream open. Streaming downloads are not buffered; dispose the returned stream after reading it.
+
+```csharp
+SandboxGroupSandboxFiles files = sandbox.GetSandboxGroupSandboxFilesClient();
+
+using Stream upload = File.OpenRead("example.txt");
+await files.UploadSandboxFileAsync(
+    "/tmp/example.txt",
+    upload,
+    createDirs: true);
+
+var response = await files.DownloadSandboxFileStreamingAsync("/tmp/example.txt");
+using Stream download = response.Value;
+using FileStream destination = File.Create("downloaded-example.txt");
+await download.CopyToAsync(destination);
+```
+
 ## Troubleshooting
 
+Service operations throw a `RequestFailedException` when the service returns an unsuccessful response. Inspect the exception's `Status`, `ErrorCode`, and `Message` properties for details.
+
+Common causes include:
+
+- using the Azure Resource Manager endpoint instead of the sandbox group's data-plane endpoint;
+- authenticating with an identity that does not have data-plane access to the sandbox group;
+- using a subscription, resource group, sandbox group, or sandbox ID that does not match the endpoint;
+- attempting an operation while the sandbox is in an incompatible lifecycle state.
+
+To enable Azure SDK console logging during development:
+
+```csharp
+using Azure.Core.Diagnostics;
+
+using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
+```
+
+For additional logging, distributed tracing, and request diagnostics guidance, see the [Azure SDK diagnostics documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
 ## Next steps
+
+- Review the [package source](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/containerapps/Azure.Containers.Apps.Sandbox).
+- Review the [release history](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/containerapps/Azure.Containers.Apps.Sandbox/CHANGELOG.md).
+- Learn more about authentication with the [Azure Identity client library](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Contributing
 
