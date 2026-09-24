@@ -205,6 +205,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("cassandraAuditLoggingEnabled"u8);
                 writer.WriteBooleanValue(IsCassandraAuditLoggingEnabled.Value);
             }
+            if (Optional.IsDefined(ClusterType))
+            {
+                writer.WritePropertyName("clusterType"u8);
+                writer.WriteStringValue(ClusterType.Value.ToString());
+            }
             if (Optional.IsDefined(ProvisionError))
             {
                 writer.WritePropertyName("provisionError"u8);
@@ -311,6 +316,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             int? hoursBetweenBackups = default;
             bool? isDeallocated = default;
             bool? isCassandraAuditLoggingEnabled = default;
+            CassandraClusterType? clusterType = default;
             CassandraError provisionError = default;
             IList<string> extensions = default;
             IList<CassandraClusterBackupSchedule> backupSchedules = default;
@@ -512,6 +518,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     isCassandraAuditLoggingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("clusterType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterType = new CassandraClusterType(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("provisionError"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -608,6 +623,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 hoursBetweenBackups,
                 isDeallocated,
                 isCassandraAuditLoggingEnabled,
+                clusterType,
                 provisionError,
                 extensions ?? new ChangeTrackingList<string>(),
                 backupSchedules ?? new ChangeTrackingList<CassandraClusterBackupSchedule>(),
