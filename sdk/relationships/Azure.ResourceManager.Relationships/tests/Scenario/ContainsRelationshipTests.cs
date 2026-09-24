@@ -21,8 +21,9 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         private const string ResourceGroupName = "rg-contains";
         private const string Filter = "properties.metadata.targetType eq 'Microsoft.KeyVault/vaults'";
 
-        [Test]
-        public async Task GetByResourceGroupContainsRelationshipsAsync_EncodesFilterAndFollowsNextLink()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task GetByResourceGroupContainsRelationships_EncodesFilterAndFollowsNextLink(bool async)
         {
             string sourceId = $"/subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}";
             string firstTargetId = $"{sourceId}/providers/Microsoft.KeyVault/vaults/vault1";
@@ -34,10 +35,18 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             var client = CreateClient(transport);
             ResourceGroupResource resourceGroup = client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(SubscriptionId, ResourceGroupName));
 
-            var pages = new List<Page<ContainsRelationship>>();
-            await foreach (Page<ContainsRelationship> page in resourceGroup.GetByResourceGroupContainsRelationshipsAsync(Filter).AsPages())
+            List<Page<ContainsRelationship>> pages;
+            if (async)
             {
-                pages.Add(page);
+                pages = new List<Page<ContainsRelationship>>();
+                await foreach (Page<ContainsRelationship> page in resourceGroup.GetByResourceGroupContainsRelationshipsAsync(Filter).AsPages())
+                {
+                    pages.Add(page);
+                }
+            }
+            else
+            {
+                pages = resourceGroup.GetByResourceGroupContainsRelationships(Filter).AsPages().ToList();
             }
 
             Assert.AreEqual(2, pages.Count);
@@ -50,8 +59,9 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.AreEqual(new Uri(nextLink).PathAndQuery, transport.Requests[1].Uri.PathAndQuery);
         }
 
-        [Test]
-        public void GetBySubscriptionContainsRelationships_EncodesFilterAndFollowsNextLink()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task GetBySubscriptionContainsRelationships_EncodesFilterAndFollowsNextLink(bool async)
         {
             string sourceId = $"/subscriptions/{SubscriptionId}";
             string firstTargetId = $"{sourceId}/resourceGroups/{ResourceGroupName}";
@@ -63,7 +73,19 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             var client = CreateClient(transport);
             SubscriptionResource subscription = client.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(SubscriptionId));
 
-            List<Page<ContainsRelationship>> pages = subscription.GetBySubscriptionContainsRelationships(Filter).AsPages().ToList();
+            List<Page<ContainsRelationship>> pages;
+            if (async)
+            {
+                pages = new List<Page<ContainsRelationship>>();
+                await foreach (Page<ContainsRelationship> page in subscription.GetBySubscriptionContainsRelationshipsAsync(Filter).AsPages())
+                {
+                    pages.Add(page);
+                }
+            }
+            else
+            {
+                pages = subscription.GetBySubscriptionContainsRelationships(Filter).AsPages().ToList();
+            }
 
             Assert.AreEqual(2, pages.Count);
             Assert.AreEqual(nextLink, pages[0].ContinuationToken);
