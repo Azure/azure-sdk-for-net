@@ -86,4 +86,4 @@ When you are finished, delete the sample cloud validation. If an earlier request
 await cloudValidation.DeleteAsync(WaitUntil.Completed);
 ```
 
-For the compile-checked source, see [Sample1_ManagingCloudValidations.cs](../tests/Samples/Sample1_ManagingCloudValidations.cs). The sample is not executed by automated tests because it requires service access and creates and deletes live resources.
+For the compile-checked source, see [Sample1_ManagingCloudValidations.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/platformvalidation/Azure.ResourceManager.PlatformValidation/tests/Samples/Sample1_ManagingCloudValidations.cs). The sample is not executed by automated tests because it requires service access and creates and deletes live resources.

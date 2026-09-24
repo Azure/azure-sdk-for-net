@@ -43,7 +43,7 @@ Documentation is available to help you learn how to use this package:
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
-- [Create, retrieve, list, and delete cloud validations](samples/Sample1_ManagingCloudValidations.md)
+- [Create, retrieve, list, and delete cloud validations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/platformvalidation/Azure.ResourceManager.PlatformValidation/samples/Sample1_ManagingCloudValidations.md)
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ## Troubleshooting
