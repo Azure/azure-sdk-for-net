@@ -43,9 +43,9 @@
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.45",
-    "@azure-tools/typespec-autorest": "0.72.0",
+    "@azure-tools/typespec-autorest": "0.72.1",
     "@azure-tools/typespec-azure-core": "0.72.1",
-    "@azure-tools/typespec-azure-resource-manager": "0.72.0",
+    "@azure-tools/typespec-azure-resource-manager": "0.72.1",
     "@azure-tools/typespec-azure-rulesets": "0.72.0",
     "@azure-tools/typespec-client-generator-core": "0.72.2",
     "@eslint/js": "^9.2.0",
