@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Response from uploading a file to a session sandbox. </summary>
-    internal partial class SessionFileWriteResult : IJsonModel<SessionFileWriteResult>
+    public partial class SessionFileWriteResult : IJsonModel<SessionFileWriteResult>
     {
         /// <summary> Initializes a new instance of <see cref="SessionFileWriteResult"/> for deserialization. </summary>
         internal SessionFileWriteResult()

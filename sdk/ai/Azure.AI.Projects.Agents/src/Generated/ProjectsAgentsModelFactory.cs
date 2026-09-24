@@ -3070,6 +3070,15 @@ namespace Azure.AI.Projects.Agents
             return new SkillVersionDeletionResult(id, name, deleted, version, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Response from uploading a file to a session sandbox. </summary>
+        /// <param name="path"> The path where the file was written, relative to the session home directory. </param>
+        /// <param name="bytesWritten"> Number of bytes written. </param>
+        /// <returns> A new <see cref="Agents.SessionFileWriteResult"/> instance for mocking. </returns>
+        public static SessionFileWriteResult SessionFileWriteResult(string path = default, long bytesWritten = default)
+        {
+            return new SessionFileWriteResult(path, bytesWritten, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A single entry in a directory listing. </summary>
         /// <param name="name"> The name of the file or directory. </param>
         /// <param name="sizeInBytes"> The size in bytes (0 for directories). </param>

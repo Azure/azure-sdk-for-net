@@ -72,7 +72,7 @@ public partial class AgentAdministrationClient
     /// <param name="endpoint">The service endpoint to target.</param>
     /// <param name="tokenProvider">The token provider used to authenticate requests.</param>
     /// <param name="options">Optional client configuration options.</param>
-    public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options =null)
+    public AgentAdministrationClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AgentAdministrationClientOptions options = null)
     {
         Argument.AssertNotNull(endpoint, nameof(endpoint));
         Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
@@ -1040,7 +1040,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual BinaryData DownloadAgentCode(string agentName, string path, string agentVersion = default, CancellationToken cancellationToken =default)
+    public virtual BinaryData DownloadAgentCode(string agentName, string path, string agentVersion = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
@@ -1075,7 +1075,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     /// <returns> The response returned from the service. </returns>
-    public virtual async Task<BinaryData> DownloadAgentCodeAsync(string agentName, string path, string agentVersion=default, CancellationToken cancellationToken = default)
+    public virtual async Task<BinaryData> DownloadAgentCodeAsync(string agentName, string path, string agentVersion = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(path, nameof(path));
 
