@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    schemaSetting = BinaryData.FromString(prop.Value.GetRawText());
+                    schemaSetting = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new MigrateSqlServerSqlDBDatabaseInput(

@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     {
                         continue;
                     }
-                    identifiers = BinaryData.FromString(prop.Value.GetRawText());
+                    identifiers = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("extension"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     {
                         continue;
                     }
-                    before = BinaryData.FromString(prop.Value.GetRawText());
+                    before = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("after"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                     {
                         continue;
                     }
-                    after = BinaryData.FromString(prop.Value.GetRawText());
+                    after = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("delta"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WhatIfChange(

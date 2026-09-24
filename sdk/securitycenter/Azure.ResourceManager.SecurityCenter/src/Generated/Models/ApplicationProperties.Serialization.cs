@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         }
                         else
                         {
-                            array.Add(BinaryData.FromString(item.GetRawText()));
+                            array.Add(item.GetUtf8Bytes());
                         }
                     }
                     conditionSets = array;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApplicationProperties(displayName, description, sourceResourceType, conditionSets, additionalBinaryDataProperties);

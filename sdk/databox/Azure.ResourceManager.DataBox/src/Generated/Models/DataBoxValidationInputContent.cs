@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary>
     /// Minimum fields that must be present in any type of validation request.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataBoxValidateAddressContent"/>, <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/>, and <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataBoxValidateAddressContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/>, and <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/>.
     /// </summary>
     public abstract partial class DataBoxValidationInputContent
     {

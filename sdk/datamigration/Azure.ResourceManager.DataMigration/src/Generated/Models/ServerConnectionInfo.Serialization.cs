@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Defines the connection properties of a server
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataMigrationMongoDBConnectionInfo"/>, <see cref="DataMigrationSqlConnectionInfo"/>, <see cref="DataMigrationMySqlConnectionInfo"/>, <see cref="DataMigrationOracleConnectionInfo"/>, <see cref="DataMigrationPostgreSqlConnectionInfo"/>, and <see cref="DataMigrationMISqlConnectionInfo"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataMigrationMISqlConnectionInfo"/>, <see cref="DataMigrationMongoDBConnectionInfo"/>, <see cref="DataMigrationMySqlConnectionInfo"/>, <see cref="DataMigrationOracleConnectionInfo"/>, <see cref="DataMigrationPostgreSqlConnectionInfo"/>, and <see cref="DataMigrationSqlConnectionInfo"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConnectionInfo))]
     public abstract partial class ServerConnectionInfo : IJsonModel<ServerConnectionInfo>
@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "MiSqlConnectionInfo":
+                        return DataMigrationMISqlConnectionInfo.DeserializeDataMigrationMISqlConnectionInfo(element, options);
                     case "MongoDbConnectionInfo":
                         return DataMigrationMongoDBConnectionInfo.DeserializeDataMigrationMongoDBConnectionInfo(element, options);
-                    case "SqlConnectionInfo":
-                        return DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(element, options);
                     case "MySqlConnectionInfo":
                         return DataMigrationMySqlConnectionInfo.DeserializeDataMigrationMySqlConnectionInfo(element, options);
                     case "OracleConnectionInfo":
                         return DataMigrationOracleConnectionInfo.DeserializeDataMigrationOracleConnectionInfo(element, options);
                     case "PostgreSqlConnectionInfo":
                         return DataMigrationPostgreSqlConnectionInfo.DeserializeDataMigrationPostgreSqlConnectionInfo(element, options);
-                    case "MiSqlConnectionInfo":
-                        return DataMigrationMISqlConnectionInfo.DeserializeDataMigrationMISqlConnectionInfo(element, options);
+                    case "SqlConnectionInfo":
+                        return DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(element, options);
                 }
             }
             return UnknownConnectionInfo.DeserializeUnknownConnectionInfo(element, options);

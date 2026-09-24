@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// AkriConnectorsRegistrySettings properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AkriConnectorsRegistryEndpointRef"/> and <see cref="AkriConnectorsContainerRegistry"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AkriConnectorsContainerRegistry"/> and <see cref="AkriConnectorsRegistryEndpointRef"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAkriConnectorsRegistrySettings))]
     public abstract partial class AkriConnectorsRegistrySettings : IJsonModel<AkriConnectorsRegistrySettings>
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "RegistryEndpointRef":
-                        return AkriConnectorsRegistryEndpointRef.DeserializeAkriConnectorsRegistryEndpointRef(element, options);
                     case "ContainerRegistry":
                         return AkriConnectorsContainerRegistry.DeserializeAkriConnectorsContainerRegistry(element, options);
+                    case "RegistryEndpointRef":
+                        return AkriConnectorsRegistryEndpointRef.DeserializeAkriConnectorsRegistryEndpointRef(element, options);
                 }
             }
             return UnknownAkriConnectorsRegistrySettings.DeserializeUnknownAkriConnectorsRegistrySettings(element, options);

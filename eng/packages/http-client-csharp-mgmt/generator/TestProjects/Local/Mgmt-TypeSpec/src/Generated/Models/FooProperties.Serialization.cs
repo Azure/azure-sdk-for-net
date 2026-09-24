@@ -131,9 +131,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 writer.WritePropertyName("prop1"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "prop1"u8);
                 for (int i = 0; i < Prop1.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop1[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop1[{i}]")))
                     {
                         continue;
                     }
@@ -159,9 +160,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 writer.WritePropertyName("prop2"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "prop2"u8);
                 for (int i = 0; i < Prop2.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop2[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.prop2[{i}]")))
                     {
                         continue;
                     }
@@ -402,18 +404,34 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             if (local.StartsWith("nestedProperty"u8))
             {
+                if (NestedProperty == null)
+                {
+                    return false;
+                }
                 return NestedProperty.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("nestedProperty"u8.Length)], out value);
             }
             if (local.StartsWith("optionalProperty"u8))
             {
+                if (OptionalProperty == null)
+                {
+                    return false;
+                }
                 return OptionalProperty.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("optionalProperty"u8.Length)], out value);
             }
             if (local.StartsWith("vmProfile"u8))
             {
+                if (VmProfile == null)
+                {
+                    return false;
+                }
                 return VmProfile.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("vmProfile"u8.Length)], out value);
             }
             if (local.StartsWith("computeFleetVmProfile"u8))
             {
+                if (ComputeFleetVmProfile == null)
+                {
+                    return false;
+                }
                 return ComputeFleetVmProfile.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("computeFleetVmProfile"u8.Length)], out value);
             }
             return false;
@@ -431,21 +449,37 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
             if (local.StartsWith("nestedProperty"u8))
             {
+                if (NestedProperty == null)
+                {
+                    return false;
+                }
                 NestedProperty.Patch.Set([.. "$"u8, .. local.Slice("nestedProperty"u8.Length)], value);
                 return true;
             }
             if (local.StartsWith("optionalProperty"u8))
             {
+                if (OptionalProperty == null)
+                {
+                    return false;
+                }
                 OptionalProperty.Patch.Set([.. "$"u8, .. local.Slice("optionalProperty"u8.Length)], value);
                 return true;
             }
             if (local.StartsWith("vmProfile"u8))
             {
+                if (VmProfile == null)
+                {
+                    return false;
+                }
                 VmProfile.Patch.Set([.. "$"u8, .. local.Slice("vmProfile"u8.Length)], value);
                 return true;
             }
             if (local.StartsWith("computeFleetVmProfile"u8))
             {
+                if (ComputeFleetVmProfile == null)
+                {
+                    return false;
+                }
                 ComputeFleetVmProfile.Patch.Set([.. "$"u8, .. local.Slice("computeFleetVmProfile"u8.Length)], value);
                 return true;
             }

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadPreserveCompressionFileNameAsFolder(prop, ref preserveCompressionFileNameAsFolder);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new TarReadSettings(compressionReadSettingsType, additionalProperties, preserveCompressionFileNameAsFolder);
         }
