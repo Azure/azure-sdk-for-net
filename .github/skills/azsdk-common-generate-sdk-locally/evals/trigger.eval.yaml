@@ -1,0 +1,34 @@
+name: azsdk-common-generate-sdk-locally-trigger-eval
+description: Trigger tests for the azsdk-common-generate-sdk-locally skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-generate-sdk-locally
+  type: ci-gate
+
+defaults:
+  runs: 1
+  timeout: "90s"
+  model: gpt-5.6-sol
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  - name: trigger-generate-python-sdk-locally
+    prompt: "Generate the Python SDK locally from my TypeSpec project at specification/compute/resource-manager/Microsoft.Compute/ComputeRP/tspconfig.yaml."
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-generate-sdk-locally"]
+
+  # Should NOT trigger
+  - name: anti-trigger-mitigate-breaking-change
+    prompt: "Fix the SDK breaking changes"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-generate-sdk-locally"]
