@@ -20,32 +20,32 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MaintenanceConfigurationResource"/> and their operations.
-    /// Each <see cref="MaintenanceConfigurationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="MaintenanceConfigurationCollection"/> instance call the GetMaintenanceConfigurations method from an instance of <see cref="ResourceGroupResource"/>.
+    /// A class representing a collection of <see cref="ResourceGroupsMaintenanceConfigurationsResource"/> and their operations.
+    /// Each <see cref="ResourceGroupsMaintenanceConfigurationsResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ResourceGroupsMaintenanceConfigurationsCollection"/> instance call the GetResourceGroupsMaintenanceConfigurations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class MaintenanceConfigurationCollection : ArmCollection, IEnumerable<MaintenanceConfigurationResource>, IAsyncEnumerable<MaintenanceConfigurationResource>
+    public partial class ResourceGroupsMaintenanceConfigurationsCollection : ArmCollection, IEnumerable<ResourceGroupsMaintenanceConfigurationsResource>, IAsyncEnumerable<ResourceGroupsMaintenanceConfigurationsResource>
     {
         private readonly ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
         private readonly MaintenanceConfigurations _maintenanceConfigurationsRestClient;
         private readonly ClientDiagnostics _maintenanceConfigurationsForResourceGroupClientDiagnostics;
         private readonly MaintenanceConfigurationsForResourceGroup _maintenanceConfigurationsForResourceGroupRestClient;
 
-        /// <summary> Initializes a new instance of MaintenanceConfigurationCollection for mocking. </summary>
-        protected MaintenanceConfigurationCollection()
+        /// <summary> Initializes a new instance of ResourceGroupsMaintenanceConfigurationsCollection for mocking. </summary>
+        protected ResourceGroupsMaintenanceConfigurationsCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupsMaintenanceConfigurationsCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MaintenanceConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ResourceGroupsMaintenanceConfigurationsCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MaintenanceConfigurationResource.ResourceType, out string maintenanceConfigurationApiVersion);
-            _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceConfigurationApiVersion ?? "2025-10-01-preview");
-            _maintenanceConfigurationsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceConfigurationResource.ResourceType.Namespace, Diagnostics);
-            _maintenanceConfigurationsForResourceGroupRestClient = new MaintenanceConfigurationsForResourceGroup(_maintenanceConfigurationsForResourceGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceConfigurationApiVersion ?? "2025-10-01-preview");
+            TryGetApiVersion(ResourceGroupsMaintenanceConfigurationsResource.ResourceType, out string resourceGroupsMaintenanceConfigurationsApiVersion);
+            _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceGroupsMaintenanceConfigurationsResource.ResourceType.Namespace, Diagnostics);
+            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupsMaintenanceConfigurationsApiVersion ?? "2025-10-01-preview");
+            _maintenanceConfigurationsForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceGroupsMaintenanceConfigurationsResource.ResourceType.Namespace, Diagnostics);
+            _maintenanceConfigurationsForResourceGroupRestClient = new MaintenanceConfigurationsForResourceGroup(_maintenanceConfigurationsForResourceGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupsMaintenanceConfigurationsApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MaintenanceConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ResourceGroupsMaintenanceConfigurationsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Maintenance
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceConfigurationResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<ResourceGroupsMaintenanceConfigurationsResource> operation = new MaintenanceArmOperation<ResourceGroupsMaintenanceConfigurationsResource>(Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MaintenanceConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ResourceGroupsMaintenanceConfigurationsResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Maintenance
                 Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation<MaintenanceConfigurationResource> operation = new MaintenanceArmOperation<MaintenanceConfigurationResource>(Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MaintenanceArmOperation<ResourceGroupsMaintenanceConfigurationsResource> operation = new MaintenanceArmOperation<ResourceGroupsMaintenanceConfigurationsResource>(Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MaintenanceConfigurationResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupsMaintenanceConfigurationsResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Get");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsCollection.Get");
             scope.Start();
             try
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -239,11 +239,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MaintenanceConfigurationResource> Get(string resourceName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupsMaintenanceConfigurationsResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Get");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsCollection.Get");
             scope.Start();
             try
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -285,14 +285,14 @@ namespace Azure.ResourceManager.Maintenance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGroupsMaintenanceConfigurationsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGroupsMaintenanceConfigurationsResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsForResourceGroupGetAllAsyncCollectionResultOfT(_maintenanceConfigurationsForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceConfigurationCollection.GetAll"), data => new MaintenanceConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceConfigurationData, ResourceGroupsMaintenanceConfigurationsResource>(new MaintenanceConfigurationsForResourceGroupGetAllAsyncCollectionResultOfT(_maintenanceConfigurationsForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGroupsMaintenanceConfigurationsCollection.GetAll"), data => new ResourceGroupsMaintenanceConfigurationsResource(Client, data));
         }
 
         /// <summary>
@@ -313,14 +313,14 @@ namespace Azure.ResourceManager.Maintenance
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceConfigurationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGroupsMaintenanceConfigurationsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGroupsMaintenanceConfigurationsResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsForResourceGroupGetAllCollectionResultOfT(_maintenanceConfigurationsForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MaintenanceConfigurationCollection.GetAll"), data => new MaintenanceConfigurationResource(Client, data));
+            return new PageableWrapper<MaintenanceConfigurationData, ResourceGroupsMaintenanceConfigurationsResource>(new MaintenanceConfigurationsForResourceGroupGetAllCollectionResultOfT(_maintenanceConfigurationsForResourceGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ResourceGroupsMaintenanceConfigurationsCollection.GetAll"), data => new ResourceGroupsMaintenanceConfigurationsResource(Client, data));
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Exists");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsCollection.Exists");
             scope.Start();
             try
             {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.Exists");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsCollection.Exists");
             scope.Start();
             try
             {
@@ -458,11 +458,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<MaintenanceConfigurationResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ResourceGroupsMaintenanceConfigurationsResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -487,9 +487,9 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<MaintenanceConfigurationResource>(response.GetRawResponse());
+                    return new NoValueResponse<ResourceGroupsMaintenanceConfigurationsResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -519,11 +519,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<MaintenanceConfigurationResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ResourceGroupsMaintenanceConfigurationsResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationCollection.GetIfExists");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -548,9 +548,9 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<MaintenanceConfigurationResource>(response.GetRawResponse());
+                    return new NoValueResponse<ResourceGroupsMaintenanceConfigurationsResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Maintenance
             }
         }
 
-        IEnumerator<MaintenanceConfigurationResource> IEnumerable<MaintenanceConfigurationResource>.GetEnumerator()
+        IEnumerator<ResourceGroupsMaintenanceConfigurationsResource> IEnumerable<ResourceGroupsMaintenanceConfigurationsResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<MaintenanceConfigurationResource> IAsyncEnumerable<MaintenanceConfigurationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ResourceGroupsMaintenanceConfigurationsResource> IAsyncEnumerable<ResourceGroupsMaintenanceConfigurationsResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

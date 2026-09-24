@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// Abstract placement policy properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmPlacementPolicyProperties"/> and <see cref="VmHostPlacementPolicyProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VmHostPlacementPolicyProperties"/> and <see cref="VmPlacementPolicyProperties"/>.
     /// </summary>
     public abstract partial class PlacementPolicyProperties
     {

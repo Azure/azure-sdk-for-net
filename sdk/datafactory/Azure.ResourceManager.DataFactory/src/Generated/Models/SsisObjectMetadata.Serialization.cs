@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// SSIS object metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SsisFolder"/>, <see cref="SsisProject"/>, <see cref="SsisPackage"/>, and <see cref="SsisEnvironment"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SsisEnvironment"/>, <see cref="SsisFolder"/>, <see cref="SsisPackage"/>, and <see cref="SsisProject"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSsisObjectMetadata))]
     public abstract partial class SsisObjectMetadata : IJsonModel<SsisObjectMetadata>
@@ -140,14 +140,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Folder":
-                        return SsisFolder.DeserializeSsisFolder(element, options);
-                    case "Project":
-                        return SsisProject.DeserializeSsisProject(element, options);
-                    case "Package":
-                        return SsisPackage.DeserializeSsisPackage(element, options);
                     case "Environment":
                         return SsisEnvironment.DeserializeSsisEnvironment(element, options);
+                    case "Folder":
+                        return SsisFolder.DeserializeSsisFolder(element, options);
+                    case "Package":
+                        return SsisPackage.DeserializeSsisPackage(element, options);
+                    case "Project":
+                        return SsisProject.DeserializeSsisProject(element, options);
                 }
             }
             return UnknownSsisObjectMetadata.DeserializeUnknownSsisObjectMetadata(element, options);

@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ApplicationGatewayAvailableSslOptionsPropertiesFormat(predefinedPolicies ?? new ChangeTrackingList<NetworkSubResource>(), defaultPolicy, availableCipherSuites ?? new ChangeTrackingList<ApplicationGatewaySslCipherSuite>(), availableProtocols ?? new ChangeTrackingList<ApplicationGatewaySslProtocol>(), additionalBinaryDataProperties);

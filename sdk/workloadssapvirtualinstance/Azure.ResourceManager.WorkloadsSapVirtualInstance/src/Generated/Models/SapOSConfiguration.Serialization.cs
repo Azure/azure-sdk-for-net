@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
 {
     /// <summary>
     /// Defines the OS configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SapWindowsConfiguration"/> and <see cref="SapLinuxConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SapLinuxConfiguration"/> and <see cref="SapWindowsConfiguration"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSapOSConfiguration))]
     public abstract partial class SapOSConfiguration : IJsonModel<SapOSConfiguration>
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Windows":
-                        return SapWindowsConfiguration.DeserializeSapWindowsConfiguration(element, options);
                     case "Linux":
                         return SapLinuxConfiguration.DeserializeSapLinuxConfiguration(element, options);
+                    case "Windows":
+                        return SapWindowsConfiguration.DeserializeSapWindowsConfiguration(element, options);
                 }
             }
             return UnknownSapOSConfiguration.DeserializeUnknownSapOSConfiguration(element, options);
