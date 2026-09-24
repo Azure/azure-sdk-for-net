@@ -53,6 +53,20 @@ namespace Azure.Core.Tests.Identity
             Assert.IsTrue(messages.Any(message => ExceptionChainContains(ex, message)), $"Expected exception chain to contain one of: {string.Join(", ", messages)}{Environment.NewLine}Actual: {ex}");
         }
 
+        [Test]
+        public void MtlsProofOfPossessionIsOptIn()
+        {
+#pragma warning disable AZID0004 // Testing experimental mTLS proof-of-possession API
+            var options = new ManagedIdentityCredentialOptions();
+
+            Assert.IsFalse(options.EnableMtlsProofOfPossession);
+
+            options.EnableMtlsProofOfPossession = true;
+
+            Assert.IsTrue(options.EnableMtlsProofOfPossession);
+#pragma warning restore AZID0004
+        }
+
         #region Private Helpers
 
         private static ManagedIdentityId ResolveManagedIdentityId(string clientId = null, string resourceId = null)
@@ -71,7 +85,7 @@ namespace Azure.Core.Tests.Identity
             bool isManagedIdentityPipeline = false,
             bool preserveTransport = true,
             Action<MockMsalManagedIdentityClient> configureMockMsal = null,
-            bool disableMtlsProofOfPossession = false,
+            bool enableMtlsProofOfPossession = true,
             bool instrument = true,
             TimeSpan? initialImdsConnectionTimeout = null)
         {
@@ -83,7 +97,7 @@ namespace Azure.Core.Tests.Identity
                 IsForceRefreshEnabled = isForceRefreshEnabled,
                 PreserveTransport = preserveTransport,
                 Options = options,
-                DisableMtlsProofOfPossession = disableMtlsProofOfPossession,
+                EnableMtlsProofOfPossession = enableMtlsProofOfPossession,
                 InitialImdsConnectionTimeout = initialImdsConnectionTimeout
             };
             // Inject a mock MSAL client that:
@@ -418,7 +432,7 @@ namespace Azure.Core.Tests.Identity
 
         [NonParallelizable]
         [Test]
-        public async Task ProofOfPossessionRequestSkipsCapabilitiesWhenMtlsIsDisabled()
+        public async Task ProofOfPossessionRequestSkipsCapabilitiesWhenMtlsIsNotEnabled()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
@@ -433,11 +447,11 @@ namespace Azure.Core.Tests.Identity
                     mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
                     {
                         capabilityCallCount++;
-                        throw new MsalClientException("managed_identity_request_failed", "Capability discovery should not run when mTLS proof-of-possession is disabled.");
+                        throw new MsalClientException("managed_identity_request_failed", "Capability discovery should not run when mTLS proof-of-possession is not enabled.");
                     };
                     mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
                 },
-                disableMtlsProofOfPossession: true,
+                enableMtlsProofOfPossession: false,
                 instrument: false);
 
             AccessToken token = await GetTokenAsync(
@@ -788,12 +802,12 @@ namespace Azure.Core.Tests.Identity
             Assert.AreEqual(expectedTokenBindingAvailable, mockMsal.LastIsTokenBindingAvailable);
         }
 
-        [TestCase(false, false, true)]
-        [TestCase(true, true, true)]
-        [TestCase(true, false, false)]
+        [TestCase(false, true, true)]
+        [TestCase(true, false, true)]
+        [TestCase(true, true, false)]
         public async Task KeyGuardBearerRequestsUseConfiguredTransport(
             bool isProofOfPossessionEnabled,
-            bool disableMtlsProofOfPossession,
+            bool enableMtlsProofOfPossession,
             bool attestationSupportAvailable)
         {
             using var environment = new TestEnvVar(new()
@@ -819,7 +833,7 @@ namespace Azure.Core.Tests.Identity
                     mock.OverrideAttestationSupport = true;
                     mock.AttestationSupport = attestationSupportAvailable ? builder => builder : null;
                 },
-                disableMtlsProofOfPossession: disableMtlsProofOfPossession);
+                enableMtlsProofOfPossession: enableMtlsProofOfPossession);
             var context = new TokenRequestContext(
                 MockScopes.Default,
                 isProofOfPossessionEnabled: isProofOfPossessionEnabled);

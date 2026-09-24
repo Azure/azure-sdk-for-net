@@ -115,9 +115,9 @@ namespace Azure.Identity
                 DisableInstanceDiscovery = disableInstanceDiscovery;
             }
 
-            if (bool.TryParse(section[nameof(DisableMtlsProofOfPossession)], out bool disableMtlsProofOfPossession))
+            if (bool.TryParse(section[nameof(EnableMtlsProofOfPossession)], out bool enableMtlsProofOfPossession))
             {
-                DisableMtlsProofOfPossession = disableMtlsProofOfPossession;
+                EnableMtlsProofOfPossession = enableMtlsProofOfPossession;
             }
 
             if (section[nameof(AzureCliCredentialOptions.Subscription)] is string subscription)
@@ -590,7 +590,7 @@ namespace Azure.Identity
 
         internal bool IsAzureProxyEnabled { get; set; }
 
-        internal bool DisableMtlsProofOfPossession { get; set; }
+        internal bool EnableMtlsProofOfPossession { get; set; }
 
         /// <summary>
         /// Specifies the client ID of the application the credential will authenticate.
@@ -699,7 +699,7 @@ namespace Azure.Identity
                     dacClone.Subscription = Subscription;
                 }
                 dacClone.IsAzureProxyEnabled = IsAzureProxyEnabled;
-                dacClone.DisableMtlsProofOfPossession = DisableMtlsProofOfPossession;
+                dacClone.EnableMtlsProofOfPossession = EnableMtlsProofOfPossession;
                 dacClone.ClientId = ClientId;
                 dacClone.AzurePipelinesServiceConnectionId = AzurePipelinesServiceConnectionId;
                 dacClone.AzurePipelinesSystemAccessToken = AzurePipelinesSystemAccessToken;

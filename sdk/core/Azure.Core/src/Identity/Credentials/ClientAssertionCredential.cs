@@ -37,7 +37,7 @@ namespace Azure.Identity
             "Proof-of-possession (mTLS PoP) was requested, but no binding certificate was available to bind the token. " +
             "This usually means the host does not support managed identity mTLS proof-of-possession. " +
             "Bearer fallback is intentionally not performed for an explicit proof-of-possession request. " +
-            "To use bearer tokens instead, set DisableMtlsProofOfPossession, or run on a host that supports mTLS proof-of-possession.";
+            "To use bearer tokens instead, set EnableMtlsProofOfPossession to false, or run on a host that supports mTLS proof-of-possession.";
 
         /// <summary>
         /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
@@ -73,9 +73,7 @@ namespace Azure.Identity
             ClientAssertionCredentialOptions options = default)
             : this(tenantId, clientId, assertionCallback, options)
         {
-            // Only create the proof-of-possession client when mTLS PoP is not explicitly disabled. When disabled,
-            // the credential is bearer-only and a proof-of-possession request is served by the bearer client.
-            if (options?.DisableMtlsProofOfPossession != true)
+            if (options?.EnableMtlsProofOfPossession == true)
             {
                 PopClient = options?.PopMsalClient ?? new MsalConfidentialClient(Pipeline, tenantId, clientId, popAssertionCallback, options);
             }
