@@ -11,12 +11,6 @@ parameters:
   - name: publishDashboardResults
     type: boolean
     default: false
-  - name: storageServiceConnection
-    type: string
-    default: ''
-  - name: storageContainerUrl
-    type: string
-    default: ''
   - name: notifyDashboard
     type: boolean
     default: false
@@ -90,8 +84,6 @@ jobs:
         - template: ../steps/eval-publish-results.yml
           parameters:
             publishDashboardResults: ${{ parameters.publishDashboardResults }}
-            storageServiceConnection: ${{ parameters.storageServiceConnection }}
-            storageContainerUrl: ${{ parameters.storageContainerUrl }}
             notifyDashboard: ${{ parameters.notifyDashboard }}
 
       # Completed failing evals are useful data: publish BEFORE the evaluation gate.

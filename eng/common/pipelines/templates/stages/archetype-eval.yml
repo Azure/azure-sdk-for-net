@@ -73,12 +73,6 @@ parameters:
     # A consumer that enables this needs the matching repo-owned redirect support.
     type: boolean
     default: false
-  - name: storageServiceConnection
-    type: string
-    default: ''
-  - name: storageContainerUrl
-    type: string
-    default: ''
   - name: notifyDashboard
     type: boolean
     default: false
@@ -136,7 +130,5 @@ extends:
               failOnFailedTests: ${{ parameters.failOnFailedTests }}
               createDashboardBundle: ${{ parameters.createDashboardBundle }}
               publishDashboardResults: ${{ parameters.publishDashboardResults }}
-              storageServiceConnection: ${{ parameters.storageServiceConnection }}
-              storageContainerUrl: ${{ parameters.storageContainerUrl }}
               notifyDashboard: ${{ parameters.notifyDashboard }}
               summaryPool: ${{ parameters.summaryPool }}

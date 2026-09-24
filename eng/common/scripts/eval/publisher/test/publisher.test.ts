@@ -312,11 +312,17 @@ test("publisher dependency lock is portable with public URLs and SHA512 integrit
     }
 });
 
-test("real CLI blocks PR publication before requesting a credential", () => {
-    const script = resolve(import.meta.dirname, "../publish-bundle.ts"), env = { ...process.env, TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "PullRequest", BUILD_SOURCEBRANCH: "refs/pull/1/merge" };
-    delete env.NODE_TEST_CONTEXT;
-    const child = spawnSync(process.execPath, ["--experimental-strip-types", script, "--bundle", "unused.zip", "--result", "unused.json"], { encoding: "utf8", env, timeout: 30_000 });
-    assert.equal(child.status, 1); assert.match(child.stderr, /trusted internal, non-PR/);
+test("real CLI blocks public projects, PR validation and pull refs before requesting a credential", () => {
+    const script = resolve(import.meta.dirname, "../publish-bundle.ts");
+    for (const rejected of [{ SYSTEM_TEAMPROJECT: "public" }, { BUILD_REASON: "PullRequest" },
+        { BUILD_SOURCEBRANCH: "refs/pull/1/merge" }]) {
+        const env = { ...process.env, TF_BUILD: "true", SYSTEM_TEAMPROJECT: "internal", BUILD_REASON: "Manual",
+            BUILD_SOURCEBRANCH: "refs/heads/main", ...rejected };
+        delete env.NODE_TEST_CONTEXT;
+        const child = spawnSync(process.execPath, ["--experimental-strip-types", script, "--bundle", "unused.zip", "--result", "unused.json"], { encoding: "utf8", env, timeout: 30_000 });
+        assert.ifError(child.error); assert.equal(child.status, 1); assert.match(child.stderr, /trusted internal, non-PR/);
+        assert.doesNotMatch(child.stdout, /storage identity acquired/);
+    }
 });
 
 test("failure diagnostics retain operation/code/status but never arbitrary error payloads", () => {
@@ -337,17 +343,19 @@ test("pipeline keeps publication opt-in, blocks PR credentials and shares the re
     const summary = await readFile(join(root, "pipelines/templates/jobs/eval-summarize.yml"), "utf8");
     const archetype = await readFile(join(root, "pipelines/templates/stages/archetype-eval.yml"), "utf8");
     assert.match(workflow, /name: publishDashboardResults[\s\S]*?default: false/);
-    assert.match(workflow, /name: storageServiceConnection\s+type: string\s+default: eval-dashboard-sc/);
     assert.match(workflow, /- group: AzSDK_Eval_Variable_group/);
     assert.doesNotMatch(workflow + steps + summary + archetype, /storageSmokeTest|EVAL_PUBLISH_SMOKE_TEST|eval-storage-smoke/);
     assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/build-mcp.yml/);
     assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/eval-shard.yml/);
     for (const content of [steps, summary, archetype]) {
+        assert.match(content, /name: publishDashboardResults\s+type: boolean\s+default: false/);
         assert.match(content, /name: notifyDashboard\s+type: boolean\s+default: false/);
         assert.doesNotMatch(content, /parameters\.dashboard(?:Url|Audience)|name: dashboard(?:Url|Audience)/);
+        assert.doesNotMatch(content, /storageServiceConnection|storageContainerUrl/);
     }
     assert.match(steps, /if and\(parameters.publishDashboardResults.*System.TeamProject.*internal.*PullRequest.*refs\/pull\//);
-    assert.match(steps, /azureSubscription: \$\{\{ parameters.storageServiceConnection \}\}/);
+    assert.match(steps, /azureSubscription: eval-dashboard-sc/);
+    assert.match(steps, /EVAL_STORAGE_CONTAINER_URL: https:\/\/evaltestsummary\.blob\.core\.windows\.net\/vally-results/);
     assert.match(summary, /dependsOn:|EvalExpectedMatrix:.*stageDependencies.Prepare.generate_eval_matrix/);
     assert.match(archetype, /dependsOn: \[Prepare, Eval\]/);
     assert.ok(summary.indexOf("../steps/eval-publish-results.yml") < summary.indexOf("task: PublishTestResults@2"));
@@ -388,18 +396,13 @@ for (const tier of ["workflow", "skill", "live"]) {
         }
         assert.match(content, /name: notifyDashboard\n(?:    [^\n]*\n)*?    type: boolean\n    default: true/);
         assert.doesNotMatch(content, /parameters\.dashboard(?:Url|Audience)|name: dashboard(?:Url|Audience)/);
-        assert.match(content, /name: storageServiceConnection\s+type: string\s+default: eval-dashboard-sc/);
-        assert.match(content, /name: storageContainerUrl\s+type: string\s+default: https:\/\/evaltestsummary\.blob\.core\.windows\.net\/vally-results/);
+        assert.doesNotMatch(content, /storageServiceConnection|storageContainerUrl|pipelineDefinitionId/);
         assert.match(content, /name: autoPublishDashboardResults\n(?:    [^\n]*\n)*?    type: boolean\n    default: true/);
         assert.match(content, /template: \/eng\/common\/pipelines\/templates\/variables\/eval-dashboard.yml/);
-        const definition = { workflow: "8255", skill: "8256", live: "8246" }[tier];
-        assert.ok(content.includes(`pipelineDefinitionId: '${definition}'`));
         for (const name of ["publishDashboardResults", "allowAzureStorageNetworkAccess"]) {
             assert.ok(content.includes(name + ": ${{ or(parameters." + name + ", eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}"));
         }
-        for (const name of ["storageServiceConnection", "storageContainerUrl", "notifyDashboard"]) {
-            assert.ok(content.includes(name + ": ${{ parameters." + name + " }}"));
-        }
+        assert.ok(content.includes("notifyDashboard: ${{ parameters.notifyDashboard }}"));
         assert.match(content, /group: AzSDK_Eval_Variable_group/);
         assert.match(content, new RegExp(`TestType: ${tier === "live" ? "live" : "mock"}`));
         if (tier === "live") {
@@ -419,6 +422,7 @@ test("automatic publication is restricted to the exact trusted tools main defini
     const root = resolve(import.meta.dirname, "../../../..");
     const source = await readFile(join(root, "pipelines/templates/variables/eval-dashboard.yml"), "utf8");
     assert.match(source, /name: enableAutomaticPublication\s+type: boolean\s+default: false/);
+    assert.doesNotMatch(source, /pipelineDefinitionId/);
     const expression = source.match(/value: \$\{\{ (.+) \}\}/)?.[1];
     assert.ok(expression);
     // Exercise the actual YAML predicate with the same and/eq/in semantics.
@@ -433,19 +437,23 @@ test("automatic publication is restricted to the exact trusted tools main defini
         const variables = { "System.CollectionUri": "https://dev.azure.com/azure-sdk/", "System.TeamProject": "internal",
             "Build.Repository.Name": "Azure/azure-sdk-tools", "System.DefinitionId": id,
             "Build.SourceBranch": "refs/heads/main", "Build.Reason": "Schedule" };
-        const parameters = { enableAutomaticPublication: true, pipelineDefinitionId: id };
+        const parameters = { enableAutomaticPublication: true };
         for (const reason of ["Schedule", "Manual", "IndividualCI", "BatchedCI"]) {
             assert.equal(evaluate({ ...variables, "Build.Reason": reason }, parameters), true);
         }
         assert.equal(evaluate(variables, { ...parameters, enableAutomaticPublication: false }), false);
         for (const [key, value] of [["System.CollectionUri", "https://dev.azure.com/other/"], ["System.TeamProject", "public"],
             ["Build.Repository.Name", "Azure/azure-rest-api-specs"], ["System.DefinitionId", "9999"],
+            ["System.DefinitionId", ""], ["System.DefinitionId", undefined],
             ["Build.SourceBranch", "refs/heads/feature"], ["Build.SourceBranch", "refs/pull/17084/merge"],
             ["Build.SourceBranch", "refs/tags/v1"], ["Build.SourceBranch", "refs/heads/main-copy"],
             ["Build.Reason", "PullRequest"], ["Build.Reason", "ResourceTrigger"], ["System.CollectionUri", ""]]) {
             assert.equal(evaluate({ ...variables, [key]: value }, parameters), false, `${id}: ${key}=${value}`);
         }
-        assert.equal(evaluate({ ...variables, "System.DefinitionId": "9999" }, { ...parameters, pipelineDefinitionId: "9999" }), false);
+        for (const key of Object.keys(variables)) {
+            const missing = { ...variables }; delete missing[key];
+            assert.equal(evaluate(missing, parameters), false, `${id}: missing ${key} never enables publication`);
+        }
         assert.equal(evaluate({}, parameters), false, "Missing identity never enables publication");
     }
 });
