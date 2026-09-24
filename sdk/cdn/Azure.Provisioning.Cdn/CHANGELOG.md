@@ -1,14 +1,13 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.4 (2026-09-24)
 
 ### Bugs Fixed
 
-### Other Changes
+- Corrected generated names for `FrontDoorOriginGroup`, `FrontDoorOrigin`, and
+  `FrontDoorRoute` to use Azure's documented 50-character limit and supported
+  characters. Automatically generated names may change or be truncated sooner
+  when upgrading from `1.0.0-beta.3`.
 
 ## 1.0.0-beta.3 (2026-06-25)
 

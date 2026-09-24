@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -10,6 +11,35 @@ namespace Azure.Provisioning.Cdn.Tests;
 
 public class BasicCdnTests
 {
+    [Test]
+    public void ResourceNameRequirementsMatchAzureNamingRules()
+    {
+        ResourceNameCharacters validCharacters =
+            ResourceNameCharacters.LowercaseLetters |
+            ResourceNameCharacters.UppercaseLetters |
+            ResourceNameCharacters.Numbers |
+            ResourceNameCharacters.Hyphen;
+
+        (ProvisionableResource Resource, int MaxLength)[] resources =
+        [
+            (new CdnProfile("profile"), 260),
+            (new FrontDoorOriginGroup("originGroup"), 50),
+            (new FrontDoorOrigin("origin"), 50),
+            (new FrontDoorRoute("route"), 50)
+        ];
+
+        Assert.Multiple(() =>
+        {
+            foreach ((ProvisionableResource resource, int maxLength) in resources)
+            {
+                ResourceNameRequirements requirements = resource.GetResourceNameRequirements();
+                Assert.That(requirements.MinLength, Is.EqualTo(1), resource.GetType().Name);
+                Assert.That(requirements.MaxLength, Is.EqualTo(maxLength), resource.GetType().Name);
+                Assert.That(requirements.ValidCharacters, Is.EqualTo(validCharacters), resource.GetType().Name);
+            }
+        });
+    }
+
     internal static Trycep CreateCdnWithCustomOriginTest()
     {
         return new Trycep().Define(
