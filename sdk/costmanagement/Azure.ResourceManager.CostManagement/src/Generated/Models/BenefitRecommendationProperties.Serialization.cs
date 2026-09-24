@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary>
     /// The properties of the benefit recommendations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SingleScopeBenefitRecommendationProperties"/> and <see cref="SharedScopeBenefitRecommendationProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SharedScopeBenefitRecommendationProperties"/> and <see cref="SingleScopeBenefitRecommendationProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownBenefitRecommendationProperties))]
     public abstract partial class BenefitRecommendationProperties : IJsonModel<BenefitRecommendationProperties>
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Single":
-                        return SingleScopeBenefitRecommendationProperties.DeserializeSingleScopeBenefitRecommendationProperties(element, options);
                     case "Shared":
                         return SharedScopeBenefitRecommendationProperties.DeserializeSharedScopeBenefitRecommendationProperties(element, options);
+                    case "Single":
+                        return SingleScopeBenefitRecommendationProperties.DeserializeSingleScopeBenefitRecommendationProperties(element, options);
                 }
             }
             return UnknownBenefitRecommendationProperties.DeserializeUnknownBenefitRecommendationProperties(element, options);
