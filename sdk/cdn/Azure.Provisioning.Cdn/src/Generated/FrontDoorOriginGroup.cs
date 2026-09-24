@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -241,6 +242,11 @@ namespace Azure.Provisioning.Cdn
 
         /// <summary> Define additional provisionable properties for FrontDoorOriginGroup that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
+
+        /// <summary> Get the requirements for naming this resource. </summary>
+        /// <returns> Naming requirements. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 50, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
         /// <summary></summary>
         public static partial class ResourceVersions
