@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.Maintenance.Mocking
             return new MaintenancePublicConfigurationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MaintenanceConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ResourceGroupsMaintenanceConfigurationsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceConfigurationResource"/> object. </returns>
-        public virtual MaintenanceConfigurationResource GetMaintenanceConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ResourceGroupsMaintenanceConfigurationsResource"/> object. </returns>
+        public virtual ResourceGroupsMaintenanceConfigurationsResource GetResourceGroupsMaintenanceConfigurationsResource(ResourceIdentifier id)
         {
-            MaintenanceConfigurationResource.ValidateResourceId(id);
-            return new MaintenanceConfigurationResource(Client, id);
+            ResourceGroupsMaintenanceConfigurationsResource.ValidateResourceId(id);
+            return new ResourceGroupsMaintenanceConfigurationsResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MaintenanceSubscriptionConfigurationAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>

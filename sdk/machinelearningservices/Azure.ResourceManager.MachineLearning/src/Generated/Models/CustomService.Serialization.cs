@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     kernel = JupyterKernelConfig.DeserializeJupyterKernelConfig(prop.Value, options);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new CustomService(
                 name,
