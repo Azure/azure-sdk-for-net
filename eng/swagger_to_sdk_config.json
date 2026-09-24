@@ -27,6 +27,9 @@
     "buildScript": {
       "command": "dotnet build {packagePath}/src"
     },
+    "updateChangelogContentScript": {
+      "path": "./eng/scripts/Automation-Sdk-UpdateChangelog.ps1"
+    },
     "updateMetadataScript": {
       "path": "./eng/scripts/Export-API.ps1"
     },
