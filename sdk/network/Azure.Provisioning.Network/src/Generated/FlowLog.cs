@@ -257,7 +257,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Format. </summary>
-        public FlowLogFormatParameters Format
+        public FlowLogProperties Format
         {
             get
             {

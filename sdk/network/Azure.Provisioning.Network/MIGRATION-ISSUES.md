@@ -45,24 +45,23 @@ unique differences for each target framework:
 
 | Diagnostic | Per framework | Across three frameworks | Meaning |
 |---|---:|---:|---|
-| `CP0001` | 11 | 33 | Removed public types |
-| `CP0002` | 412 | 1,236 | Removed public members |
+| `CP0001` | 10 | 30 | Removed public types |
+| `CP0002` | 411 | 1,233 | Removed public members |
 | `CP0011` | 24 | 72 | Changed public member types |
-| **Total** | **447** | **1,341** | |
+| **Total** | **445** | **1,335** | |
 
 These diagnostics are the remaining provisioning compatibility backlog. They
 are not C# compilation or generation failures.
 
 The non-live test project restores successfully, but tests do not yet execute.
 After bypassing the separately measured ApiCompat gate with
-`RunApiCompat=false`, test compilation reports five migration issues across its
+`RunApiCompat=false`, test compilation reports four migration issues across its
 target frameworks:
 
 - A `WritableSubResource` value cannot be assigned to
   `BicepValue<NetworkSubResource>`.
 - `SubnetResource.PrivateEndpointNetworkPolicy` is absent.
 - `SubnetResource.PrivateLinkServiceNetworkPolicy` is absent.
-- `FlowLogProperties` is absent.
 - `NetworkSecurityGroup.Id` is now read-only.
 
 No test failures have been observed because compilation stops before test
@@ -73,13 +72,12 @@ execution.
 ### Removed public types
 
 The current API has 619 public types, compared with 589 in the pre-migration
-API. It adds 41 public types and removes these 11:
+API. It adds 40 public types and removes these 10:
 
 - `ConnectionMonitorType`
 - `DdosCustomPolicyTriggerSensitivityOverride`
 - `DdosSettingsProtectionMode`
 - `DdosTrafficType`
-- `FlowLogProperties`
 - `ManagementGroupNetworkManagerConnection`
 - `PropagatedRouteTable`
 - `ProtocolCustomSettings`
@@ -91,7 +89,6 @@ Several removed models have clear generated successors:
 
 | Removed type | Current generated type | Current shape |
 |---|---|---|
-| `FlowLogProperties` | `FlowLogPropertiesFormat` | Construct |
 | `PropagatedRouteTable` | `PropagatedRouteTableNfv` | Construct |
 | `RoutingConfiguration` / `RoutingConfigurationNfvSubResource` | `RoutingConfigurationNfv` | Construct |
 
@@ -108,7 +105,7 @@ resource classes are absent.
 
 ### Removed and changed members
 
-The remaining 412 `CP0002` and 24 `CP0011` diagnostics per framework cover
+The remaining 411 `CP0002` and 24 `CP0011` diagnostics per framework cover
 removed members and changed property types on otherwise retained public types.
 They have not yet been broadly mitigated. The ApiCompat output should be used
 as the source of truth when this phase begins.
@@ -176,6 +173,35 @@ The old and new collection shapes serialize to the same ARM property paths.
 Callers should use one shape or the other for a given parent. ApiCompat reports
 no remaining diagnostics for these four types or their parent properties.
 
+### Flow log format model
+
+The released provisioning `FlowLogProperties` construct represented only the
+nested `properties.format` object in the ARM payload:
+
+```json
+{
+  "properties": {
+    "format": {
+      "type": "JSON",
+      "version": 2
+    }
+  }
+}
+```
+
+TypeSpec names this nested shape `FlowLogFormatParameters`. It is distinct from
+both the complete Flow Log resource-properties envelope
+`FlowLogPropertiesFormat` and the separate Network Watcher operation model
+`FlowLogProperties`.
+
+An SDK-side `[CodeGenType("FlowLogFormatParameters")]` customization restores
+the provisioning name `FlowLogProperties`, and `[CodeGenMember("Type")]`
+restores `FormatType`. `FlowLog.Format`, `FlowLogProperties.FormatType`, and
+`FlowLogProperties.Version` therefore preserve the released API while still
+serializing to `properties.format.type` and `properties.format.version`.
+ApiCompat reports no remaining Flow Log diagnostics, and the prior
+`FlowLogProperties` test-compilation error is resolved.
+
 ### Historical resource versions
 
 The TypeSpec emitter generates the current `V2025_05_01` resource version.
@@ -208,16 +234,16 @@ the duplicate class name.
 The package currently contains:
 
 - 828 generated C# files
-- 39 customization files under `src/Custom`
+- 40 customization files under `src/Custom`
 - 619 public API types in the `net8.0` API listing
 
 Compared with SDK `main`, the generated tree contains:
 
 - 574 modified files
-- 252 added files
+- 253 added files
 - 15 deleted files
 
-The migration adds 41 public types, including 17 resource types:
+The migration adds 40 public types, including 17 resource types:
 
 - `ApplicationGatewayAvailableSslOptionsInfo`
 - `ApplicationGatewayWafDynamicManifest`
@@ -242,9 +268,9 @@ The migration adds 41 public types, including 17 resource types:
 The following work remains intentionally deferred until the provisioning API
 compatibility approach is reviewed:
 
-- Mitigation of the 11 removed public types
+- Mitigation of the 10 removed public types
 - Mitigation of the remaining removed and changed members
-- Resolution of the five current test-compilation issues, followed by unit and
+- Resolution of the four current test-compilation issues, followed by unit and
   live test validation
 - Changelog finalization
 

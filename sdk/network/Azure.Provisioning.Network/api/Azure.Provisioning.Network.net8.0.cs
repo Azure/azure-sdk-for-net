@@ -2906,7 +2906,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EnabledFilteringCriteria { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ETag { get { throw null; } }
-        public Azure.Provisioning.Network.FlowLogFormatParameters Format { get { throw null; } set { } }
+        public Azure.Provisioning.Network.FlowLogProperties Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Network.InternalNetworkManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -2983,24 +2983,24 @@ namespace Azure.Provisioning.Network
             public static readonly string V2025_05_01;
         }
     }
-    public partial class FlowLogFormatParameters : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public FlowLogFormatParameters() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.FlowLogFormatType> Type { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> Version { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public enum FlowLogFormatType
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="JSON")]
         Json = 0,
+    }
+    public partial class FlowLogProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FlowLogProperties() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.FlowLogFormatType> FormatType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Version { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class FlowLogPropertiesFormat : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public FlowLogPropertiesFormat() { }
         public Azure.Provisioning.BicepValue<bool> Enabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EnabledFilteringCriteria { get { throw null; } set { } }
-        public Azure.Provisioning.Network.FlowLogFormatParameters Format { get { throw null; } set { } }
+        public Azure.Provisioning.Network.FlowLogProperties Format { get { throw null; } set { } }
         public Azure.Provisioning.Network.TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> RecordTypes { get { throw null; } set { } }

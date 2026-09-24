@@ -11,29 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Parameters that define the flow log format. </summary>
-    public partial class FlowLogFormatParameters : ProvisionableConstruct
+    public partial class FlowLogProperties : ProvisionableConstruct
     {
-        private BicepValue<FlowLogFormatType> _type;
         private BicepValue<int> _version;
 
-        /// <summary> Creates a new FlowLogFormatParameters. </summary>
-        public FlowLogFormatParameters()
+        /// <summary> Creates a new FlowLogProperties. </summary>
+        public FlowLogProperties()
         {
-        }
-
-        /// <summary> Gets or sets the Type. </summary>
-        public BicepValue<FlowLogFormatType> Type
-        {
-            get
-            {
-                Initialize();
-                return _type;
-            }
-            set
-            {
-                Initialize();
-                _type.Assign(value);
-            }
         }
 
         /// <summary> Gets or sets the Version. </summary>
@@ -51,16 +35,15 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for FlowLogFormatParameters. </summary>
+        /// <summary> Define all the provisionable properties for FlowLogProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _type = DefineProperty<FlowLogFormatType>(nameof(Type), new string[] { "type" });
             _version = DefineProperty<int>(nameof(Version), new string[] { "version" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for FlowLogFormatParameters that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FlowLogProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

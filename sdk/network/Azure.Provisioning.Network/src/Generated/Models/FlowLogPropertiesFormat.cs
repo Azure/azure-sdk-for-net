@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _recordTypes;
         private BicepValue<bool> _enabled;
         private RetentionPolicyParameters _retentionPolicy;
-        private FlowLogFormatParameters _format;
+        private FlowLogProperties _format;
         private TrafficAnalyticsProperties _flowAnalyticsConfiguration;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Format. </summary>
-        public FlowLogFormatParameters Format
+        public FlowLogProperties Format
         {
             get
             {
@@ -199,7 +199,7 @@ namespace Azure.Provisioning.Network
             _recordTypes = DefineProperty<string>(nameof(RecordTypes), new string[] { "recordTypes" });
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             _retentionPolicy = DefineModelProperty<RetentionPolicyParameters>(nameof(RetentionPolicy), new string[] { "retentionPolicy" });
-            _format = DefineModelProperty<FlowLogFormatParameters>(nameof(Format), new string[] { "format" });
+            _format = DefineModelProperty<FlowLogProperties>(nameof(Format), new string[] { "format" });
             _flowAnalyticsConfiguration = DefineModelProperty<TrafficAnalyticsProperties>(nameof(FlowAnalyticsConfiguration), new string[] { "flowAnalyticsConfiguration" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
