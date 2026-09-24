@@ -166,6 +166,7 @@ namespace Azure.Core.Tests.Identity
             var options = new ClientAssertionCredentialOptions
             {
                 MsalClient = bearerClient,        // mock bearer client, to prove it is never invoked
+                EnableMtlsProofOfPossession = true,
                 DisableInstanceDiscovery = true,  // avoid network for authority instance discovery
                 Pipeline = CredentialPipeline.GetInstance(null),
             };
@@ -225,6 +226,7 @@ namespace Azure.Core.Tests.Identity
             {
                 MsalClient = bearerClient,
                 PopMsalClient = popClient,
+                EnableMtlsProofOfPossession = true,
                 Pipeline = CredentialPipeline.GetInstance(null),
             };
             return new ClientAssertionCredential(TenantId, ClientId, new MockTokenCredential(), "assertion-scope", credentialOptions);
