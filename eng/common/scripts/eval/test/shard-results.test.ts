@@ -29,6 +29,10 @@ function artifact(root, shard, attempt, options = {}) {
     const source = invocation(root, `source-${shard}-${attempt}`, options);
     const output = path.join(root, "download", `eval-result-${shard}-${attempt}`);
     stageShardResults({ resultsRoot: source, outputDirectory: output, shardName: shard, attempt });
+    const evidence = path.join(root, "job-attempts.json");
+    const timeline = fs.existsSync(evidence) ? readJson(evidence) : { schemaVersion: 1, valid: true, attempts: {} };
+    if (!timeline.attempts[shard] || timeline.attempts[shard].attempt < attempt) timeline.attempts[shard] = { attempt, complete: true };
+    fs.writeFileSync(evidence, JSON.stringify(timeline));
     return output;
 }
 
@@ -53,7 +57,8 @@ function runSummary(root, shards, options = {}) {
     const matrix = Object.hasOwn(options, "matrix") ? options.matrix :
         JSON.stringify(Object.fromEntries(shards.map((shardName) => [shardName, { shardName }])));
     const child = runCli("build-eval-summary.ts", [
-        "--results-root", path.join(root, "download"), "--selected-root", path.join(root, "selected"), "--output-path", output,
+        "--results-root", path.join(root, "download"), "--selected-root", path.join(root, "selected"),
+        "--attempts-file", path.join(root, "job-attempts.json"), "--output-path", output,
     ], { TF_BUILD: "true", EVAL_EXPECTED_MATRIX: matrix });
     return {
         child, markdown: fs.readFileSync(output, "utf8"),
@@ -355,6 +360,27 @@ test("a missing artifact root reports every expected shard missing", (t) => {
     assert.ok(result.shards.every((entry) => entry.attempt === null));
     assert.deepEqual(index.expectedShards, ["area_a", "area_b"]);
     assert.deepEqual(index.attempts, []);
+});
+
+test("summary cannot publish when timeline evidence is omitted, missing or corrupt", (t) => {
+    const root = setup(t);
+    for (const mode of ["omitted", "missing", "corrupt"]) {
+        const directory = path.join(root, mode);
+        artifact(directory, "area_a", 1);
+        const attempts = path.join(directory, "job-attempts.json");
+        if (mode === "missing") fs.unlinkSync(attempts);
+        if (mode === "corrupt") fs.writeFileSync(attempts, "not JSON");
+        const output = path.join(directory, "summary", "eval-summary.md");
+        const child = runCli("build-eval-summary.ts", ["--results-root", path.join(directory, "download"),
+            "--selected-root", path.join(directory, "selected"), "--output-path", output,
+            ...(mode === "omitted" ? [] : ["--attempts-file", attempts])], {
+            TF_BUILD: "true", EVAL_EXPECTED_MATRIX: JSON.stringify({ a: { shardName: "area_a" } }),
+        });
+        assert.equal(child.status, 1); assert.match(child.stdout, /EvalSummaryComplete\]false/);
+        assert.equal(readJson(path.join(directory, "download", "shard-index.json")).complete, false);
+        assert.equal(readJson(path.join(directory, "summary", "eval-summary.json")).totals.scenarios, 1);
+        assert.match(fs.readFileSync(output, "utf8"), /timeline/);
+    }
 });
 
 test("selection rejects stale destinations and never treats zero expected shards as complete", (t) => {

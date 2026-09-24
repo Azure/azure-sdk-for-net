@@ -3,9 +3,6 @@ parameters:
   - name: publishDashboardResults
     type: boolean
     default: false
-  - name: notifyDashboard
-    type: boolean
-    default: false
 
 steps:
   - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
@@ -44,4 +41,3 @@ steps:
             --result "$(Build.ArtifactStagingDirectory)/eval-summary/storage-publication-result.json"
       env:
         EVAL_STORAGE_CONTAINER_URL: https://evaltestsummary.blob.core.windows.net/vally-results
-        EVAL_NOTIFY_DASHBOARD: ${{ parameters.notifyDashboard }}

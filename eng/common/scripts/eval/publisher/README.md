@@ -1,65 +1,47 @@
 # Evaluation result publisher
 
-This optional, data-only package writes one complete build result directly to
-Azure Blob. It does not contain Vally CLI, the dashboard server, SQLite, MCP or an
-LLM client. The evaluator stays in the parent package; only the Summary job
-restores these separately locked dependencies when bundle creation is enabled.
+This data-only package saves complete evaluation builds to Azure Blob, then
+notifies the read-only dashboard. It contains no evaluator, dashboard, SQLite,
+MCP or LLM client. Only the Summary job restores its separate dependency lock.
 
 | Source | Responsibility |
 | --- | --- |
 | [prepare-bundle.ts](prepare-bundle.ts), [bundle.ts](bundle.ts) | Validate selected attempts and prepare the saved schema-v1 archive |
 | [publish-bundle.ts](publish-bundle.ts), [storage.ts](storage.ts) | Authenticate the pipeline and publish the exact saved bytes with create-only retries |
-| [notification.ts](notification.ts) | Reviewed notification defaults and authenticated targeted cache-refresh signals |
+| [notification.ts](notification.ts) | Authenticated refresh signal to the fixed reviewed dashboard |
 | [diagnostics.ts](diagnostics.ts) | Bounded error reporting without credentials or result contents |
-
-The separate dashboard owns read-only import, cache, UI and deployment. It has
-no publishing or sample-data mode; this package is the only production writer.
 
 ## Flow and contract
 
-1. Every shard retains its newest invocation's raw JSONL, JUnit and a schema-v1
-   completion marker. Completed failed evaluations are results too.
-2. Summary uses the Prepare matrix and each expected shard's highest attempt for
-   its Markdown, Tests tab and bundle input. Missing/incomplete latest attempts
-   block publishing; they never fall back to a previous successful attempt.
-   It reads **this build's** timeline with `System.AccessToken` to detect newer
-   retries that published no artifact. Failure to verify those attempts prevents
-   publication while retaining diagnostics; no dashboard/ADO discovery is added.
-3. `prepare-bundle.ts` packages the selected streams into one saved ZIP:
-   `manifest.json`, merged `results.jsonl`, `eval-summary.md` and `junit/*.xml`.
-   Other artifacts, MCP binaries, debug files and signing files are excluded.
-4. `publish-bundle.ts` runs inside `AzureCLI@2`, using that task's federated
-   identity via `AzureCliCredential`. It uploads the ZIP with `ifNoneMatch: *` to
-   `v1/<org>/<lowercase-encoded-project>/<definition>/<build>/<Summary-attempt>/dashboard-bundle.zip`.
-5. Immutable Blob metadata is `schema: "1"`, `sha256`, `publisher` (SHA-256 of
-   tenant ID and principal object ID), and `storedat`. These are integrity and
-   provenance fields, not cryptographic attestation. Azure RBAC authorizes writes.
+1. Shards retain raw JSONL, JUnit and completion metadata from the newest invocation,
+   including completed failed evaluations.
+2. Summary checks the Prepare matrix against **this build's** timeline and selects
+   each expected shard's latest attempt. Missing, incomplete or unverified attempts
+   prevent publication; older successful results are never substituted.
+3. Prepare one saved schema-v1 ZIP containing the manifest, merged raw results,
+   Markdown summary and JUnit. No debug files, MCP binaries or other artifacts enter it.
+4. Upload using the task's federated `AzureCliCredential` and `ifNoneMatch: *`.
+   Retain the publication result before sending the notification.
 
-Manifest identity strings must be trimmed. Padding is rejected before storage
-because the reader canonicalizes those fields when checking the archive name.
+Archives use
+`v1/<org>/<lowercase-encoded-project>/<definition>/<build>/<Summary-attempt>/dashboard-bundle.zip`.
+Metadata contains `schema: "1"`, `sha256`, `publisher` (hashed tenant/principal ID),
+and `storedat`. Metadata records integrity/provenance; Azure RBAC authorizes access.
 
-The format matches the storage-first dashboard's schema-v1 reader. Archive and
-expanded data limits are 32 MiB / 128 MiB, with at most 10,000 ZIP entries and
-100,000 plain-eval trial records. Experiments are not supported. No ADO historical
-backfill or evaluation rerun is performed by the publisher.
+Limits match the reader: **32 MiB ZIP, 128 MiB expanded, 10,000 entries, 100,000 trials**.
+Identity strings must be trimmed, encoded names fit within 800 characters, and
+timestamps must be valid UTC calendar dates. Only executed `success`/`error` trials
+are imported. Non-executed skips remain in raw artifacts and JUnit/Markdown counts;
+an entirely skipped shard is not publishable. Experiments are unsupported.
 
-The current dashboard imports executed `success`/`error` trials. Non-executed
-`skipped` records remain in the original raw shard artifacts; the ZIP's JUnit and
-Markdown retain their skipped counts. Bundle preparation reports skipped records
-explicitly rather than converting them to failed executions. A shard with no
-executed trials remains non-publishable, not a successful evaluation result.
-
-Transient storage errors retry the **same saved bytes**. An existing name must
-have the same owner, checksum and size; changed data needs a new Summary attempt.
-The publisher never overwrites/deletes an archive or creates the container.
-Its identity needs Blob data write/read access to the existing container. Keep
-the dashboard's identity separate and read-only.
+Transient failures retry the **same saved bytes**, at most four times. An existing
+archive must match owner, checksum, size and valid metadata; changed results need
+a new attempt. The publisher never overwrites/deletes archives or creates containers.
+Its Blob write/read identity stays separate from the dashboard's read-only identity.
 
 ## Configure a consumer
 
-Pass the following parameters to the shared eval archetype. Shared publishing
-defaults remain off. The three tools entrypoints additionally enable scoped
-automatic publication for their trusted internal main builds after merge.
+Only controls with distinct uses remain:
 
 | Parameter | Meaning |
 | --- | --- |
@@ -67,59 +49,41 @@ automatic publication for their trusted internal main builds after merge.
 | `createDashboardBundle` | Prepare/retain a ZIP even without uploading; enabled in the workflow, skill and live entrypoints |
 | `publishDashboardResults` | Explicitly enable direct Blob publication |
 | `allowAzureStorageNetworkAccess` | Separately opt into the documented `AzureStorage` network-isolation policy for this trusted publishing run; default `false` |
-| `notifyDashboard` | Targeted cache-refresh signal after durable storage; default `true` in the three tools entrypoints, `false` in shared templates; set `false` to opt out |
-| `summaryPool` | Linux agent pool with routes to Blob and optionally the dashboard |
 
-These are YAML parameters, not ordinary pipeline variables or App Service
-settings. No GitHub Enterprise service connection or private dashboard checkout
-is required: all publishing code is in this public shared package.
+These are YAML parameters, not App Service settings. Bundle-only runs need no
+Blob credentials. Other consumers default to neither bundling nor publishing.
+Summary uses the same Linux pool/image variables as the eval jobs; it has no
+separate pool override. Every successful publication attempts a notification.
 
 The [shared publishing step](../../../pipelines/templates/steps/eval-publish-results.yml)
 defines the connection/container pair once: `eval-dashboard-sc` and
 `https://evaltestsummary.blob.core.windows.net/vally-results`. They are not
 queue-time parameters. Consumers opt into this shared dashboard rather than
 selecting an unrelated destination; changing either value requires a reviewed
-source change. Other repos remain off by default and must explicitly onboard
-service-connection authorization and network access before enabling publication.
+source change. Other repos must explicitly onboard service-connection authorization
+and network access before opting in. No enterprise checkout is required.
 
-Publication is excluded from PR validation, non-internal projects and
-`refs/pull/*` sources. For a draft PR pilot, manually run the existing pipeline
-against the trusted **feature branch**, not the PR validation/merge ref. Keep
-Azure DevOps service-connection approvals and checks in place.
+Publication is excluded from PR validation, non-internal projects and `refs/pull/*`.
+Keep service-connection approvals and checks in place.
 
 ### Opt-in network policy
 
 The [1ES Network Isolation guide](https://aka.ms/1es/netiso/pipelinetemplates)
-documents `AzureStorage` as a shared **allow** policy selectable through
-`parameters.settings.networkIsolationPolicy`. On this repository's eval entrypoints,
-setting `allowAzureStorageNetworkAccess=true` **and**
-`publishDashboardResults=true` requests:
+documents the `AzureStorage` allow policy. Enabling both network access and
+publication on an internal non-PR run requests:
 
 `DefaultDeny, CFSClean, CFSClean2, CFSClean3, AzureStorage`
 
-Network isolation remains enforced. No `Permissive` fallback, process/proxy
-workaround, extra role grant, storage firewall edit or account key is involved.
-The opt-in is ignored for PR validation, pull refs and non-internal projects.
-Unchanged consumers retain their existing policy lists. Cross-repo consumers
-enabling this option need the matching `AllowAzureStorage` parameter support in
-their repo-owned 1ES redirect; it is not forwarded when the opt-in is off.
-
-**Scope:** this permits network access to Azure Storage generally from **all
-processes in the pipeline**, not only the Summary job, one account or one
-container. It does not grant Azure RBAC access. Obtain the pipeline owner's
-approval for that scope; a central custom endpoint/process rule remains the
-narrower alternative. Policy changes may create an SFI item per the 1ES guide.
-Do not use `networkIsolationAdditionalDomainAllowList`: that is Agency-only.
-
-Selecting this documented policy is an explicit configuration change, not a
-retry through another identity or network. Verify the effective policy list
-and upload result when onboarding a consumer.
+**This permits Azure Storage egress for all processes in the pipeline**, not just
+Summary or one container; it grants no RBAC access. Obtain the pipeline owner's
+approval and verify the effective policy. Cross-repo consumers need matching
+`AllowAzureStorage` support in their repo-owned 1ES redirect; nothing is forwarded
+when the opt-in is off. PRs, pull refs and non-internal projects stay excluded.
+Do not weaken Default Deny/CFS, use a permissive fallback or substitute credentials.
 
 ### Real workflow, skill and live evaluations
 
-All three entrypoints can publish to the same account/container. The pipeline
-definition ID in each Blob name and the manifest's pipeline name keep their
-results separate; no second dashboard or staging container is required.
+The three entrypoints share one dashboard/container; archive identities separate builds.
 
 | Pipeline | Definition | Entrypoint |
 | --- | --- | --- |
@@ -129,93 +93,58 @@ results separate; no second dashboard or staging container is required.
 
 For each deliberate real run, select the feature branch containing the publisher
 and set `publishDashboardResults=true` and `allowAzureStorageNetworkAccess=true`.
-Notifications default on after a successful upload; set `notifyDashboard=false`
-for a storage-only run. The central service connection/container above are shared.
-All entrypoints execute the existing full eval matrix and consume model
-quota. Workflow and skill use their mock MCP environments but still evaluate
-real model responses. Synthetic fixtures are confined to local unit tests.
+**These pipelines execute real evaluations and consume model quota.** Local tests
+use synthetic fixtures; the pipelines do not have a separate synthetic run mode.
 
-The live tier retains `UseAzSdkAuthentication=true`, the existing
-`opensource-api-connection` for live MCP calls, `AZSDKTOOLS_AGENT_TESTING=true`,
-and its evaluation score gate. The Blob publisher uses the separate
-`eval-dashboard-sc` connection. Complete failed evaluations are published before
-the gate; missing/incomplete shards still block publication. Do not change scores
-or omit failing scenarios to make a dashboard import pass.
+Live MCP authentication, `AZSDKTOOLS_AGENT_TESTING=true` and score gates are unchanged.
+Complete failed evaluations publish before the gate; incomplete builds cannot publish.
 
 ### Automatic main-branch publication
 
-The three entrypoints pass `autoPublishDashboardResults` to a shared variable
-template, which defaults off unless called explicitly. Automatic publication
-requires all of the following: organization URL `https://dev.azure.com/azure-sdk/`,
+Automatic publication requires organization URL `https://dev.azure.com/azure-sdk/`,
 project `internal`, repository `Azure/azure-sdk-tools`, `System.DefinitionId` in
 the approved set (8255, 8256 or 8246), branch `refs/heads/main`, and a normal CI,
-scheduled or manual reason. The template reads the current system ID directly;
-entrypoints no longer pass a redundant expected-ID parameter. The shared template
-still defaults off, and a matching ID alone never enables a foreign repository.
-
-Both publication and the documented AzureStorage egress policy are selected for
-that scope. Successful publication sends a targeted notification unless
-`notifyDashboard=false`; it does not require a full archive listing. To disable a production run's publication,
-set `autoPublishDashboardResults=false` and leave both explicit publication/network
-flags false. Feature branches, pull refs, other definitions and synced consumers
-remain off by default; their deliberate manual publication still requires the
-existing explicit flags and trust guards.
-
-This takes effect only after the feature branch is merged. It does not change
-existing CI path filters or the live nightly schedule, and it creates no new
-pipeline, storage account or container.
+scheduled or manual reason. Matching an ID alone never enables another repository.
+That scope selects both publishing and the approved AzureStorage policy after merge.
+Set `autoPublishDashboardResults=false` and leave explicit flags false to opt out.
+Other definitions, feature branches and synced consumers remain off by default.
 
 ## Notification-first refresh and recovery
 
-When enabled, the publisher sends only `{blobName, sha256}` to `POST /api/refresh`,
-with an Entra application token. It saves `status: "stored"` locally before
-waiting for this request. A failed signal is a warning and does not undo or fail
-the durable archive. Retry only the signal, not the upload. The dashboard also
-checks Blob on browser reload and startup, with **once-daily reconciliation** as
-a missed-notification/retention fallback instead of 30-minute polling.
+Every successful upload sends `{blobName, sha256}` to `POST /api/refresh` with an
+Entra application token. The storage result is saved first. A failed signal is
+only a warning; a failed Blob upload remains an error. Retries are bounded to four
+attempts and redirects are disabled. Retry the signal, not a rebuilt archive.
 
-The source-reviewed notification defaults are the exact pair
+The fixed reviewed pair in [notification.ts](notification.ts) is
 `https://azsdk-eval-bue6a7dwanatgpb3.westus3-01.azurewebsites.net` and
-`api://258998df-81ec-460c-bdd7-56a9bdde1e48`. They live together in `notification.ts`,
-not as queue-time YAML parameters. Existing explicit `EVAL_DASHBOARD_URL` and
-`EVAL_DASHBOARD_AUDIENCE` settings must still match that pair; empty or different
-values are rejected before any credentials are acquired. Redirects remain disabled.
-Adding a destination requires a reviewed source change.
+`api://258998df-81ec-460c-bdd7-56a9bdde1e48`. There are no notification switches,
+URL/audience overrides or retry-count settings. Changing the target requires review.
 
-Blob permission is not notification permission. The app's expected API audience,
-`Dashboard.Refresh` application role, client-ID allowlist, reader connectivity,
-and agent-to-dashboard route must be configured separately. Request tokens for
+Blob access does not grant notification access. The receiver requires the
+application-only `Dashboard.Refresh` role and an Easy Auth client allowlist.
+Request tokens for
 `api://258998df-81ec-460c-bdd7-56a9bdde1e48/.default`; the server validates the Entra
 v2 token's `aud` as the API client ID `258998df-81ec-460c-bdd7-56a9bdde1e48`.
-The role is application-only and is assigned to the existing `eval-dashboard-sc`
-identity, not the dashboard's read-only Blob identity. Easy Auth must allow that
-caller too. Preserve viewer authentication and all network restrictions; the
-AzureStorage policy does not itself prove dashboard connectivity.
-
-The receiver was configured for authenticated notifications and a `86400`-second
-fallback on 2026-09-24. These pipeline defaults take effect after this PR is merged;
-confirm a successful notification on the next approved run from the real agent
-pool. No evaluation run is needed merely to change the receiver's settings.
+Preserve viewer authentication and network restrictions. The AzureStorage policy
+does not prove agent-to-dashboard connectivity; confirm delivery on an approved run.
+The reader recovers missed signals on browser reload/startup and **once-daily**
+reconciliation, without changing source archives.
 
 ## Local tests
 
 From this directory, run `npm ci --ignore-scripts` followed by `npm test`
 (`npm.cmd` on Windows). Tests use temporary synthetic artifacts and a fake Blob
-client; they do not contact Azure or call an evaluator. The full shared-script
-suite remains `npm test` from the parent directory. End-to-end service-connection
-validation uses the real evaluation pipelines; no extra verification upload is
-performed during normal publication. Exact-byte retry/idempotency coverage is
-retained in local tests.
+client; they do not contact Azure or call an evaluator. Run `npm test` from the
+parent directory for staging, timeline and summary coverage.
 
-The publisher's dependency lock is separate from the evaluator lock, and the
-Summary restore uses the authenticated Azure SDK npm mirror. Do not place keys,
-tokens, local archives, database files, or external dashboard source in this package.
+CI restores through the authenticated Azure SDK npm mirror. Keep credentials,
+local data and private dashboard source out of this package.
 
 ## Diagnosing a failed publication
 
-The result artifact records a bounded failure `operation`, `errorCode` and HTTP
-status when available. Raw Azure SDK exceptions, requests, headers and tokens are
-never logged. A saved successful storage result is not replaced by a later error.
+The result artifact records a sanitized operation, error code and HTTP status.
+Raw requests, tokens and evaluation content are not logged.
 
 - `acquire_storage_token`: check service-connection federation and token acquisition.
 - `publish_blob` with `AuthorizationPermissionMismatch`/403: check the connection
@@ -225,6 +154,5 @@ never logged. A saved successful storage result is not replaced by a later error
 - `submission_conflict`: retain the original bytes and use a new Summary attempt
    for corrected content; never overwrite existing history.
 
-An Azure CLI login succeeding proves the connection can sign in, not that the
-subsequent Blob request succeeded. Keep cloud-pilot results separate from local
-unit/emulator validation and do not broaden network/security settings to hide a failure.
+Successful CLI login does not prove Blob or notification access. Do not broaden
+network/security settings to hide a failed request.

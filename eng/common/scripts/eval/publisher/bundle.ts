@@ -25,6 +25,13 @@ function parseJson(bytes) {
 
 export const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
+export function isUtcTimestamp(value) {
+    if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}T.*Z$/.test(value)) return false;
+    const timestamp = Date.parse(value);
+    // Date.parse normalizes impossible dates; the dashboard rejects that rollover.
+    return Number.isFinite(timestamp) && new Date(timestamp).toISOString().slice(0, 10) === value.slice(0, 10);
+}
+
 export async function boundedFile(path, maximum = MAX_EXPANDED_BYTES) {
     const stat = await lstat(path);
     requireValue(stat.isFile() && stat.size > 0 && stat.size <= maximum, "Result input must be a non-empty regular file within the size limit.");
@@ -48,8 +55,8 @@ export function validateManifest(value) {
         requireValue(typeof value[key] === "string" && /^[1-9][0-9]{0,19}$/.test(value[key]), "Positive numeric pipeline/build IDs are required.");
     }
     requireValue(Number.isSafeInteger(value.summaryAttempt) && value.summaryAttempt > 0, "A positive Summary attempt is required.");
-    requireValue(/^\d{4}-\d{2}-\d{2}T.*Z$/.test(value.runTimestamp) && Number.isFinite(Date.parse(value.runTimestamp)), "A UTC result timestamp is required.");
-    if (value.branch !== undefined) requireValue(typeof value.branch === "string" && value.branch.length > 0 &&
+    requireValue(isUtcTimestamp(value.runTimestamp), "A valid UTC result timestamp is required.");
+    if (value.branch !== undefined) requireValue(typeof value.branch === "string" && value.branch.trim().length > 0 && value.branch === value.branch.trim() &&
         value.branch.length <= 200 && !/[\u0000-\u001f\u007f]/.test(value.branch), "Invalid source branch.");
     if (value.sourceVersion !== undefined) requireValue(typeof value.sourceVersion === "string" && /^[a-fA-F0-9]{40,64}$/.test(value.sourceVersion), "A source commit SHA is required.");
     return value;
@@ -69,8 +76,10 @@ export function pipelineManifest(env, now = new Date()) {
 
 export function blobName(manifest) {
     validateManifest(manifest);
-    return ["v1", manifest.adoOrganization, manifest.adoProject.toLowerCase(), manifest.pipelineDefinitionId,
+    const name = ["v1", manifest.adoOrganization, manifest.adoProject.toLowerCase(), manifest.pipelineDefinitionId,
         manifest.buildId, String(manifest.summaryAttempt)].map(encodeURIComponent).join("/") + "/dashboard-bundle.zip";
+    requireValue(name.length <= 800, "The encoded archive name exceeds the dashboard limit.");
+    return name;
 }
 
 export function selectAttempts(index) {
@@ -135,7 +144,7 @@ export function validateBundle(bytes) {
 }
 
 export async function prepareBundle({ indexPath, summaryPath, outputPath, manifest }) {
-    validateManifest(manifest);
+    const name = blobName(manifest);
     const root = await realpath(dirname(resolve(indexPath)));
     const selected = selectAttempts(parseJson(await boundedFile(indexPath, 2 * 1024 * 1024)));
     const entries = { "manifest.json": strToU8(JSON.stringify(manifest, null, 2) + "\n") };
@@ -173,5 +182,5 @@ export async function prepareBundle({ indexPath, summaryPath, outputPath, manife
     validateBundle(bytes);
     await mkdir(dirname(resolve(outputPath)), { recursive: true });
     await writeFile(outputPath, bytes, { flag: "wx" });
-    return { shards: selected.length, trials: trials.length, skipped, bytes: bytes.length, sha256: sha256(bytes), blobName: blobName(manifest) };
+    return { shards: selected.length, trials: trials.length, skipped, bytes: bytes.length, sha256: sha256(bytes), blobName: name };
 }
