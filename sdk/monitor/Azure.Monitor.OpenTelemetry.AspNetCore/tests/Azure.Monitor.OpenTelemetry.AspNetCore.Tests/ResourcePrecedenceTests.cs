@@ -22,7 +22,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         private const string OtelResourceAttributes = "OTEL_RESOURCE_ATTRIBUTES";
         private const string AppServiceSiteName = "WEBSITE_SITE_NAME";
         private const string AppServiceInstanceId = "WEBSITE_INSTANCE_ID";
+        private const string AppServiceStampName = "WEBSITE_HOME_STAMPNAME";
         private const string ContainerAppName = "CONTAINER_APP_NAME";
+
+        // A mock transmitter is registered for this connection string so these tests never upload. A real
+        // transmitter persists telemetry on shutdown and drains it in the background, where its HTTP calls
+        // are captured by the HttpClient instrumentation of whichever test runs next.
+        private const string TestConnectionString = "InstrumentationKey=unitTest-" + nameof(ResourcePrecedenceTests);
         private const string ContainerAppReplicaName = "CONTAINER_APP_REPLICA_NAME";
 
         private static readonly string[] EnvironmentVariableNames =
@@ -31,6 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             OtelResourceAttributes,
             AppServiceSiteName,
             AppServiceInstanceId,
+            AppServiceStampName,
             ContainerAppName,
             ContainerAppReplicaName,
         ];
@@ -44,6 +51,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 _originalEnvironmentVariables[name] = Environment.GetEnvironmentVariable(name);
                 Environment.SetEnvironmentVariable(name, null);
             }
+
+            Exporter.Internals.TransmitterFactory.Instance.Set(
+                connectionString: TestConnectionString,
+                transmitter: new Exporter.Tests.CommonTestFramework.MockTransmitter(new List<Exporter.Models.TelemetryItem>()));
         }
 
         public void Dispose()
@@ -59,13 +70,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         {
             Environment.SetEnvironmentVariable(OtelServiceName, "otel-service-name");
             Environment.SetEnvironmentVariable(AppServiceSiteName, "app-service-site-name");
+            Environment.SetEnvironmentVariable(AppServiceStampName, "app-service-stamp");
 
             var resource = CreateResource();
 
             AssertAttribute(resource, "service.name", "otel-service-name");
-            // These values reflect the currently vendored OpenTelemetry.Resources.Azure and will change to
-            // azure.app_service and azure.container_apps when re-vendored from 1.18.0-beta.2 or later.
-            AssertAttribute(resource, "cloud.platform", "azure_app_service");
+
+            // Proves the App Service detector's other attributes survive. cloud.platform cannot be used: the VM
+            // detector runs after it and overwrites that value wherever IMDS answers, including Azure-hosted CI.
+            AssertAttribute(resource, "azure.app.service.stamp", "app-service-stamp");
         }
 
         [Fact]
@@ -168,7 +181,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             var builder = services.AddOpenTelemetry()
                 .UseAzureMonitor(options =>
                 {
-                    options.ConnectionString = "InstrumentationKey=unitTest";
+                    options.ConnectionString = TestConnectionString;
                     options.EnableLiveMetrics = false;
                 });
             configureBuilder?.Invoke(builder);
