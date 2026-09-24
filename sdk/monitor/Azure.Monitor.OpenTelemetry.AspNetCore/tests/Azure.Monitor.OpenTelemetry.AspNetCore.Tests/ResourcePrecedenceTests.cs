@@ -7,6 +7,8 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Xunit;
@@ -61,6 +63,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             var resource = CreateResource();
 
             AssertAttribute(resource, "service.name", "otel-service-name");
+            // These values reflect the currently vendored OpenTelemetry.Resources.Azure and will change to
+            // azure.app_service and azure.container_apps when re-vendored from 1.18.0-beta.2 or later.
             AssertAttribute(resource, "cloud.platform", "azure_app_service");
         }
 
@@ -103,6 +107,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             var resource = CreateResource();
 
             AssertAttribute(resource, "service.name", expectedServiceName);
+            // These values reflect the currently vendored OpenTelemetry.Resources.Azure and will change to
+            // azure.app_service and azure.container_apps when re-vendored from 1.18.0-beta.2 or later.
             AssertAttribute(resource, "cloud.platform", "azure_container_apps");
         }
 
@@ -136,13 +142,22 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Environment.SetEnvironmentVariable(OtelServiceName, "otel-service-name");
             Environment.SetEnvironmentVariable(AppServiceSiteName, "app-service-site-name");
 
-            AssertAttribute(
-                CreateResource(configureBuilder: builder => builder.ConfigureResource(resource => resource.AddService("code-name"))),
-                "service.name",
-                "code-name");
+            var services = CreateServices(
+                configureBuilder: builder => builder.ConfigureResource(resource => resource.AddService("code-name")));
+
+            using var serviceProvider = services.BuildServiceProvider();
+            AssertAttribute(serviceProvider.GetRequiredService<TracerProvider>().GetResource(), "service.name", "code-name");
+            AssertAttribute(serviceProvider.GetRequiredService<MeterProvider>().GetResource(), "service.name", "code-name");
+            AssertAttribute(serviceProvider.GetRequiredService<LoggerProvider>().GetResource(), "service.name", "code-name");
         }
 
         private static Resource CreateResource(IConfiguration? configuration = null, Action<OpenTelemetryBuilder>? configureBuilder = null)
+        {
+            using var serviceProvider = CreateServices(configuration, configureBuilder).BuildServiceProvider();
+            return serviceProvider.GetRequiredService<TracerProvider>().GetResource();
+        }
+
+        private static ServiceCollection CreateServices(IConfiguration? configuration = null, Action<OpenTelemetryBuilder>? configureBuilder = null)
         {
             var services = new ServiceCollection();
             if (configuration != null)
@@ -158,8 +173,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 });
             configureBuilder?.Invoke(builder);
 
-            using var serviceProvider = services.BuildServiceProvider();
-            return serviceProvider.GetRequiredService<TracerProvider>().GetResource();
+            return services;
         }
 
         private static void AssertAttribute(Resource resource, string key, string expectedValue)
