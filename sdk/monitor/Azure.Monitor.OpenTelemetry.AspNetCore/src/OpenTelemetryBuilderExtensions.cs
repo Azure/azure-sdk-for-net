@@ -82,14 +82,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
 
             Action<ResourceBuilder> configureResource = (r) => r
-                .AddAttributes(new[] { new KeyValuePair<string, object>("telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore") })
                 .AddDetector(new AppServiceResourceDetector())
                 .AddDetector(new AzureVMResourceDetector())
                 .AddDetector(new AzureContainerAppsResourceDetector())
                 // ResourceBuilder.CreateDefault() already includes the env var detector, but the Azure detectors above
                 // override service.name / service.instance.id. Re-applying it last ensures OTEL_SERVICE_NAME and
                 // OTEL_RESOURCE_ATTRIBUTES take precedence over detected values. Do not remove or reorder.
-                .AddEnvironmentVariableDetector();
+                .AddEnvironmentVariableDetector()
+                // The distro marker is added last so it cannot be overwritten by OTEL_RESOURCE_ATTRIBUTES,
+                // because the exporter relies on it to identify this package as the distro.
+                .AddAttributes(new[] { new KeyValuePair<string, object>("telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore") });
 
             builder.ConfigureResource(configureResource);
 
