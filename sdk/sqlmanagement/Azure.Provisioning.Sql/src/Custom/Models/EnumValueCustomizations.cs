@@ -27,3 +27,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 [assembly: CodeGenEnumValue("ManagedInstancePropertiesProvisioningState", "Registering", 13)]
 [assembly: CodeGenEnumValue("ManagedInstancePropertiesProvisioningState", "TimedOut", 14)]
 [assembly: CodeGenEnumValue("ManagedInstancePropertiesProvisioningState", "InProgress", 15)]
+
+// Retain the private endpoint states shipped before the preview API renamed them.
+[assembly: CodeGenEnumValue("SqlPrivateEndpointProvisioningState", "Approving", 0)]
+[assembly: CodeGenEnumValue("SqlPrivateEndpointProvisioningState", "Ready", 1)]
+[assembly: CodeGenEnumValue("SqlPrivateEndpointProvisioningState", "Dropping", 2)]
+[assembly: CodeGenEnumValue("SqlPrivateEndpointProvisioningState", "Failed", 3)]
+[assembly: CodeGenEnumValue("SqlPrivateEndpointProvisioningState", "Rejecting", 4)]
