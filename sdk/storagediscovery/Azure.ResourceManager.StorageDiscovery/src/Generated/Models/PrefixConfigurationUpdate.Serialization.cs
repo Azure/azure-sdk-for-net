@@ -13,57 +13,52 @@ using Azure.ResourceManager.StorageDiscovery;
 
 namespace Azure.ResourceManager.StorageDiscovery.Models
 {
-    /// <summary> A prefix definition that scopes capacity details to a specific storage account, container, and prefix. </summary>
-    public partial class PrefixDefinition : IJsonModel<PrefixDefinition>
+    /// <summary> A prefix configuration that can be updated. </summary>
+    public partial class PrefixConfigurationUpdate : IJsonModel<PrefixConfigurationUpdate>
     {
-        /// <summary> Initializes a new instance of <see cref="PrefixDefinition"/> for deserialization. </summary>
-        internal PrefixDefinition()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrefixDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PrefixConfigurationUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrefixDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrefixConfigurationUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrefixDefinition(document.RootElement, options);
+                        return DeserializePrefixConfigurationUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrefixDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrefixConfigurationUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrefixDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrefixConfigurationUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrefixDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrefixConfigurationUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrefixDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PrefixConfigurationUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrefixDefinition IPersistableModel<PrefixDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PrefixConfigurationUpdate IPersistableModel<PrefixConfigurationUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrefixDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrefixConfigurationUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrefixDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrefixConfigurationUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +69,21 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrefixDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrefixConfigurationUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrefixDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrefixConfigurationUpdate)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("storageAccountName"u8);
-            writer.WriteStringValue(StorageAccountName);
-            writer.WritePropertyName("containerName"u8);
-            writer.WriteStringValue(ContainerName);
+            if (Optional.IsDefined(StorageAccountName))
+            {
+                writer.WritePropertyName("storageAccountName"u8);
+                writer.WriteStringValue(StorageAccountName);
+            }
+            if (Optional.IsDefined(ContainerName))
+            {
+                writer.WritePropertyName("containerName"u8);
+                writer.WriteStringValue(ContainerName);
+            }
             if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);
@@ -107,24 +108,24 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrefixDefinition IJsonModel<PrefixDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PrefixConfigurationUpdate IJsonModel<PrefixConfigurationUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PrefixDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PrefixConfigurationUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrefixDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrefixConfigurationUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrefixDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrefixConfigurationUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrefixDefinition(document.RootElement, options);
+            return DeserializePrefixConfigurationUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrefixDefinition DeserializePrefixDefinition(JsonElement element, ModelReaderWriterOptions options)
+        internal static PrefixConfigurationUpdate DeserializePrefixConfigurationUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrefixDefinition(storageAccountName, containerName, prefix, additionalBinaryDataProperties);
+            return new PrefixConfigurationUpdate(storageAccountName, containerName, prefix, additionalBinaryDataProperties);
         }
     }
 }

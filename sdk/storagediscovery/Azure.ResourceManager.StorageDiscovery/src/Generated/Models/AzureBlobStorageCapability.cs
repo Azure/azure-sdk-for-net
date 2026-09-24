@@ -23,25 +23,25 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         {
 
             CapacityDetails = new CapacityDetails(capacityDetailsStatus);
-            PrefixDefinitions = new ChangeTrackingList<PrefixDefinition>();
+            PrefixConfigurations = new ChangeTrackingList<PrefixConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobStorageCapability"/>. </summary>
         /// <param name="capacityDetails"> The capacity details configuration for Azure Blob Storage. </param>
-        /// <param name="prefixDefinitions"> The prefix definitions that scope the capacity details to specific storage accounts, containers, and prefixes. </param>
+        /// <param name="prefixConfigurations"> The prefix configurations that scope the capacity details to specific storage accounts, containers, and prefixes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobStorageCapability(CapacityDetails capacityDetails, IList<PrefixDefinition> prefixDefinitions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBlobStorageCapability(CapacityDetails capacityDetails, IList<PrefixConfiguration> prefixConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityDetails = capacityDetails;
-            PrefixDefinitions = prefixDefinitions;
+            PrefixConfigurations = prefixConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The capacity details configuration for Azure Blob Storage. </summary>
         internal CapacityDetails CapacityDetails { get; set; }
 
-        /// <summary> The prefix definitions that scope the capacity details to specific storage accounts, containers, and prefixes. </summary>
-        public IList<PrefixDefinition> PrefixDefinitions { get; }
+        /// <summary> The prefix configurations that scope the capacity details to specific storage accounts, containers, and prefixes. </summary>
+        public IList<PrefixConfiguration> PrefixConfigurations { get; }
 
         /// <summary> The enablement status of the capacity details capability. </summary>
         public CapabilityStatus CapacityDetailsStatus

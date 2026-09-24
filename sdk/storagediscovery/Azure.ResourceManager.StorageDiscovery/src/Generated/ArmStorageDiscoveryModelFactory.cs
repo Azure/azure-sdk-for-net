@@ -65,23 +65,23 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         }
 
         /// <param name="capacityDetailsStatus"> The enablement status of the capacity details capability. </param>
-        /// <param name="prefixDefinitions"> The prefix definitions that scope the capacity details to specific storage accounts, containers, and prefixes. </param>
+        /// <param name="prefixConfigurations"> The prefix configurations that scope the capacity details to specific storage accounts, containers, and prefixes. </param>
         /// <returns> A new <see cref="Models.AzureBlobStorageCapability"/> instance for mocking. </returns>
-        public static AzureBlobStorageCapability AzureBlobStorageCapability(CapabilityStatus capacityDetailsStatus = default, IEnumerable<PrefixDefinition> prefixDefinitions = default)
+        public static AzureBlobStorageCapability AzureBlobStorageCapability(CapabilityStatus capacityDetailsStatus = default, IEnumerable<PrefixConfiguration> prefixConfigurations = default)
         {
-            prefixDefinitions ??= new ChangeTrackingList<PrefixDefinition>();
+            prefixConfigurations ??= new ChangeTrackingList<PrefixConfiguration>();
 
-            return new AzureBlobStorageCapability(new CapacityDetails(capacityDetailsStatus, default), (prefixDefinitions ?? new ChangeTrackingList<PrefixDefinition>()).ToList(), default);
+            return new AzureBlobStorageCapability(new CapacityDetails(capacityDetailsStatus, default), (prefixConfigurations ?? new ChangeTrackingList<PrefixConfiguration>()).ToList(), default);
         }
 
-        /// <summary> A prefix definition that scopes capacity details to a specific storage account, container, and prefix. </summary>
+        /// <summary> A prefix configuration that scopes capacity details to a specific storage account, container, and prefix. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="containerName"> The name of the blob container within the storage account. </param>
         /// <param name="prefix"> The blob prefix within the container to scope capacity details to. An empty value scopes to the entire container. Must not start with a '/'. </param>
-        /// <returns> A new <see cref="Models.PrefixDefinition"/> instance for mocking. </returns>
-        public static PrefixDefinition PrefixDefinition(string storageAccountName = default, string containerName = default, string prefix = default)
+        /// <returns> A new <see cref="Models.PrefixConfiguration"/> instance for mocking. </returns>
+        public static PrefixConfiguration PrefixConfiguration(string storageAccountName = default, string containerName = default, string prefix = default)
         {
-            return new PrefixDefinition(storageAccountName, containerName, prefix, default);
+            return new PrefixConfiguration(storageAccountName, containerName, prefix, default);
         }
 
         /// <summary> Storage Discovery Scope. This had added validations. </summary>
@@ -131,23 +131,23 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         }
 
         /// <param name="capacityDetailsStatus"> The enablement status to update for the capacity details capability. </param>
-        /// <param name="prefixDefinitions"> The prefix definitions to update for Azure Blob Storage. </param>
+        /// <param name="prefixConfigurations"> The prefix configurations to update for Azure Blob Storage. </param>
         /// <returns> A new <see cref="Models.AzureBlobStorageCapabilityUpdate"/> instance for mocking. </returns>
-        public static AzureBlobStorageCapabilityUpdate AzureBlobStorageCapabilityUpdate(CapabilityStatus? capacityDetailsStatus = default, IEnumerable<PrefixDefinitionUpdate> prefixDefinitions = default)
+        public static AzureBlobStorageCapabilityUpdate AzureBlobStorageCapabilityUpdate(CapabilityStatus? capacityDetailsStatus = default, IEnumerable<PrefixConfigurationUpdate> prefixConfigurations = default)
         {
-            prefixDefinitions ??= new ChangeTrackingList<PrefixDefinitionUpdate>();
+            prefixConfigurations ??= new ChangeTrackingList<PrefixConfigurationUpdate>();
 
-            return new AzureBlobStorageCapabilityUpdate(capacityDetailsStatus is null ? default : new CapacityDetailsUpdate(capacityDetailsStatus, default), (prefixDefinitions ?? new ChangeTrackingList<PrefixDefinitionUpdate>()).ToList(), default);
+            return new AzureBlobStorageCapabilityUpdate(capacityDetailsStatus is null ? default : new CapacityDetailsUpdate(capacityDetailsStatus, default), (prefixConfigurations ?? new ChangeTrackingList<PrefixConfigurationUpdate>()).ToList(), default);
         }
 
-        /// <summary> A prefix definition that can be updated. </summary>
+        /// <summary> A prefix configuration that can be updated. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="containerName"> The name of the blob container within the storage account. </param>
         /// <param name="prefix"> The blob prefix within the container to scope capacity details to. An empty value scopes to the entire container. Must not start with a '/'. </param>
-        /// <returns> A new <see cref="Models.PrefixDefinitionUpdate"/> instance for mocking. </returns>
-        public static PrefixDefinitionUpdate PrefixDefinitionUpdate(string storageAccountName = default, string containerName = default, string prefix = default)
+        /// <returns> A new <see cref="Models.PrefixConfigurationUpdate"/> instance for mocking. </returns>
+        public static PrefixConfigurationUpdate PrefixConfigurationUpdate(string storageAccountName = default, string containerName = default, string prefix = default)
         {
-            return new PrefixDefinitionUpdate(storageAccountName, containerName, prefix, default);
+            return new PrefixConfigurationUpdate(storageAccountName, containerName, prefix, default);
         }
 
         /// <summary> Storage Discovery Workspace Properties. </summary>

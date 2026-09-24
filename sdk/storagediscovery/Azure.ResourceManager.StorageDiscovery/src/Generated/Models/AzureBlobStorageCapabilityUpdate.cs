@@ -20,25 +20,25 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         /// <summary> Initializes a new instance of <see cref="AzureBlobStorageCapabilityUpdate"/>. </summary>
         public AzureBlobStorageCapabilityUpdate()
         {
-            PrefixDefinitions = new ChangeTrackingList<PrefixDefinitionUpdate>();
+            PrefixConfigurations = new ChangeTrackingList<PrefixConfigurationUpdate>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobStorageCapabilityUpdate"/>. </summary>
         /// <param name="capacityDetails"> The capacity details configuration to update for Azure Blob Storage. </param>
-        /// <param name="prefixDefinitions"> The prefix definitions to update for Azure Blob Storage. </param>
+        /// <param name="prefixConfigurations"> The prefix configurations to update for Azure Blob Storage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobStorageCapabilityUpdate(CapacityDetailsUpdate capacityDetails, IList<PrefixDefinitionUpdate> prefixDefinitions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBlobStorageCapabilityUpdate(CapacityDetailsUpdate capacityDetails, IList<PrefixConfigurationUpdate> prefixConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityDetails = capacityDetails;
-            PrefixDefinitions = prefixDefinitions;
+            PrefixConfigurations = prefixConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The capacity details configuration to update for Azure Blob Storage. </summary>
         internal CapacityDetailsUpdate CapacityDetails { get; set; }
 
-        /// <summary> The prefix definitions to update for Azure Blob Storage. </summary>
-        public IList<PrefixDefinitionUpdate> PrefixDefinitions { get; }
+        /// <summary> The prefix configurations to update for Azure Blob Storage. </summary>
+        public IList<PrefixConfigurationUpdate> PrefixConfigurations { get; }
 
         /// <summary> The enablement status to update for the capacity details capability. </summary>
         public CapabilityStatus? CapacityDetailsStatus

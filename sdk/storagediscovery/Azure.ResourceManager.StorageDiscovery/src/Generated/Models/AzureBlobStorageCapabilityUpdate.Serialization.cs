@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 writer.WritePropertyName("capacityDetails"u8);
                 writer.WriteObjectValue(CapacityDetails, options);
             }
-            if (Optional.IsCollectionDefined(PrefixDefinitions))
+            if (Optional.IsCollectionDefined(PrefixConfigurations))
             {
-                writer.WritePropertyName("prefixDefinitions"u8);
+                writer.WritePropertyName("prefixConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (PrefixDefinitionUpdate item in PrefixDefinitions)
+                foreach (PrefixConfigurationUpdate item in PrefixConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 return null;
             }
             CapacityDetailsUpdate capacityDetails = default;
-            IList<PrefixDefinitionUpdate> prefixDefinitions = default;
+            IList<PrefixConfigurationUpdate> prefixConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,18 +145,18 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     capacityDetails = CapacityDetailsUpdate.DeserializeCapacityDetailsUpdate(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("prefixDefinitions"u8))
+                if (prop.NameEquals("prefixConfigurations"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<PrefixDefinitionUpdate> array = new List<PrefixDefinitionUpdate>();
+                    List<PrefixConfigurationUpdate> array = new List<PrefixConfigurationUpdate>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrefixDefinitionUpdate.DeserializePrefixDefinitionUpdate(item, options));
+                        array.Add(PrefixConfigurationUpdate.DeserializePrefixConfigurationUpdate(item, options));
                     }
-                    prefixDefinitions = array;
+                    prefixConfigurations = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureBlobStorageCapabilityUpdate(capacityDetails, prefixDefinitions ?? new ChangeTrackingList<PrefixDefinitionUpdate>(), additionalBinaryDataProperties);
+            return new AzureBlobStorageCapabilityUpdate(capacityDetails, prefixConfigurations ?? new ChangeTrackingList<PrefixConfigurationUpdate>(), additionalBinaryDataProperties);
         }
     }
 }

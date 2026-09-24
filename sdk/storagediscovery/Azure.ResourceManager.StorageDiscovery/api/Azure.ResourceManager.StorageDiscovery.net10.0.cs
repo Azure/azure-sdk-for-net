@@ -97,11 +97,96 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
 {
     public static partial class ArmStorageDiscoveryModelFactory
     {
+        public static Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability AzureBlobStorageCapability(Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus capacityDetailsStatus = default(Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus), System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration> prefixConfigurations = null) { throw null; }
+        public static Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate AzureBlobStorageCapabilityUpdate(Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus? capacityDetailsStatus = default(Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate> prefixConfigurations = null) { throw null; }
+        public static Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration PrefixConfiguration(string storageAccountName = null, string containerName = null, string prefix = null) { throw null; }
+        public static Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate PrefixConfigurationUpdate(string storageAccountName = null, string containerName = null, string prefix = null) { throw null; }
         public static Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryScope StorageDiscoveryScope(string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryResourceKind> resourceTypes = null, System.Collections.Generic.IEnumerable<string> tagKeysOnly = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.StorageDiscovery.StorageDiscoveryWorkspaceData StorageDiscoveryWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryWorkspaceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryWorkspacePatch StorageDiscoveryWorkspacePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryWorkspacePatchProperties properties = null) { throw null; }
         public static Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku? sku = default(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> workspaceRoots = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryScope> scopes = null) { throw null; }
+        public static Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryWorkspacePatchProperties StorageDiscoveryWorkspacePatchProperties(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku? sku, string description, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> workspaceRoots, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryScope> scopes, Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate capabilitiesAzureBlobStorage) { throw null; }
+        public static Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku? sku, string description, Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability capabilitiesAzureBlobStorage, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> workspaceRoots, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryScope> scopes, Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryProvisioningState? provisioningState) { throw null; }
         public static Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryWorkspaceProperties StorageDiscoveryWorkspaceProperties(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku? sku = default(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku?), string description = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> workspaceRoots = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryScope> scopes = null, Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryProvisioningState? provisioningState = default(Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryProvisioningState?)) { throw null; }
+    }
+    public partial class AzureBlobStorageCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability>
+    {
+        public AzureBlobStorageCapability(Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus capacityDetailsStatus) { }
+        public Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus CapacityDetailsStatus { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration> PrefixConfigurations { get { throw null; } }
+        protected virtual Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AzureBlobStorageCapabilityUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate>
+    {
+        public AzureBlobStorageCapabilityUpdate() { }
+        public Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus? CapacityDetailsStatus { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate> PrefixConfigurations { get { throw null; } }
+        protected virtual Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CapabilityStatus : System.IEquatable<Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CapabilityStatus(string value) { throw null; }
+        public static Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus left, Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus left, Azure.ResourceManager.StorageDiscovery.Models.CapabilityStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PrefixConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration>
+    {
+        public PrefixConfiguration(string storageAccountName, string containerName) { }
+        public string ContainerName { get { throw null; } set { } }
+        public string Prefix { get { throw null; } set { } }
+        public string StorageAccountName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class PrefixConfigurationUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate>
+    {
+        public PrefixConfigurationUpdate() { }
+        public string ContainerName { get { throw null; } set { } }
+        public string Prefix { get { throw null; } set { } }
+        public string StorageAccountName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.PrefixConfigurationUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageDiscoveryProvisioningState : System.IEquatable<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryProvisioningState>
@@ -189,6 +274,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
     public partial class StorageDiscoveryWorkspacePatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryWorkspacePatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryWorkspacePatchProperties>
     {
         public StorageDiscoveryWorkspacePatchProperties() { }
+        public Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapabilityUpdate CapabilitiesAzureBlobStorage { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryScope> Scopes { get { throw null; } }
         public Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoverySku? Sku { get { throw null; } set { } }
@@ -206,6 +292,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
     public partial class StorageDiscoveryWorkspaceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryWorkspaceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryWorkspaceProperties>
     {
         public StorageDiscoveryWorkspaceProperties(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> workspaceRoots, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryScope> scopes) { }
+        public Azure.ResourceManager.StorageDiscovery.Models.AzureBlobStorageCapability CapabilitiesAzureBlobStorage { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StorageDiscovery.Models.StorageDiscoveryScope> Scopes { get { throw null; } }
