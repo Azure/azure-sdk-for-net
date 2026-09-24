@@ -22,7 +22,9 @@ corrupt results remain incomplete; later failed attempts never fall back to olde
 successful artifacts. No historical build download or reconstruction is involved.
 
 The shared archetype supports opt-in `createDashboardBundle` and
-`publishDashboardResults`, with `storageServiceConnection`/`storageContainerUrl`.
+`publishDashboardResults`. The shared publishing step defines the reviewed
+`eval-dashboard-sc` connection and dashboard Blob container once; neither is a
+queue-time parameter.
 Workflow, skill and live entrypoints support scoped automatic publication for
 their trusted tools-repo main definitions. Other consumers and feature branches
 remain opt-in; explicitly enabling publication writes to Blob using `AzureCLI@2`.
@@ -38,8 +40,10 @@ scope and cross-repo redirect compatibility. Other pipelines' defaults are uncha
 All entrypoints run their normal evaluation matrix; there is no separate
 synthetic publication mode. PR validation never receives the publishing task.
 See [publisher setup and real-run parameters](publisher/README.md).
-Dashboard synchronization and notification authentication remain separate from
-successful Blob storage and are not enabled by this pipeline change.
+These entrypoints send targeted notifications by default after successful storage;
+the reviewed URL/audience pair stays together in the publisher. Receiver
+authentication and network access are onboarded separately, and a failed signal
+does not fail the durable upload.
 
 ## TypeScript (no build step)
 
