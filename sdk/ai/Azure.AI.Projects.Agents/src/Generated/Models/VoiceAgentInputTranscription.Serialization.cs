@@ -83,6 +83,36 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
+            if (Optional.IsCollectionDefined(Languages))
+            {
+                writer.WritePropertyName("languages"u8);
+                writer.WriteStartArray();
+                foreach (string item in Languages)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Keywords))
+            {
+                writer.WritePropertyName("keywords"u8);
+                writer.WriteStartArray();
+                foreach (string item in Keywords)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Prompt))
             {
                 writer.WritePropertyName("prompt"u8);
@@ -169,6 +199,8 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string language = default;
+            IList<string> languages = default;
+            IList<string> keywords = default;
             string prompt = default;
             VoiceAgentAudioInputConfigTranscriptionDelay? delay = default;
             VoiceAgentInputTranscriptionModel model = default;
@@ -180,6 +212,48 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("language"u8))
                 {
                     language = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("languages"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    languages = array;
+                    continue;
+                }
+                if (prop.NameEquals("keywords"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    keywords = array;
                     continue;
                 }
                 if (prop.NameEquals("prompt"u8))
@@ -250,6 +324,8 @@ namespace Azure.AI.Projects.Agents
             }
             return new VoiceAgentInputTranscription(
                 language,
+                languages ?? new ChangeTrackingList<string>(),
+                keywords ?? new ChangeTrackingList<string>(),
                 prompt,
                 delay,
                 model,

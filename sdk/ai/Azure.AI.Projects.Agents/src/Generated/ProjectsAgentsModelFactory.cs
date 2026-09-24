@@ -760,6 +760,8 @@ namespace Azure.AI.Projects.Agents
         ///   [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) (e.g. `en`) format
         ///   will improve accuracy and latency.
         /// </param>
+        /// <param name="languages"> Possible languages of the input audio, in [ISO-639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) format. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
+        /// <param name="keywords"> Words or phrases to guide transcription of the input audio. Supported by `gpt-transcribe` and `gpt-live-transcribe`. </param>
         /// <param name="prompt">
         /// An optional text to guide the model's style or continue a previous audio
         ///   segment.
@@ -777,13 +779,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="phraseList"> Optional phrase hints that bias recognition toward domain terms. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentInputTranscription"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = default, string prompt = default, VoiceAgentAudioInputConfigTranscriptionDelay? delay = default, VoiceAgentInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default)
+        public static VoiceAgentInputTranscription VoiceAgentInputTranscription(string language = default, IEnumerable<string> languages = default, IEnumerable<string> keywords = default, string prompt = default, VoiceAgentAudioInputConfigTranscriptionDelay? delay = default, VoiceAgentInputTranscriptionModel model = default, IDictionary<string, string> customSpeech = default, IEnumerable<string> phraseList = default)
         {
+            languages ??= new ChangeTrackingList<string>();
+            keywords ??= new ChangeTrackingList<string>();
             customSpeech ??= new ChangeTrackingDictionary<string, string>();
             phraseList ??= new ChangeTrackingList<string>();
 
             return new VoiceAgentInputTranscription(
                 language,
+                languages.ToList(),
+                keywords.ToList(),
                 prompt,
                 delay,
                 model,
