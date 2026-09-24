@@ -25,6 +25,8 @@ namespace Azure.Storage.ChangeFeed.Common
         public string ManifestPath { get; private set; }
 
         private readonly List<ShardBase<TEvent>> _shards;
+        private readonly List<ShardCursor> _retainedShardCursors;
+        private readonly string _retainedCurrentShardPath;
         private readonly HashSet<int> _finishedShards;
         private int _shardIndex;
 
@@ -35,12 +37,22 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="shardIndex">The shard index to start reading from (used when resuming).</param>
         /// <param name="dateTime">The timestamp of this segment.</param>
         /// <param name="manifestPath">Blob path of the segment manifest.</param>
-        public SegmentBase(List<ShardBase<TEvent>> shards, int shardIndex, DateTimeOffset dateTime, string manifestPath)
+        /// <param name="retainedShardCursors">Cursors for restored shards that currently have no unread events.</param>
+        /// <param name="retainedCurrentShardPath">Current shard path to preserve when no readable shards remain.</param>
+        public SegmentBase(
+            List<ShardBase<TEvent>> shards,
+            int shardIndex,
+            DateTimeOffset dateTime,
+            string manifestPath,
+            List<ShardCursor> retainedShardCursors = null,
+            string retainedCurrentShardPath = null)
         {
             _shards = shards;
             _shardIndex = shardIndex;
             DateTime = dateTime;
             ManifestPath = manifestPath;
+            _retainedShardCursors = retainedShardCursors;
+            _retainedCurrentShardPath = retainedCurrentShardPath;
             _finishedShards = new HashSet<int>();
         }
 
@@ -50,7 +62,9 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <returns>A <see cref="SegmentCursor"/> for this segment.</returns>
         public virtual SegmentCursor GetCursor()
         {
-            List<ShardCursor> shardCursors = new List<ShardCursor>();
+            List<ShardCursor> shardCursors = _retainedShardCursors == null
+                ? new List<ShardCursor>()
+                : new List<ShardCursor>(_retainedShardCursors);
             foreach (ShardBase<TEvent> shard in _shards)
             {
                 ShardCursor shardCursor = shard.GetCursor();
@@ -59,7 +73,7 @@ namespace Azure.Storage.ChangeFeed.Common
             return new SegmentCursor(
                 segmentPath: ManifestPath,
                 shardCursors: shardCursors,
-                currentShardPath: _shards.Count > 0 ? _shards[_shardIndex].ShardPath : null);
+                currentShardPath: _shards.Count > 0 ? _shards[_shardIndex].ShardPath : _retainedCurrentShardPath);
         }
 
         /// <summary>

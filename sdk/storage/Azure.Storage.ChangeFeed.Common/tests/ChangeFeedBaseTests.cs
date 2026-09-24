@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
@@ -292,6 +293,71 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             segmentFactory.Verify(
                 f => f.BuildSegment(IsAsync, nextSegmentPath, null),
                 Times.Never);
+        }
+
+        [Test]
+        public async Task GetPage_ExhaustedSegmentWithPendingYear_PreservesCursorOnEmptyPage()
+        {
+            DateTimeOffset lastConsumable = new DateTimeOffset(2024, 12, 31, 23, 45, 0, TimeSpan.Zero);
+            string manifestPath = "idx/segments/2024/12/31/2345/meta.json";
+            string shardPath = "log/00/2024/12/31/2345/";
+            ShardCursor shardCursor = new ShardCursor(
+                currentChunkPath: shardPath + "00000.avro",
+                blockOffset: 128,
+                eventIndex: 0);
+
+            SegmentBase<TestEvent> currentSegment = new SegmentBase<TestEvent>(
+                shards: new List<ShardBase<TestEvent>>(),
+                shardIndex: 0,
+                dateTime: lastConsumable,
+                manifestPath: manifestPath,
+                retainedShardCursors: new List<ShardCursor> { shardCursor },
+                retainedCurrentShardPath: shardPath);
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            containerClient.Setup(c => c.Uri).Returns(new Uri("https://account.blob.core.windows.net/container"));
+
+            Page<BlobHierarchyItem> emptySegmentPage = new BlobHierarchyItemPage(new List<BlobHierarchyItem>());
+            if (IsAsync)
+            {
+                containerClient
+                    .Setup(c => c.GetBlobsByHierarchyAsync(
+                        It.IsAny<GetBlobsByHierarchyOptions>(),
+                        It.IsAny<CancellationToken>()))
+                    .Returns(AsyncPageable<BlobHierarchyItem>.FromPages(new[] { emptySegmentPage }));
+            }
+            else
+            {
+                containerClient
+                    .Setup(c => c.GetBlobsByHierarchy(
+                        It.IsAny<GetBlobsByHierarchyOptions>(),
+                        It.IsAny<CancellationToken>()))
+                    .Returns(Pageable<BlobHierarchyItem>.FromPages(new[] { emptySegmentPage }));
+            }
+
+            ChangeFeedBase<TestEvent> changeFeed = new ChangeFeedBase<TestEvent>(
+                containerClient: containerClient.Object,
+                segmentFactory: new Mock<SegmentFactoryBase<TestEvent>>().Object,
+                years: new Queue<string>(new[] { "idx/segments/2025/" }),
+                segments: new Queue<string>(),
+                currentSegment,
+                lastConsumable,
+                startTime: null,
+                endTime: null,
+                config: CreateTestConfig(),
+                includeNonFinalizedEvents: false);
+
+            Page<TestEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 10);
+            ChangeFeedCursor cursor = JsonSerializer.Deserialize<ChangeFeedCursor>(page.ContinuationToken);
+
+            Assert.IsEmpty(page.Values);
+            Assert.IsFalse(changeFeed.HasNext());
+            Assert.AreEqual(manifestPath, cursor.CurrentSegmentCursor.SegmentPath);
+            Assert.AreEqual(shardPath, cursor.CurrentSegmentCursor.CurrentShardPath);
+            Assert.AreEqual(1, cursor.CurrentSegmentCursor.ShardCursors.Count);
+            Assert.AreEqual(shardCursor.CurrentChunkPath, cursor.CurrentSegmentCursor.ShardCursors[0].CurrentChunkPath);
+            Assert.AreEqual(shardCursor.BlockOffset, cursor.CurrentSegmentCursor.ShardCursors[0].BlockOffset);
+            Assert.AreEqual(shardCursor.EventIndex, cursor.CurrentSegmentCursor.ShardCursors[0].EventIndex);
         }
 
         /// <summary>
