@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.Data.AI
 {
     /// <summary> Additional metadata about the semantic reranking operation. </summary>
-    public partial class MetaResult
+    public partial class SemanticRerankMetaResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MetaResult"/>. </summary>
-        internal MetaResult()
+        /// <summary> Initializes a new instance of <see cref="SemanticRerankMetaResult"/>. </summary>
+        internal SemanticRerankMetaResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetaResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticRerankMetaResult"/>. </summary>
         /// <param name="tokenUsage"> The number of tokens processed in the request. </param>
         /// <param name="latency"> The latency of the semantic reranking operation. </param>
         /// <param name="modelName"> The name of the model used for the semantic reranking operation. </param>
         /// <param name="modelVersion"> The version of the model used for the semantic reranking operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetaResult(TokenUsageResult tokenUsage, LatencyResult latency, string modelName, string modelVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticRerankMetaResult(TokenUsageResult tokenUsage, LatencyResult latency, string modelName, string modelVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TokenUsage = tokenUsage;
             Latency = latency;

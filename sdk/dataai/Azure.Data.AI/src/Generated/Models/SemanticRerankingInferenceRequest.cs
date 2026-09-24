@@ -42,7 +42,7 @@ namespace Azure.Data.AI
         /// <param name="model"> The name of the model used for the semantic reranking operation. </param>
         /// <param name="returnSentenceScore"> Whether to return sentence-level scores in the response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SemanticRerankingInferenceRequest(string query, IList<string> documents, bool? returnDocuments, int? topK, int? batchSize, bool? sort, DocumentType? documentType, string targetPaths, string model, bool? returnSentenceScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticRerankingInferenceRequest(string query, IList<string> documents, bool? returnDocuments, int? topK, int? batchSize, bool? sort, SemanticRerankDocumentType? documentType, string targetPaths, string model, bool? returnSentenceScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Query = query;
             Documents = documents;
@@ -76,7 +76,7 @@ namespace Azure.Data.AI
         public bool? Sort { get; set; }
 
         /// <summary> The format of the submitted documents. </summary>
-        public DocumentType? DocumentType { get; set; }
+        public SemanticRerankDocumentType? DocumentType { get; set; }
 
         /// <summary> The JSON paths containing text to rank when the document type is JSON. </summary>
         public string TargetPaths { get; set; }

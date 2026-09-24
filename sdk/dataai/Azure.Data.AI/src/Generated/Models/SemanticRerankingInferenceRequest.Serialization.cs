@@ -191,7 +191,7 @@ namespace Azure.Data.AI
             int? topK = default;
             int? batchSize = default;
             bool? sort = default;
-            DocumentType? documentType = default;
+            SemanticRerankDocumentType? documentType = default;
             string targetPaths = default;
             string model = default;
             bool? returnSentenceScore = default;
@@ -262,7 +262,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    documentType = new DocumentType(prop.Value.GetString());
+                    documentType = new SemanticRerankDocumentType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetPaths"u8))

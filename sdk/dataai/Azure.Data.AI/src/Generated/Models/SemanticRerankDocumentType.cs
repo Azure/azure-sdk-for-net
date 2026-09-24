@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AI
 {
     /// <summary> The format of a document submitted for semantic reranking. </summary>
-    public readonly partial struct DocumentType : IEquatable<DocumentType>
+    public readonly partial struct SemanticRerankDocumentType : IEquatable<SemanticRerankDocumentType>
     {
         private readonly string _value;
         /// <summary> A plain-text document. </summary>
@@ -19,10 +19,10 @@ namespace Azure.Data.AI
         /// <summary> A JSON document. </summary>
         private const string JsonValue = "json";
 
-        /// <summary> Initializes a new instance of <see cref="DocumentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticRerankDocumentType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DocumentType(string value)
+        public SemanticRerankDocumentType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,35 +30,35 @@ namespace Azure.Data.AI
         }
 
         /// <summary> A plain-text document. </summary>
-        public static DocumentType Text { get; } = new DocumentType(TextValue);
+        public static SemanticRerankDocumentType Text { get; } = new SemanticRerankDocumentType(TextValue);
 
         /// <summary> A JSON document. </summary>
-        public static DocumentType Json { get; } = new DocumentType(JsonValue);
+        public static SemanticRerankDocumentType Json { get; } = new SemanticRerankDocumentType(JsonValue);
 
-        /// <summary> Determines if two <see cref="DocumentType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SemanticRerankDocumentType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DocumentType left, DocumentType right) => left.Equals(right);
+        public static bool operator ==(SemanticRerankDocumentType left, SemanticRerankDocumentType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DocumentType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SemanticRerankDocumentType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DocumentType left, DocumentType right) => !left.Equals(right);
+        public static bool operator !=(SemanticRerankDocumentType left, SemanticRerankDocumentType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DocumentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SemanticRerankDocumentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentType(string value) => new DocumentType(value);
+        public static implicit operator SemanticRerankDocumentType(string value) => new SemanticRerankDocumentType(value);
 
-        /// <summary> Converts a string to a <see cref="DocumentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SemanticRerankDocumentType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DocumentType?(string value) => value == null ? null : new DocumentType(value);
+        public static implicit operator SemanticRerankDocumentType?(string value) => value == null ? null : new SemanticRerankDocumentType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DocumentType other && Equals(other);
+        public override bool Equals(object obj) => obj is SemanticRerankDocumentType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DocumentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SemanticRerankDocumentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
