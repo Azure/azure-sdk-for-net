@@ -57,6 +57,7 @@ namespace Azure.Storage.ChangeFeed.Common
 #pragma warning restore CA1822
         {
             List<ShardBase<TEvent>> shards = new List<ShardBase<TEvent>>();
+            List<ShardCursor> retainedShardCursors = new List<ShardCursor>();
             DateTimeOffset dateTime = ChangeFeedExtensionsBase.ToDateTimeOffset(manifestPath).Value;
 
             BlobClient blobClient = _containerClient.GetBlobClient(manifestPath);
@@ -90,7 +91,14 @@ namespace Azure.Storage.ChangeFeed.Common
                         x => x.CurrentChunkPath.StartsWith(shardPath, StringComparison.Ordinal));
 
                     ShardBase<TEvent> shard = await _shardFactory.BuildShard(async, shardPath, shardCursor).ConfigureAwait(false);
-                    if (shard.HasNext()) shards.Add(shard);
+                    if (shard.HasNext())
+                    {
+                        shards.Add(shard);
+                    }
+                    else if (shardCursor != null)
+                    {
+                        retainedShardCursors.Add(shardCursor);
+                    }
                 }
             }
             finally
@@ -105,7 +113,13 @@ namespace Azure.Storage.ChangeFeed.Common
                 shardIndex = shards.FindIndex(s => s.ShardPath == currentShardPath);
                 if (shardIndex < 0) shardIndex = 0;
             }
-            return new SegmentBase<TEvent>(shards, shardIndex, dateTime, manifestPath);
+            return new SegmentBase<TEvent>(
+                shards,
+                shardIndex,
+                dateTime,
+                manifestPath,
+                retainedShardCursors,
+                cursor?.CurrentShardPath);
         }
     }
 }
