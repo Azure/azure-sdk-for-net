@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Corrected generated names for Container Apps managed environments to use 2–60 lowercase letters, numbers, or hyphens.
+
 ### Other Changes
 
 ## 1.3.0-beta.1 (2026-09-15)

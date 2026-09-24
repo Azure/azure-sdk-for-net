@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.OperationalInsights;
+using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -11,6 +12,25 @@ namespace Azure.Provisioning.AppContainers.Tests;
 
 public class BasicAppContainersTests
 {
+    [Test]
+    public void ManagedEnvironmentNameRequirements()
+    {
+        ResourceNameRequirements requirements =
+            new ContainerAppManagedEnvironment("env").GetResourceNameRequirements();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(requirements.MinLength, Is.EqualTo(2));
+            Assert.That(requirements.MaxLength, Is.EqualTo(60));
+            Assert.That(
+                requirements.ValidCharacters,
+                Is.EqualTo(
+                    ResourceNameCharacters.LowercaseLetters |
+                    ResourceNameCharacters.Numbers |
+                    ResourceNameCharacters.Hyphen));
+        });
+    }
+
     internal static Trycep CreateContainerAppTest()
     {
         return new Trycep().Define(
@@ -125,7 +145,7 @@ public class BasicAppContainersTests
             }
 
             resource env 'Microsoft.App/managedEnvironments@2024-03-01' = {
-              name: take('env-${uniqueString(resourceGroup().id)}', 24)
+              name: take('env-${uniqueString(resourceGroup().id)}', 60)
               location: location
               properties: {
                 appLogsConfiguration: {
