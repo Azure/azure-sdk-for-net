@@ -3990,6 +3990,24 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> PrincipalId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version. Please use NetworkManagerConnection instead.")]
+    public partial class ManagementGroupNetworkManagerConnection : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ManagementGroupNetworkManagerConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ScopeConnectionState> ConnectionState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> NetworkManagerId { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.ManagementGroupNetworkManagerConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_05_01;
+        }
+    }
     public partial class MatchCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MatchCondition() { }
@@ -7555,6 +7573,24 @@ namespace Azure.Provisioning.Network
             public static readonly string V2024_10_01;
             public static readonly string V2025_01_01;
             public static readonly string V2025_03_01;
+            public static readonly string V2025_05_01;
+        }
+    }
+    [System.ObsoleteAttribute("This type is deprecated and it will be removed in a future version. Please use NetworkManagerConnection instead.")]
+    public partial class SubscriptionNetworkManagerConnection : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public SubscriptionNetworkManagerConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.ScopeConnectionState> ConnectionState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> NetworkManagerId { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.SubscriptionNetworkManagerConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
             public static readonly string V2025_05_01;
         }
     }

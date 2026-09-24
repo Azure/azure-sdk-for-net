@@ -23521,10 +23521,13 @@ namespace Azure.ResourceManager.Network.Models
     {
         public RoutingConfigurationNfv() { }
         public Azure.Core.ResourceIdentifier AssociatedRouteTableId { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer functions. Please use AssociatedRouteTableId instead.", false)]
         public System.Uri AssociatedRouteTableResourceUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InboundRouteMapId { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer functions. Please use InboundRouteMapId instead.", false)]
         public System.Uri InboundRouteMapResourceUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier OutboundRouteMapId { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and no longer functions. Please use OutboundRouteMapId instead.", false)]
         public System.Uri OutboundRouteMapResourceUri { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.PropagatedRouteTableNfv PropagatedRouteTables { get { throw null; } set { } }
         public Azure.ResourceManager.Network.Models.VnetRoute VnetRoutes { get { throw null; } set { } }

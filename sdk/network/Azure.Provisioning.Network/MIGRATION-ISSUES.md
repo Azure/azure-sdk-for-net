@@ -46,10 +46,10 @@ unique differences for each target framework:
 
 | Diagnostic | Per framework | Across three frameworks | Meaning |
 |---|---:|---:|---|
-| `CP0001` | 10 | 30 | Removed public types |
+| `CP0001` | 8 | 24 | Removed public types |
 | `CP0002` | 408 | 1,224 | Removed public members |
 | `CP0011` | 24 | 72 | Changed public member types |
-| **Total** | **442** | **1,326** | |
+| **Total** | **440** | **1,320** | |
 
 These diagnostics are the remaining provisioning compatibility backlog. They
 are not C# compilation or generation failures.
@@ -72,19 +72,17 @@ execution.
 
 ### Removed public types
 
-The current API has 619 public types, compared with 589 in the pre-migration
-API. It adds 40 public types and removes these 10:
+The current API has 621 public types, compared with 589 in the pre-migration
+API. It adds 40 public types and removes these 8:
 
 - `ConnectionMonitorType`
 - `DdosCustomPolicyTriggerSensitivityOverride`
 - `DdosSettingsProtectionMode`
 - `DdosTrafficType`
-- `ManagementGroupNetworkManagerConnection`
 - `PropagatedRouteTableNfv`
 - `ProtocolCustomSettings`
 - `RoutingConfigurationNfv`
 - `RoutingConfigurationNfvSubResource`
-- `SubscriptionNetworkManagerConnection`
 
 `PropagatedRouteTableNfv`, `RoutingConfigurationNfv`, and
 `RoutingConfigurationNfvSubResource` were empty and unreferenced constructs in
@@ -92,13 +90,6 @@ the released provisioning API. The populated generated models now use the
 released `PropagatedRouteTable` and `RoutingConfiguration` names directly.
 Compatibility work must still decide whether the three empty NFV types should
 be restored as hidden obsolete stubs.
-
-`ManagementGroupNetworkManagerConnection` and
-`SubscriptionNetworkManagerConnection` remain the highest-priority removed
-resource types. Their ARM resource type,
-`Microsoft.Network/networkManagerConnections`, is now represented by the
-generated `NetworkManagerConnection`, but the two released scope-specific
-resource classes are absent.
 
 ### Removed and changed members
 
@@ -114,10 +105,10 @@ as the source of truth when this phase begins.
 The related `Azure.ResourceManager.Network` TypeSpec migration was completed
 and merged through
 [Azure/azure-sdk-for-net#63027](https://github.com/Azure/azure-sdk-for-net/pull/63027).
-The management package uses SDK-side `[CodeGenType]` and `[CodeGenMember]`
-customizations for the routing configuration model family so the shared
-TypeSpec names remain correct for provisioning while the released management
-dual-surface API remains unchanged.
+The management package uses SDK-side `[CodeGenType]` customizations and
+compatibility classes for the routing configuration model family so the
+shared TypeSpec names remain correct for provisioning while the released
+management dual-surface API remains unchanged.
 
 The merged management work includes:
 
@@ -146,6 +137,19 @@ resources:
 | `Subnet` | `SubnetResource` |
 
 This resolves the corresponding `AZC0012` analyzer failures.
+
+### Scope-specific Network Manager connections
+
+The TypeSpec emitter consolidates the released
+`ManagementGroupNetworkManagerConnection` and
+`SubscriptionNetworkManagerConnection` resources into the generated
+`NetworkManagerConnection`. Both released scope-specific resources are
+restored under `src/Custom` with their original public API, property paths,
+`BicepValue<ETag>` property type, ARM resource type, and API version. They are
+hidden with `EditorBrowsable(Never)` and marked obsolete in favor of
+`NetworkManagerConnection`.
+
+Restoring these resources reduces the removed-type diagnostics from 10 to 8.
 
 ### Child-resource model promotions
 
@@ -216,8 +220,8 @@ customizations:
   `PropagatedRouteTableNfv` through `[CodeGenType]`.
 - `RoutingConfiguration` and `PropagatedRouteTable` remain compatibility
   subclasses.
-- `PropagatedRouteTableNfv.Ids` retains
-  `RoutingConfigurationNfvSubResource` through `[CodeGenMember]`.
+- The generator retains `PropagatedRouteTableNfv.Ids` as
+  `IList<RoutingConfigurationNfvSubResource>` without a member customization.
 
 The released management `RoutingConfigurationNfv` also exposed
 `AssociatedRouteTableResourceUri`, `InboundRouteMapResourceUri`, and

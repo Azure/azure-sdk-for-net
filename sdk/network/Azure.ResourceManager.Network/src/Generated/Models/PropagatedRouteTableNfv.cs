@@ -38,5 +38,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The list of labels. </summary>
         [WirePath("labels")]
         public IList<string> Labels { get; }
+
+        /// <summary> The list of resource ids of all the RouteTables. </summary>
+        [WirePath("ids")]
+        public IList<RoutingConfigurationNfvSubResource> Ids { get; }
     }
 }
