@@ -4,12 +4,12 @@
 
 ### Features Added
 
-- Added opt-in mTLS proof-of-possession support to `ClientCertificateCredential`, including subject name and issuer certificate authentication configured with `SendCertificateChain`. First-party applications must also enable `Azure.Identity.EnableClientCertificateMtlsProofOfPossession` or `AZURE_IDENTITY_ENABLE_CLIENT_CERTIFICATE_MTLS_POP`.
-- Added opt-in mTLS proof-of-possession support to the managed identity federated identity flow used by configured credentials, covering both managed identity assertion acquisition and client assertion token redemption. Set `EnableMtlsProofOfPossession` to `true` in the credential's JSON configuration to enable it for both exchanges.
+- Added mTLS proof-of-possession support to `ClientCertificateCredential`, including subject name and issuer certificate authentication configured with `SendCertificateChain`. Proof-of-possession is used by default when requested; first-party applications can opt out by setting the `Azure.Identity.EnableClientCertificateMtlsProofOfPossession` AppContext switch (or `AZURE_IDENTITY_ENABLE_CLIENT_CERTIFICATE_MTLS_POP` environment variable) to `false`.
+- Added mTLS proof-of-possession support to the managed identity federated identity flow used by configured credentials, covering both managed identity assertion acquisition and client assertion token redemption. It is enabled by default; set `EnableMtlsProofOfPossession` to `false` in the credential's JSON configuration to force bearer authentication for both exchanges.
 
 ### Breaking Changes
 
-- Renamed the experimental `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` property and corresponding configuration setting to `EnableMtlsProofOfPossession`. mTLS proof-of-possession is now disabled by default and must be explicitly enabled.
+- Renamed the experimental `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` property and corresponding configuration setting to `EnableMtlsProofOfPossession`. The default behavior is unchanged: mTLS proof-of-possession remains enabled by default, and `EnableMtlsProofOfPossession = false` now expresses what `DisableMtlsProofOfPossession = true` previously did.
 
 ### Bugs Fixed
 

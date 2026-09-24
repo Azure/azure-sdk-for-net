@@ -334,7 +334,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         }
 
         [Test]
-        public void Constructor_WithChainedFederatedIdentitySource_Default_DoesNotCreatePopClient()
+        public void Constructor_WithChainedFederatedIdentitySource_Default_CreatesPopCredential()
         {
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
@@ -360,7 +360,39 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
             Assert.AreEqual(1, sources.Length);
             var assertionCredential = sources[0] as ClientAssertionCredential;
             Assert.IsNotNull(assertionCredential);
-            Assert.IsNull(assertionCredential.PopClient, "PopClient must not be created unless EnableMtlsProofOfPossession is true.");
+            Assert.IsNotNull(assertionCredential.PopClient, "PopClient must be created by default because mTLS proof-of-possession is on by default.");
+            Assert.AreNotSame(assertionCredential.Client, assertionCredential.PopClient);
+        }
+
+        [Test]
+        public void Constructor_WithChainedFederatedIdentitySource_DisableMtlsPop_DoesNotCreatePopClient()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["Credential:Sources:0:CredentialSource"] = "ManagedIdentityAsFederatedIdentityCredential",
+                    ["Credential:Sources:0:TenantId"] = "test-tenant",
+                    ["Credential:Sources:0:ClientId"] = "test-client",
+                    ["Credential:Sources:0:ManagedIdentityIdKind"] = "ClientId",
+                    ["Credential:Sources:0:ManagedIdentityId"] = "test-mi-client-id",
+                    ["Credential:Sources:0:AzureCloud"] = "public",
+                    ["Credential:Sources:0:EnableMtlsProofOfPossession"] = "false",
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            var credential = new ConfigurableCredential(options);
+
+            var innerCredential = GetInnerCredential(credential) as ChainedTokenCredential;
+            Assert.IsNotNull(innerCredential);
+
+            var sources = GetChainedTokenCredentialSources(innerCredential);
+            Assert.AreEqual(1, sources.Length);
+            var assertionCredential = sources[0] as ClientAssertionCredential;
+            Assert.IsNotNull(assertionCredential);
+            Assert.IsNull(assertionCredential.PopClient, "PopClient must not be created when EnableMtlsProofOfPossession is false.");
             Assert.IsNotNull(assertionCredential.Client);
         }
 

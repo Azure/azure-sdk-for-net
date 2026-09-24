@@ -36,7 +36,7 @@ namespace Azure.Core.Tests.Identity
         [TestCase(true, false, true, false)]
         [TestCase(true, true, false, false)]
         [TestCase(false, true, true, false)]
-        public void ShouldAttemptMtlsPopRequiresExplicitOptInAndCallerIntent(
+        public void ShouldAttemptMtlsPopRespectsEnableFlagAndCallerIntent(
             bool enableMtlsProofOfPossession,
             bool isProofOfPossessionEnabled,
             bool isTokenBindingAvailable,

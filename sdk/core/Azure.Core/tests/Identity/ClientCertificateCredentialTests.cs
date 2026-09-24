@@ -317,7 +317,7 @@ namespace Azure.Core.Tests.Identity
         }
 
         [Test]
-        public void MtlsProofOfPossessionSwitchUsesOptInNames()
+        public void MtlsProofOfPossessionSwitchUsesExpectedNames()
         {
             Assert.AreEqual(
                 "Azure.Identity.EnableClientCertificateMtlsProofOfPossession",
@@ -329,7 +329,7 @@ namespace Azure.Core.Tests.Identity
 
         [Test]
         [NonParallelizable]
-        public async Task UsesBearerTokenByDefaultWhenProofOfPossessionRequested()
+        public async Task DisableSwitchForcesBearerTokenWhenProofOfPossessionRequested()
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 #if NET9_0_OR_GREATER
@@ -354,6 +354,33 @@ namespace Azure.Core.Tests.Identity
 
             Assert.AreEqual("bearer-token", token.Token);
             Assert.IsNull(token.BindingCertificate);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public async Task UsesPopByDefaultWhenProofOfPossessionRequested()
+        {
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            using var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            using var mockCert = new X509Certificate2(certificatePath);
+#endif
+            var bearerClient = new MockMsalConfidentialClient(AuthenticationResultFactory.Create("bearer-token"));
+            AuthenticationResult popResult = AuthenticationResultFactory.Create("pop-token");
+            popResult.BindingCertificate = mockCert;
+            var popClient = new MockMsalConfidentialClient(popResult);
+            var options = new ClientCertificateCredentialOptions { SendCertificateChain = true };
+            var credential = new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, bearerClient, popClient);
+            var requestContext = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            // mTLS proof-of-possession is on by default, so a PoP request selects the PoP client without any switch.
+            AccessToken token = IsAsync
+                ? await credential.GetTokenAsync(requestContext)
+                : credential.GetToken(requestContext);
+
+            Assert.AreEqual("pop-token", token.Token);
+            Assert.AreSame(mockCert, token.BindingCertificate);
         }
 
         [Test]
