@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The summarized provisioning result of an occurrence. </summary>
+    /// <summary> Summary of results for a scheduled action occurrence. </summary>
     public partial class OccurrenceResultSummary : IJsonModel<OccurrenceResultSummary>
     {
         /// <summary> Initializes a new instance of <see cref="OccurrenceResultSummary"/> for deserialization. </summary>

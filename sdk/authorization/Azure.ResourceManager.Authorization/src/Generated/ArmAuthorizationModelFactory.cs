@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Authorization.Models
                     (decisions ?? new ChangeTrackingList<AccessReviewResult>()).ToList(),
                     status,
                     createdOn,
-                    new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
+                    principalId is null && principalType is null && principalName is null && userPrincipalName is null ? default : new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
                     (scopes ?? new ChangeTrackingList<AccessReviewScope>()).ToList(),
-                    new AccessReviewHistoryScheduleSettings(pattern, range, default),
+                    pattern is null && range is null ? default : new AccessReviewHistoryScheduleSettings(pattern, range, default),
                     (instances ?? new ChangeTrackingList<AccessReviewHistoryInstance>()).ToList(),
                     default),
                 default);
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.Authorization.Models
                     status,
                     descriptionForAdmins,
                     descriptionForReviewers,
-                    new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
-                    new AccessReviewScheduleSettings(
+                    principalId is null && principalType is null && principalName is null && userPrincipalName is null ? default : new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
+                    isMailNotificationsEnabled is null && isReminderNotificationsEnabled is null && isDefaultDecisionEnabled is null && isJustificationRequiredOnApproval is null && defaultDecision is null && isAutoApplyDecisionsEnabled is null && isRecommendationsEnabled is null && recommendationLookBackDuration is null && instanceDurationInDays is null && pattern is null && range is null ? default : new AccessReviewScheduleSettings(
                         isMailNotificationsEnabled,
                         isReminderNotificationsEnabled,
                         isDefaultDecisionEnabled,
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         isRecommendationsEnabled,
                         recommendationLookBackDuration,
                         instanceDurationInDays,
-                        new AccessReviewRecurrenceSettings(pattern, range, default),
+                        pattern is null && range is null ? default : new AccessReviewRecurrenceSettings(pattern, range, default),
                         default),
                     scope,
                     (reviewers ?? new ChangeTrackingList<AccessReviewReviewer>()).ToList(),
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isRecommendationsEnabled,
                     recommendationLookBackDuration,
                     instanceDurationInDays,
-                    new AccessReviewRecurrenceSettings(pattern, range, default),
+                    pattern is null && range is null ? default : new AccessReviewRecurrenceSettings(pattern, range, default),
                     default),
                 scope,
                 (reviewers ?? new ChangeTrackingList<AccessReviewReviewer>()).ToList(),
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isRecommendationsEnabled,
                     recommendationLookBackDuration,
                     instanceDurationInDays,
-                    new AccessReviewRecurrenceSettings(pattern, range, default),
+                    pattern is null && range is null ? default : new AccessReviewRecurrenceSettings(pattern, range, default),
                     default),
                 default);
         }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="email"> Email id of the principal. </param>
         /// <param name="principalType"> Type of the principal. </param>
         /// <returns> A new <see cref="Models.RoleManagementExpandedProperties"/> instance for mocking. </returns>
-        public static RoleManagementExpandedProperties RoleManagementExpandedProperties(ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, Guid? principalId = default, string principalDisplayName = default, string email = default, RoleManagementPrincipalType? principalType = default)
+        public static RoleManagementExpandedProperties RoleManagementExpandedProperties(ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, Guid? principalId, string principalDisplayName, string email, RoleManagementPrincipalType? principalType)
         {
             return new RoleManagementExpandedProperties(scopeId is null && scopeDisplayName is null && scopeType is null ? default : new ExpandedPropertiesScope(scopeId, scopeDisplayName, scopeType, default), roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new ExpandedPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default), principalId is null && principalDisplayName is null && email is null && principalType is null ? default : new ExpandedPropertiesPrincipal(principalId, principalDisplayName, email, principalType, default), default);
         }
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     approvalId,
                     targetRoleAssignmentScheduleId,
                     targetRoleAssignmentScheduleInstanceId,
-                    new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startOn, new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
+                    startOn is null && expirationType is null && endOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startOn, expirationType is null && endOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
                     linkedRoleEligibilityScheduleId,
                     justification,
                     ticketInfo,
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     requestType.GetValueOrDefault(),
                     status,
                     approvalId,
-                    new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startOn, new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
+                    startOn is null && expirationType is null && endOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startOn, expirationType is null && endOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
                     targetRoleEligibilityScheduleId,
                     targetRoleEligibilityScheduleInstanceId,
                     justification,
@@ -1083,7 +1083,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
         /// <param name="lastModifiedOn"> The last modified date time. </param>
         /// <returns> A new <see cref="Models.PolicyAssignmentProperties"/> instance for mocking. </returns>
-        public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default)
+        public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType, ResourceIdentifier roleDefinitionId, string roleDefinitionDisplayName, AuthorizationRoleType? roleType, ResourceIdentifier policyId, RoleManagementPrincipal lastModifiedBy, DateTimeOffset? lastModifiedOn)
         {
             return new PolicyAssignmentProperties(
                 id,
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdBy"> Id of the user who created the assignment. </param>
         /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <returns> A new <see cref="Authorization.DenyAssignmentData"/> instance for mocking. </returns>
-        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string denyAssignmentName = default, string description = default, IEnumerable<DenyAssignmentPermission> deniedPermissions = default, string scope = default, bool? isAppliedToChildScopes = default, IEnumerable<RoleManagementPrincipal> deniedPrincipals = default, IEnumerable<RoleManagementPrincipal> excludedPrincipals = default, bool? isSystemProtected = default, DenyAssignmentEffect? denyAssignmentEffect = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default)
+        public static DenyAssignmentData DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IEnumerable<DenyAssignmentPermission> deniedPermissions, string scope, bool? isAppliedToChildScopes, IEnumerable<RoleManagementPrincipal> deniedPrincipals, IEnumerable<RoleManagementPrincipal> excludedPrincipals, bool? isSystemProtected, DenyAssignmentEffect? denyAssignmentEffect, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default)
         {
             return new DenyAssignmentData(
                 id,
@@ -1254,7 +1254,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdBy"> Id of the user who created the assignment. </param>
         /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <returns> A new <see cref="Authorization.AuthorizationRoleDefinitionData"/> instance for mocking. </returns>
-        public static AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleName = default, string description = default, AuthorizationRoleType? roleType = default, IEnumerable<RoleDefinitionPermission> permissions = default, IEnumerable<string> assignableScopes = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default)
+        public static AuthorizationRoleDefinitionData AuthorizationRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string roleName, string description, AuthorizationRoleType? roleType, IEnumerable<RoleDefinitionPermission> permissions, IEnumerable<string> assignableScopes, DateTimeOffset? createdOn, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default)
         {
             return new AuthorizationRoleDefinitionData(
                 id,
@@ -1625,7 +1625,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     appliedOn,
                     appliedBy,
                     (insights ?? new ChangeTrackingList<AccessReviewDecisionInsight>()).ToList(),
-                    new AccessReviewDecisionPrincipalResourceMembership((membershipTypes ?? new ChangeTrackingList<AccessReviewDecisionPrincipalResourceMembershipType>()).ToList(), default),
+                    membershipTypes is null ? default : new AccessReviewDecisionPrincipalResourceMembership((membershipTypes ?? new ChangeTrackingList<AccessReviewDecisionPrincipalResourceMembershipType>()).ToList(), default),
                     default),
                 default);
         }

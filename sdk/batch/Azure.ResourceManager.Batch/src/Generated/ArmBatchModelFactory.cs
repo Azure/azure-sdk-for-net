@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Batch.BatchAccountData"/> instance for mocking. </returns>
-        public static BatchAccountData BatchAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string accountEndpoint = default, string nodeManagementEndpoint = default, BatchProvisioningState? provisioningState = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections = default, BatchAccountAutoStorageConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, int? dedicatedCoreQuota = default, int? lowPriorityCoreQuota = default, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default, bool? isDedicatedCoreQuotaPerVmFamilyEnforced = default, int? poolQuota = default, int? activeJobAndJobScheduleQuota = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, ManagedServiceIdentity identity = default, IReadOnlyDictionary<string, string> tags = default, AzureLocation? location = default)
+        public static BatchAccountData BatchAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string accountEndpoint, string nodeManagementEndpoint, BatchProvisioningState? provisioningState, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections, BatchAccountAutoStorageConfiguration autoStorage, BatchAccountEncryptionConfiguration encryption, int? dedicatedCoreQuota, int? lowPriorityCoreQuota, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily, bool? isDedicatedCoreQuotaPerVmFamilyEnforced, int? poolQuota, int? activeJobAndJobScheduleQuota, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes, ManagedServiceIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation? location)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="action"> Action when client IP address is matched. </param>
         /// <param name="value"> IPv4 address, or IPv4 address range in CIDR format. </param>
         /// <returns> A new <see cref="Models.BatchIPRule"/> instance for mocking. </returns>
-        public static BatchIPRule BatchIPRule(BatchIPRuleAction action = default, string value = default)
+        public static BatchIPRule BatchIPRule(BatchIPRuleAction action, string value)
         {
             return new BatchIPRule(action, value, default);
         }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Batch.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
                 eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
         /// <param name="identity"> The identity of the Batch account. </param>
         /// <returns> A new <see cref="Models.BatchAccountCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static BatchAccountCreateOrUpdateContent BatchAccountCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = default, BatchAccountAutoStorageBaseConfiguration autoStorage = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, BatchAccountEncryptionConfiguration encryption = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, ManagedServiceIdentity identity = default)
+        public static BatchAccountCreateOrUpdateContent BatchAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, BatchAccountAutoStorageBaseConfiguration autoStorage, BatchAccountPoolAllocationMode? poolAllocationMode, BatchKeyVaultReference keyVaultReference, BatchPublicNetworkAccess? publicNetworkAccess, BatchNetworkProfile networkProfile, BatchAccountEncryptionConfiguration encryption, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Batch.Models
                     allocationState,
                     allocationStateTransitionOn,
                     vmSize,
-                    new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
+                    deploymentVmConfiguration is null ? default : new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
                     currentDedicatedNodes,
                     currentLowPriorityNodes,
                     scaleSettings,
@@ -1087,7 +1087,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"> Properties of the access rule. </param>
         /// <returns> A new <see cref="Models.BatchAccessRule"/> instance for mocking. </returns>
-        public static BatchAccessRule BatchAccessRule(string name = default, BatchAccessRuleProperties properties = default)
+        public static BatchAccessRule BatchAccessRule(string name, BatchAccessRuleProperties properties)
         {
             return new BatchAccessRule(name, properties, default);
         }
@@ -1270,7 +1270,7 @@ namespace Azure.ResourceManager.Batch.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
@@ -1433,7 +1433,7 @@ namespace Azure.ResourceManager.Batch.Models
                     allocationState,
                     allocationStateTransitionOn,
                     vmSize,
-                    new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
+                    deploymentVmConfiguration is null ? default : new BatchDeploymentConfiguration(deploymentVmConfiguration, default),
                     currentDedicatedNodes,
                     currentLowPriorityNodes,
                     scaleSettings,

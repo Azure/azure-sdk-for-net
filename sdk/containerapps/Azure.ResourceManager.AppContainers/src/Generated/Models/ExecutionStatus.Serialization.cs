@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteStartArray();
-                foreach (ReplicaExecutionStatus item in Replicas)
+                foreach (ContainerAppJobExecutionReplicaStatus item in Replicas)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            IList<ReplicaExecutionStatus> replicas = default;
+            IList<ContainerAppJobExecutionReplicaStatus> replicas = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    List<ReplicaExecutionStatus> array = new List<ReplicaExecutionStatus>();
+                    List<ContainerAppJobExecutionReplicaStatus> array = new List<ContainerAppJobExecutionReplicaStatus>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ReplicaExecutionStatus.DeserializeReplicaExecutionStatus(item, options));
+                        array.Add(ContainerAppJobExecutionReplicaStatus.DeserializeContainerAppJobExecutionReplicaStatus(item, options));
                     }
                     replicas = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExecutionStatus(replicas ?? new ChangeTrackingList<ReplicaExecutionStatus>(), additionalBinaryDataProperties);
+            return new ExecutionStatus(replicas ?? new ChangeTrackingList<ContainerAppJobExecutionReplicaStatus>(), additionalBinaryDataProperties);
         }
     }
 }

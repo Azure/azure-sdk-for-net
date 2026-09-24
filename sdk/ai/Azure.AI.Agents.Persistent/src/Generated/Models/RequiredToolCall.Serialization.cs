@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a tool invocation needed by the model to continue a run.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequiredFunctionToolCall"/>, <see cref="RequiredMcpToolCall"/>, and <see cref="RequiredComputerUseToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequiredComputerUseToolCall"/>, <see cref="RequiredFunctionToolCall"/>, and <see cref="RequiredMcpToolCall"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRequiredToolCall))]
     public abstract partial class RequiredToolCall : RequiredAction, IJsonModel<RequiredToolCall>
@@ -110,12 +110,12 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
+                    case "computer_use_preview":
+                        return RequiredComputerUseToolCall.DeserializeRequiredComputerUseToolCall(element, options);
                     case "function":
                         return RequiredFunctionToolCall.DeserializeRequiredFunctionToolCall(element, options);
                     case "mcp":
                         return RequiredMcpToolCall.DeserializeRequiredMcpToolCall(element, options);
-                    case "computer_use_preview":
-                        return RequiredComputerUseToolCall.DeserializeRequiredComputerUseToolCall(element, options);
                 }
             }
             return UnknownRequiredToolCall.DeserializeUnknownRequiredToolCall(element, options);

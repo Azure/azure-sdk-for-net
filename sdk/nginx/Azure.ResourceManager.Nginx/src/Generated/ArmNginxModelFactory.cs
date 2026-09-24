@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 userPreferredEmail is null ? default : new NginxDeploymentUserProfile(userPreferredEmail, default),
                 networkProfile,
                 upgradeChannel is null ? default : new AutoUpgradeProfile(upgradeChannel, default),
-                webApplicationFirewallActivationState is null ? default : new NginxDeploymentUpdatePropertiesNginxAppProtect(new WebApplicationFirewallSettings(webApplicationFirewallActivationState, default), default),
+                webApplicationFirewallActivationState is null ? default : new NginxDeploymentUpdatePropertiesNginxAppProtect(webApplicationFirewallActivationState is null ? default : new WebApplicationFirewallSettings(webApplicationFirewallActivationState, default), default),
                 default);
         }
 

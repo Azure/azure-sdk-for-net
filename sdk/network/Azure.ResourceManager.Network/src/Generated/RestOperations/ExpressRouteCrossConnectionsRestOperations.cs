@@ -291,5 +291,213 @@ namespace Azure.ResourceManager.Network
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateValidateCircuitMigrationRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
+            uri.AppendPath(crossConnectionName, true);
+            uri.AppendPath("/validateCircuitMigration", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetCircuitMigrationInfoRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
+            uri.AppendPath(crossConnectionName, true);
+            uri.AppendPath("/getCircuitMigrationInfo", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreatePrepareCircuitMigrationRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
+            uri.AppendPath(crossConnectionName, true);
+            uri.AppendPath("/prepareCircuitMigration", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateShutDownBgpForCircuitMigrationRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
+            uri.AppendPath(crossConnectionName, true);
+            uri.AppendPath("/shutDownBgpForCircuitMigration", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateRestoreBgpForCircuitMigrationRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
+            uri.AppendPath(crossConnectionName, true);
+            uri.AppendPath("/restoreBgpForCircuitMigration", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateMigrateCircuitRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
+            uri.AppendPath(crossConnectionName, true);
+            uri.AppendPath("/migrateCircuit", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateCommitCircuitMigrationRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
+            uri.AppendPath(crossConnectionName, true);
+            uri.AppendPath("/commitCircuitMigration", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateRollbackCircuitMigrationRequest(Guid subscriptionId, string resourceGroupName, string crossConnectionName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteCrossConnections/", false);
+            uri.AppendPath(crossConnectionName, true);
+            uri.AppendPath("/rollbackCircuitMigration", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
     }
 }

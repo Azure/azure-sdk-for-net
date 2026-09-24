@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network;
 
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvailableServiceAlias PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AvailableServiceAlias>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -52,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailableServiceAlias IPersistableModel<AvailableServiceAlias>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AvailableServiceAlias IPersistableModel<AvailableServiceAlias>.Create(BinaryData data, ModelReaderWriterOptions options) => (AvailableServiceAlias)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AvailableServiceAlias>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -66,13 +68,45 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteEndObject();
         }
 
-        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AvailableServiceAlias IJsonModel<AvailableServiceAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AvailableServiceAlias>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvailableServiceAlias)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ResourceName))
+            {
+                writer.WritePropertyName("resourceName"u8);
+                writer.WriteStringValue(ResourceName);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AvailableServiceAlias JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AvailableServiceAlias IJsonModel<AvailableServiceAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AvailableServiceAlias)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AvailableServiceAlias>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -91,26 +125,44 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
+            ResourceIdentifier id = default;
             string name = default;
-            string id = default;
-            string @type = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             string resourceName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("id"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("resourceName"u8))
@@ -123,7 +175,13 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AvailableServiceAlias(name, id, @type, resourceName, additionalBinaryDataProperties);
+            return new AvailableServiceAlias(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceName,
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -38,7 +38,7 @@ permissions:
   checks: read
 engine:
   id: copilot
-  version: "1.0.83"
+  version: "1.0.80"
   concurrency:
     group: "gh-aw-copilot-${{ github.workflow }}-${{ github.event.inputs.pr_number }}"
     queue: max
@@ -49,6 +49,7 @@ network:
     - dotnet
     - github
 safe-outputs:
+  runs-on: ubuntu-latest
   report-failure-as-issue: false
   add-comment:
     max: 1

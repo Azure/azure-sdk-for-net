@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="extensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
+        /// <param name="typeHandlerVersion"> Specifies the Major.Minor version of the script handler. Customer is able to specify only the Major.Minor version of an extension, Azure platform will deliver the latest Patch.Hotfix version in the Major.Minor series. </param>
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
         public string ExtensionType { get; set; }
 
-        /// <summary> Specifies the version of the script handler. </summary>
+        /// <summary> Specifies the Major.Minor version of the script handler. Customer is able to specify only the Major.Minor version of an extension, Azure platform will deliver the latest Patch.Hotfix version in the Major.Minor series. </summary>
         public string TypeHandlerVersion { get; set; }
 
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
