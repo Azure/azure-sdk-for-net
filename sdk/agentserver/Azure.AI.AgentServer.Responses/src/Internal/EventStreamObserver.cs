@@ -2,18 +2,19 @@
 // Licensed under the MIT License.
 
 using System.Globalization;
+using System.Net.ServerSentEvents;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
 /// <summary>
-/// Adapts a Core <see cref="AgentEventStream"/> to the orchestrator's push-based
-/// <see cref="IAsyncObserver{T}"/> publisher contract. The Responses layer no longer owns an
-/// event-stream store; it publishes response events onto the Core event-stream primitive
-/// (obtained from <see cref="AgentEventStreamRegistry"/>), mirroring the Python implementation.
+/// Adapts a Core <see cref="AgentEventStream"/> or task-bound <see cref="TaskStreamWriter"/> to the
+/// orchestrator's push-based <see cref="IAsyncObserver{T}"/> publisher contract. The Responses layer
+/// no longer owns an event-stream store; it publishes response events through Core.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -25,7 +26,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </para>
 /// <para>
 /// When the stream is a durable rehydrated stream from a prior (crashed) lifetime — created via
-/// <see cref="CreateAsync"/>, which reads the rehydrated watermark from
+/// a stream writer factory, which reads the rehydrated watermark from
 /// <see cref="AgentEventStream.GetLastEventIdAsync"/> — two crash-recovery invariants are preserved so
 /// the durable stream a client replays stays contiguous with exactly one logical
 /// <c>response.created</c> across lifetimes (US3, T036):
@@ -34,19 +35,28 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// so <c>response.in_progress</c> becomes the client-visible reset.
 /// </para>
 /// <para>
-/// Completion and error both close the Core stream (Core has no separate error channel), which
-/// drains attached subscribers and ends SSE replay.
+/// For raw registry streams, completion and error close the stream. For task-bound streams,
+/// completion is a no-op because Core closes the transport after the task's terminal transition.
 /// </para>
 /// </remarks>
 internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
 {
-    private readonly AgentEventStream _stream;
+    private readonly Func<SseItem<string>, CancellationToken, ValueTask> _emit;
+    private readonly Func<ValueTask> _complete;
+    private readonly Func<Exception, ValueTask> _error;
     private long _nextSequenceNumber;
     private bool _hasCreated;
 
-    private EventStreamObserver(AgentEventStream stream, long nextSequenceNumber, bool hasCreated)
+    private EventStreamObserver(
+        Func<SseItem<string>, CancellationToken, ValueTask> emit,
+        Func<ValueTask> complete,
+        Func<Exception, ValueTask> error,
+        long nextSequenceNumber,
+        bool hasCreated)
     {
-        _stream = stream;
+        _emit = emit;
+        _complete = complete;
+        _error = error;
         _nextSequenceNumber = nextSequenceNumber;
         _hasCreated = hasCreated;
     }
@@ -62,9 +72,44 @@ internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
         AgentEventStream stream, CancellationToken cancellationToken = default)
     {
         var lastEventId = await stream.GetLastEventIdAsync(cancellationToken).ConfigureAwait(false);
-        return long.TryParse(lastEventId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var watermark)
-            ? new EventStreamObserver(stream, watermark + 1, hasCreated: true)
-            : new EventStreamObserver(stream, nextSequenceNumber: 0, hasCreated: false);
+        GetSequenceSeed(lastEventId, out long nextSequenceNumber, out bool hasCreated);
+        return new EventStreamObserver(
+            (item, ct) => stream.EmitAsync(item, cancellationToken: ct),
+            () => stream.CloseAsync(),
+            _ => stream.CloseAsync(),
+            nextSequenceNumber,
+            hasCreated);
+    }
+
+    /// <summary>
+    /// Creates a publisher over a task-bound writer. Core owns transport closure for this mode,
+    /// after the resilient task's terminal state transition succeeds.
+    /// </summary>
+    public static async ValueTask<EventStreamObserver> CreateAsync(
+        TaskStreamWriter stream,
+        CancellationToken cancellationToken = default)
+    {
+        var lastEventId = await stream.GetLastEventIdAsync(cancellationToken).ConfigureAwait(false);
+        GetSequenceSeed(lastEventId, out long nextSequenceNumber, out bool hasCreated);
+        return new EventStreamObserver(
+            stream.EmitAsync,
+            () => ValueTask.CompletedTask,
+            error => new ValueTask(Task.FromException(error)),
+            nextSequenceNumber,
+            hasCreated);
+    }
+
+    private static void GetSequenceSeed(
+        string? lastEventId,
+        out long nextSequenceNumber,
+        out bool hasCreated)
+    {
+        hasCreated = long.TryParse(
+            lastEventId,
+            NumberStyles.Integer,
+            CultureInfo.InvariantCulture,
+            out long watermark);
+        nextSequenceNumber = hasCreated ? watermark + 1 : 0;
     }
 
     public ValueTask OnNextAsync(ResponseStreamEvent value)
@@ -85,12 +130,14 @@ internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
         }
 
         value.SequenceNumber = _nextSequenceNumber++;
-        return _stream.EmitAsync(ResponseWireStreamCodec.ToWireItem(value, SharedJsonOptions.Instance));
+        return _emit(
+            ResponseWireStreamCodec.ToWireItem(value, SharedJsonOptions.Instance),
+            CancellationToken.None);
     }
 
     public ValueTask OnErrorAsync(Exception error)
-        => _stream.CloseAsync();
+        => _error(error);
 
     public ValueTask OnCompletedAsync()
-        => _stream.CloseAsync();
+        => _complete();
 }

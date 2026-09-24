@@ -1478,7 +1478,6 @@ public async IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
 |---|---|---|
 | `SSE_KEEPALIVE_INTERVAL` | Disabled | Interval (in seconds) between SSE keep-alive comments. See [SSE Keep-Alive](#sse-keep-alive) |
 | `PORT` | `8088` | HTTP listen port for the Kestrel server |
-| `DEFAULT_FETCH_HISTORY_ITEM_COUNT` | `100` | Override for `DefaultFetchHistoryCount` |
 
 **In-memory provider options** (`InMemoryProviderOptions` — separate from `ResponsesServerOptions`):
 
