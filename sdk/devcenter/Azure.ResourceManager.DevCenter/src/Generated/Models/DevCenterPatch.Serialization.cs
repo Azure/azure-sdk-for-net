@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DevCenterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), location, additionalBinaryDataProperties, identity, properties);

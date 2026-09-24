@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Format write settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvroWriteSettings"/>, <see cref="OrcWriteSettings"/>, <see cref="ParquetWriteSettings"/>, <see cref="DelimitedTextWriteSettings"/>, <see cref="JsonWriteSettings"/>, and <see cref="IcebergWriteSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvroWriteSettings"/>, <see cref="DelimitedTextWriteSettings"/>, <see cref="IcebergWriteSettings"/>, <see cref="JsonWriteSettings"/>, <see cref="OrcWriteSettings"/>, and <see cref="ParquetWriteSettings"/>.
     /// </summary>
     public abstract partial class FormatWriteSettings
     {
