@@ -180,6 +180,43 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             Assert.AreEqual("log/01/2024/01/15/0800/", cursor.CurrentShardPath);
         }
 
+        [Test]
+        public async Task BuildSegment_RetainsCursorForExhaustedShard()
+        {
+            string shardPath = "log/00/2024/01/15/0800/";
+            string chunkPath = shardPath + "00000.avro";
+            string manifestJson = $@"{{""chunkFilePaths"":[""{shardPath}""]}}";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            SetupManifestDownload(containerClient, manifestJson);
+
+            ShardCursor shardCursor = new ShardCursor(chunkPath, blockOffset: 128, eventIndex: 0);
+            SegmentCursor inputCursor = new SegmentCursor(
+                segmentPath: ManifestPath,
+                shardCursors: new List<ShardCursor> { shardCursor },
+                currentShardPath: shardPath);
+
+            Mock<ShardBase<TestEvent>> exhaustedShard = new Mock<ShardBase<TestEvent>>(MockBehavior.Strict);
+            exhaustedShard.Setup(s => s.HasNext()).Returns(false);
+
+            Mock<ShardFactoryBase<TestEvent>> shardFactory = new Mock<ShardFactoryBase<TestEvent>>(MockBehavior.Strict);
+            shardFactory.Setup(f => f.BuildShard(IsAsync, shardPath, shardCursor))
+                .ReturnsAsync(exhaustedShard.Object);
+
+            SegmentFactoryBase<TestEvent> factory = new SegmentFactoryBase<TestEvent>(
+                containerClient.Object,
+                shardFactory.Object,
+                CreateTestConfig());
+
+            SegmentBase<TestEvent> segment = await factory.BuildSegment(IsAsync, ManifestPath, inputCursor);
+            SegmentCursor outputCursor = segment.GetCursor();
+
+            Assert.IsFalse(segment.HasNext());
+            Assert.AreEqual(shardPath, outputCursor.CurrentShardPath);
+            Assert.AreEqual(1, outputCursor.ShardCursors.Count);
+            Assert.AreSame(shardCursor, outputCursor.ShardCursors[0]);
+        }
+
         /// <summary>
         /// Verifies that when a <see cref="SegmentCursor"/> with a non-null
         /// <c>CurrentShardPath</c> is supplied, the returned segment positions itself on the
