@@ -138,6 +138,47 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
         }
 
         [Test]
+        public async Task GetPage_IncludeNonFinalizedEventsFalse_LastConsumableSegmentUsesCallerEndTime()
+        {
+            DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 14, 0, 0, TimeSpan.Zero);
+            DateTimeOffset endTime = bucket.AddMinutes(45);
+
+            List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>
+            {
+                new ShareChangeFeedEvent { EventTime = bucket.AddMinutes(2), Id = "event-in-finalized-segment" },
+                new ShareChangeFeedEvent { EventTime = endTime, Id = "event-at-caller-end" },
+            };
+
+            SegmentBase<ShareChangeFeedEvent> segment = BuildSegmentWithEvents(
+                $"idx/segments/{bucket:yyyy/MM/dd}/{bucket:HHmm}/meta.json",
+                bucket,
+                events);
+
+            Mock<BlobContainerClient> container = new Mock<BlobContainerClient>(MockBehavior.Loose);
+            container.Setup(c => c.Uri).Returns(new Uri("https://account.blob.core.windows.net/$fileschangefeed-testguid"));
+
+            ChangeFeedBase<ShareChangeFeedEvent> changeFeed = new ChangeFeedBase<ShareChangeFeedEvent>(
+                containerClient: container.Object,
+                segmentFactory: new Mock<SegmentFactoryBase<ShareChangeFeedEvent>>().Object,
+                years: new Queue<string>(),
+                segments: new Queue<string>(),
+                currentSegment: segment,
+                lastConsumable: bucket,
+                startTime: null,
+                endTime: endTime,
+                config: ShareChangeFeedClient.CreateConfiguration("$fileschangefeed-testguid"),
+                includeNonFinalizedEvents: false);
+
+            Page<ShareChangeFeedEvent> page = await changeFeed.GetPage(
+                IsAsync,
+                pageSize: 5000,
+                CancellationToken.None);
+
+            Assert.AreEqual(1, page.Values.Count);
+            Assert.AreEqual(bucket.AddMinutes(2), page.Values[0].EventTime);
+        }
+
+        [Test]
         public async Task BuildChangeFeed_IncludeNonFinalizedEventsTrue_NoMetadata_StillScansSegments()
         {
             // When meta/segments.json is missing (brand-new change feed), the default reader returns
@@ -409,6 +450,26 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                         path)));
 
             return factory;
+        }
+
+        private static SegmentBase<ShareChangeFeedEvent> BuildSegmentWithEvents(
+            string manifestPath,
+            DateTimeOffset segmentTime,
+            List<ShareChangeFeedEvent> events)
+        {
+            int index = 0;
+            Mock<ShardBase<ShareChangeFeedEvent>> shard = new Mock<ShardBase<ShareChangeFeedEvent>>();
+            shard.Setup(s => s.HasNext()).Returns(() => index < events.Count);
+            shard.Setup(s => s.Next(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(() => events[index++]);
+            shard.Setup(s => s.ShardPath).Returns("log/00/" + manifestPath);
+            shard.Setup(s => s.GetCursor()).Returns(new ShardCursor("chunk0", 0, 0));
+
+            return new SegmentBase<ShareChangeFeedEvent>(
+                new List<ShardBase<ShareChangeFeedEvent>> { shard.Object },
+                shardIndex: 0,
+                dateTime: segmentTime,
+                manifestPath: manifestPath);
         }
 
         private Mock<BlobContainerClient> SetupContainer(bool metaBlobExists = true)

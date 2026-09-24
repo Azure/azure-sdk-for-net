@@ -260,11 +260,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
         /// <summary>
         /// Verifies that <see cref="BlobChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
-        /// allows reading events past the change feed's last consumable watermark.
+        /// reads the latest available segments without producing continuation tokens.
         /// </summary>
         [Test]
         [Ignore("Requires non-finalized segments in the change feed, which cannot be reproduced deterministically in playback.")]
-        public async Task GetChanges_IncludeNonFinalizedEvents_ReturnsEventsPastLastConsumable()
+        public async Task GetChanges_IncludeNonFinalizedEvents_ReturnsEventsWithoutContinuationTokens()
         {
             // Arrange - provision a fresh container under a change-feed-enabled account and seed it with events.
             //await using DisposingContainer test = await GetTestContainerAsync();
@@ -285,13 +285,6 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                     TestConfigDefault.AccountKey),
                 options: null,
                 changeFeedOptions: new BlobChangeFeedClientOptions { IncludeNonFinalizedEvents = true });
-
-            // Snapshot the current watermark. If the account has no finalized segments yet
-            // this will be null, in which case every event the tailing reader returns is
-            // by definition past last consumable.
-            DateTimeOffset? lastConsumable = IsAsync
-                ? await tailing.GetLastConsumableAsync()
-                : tailing.GetLastConsumable();
 
             // Act - tailing reader. Iterate via AsPages so we can also assert that no page
             // carries a continuation token (resumption is unsupported in non-finalized mode).
@@ -315,14 +308,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 }
             }
 
-            // Assert - tailing reader surfaces non-finalized events past the watermark.
+            // Assert - tailing reader surfaces events from the latest available segments.
             CollectionAssert.IsNotEmpty(tailingEvents, "Tailing reader should surface events from the non-finalized segment.");
-            if (lastConsumable.HasValue)
-            {
-                Assert.IsTrue(
-                    tailingEvents.Any(e => e.EventTime > lastConsumable.Value),
-                    "Tailing reader should return at least one event with EventTime > LastConsumable.");
-            }
         }
     }
 }

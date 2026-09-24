@@ -31,8 +31,8 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="config">Change feed configuration.</param>
         /// <param name="includeNonFinalizedEvents">
         /// When <c>true</c>, segment enumeration is not capped at the change feed's last consumable
-        /// timestamp. Used by callers that opt in to reading from non-finalized segments. Defaults
-        /// to <c>false</c> to preserve the historical behavior of capping at the watermark.
+        /// segment label. Used by callers that opt in to reading from non-finalized segments.
+        /// Defaults to <c>false</c> to preserve the historical behavior of capping at that segment.
         /// </param>
         public ChangeFeedFactoryBase(
             BlobContainerClient containerClient,
@@ -64,7 +64,7 @@ namespace Azure.Storage.ChangeFeed.Common
         /// <param name="config">Change feed configuration.</param>
         /// <param name="includeNonFinalizedEvents">
         /// When <c>true</c>, segment enumeration is not capped at the change feed's last consumable
-        /// timestamp.
+        /// segment label.
         /// </param>
         public ChangeFeedFactoryBase(
             BlobContainerClient containerClient,
@@ -221,10 +221,9 @@ endTime = cursor.EndTime;
 
             // When _includeNonFinalizedEvents is true, do not cap segment enumeration at the
             // last consumable watermark — pass the user's endTime through directly. When it is
-            // false, cap enumeration at min(lastConsumable, endTime). The event-level finalized
-            // cap (EventTime < lastConsumable) is applied inside ChangeFeedBase, which also
-            // receives lastConsumable, so the cursor can still persist the user's endTime.
-            DateTimeOffset? effectiveEndTime = _includeNonFinalizedEvents
+            // false, cap enumeration at min(lastConsumable, endTime). LastConsumable is an
+            // inclusive segment-label boundary; event filtering still uses the caller's endTime.
+            DateTimeOffset? segmentDiscoveryEndTime = _includeNonFinalizedEvents
                 ? endTime
                 : ChangeFeedExtensionsBase.MinDateTime(lastConsumable, endTime);
 
@@ -234,7 +233,7 @@ endTime = cursor.EndTime;
                 segments = await ChangeFeedExtensionsBase.GetSegmentsInYearInternal(
                     containerClient: _containerClient, yearPath: years.Dequeue(),
                     startTime: startTime,
-                    endTime: effectiveEndTime,
+                    endTime: segmentDiscoveryEndTime,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -316,9 +315,9 @@ endTime = cursor.EndTime;
         }
 
         /// <summary>
-        /// Downloads and parses the meta/segments.json file to determine the last consumable timestamp.
+        /// Downloads and parses the meta/segments.json file to determine the last consumable segment label.
         /// </summary>
-        /// <returns>The last consumable <see cref="DateTimeOffset"/>, or null if the metadata blob does not exist.</returns>
+        /// <returns>The last consumable segment label, or null if the metadata blob does not exist.</returns>
         internal static async Task<DateTimeOffset?> GetLastConsumableInternal(
             BlobContainerClient containerClient,
             string metaSegmentsPath,
