@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary>
     /// Represents a policy for authorizing applications based on specified authentication and authorization schemes.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CognitiveServicesRoleBasedBuiltInAuthorizationPolicy"/>, <see cref="OrganizationSharedBuiltInAuthorizationPolicy"/>, and <see cref="ChannelsBuiltInAuthorizationPolicy"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ChannelsBuiltInAuthorizationPolicy"/>, <see cref="CognitiveServicesRoleBasedBuiltInAuthorizationPolicy"/>, and <see cref="OrganizationSharedBuiltInAuthorizationPolicy"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCognitiveServicesApplicationAuthorizationPolicy))]
     public abstract partial class CognitiveServicesApplicationAuthorizationPolicy : IJsonModel<CognitiveServicesApplicationAuthorizationPolicy>
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Channels":
+                        return ChannelsBuiltInAuthorizationPolicy.DeserializeChannelsBuiltInAuthorizationPolicy(element, options);
                     case "Default":
                         return CognitiveServicesRoleBasedBuiltInAuthorizationPolicy.DeserializeCognitiveServicesRoleBasedBuiltInAuthorizationPolicy(element, options);
                     case "OrganizationScope":
                         return OrganizationSharedBuiltInAuthorizationPolicy.DeserializeOrganizationSharedBuiltInAuthorizationPolicy(element, options);
-                    case "Channels":
-                        return ChannelsBuiltInAuthorizationPolicy.DeserializeChannelsBuiltInAuthorizationPolicy(element, options);
                 }
             }
             return UnknownCognitiveServicesApplicationAuthorizationPolicy.DeserializeUnknownCognitiveServicesApplicationAuthorizationPolicy(element, options);

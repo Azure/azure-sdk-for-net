@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new KeyGroupProperties(keyReferences ?? new ChangeTrackingList<CdnResourceReference>(), provisioningState, deploymentStatus, additionalBinaryDataProperties);
