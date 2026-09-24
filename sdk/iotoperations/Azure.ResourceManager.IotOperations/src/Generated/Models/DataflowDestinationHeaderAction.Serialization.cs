@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// Dataflow Destination Header Action properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowDestinationAddIfNotPresentHeaderAction"/>, <see cref="DataflowDestinationRemoveHeaderAction"/>, and <see cref="DataflowDestinationAddOrReplaceHeaderAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataflowDestinationAddIfNotPresentHeaderAction"/>, <see cref="DataflowDestinationAddOrReplaceHeaderAction"/>, and <see cref="DataflowDestinationRemoveHeaderAction"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataflowDestinationHeaderAction))]
     public abstract partial class DataflowDestinationHeaderAction : IJsonModel<DataflowDestinationHeaderAction>
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                 {
                     case "AddIfNotPresent":
                         return DataflowDestinationAddIfNotPresentHeaderAction.DeserializeDataflowDestinationAddIfNotPresentHeaderAction(element, options);
-                    case "Remove":
-                        return DataflowDestinationRemoveHeaderAction.DeserializeDataflowDestinationRemoveHeaderAction(element, options);
                     case "AddOrReplace":
                         return DataflowDestinationAddOrReplaceHeaderAction.DeserializeDataflowDestinationAddOrReplaceHeaderAction(element, options);
+                    case "Remove":
+                        return DataflowDestinationRemoveHeaderAction.DeserializeDataflowDestinationRemoveHeaderAction(element, options);
                 }
             }
             return UnknownDataflowDestinationHeaderAction.DeserializeUnknownDataflowDestinationHeaderAction(element, options);
