@@ -9,10 +9,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Blobs.Models;
@@ -4388,6 +4390,657 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Assert.IsTrue(exists);
             CollectionAssert.IsEmpty(events.Where(e => e.EventData.Level < EventLevel.Informational));
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreNotEqual(default(ETag), blobLayoutInfo.ETag);
+                Assert.AreEqual(size, blobLayoutInfo.BlobContentLength);
+                Assert.AreEqual(BlobType.Block, blobLayoutInfo.BlobType);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.CreatedOn);
+                Assert.IsTrue(blobLayoutInfo.IsServerEncrypted);
+                Assert.AreEqual(LeaseStatus.Unlocked, blobLayoutInfo.LeaseStatus);
+                Assert.AreEqual(LeaseState.Available, blobLayoutInfo.LeaseState);
+                Assert.NotNull(blobLayoutInfo.Ranges);
+                Assert.NotNull(blobLayoutInfo.Endpoints);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_OAuth()
+        {
+            // The layout endpoints are returned by the service, so exercise the
+            // bearer-token path explicitly rather than relying on the SharedKey
+            // coverage above.
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service: oauthService);
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            bool anyPages = false;
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                anyPages = true;
+
+                // Assert
+                Assert.AreNotEqual(default(ETag), blobLayoutInfo.ETag);
+                Assert.AreEqual(size, blobLayoutInfo.BlobContentLength);
+                Assert.AreEqual(BlobType.Block, blobLayoutInfo.BlobType);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.CreatedOn);
+                Assert.IsTrue(blobLayoutInfo.IsServerEncrypted);
+                Assert.AreEqual(LeaseStatus.Unlocked, blobLayoutInfo.LeaseStatus);
+                Assert.AreEqual(LeaseState.Available, blobLayoutInfo.LeaseState);
+                Assert.NotNull(blobLayoutInfo.Ranges);
+                Assert.NotNull(blobLayoutInfo.Endpoints);
+            }
+
+            Assert.IsTrue(anyPages, "Expected GetLayoutAsync to return at least one page under OAuth");
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_EmptyBlob()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            await blob.CommitBlockListAsync(Array.Empty<string>());
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.Null(blobLayoutInfo.Ranges);
+                Assert.Null(blobLayoutInfo.Endpoints);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_ReturnsRangesAndEndpoints()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.IsNotNull(blobLayoutInfo.Ranges);
+                Assert.IsNotNull(blobLayoutInfo.Endpoints);
+
+                // Verify ranges have valid start/end byte offsets
+                Assert.IsNotEmpty(blobLayoutInfo.Ranges.Range);
+                foreach (BlobLayoutRange rangeItem in blobLayoutInfo.Ranges.Range)
+                {
+                    Assert.GreaterOrEqual(rangeItem.Start, 0);
+                    Assert.Greater(rangeItem.End, rangeItem.Start);
+                }
+
+                // Verify ranges are contiguous and cover byte 0 through size-1
+                Assert.AreEqual(0, blobLayoutInfo.Ranges.Range[0].Start);
+                for (int i = 1; i < blobLayoutInfo.Ranges.Range.Count; i++)
+                {
+                    Assert.AreEqual(blobLayoutInfo.Ranges.Range[i - 1].End + 1, blobLayoutInfo.Ranges.Range[i].Start);
+                }
+                Assert.AreEqual(size - 1, blobLayoutInfo.Ranges.Range[blobLayoutInfo.Ranges.Range.Count - 1].End);
+
+                // Verify endpoints are present and each range's EndpointIndex resolves
+                Assert.IsNotEmpty(blobLayoutInfo.Endpoints.Endpoint);
+                Dictionary<int, string> endpointMap = new Dictionary<int, string>();
+                foreach (BlobLayoutEndpoint ep in blobLayoutInfo.Endpoints.Endpoint)
+                {
+                    Assert.IsNotNull(ep.Value);
+                    Assert.IsNotEmpty(ep.Value);
+                    endpointMap[ep.Index] = ep.Value;
+                }
+                foreach (BlobLayoutRange rangeItem in blobLayoutInfo.Ranges.Range)
+                {
+                    Assert.IsTrue(endpointMap.ContainsKey(rangeItem.EndpointIndex),
+                        $"Range [{rangeItem.Start}-{rangeItem.End}] references EndpointIndex {rangeItem.EndpointIndex} not found in endpoints");
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_MaxPageSize()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Act
+            int maxPageSize = 1;
+            await foreach (Page<BlobLayoutInfo> page in blob.GetLayoutAsync().AsPages(pageSizeHint: maxPageSize))
+            {
+                foreach (BlobLayoutInfo blobLayoutInfo in page.Values)
+                {
+                    // Assert
+                    Assert.AreEqual(maxPageSize, blobLayoutInfo.Ranges.Range.Count);
+                    Assert.AreEqual(maxPageSize, blobLayoutInfo.Endpoints.Endpoint.Count);
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_ContinuationToken()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            // Act
+            Page<BlobLayoutInfo> page1 = blob.GetLayoutAsync().AsPages(pageSizeHint: 1).FirstAsync().GetAwaiter().GetResult();
+            BlobLayoutInfo blobLayoutInfo1 = page1.Values.First();
+            Assert.AreEqual(1, blobLayoutInfo1.Ranges.Range.Count);
+
+            string continuationToken = page1.ContinuationToken;
+            Assert.IsNotNull(continuationToken);
+            ETag prevETag = blobLayoutInfo1.ETag;
+            BlobRequestConditions conditions = new BlobRequestConditions().WithIfMatch(prevETag);
+            Page<BlobLayoutInfo> page2 = blob.GetLayoutAsync(new BlobGetLayoutOptions { Conditions = conditions }).AsPages(continuationToken: continuationToken).FirstAsync().GetAwaiter().GetResult();
+            BlobLayoutInfo blobLayoutInfo2 = page2.Values.First();
+            Assert.IsNotNull(blobLayoutInfo2);
+        }
+
+        [Ignore("The service currently has a bug, please re-enable after fix")]
+        [RecordedTest]
+        public async Task GetLayoutAsync_Ranged_ValidatesRange()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 15;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            long rangeOffset = 3;
+            long rangeCount = 7;
+            HttpRange range = new HttpRange(rangeOffset, rangeCount);
+
+            // Act
+            List<BlobLayoutRange> allRanges = new List<BlobLayoutRange>();
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(new BlobGetLayoutOptions { Range = range }))
+            {
+                // Assert
+                Assert.IsNotNull(blobLayoutInfo.Ranges);
+                Assert.IsNotEmpty(blobLayoutInfo.Ranges.Range);
+
+                allRanges.AddRange(blobLayoutInfo.Ranges.Range);
+
+                // Verify endpoints are returned and resolvable
+                Assert.IsNotNull(blobLayoutInfo.Endpoints);
+                Assert.IsNotEmpty(blobLayoutInfo.Endpoints.Endpoint);
+                foreach (BlobLayoutEndpoint ep in blobLayoutInfo.Endpoints.Endpoint)
+                {
+                    Assert.IsNotNull(ep.Value);
+                    Assert.IsNotEmpty(ep.Value);
+                }
+            }
+
+            // Verify range coverage is scoped to the requested range across all pages
+            Assert.IsNotEmpty(allRanges);
+            Assert.AreEqual(rangeOffset, allRanges[0].Start);
+            long rangeEnd = rangeOffset + rangeCount - 1;
+            Assert.AreEqual(rangeEnd, allRanges[allRanges.Count - 1].End);
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_Error()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetLayoutAsync().ToListAsync(),
+                e => Assert.AreEqual("BlobNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_AccessConditions()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in AccessConditions_Data)
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                long size = 5 * Constants.KB;
+                var data = GetRandomBuffer(size);
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+
+                parameters.Match = await SetupBlobMatchCondition(blob, parameters.Match);
+                parameters.LeaseId = await SetupBlobLeaseCondition(blob, parameters.LeaseId, garbageLeaseId);
+                BlobRequestConditions accessConditions = BuildAccessConditions(
+                    parameters: parameters,
+                    lease: true);
+
+                // Act
+                await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
+                    new BlobGetLayoutOptions { Conditions = accessConditions }))
+                {
+                    // Assert
+                    Assert.IsNotNull(blobLayoutInfo.ETag);
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_AccessConditionsFail()
+        {
+            var garbageLeaseId = GetGarbageLeaseId();
+            foreach (AccessConditionParameters parameters in GetAccessConditionsFail_Data(garbageLeaseId))
+            {
+                await using DisposingContainer test = await GetTestContainerAsync();
+
+                // Arrange
+                BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+                long size = 5 * Constants.KB;
+                var data = GetRandomBuffer(size);
+                using (var stream = new MemoryStream(data))
+                {
+                    await blob.UploadAsync(stream);
+                }
+
+                parameters.NoneMatch = await SetupBlobMatchCondition(blob, parameters.NoneMatch);
+                BlobRequestConditions accessConditions = BuildAccessConditions(parameters);
+
+                // Act
+                await TestHelper.CatchAsync<Exception>(
+                    async () =>
+                    {
+                        await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
+                            new BlobGetLayoutOptions { Conditions = accessConditions }))
+                        {
+                            // intentionally empty
+                        }
+                    });
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetLayoutAsync_IfTags()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            Dictionary<string, string> tags = new Dictionary<string, string>
+            {
+                { "coolTag", "true" }
+            };
+            await blob.SetTagsAsync(tags);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
+                new BlobGetLayoutOptions { Conditions = conditions }))
+            {
+                // Assert
+                Assert.IsNotNull(blobLayoutInfo.ETag);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetLayoutAsync_IfTagsFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                TagConditions = "\"coolTag\" = 'true'"
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetLayoutAsync(new BlobGetLayoutOptions { Conditions = conditions }).ToListAsync(),
+                e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_Lease()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+            var duration = TimeSpan.FromSeconds(15);
+            await InstrumentClient(blob.GetBlobLeaseClient(leaseId)).AcquireAsync(duration);
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync(
+                new BlobGetLayoutOptions { Conditions = conditions }))
+            {
+                // Assert
+                Assert.AreEqual(LeaseStatus.Locked, blobLayoutInfo.LeaseStatus);
+                Assert.AreEqual(LeaseState.Leased, blobLayoutInfo.LeaseState);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_LeaseFailed()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            var leaseId = Recording.Random.NewGuid().ToString();
+
+            BlobRequestConditions conditions = new BlobRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                blob.GetLayoutAsync(new BlobGetLayoutOptions { Conditions = conditions }).ToListAsync(),
+                e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_Metadata()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            IDictionary<string, string> metadata = BuildMetadata();
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream, metadata: metadata);
+            }
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.CreatedOn);
+                Assert.AreEqual(BlobType.Block, blobLayoutInfo.BlobType);
+                Assert.AreEqual(size, blobLayoutInfo.BlobContentLength);
+                Assert.IsTrue(blobLayoutInfo.IsServerEncrypted);
+                Assert.AreEqual(LeaseStatus.Unlocked, blobLayoutInfo.LeaseStatus);
+                Assert.AreEqual(LeaseState.Available, blobLayoutInfo.LeaseState);
+                Assert.IsNotNull(blobLayoutInfo.Metadata);
+                AssertDictionaryEquality(metadata, blobLayoutInfo.Metadata);
+            }
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        public async Task GetLayoutAsync_CPK()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            CustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            blob = InstrumentClient(blob.WithCustomerProvidedKey(customerProvidedKey));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, blobLayoutInfo.EncryptionKeySha256);
+            }
+        }
+
+        [Ignore("The current test environment does not support this feature")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_07_07)]
+        public async Task GetLayoutAsync_EncryptionScope()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            blob = InstrumentClient(blob.WithEncryptionScope(TestConfigDefault.EncryptionScope));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreEqual(TestConfigDefault.EncryptionScope, blobLayoutInfo.EncryptionScope);
+            }
+        }
+
+        [Ignore("The current test environment does not support this feature")]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [TestCase(null)]
+        [TestCase(RehydratePriority.Standard)]
+        [TestCase(RehydratePriority.High)]
+        public async Task GetLayoutAsync_RehydratePriority(RehydratePriority? rehydratePriority)
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            if (rehydratePriority.HasValue)
+            {
+                await blob.SetAccessTierAsync(
+                    AccessTier.Archive);
+
+                await blob.SetAccessTierAsync(
+                    AccessTier.Hot,
+                    rehydratePriority: rehydratePriority.Value);
+            }
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreEqual(rehydratePriority.HasValue ? rehydratePriority.Value.ToString() : null, blobLayoutInfo.RehydratePriority);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        public async Task GetLayoutAsync_Tags()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            IDictionary<string, string> tags = BuildTags();
+            await blob.SetTagsAsync(tags);
+
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.AreEqual(tags.Count, blobLayoutInfo.TagCount);
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetLayoutAsync_BlobSAS()
+        {
+            var containerName = GetNewContainerName();
+            var blobName = GetNewBlobName();
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(blobName));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            BlockBlobClient sasBlob = InstrumentClient(
+                GetServiceClient_BlobServiceSas_Blob(
+                    containerName: containerName,
+                    blobName: blobName)
+                .GetBlobContainerClient(containerName)
+                .GetBlockBlobClient(blobName));
+
+            // Act
+            await foreach (BlobLayoutInfo blobLayoutInfo in sasBlob.GetLayoutAsync())
+            {
+                // Assert
+                Assert.NotNull(blobLayoutInfo.ETag);
+            }
         }
 
         [RecordedTest]

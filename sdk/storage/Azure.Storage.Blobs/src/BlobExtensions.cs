@@ -719,6 +719,170 @@ namespace Azure.Storage.Blobs
                 hasLegalHold: response.Headers.TryGetValue("x-ms-legal-hold", out bool? legalHold) && legalHold.GetValueOrDefault(),
                 smartAccessTier: response.Headers.TryGetValue("x-ms-smart-access-tier", out string smartAccessTier) ? smartAccessTier : null);
         }
+
+        internal static BlobLayoutInfo ToBlobLayoutInfo(this NullableResponse<BlobLayout> response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+
+            Response rawResponse = response.GetRawResponse();
+            BlobLayout layout = response.HasValue ? response.Value : null;
+
+            var objectReplicationRules = rawResponse.Headers.TryGetValue(Constants.Blob.ObjectReplicationRulesHeaderPrefix, out IDictionary<string, string> objectReplicationRulesValue)
+                ? objectReplicationRulesValue
+                : null;
+            BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
+            immutabilityPolicy.ExpiresOn = rawResponse.Headers.TryGetValue("x-ms-immutability-policy-until-date", out DateTimeOffset? immutabilityExpiry) ? immutabilityExpiry : null;
+            immutabilityPolicy.PolicyMode = rawResponse.Headers.TryGetValue("x-ms-immutability-policy-mode", out string immutabilityMode) ? immutabilityMode.ToBlobImmutabilityPolicyMode() : null;
+
+            return new BlobLayoutInfo
+            {
+                Ranges = layout?.Ranges,
+                Endpoints = layout?.Endpoints,
+                LastModified = rawResponse.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                CreatedOn = rawResponse.Headers.TryGetValue("x-ms-creation-time", out DateTimeOffset? creationTime) ? creationTime.GetValueOrDefault() : default,
+                Metadata = rawResponse.Headers.TryGetValue(Constants.Blob.MetadataHeaderPrefix, out IDictionary<string, string> metadataValue) ? metadataValue : null,
+                ObjectReplicationDestinationPolicyId = rawResponse.Headers.TryGetValue("x-ms-or-policy-id", out string orPolicyId) ? orPolicyId : null,
+                ObjectReplicationSourceProperties =
+                    objectReplicationRules?.Count > 0
+                    ? BlobExtensions.ParseObjectReplicationIds(objectReplicationRules)
+                    : null,
+                BlobType = rawResponse.Headers.TryGetValue("x-ms-blob-type", out string blobType) ? blobType.ToBlobType() : default,
+                CopyCompletedOn = rawResponse.Headers.TryGetValue("x-ms-copy-completion-time", out DateTimeOffset? copyCompletionTime) ? copyCompletionTime.GetValueOrDefault() : default,
+                CopyStatusDescription = rawResponse.Headers.TryGetValue("x-ms-copy-status-description", out string copyStatusDescription) ? copyStatusDescription : null,
+                CopyId = rawResponse.Headers.TryGetValue("x-ms-copy-id", out string copyId) ? copyId : null,
+                CopyProgress = rawResponse.Headers.TryGetValue("x-ms-copy-progress", out string copyProgress) ? copyProgress : null,
+                CopySource = rawResponse.Headers.TryGetValue("x-ms-copy-source", out string copySource) ? (copySource == null ? null : new Uri(copySource)) : null,
+                BlobCopyStatus = rawResponse.Headers.TryGetValue("x-ms-copy-status", out string copyStatus) ? copyStatus.ToCopyStatus() : null,
+                IsIncrementalCopy = rawResponse.Headers.TryGetValue("x-ms-incremental-copy", out bool? isIncrementalCopy) && isIncrementalCopy.GetValueOrDefault(),
+                DestinationSnapshot = rawResponse.Headers.TryGetValue("x-ms-copy-destination-snapshot", out string destinationSnapshot) ? destinationSnapshot : null,
+                LeaseDuration = rawResponse.Headers.TryGetValue("x-ms-lease-duration", out string leaseDuration) ? leaseDuration.ToLeaseDurationType() : default,
+                LeaseState = rawResponse.Headers.TryGetValue("x-ms-lease-state", out string leaseState) ? leaseState.ToLeaseState() : default,
+                LeaseStatus = rawResponse.Headers.TryGetValue("x-ms-lease-status", out string leaseStatus) ? leaseStatus.ToLeaseStatus() : default,
+                ContentLength = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out long? contentLength) ? contentLength.GetValueOrDefault() : default,
+                ContentType = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentType, out string contentType) ? contentType : null,
+                ETag = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ETag, out string etagValue) ? new ETag(etagValue) : default,
+                ContentHash = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null,
+                ContentEncoding = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out string contentEncoding) ? contentEncoding : null,
+                ContentDisposition = rawResponse.Headers.TryGetValue("Content-Disposition", out string contentDisposition) ? contentDisposition : null,
+                ContentLanguage = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out string contentLanguage) ? contentLanguage : null,
+                CacheControl = rawResponse.Headers.TryGetValue("Cache-Control", out string cacheControl) ? cacheControl : null,
+                BlobSequenceNumber = rawResponse.Headers.TryGetValue("x-ms-blob-sequence-number", out long? blobSequenceNumber) ? blobSequenceNumber.GetValueOrDefault() : default,
+                AcceptRanges = rawResponse.Headers.TryGetValue("Accept-Ranges", out string acceptRanges) ? acceptRanges : null,
+                BlobCommittedBlockCount = rawResponse.Headers.TryGetValue("x-ms-blob-committed-block-count", out int? blobCommittedBlockCount) ? blobCommittedBlockCount.GetValueOrDefault() : default,
+                IsServerEncrypted = rawResponse.Headers.TryGetValue("x-ms-server-encrypted", out bool? isServerEncrypted) && isServerEncrypted.GetValueOrDefault(),
+                EncryptionKeySha256 = rawResponse.Headers.TryGetValue("x-ms-encryption-key-sha256", out string encryptionKeySha256) ? encryptionKeySha256 : null,
+                EncryptionScope = rawResponse.Headers.TryGetValue("x-ms-encryption-scope", out string encryptionScope) ? encryptionScope : null,
+                AccessTier = rawResponse.Headers.TryGetValue("x-ms-access-tier", out string accessTier) ? accessTier : null,
+                AccessTierInferred = rawResponse.Headers.TryGetValue("x-ms-access-tier-inferred", out bool? accessTierInferred) && accessTierInferred.GetValueOrDefault(),
+                SmartAccessTier = rawResponse.Headers.TryGetValue("x-ms-smart-access-tier", out string smartAccessTier) ? smartAccessTier : null,
+                ArchiveStatus = rawResponse.Headers.TryGetValue("x-ms-archive-status", out string archiveStatus) ? archiveStatus : null,
+                AccessTierChangedOn = rawResponse.Headers.TryGetValue("x-ms-access-tier-change-time", out DateTimeOffset? accessTierChangeTime) ? accessTierChangeTime.GetValueOrDefault() : default,
+                VersionId = rawResponse.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string versionId) ? versionId : null,
+                IsLatestVersion = rawResponse.Headers.TryGetValue("x-ms-is-current-version", out bool? isCurrentVersion) && isCurrentVersion.GetValueOrDefault(),
+                TagCount = rawResponse.Headers.TryGetValue("x-ms-tag-count", out long? tagCount) ? tagCount.GetValueOrDefault() : default,
+                ExpiresOn = rawResponse.Headers.TryGetValue("x-ms-expiry-time", out DateTimeOffset? expiresOn) ? expiresOn.GetValueOrDefault() : default,
+                IsSealed = rawResponse.Headers.TryGetValue("x-ms-blob-sealed", out bool? isSealed) && isSealed.GetValueOrDefault(),
+                RehydratePriority = rawResponse.Headers.TryGetValue("x-ms-rehydrate-priority", out string rehydratePriority) ? rehydratePriority : null,
+                LastAccessed = rawResponse.Headers.TryGetValue("x-ms-last-access-time", out DateTimeOffset? lastAccessed) ? lastAccessed.GetValueOrDefault() : default,
+                ImmutabilityPolicy = immutabilityPolicy,
+                HasLegalHold = rawResponse.Headers.TryGetValue("x-ms-legal-hold", out bool? legalHold) && legalHold.GetValueOrDefault(),
+                BlobContentLength = rawResponse.Headers.TryGetValue("x-ms-blob-content-length", out long? blobContentLength) ? blobContentLength.GetValueOrDefault() : default,
+                BlobContentType = rawResponse.Headers.TryGetValue("x-ms-blob-content-type", out string blobContentType) ? blobContentType : null,
+                BlobContentEncoding = rawResponse.Headers.TryGetValue("x-ms-blob-content-encoding", out string blobContentEncoding) ? blobContentEncoding : null,
+                BlobContentMD5 = rawResponse.Headers.TryGetValue("x-ms-blob-content-md5", out byte[] blobContentMD5) ? blobContentMD5 : null,
+                BlobCreatedOn = rawResponse.Headers.TryGetValue("x-ms-blob-creation-time", out DateTimeOffset? blobCreationTime) ? blobCreationTime.GetValueOrDefault() : default
+            };
+        }
+
+        internal static BlobLayoutSegment[] ToBlobLayoutSegments(this BlobLayoutInfo blobLayoutInfo)
+        {
+            if (blobLayoutInfo == null)
+            {
+                return null;
+            }
+
+            IList<BlobLayoutRange> ranges = blobLayoutInfo.Ranges?.Range;
+            if (ranges == null || ranges.Count == 0)
+            {
+                return Array.Empty<BlobLayoutSegment>();
+            }
+
+            // Build Dictionary for index → endpoint
+            Dictionary<int, string> indexToEndpoint = new Dictionary<int, string>();
+            if (blobLayoutInfo.Endpoints?.Endpoint != null)
+            {
+                foreach (BlobLayoutEndpoint endpoint in blobLayoutInfo.Endpoints.Endpoint)
+                {
+                    indexToEndpoint[endpoint.Index] = endpoint.Value;
+                }
+            }
+
+            BlobLayoutSegment[] segments = new BlobLayoutSegment[ranges.Count];
+            for (int i = 0; i < ranges.Count; i++)
+            {
+                BlobLayoutRange range = ranges[i];
+                indexToEndpoint.TryGetValue(range.EndpointIndex, out string endpointValue);
+                segments[i] = new BlobLayoutSegment
+                {
+                    Start = range.Start,
+                    End = range.End,
+                    Endpoint = endpointValue,
+                };
+            }
+
+            return segments;
+        }
+
+        /// <summary>
+        /// Gets the endpoint of the first range within the blob layout that overlaps with the
+        /// download chunk range. Utilizes binary search.
+        /// </summary>
+        /// <param name="chunkRange">
+        /// The download chunk range to intersect.
+        /// </param>
+        /// <param name="layoutSegments">
+        /// Non-overlapping sorted layout segments produced by <see cref="ToBlobLayoutSegments"/>.
+        /// May be null or empty when no layout is available; in that case, returns null.
+        /// </param>
+        /// <returns>
+        /// The optimal endpoint for this chunk based on the blob layout, or null if no
+        /// segment covers the chunk's start offset.
+        /// </returns>
+        internal static string GetLayoutEndpoint(
+            HttpRange chunkRange,
+            IReadOnlyList<BlobLayoutSegment> layoutSegments)
+        {
+            if (layoutSegments == null || layoutSegments.Count == 0)
+            {
+                return null;
+            }
+
+            long chunkRangeStart = chunkRange.Offset;
+
+            // Binary search: find the first range layout segment with End >= chunkRangeStart.
+            int lo = 0, hi = layoutSegments.Count - 1;
+            int overlapIndex = layoutSegments.Count;
+            while (lo <= hi)
+            {
+                int mid = lo + (hi - lo) / 2;
+                if (layoutSegments[mid].End >= chunkRangeStart)
+                {
+                    overlapIndex = mid;
+                    hi = mid - 1;
+                }
+                else
+                {
+                    lo = mid + 1;
+                }
+            }
+
+            return overlapIndex == layoutSegments.Count
+                ? null // should theoretically never happen since layout returned by service will always cover range
+                : layoutSegments[overlapIndex].Endpoint;
+        }
         #endregion
 
         #region ToBlobCopyInfo
@@ -837,6 +1001,9 @@ namespace Azure.Storage.Blobs
                     AccessTierInferred = rawResponse.Headers.TryGetValue("x-ms-access-tier-inferred", out bool? accessTierInferred) && accessTierInferred.GetValueOrDefault(),
                     AccessTierChangedOn = rawResponse.Headers.TryGetValue("x-ms-access-tier-change-time", out DateTimeOffset? accessTierChangedOn) ? accessTierChangedOn.GetValueOrDefault() : default,
                     SmartAccessTier = rawResponse.Headers.TryGetValue("x-ms-smart-access-tier", out string smartAccessTier) ? smartAccessTier : null,
+                    DownloadHint = rawResponse.Headers.TryGetValue("x-ms-download-hint", out string downloadHint) && downloadHint != null
+                        ? new DownloadHint(downloadHint)
+                        : (DownloadHint?)null,
                 }
             };
         }
