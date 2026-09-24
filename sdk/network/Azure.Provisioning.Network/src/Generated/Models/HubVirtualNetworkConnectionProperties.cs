@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<bool> _allowHubToRemoteVnetTransit;
         private BicepValue<bool> _allowRemoteVnetToUseHubVnetGateways;
         private BicepValue<bool> _enableInternetSecurity;
-        private RoutingConfigurationNfv _routingConfiguration;
+        private RoutingConfiguration _routingConfiguration;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new HubVirtualNetworkConnectionProperties. </summary>
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the RoutingConfiguration. </summary>
-        public RoutingConfigurationNfv RoutingConfiguration
+        public RoutingConfiguration RoutingConfiguration
         {
             get
             {
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.Network
             _allowHubToRemoteVnetTransit = DefineProperty<bool>(nameof(AllowHubToRemoteVnetTransit), new string[] { "allowHubToRemoteVnetTransit" });
             _allowRemoteVnetToUseHubVnetGateways = DefineProperty<bool>(nameof(AllowRemoteVnetToUseHubVnetGateways), new string[] { "allowRemoteVnetToUseHubVnetGateways" });
             _enableInternetSecurity = DefineProperty<bool>(nameof(EnableInternetSecurity), new string[] { "enableInternetSecurity" });
-            _routingConfiguration = DefineModelProperty<RoutingConfigurationNfv>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
+            _routingConfiguration = DefineModelProperty<RoutingConfiguration>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

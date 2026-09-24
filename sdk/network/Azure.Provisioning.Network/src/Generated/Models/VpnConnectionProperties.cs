@@ -31,7 +31,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<bool> _useLocalAzureIPAddress;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepList<VpnSiteLinkConnection> _vpnLinkConnections;
-        private RoutingConfigurationNfv _routingConfiguration;
+        private RoutingConfiguration _routingConfiguration;
 
         /// <summary> Creates a new VpnConnectionProperties. </summary>
         public VpnConnectionProperties()
@@ -289,7 +289,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the RoutingConfiguration. </summary>
-        public RoutingConfigurationNfv RoutingConfiguration
+        public RoutingConfiguration RoutingConfiguration
         {
             get
             {
@@ -342,7 +342,7 @@ namespace Azure.Provisioning.Network
             _useLocalAzureIPAddress = DefineProperty<bool>(nameof(UseLocalAzureIPAddress), new string[] { "useLocalAzureIpAddress" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _vpnLinkConnections = DefineListProperty<VpnSiteLinkConnection>(nameof(VpnLinkConnections), new string[] { "vpnLinkConnections" });
-            _routingConfiguration = DefineModelProperty<RoutingConfigurationNfv>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
+            _routingConfiguration = DefineModelProperty<RoutingConfiguration>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
             DefineAdditionalProperties();
         }
 

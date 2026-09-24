@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<long> _tunnelIdentifier;
         private BicepList<string> _bgpPeerAddress;
         private BicepValue<bool> _enableInternetSecurity;
-        private RoutingConfigurationNfv _routingConfiguration;
+        private RoutingConfiguration _routingConfiguration;
 
         /// <summary> Creates a new NetworkVirtualApplianceConnectionProperties. </summary>
         public NetworkVirtualApplianceConnectionProperties()
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the RoutingConfiguration. </summary>
-        public RoutingConfigurationNfv RoutingConfiguration
+        public RoutingConfiguration RoutingConfiguration
         {
             get
             {
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.Network
             _tunnelIdentifier = DefineProperty<long>(nameof(TunnelIdentifier), new string[] { "tunnelIdentifier" });
             _bgpPeerAddress = DefineListProperty<string>(nameof(BgpPeerAddress), new string[] { "bgpPeerAddress" });
             _enableInternetSecurity = DefineProperty<bool>(nameof(EnableInternetSecurity), new string[] { "enableInternetSecurity" });
-            _routingConfiguration = DefineModelProperty<RoutingConfigurationNfv>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
+            _routingConfiguration = DefineModelProperty<RoutingConfiguration>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
             DefineAdditionalProperties();
         }
 

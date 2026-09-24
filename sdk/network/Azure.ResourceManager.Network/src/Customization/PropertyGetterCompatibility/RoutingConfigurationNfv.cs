@@ -3,9 +3,12 @@
 
 #nullable disable
 
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility declaration for the RoutingConfigurationNfv type. </summary>
+    [CodeGenType("RoutingConfiguration")]
     public partial class RoutingConfigurationNfv
     {
         /// <summary> Compatibility member. </summary>

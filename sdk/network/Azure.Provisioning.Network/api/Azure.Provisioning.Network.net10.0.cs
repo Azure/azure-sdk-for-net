@@ -2288,7 +2288,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Network.ExpressRouteGateway Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Network.RoutingConfigurationNfv RoutingConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.Network.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> RoutingWeight { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.ExpressRouteConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -3257,7 +3257,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.Network.VirtualHub Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> RemoteVirtualNetworkId { get { throw null; } set { } }
-        public Azure.Provisioning.Network.RoutingConfigurationNfv RoutingConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.Network.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.HubVirtualNetworkConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -5279,7 +5279,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> NamePropertiesName { get { throw null; } set { } }
         public Azure.Provisioning.Network.NetworkVirtualAppliance Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Network.RoutingConfigurationNfv RoutingConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.Network.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TunnelIdentifier { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.NetworkVirtualApplianceConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -5586,7 +5586,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.VpnServerConfigurationPolicyGroup> PreviousConfigurationPolicyGroupAssociations { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Network.RoutingConfigurationNfv RoutingConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.Network.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.Network.VirtualNetworkAddressSpace VpnClientAddressPool { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -6170,9 +6170,9 @@ namespace Azure.Provisioning.Network
             public static readonly string V2025_05_01;
         }
     }
-    public partial class PropagatedRouteTableNfv : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class PropagatedRouteTable : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public PropagatedRouteTableNfv() { }
+        public PropagatedRouteTable() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkSubResource> Ids { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Labels { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -6860,13 +6860,13 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.Network.SubnetResource Subnet { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class RoutingConfigurationNfv : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RoutingConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public RoutingConfigurationNfv() { }
+        public RoutingConfiguration() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AssociatedRouteTableId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> InboundRouteMapId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> OutboundRouteMapId { get { throw null; } set { } }
-        public Azure.Provisioning.Network.PropagatedRouteTableNfv PropagatedRouteTables { get { throw null; } set { } }
+        public Azure.Provisioning.Network.PropagatedRouteTable PropagatedRouteTables { get { throw null; } set { } }
         public Azure.Provisioning.Network.VnetRoute VnetRoutes { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -8623,7 +8623,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.Network.VpnGateway Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> RemoteVpnSiteId { get { throw null; } set { } }
-        public Azure.Provisioning.Network.RoutingConfigurationNfv RoutingConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.Network.RoutingConfiguration RoutingConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> RoutingWeight { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SharedKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.TrafficSelectorPolicy> TrafficSelectorPolicies { get { throw null; } set { } }

@@ -9,7 +9,7 @@ It reflects the generated code and API surface in SDK PR
 
 - Spec PR:
   [Azure/azure-rest-api-specs#46412](https://github.com/Azure/azure-rest-api-specs/pull/46412)
-- Spec commit: `f5132f8a007ad9fd37adbc4bceb8f1281fbab9cb`
+- Spec commit: `a3a076f131f1a11a5748c6eb21bc0b09092c9e6a`
 - Provisioning emitter:
   `@azure-typespec/http-client-csharp-provisioning`
   `1.0.0-alpha.20260916.3`
@@ -46,9 +46,9 @@ unique differences for each target framework:
 | Diagnostic | Per framework | Across three frameworks | Meaning |
 |---|---:|---:|---|
 | `CP0001` | 10 | 30 | Removed public types |
-| `CP0002` | 411 | 1,233 | Removed public members |
+| `CP0002` | 408 | 1,224 | Removed public members |
 | `CP0011` | 24 | 72 | Changed public member types |
-| **Total** | **445** | **1,335** | |
+| **Total** | **442** | **1,326** | |
 
 These diagnostics are the remaining provisioning compatibility backlog. They
 are not C# compilation or generation failures.
@@ -79,22 +79,18 @@ API. It adds 40 public types and removes these 10:
 - `DdosSettingsProtectionMode`
 - `DdosTrafficType`
 - `ManagementGroupNetworkManagerConnection`
-- `PropagatedRouteTable`
+- `PropagatedRouteTableNfv`
 - `ProtocolCustomSettings`
-- `RoutingConfiguration`
+- `RoutingConfigurationNfv`
 - `RoutingConfigurationNfvSubResource`
 - `SubscriptionNetworkManagerConnection`
 
-Several removed models have clear generated successors:
-
-| Removed type | Current generated type | Current shape |
-|---|---|---|
-| `PropagatedRouteTable` | `PropagatedRouteTableNfv` | Construct |
-| `RoutingConfiguration` / `RoutingConfigurationNfvSubResource` | `RoutingConfigurationNfv` | Construct |
-
-These successors do not by themselves preserve the released API. Compatibility
-work must decide whether to restore adapters, aliases, or obsolete stubs for
-each removed type.
+`PropagatedRouteTableNfv`, `RoutingConfigurationNfv`, and
+`RoutingConfigurationNfvSubResource` were empty and unreferenced constructs in
+the released provisioning API. The populated generated models now use the
+released `PropagatedRouteTable` and `RoutingConfiguration` names directly.
+Compatibility work must still decide whether the three empty NFV types should
+be restored as hidden obsolete stubs.
 
 `ManagementGroupNetworkManagerConnection` and
 `SubscriptionNetworkManagerConnection` remain the highest-priority removed
@@ -105,7 +101,7 @@ resource classes are absent.
 
 ### Removed and changed members
 
-The remaining 411 `CP0002` and 24 `CP0011` diagnostics per framework cover
+The remaining 408 `CP0002` and 24 `CP0011` diagnostics per framework cover
 removed members and changed property types on otherwise retained public types.
 They have not yet been broadly mitigated. The ApiCompat output should be used
 as the source of truth when this phase begins.
@@ -117,8 +113,10 @@ as the source of truth when this phase begins.
 The related `Azure.ResourceManager.Network` TypeSpec migration was completed
 and merged through
 [Azure/azure-sdk-for-net#63027](https://github.com/Azure/azure-sdk-for-net/pull/63027).
-The provisioning migration has no management-package code delta from current
-SDK `main`; it changes only the management package's `tsp-location.yaml` pin.
+The management package uses SDK-side `[CodeGenType]` and `[CodeGenMember]`
+customizations for the routing configuration model family so the shared
+TypeSpec names remain correct for provisioning while the released management
+dual-surface API remains unchanged.
 
 The merged management work includes:
 
@@ -202,6 +200,34 @@ serializing to `properties.format.type` and `properties.format.version`.
 ApiCompat reports no remaining Flow Log diagnostics, and the prior
 `FlowLogProperties` test-compilation error is resolved.
 
+### Routing configuration model names
+
+The shared TypeSpec models are named `RoutingConfiguration` and
+`PropagatedRouteTable`. Two C# `@@clientName` customizations previously renamed
+them to `RoutingConfigurationNfv` and `PropagatedRouteTableNfv` for every C#
+emitter. Those decorators were removed because the provisioning library's
+released populated models use the plain names.
+
+The management SDK preserves its released dual surface with SDK-side
+customizations:
+
+- Generated native models remain `RoutingConfigurationNfv` and
+  `PropagatedRouteTableNfv` through `[CodeGenType]`.
+- `RoutingConfiguration` and `PropagatedRouteTable` remain compatibility
+  subclasses.
+- `PropagatedRouteTableNfv.Ids` retains
+  `RoutingConfigurationNfvSubResource` through `[CodeGenMember]`.
+
+The management package builds against version 1.17.0 with zero ApiCompat
+diagnostics. Provisioning generation now directly produces
+`RoutingConfiguration` and `PropagatedRouteTable`, and affected resource
+properties use `RoutingConfiguration`. The prior provisioning rename
+diagnostics are resolved.
+
+`PropagatedRouteTable.Ids` still uses `BicepList<NetworkSubResource>` instead of
+the released `BicepList<WritableSubResource>`. This is a separate property-type
+compatibility issue and remains one of the four test-compilation blockers.
+
 ### Historical resource versions
 
 The TypeSpec emitter generates the current `V2025_05_01` resource version.
@@ -239,9 +265,9 @@ The package currently contains:
 
 Compared with SDK `main`, the generated tree contains:
 
-- 574 modified files
+- 573 modified files
 - 253 added files
-- 15 deleted files
+- 16 deleted files
 
 The migration adds 40 public types, including 17 resource types:
 

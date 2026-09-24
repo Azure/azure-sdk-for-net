@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> The list of RouteTables to advertise the routes to. </summary>
-    public partial class PropagatedRouteTableNfv : ProvisionableConstruct
+    public partial class PropagatedRouteTable : ProvisionableConstruct
     {
         private BicepList<string> _labels;
         private BicepList<NetworkSubResource> _ids;
 
-        /// <summary> Creates a new PropagatedRouteTableNfv. </summary>
-        public PropagatedRouteTableNfv()
+        /// <summary> Creates a new PropagatedRouteTable. </summary>
+        public PropagatedRouteTable()
         {
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for PropagatedRouteTableNfv. </summary>
+        /// <summary> Define all the provisionable properties for PropagatedRouteTable. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -60,7 +60,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for PropagatedRouteTableNfv that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for PropagatedRouteTable that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

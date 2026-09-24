@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<bool> _enableInternetSecurity;
         private BicepValue<bool> _expressRouteGatewayBypass;
         private BicepValue<bool> _enablePrivateLinkFastPath;
-        private RoutingConfigurationNfv _routingConfiguration;
+        private RoutingConfiguration _routingConfiguration;
 
         /// <summary> Creates a new ExpressRouteConnectionProperties. </summary>
         public ExpressRouteConnectionProperties()
@@ -129,7 +129,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the RoutingConfiguration. </summary>
-        public RoutingConfigurationNfv RoutingConfiguration
+        public RoutingConfiguration RoutingConfiguration
         {
             get
             {
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.Network
             _enableInternetSecurity = DefineProperty<bool>(nameof(EnableInternetSecurity), new string[] { "enableInternetSecurity" });
             _expressRouteGatewayBypass = DefineProperty<bool>(nameof(ExpressRouteGatewayBypass), new string[] { "expressRouteGatewayBypass" });
             _enablePrivateLinkFastPath = DefineProperty<bool>(nameof(EnablePrivateLinkFastPath), new string[] { "enablePrivateLinkFastPath" });
-            _routingConfiguration = DefineModelProperty<RoutingConfigurationNfv>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
+            _routingConfiguration = DefineModelProperty<RoutingConfiguration>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
             DefineAdditionalProperties();
         }
 

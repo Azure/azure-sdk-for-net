@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Network
     internal partial class P2SConnectionConfigurationProperties : ProvisionableConstruct
     {
         private VirtualNetworkAddressSpace _vpnClientAddressPool;
-        private RoutingConfigurationNfv _routingConfiguration;
+        private RoutingConfiguration _routingConfiguration;
         private BicepValue<bool> _enableInternetSecurity;
         private BicepList<WritableSubResource> _configurationPolicyGroupAssociations;
         private BicepList<VpnServerConfigurationPolicyGroup> _previousConfigurationPolicyGroupAssociations;
@@ -42,7 +42,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the RoutingConfiguration. </summary>
-        public RoutingConfigurationNfv RoutingConfiguration
+        public RoutingConfiguration RoutingConfiguration
         {
             get
             {
@@ -111,7 +111,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _vpnClientAddressPool = DefineModelProperty<VirtualNetworkAddressSpace>(nameof(VpnClientAddressPool), new string[] { "vpnClientAddressPool" });
-            _routingConfiguration = DefineModelProperty<RoutingConfigurationNfv>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
+            _routingConfiguration = DefineModelProperty<RoutingConfiguration>(nameof(RoutingConfiguration), new string[] { "routingConfiguration" });
             _enableInternetSecurity = DefineProperty<bool>(nameof(EnableInternetSecurity), new string[] { "enableInternetSecurity" });
             _configurationPolicyGroupAssociations = DefineListProperty<WritableSubResource>(nameof(ConfigurationPolicyGroupAssociations), new string[] { "configurationPolicyGroupAssociations" });
             _previousConfigurationPolicyGroupAssociations = DefineListProperty<VpnServerConfigurationPolicyGroup>(nameof(PreviousConfigurationPolicyGroupAssociations), new string[] { "previousConfigurationPolicyGroupAssociations" }, isOutput: true);

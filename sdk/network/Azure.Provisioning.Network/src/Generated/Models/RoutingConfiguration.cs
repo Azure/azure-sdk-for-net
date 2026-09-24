@@ -12,16 +12,16 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Routing Configuration indicating the associated and propagated route tables for this connection. </summary>
-    public partial class RoutingConfigurationNfv : ProvisionableConstruct
+    public partial class RoutingConfiguration : ProvisionableConstruct
     {
         private NetworkSubResource _associatedRouteTable;
-        private PropagatedRouteTableNfv _propagatedRouteTables;
+        private PropagatedRouteTable _propagatedRouteTables;
         private VnetRoute _vnetRoutes;
         private NetworkSubResource _inboundRouteMap;
         private NetworkSubResource _outboundRouteMap;
 
-        /// <summary> Creates a new RoutingConfigurationNfv. </summary>
-        public RoutingConfigurationNfv()
+        /// <summary> Creates a new RoutingConfiguration. </summary>
+        public RoutingConfiguration()
         {
         }
 
@@ -41,7 +41,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the PropagatedRouteTables. </summary>
-        public PropagatedRouteTableNfv PropagatedRouteTables
+        public PropagatedRouteTable PropagatedRouteTables
         {
             get
             {
@@ -151,19 +151,19 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for RoutingConfigurationNfv. </summary>
+        /// <summary> Define all the provisionable properties for RoutingConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _associatedRouteTable = DefineModelProperty<NetworkSubResource>(nameof(AssociatedRouteTable), new string[] { "associatedRouteTable" });
-            _propagatedRouteTables = DefineModelProperty<PropagatedRouteTableNfv>(nameof(PropagatedRouteTables), new string[] { "propagatedRouteTables" });
+            _propagatedRouteTables = DefineModelProperty<PropagatedRouteTable>(nameof(PropagatedRouteTables), new string[] { "propagatedRouteTables" });
             _vnetRoutes = DefineModelProperty<VnetRoute>(nameof(VnetRoutes), new string[] { "vnetRoutes" });
             _inboundRouteMap = DefineModelProperty<NetworkSubResource>(nameof(InboundRouteMap), new string[] { "inboundRouteMap" });
             _outboundRouteMap = DefineModelProperty<NetworkSubResource>(nameof(OutboundRouteMap), new string[] { "outboundRouteMap" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for RoutingConfigurationNfv that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for RoutingConfiguration that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }
