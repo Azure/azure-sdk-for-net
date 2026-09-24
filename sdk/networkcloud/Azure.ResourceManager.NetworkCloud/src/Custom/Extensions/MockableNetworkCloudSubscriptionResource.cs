@@ -20,6 +20,50 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
+        /// <description>CloudServicesNetworks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(CancellationToken cancellationToken)
+            => GetNetworkCloudCloudServicesNetworksAsync(null, null, cancellationToken);
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServicesNetworks_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudCloudServicesNetworkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(CancellationToken cancellationToken)
+            => GetNetworkCloudCloudServicesNetworks(null, null, cancellationToken);
+
+        /// <summary>
+        /// Get the list of bare metal machine for the subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/naksClusters/{naksClusterName}/agentPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
         /// <description>BareMetalMachines_List</description>
         /// </item>
         /// <item>
