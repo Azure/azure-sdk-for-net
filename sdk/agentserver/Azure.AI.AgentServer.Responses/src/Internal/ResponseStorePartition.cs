@@ -18,6 +18,17 @@ internal readonly record struct ResponseStorePartition(string? UserIdKey)
     // Anonymous is a separate namespace, never a reserved user ID.
     public string DirectoryName => UserIdKey is null ? "anonymous" : "user-" + Hash(UserIdKey);
 
+    public string GetLifecycleId(string responseId)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(responseId);
+        if (UserIdKey is null)
+        {
+            return responseId;
+        }
+
+        return "lifecycle-" + Hash($"{UserIdKey?.Length ?? -1}:{UserIdKey}{responseId.Length}:{responseId}");
+    }
+
     public static string Hash(string value) =>
         Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value))).ToLowerInvariant();
 }

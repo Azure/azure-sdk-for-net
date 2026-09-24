@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
@@ -194,12 +195,131 @@ public class ResponseStoreIsolationProtocolTests
         }
     }
 
-    private Task<HttpResponseMessage> SendAsync(HttpMethod method, string path, string? user, object? body = null)
+    [Test]
+    public async Task Persisted_Response_Is_Visible_While_Another_User_Has_The_Same_Id_Active()
+    {
+        var responseId = IdGenerator.NewResponseId();
+        using (var persisted = await SendAsync(HttpMethod.Post, "/responses", "user-b",
+            new { model = "persisted" }, responseId: responseId))
+        {
+            Assert.That(persisted.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        }
+
+        var release = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var finished = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        _handler.EventFactory = (_, context, ct) => WaitingResponse(context, ct);
+
+        async IAsyncEnumerable<ResponseStreamEvent> WaitingResponse(
+            ResponseContext context, [EnumeratorCancellation] CancellationToken ct)
+        {
+            var response = new ResponseObject(context.ResponseId, "active");
+            yield return new ResponseCreatedEvent(0, response);
+            try
+            {
+                await release.Task.WaitAsync(ct);
+                response.SetCompleted();
+                yield return new ResponseCompletedEvent(1, response);
+            }
+            finally
+            {
+                finished.TrySetResult();
+            }
+        }
+
+        try
+        {
+            using var active = await SendAsync(HttpMethod.Post, "/responses", "user-a",
+                new { model = "active", background = true }, responseId: responseId);
+            Assert.That(active.StatusCode, Is.EqualTo(HttpStatusCode.OK), await active.Content.ReadAsStringAsync());
+
+            using var retrieved = await SendAsync(HttpMethod.Get, $"/responses/{responseId}", "user-b");
+            Assert.That(retrieved.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            var body = await retrieved.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.That(body.GetProperty("model").GetString(), Is.EqualTo("test"));
+        }
+        finally
+        {
+            release.TrySetResult();
+            await finished.Task.WaitAsync(TimeSpan.FromSeconds(10));
+        }
+    }
+
+    [Test]
+    public async Task Same_Id_Active_Responses_Have_Independent_Cancellation()
+    {
+        var responseId = IdGenerator.NewResponseId();
+        var releases = new ConcurrentDictionary<string, TaskCompletionSource>();
+        var finished = new ConcurrentDictionary<string, TaskCompletionSource>();
+        _handler.EventFactory = (_, context, ct) => WaitingResponse(context, ct);
+
+        async IAsyncEnumerable<ResponseStreamEvent> WaitingResponse(
+            ResponseContext context, [EnumeratorCancellation] CancellationToken ct)
+        {
+            var user = context.PlatformContext.UserIdKey!;
+            var release = releases.GetOrAdd(user, _ => new(TaskCreationOptions.RunContinuationsAsynchronously));
+            var done = finished.GetOrAdd(user, _ => new(TaskCreationOptions.RunContinuationsAsynchronously));
+            var response = new ResponseObject(context.ResponseId, user);
+            yield return new ResponseCreatedEvent(0, response);
+            try
+            {
+                await release.Task.WaitAsync(ct);
+                response.SetCompleted();
+                yield return new ResponseCompletedEvent(1, response);
+            }
+            finally
+            {
+                done.TrySetResult();
+            }
+        }
+
+        try
+        {
+            using var first = await SendAsync(HttpMethod.Post, "/responses", "user-a",
+                new { model = "user-a", background = true }, responseId: responseId);
+            using var second = await SendAsync(HttpMethod.Post, "/responses", "user-b",
+                new { model = "user-b", background = true }, responseId: responseId);
+            Assert.That(first.StatusCode, Is.EqualTo(HttpStatusCode.OK), await first.Content.ReadAsStringAsync());
+            Assert.That(second.StatusCode, Is.EqualTo(HttpStatusCode.OK), await second.Content.ReadAsStringAsync());
+
+            using var cancelled = await SendAsync(HttpMethod.Post, $"/responses/{responseId}/cancel", "user-a");
+            Assert.That(cancelled.StatusCode, Is.EqualTo(HttpStatusCode.OK), await cancelled.Content.ReadAsStringAsync());
+            await finished["user-a"].Task.WaitAsync(TimeSpan.FromSeconds(10));
+
+            using var other = await SendAsync(HttpMethod.Get, $"/responses/{responseId}", "user-b");
+            Assert.That(other.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            var body = await other.Content.ReadFromJsonAsync<JsonElement>();
+            Assert.That(body.GetProperty("model").GetString(), Is.EqualTo("user-b"));
+            Assert.That(body.GetProperty("status").GetString(), Is.Not.EqualTo("cancelled"));
+        }
+        finally
+        {
+            foreach (var release in releases.Values)
+            {
+                release.TrySetResult();
+            }
+
+            foreach (var done in finished.Values)
+            {
+                await done.Task.WaitAsync(TimeSpan.FromSeconds(10));
+            }
+        }
+    }
+
+    private Task<HttpResponseMessage> SendAsync(
+        HttpMethod method,
+        string path,
+        string? user,
+        object? body = null,
+        string? responseId = null)
     {
         var request = new HttpRequestMessage(method, path);
         if (user is not null)
         {
             request.Headers.Add(PlatformHeaders.UserId, user);
+        }
+        if (responseId is not null)
+        {
+            request.Headers.Add("x-agent-response-id", responseId);
         }
         if (body is not null)
         {

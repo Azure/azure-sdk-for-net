@@ -19,17 +19,26 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </summary>
 internal sealed class ResponseExecution : IDisposable
 {
+    public ResponseExecution(string responseId,
+        bool isBackground = false, bool isStreaming = false, bool store = true)
+        : this(responseId, ResponseStorePartition.FromContext(PlatformContext.Empty), isBackground, isStreaming, store)
+    {
+    }
+
     /// <summary>
     /// Initializes a new instance of <see cref="ResponseExecution"/>.
     /// </summary>
     /// <param name="responseId">The unique response identifier.</param>
+    /// <param name="partition">The user partition that owns the execution.</param>
     /// <param name="isBackground">Whether the response was created with <c>background=true</c>.</param>
     /// <param name="isStreaming">Whether the response was created with <c>stream=true</c>.</param>
     /// <param name="store">Whether the response should be stored for later retrieval.</param>
-    public ResponseExecution(string responseId,
+    public ResponseExecution(string responseId, ResponseStorePartition partition,
         bool isBackground = false, bool isStreaming = false, bool store = true)
     {
         ResponseId = responseId;
+        Partition = partition;
+        UserIdKey = partition.UserIdKey;
         IsBackground = isBackground;
         IsStreaming = isStreaming;
         Store = store;
@@ -38,6 +47,12 @@ internal sealed class ResponseExecution : IDisposable
 
     /// <summary>Gets the unique response identifier.</summary>
     public string ResponseId { get; }
+
+    /// <summary>Gets the user partition that owns this execution.</summary>
+    public ResponseStorePartition Partition { get; }
+
+    /// <summary>Gets the internal user-scoped identifier for lifecycle state.</summary>
+    public string LifecycleId => Partition.GetLifecycleId(ResponseId);
 
     /// <summary>Gets whether the response was created with <c>background=true</c>.</summary>
     public bool IsBackground { get; }
@@ -76,7 +91,7 @@ internal sealed class ResponseExecution : IDisposable
     /// provide the same key; mismatches are treated as "not found" (404) to prevent
     /// information leakage across user partitions.
     /// </summary>
-    public string? UserIdKey { get; set; }
+    public string? UserIdKey { get; }
 
     /// <summary>
     /// Gets or sets the mutable response object (accumulator for the current pipeline).
