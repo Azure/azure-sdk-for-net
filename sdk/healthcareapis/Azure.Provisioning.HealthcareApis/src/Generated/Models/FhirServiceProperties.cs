@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.HealthcareApis
 {
-    /// <summary> Fhir Service properties. </summary>
     internal partial class FhirServiceProperties : ProvisionableConstruct
     {
         private BicepValue<HealthcareApisProvisioningState> _provisioningState;
@@ -19,7 +18,6 @@ namespace Azure.Provisioning.HealthcareApis
         private FhirServiceAuthenticationConfiguration _authenticationConfiguration;
         private FhirServiceCorsConfiguration _corsConfiguration;
         private FhirServiceExportConfiguration _exportConfiguration;
-        private BicepList<HealthcareApisServicePrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<HealthcareApisPublicNetworkAccess> _publicNetworkAccess;
         private BicepValue<FhirServiceEventState> _eventState;
         private FhirServiceResourceVersionPolicyConfiguration _resourceVersionPolicyConfiguration;
@@ -99,16 +97,6 @@ namespace Azure.Provisioning.HealthcareApis
             {
                 Initialize();
                 AssignOrReplace(ref _exportConfiguration, value);
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<HealthcareApisServicePrivateEndpointConnection> PrivateEndpointConnections
-        {
-            get
-            {
-                Initialize();
-                return _privateEndpointConnections;
             }
         }
 
@@ -257,7 +245,6 @@ namespace Azure.Provisioning.HealthcareApis
             _authenticationConfiguration = DefineModelProperty<FhirServiceAuthenticationConfiguration>(nameof(AuthenticationConfiguration), new string[] { "authenticationConfiguration" });
             _corsConfiguration = DefineModelProperty<FhirServiceCorsConfiguration>(nameof(CorsConfiguration), new string[] { "corsConfiguration" });
             _exportConfiguration = DefineModelProperty<FhirServiceExportConfiguration>(nameof(ExportConfiguration), new string[] { "exportConfiguration" });
-            _privateEndpointConnections = DefineListProperty<HealthcareApisServicePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<HealthcareApisPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             _eventState = DefineProperty<FhirServiceEventState>(nameof(EventState), new string[] { "eventState" }, isOutput: true);
             _resourceVersionPolicyConfiguration = DefineModelProperty<FhirServiceResourceVersionPolicyConfiguration>(nameof(ResourceVersionPolicyConfiguration), new string[] { "resourceVersionPolicyConfiguration" });
