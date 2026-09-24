@@ -36,12 +36,6 @@ parameters:
     displayName: 'Allow Azure Storage network access for this publishing pipeline (all processes)'
     type: boolean
     default: false
-  - name: storageServiceConnection
-    type: string
-    default: eval-dashboard-sc
-  - name: storageContainerUrl
-    type: string
-    default: https://evaltestsummary.blob.core.windows.net/vally-results
   - name: notifyDashboard
     displayName: 'Notify the dashboard after successful Blob publication'
     type: boolean
@@ -53,7 +47,6 @@ variables:
   - template: /eng/common/pipelines/templates/variables/eval-dashboard.yml
     parameters:
       enableAutomaticPublication: ${{ parameters.autoPublishDashboardResults }}
-      pipelineDefinitionId: '8255'
   # Provides the secret azuresdk-copilot-github-pat, mapped into GITHUB_TOKEN in the invoke step.
   - group: AzSDK_Eval_Variable_group
 
@@ -63,8 +56,6 @@ extends:
     createDashboardBundle: true
     publishDashboardResults: ${{ or(parameters.publishDashboardResults, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
     allowAzureStorageNetworkAccess: ${{ or(parameters.allowAzureStorageNetworkAccess, eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}
-    storageServiceConnection: ${{ parameters.storageServiceConnection }}
-    storageContainerUrl: ${{ parameters.storageContainerUrl }}
     notifyDashboard: ${{ parameters.notifyDashboard }}
     # Shared mock/live builder; select the mock tier.
     mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml

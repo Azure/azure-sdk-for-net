@@ -67,14 +67,20 @@ automatic publication for their trusted internal main builds after merge.
 | `createDashboardBundle` | Prepare/retain a ZIP even without uploading; enabled in the workflow, skill and live entrypoints |
 | `publishDashboardResults` | Explicitly enable direct Blob publication |
 | `allowAzureStorageNetworkAccess` | Separately opt into the documented `AzureStorage` network-isolation policy for this trusted publishing run; default `false` |
-| `storageServiceConnection` | Existing Azure Resource Manager service connection; tools entrypoints use `eval-dashboard-sc` |
-| `storageContainerUrl` | Normal HTTPS container URL, with no SAS or keys |
 | `notifyDashboard` | Targeted cache-refresh signal after durable storage; default `true` in the three tools entrypoints, `false` in shared templates; set `false` to opt out |
 | `summaryPool` | Linux agent pool with routes to Blob and optionally the dashboard |
 
 These are YAML parameters, not ordinary pipeline variables or App Service
 settings. No GitHub Enterprise service connection or private dashboard checkout
 is required: all publishing code is in this public shared package.
+
+The [shared publishing step](../../../pipelines/templates/steps/eval-publish-results.yml)
+defines the connection/container pair once: `eval-dashboard-sc` and
+`https://evaltestsummary.blob.core.windows.net/vally-results`. They are not
+queue-time parameters. Consumers opt into this shared dashboard rather than
+selecting an unrelated destination; changing either value requires a reviewed
+source change. Other repos remain off by default and must explicitly onboard
+service-connection authorization and network access before enabling publication.
 
 Publication is excluded from PR validation, non-internal projects and
 `refs/pull/*` sources. For a draft PR pilot, manually run the existing pipeline
@@ -124,7 +130,7 @@ results separate; no second dashboard or staging container is required.
 For each deliberate real run, select the feature branch containing the publisher
 and set `publishDashboardResults=true` and `allowAzureStorageNetworkAccess=true`.
 Notifications default on after a successful upload; set `notifyDashboard=false`
-for a storage-only run. The default service connection/container above are shared.
+for a storage-only run. The central service connection/container above are shared.
 All entrypoints execute the existing full eval matrix and consume model
 quota. Workflow and skill use their mock MCP environments but still evaluate
 real model responses. Synthetic fixtures are confined to local unit tests.
@@ -141,9 +147,11 @@ or omit failing scenarios to make a dashboard import pass.
 The three entrypoints pass `autoPublishDashboardResults` to a shared variable
 template, which defaults off unless called explicitly. Automatic publication
 requires all of the following: organization URL `https://dev.azure.com/azure-sdk/`,
-project `internal`, repository `Azure/azure-sdk-tools`, the entrypoint's exact
-definition ID (8255, 8256 or 8246), branch `refs/heads/main`, and a normal CI,
-scheduled or manual reason.
+project `internal`, repository `Azure/azure-sdk-tools`, `System.DefinitionId` in
+the approved set (8255, 8256 or 8246), branch `refs/heads/main`, and a normal CI,
+scheduled or manual reason. The template reads the current system ID directly;
+entrypoints no longer pass a redundant expected-ID parameter. The shared template
+still defaults off, and a matching ID alone never enables a foreign repository.
 
 Both publication and the documented AzureStorage egress policy are selected for
 that scope. Successful publication sends a targeted notification unless
