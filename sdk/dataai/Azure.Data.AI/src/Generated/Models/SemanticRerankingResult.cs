@@ -26,7 +26,7 @@ namespace Azure.Data.AI
         /// <param name="scores"> The relevance scores for the submitted documents. </param>
         /// <param name="meta"> Additional metadata about the semantic reranking operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SemanticRerankingResult(IList<SemanticRerankingScore> scores, SemanticRerankMetaResult meta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SemanticRerankingResult(IList<SemanticRerankingScore> scores, SemanticRerankingMetaResult meta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scores = scores;
             Meta = meta;
@@ -37,6 +37,6 @@ namespace Azure.Data.AI
         public IList<SemanticRerankingScore> Scores { get; }
 
         /// <summary> Additional metadata about the semantic reranking operation. </summary>
-        public SemanticRerankMetaResult Meta { get; }
+        public SemanticRerankingMetaResult Meta { get; }
     }
 }

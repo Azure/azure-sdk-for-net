@@ -13,51 +13,51 @@ using System.Text.Json;
 namespace Azure.Data.AI
 {
     /// <summary> Additional metadata about the semantic reranking operation. </summary>
-    public partial class SemanticRerankMetaResult : IJsonModel<SemanticRerankMetaResult>
+    public partial class SemanticRerankingMetaResult : IJsonModel<SemanticRerankingMetaResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SemanticRerankMetaResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SemanticRerankingMetaResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankMetaResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingMetaResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSemanticRerankMetaResult(document.RootElement, options);
+                        return DeserializeSemanticRerankingMetaResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SemanticRerankMetaResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SemanticRerankingMetaResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankMetaResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingMetaResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureDataAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SemanticRerankMetaResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SemanticRerankingMetaResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SemanticRerankMetaResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SemanticRerankingMetaResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SemanticRerankMetaResult IPersistableModel<SemanticRerankMetaResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SemanticRerankingMetaResult IPersistableModel<SemanticRerankingMetaResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SemanticRerankMetaResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SemanticRerankingMetaResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SemanticRerankMetaResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SemanticRerankingMetaResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,10 +68,10 @@ namespace Azure.Data.AI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankMetaResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingMetaResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SemanticRerankMetaResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SemanticRerankingMetaResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(TokenUsage))
             {
@@ -112,24 +112,24 @@ namespace Azure.Data.AI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SemanticRerankMetaResult IJsonModel<SemanticRerankMetaResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SemanticRerankingMetaResult IJsonModel<SemanticRerankingMetaResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SemanticRerankMetaResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SemanticRerankingMetaResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankMetaResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SemanticRerankingMetaResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SemanticRerankMetaResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SemanticRerankingMetaResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSemanticRerankMetaResult(document.RootElement, options);
+            return DeserializeSemanticRerankingMetaResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SemanticRerankMetaResult DeserializeSemanticRerankMetaResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static SemanticRerankingMetaResult DeserializeSemanticRerankingMetaResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +175,7 @@ namespace Azure.Data.AI
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SemanticRerankMetaResult(tokenUsage, latency, modelName, modelVersion, additionalBinaryDataProperties);
+            return new SemanticRerankingMetaResult(tokenUsage, latency, modelName, modelVersion, additionalBinaryDataProperties);
         }
     }
 }

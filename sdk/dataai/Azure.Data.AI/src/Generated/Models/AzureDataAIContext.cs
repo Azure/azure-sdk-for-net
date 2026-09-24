@@ -15,9 +15,9 @@ namespace Azure.Data.AI
     /// </summary>
     [ModelReaderWriterBuildable(typeof(LatencyResult))]
     [ModelReaderWriterBuildable(typeof(SemanticRerankingInferenceRequest))]
+    [ModelReaderWriterBuildable(typeof(SemanticRerankingMetaResult))]
     [ModelReaderWriterBuildable(typeof(SemanticRerankingResult))]
     [ModelReaderWriterBuildable(typeof(SemanticRerankingScore))]
-    [ModelReaderWriterBuildable(typeof(SemanticRerankMetaResult))]
     [ModelReaderWriterBuildable(typeof(SentenceScore))]
     [ModelReaderWriterBuildable(typeof(TokenUsageResult))]
     public partial class AzureDataAIContext : ModelReaderWriterContext

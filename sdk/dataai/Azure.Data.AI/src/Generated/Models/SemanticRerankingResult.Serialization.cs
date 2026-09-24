@@ -139,7 +139,7 @@ namespace Azure.Data.AI
                 return null;
             }
             IList<SemanticRerankingScore> scores = default;
-            SemanticRerankMetaResult meta = default;
+            SemanticRerankingMetaResult meta = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -163,7 +163,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    meta = SemanticRerankMetaResult.DeserializeSemanticRerankMetaResult(prop.Value, options);
+                    meta = SemanticRerankingMetaResult.DeserializeSemanticRerankingMetaResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
