@@ -19,11 +19,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// A class representing a ResourceGroupsMaintenanceConfigurations along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceGroupsMaintenanceConfigurationsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAllResourceGroupsMaintenanceConfigurations method.
+    /// A class representing a MaintenanceConfiguration along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMaintenanceConfigurations method.
     /// </summary>
-    public partial class ResourceGroupsMaintenanceConfigurationsResource : ArmResource
+    public partial class MaintenanceConfigurationResource : ArmResource
     {
         private readonly ClientDiagnostics _maintenanceConfigurationsClientDiagnostics;
         private readonly MaintenanceConfigurations _maintenanceConfigurationsRestClient;
@@ -31,28 +31,28 @@ namespace Azure.ResourceManager.Maintenance
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Maintenance/maintenanceConfigurations";
 
-        /// <summary> Initializes a new instance of ResourceGroupsMaintenanceConfigurationsResource for mocking. </summary>
-        protected ResourceGroupsMaintenanceConfigurationsResource()
+        /// <summary> Initializes a new instance of MaintenanceConfigurationResource for mocking. </summary>
+        protected MaintenanceConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceGroupsMaintenanceConfigurationsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceGroupsMaintenanceConfigurationsResource(ArmClient client, MaintenanceConfigurationData data) : this(client, data.Id)
+        internal MaintenanceConfigurationResource(ArmClient client, MaintenanceConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceGroupsMaintenanceConfigurationsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupsMaintenanceConfigurationsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MaintenanceConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string resourceGroupsMaintenanceConfigurationsApiVersion);
+            TryGetApiVersion(ResourceType, out string maintenanceConfigurationApiVersion);
             _maintenanceConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
-            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceGroupsMaintenanceConfigurationsApiVersion ?? "2025-10-01-preview");
+            _maintenanceConfigurationsRestClient = new MaintenanceConfigurations(_maintenanceConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceConfigurationApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupsMaintenanceConfigurationsResource"/>. </description>
+        /// <description> <see cref="MaintenanceConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceGroupsMaintenanceConfigurationsResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.Get");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupsMaintenanceConfigurationsResource"/>. </description>
+        /// <description> <see cref="MaintenanceConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceGroupsMaintenanceConfigurationsResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.Get");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,18 +205,18 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupsMaintenanceConfigurationsResource"/>. </description>
+        /// <description> <see cref="MaintenanceConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroupsMaintenanceConfigurationsResource>> UpdateAsync(MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationResource>> UpdateAsync(MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.Update");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Update");
             scope.Start();
             try
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,18 +257,18 @@ namespace Azure.ResourceManager.Maintenance
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupsMaintenanceConfigurationsResource"/>. </description>
+        /// <description> <see cref="MaintenanceConfigurationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ResourceGroupsMaintenanceConfigurationsResource> Update(MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationResource> Update(MaintenanceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.Update");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Update");
             scope.Start();
             try
             {
@@ -283,109 +283,7 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete Configuration record
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupsMaintenanceConfigurationsResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateDeleteExRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation operation = new MaintenanceArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete Configuration record
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> MaintenanceConfigurationOperationGroup_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ResourceGroupsMaintenanceConfigurationsResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.Delete");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _maintenanceConfigurationsRestClient.CreateDeleteExRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                RequestUriBuilder uri = message.Request.Uri;
-                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MaintenanceArmOperation operation = new MaintenanceArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
+                return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -399,12 +297,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroupsMaintenanceConfigurationsResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.AddTag");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.AddTag");
             scope.Start();
             try
             {
@@ -420,7 +318,7 @@ namespace Azure.ResourceManager.Maintenance
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                    return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -431,7 +329,7 @@ namespace Azure.ResourceManager.Maintenance
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ResourceGroupsMaintenanceConfigurationsResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<MaintenanceConfigurationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -447,12 +345,12 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ResourceGroupsMaintenanceConfigurationsResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.AddTag");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.AddTag");
             scope.Start();
             try
             {
@@ -468,7 +366,7 @@ namespace Azure.ResourceManager.Maintenance
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                    return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -479,7 +377,7 @@ namespace Azure.ResourceManager.Maintenance
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ResourceGroupsMaintenanceConfigurationsResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<MaintenanceConfigurationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -494,11 +392,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroupsMaintenanceConfigurationsResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.SetTags");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.SetTags");
             scope.Start();
             try
             {
@@ -515,14 +413,14 @@ namespace Azure.ResourceManager.Maintenance
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                    return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     MaintenanceConfigurationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     MaintenanceConfigurationData patch = new MaintenanceConfigurationData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    Response<ResourceGroupsMaintenanceConfigurationsResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<MaintenanceConfigurationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -537,11 +435,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ResourceGroupsMaintenanceConfigurationsResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.SetTags");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.SetTags");
             scope.Start();
             try
             {
@@ -558,14 +456,14 @@ namespace Azure.ResourceManager.Maintenance
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                    return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
                     MaintenanceConfigurationData current = Get(cancellationToken: cancellationToken).Value.Data;
                     MaintenanceConfigurationData patch = new MaintenanceConfigurationData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    Response<ResourceGroupsMaintenanceConfigurationsResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<MaintenanceConfigurationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -580,11 +478,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ResourceGroupsMaintenanceConfigurationsResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceConfigurationResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.RemoveTag");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.RemoveTag");
             scope.Start();
             try
             {
@@ -600,7 +498,7 @@ namespace Azure.ResourceManager.Maintenance
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                    return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -611,7 +509,7 @@ namespace Azure.ResourceManager.Maintenance
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ResourceGroupsMaintenanceConfigurationsResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    Response<MaintenanceConfigurationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -626,11 +524,11 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ResourceGroupsMaintenanceConfigurationsResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceConfigurationResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("ResourceGroupsMaintenanceConfigurationsResource.RemoveTag");
+            using DiagnosticScope scope = _maintenanceConfigurationsClientDiagnostics.CreateScope("MaintenanceConfigurationResource.RemoveTag");
             scope.Start();
             try
             {
@@ -646,7 +544,7 @@ namespace Azure.ResourceManager.Maintenance
                     HttpMessage message = _maintenanceConfigurationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<MaintenanceConfigurationData> response = Response.FromValue(MaintenanceConfigurationData.FromResponse(result), result);
-                    return Response.FromValue(new ResourceGroupsMaintenanceConfigurationsResource(Client, response.Value), response.GetRawResponse());
+                    return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
@@ -657,7 +555,7 @@ namespace Azure.ResourceManager.Maintenance
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ResourceGroupsMaintenanceConfigurationsResource> result = Update(patch, cancellationToken: cancellationToken);
+                    Response<MaintenanceConfigurationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
