@@ -5,6 +5,8 @@
 #
 # Allow relative links for all files under the .github folder (e.g. copilot instructions).
 .github/**
+# Plugin skills also need portable links to bundled references; link targets are still verified.
+plugins/azure-sdk-tools/skills/**
 # Allow relative links for other agent instructions.
 AGENTS.md
 # Allow relative links for all files under the eng folder (e.g. engineering system scripts and templates).
