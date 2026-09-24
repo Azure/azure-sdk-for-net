@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WhatIfOperationProperties(changes ?? new ChangeTrackingList<WhatIfChange>(), potentialChanges ?? new ChangeTrackingList<WhatIfChange>(), diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>(), additionalBinaryDataProperties);
