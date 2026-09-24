@@ -17,14 +17,15 @@ It reflects the generated code and API surface in SDK PR
 - `Microsoft.Network` API version: `2025-05-01`
 - `Microsoft.Compute` API version: `2018-10-01`
 
-The spec PR has been updated with the latest `main`. Its `client.tsp` is
-identical to `main`; its only Network-specific diff is `tspconfig.yaml`, which
-adds the provisioning emitter configuration and pins the management and
-provisioning API versions.
+The spec PR has been updated with the latest `main`. Its `client.tsp` removes
+the C# `@@clientName` decorators that renamed `RoutingConfiguration` and
+`PropagatedRouteTable` to their `Nfv` variants. Its `tspconfig.yaml` adds the
+provisioning emitter configuration, pins provisioning Network to `2025-05-01`,
+and pins both emitters' Compute input to `2018-10-01`. Management Network is
+not pinned and resolves to `2026-01-01`.
 
 Both `Azure.Provisioning.Network` and `Azure.ResourceManager.Network` pin the
-same spec commit. Regenerating both libraries from that commit completed
-without producing additional generated-code changes.
+same spec commit, and both libraries were regenerated from that commit.
 
 ## Validation status
 
@@ -217,6 +218,16 @@ customizations:
   subclasses.
 - `PropagatedRouteTableNfv.Ids` retains
   `RoutingConfigurationNfvSubResource` through `[CodeGenMember]`.
+
+The released management `RoutingConfigurationNfv` also exposed
+`AssociatedRouteTableResourceUri`, `InboundRouteMapResourceUri`, and
+`OutboundRouteMapResourceUri`. Those properties previously serialized through
+nested `resourceUri` fields, while TypeSpec defines standard `SubResource`
+values with nested `id` fields. The compatibility properties have no current
+wire behavior, so they are hidden with `EditorBrowsable(Never)` and marked
+obsolete in favor of `AssociatedRouteTableId`, `InboundRouteMapId`, and
+`OutboundRouteMapId`. `RoutingConfigurationNfvSubResource.ResourceUri` remains
+functional for `PropagatedRouteTableNfv.Ids` and serializes as `id`.
 
 The management package builds against version 1.17.0 with zero ApiCompat
 diagnostics. Provisioning generation now directly produces
