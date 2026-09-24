@@ -144,7 +144,7 @@ namespace Azure.AI.Projects
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.CodeBasedEvaluatorDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ContainerNetworkPolicyDisabledParam))]
     [ModelReaderWriterBuildable(typeof(ContinuousEvaluationRuleAction))]
-    [ModelReaderWriterBuildable(typeof(CreateAsyncResponse))]
+    [ModelReaderWriterBuildable(typeof(CreateAsyncResult))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.CreateMemoryRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CreateMemoryRequest))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.CreateMemoryRequest is experimental and may change in future versions.
@@ -211,6 +211,8 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EndpointBasedEvaluatorDefinition))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(Error))]
+    [ModelReaderWriterBuildable(typeof(ErrorResult))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.EvalResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvalResult))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EvalResult is experimental and may change in future versions.
@@ -302,6 +304,7 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HumanEvaluationPreviewRuleAction))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(InnerError))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.InsightCluster is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InsightCluster))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.InsightCluster is experimental and may change in future versions.

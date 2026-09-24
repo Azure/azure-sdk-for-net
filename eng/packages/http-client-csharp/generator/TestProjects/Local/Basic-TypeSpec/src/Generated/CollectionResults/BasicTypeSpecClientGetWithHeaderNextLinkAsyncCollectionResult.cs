@@ -46,7 +46,7 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithHeaderNextLinkResponse result = (ListWithHeaderNextLinkResponse)response;
+                ListWithHeaderNextLinkResult result = (ListWithHeaderNextLinkResult)response;
                 if (response.Headers.TryGetValue("next", out string value) && !string.IsNullOrEmpty(value))
                 {
                     nextPage = new Uri(value, UriKind.RelativeOrAbsolute);

@@ -46,7 +46,7 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithNextLinkResponse result = (ListWithNextLinkResponse)response;
+                ListWithNextLinkResult result = (ListWithNextLinkResult)response;
                 nextPage = result.Next;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Things)
