@@ -45,7 +45,6 @@ public class BasicBillingTests
     }
 
     [Test]
-    [Description("https://learn.microsoft.com/rest/api/billing/policies/put?view=rest-billing-2024-04-01")]
     public async Task CreateBillingAccountPolicy()
     {
         await using Trycep test = CreateBillingAccountPolicyTest();

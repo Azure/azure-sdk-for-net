@@ -12,7 +12,6 @@ public class BasicLiveBillingTests(bool async)
     : ProvisioningTestBase(async /*, skipTools: true, skipLiveCalls: true */)
 {
     [Test]
-    [Description("https://learn.microsoft.com/rest/api/billing/policies/put?view=rest-billing-2024-04-01")]
     [LiveOnly]
     public async Task CreateBillingAccountPolicy()
     {
