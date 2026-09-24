@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [Test]
-        public void GetEkmPrivateEndpointNullOrEmptyPeNameThrows()
+        public void GetEkmPrivateEndpointNullOrEmptyPrivateEndpointNameThrows()
         {
             KeyVaultEkmClient client = new(VaultUri, new MockCredential());
             Assert.Throws<ArgumentNullException>(() => client.GetEkmPrivateEndpoint(null));
@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [Test]
-        public void CreateEkmPrivateEndpointNullOrEmptyPeNameThrows()
+        public void CreateEkmPrivateEndpointNullOrEmptyPrivateEndpointNameThrows()
         {
             KeyVaultEkmClient client = new(VaultUri, new MockCredential());
             Assert.Throws<ArgumentNullException>(() => client.CreateEkmPrivateEndpoint(WaitUntil.Started, null, "pls-id"));
@@ -77,7 +77,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [Test]
-        public void CreateEkmPrivateEndpointNullOrEmptyPrivateLinkServiceIdThrows()
+        public void CreateEkmPrivateEndpointNullOrEmptyPrivateLinkServiceAliasThrows()
         {
             KeyVaultEkmClient client = new(VaultUri, new MockCredential());
             Assert.Throws<ArgumentNullException>(() => client.CreateEkmPrivateEndpoint(WaitUntil.Started, "my-pe", (string)null));
@@ -87,7 +87,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [Test]
-        public void DeleteEkmPrivateEndpointNullOrEmptyPeNameThrows()
+        public void DeleteEkmPrivateEndpointNullOrEmptyPrivateEndpointNameThrows()
         {
             KeyVaultEkmClient client = new(VaultUri, new MockCredential());
             Assert.Throws<ArgumentNullException>(() => client.DeleteEkmPrivateEndpoint(WaitUntil.Started, null));

@@ -13,7 +13,7 @@ Create a private endpoint that connects the Managed HSM EKM proxy pool to a Priv
 Operation<KeyVaultEkmPrivateEndpointOperation> createOperation = await Client.CreateEkmPrivateEndpointAsync(
     WaitUntil.Completed,
     _privateEndpointName,
-    privateLinkServiceId,
+    privateLinkServiceAlias,
     requestMessage: "Please approve this connection from my Managed HSM");
 
 Console.WriteLine($"EKM private endpoint creation finished with status: {createOperation.Value.Status}");

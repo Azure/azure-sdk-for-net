@@ -73,10 +73,10 @@ namespace Azure.Security.KeyVault.Administration
             {
                 throw new FormatException($"The model {nameof(KeyVaultEkmPrivateEndpointProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceId))
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceAlias))
             {
                 writer.WritePropertyName("privateLinkServiceId"u8);
-                writer.WriteStringValue(PrivateLinkServiceId);
+                writer.WriteStringValue(PrivateLinkServiceAlias);
             }
             if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceConnectionName))
             {
@@ -125,14 +125,14 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            string privateLinkServiceId = default;
+            string privateLinkServiceAlias = default;
             string privateLinkServiceConnectionName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("privateLinkServiceId"u8))
                 {
-                    privateLinkServiceId = prop.Value.GetString();
+                    privateLinkServiceAlias = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionName"u8))
@@ -145,7 +145,7 @@ namespace Azure.Security.KeyVault.Administration
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new KeyVaultEkmPrivateEndpointProperties(privateLinkServiceId, privateLinkServiceConnectionName, additionalBinaryDataProperties);
+            return new KeyVaultEkmPrivateEndpointProperties(privateLinkServiceAlias, privateLinkServiceConnectionName, additionalBinaryDataProperties);
         }
     }
 }

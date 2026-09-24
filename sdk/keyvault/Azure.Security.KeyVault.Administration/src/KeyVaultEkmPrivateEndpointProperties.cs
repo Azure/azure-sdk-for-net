@@ -9,5 +9,8 @@ namespace Azure.Security.KeyVault.Administration
     [CodeGenType("EkmPrivateEndpointProperties")]
     public partial class KeyVaultEkmPrivateEndpointProperties
     {
+        /// <summary> Alias of the Private Link Service that the private endpoint connects to. </summary>
+        [CodeGenMember("PrivateLinkServiceId")]
+        public string PrivateLinkServiceAlias { get; }
     }
 }

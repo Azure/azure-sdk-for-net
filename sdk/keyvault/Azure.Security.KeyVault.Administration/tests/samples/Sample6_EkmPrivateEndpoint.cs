@@ -32,19 +32,14 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         [RecordedTest]
         [AsyncOnly]
+        [ServiceVersion(Min = KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview)]
         public async Task EkmPrivateEndpointAsync()
         {
-            // EKM proxy private endpoints require this service version or later.
-            if (ServiceVersion != KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview)
-            {
-                Assert.Ignore("EKM proxy private endpoint operations require service version 2026-07-01-preview or later.");
-            }
-
-            string privateLinkServiceId = TestEnvironment.EkmPrivateLinkServiceId
+            string privateLinkServiceAlias = TestEnvironment.EkmPrivateLinkServiceId
                 ?? throw new IgnoreException("EKM_PRIVATE_LINK_SERVICE_ID is not defined.");
 
 #if SNIPPET
-            privateLinkServiceId = "<private_link_service_id>";
+            privateLinkServiceAlias = "<private_link_service_alias>";
 #endif
 
             _privateEndpointName = Recording.GenerateId("ekm-pe-", 24);
@@ -55,7 +50,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Operation<KeyVaultEkmPrivateEndpointOperation> createOperation = await Client.CreateEkmPrivateEndpointAsync(
                 WaitUntil.Completed,
                 _privateEndpointName,
-                privateLinkServiceId,
+                privateLinkServiceAlias,
                 requestMessage: "Please approve this connection from my Managed HSM");
 
             Console.WriteLine($"EKM private endpoint creation finished with status: {createOperation.Value.Status}");
@@ -130,19 +125,14 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
         [RecordedTest]
         [SyncOnly]
+        [ServiceVersion(Min = KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview)]
         public async Task EkmPrivateEndpointSync()
         {
-            // EKM proxy private endpoints require this service version or later.
-            if (ServiceVersion != KeyVaultAdministrationClientOptions.ServiceVersion.V2026_07_01_Preview)
-            {
-                Assert.Ignore("EKM proxy private endpoint operations require service version 2026-07-01-preview or later.");
-            }
-
-            string privateLinkServiceId = TestEnvironment.EkmPrivateLinkServiceId
+            string privateLinkServiceAlias = TestEnvironment.EkmPrivateLinkServiceId
                 ?? throw new IgnoreException("EKM_PRIVATE_LINK_SERVICE_ID is not defined.");
 
 #if SNIPPET
-            privateLinkServiceId = "<private_link_service_id>";
+            privateLinkServiceAlias = "<private_link_service_alias>";
 #endif
 
             _privateEndpointName = Recording.GenerateId("ekm-pe-", 24);
@@ -154,13 +144,13 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Operation<KeyVaultEkmPrivateEndpointOperation> createOperation = Client.CreateEkmPrivateEndpoint(
                 WaitUntil.Completed,
                 _privateEndpointName,
-                privateLinkServiceId,
+                privateLinkServiceAlias,
                 requestMessage: "Please approve this connection from my Managed HSM");
 #else
             Operation<KeyVaultEkmPrivateEndpointOperation> createOperation = Client.CreateEkmPrivateEndpoint(
                 WaitUntil.Started,
                 _privateEndpointName,
-                privateLinkServiceId,
+                privateLinkServiceAlias,
                 requestMessage: "Please approve this connection from my Managed HSM");
 
             while (!createOperation.HasCompleted)
@@ -259,45 +249,23 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 return;
             }
 
-            try
+            using (Recording.DisableRecording())
             {
-                using (Recording.DisableRecording())
+                // The connection must go first; the service rejects deleting a private endpoint still referenced by it.
+                await TryAsync(() => Client.DeleteEkmConnectionAsync());
+
+                if (_privateEndpointName is not null)
                 {
-                    await Client.DeleteEkmConnectionAsync();
+                    await TryAsync(() => Client.DeleteEkmPrivateEndpointAsync(WaitUntil.Completed, _privateEndpointName));
                 }
             }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
-                // Already deleted.
-            }
-            catch
-            {
-                // Best-effort cleanup; never fail teardown.
-            }
 
-            if (_privateEndpointName is null)
-            {
-                return;
-            }
+            _privateEndpointName = null;
 
-            try
+            // Best-effort cleanup; never fail teardown.
+            static async Task TryAsync(Func<Task> action)
             {
-                using (Recording.DisableRecording())
-                {
-                    await Client.DeleteEkmPrivateEndpointAsync(WaitUntil.Completed, _privateEndpointName);
-                }
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
-                // Already deleted.
-            }
-            catch
-            {
-                // Best-effort cleanup; never fail teardown.
-            }
-            finally
-            {
-                _privateEndpointName = null;
+                try { await action(); } catch { }
             }
         }
 

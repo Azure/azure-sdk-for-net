@@ -18,19 +18,19 @@ namespace Azure.Security.KeyVault.Administration
     {
         /// <summary> Initializes a new instance of <see cref="Administration.KeyVaultEkmPrivateEndpointOperation"/>. </summary>
         /// <param name="jobId"> Identifier for the private endpoint operation. </param>
-        /// <param name="privateEndpointName"> The name of the private endpoint (peName) the operation applies to. </param>
+        /// <param name="privateEndpointName"> The name of the private endpoint the operation applies to. </param>
         /// <param name="operationType"> The type of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="statusDetails"> The status details of the operation. </param>
-        /// <param name="startTime"> The start time of the operation in UTC. </param>
-        /// <param name="endTime"> The end time of the operation in UTC. </param>
+        /// <param name="startsOn"> The start time of the operation in UTC. </param>
+        /// <param name="endsOn"> The end time of the operation in UTC. </param>
         /// <param name="errorCode"> The code of the error encountered, if any, during the operation. </param>
         /// <param name="errorMessage"> The message of the error encountered, if any, during the operation. </param>
         /// <returns> A new <see cref="Administration.KeyVaultEkmPrivateEndpointOperation"/> instance for mocking. </returns>
-        public static KeyVaultEkmPrivateEndpointOperation KeyVaultEkmPrivateEndpointOperation(string jobId = default, string privateEndpointName = default, KeyVaultEkmPrivateEndpointOperationType? operationType = default, KeyVaultEkmPrivateEndpointOperationStatus? status = default, string statusDetails = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string errorCode = default, string errorMessage = default)
+        public static KeyVaultEkmPrivateEndpointOperation KeyVaultEkmPrivateEndpointOperation(string jobId = default, string privateEndpointName = default, KeyVaultEkmPrivateEndpointOperationType? operationType = default, KeyVaultEkmPrivateEndpointOperationStatus? status = default, string statusDetails = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string errorCode = default, string errorMessage = default)
         {
             KeyVaultServiceError error = errorCode != null || errorMessage != null ? new KeyVaultServiceError(errorCode, errorMessage, null) : null;
-            return new KeyVaultEkmPrivateEndpointOperation(jobId, privateEndpointName, operationType, status, statusDetails, startTime, endTime, error, additionalBinaryDataProperties: null);
+            return new KeyVaultEkmPrivateEndpointOperation(jobId, privateEndpointName, operationType, status, statusDetails, startsOn, endsOn, error, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
