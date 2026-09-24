@@ -95,10 +95,16 @@
 # ServiceLabel: %AI Agents
 # ServiceOwners: @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
 
-# PRLabel: %AI Model Inference %AI Projects
+# PRLabel: %AI Model Inference
+/sdk/ai/Azure.AI.Inference    @Azure/ai-foundry-devex
+
+# ServiceLabel: %AI Model Inference
+# ServiceOwners: @Azure/ai-foundry-devex
+
+# PRLabel: %AI Projects
 /sdk/ai/    @Azure/ai-foundry-devex
 
-# ServiceLabel: %AI Model Inference %AI Projects
+# ServiceLabel: %AI Projects
 # ServiceOwners: @Azure/ai-foundry-devex
 
 # PRLabel: %App Configuration
