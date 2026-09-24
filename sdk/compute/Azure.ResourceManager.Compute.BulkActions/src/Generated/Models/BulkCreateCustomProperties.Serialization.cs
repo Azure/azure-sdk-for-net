@@ -118,23 +118,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             writer.WritePropertyName("priorityProfile"u8);
             writer.WriteObjectValue(PriorityProfile, options);
-            if (Optional.IsCollectionDefined(VmSizesProfile))
-            {
-                writer.WritePropertyName("vmSizesProfile"u8);
-                writer.WriteStartArray();
-                foreach (BulkCreateCustomVmSizeProfile item in VmSizesProfile)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             writer.WritePropertyName("computeProfile"u8);
             writer.WriteObjectValue(ComputeProfile, options);
-            if (Optional.IsDefined(ZoneAllocationPolicy))
-            {
-                writer.WritePropertyName("zoneAllocationPolicy"u8);
-                writer.WriteObjectValue(ZoneAllocationPolicy, options);
-            }
             if (Optional.IsDefined(OverridesProfile))
             {
                 writer.WritePropertyName("overridesProfile"u8);
@@ -195,9 +180,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             PartialFulfillmentPolicy partialFulfillmentPolicy = default;
             IReadOnlyList<BulkCreateCustomResolvedItem> resources = default;
             BulkCreateCustomPriorityProfile priorityProfile = default;
-            IList<BulkCreateCustomVmSizeProfile> vmSizesProfile = default;
             ComputeProfile computeProfile = default;
-            BulkCreateCustomZoneAllocationPolicy zoneAllocationPolicy = default;
             BulkCreateCustomOverridesProfile overridesProfile = default;
             BulkActionExecutionParameterDetail executionParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -272,32 +255,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     priorityProfile = BulkCreateCustomPriorityProfile.DeserializeBulkCreateCustomPriorityProfile(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("vmSizesProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BulkCreateCustomVmSizeProfile> array = new List<BulkCreateCustomVmSizeProfile>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(BulkCreateCustomVmSizeProfile.DeserializeBulkCreateCustomVmSizeProfile(item, options));
-                    }
-                    vmSizesProfile = array;
-                    continue;
-                }
                 if (prop.NameEquals("computeProfile"u8))
                 {
                     computeProfile = ComputeProfile.DeserializeComputeProfile(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("zoneAllocationPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    zoneAllocationPolicy = BulkCreateCustomZoneAllocationPolicy.DeserializeBulkCreateCustomZoneAllocationPolicy(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("overridesProfile"u8))
@@ -332,9 +292,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 partialFulfillmentPolicy,
                 resources ?? new ChangeTrackingList<BulkCreateCustomResolvedItem>(),
                 priorityProfile,
-                vmSizesProfile ?? new ChangeTrackingList<BulkCreateCustomVmSizeProfile>(),
                 computeProfile,
-                zoneAllocationPolicy,
                 overridesProfile,
                 executionParameters,
                 additionalBinaryDataProperties);

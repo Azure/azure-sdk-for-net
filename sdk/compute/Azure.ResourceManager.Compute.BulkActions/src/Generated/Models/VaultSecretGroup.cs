@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> The list of key vault references in SourceVault which contain certificates. </summary>
         public IList<VaultCertificate> VaultCertificates { get; }
 
-        /// <summary> The ID of the sub-resource. </summary>
+        /// <summary> The Azure resource ID. </summary>
         public string SourceVaultId
         {
             get
