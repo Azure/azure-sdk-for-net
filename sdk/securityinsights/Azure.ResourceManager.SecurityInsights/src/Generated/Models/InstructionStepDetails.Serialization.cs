@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (prop.NameEquals("parameters"u8))
                 {
-                    parameters = BinaryData.FromString(prop.Value.GetRawText());
+                    parameters = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new InstructionStepDetails(parameters, @type, additionalBinaryDataProperties);
