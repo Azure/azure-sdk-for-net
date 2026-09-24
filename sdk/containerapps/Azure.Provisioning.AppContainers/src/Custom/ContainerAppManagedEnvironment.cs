@@ -5,17 +5,15 @@ using System;
 using System.ComponentModel;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.AppContainers
 {
-    // A model-scoped resource-name-constraint also affects detectorProperties because it shares the ManagedEnvironment model.
-    // Keep this customization until https://github.com/Azure/azure-sdk-for-net/issues/63349 is resolved.
-    [CodeGenSuppress("GetResourceNameRequirements")]
     public partial class ContainerAppManagedEnvironment
     {
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
+        // A model-scoped resource-name-constraint also affects detectorProperties because it shares the ManagedEnvironment model.
+        // Keep this customization until https://github.com/Azure/azure-sdk-for-net/issues/63349 is resolved.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override ResourceNameRequirements GetResourceNameRequirements() =>
             new(2, 60, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
