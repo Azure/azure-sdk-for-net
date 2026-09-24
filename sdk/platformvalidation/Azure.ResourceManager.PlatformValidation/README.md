@@ -1,6 +1,6 @@
 # Azure Platform Validation management client library for .NET
 
-This library supports managing Microsoft Azure resources.
+This library supports managing Azure Platform Validation resources, including cloud validations, validation execution plans, and execution plan runs, and retrieving validation test results and catalog entries.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -43,6 +43,7 @@ Documentation is available to help you learn how to use this package:
 ## Examples
 
 Code samples for using the management library for .NET can be found in the following locations
+- [Create, retrieve, list, and delete cloud validations](samples/Sample1_ManagingCloudValidations.md)
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
 ## Troubleshooting
