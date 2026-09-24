@@ -4214,14 +4214,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of ProfileData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> The pricing tier (defines Azure Front Door Standard or Premium or a CDN provider, feature list and rate) of the profile. </param>
+        /// <summary> A profile is a logical grouping of endpoints that share the same settings. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="skuName"> Name of the pricing tier. </param>
         /// <param name="kind"> Kind of the profile. Used by portal to differentiate traditional CDN profile and new AFD profile. </param>
         /// <param name="resourceState"> Resource status of the profile. </param>
         /// <param name="provisioningState"> Provisioning status of the profile. </param>
@@ -4252,19 +4252,19 @@ namespace Azure.ResourceManager.Cdn.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of CdnWebApplicationFirewallPolicyData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Defines web application firewall policy for Azure CDN. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="skuName"> The pricing tier (defines a CDN provider, feature list and rate) of the CdnWebApplicationFirewallPolicy. </param>
+        /// <param name="skuName"> Name of the pricing tier. </param>
         /// <param name="policySettings"> Describes  policySettings for policy. </param>
-        /// <param name="rateLimitRules"> Describes rate limit rules inside the policy. </param>
-        /// <param name="customRules"> Describes custom rules inside the policy. </param>
-        /// <param name="managedRuleSets"> Describes managed rules inside the policy. </param>
+        /// <param name="rateLimitRules"> List of rules. </param>
+        /// <param name="customRules"> List of rules. </param>
+        /// <param name="managedRuleSets"> List of rule sets. </param>
         /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
@@ -4281,9 +4281,9 @@ namespace Azure.ResourceManager.Cdn.Models
                 location,
                 policySettings is null && rateLimitRules is null && customRules is null && managedRuleSets is null && endpointLinks is null && provisioningState is null && resourceState is null ? default : new CdnWebApplicationFirewallPolicyProperties(
                     policySettings,
-                    new RateLimitRuleList((rateLimitRules ?? new ChangeTrackingList<RateLimitRule>()).ToList(), default),
-                    new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), default),
-                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), default),
+                    rateLimitRules is null ? default : new RateLimitRuleList((rateLimitRules ?? new ChangeTrackingList<RateLimitRule>()).ToList(), default),
+                    customRules is null ? default : new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), default),
+                    managedRuleSets is null ? default : new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), default),
                     (endpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
                     default,
                     provisioningState,
