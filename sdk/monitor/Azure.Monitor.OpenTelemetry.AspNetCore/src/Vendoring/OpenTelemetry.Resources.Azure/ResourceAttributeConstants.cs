@@ -21,7 +21,6 @@ internal sealed class ResourceAttributeConstants
     internal const string AppServiceSiteNameEnvVar = "WEBSITE_SITE_NAME";
     internal const string AppServiceSlotNameEnvVar = "WEBSITE_SLOT_NAME";
     internal const string AppServiceStampNameEnvVar = "WEBSITE_HOME_STAMPNAME";
-    internal const string OpenTelemetryServiceNameEnvVar = "OTEL_SERVICE_NAME";
 
     // Azure Container Apps environment variables
     internal const string AzureContainerAppsNameEnvVar = "CONTAINER_APP_NAME";

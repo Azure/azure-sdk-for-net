@@ -3,8 +3,10 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Resources;
-using OpenTelemetry.Resources.Azure;
+using OpenTelemetry.Trace;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
@@ -17,17 +19,28 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         {
             const string otelServiceName = "otel-service-name";
             const string appServiceSiteName = "app-service-site-name";
-            string? previousOtelServiceName = Environment.GetEnvironmentVariable(ResourceAttributeConstants.OpenTelemetryServiceNameEnvVar);
-            string? previousAppServiceSiteName = Environment.GetEnvironmentVariable(ResourceAttributeConstants.AppServiceSiteNameEnvVar);
+            const string otelServiceNameEnvironmentVariable = "OTEL_SERVICE_NAME";
+            const string appServiceSiteNameEnvironmentVariable = "WEBSITE_SITE_NAME";
+            string? previousOtelServiceName = Environment.GetEnvironmentVariable(otelServiceNameEnvironmentVariable);
+            string? previousAppServiceSiteName = Environment.GetEnvironmentVariable(appServiceSiteNameEnvironmentVariable);
 
             try
             {
-                Environment.SetEnvironmentVariable(ResourceAttributeConstants.OpenTelemetryServiceNameEnvVar, otelServiceName);
-                Environment.SetEnvironmentVariable(ResourceAttributeConstants.AppServiceSiteNameEnvVar, appServiceSiteName);
+                Environment.SetEnvironmentVariable(otelServiceNameEnvironmentVariable, otelServiceName);
+                Environment.SetEnvironmentVariable(appServiceSiteNameEnvironmentVariable, appServiceSiteName);
 
-                var resource = ResourceBuilder.CreateDefault()
-                    .AddDetector(new AppServiceResourceDetector())
-                    .Build();
+                var services = new ServiceCollection();
+                services.AddOpenTelemetry()
+                    .UseAzureMonitor(options =>
+                    {
+                        options.ConnectionString = "InstrumentationKey=unitTest";
+                        options.EnableLiveMetrics = false;
+                    });
+
+                using var serviceProvider = services.BuildServiceProvider();
+                var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
+                var resourceProperty = tracerProvider.GetType().GetProperty("Resource", BindingFlags.NonPublic | BindingFlags.Instance);
+                var resource = Assert.IsType<Resource>(resourceProperty?.GetValue(tracerProvider));
 
                 Assert.Equal(
                     otelServiceName,
@@ -35,12 +48,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 Assert.Contains(
                     resource.Attributes,
                     attribute => attribute.Key == "cloud.platform" &&
-                        (string)attribute.Value == ResourceAttributeConstants.AzureAppServicePlatformValue);
+                        (string)attribute.Value == "azure_app_service");
             }
             finally
             {
-                Environment.SetEnvironmentVariable(ResourceAttributeConstants.OpenTelemetryServiceNameEnvVar, previousOtelServiceName);
-                Environment.SetEnvironmentVariable(ResourceAttributeConstants.AppServiceSiteNameEnvVar, previousAppServiceSiteName);
+                Environment.SetEnvironmentVariable(otelServiceNameEnvironmentVariable, previousOtelServiceName);
+                Environment.SetEnvironmentVariable(appServiceSiteNameEnvironmentVariable, previousAppServiceSiteName);
             }
         }
     }

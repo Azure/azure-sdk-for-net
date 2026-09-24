@@ -30,11 +30,7 @@ internal sealed class AppServiceResourceDetector : IResourceDetector
 
             if (websiteSiteName != null)
             {
-                if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable(ResourceAttributeConstants.OpenTelemetryServiceNameEnvVar)))
-                {
-                    attributeList.Add(new KeyValuePair<string, object>(ResourceSemanticConventions.AttributeServiceName, websiteSiteName));
-                }
-
+                attributeList.Add(new KeyValuePair<string, object>(ResourceSemanticConventions.AttributeServiceName, websiteSiteName));
                 attributeList.Add(new KeyValuePair<string, object>(ResourceSemanticConventions.AttributeCloudProvider, ResourceAttributeConstants.AzureCloudProviderValue));
                 attributeList.Add(new KeyValuePair<string, object>(ResourceSemanticConventions.AttributeCloudPlatform, ResourceAttributeConstants.AzureAppServicePlatformValue));
 
