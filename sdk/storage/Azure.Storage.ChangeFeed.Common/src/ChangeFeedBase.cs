@@ -24,8 +24,9 @@ namespace Azure.Storage.ChangeFeed.Common
         private readonly ChangeFeedConfiguration<TEvent> _config;
 
         /// <summary>
-        /// The last consumable timestamp reported by the service's meta/segments.json.
-        /// Events after this time are not yet finalized and should not be read.
+        /// The label of the last finalized segment reported by the service's meta/segments.json.
+        /// Events in this segment are finalized even when their event times are later than the
+        /// segment label.
         /// </summary>
         public DateTimeOffset LastConsumable { get; private set; }
 
@@ -44,15 +45,13 @@ namespace Azure.Storage.ChangeFeed.Common
         private bool _empty;
 
         /// <summary>
-        /// The exclusive upper bound actually applied to segment/event enumeration.
+        /// The inclusive upper bound applied when discovering segments.
         /// When <see cref="_includeNonFinalizedEvents"/> is <c>false</c>, the read is capped at
-        /// the finalized watermark (<c>min(LastConsumable, userEndTime)</c>) so events at or after
-        /// <see cref="LastConsumable"/> are not returned. When <c>true</c>, only the user-supplied
-        /// end time bounds the read. This value is used solely for gating; <see cref="_endTime"/>
-        /// (the user's original end time) is what gets persisted on the continuation cursor so a
-        /// resumed read re-evaluates against the current watermark instead of a stale one.
+        /// the last finalized segment (<c>min(LastConsumable, userEndTime)</c>). Event filtering
+        /// continues to use <see cref="_endTime"/> because <see cref="LastConsumable"/> is a
+        /// segment label, not an event-time boundary.
         /// </summary>
-        private DateTimeOffset? EffectiveEndTime
+        private DateTimeOffset? SegmentDiscoveryEndTime
             => _includeNonFinalizedEvents
                 ? _endTime
                 : ChangeFeedExtensionsBase.MinDateTime(LastConsumable, _endTime);
@@ -129,7 +128,7 @@ namespace Azure.Storage.ChangeFeed.Common
             // In snapshot mode the enumerated segment set is already bounded by the log window;
             // skipping the boundary segment here would drop the segment whose bucket DateTime
             // equals endTime — exactly the degenerate same-minute window the snapshot reader hits.
-            if (!_disableEventTimeFilter && _currentSegment.DateTime >= EffectiveEndTime)
+            if (!_disableEventTimeFilter && _currentSegment.DateTime >= _endTime)
                 return ChangeFeedEventPageBase<TEvent>.Empty();
 
 int defaultPageSize = _config?.DefaultPageSize ?? 5000;
@@ -152,7 +151,7 @@ if (pageSize > defaultPageSize)
                     async,
                     remainingEvents,
                     _disableEventTimeFilter ? null : _startTime,
-                    _disableEventTimeFilter ? null : EffectiveEndTime,
+                    _disableEventTimeFilter ? null : _endTime,
                     cancellationToken)
                     .ConfigureAwait(false);
 
@@ -185,9 +184,8 @@ if (pageSize > defaultPageSize)
             // Snapshot mode relies solely on the enumerated segment set (already bounded by the
             // log window) to terminate; applying the end gate here would skip the boundary
             // segment when the begin/end log windows fall in the same minute bucket.
-            DateTimeOffset? effectiveEndTime = EffectiveEndTime;
-            if (effectiveEndTime.HasValue && !_disableEventTimeFilter)
-                return _currentSegment.DateTime < effectiveEndTime;
+            if (_endTime.HasValue && !_disableEventTimeFilter)
+                return _currentSegment.DateTime < _endTime;
 
             return true;
         }
@@ -221,7 +219,7 @@ if (pageSize > defaultPageSize)
                     _containerClient,
                     yearPath: yearPath,
                     startTime: _startTime,
-                    endTime: _endTime,
+                    endTime: SegmentDiscoveryEndTime,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

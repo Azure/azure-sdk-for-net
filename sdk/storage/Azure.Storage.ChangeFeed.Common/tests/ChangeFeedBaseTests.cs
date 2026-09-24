@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Moq;
 using NUnit.Framework;
 
@@ -126,70 +127,63 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         }
 
         /// <summary>
-        /// When <c>IncludeNonFinalizedEvents == false</c> and no user end time is supplied, the
-        /// read must be bounded (exclusive) at the finalized watermark: events whose
-        /// <c>EventTime</c> is at or after <c>LastConsumable</c> live in the same boundary segment
-        /// bucket but must not be returned.
+        /// Verifies that LastConsumable is an inclusive segment-label boundary rather than an
+        /// event-time cutoff. Events within the LastConsumable segment remain readable when their
+        /// event times are within the caller's requested range.
         /// </summary>
         [Test]
-        public async Task GetPage_IncludeNonFinalizedFalse_NoEndTime_BoundsAtLastConsumableExclusive()
+        public async Task GetPage_IncludeNonFinalizedFalse_LastConsumableSegment_UsesCallerEndTime()
         {
-            DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero);
-            DateTimeOffset lastConsumable = bucket.AddSeconds(30);
+            DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 14, 0, 0, TimeSpan.Zero);
+            DateTimeOffset endTime = bucket.AddMinutes(45);
 
             List<TestEvent> rows = new List<TestEvent>
             {
-                new TestEvent { Id = "evt-before-1", EventTime = bucket.AddSeconds(10) },
-                new TestEvent { Id = "evt-before-2", EventTime = bucket.AddSeconds(20) },
-                new TestEvent { Id = "evt-at-watermark", EventTime = lastConsumable },
-                new TestEvent { Id = "evt-after", EventTime = bucket.AddSeconds(40) },
+                new TestEvent { Id = "evt-in-finalized-segment", EventTime = bucket.AddMinutes(2) },
+                new TestEvent { Id = "evt-at-caller-end", EventTime = endTime },
             };
 
             ChangeFeedBase<TestEvent> changeFeed = BuildBoundedFeed(
                 bucket,
                 rows,
-                lastConsumable,
-                endTime: null,
+                lastConsumable: bucket,
+                endTime: endTime,
                 includeNonFinalizedEvents: false);
 
             Page<TestEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 10);
 
-            Assert.AreEqual(2, page.Values.Count);
-            Assert.AreEqual("evt-before-1", page.Values[0].Id);
-            Assert.AreEqual("evt-before-2", page.Values[1].Id);
+            Assert.AreEqual(1, page.Values.Count);
+            Assert.AreEqual("evt-in-finalized-segment", page.Values[0].Id);
         }
 
         /// <summary>
-        /// When <c>IncludeNonFinalizedEvents == true</c>, the finalized watermark must not cap the
-        /// read: events at or after <c>LastConsumable</c> are returned (only the user-supplied end
-        /// time, here none, bounds the read).
+        /// When <c>IncludeNonFinalizedEvents == true</c>, segments after LastConsumable may be
+        /// read, but the caller's exclusive event end time still applies.
         /// </summary>
         [Test]
-        public async Task GetPage_IncludeNonFinalizedTrue_ReadsPastLastConsumable()
+        public async Task GetPage_IncludeNonFinalizedTrue_UsesCallerEndTime()
         {
             DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero);
-            DateTimeOffset lastConsumable = bucket.AddSeconds(30);
+            DateTimeOffset endTime = bucket.AddSeconds(30);
 
             List<TestEvent> rows = new List<TestEvent>
             {
-                new TestEvent { Id = "evt-before", EventTime = bucket.AddSeconds(10) },
-                new TestEvent { Id = "evt-at-watermark", EventTime = lastConsumable },
+                new TestEvent { Id = "evt-before-end", EventTime = bucket.AddSeconds(10) },
+                new TestEvent { Id = "evt-at-end", EventTime = endTime },
                 new TestEvent { Id = "evt-after", EventTime = bucket.AddSeconds(40) },
             };
 
             ChangeFeedBase<TestEvent> changeFeed = BuildBoundedFeed(
                 bucket,
                 rows,
-                lastConsumable,
-                endTime: null,
+                lastConsumable: bucket.AddMinutes(-15),
+                endTime: endTime,
                 includeNonFinalizedEvents: true);
 
             Page<TestEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 10);
 
-            Assert.AreEqual(3, page.Values.Count);
-            Assert.AreEqual("evt-before", page.Values[0].Id);
-            Assert.AreEqual("evt-at-watermark", page.Values[1].Id);
-            Assert.AreEqual("evt-after", page.Values[2].Id);
+            Assert.AreEqual(1, page.Values.Count);
+            Assert.AreEqual("evt-before-end", page.Values[0].Id);
         }
 
         /// <summary>
@@ -201,7 +195,7 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         public async Task GetPage_IncludeNonFinalizedFalse_UserEndTimeEarlierThanWatermark_UserEndTimeWins()
         {
             DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero);
-            DateTimeOffset lastConsumable = bucket.AddSeconds(30);
+            DateTimeOffset lastConsumable = bucket.AddMinutes(15);
             DateTimeOffset userEndTime = bucket.AddSeconds(15);
 
             List<TestEvent> rows = new List<TestEvent>
@@ -222,6 +216,82 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
             Assert.AreEqual(1, page.Values.Count);
             Assert.AreEqual("evt-before-end", page.Values[0].Id);
+        }
+
+        /// <summary>
+        /// Verifies that loading segments from a later year continues to use LastConsumable as
+        /// the segment-discovery boundary. Event filtering must not use LastConsumable, but
+        /// segment discovery must still exclude segment labels after it.
+        /// </summary>
+        [Test]
+        public async Task GetPage_IncludeNonFinalizedFalse_NextYearSegmentPastLastConsumable_IsNotRead()
+        {
+            DateTimeOffset lastConsumable = new DateTimeOffset(2024, 12, 31, 23, 45, 0, TimeSpan.Zero);
+            DateTimeOffset nextSegmentTime = new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero);
+            string nextSegmentPath = "idx/segments/2025/01/01/0000/meta.json";
+
+            SegmentBase<TestEvent> currentSegment = BuildSegmentWithEvents(
+                manifestPath: "idx/segments/2024/12/31/2345/meta.json",
+                segmentTime: lastConsumable,
+                eventIds: new[] { "finalized-event" });
+
+            SegmentBase<TestEvent> nextSegment = BuildSegmentWithEvents(
+                manifestPath: nextSegmentPath,
+                segmentTime: nextSegmentTime,
+                eventIds: new[] { "non-finalized-event" });
+
+            Mock<SegmentFactoryBase<TestEvent>> segmentFactory = new Mock<SegmentFactoryBase<TestEvent>>();
+            segmentFactory
+                .Setup(f => f.BuildSegment(IsAsync, nextSegmentPath, null))
+                .ReturnsAsync(nextSegment);
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            containerClient.Setup(c => c.Uri).Returns(new Uri("https://account.blob.core.windows.net/container"));
+
+            Page<BlobHierarchyItem> segmentPage = new BlobHierarchyItemPage(new List<BlobHierarchyItem>
+            {
+                BlobsModelFactory.BlobHierarchyItem(
+                    null,
+                    BlobsModelFactory.BlobItem(nextSegmentPath, false, null)),
+            });
+
+            if (IsAsync)
+            {
+                containerClient
+                    .Setup(c => c.GetBlobsByHierarchyAsync(
+                        It.IsAny<GetBlobsByHierarchyOptions>(),
+                        It.IsAny<CancellationToken>()))
+                    .Returns(AsyncPageable<BlobHierarchyItem>.FromPages(new[] { segmentPage }));
+            }
+            else
+            {
+                containerClient
+                    .Setup(c => c.GetBlobsByHierarchy(
+                        It.IsAny<GetBlobsByHierarchyOptions>(),
+                        It.IsAny<CancellationToken>()))
+                    .Returns(Pageable<BlobHierarchyItem>.FromPages(new[] { segmentPage }));
+            }
+
+            ChangeFeedBase<TestEvent> changeFeed = new ChangeFeedBase<TestEvent>(
+                containerClient: containerClient.Object,
+                segmentFactory: segmentFactory.Object,
+                years: new Queue<string>(new[] { "idx/segments/2025/" }),
+                segments: new Queue<string>(),
+                currentSegment,
+                lastConsumable,
+                startTime: null,
+                endTime: null,
+                config: CreateTestConfig(),
+                includeNonFinalizedEvents: false);
+
+            Page<TestEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 10);
+
+            Assert.AreEqual(1, page.Values.Count);
+            Assert.AreEqual("finalized-event", page.Values[0].Id);
+            Assert.IsFalse(changeFeed.HasNext());
+            segmentFactory.Verify(
+                f => f.BuildSegment(IsAsync, nextSegmentPath, null),
+                Times.Never);
         }
 
         /// <summary>

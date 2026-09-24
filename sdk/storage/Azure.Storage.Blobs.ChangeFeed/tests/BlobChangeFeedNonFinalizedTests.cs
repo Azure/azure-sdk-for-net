@@ -77,49 +77,58 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         }
 
         [Test]
-        public async Task GetPage_IncludeNonFinalizedEventsFalse_BoundsEventsAtLastConsumableExclusive()
+        public async Task GetPage_IncludeNonFinalizedEventsFalse_LastConsumableSegmentUsesCallerEndTime()
         {
-            // Bucket 08:30 with a watermark 30 seconds inside it, so the boundary segment is not
-            // gated whole and we can observe the event-level (exclusive) cap.
-            DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 8, 30, 0, TimeSpan.Zero);
-            DateTimeOffset watermark = bucket.AddSeconds(30);
+            DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 14, 0, 0, TimeSpan.Zero);
+            DateTimeOffset endTime = bucket.AddMinutes(45);
 
             List<BlobChangeFeedEvent> events = new List<BlobChangeFeedEvent>
             {
-                BuildEvent(bucket.AddSeconds(10)), // before watermark - returned
-                BuildEvent(watermark),             // == watermark - excluded (exclusive)
-                BuildEvent(bucket.AddSeconds(40)), // after watermark - excluded
+                BuildEvent(bucket.AddMinutes(2)),
+                BuildEvent(endTime),
             };
 
-            List<BlobChangeFeedEvent> collected = await CollectAsync(bucket, events, watermark, includeNonFinalizedEvents: false);
+            List<BlobChangeFeedEvent> collected = await CollectAsync(
+                bucket,
+                events,
+                lastConsumable: bucket,
+                includeNonFinalizedEvents: false,
+                endTime: endTime);
 
             Assert.AreEqual(1, collected.Count);
-            Assert.AreEqual(bucket.AddSeconds(10), collected[0].EventTime);
+            Assert.AreEqual(bucket.AddMinutes(2), collected[0].EventTime);
         }
 
         [Test]
-        public async Task GetPage_IncludeNonFinalizedEventsTrue_ReturnsEventsPastLastConsumable()
+        public async Task GetPage_IncludeNonFinalizedEventsTrue_UsesCallerEndTime()
         {
             DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 8, 30, 0, TimeSpan.Zero);
-            DateTimeOffset watermark = bucket.AddSeconds(30);
+            DateTimeOffset endTime = bucket.AddSeconds(30);
 
             List<BlobChangeFeedEvent> events = new List<BlobChangeFeedEvent>
             {
                 BuildEvent(bucket.AddSeconds(10)),
-                BuildEvent(watermark),
+                BuildEvent(endTime),
                 BuildEvent(bucket.AddSeconds(40)),
             };
 
-            List<BlobChangeFeedEvent> collected = await CollectAsync(bucket, events, watermark, includeNonFinalizedEvents: true);
+            List<BlobChangeFeedEvent> collected = await CollectAsync(
+                bucket,
+                events,
+                lastConsumable: bucket.AddMinutes(-15),
+                includeNonFinalizedEvents: true,
+                endTime: endTime);
 
-            Assert.AreEqual(3, collected.Count);
+            Assert.AreEqual(1, collected.Count);
+            Assert.AreEqual(bucket.AddSeconds(10), collected[0].EventTime);
         }
 
         private async Task<List<BlobChangeFeedEvent>> CollectAsync(
             DateTimeOffset bucket,
             List<BlobChangeFeedEvent> events,
             DateTimeOffset lastConsumable,
-            bool includeNonFinalizedEvents)
+            bool includeNonFinalizedEvents,
+            DateTimeOffset? endTime = null)
         {
             SegmentBase<BlobChangeFeedEvent> segment = BuildSegmentWithEvents(
                 $"idx/segments/{bucket:yyyy/MM/dd}/{bucket:HHmm}/meta.json", bucket, events);
@@ -135,7 +144,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 currentSegment: segment,
                 lastConsumable: lastConsumable,
                 startTime: null,
-                endTime: null,
+                endTime: endTime,
                 config: BlobChangeFeedClient.CreateConfiguration(),
                 includeNonFinalizedEvents: includeNonFinalizedEvents,
                 disableEventTimeFilter: false);

@@ -317,11 +317,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
 
         /// <summary>
         /// Verifies that <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
-        /// allows reading events past the change feed's last consumable watermark.
+        /// reads the latest available segments without producing continuation tokens.
         /// </summary>
         [Test]
         [Ignore("Requires non-finalized segments in the change feed, which cannot be reproduced deterministically in playback.")]
-        public async Task GetChanges_IncludeNonFinalizedEvents_ReturnsEventsPastLastConsumable()
+        public async Task GetChanges_IncludeNonFinalizedEvents_ReturnsEventsWithoutContinuationTokens()
         {
             // Arrange - provision a fresh change-feed-enabled share and seed it with events.
             ShareClient shareClient = await CreateChangeFeedEnabledShareAsync();
@@ -342,13 +342,6 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                         TestConfigDefault.AccountName,
                         TestConfigDefault.AccountKey),
                     new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = true });
-
-                // Snapshot the current watermark. On a freshly-created share with no finalized
-                // segments yet this will be null, in which case every event the tailing reader
-                // returns is by definition past last consumable.
-                DateTimeOffset? lastConsumable = IsAsync
-                    ? await tailing.GetLastConsumableAsync()
-                    : tailing.GetLastConsumable();
 
                 // Act - tailing reader. Iterate via AsPages so we can also assert that no page
                 // carries a continuation token (resumption is unsupported in non-finalized mode).
@@ -372,14 +365,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     }
                 }
 
-                // Assert - tailing reader surfaces non-finalized events past the watermark.
+                // Assert - tailing reader surfaces events from the latest available segments.
                 CollectionAssert.IsNotEmpty(tailingEvents, "Tailing reader should surface events from the non-finalized segment.");
-                if (lastConsumable.HasValue)
-                {
-                    Assert.IsTrue(
-                        tailingEvents.Any(e => e.EventTime > lastConsumable.Value),
-                        "Tailing reader should return at least one event with EventTime > LastConsumable.");
-                }
             }
             finally
             {
@@ -387,66 +374,6 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             }
         }
 
-        /// <summary>
-        /// Verifies that with <see cref="ShareChangeFeedClientOptions.IncludeNonFinalizedEvents"/>
-        /// left at its default (<c>false</c>), the reader is bounded at the change feed's last
-        /// consumable watermark (exclusive): no event with <c>EventTime &gt;= LastConsumable</c> is
-        /// returned, even for events that live in the same boundary segment bucket.
-        /// </summary>
-        [Test]
-        [Ignore("Requires non-finalized segments in the change feed, which cannot be reproduced deterministically in playback.")]
-        public async Task GetChanges_IncludeNonFinalizedEventsFalse_DoesNotReturnEventsPastLastConsumable()
-        {
-            // Arrange - provision a fresh change-feed-enabled share and seed it with events.
-            ShareClient shareClient = await CreateChangeFeedEnabledShareAsync();
-            try
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    await shareClient.GetDirectoryClient($"dir-{i}").CreateAsync();
-                }
-                // Give the service a moment to surface events and advance the finalized watermark.
-                await Task.Delay(TimeSpan.FromSeconds(30));
-
-                ShareChangeFeedClient client = new ShareChangeFeedClient(
-                    new Uri(TestConfigDefault.FileServiceEndpoint),
-                    shareClient.Name,
-                    new StorageSharedKeyCredential(
-                        TestConfigDefault.AccountName,
-                        TestConfigDefault.AccountKey),
-                    new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = false });
-
-                DateTimeOffset? lastConsumable = IsAsync
-                    ? await client.GetLastConsumableAsync()
-                    : client.GetLastConsumable();
-
-                // Act
-                List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();
-                if (IsAsync)
-                {
-                    await foreach (ShareChangeFeedEvent e in client.GetChangesAsync())
-                        events.Add(e);
-                }
-                else
-                {
-                    foreach (ShareChangeFeedEvent e in client.GetChanges())
-                        events.Add(e);
-                }
-
-                // Assert - the finalized-off reader must never surface events at or after the
-                // watermark (exclusive bound: EventTime < LastConsumable).
-                if (lastConsumable.HasValue)
-                {
-                    Assert.IsFalse(
-                        events.Any(e => e.EventTime >= lastConsumable.Value),
-                        "IncludeNonFinalizedEvents=false must not return events with EventTime >= LastConsumable.");
-                }
-            }
-            finally
-            {
-                await shareClient.DeleteAsync();
-            }
-        }
         [RecordedTest]
         [Ignore("Requires a storage account with Files Change Feed enabled, pre-existing events, and two snapshots taken")]
         public async Task GetChangesBetweenSnapshots_FiltersEvents()
