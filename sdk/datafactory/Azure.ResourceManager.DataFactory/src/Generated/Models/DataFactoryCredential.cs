@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// The Azure Data Factory nested object which contains the information and credential which can be used to connect with related store or compute resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServicePrincipalCredential"/> and <see cref="DataFactoryManagedIdentityCredentialProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataFactoryManagedIdentityCredentialProperties"/> and <see cref="ServicePrincipalCredential"/>.
     /// </summary>
     public abstract partial class DataFactoryCredential
     {

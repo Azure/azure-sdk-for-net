@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    requestInterval = BinaryData.FromString(prop.Value.GetRawText());
+                    requestInterval = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("httpCompressionType"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadHttpCompressionType(prop, ref httpCompressionType);
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new RestSink(
                 copySinkType,

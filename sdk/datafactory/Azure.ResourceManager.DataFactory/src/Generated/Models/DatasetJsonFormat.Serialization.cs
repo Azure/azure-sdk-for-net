@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    filePattern = BinaryData.FromString(prop.Value.GetRawText());
+                    filePattern = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("nestingSeparator"u8))
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    jsonPathDefinition = BinaryData.FromString(prop.Value.GetRawText());
+                    jsonPathDefinition = prop.Value.GetUtf8Bytes();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new DatasetJsonFormat(
                 datasetStorageFormatType,
