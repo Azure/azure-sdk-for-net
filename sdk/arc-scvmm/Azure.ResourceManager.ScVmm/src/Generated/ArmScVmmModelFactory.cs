@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <summary>
         /// Defines the resource properties.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualNetworkInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/>, and <see cref="Models.VirtualMachineInventoryItem"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CloudInventoryItem"/>, <see cref="Models.VirtualMachineInventoryItem"/>, <see cref="Models.VirtualMachineTemplateInventoryItem"/>, and <see cref="Models.VirtualNetworkInventoryItem"/>.
         /// </summary>
         /// <param name="inventoryType"> They inventory type. </param>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
