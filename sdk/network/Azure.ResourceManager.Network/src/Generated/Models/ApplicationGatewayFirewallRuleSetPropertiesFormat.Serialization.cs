@@ -88,6 +88,11 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(RuleSetType);
             writer.WritePropertyName("ruleSetVersion"u8);
             writer.WriteStringValue(RuleSetVersion);
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             writer.WritePropertyName("ruleGroups"u8);
             writer.WriteStartArray();
             foreach (ApplicationGatewayFirewallRuleGroup item in RuleGroups)
@@ -150,6 +155,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkProvisioningState? provisioningState = default;
             string ruleSetType = default;
             string ruleSetVersion = default;
+            string displayName = default;
             IList<ApplicationGatewayFirewallRuleGroup> ruleGroups = default;
             IList<ApplicationGatewayTierType> tiers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -172,6 +178,11 @@ namespace Azure.ResourceManager.Network.Models
                 if (prop.NameEquals("ruleSetVersion"u8))
                 {
                     ruleSetVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("displayName"u8))
+                {
+                    displayName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ruleGroups"u8))
@@ -207,6 +218,7 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState,
                 ruleSetType,
                 ruleSetVersion,
+                displayName,
                 ruleGroups,
                 tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>(),
                 additionalBinaryDataProperties);

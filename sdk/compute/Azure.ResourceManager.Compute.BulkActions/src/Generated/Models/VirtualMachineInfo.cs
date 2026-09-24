@@ -17,18 +17,22 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInfo"/>. </summary>
-        internal VirtualMachineInfo()
+        /// <param name="name"> The resolved Azure virtual machine name. </param>
+        internal VirtualMachineInfo(string name)
         {
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInfo"/>. </summary>
         /// <param name="vmSize"> The name of the VM size, eg Standard_D2ads_v5. </param>
         /// <param name="zone"> The zone identifier. </param>
+        /// <param name="name"> The resolved Azure virtual machine name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInfo(string vmSize, string zone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineInfo(string vmSize, string zone, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             Zone = zone;
+            Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +41,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> The zone identifier. </summary>
         public string Zone { get; }
+
+        /// <summary> The resolved Azure virtual machine name. </summary>
+        public string Name { get; }
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Education.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmEducationModelFactory
     {
+        /// <summary> redeem request. </summary>
         /// <param name="redeemCode"> redeem code. </param>
         /// <param name="firstName"> first name of requester. </param>
         /// <param name="lastName"> last name of requester. </param>
@@ -32,28 +33,29 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="offerCap"> Offer Cap. </param>
         /// <param name="effectiveOn"> Grant Effective Date. </param>
         /// <param name="offerType"> Grant Offer Type. </param>
-        /// <param name="expireOn"> Expiration Date. </param>
+        /// <param name="expiresOn"> Expiration Date. </param>
         /// <param name="status"> Grant status. </param>
         /// <param name="allocatedBudget"> allocated budget. </param>
         /// <returns> A new <see cref="Education.GrantDetailsData"/> instance for mocking. </returns>
-        public static GrantDetailsData GrantDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EducationAmount offerCap = default, DateTimeOffset? effectiveOn = default, EducationGrantType? offerType = default, DateTimeOffset? expireOn = default, EducationGrantStatus? status = default, EducationAmount allocatedBudget = default)
+        public static GrantDetailsData GrantDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EducationAmount offerCap = default, DateTimeOffset? effectiveOn = default, EducationGrantType? offerType = default, DateTimeOffset? expiresOn = default, EducationGrantStatus? status = default, EducationAmount allocatedBudget = default)
         {
             return new GrantDetailsData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                offerCap is null && effectiveOn is null && offerType is null && expireOn is null && status is null && allocatedBudget is null ? default : new GrantDetailProperties(
+                offerCap is null && effectiveOn is null && offerType is null && expiresOn is null && status is null && allocatedBudget is null ? default : new GrantDetailProperties(
                     offerCap,
                     effectiveOn,
                     offerType,
-                    expireOn,
+                    expiresOn,
                     status,
                     allocatedBudget,
                     default),
                 default);
         }
 
+        /// <summary> The amount. </summary>
         /// <param name="currency"> The type of currency being used for the value. </param>
         /// <param name="value"> Amount value. </param>
         /// <returns> A new <see cref="Models.EducationAmount"/> instance for mocking. </returns>
@@ -69,7 +71,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="displayName"> Lab Display Name. </param>
         /// <param name="budgetPerStudent"> Default monetary cap for each student in this lab. </param>
         /// <param name="description"> Detail description of this lab. </param>
-        /// <param name="expireOn"> Default expiration date for each student in this lab. </param>
+        /// <param name="expiresOn"> Default expiration date for each student in this lab. </param>
         /// <param name="effectiveOn"> Lab creation date. </param>
         /// <param name="status"> The status of this lab. </param>
         /// <param name="maxStudentCount"> the total number of students that can be accepted to the lab. </param>
@@ -77,18 +79,18 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="totalBudget"> Total budget. </param>
         /// <param name="totalAllocatedBudget"> Total allocated budget. </param>
         /// <returns> A new <see cref="Education.EducationLabData"/> instance for mocking. </returns>
-        public static EducationLabData EducationLabData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, EducationAmount budgetPerStudent = default, string description = default, DateTimeOffset? expireOn = default, DateTimeOffset? effectiveOn = default, LabStatus? status = default, int? maxStudentCount = default, string invitationCode = default, EducationAmount totalBudget = default, EducationAmount totalAllocatedBudget = default)
+        public static EducationLabData EducationLabData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, EducationAmount budgetPerStudent = default, string description = default, DateTimeOffset? expiresOn = default, DateTimeOffset? effectiveOn = default, LabStatus? status = default, int? maxStudentCount = default, string invitationCode = default, EducationAmount totalBudget = default, EducationAmount totalAllocatedBudget = default)
         {
             return new EducationLabData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName is null && budgetPerStudent is null && description is null && expireOn is null && effectiveOn is null && status is null && maxStudentCount is null && invitationCode is null && totalBudget is null && totalAllocatedBudget is null ? default : new LabProperties(
+                displayName is null && budgetPerStudent is null && description is null && expiresOn is null && effectiveOn is null && status is null && maxStudentCount is null && invitationCode is null && totalBudget is null && totalAllocatedBudget is null ? default : new LabProperties(
                     displayName,
                     budgetPerStudent,
                     description,
-                    expireOn.GetValueOrDefault(),
+                    expiresOn.GetValueOrDefault(),
                     effectiveOn,
                     status,
                     maxStudentCount,
@@ -99,6 +101,7 @@ namespace Azure.ResourceManager.Education.Models
                 default);
         }
 
+        /// <summary> invite code generate request. </summary>
         /// <param name="maxStudentCount"> the total number of students that can be accepted to the lab. </param>
         /// <returns> A new <see cref="Models.EducationInviteCodeGenerateContent"/> instance for mocking. </returns>
         public static EducationInviteCodeGenerateContent EducationInviteCodeGenerateContent(int? maxStudentCount = default)
@@ -136,27 +139,27 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="role"> Student Role. </param>
         /// <param name="budget"> Student Budget. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        /// <param name="expireOn"> Date this student is set to expire from the lab. </param>
+        /// <param name="expiresOn"> Date this student is set to expire from the lab. </param>
         /// <param name="status"> Student Lab Status. </param>
         /// <param name="effectiveOn"> Date student was added to the lab. </param>
         /// <param name="subscriptionAlias"> Subscription alias. </param>
         /// <param name="subscriptionInviteLastSentOn"> subscription invite last sent date. </param>
         /// <returns> A new <see cref="Education.EducationStudentData"/> instance for mocking. </returns>
-        public static EducationStudentData EducationStudentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, StudentRole? role = default, EducationAmount budget = default, string subscriptionId = default, DateTimeOffset? expireOn = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string subscriptionAlias = default, DateTimeOffset? subscriptionInviteLastSentOn = default)
+        public static EducationStudentData EducationStudentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string firstName = default, string lastName = default, string email = default, StudentRole? role = default, EducationAmount budget = default, string subscriptionId = default, DateTimeOffset? expiresOn = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string subscriptionAlias = default, DateTimeOffset? subscriptionInviteLastSentOn = default)
         {
             return new EducationStudentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                firstName is null && lastName is null && email is null && role is null && budget is null && subscriptionId is null && expireOn is null && status is null && effectiveOn is null && subscriptionAlias is null && subscriptionInviteLastSentOn is null ? default : new StudentProperties(
+                firstName is null && lastName is null && email is null && role is null && budget is null && subscriptionId is null && expiresOn is null && status is null && effectiveOn is null && subscriptionAlias is null && subscriptionInviteLastSentOn is null ? default : new StudentProperties(
                     firstName,
                     lastName,
                     email,
                     role.GetValueOrDefault(),
                     budget,
                     subscriptionId,
-                    expireOn.GetValueOrDefault(),
+                    expiresOn.GetValueOrDefault(),
                     status,
                     effectiveOn,
                     subscriptionAlias,
@@ -171,7 +174,7 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> Student lab Display Name. </param>
         /// <param name="description"> Detail description of this lab. </param>
-        /// <param name="expireOn"> Date the lab will expire and by default will be the expiration date for each student in this lab. </param>
+        /// <param name="expiresOn"> Date the lab will expire and by default will be the expiration date for each student in this lab. </param>
         /// <param name="role"> Student Role. </param>
         /// <param name="budget"> Student Budget. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
@@ -179,17 +182,17 @@ namespace Azure.ResourceManager.Education.Models
         /// <param name="effectiveOn"> User Added Date. </param>
         /// <param name="labScope"> Lab Scope. /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Education/labs/default. </param>
         /// <returns> A new <see cref="Education.StudentLabDetailsData"/> instance for mocking. </returns>
-        public static StudentLabDetailsData StudentLabDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, DateTimeOffset? expireOn = default, StudentRole? role = default, EducationAmount budget = default, string subscriptionId = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string labScope = default)
+        public static StudentLabDetailsData StudentLabDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, DateTimeOffset? expiresOn = default, StudentRole? role = default, EducationAmount budget = default, string subscriptionId = default, StudentLabStatus? status = default, DateTimeOffset? effectiveOn = default, string labScope = default)
         {
             return new StudentLabDetailsData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName is null && description is null && expireOn is null && role is null && budget is null && subscriptionId is null && status is null && effectiveOn is null && labScope is null ? default : new StudentLabProperties(
+                displayName is null && description is null && expiresOn is null && role is null && budget is null && subscriptionId is null && status is null && effectiveOn is null && labScope is null ? default : new StudentLabProperties(
                     displayName,
                     description,
-                    expireOn,
+                    expiresOn,
                     role,
                     budget,
                     subscriptionId,

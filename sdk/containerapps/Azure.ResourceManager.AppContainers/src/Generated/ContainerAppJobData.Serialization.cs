@@ -106,11 +106,6 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ExtendedLocation))
-            {
-                writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
-            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -165,7 +160,6 @@ namespace Azure.ResourceManager.AppContainers
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             JobProperties properties = default;
-            ContainerAppExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -237,15 +231,6 @@ namespace Azure.ResourceManager.AppContainers
                     properties = JobProperties.DeserializeJobProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("extendedLocation"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("identity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -268,7 +253,6 @@ namespace Azure.ResourceManager.AppContainers
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                extendedLocation,
                 identity,
                 additionalBinaryDataProperties);
         }

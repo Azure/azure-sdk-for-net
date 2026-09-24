@@ -198,8 +198,7 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        public virtual async Task<AsyncStreamingClientResult<SseItem<BinaryData>>> RetrieveStreamAsync(RequestContent content, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, RequestContext context = null)
+        public virtual async Task<AsyncStreamingResult<SseItem<BinaryData>>> RetrieveStreamAsync(RequestContent content, string querySourceAuthorization = default, string queryWorkIQSourceAuthorization = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.RetrieveStream");
             scope.Start();
@@ -210,7 +209,7 @@ namespace Azure.Search.Documents.KnowledgeBases
                 using HttpMessage message = CreateRetrieveStreamRequest(content, querySourceAuthorization, queryWorkIQSourceAuthorization, context);
                 message.BufferResponse = false;
                 await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return AsyncStreamingClientResult.CreateSse(new AzurePipelineResponse(message));
+                return AsyncStreamingResult.CreateSse(new AzurePipelineResponse(message), null, context?.CancellationToken ?? default);
             }
             catch (Exception e)
             {
@@ -218,11 +217,12 @@ namespace Azure.Search.Documents.KnowledgeBases
                 throw;
             }
         }
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<KnowledgeBaseRetrievalResponse> Retrieve(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)
@@ -234,6 +234,8 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// <summary> KnowledgeBase retrieves relevant data from backing stores. </summary>
         /// <param name="retrievalRequest"> The retrieval request to process. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="retrievalRequest"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
 #pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task<Response<KnowledgeBaseRetrievalResponse>> RetrieveAsync(KnowledgeBaseRetrievalRequest retrievalRequest, CancellationToken cancellationToken)

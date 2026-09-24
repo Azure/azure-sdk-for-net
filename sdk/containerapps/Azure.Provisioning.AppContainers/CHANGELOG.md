@@ -1,14 +1,23 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.0-beta.2 (2026-09-24)
 
 ### Bugs Fixed
 
+- Corrected default names for Container Apps managed environments to use 2–60 lowercase letters, numbers, or hyphens.
+  Expect automatically generated managed environment names to change when upgrading if explicit names are not set.
+
+## 1.3.0-beta.1 (2026-09-15)
+
+### Features Added
+
+- Upgraded api-version to 2026-07-01.
+- Added support for Container App private endpoint connections, Azure Functions, Dapr component resiliency policies, .NET components, label history, sandbox groups, and sandbox group virtual network connections.
+- Added support for managed environment migration eligibility checks and OpenTelemetry configuration.
+
 ### Other Changes
+
+- Migrated library generation to the TypeSpec provisioning emitter.
 
 ## 1.2.0 (2026-03-13)
 

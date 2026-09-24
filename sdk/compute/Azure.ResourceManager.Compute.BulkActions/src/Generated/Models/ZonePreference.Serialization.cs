@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             writer.WriteStringValue(Zone);
             writer.WritePropertyName("rank"u8);
             writer.WriteNumberValue(Rank);
+            if (Optional.IsDefined(TargetMaxCapacity))
+            {
+                writer.WritePropertyName("targetMaxCapacity"u8);
+                writer.WriteNumberValue(TargetMaxCapacity.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,6 +132,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             string zone = default;
             int rank = default;
+            int? targetMaxCapacity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -140,12 +146,21 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     rank = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("targetMaxCapacity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetMaxCapacity = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ZonePreference(zone, rank, additionalBinaryDataProperties);
+            return new ZonePreference(zone, rank, targetMaxCapacity, additionalBinaryDataProperties);
         }
     }
 }

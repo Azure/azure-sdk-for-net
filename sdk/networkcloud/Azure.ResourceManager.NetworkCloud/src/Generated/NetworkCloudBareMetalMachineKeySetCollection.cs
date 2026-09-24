@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Create a new bare metal machine key set or update the existing one for the provided cluster.
         ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}Operation IdBareMetalMachineKeySets_CreateOrUpdateResource<see cref="NetworkCloudBareMetalMachineKeySetResource"/>
         /// </summary>
-        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
         /// <param name="data"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// Create a new bare metal machine key set or update the existing one for the provided cluster.
         ///             Request Path/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bareMetalMachineKeySets/{bareMetalMachineKeySetName}Operation IdBareMetalMachineKeySets_CreateOrUpdateResource<see cref="NetworkCloudBareMetalMachineKeySetResource"/>
         /// </summary>
-        /// <param name="waitUntil"> if the method should wait to return until the long-running operation has completed on the service;  if it should return after starting the operation. For more information on long-running operations, please see  Azure.Core Long-Running Operation samples. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="bareMetalMachineKeySetName"> The name of the bare metal machine key set. </param>
         /// <param name="data"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

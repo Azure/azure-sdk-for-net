@@ -7,12 +7,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials
 {
     public class ConfigurableCredentialTests : ClientTestBase
@@ -299,6 +299,102 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
             Assert.AreEqual(2, sources.Length, "Expected exactly two credentials in the chain");
             Assert.IsInstanceOf<VisualStudioCredential>(sources[0]);
             Assert.IsInstanceOf<AzureCliCredential>(sources[1]);
+        }
+
+        [Test]
+        public void Constructor_WithChainedFederatedIdentitySource_EnableMtlsPop_CreatesPopCredential()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["Credential:Sources:0:CredentialSource"] = "ManagedIdentityAsFederatedIdentityCredential",
+                    ["Credential:Sources:0:TenantId"] = "test-tenant",
+                    ["Credential:Sources:0:ClientId"] = "test-client",
+                    ["Credential:Sources:0:ManagedIdentityIdKind"] = "ClientId",
+                    ["Credential:Sources:0:ManagedIdentityId"] = "test-mi-client-id",
+                    ["Credential:Sources:0:AzureCloud"] = "public",
+                    ["Credential:Sources:0:EnableMtlsProofOfPossession"] = "true",
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            var credential = new ConfigurableCredential(options);
+
+            var innerCredential = GetInnerCredential(credential) as ChainedTokenCredential;
+            Assert.IsNotNull(innerCredential);
+
+            var sources = GetChainedTokenCredentialSources(innerCredential);
+            Assert.AreEqual(1, sources.Length);
+            var assertionCredential = sources[0] as ClientAssertionCredential;
+            Assert.IsNotNull(assertionCredential);
+            Assert.IsNotNull(assertionCredential.PopClient);
+            Assert.AreNotSame(assertionCredential.Client, assertionCredential.PopClient);
+        }
+
+        [Test]
+        public void Constructor_WithChainedFederatedIdentitySource_Default_DoesNotCreatePopClient()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource"] = "ChainedTokenCredential",
+                    ["Credential:Sources:0:CredentialSource"] = "ManagedIdentityAsFederatedIdentityCredential",
+                    ["Credential:Sources:0:TenantId"] = "test-tenant",
+                    ["Credential:Sources:0:ClientId"] = "test-client",
+                    ["Credential:Sources:0:ManagedIdentityIdKind"] = "ClientId",
+                    ["Credential:Sources:0:ManagedIdentityId"] = "test-mi-client-id",
+                    ["Credential:Sources:0:AzureCloud"] = "public",
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            var credential = new ConfigurableCredential(options);
+
+            var innerCredential = GetInnerCredential(credential) as ChainedTokenCredential;
+            Assert.IsNotNull(innerCredential);
+
+            var sources = GetChainedTokenCredentialSources(innerCredential);
+            Assert.AreEqual(1, sources.Length);
+            var assertionCredential = sources[0] as ClientAssertionCredential;
+            Assert.IsNotNull(assertionCredential);
+            Assert.IsNull(assertionCredential.PopClient, "PopClient must not be created unless EnableMtlsProofOfPossession is true.");
+            Assert.IsNotNull(assertionCredential.Client);
+        }
+
+        [Test]
+        public void ChainedFederatedIdentity_InnerManagedIdentityUnavailable_SurfacesCredentialUnavailable()
+        {
+            // Regression guard: the ChainedTokenCredentialFactory MSI-FIC path must mark the inner managed
+            // identity as chained so an unreachable IMDS surfaces CredentialUnavailableException (letting an
+            // outer ChainedTokenCredential fall through) rather than AuthenticationFailedException (which aborts
+            // the chain). See ChainedTokenCredentialFactory.CreateManagedIdentityAsFederatedIdentityCredential.
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource"] = "ManagedIdentityAsFederatedIdentityCredential",
+                    ["Credential:TenantId"] = "test-tenant",
+                    ["Credential:ClientId"] = "test-client",
+                    ["Credential:ManagedIdentityIdKind"] = "ClientId",
+                    ["Credential:ManagedIdentityId"] = "test-mi-client-id",
+                    ["Credential:AzureCloud"] = "public",
+                    ["Credential:DisableInstanceDiscovery"] = "true",
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var source = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            source.Retry.MaxRetries = 0;
+            // Simulate an unreachable IMDS endpoint (no HTTP response / connection failure).
+            source.Transport = new MockTransport(_ => throw new RequestFailedException(0, "Simulated IMDS connection failure."));
+
+            var credential = ChainedTokenCredentialFactory.CreateCredential(source);
+
+            Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/.default" }), default),
+                "Inner managed identity must surface CredentialUnavailableException so the chain can fall through.");
         }
 
         [Test]

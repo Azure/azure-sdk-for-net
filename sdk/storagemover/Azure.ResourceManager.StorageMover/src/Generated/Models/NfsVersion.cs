@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         private const string NFSautoValue = "NFSauto";
         private const string NFSv3Value = "NFSv3";
         private const string NFSv4Value = "NFSv4";
+        private const string NFSv41Value = "NFSv4_1";
 
         /// <summary> Initializes a new instance of <see cref="NfsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -37,6 +38,9 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Gets the NFSv4. </summary>
         public static NfsVersion NFSv4 { get; } = new NfsVersion(NFSv4Value);
+
+        /// <summary> Gets the NFSv41. </summary>
+        public static NfsVersion NFSv41 { get; } = new NfsVersion(NFSv41Value);
 
         /// <summary> Determines if two <see cref="NfsVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

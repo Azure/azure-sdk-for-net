@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="outboundIPAddresses"> Outbound IP Addresses of a container apps job. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container apps job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobProperties(ContainerAppJobProvisioningState? provisioningState, JobRunningState? runningState, string environmentId, string workloadProfileName, ContainerAppJobConfiguration configuration, ContainerAppJobTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobProperties(ContainerAppJobProvisioningState? provisioningState, ContainerAppJobRunningState? runningState, string environmentId, string workloadProfileName, ContainerAppJobConfiguration configuration, ContainerAppJobTemplate template, IReadOnlyList<string> outboundIPAddresses, string eventStreamEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             RunningState = runningState;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Current running state of the job. </summary>
         [WirePath("runningState")]
-        public JobRunningState? RunningState { get; }
+        public ContainerAppJobRunningState? RunningState { get; }
 
         /// <summary> Resource ID of environment. </summary>
         [WirePath("environmentId")]

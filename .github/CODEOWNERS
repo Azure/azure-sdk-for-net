@@ -89,30 +89,23 @@
 
 /sdk/agentserver/Azure.AI.AgentServer.Responses/    @Shivakishore14
 
-/sdk/ai/Azure.AI.Extensions.OpenAI/    @rhurey
-
-/sdk/ai/Azure.AI.Projects.Agents/    @rhurey
-
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
 
 # ServiceLabel: %AI Agents
 # ServiceOwners: @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
 
-# PRLabel: %AI Model Inference %AI Projects
-/sdk/ai/    @dargilco @glharper @nick863 @trangevi @trrwilson
-
 # PRLabel: %AI Model Inference
-/sdk/ai/Azure.AI.Inference/    @dargilco @glharper @trangevi
+/sdk/ai/Azure.AI.Inference    @Azure/ai-foundry-devex
 
 # ServiceLabel: %AI Model Inference
-# ServiceOwners: @dargilco @glharper @trangevi
+# ServiceOwners: @Azure/ai-foundry-devex
 
 # PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects/    @dargilco @nick863 @rhurey @trangevi @trrwilson
+/sdk/ai/    @Azure/ai-foundry-devex
 
 # ServiceLabel: %AI Projects
-# ServiceOwners: @dargilco @nick863 @trangevi
+# ServiceOwners: @Azure/ai-foundry-devex
 
 # PRLabel: %App Configuration
 /sdk/appconfiguration/    @avanigupta @jimmyca15 @linglingye001 @mrm9084 @zhiyuanliang-ms
@@ -151,10 +144,10 @@
 # ServiceOwners: @quentinRobinson @sarkar-rajarshi
 
 # PRLabel: %Cognitive - Content Safety
-/sdk/contentsafety/Azure.AI.ContentSafety/    @bojunehsu @changjian-wang
+/sdk/contentsafety/Azure.AI.ContentSafety/    @Azure/azure-sdk-write-contentsafety
 
 # ServiceLabel: %Cognitive - Content Safety
-# ServiceOwners: @bojunehsu @changjian-wang
+# ServiceOwners: @Azure/azure-sdk-write-contentsafety
 
 # PRLabel: %Cognitive - Content Understanding
 /sdk/contentunderstanding/    @bojunehsu @changjian-wang @chienyuanchang @yungshinlintw
@@ -277,6 +270,9 @@
 # ServiceOwners: @thang-bit
 
 # PRLabel: %Device Update
+/sdk/deviceregistry/Azure.IoT.DeviceRegistry.SoftwareUpdate/    @devlie @wuqiten
+
+# PRLabel: %Device Update
 /sdk/deviceupdate/Azure.IoT.DeviceUpdate/    @devlie @wuqiten
 
 # ServiceLabel: %Device Update
@@ -328,7 +324,7 @@
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Functions
-# ServiceOwners: @fabiocav
+# ServiceOwners: @fabiocav @mathewc @alrod
 
 # PRLabel: %HDInsight
 /sdk/hdinsight/    @aim-for-better
@@ -406,10 +402,10 @@
 # ServiceOwners: @Azure/azure-sdk-write-onlineexperimentation
 
 # PRLabel: %OpenAI
-/sdk/openai/    @joseharriaga @jpalvarezl @m-nash @trrwilson
+/sdk/openai/    @joseharriaga @m-nash @Azure/ai-foundry-devex
 
 # ServiceLabel: %OpenAI
-# ServiceOwners: @jpalvarezl @trrwilson
+# ServiceOwners: @Azure/ai-foundry-devex
 
 # PRLabel: %Planetary Computer
 /sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/    @chahibi @karthick-rn @mandarinamdar
@@ -513,6 +509,12 @@
 
 # ServiceLabel: %Synapse
 # ServiceOwners: @wanyang7
+
+# PRLabel: %Tables
+/sdk/tables/    @JonathanCrd @jsquire
+
+# AzureSdkOwners: @JonathanCrd @jsquire
+# ServiceLabel: %Tables
 
 # PRLabel: %Voice Live
 /sdk/voicelive/Azure.AI.VoiceLive/    @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
@@ -749,9 +751,6 @@
 # PRLabel: %HybridConnectivity
 /sdk/hybridconnectivity/Azure.ResourceManager.*/                   @ArcturusZhang @ArthurMa1978
 
-# PRLabel: %LambdaTest HyperExecute
-/sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @ArcturusZhang @ArthurMa1978
-
 # PRLabel: %Impact Reporting
 /sdk/impactreporting/Azure.ResourceManager.*/                      @adityareddy305
 
@@ -827,9 +826,6 @@
 # ServiceLabel: %Oracle %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
-# PRLabel: %Pinecone
-/sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
-
 # PRLabel: %Planetary Computer
 /sdk/planetarycomputer/Azure.ResourceManager.*/                    @chahibi @karthick-rn @mandarinamdar
 
@@ -858,7 +854,7 @@
 /sdk/selfhelp/Azure.ResourceManager.*/                             @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Service Fabric
-/sdk/servicefabric/Azure.ResourceManager.*/                        @QingChenmsft @vaishnavk @juhacket
+/sdk/servicefabric/Azure.ResourceManager.*/                        @QingChenmsft @vaishnavk @juhacket @waldmannly @a-santamaria
 
 # ServiceLabel: %Service Fabric %Mgmt
 # ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket
@@ -893,9 +889,6 @@
 # ServiceLabel: %SQL - VM %Mgmt
 # ServiceOwners:                                                   @ericshape
 
-# PRLabel: %Weights & Biases %Mgmt
-/sdk/weightsandbiases/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
-
 # PRLabel: %Workload Orchestration %Mgmt
 /sdk/workloadorchestration/Azure.ResourceManager.*/                @ArcturusZhang @ArthurMa1978
 
@@ -910,14 +903,14 @@
 # AzureSdkOwners:                                                  @ArcturusZhang @ArthurMa1978
 
 # ######## Eng Sys ########
-/eng/                                                              @danieljurek @benbp @raych1
+/eng/                                                              @danieljurek @raych1
 /eng/common/                                                       @Azure/azure-sdk-eng
 /eng/mgmt/                                                         @ArthurMa1978 @m-nash
 
 # Add owners for notifications for specific pipelines
 /eng/pipelines/aggregate-reports.yml                               @jsquire
 /eng/common/pipelines/codeowners-linter.yml                        @jsquire
-/eng/pipelines/docindex.yml                                        @danieljurek @raych1 @benbp
+/eng/pipelines/docindex.yml                                        @danieljurek @raych1
 
 # Add owners for overrides and suppressions
 /eng/analyzerallowlist/                                            @Azure/azure-sdk-write-net-core @jsquire
@@ -978,7 +971,6 @@
 
 # Common repository-wide assets and configuration
 /.config/                                                          @jsquire @Azure/azure-sdk-write-net-core
-/.config/1espt/                                                    @benbp
 /.vscode/                                                          @jsquire @m-nash @JoshLove-msft
 /.devcontainer/                                                    @jsquire @m-nash @JoshLove-msft
 /doc/                                                              @jsquire @m-nash @JoshLove-msft
@@ -1002,5 +994,5 @@
 /**/*.py                                                           @jsquire @m-nash @JoshLove-msft
 
 # Add owners for NPM configuration
-/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @ArcturusZhang @ArthurMa1978 @mikeharder
-/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @mikeharder
+/**/package.json                                                   @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @ArcturusZhang @ArthurMa1978
+/**/package-lock.json                                              @JoshLove-msft @m-nash @jorgerangel-msft @jsquire

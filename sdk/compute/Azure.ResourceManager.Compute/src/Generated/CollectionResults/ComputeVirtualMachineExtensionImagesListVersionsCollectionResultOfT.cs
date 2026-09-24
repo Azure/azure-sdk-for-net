@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Compute
         private readonly string _filter;
         private readonly int? _top;
         private readonly string _orderby;
+        private readonly string _expand;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -38,9 +39,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="top"></param>
         /// <param name="orderby"></param>
+        /// <param name="expand"> Expand the response to include additional read-only metadata. Allowed values: `properties` — returns extended metadata (`releaseCategory`, `urgencyLevel`, `runProfile`). </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ComputeVirtualMachineExtensionImagesListVersionsCollectionResultOfT(VirtualMachineExtensionImages client, string subscriptionId, AzureLocation location, string publisherName, string @type, string filter, int? top, string @orderby, RequestContext context, string diagnosticScope)
+        public ComputeVirtualMachineExtensionImagesListVersionsCollectionResultOfT(VirtualMachineExtensionImages client, string subscriptionId, AzureLocation location, string publisherName, string @type, string filter, int? top, string @orderby, string expand, RequestContext context, string diagnosticScope)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -50,6 +52,7 @@ namespace Azure.ResourceManager.Compute
             _filter = filter;
             _top = top;
             _orderby = @orderby;
+            _expand = expand;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
@@ -74,7 +77,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetVersionsRequest(_subscriptionId, _location, _publisherName, _type, _filter, _top, _orderby, _context);
+            HttpMessage message = _client.CreateGetVersionsRequest(_subscriptionId, _location, _publisherName, _type, _filter, _top, _orderby, _expand, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

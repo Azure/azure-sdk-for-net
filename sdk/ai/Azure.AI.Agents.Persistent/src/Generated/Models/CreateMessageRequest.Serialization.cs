@@ -182,7 +182,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (prop.NameEquals("content"u8))
                 {
-                    content = BinaryData.FromString(prop.Value.GetRawText());
+                    content = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("attachments"u8))
@@ -222,7 +222,7 @@ namespace Azure.AI.Agents.Persistent
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CreateMessageRequest(role, content, attachments ?? new ChangeTrackingList<MessageAttachment>(), metadata ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
