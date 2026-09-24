@@ -124,6 +124,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("seedingMode"u8);
                 writer.WriteStringValue(SeedingMode.Value.ToString());
             }
+            if (Optional.IsDefined(LinkMode))
+            {
+                writer.WritePropertyName("linkMode"u8);
+                writer.WriteStringValue(LinkMode.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Databases))
             {
                 writer.WritePropertyName("databases"u8);
@@ -186,6 +191,7 @@ namespace Azure.ResourceManager.Sql.Models
             string instanceAvailabilityGroupName = default;
             SqlServerFailoverModeType? failoverMode = default;
             SeedingModeType? seedingMode = default;
+            LinkModeType? linkMode = default;
             IList<DistributedAvailabilityGroupDatabase> databases = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -264,6 +270,15 @@ namespace Azure.ResourceManager.Sql.Models
                     seedingMode = new SeedingModeType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("linkMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkMode = new LinkModeType(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("databases"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -294,6 +309,7 @@ namespace Azure.ResourceManager.Sql.Models
                 instanceAvailabilityGroupName,
                 failoverMode,
                 seedingMode,
+                linkMode,
                 databases ?? new ChangeTrackingList<DistributedAvailabilityGroupDatabase>(),
                 additionalBinaryDataProperties);
         }

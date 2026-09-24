@@ -28,7 +28,7 @@ namespace Azure.Identity
 
         private readonly ConcurrentDictionary<(bool EnableCae, bool EnableMtlsPop), AsyncLockWithValue<IManagedIdentityApplication>> _clientCache = new();
         private readonly bool _isForceRefreshEnabled;
-        private readonly bool _disableMtlsProofOfPossession;
+        private readonly bool _enableMtlsProofOfPossession;
         private readonly TimeSpan? _capabilityDiscoveryTimeout;
         private static readonly Lazy<Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>> s_withAttestationSupport =
             new(ResolveWithAttestationSupport, LazyThreadSafetyMode.ExecutionAndPublication);
@@ -65,7 +65,7 @@ namespace Azure.Identity
 
             Pipeline = clientOptions.Pipeline;
             _isForceRefreshEnabled = clientOptions.IsForceRefreshEnabled;
-            _disableMtlsProofOfPossession = clientOptions.DisableMtlsProofOfPossession;
+            _enableMtlsProofOfPossession = clientOptions.EnableMtlsProofOfPossession;
             _capabilityDiscoveryTimeout = clientOptions.Options?.IsChainedCredential == true
                 ? clientOptions.InitialImdsConnectionTimeout
                 : null;
@@ -251,7 +251,7 @@ namespace Azure.Identity
         }
 
         internal bool ShouldAttemptMtlsPop(TokenRequestContext requestContext, bool isTokenBindingAvailable) =>
-            !_disableMtlsProofOfPossession &&
+            _enableMtlsProofOfPossession &&
             requestContext.IsProofOfPossessionEnabled &&
             isTokenBindingAvailable;
 

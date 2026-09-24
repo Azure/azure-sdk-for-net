@@ -2785,7 +2785,7 @@ namespace BasicTypeSpec
                 using HttpMessage message = CreateReceiveJsonLinesRequest(context);
                 message.BufferResponse = false;
                 await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return AsyncStreamingResult.CreateJsonLines(new AzurePipelineResponse(message));
+                return AsyncStreamingResult.CreateJsonLines(new AzurePipelineResponse(message), context?.CancellationToken ?? default);
             }
             catch (Exception e)
             {
@@ -2825,7 +2825,7 @@ namespace BasicTypeSpec
                 using HttpMessage message = CreateReceiveSseRequest(context);
                 message.BufferResponse = false;
                 await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return AsyncStreamingResult.CreateSse(new AzurePipelineResponse(message), item => item.Data.ToString() == "[DONE]");
+                return AsyncStreamingResult.CreateSse(new AzurePipelineResponse(message), item => item.Data.ToString() == "[DONE]", context?.CancellationToken ?? default);
             }
             catch (Exception e)
             {

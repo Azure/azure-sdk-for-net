@@ -32,12 +32,12 @@ namespace Azure.Core.Tests.Identity
             });
         }
 
-        [TestCase(false, true, true, true)]
-        [TestCase(false, false, true, false)]
-        [TestCase(false, true, false, false)]
-        [TestCase(true, true, true, false)]
-        public void ShouldAttemptMtlsPopHonorsCallerIntentAndOptOut(
-            bool disableMtlsProofOfPossession,
+        [TestCase(true, true, true, true)]
+        [TestCase(true, false, true, false)]
+        [TestCase(true, true, false, false)]
+        [TestCase(false, true, true, false)]
+        public void ShouldAttemptMtlsPopRequiresExplicitOptInAndCallerIntent(
+            bool enableMtlsProofOfPossession,
             bool isProofOfPossessionEnabled,
             bool isTokenBindingAvailable,
             bool expected)
@@ -46,7 +46,7 @@ namespace Azure.Core.Tests.Identity
                 new ManagedIdentityClientOptions
                 {
                     ManagedIdentityId = ManagedIdentityId.SystemAssigned,
-                    DisableMtlsProofOfPossession = disableMtlsProofOfPossession
+                    EnableMtlsProofOfPossession = enableMtlsProofOfPossession
                 });
             var context = new TokenRequestContext(
                 MockScopes.Default,
