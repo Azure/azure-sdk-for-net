@@ -20,7 +20,6 @@ public class BasicFabricTests
 
                 FabricCapacity capacity = new(nameof(capacity), FabricCapacity.ResourceVersions.V2026_09_01_PREVIEW)
                 {
-                    Name = "existingCapacity",
                     Location = new AzureLocation("westus"),
                     Sku = new()
                     {
@@ -52,7 +51,7 @@ public class BasicFabricTests
         test.Compare(
             """
             resource capacity 'Microsoft.Fabric/capacities@2026-09-01-preview' = {
-              name: 'existingCapacity'
+              name: take('capacity${uniqueString(resourceGroup().id)}', 63)
               location: 'westus'
               properties: {
                 administration: {
