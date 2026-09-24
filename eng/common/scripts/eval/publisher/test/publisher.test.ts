@@ -8,7 +8,7 @@ import { runInNewContext } from "node:vm";
 import { zipSync, strToU8 } from "fflate";
 import { blobName, boundedFile, pipelineManifest, prepareBundle, selectAttempts, sha256, validateBundle, validateManifest } from "../bundle.ts";
 import { containerUrl, publisherIdentity, publishBundle } from "../storage.ts";
-import { DASHBOARD_NOTIFICATION_TARGET, notifyDashboard, refreshUrl } from "../notification.ts";
+import { DASHBOARD_NOTIFICATION_TARGET, notifyDashboard, readNotificationConfig, refreshUrl } from "../notification.ts";
 import { publicationFailure } from "../diagnostics.ts";
 
 const manifest = { schemaVersion: 1, adoOrganization: "azure-sdk", adoProject: "internal", repo: "Azure/azure-sdk-tools",
@@ -241,6 +241,18 @@ test("storage and notification URLs never accept embedded credentials or arbitra
     assert.throws(() => publisherIdentity("invalid"), { code: "storage_identity" });
 });
 
+test("enabled notifications use the reviewed target by default without permitting explicit destination changes", () => {
+    assert.equal(readNotificationConfig({}), null);
+    assert.equal(readNotificationConfig({ EVAL_NOTIFY_DASHBOARD: "false", EVAL_DASHBOARD_URL: "https://attacker.example" }), null);
+    assert.deepEqual(readNotificationConfig({ EVAL_NOTIFY_DASHBOARD: "true" }), { url: dashboardUrl, audience: dashboardAudience });
+    assert.deepEqual(readNotificationConfig({ EVAL_NOTIFY_DASHBOARD: "true", EVAL_DASHBOARD_URL: dashboardUrl,
+        EVAL_DASHBOARD_AUDIENCE: dashboardAudience }), { url: dashboardUrl, audience: dashboardAudience });
+    for (const overrides of [{ EVAL_DASHBOARD_URL: "https://attacker.example" }, { EVAL_DASHBOARD_AUDIENCE: "api://other" },
+        { EVAL_DASHBOARD_URL: "" }, { EVAL_DASHBOARD_AUDIENCE: "" }]) {
+        assert.throws(() => readNotificationConfig({ EVAL_NOTIFY_DASHBOARD: "true", ...overrides }));
+    }
+});
+
 test("notification retries small JSON only, honors backpressure and does not retry forbidden access", async () => {
     const calls = [], waits = [], target = { blobName: blobName(manifest), sha256: "a".repeat(64) };
     await notifyDashboard({ url: dashboardUrl, audience: dashboardAudience, target, getToken: async audience => {
@@ -330,6 +342,10 @@ test("pipeline keeps publication opt-in, blocks PR credentials and shares the re
     assert.doesNotMatch(workflow + steps + summary + archetype, /storageSmokeTest|EVAL_PUBLISH_SMOKE_TEST|eval-storage-smoke/);
     assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/build-mcp.yml/);
     assert.match(archetype, /template: \/eng\/common\/pipelines\/templates\/jobs\/eval-shard.yml/);
+    for (const content of [steps, summary, archetype]) {
+        assert.match(content, /name: notifyDashboard\s+type: boolean\s+default: false/);
+        assert.doesNotMatch(content, /parameters\.dashboard(?:Url|Audience)|name: dashboard(?:Url|Audience)/);
+    }
     assert.match(steps, /if and\(parameters.publishDashboardResults.*System.TeamProject.*internal.*PullRequest.*refs\/pull\//);
     assert.match(steps, /azureSubscription: \$\{\{ parameters.storageServiceConnection \}\}/);
     assert.match(summary, /dependsOn:|EvalExpectedMatrix:.*stageDependencies.Prepare.generate_eval_matrix/);
@@ -367,9 +383,11 @@ for (const tier of ["workflow", "skill", "live"]) {
         const root = resolve(import.meta.dirname, "../../../..");
         const content = await readFile(join(root, `pipelines/${tier}-eval.yml`), "utf8");
         assert.match(content, /createDashboardBundle: true/);
-        for (const name of ["publishDashboardResults", "allowAzureStorageNetworkAccess", "notifyDashboard"]) {
+        for (const name of ["publishDashboardResults", "allowAzureStorageNetworkAccess"]) {
             assert.match(content, new RegExp(`- name: ${name}\\n(?:    [^\\n]*\\n)*?    type: boolean\\n    default: false`));
         }
+        assert.match(content, /name: notifyDashboard\n(?:    [^\n]*\n)*?    type: boolean\n    default: true/);
+        assert.doesNotMatch(content, /parameters\.dashboard(?:Url|Audience)|name: dashboard(?:Url|Audience)/);
         assert.match(content, /name: storageServiceConnection\s+type: string\s+default: eval-dashboard-sc/);
         assert.match(content, /name: storageContainerUrl\s+type: string\s+default: https:\/\/evaltestsummary\.blob\.core\.windows\.net\/vally-results/);
         assert.match(content, /name: autoPublishDashboardResults\n(?:    [^\n]*\n)*?    type: boolean\n    default: true/);
@@ -379,7 +397,7 @@ for (const tier of ["workflow", "skill", "live"]) {
         for (const name of ["publishDashboardResults", "allowAzureStorageNetworkAccess"]) {
             assert.ok(content.includes(name + ": ${{ or(parameters." + name + ", eq(variables['EvalDashboardAutomaticPublication'], 'true')) }}"));
         }
-        for (const name of ["storageServiceConnection", "storageContainerUrl", "notifyDashboard", "dashboardUrl", "dashboardAudience"]) {
+        for (const name of ["storageServiceConnection", "storageContainerUrl", "notifyDashboard"]) {
             assert.ok(content.includes(name + ": ${{ parameters." + name + " }}"));
         }
         assert.match(content, /group: AzSDK_Eval_Variable_group/);

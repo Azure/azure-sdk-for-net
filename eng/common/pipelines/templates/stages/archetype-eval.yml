@@ -82,12 +82,6 @@ parameters:
   - name: notifyDashboard
     type: boolean
     default: false
-  - name: dashboardUrl
-    type: string
-    default: ''
-  - name: dashboardAudience
-    type: string
-    default: ''
   - name: summaryPool
     type: object
     default:
@@ -145,6 +139,4 @@ extends:
               storageServiceConnection: ${{ parameters.storageServiceConnection }}
               storageContainerUrl: ${{ parameters.storageContainerUrl }}
               notifyDashboard: ${{ parameters.notifyDashboard }}
-              dashboardUrl: ${{ parameters.dashboardUrl }}
-              dashboardAudience: ${{ parameters.dashboardAudience }}
               summaryPool: ${{ parameters.summaryPool }}
