@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -319,6 +320,64 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.IsEmpty(collected);
         }
 
+        [Test]
+        public async Task GetChanges_ResetOnlyCursor_ResumesWithoutRepeatingReset()
+        {
+            Guid resetId = Guid.Parse("A1B2C3D4-E5F6-7890-ABCD-EF0123456789");
+            long resetFileTime = 133871234567890123L;
+            DateTimeOffset resetTime = new DateTimeOffset(2025, 11, 19, 14, 32, 11, 456, TimeSpan.Zero);
+            Harness h = Harness.Create(
+                this,
+                includeNonFinalizedEvents: false,
+                resetPolicy: ShareChangeFeedResetPolicy.ContinueOnReset);
+            h.SetupResetMarker(resetId, resetFileTime, resetTime);
+
+            List<Page<ShareChangeFeedEvent>> initialPages = new List<Page<ShareChangeFeedEvent>>();
+            if (IsAsync)
+            {
+                await foreach (Page<ShareChangeFeedEvent> page in h.Client.GetChangesAsync().AsPages())
+                    initialPages.Add(page);
+            }
+            else
+            {
+                foreach (Page<ShareChangeFeedEvent> page in h.Client.GetChanges().AsPages())
+                    initialPages.Add(page);
+            }
+
+            Assert.AreEqual(1, initialPages.Count);
+            Assert.AreEqual(1, initialPages[0].Values.Count);
+            Assert.IsInstanceOf<ShareChangeFeedResetEvent>(initialPages[0].Values[0]);
+            Assert.IsNotNull(initialPages[0].ContinuationToken);
+
+            ShareChangeFeedCursor resetOnlyCursor =
+                ShareChangeFeedCursorSerializer.Deserialize(initialPages[0].ContinuationToken);
+            Assert.IsNull(resetOnlyCursor.InnerCursor);
+            Assert.AreEqual(resetId, resetOnlyCursor.LastSeenResetId);
+            Assert.AreEqual(resetFileTime, resetOnlyCursor.LastSeenResetFileTime);
+
+            List<Page<ShareChangeFeedEvent>> resumedPages = new List<Page<ShareChangeFeedEvent>>();
+            if (IsAsync)
+            {
+                await foreach (Page<ShareChangeFeedEvent> page in h.Client
+                    .GetChangesAsync(initialPages[0].ContinuationToken)
+                    .AsPages())
+                {
+                    resumedPages.Add(page);
+                }
+            }
+            else
+            {
+                foreach (Page<ShareChangeFeedEvent> page in h.Client
+                    .GetChanges(initialPages[0].ContinuationToken)
+                    .AsPages())
+                {
+                    resumedPages.Add(page);
+                }
+            }
+
+            Assert.IsEmpty(resumedPages);
+        }
+
         /// <summary>
         /// Set of helpers that wires <see cref="ShareChangeFeedClient"/> together with mocked
         /// share/blob clients so end-to-end pipelines can be exercised without service traffic.
@@ -334,7 +393,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 ShareChangeFeedClientMockedTests test,
                 bool metaBlobExists = true,
                 string metaSegmentsJson = null,
-                bool includeNonFinalizedEvents = false)
+                bool includeNonFinalizedEvents = false,
+                ShareChangeFeedResetPolicy? resetPolicy = null)
             {
                 Harness h = new Harness();
 
@@ -413,8 +473,63 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                     h.ShareClient.Object,
                     new Uri("https://account.file.core.windows.net"),
                     "myshare",
-                    new ShareChangeFeedClientOptions { IncludeNonFinalizedEvents = includeNonFinalizedEvents });
+                    new ShareChangeFeedClientOptions
+                    {
+                        IncludeNonFinalizedEvents = includeNonFinalizedEvents,
+                        ResetPolicy = resetPolicy,
+                    });
                 return h;
+            }
+
+            public void SetupResetMarker(
+                Guid resetId,
+                long resetFileTime,
+                DateTimeOffset resetTime)
+            {
+                const string markerPath = "meta/resets/00133871234567890123.json";
+                string pointerJson = JsonSerializer.Serialize(new
+                {
+                    schemaVersion = 1,
+                    latestResetId = resetId.ToString(),
+                    latestResetFileTime = resetFileTime,
+                    latestResetTimeUtc = resetTime.ToString("O"),
+                    latestMarkerPath = markerPath,
+                    accountName = "account",
+                    containerName = "myshare",
+                    reason = "Customer-managed unplanned failover",
+                });
+                string markerJson = JsonSerializer.Serialize(new
+                {
+                    schemaVersion = 1,
+                    resetId = resetId.ToString(),
+                    resetFileTime = resetFileTime,
+                    resetTimeUtc = resetTime.ToString("O"),
+                    accountName = "account",
+                    containerName = "myshare",
+                    reason = "Customer-managed unplanned failover",
+                });
+
+                SetupJsonBlob(Constants.FilesChangeFeed.ResetLatestJsonPath, pointerJson);
+                SetupJsonBlob(markerPath, markerJson);
+            }
+
+            private void SetupJsonBlob(string path, string json)
+            {
+                Mock<BlobClient> blob = new Mock<BlobClient>(MockBehavior.Loose);
+                Container.Setup(c => c.GetBlobClient(path)).Returns(blob.Object);
+                byte[] bytes = Encoding.UTF8.GetBytes(json);
+                blob.Setup(b => b.DownloadStreamingAsync(
+                        It.IsAny<BlobDownloadOptions>(),
+                        It.IsAny<CancellationToken>()))
+                    .Returns(() => Task.FromResult(Response.FromValue(
+                        BlobsModelFactory.BlobDownloadStreamingResult(content: new MemoryStream(bytes)),
+                        (Response)null)));
+                blob.Setup(b => b.DownloadStreaming(
+                        It.IsAny<BlobDownloadOptions>(),
+                        It.IsAny<CancellationToken>()))
+                    .Returns(() => Response.FromValue(
+                        BlobsModelFactory.BlobDownloadStreamingResult(content: new MemoryStream(bytes)),
+                        (Response)null));
             }
 
             /// <summary>
