@@ -3,7 +3,6 @@
 
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -23,7 +22,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary>
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
-    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))] // disable convvenience overload
+    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))] // Keep the typed streaming convenience overload.
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -109,22 +108,20 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </returns>
 #pragma warning disable AZC0004 // Streaming APIs are async-only.
 #pragma warning disable AZC0015 // IAsyncEnumerable<T> is the temporary streaming convenience shape.
-    [ForwardsClientCalls(true)]
+        [ForwardsClientCalls(true)]
         public virtual async IAsyncEnumerable<SseItem<KnowledgeBaseRetrievalStreamEvent>> RetrieveStreamAsync(
-            KnowledgeBaseRetrievalRequest retrievalRequest,
-            string querySourceAuthorization = default,
-            string queryWorkIQSourceAuthorization = default,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+                KnowledgeBaseRetrievalRequest retrievalRequest,
+                string querySourceAuthorization = default,
+                string queryWorkIQSourceAuthorization = default,
+                [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-            AsyncStreamingClientResult<SseItem<BinaryData>> result = await RetrieveStreamAsync(
+            AsyncStreamingResult<SseItem<BinaryData>> result = await RetrieveStreamAsync(
                 retrievalRequest,
                 querySourceAuthorization,
                 queryWorkIQSourceAuthorization,
                 cancellationToken.ToRequestContext()).ConfigureAwait(false);
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
             await using (((IAsyncDisposable)result).ConfigureAwait(false))
             {

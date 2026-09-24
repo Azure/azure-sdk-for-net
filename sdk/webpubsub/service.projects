@@ -1,0 +1,5 @@
+<Project>
+  <ItemGroup Condition="'$(ExcludeWebPubSubChatTests)' == 'true'">
+    <ProjectReference Remove="$(MSBuildThisFileDirectory)Azure.Messaging.WebPubSub.Chat\tests\**\*.csproj" />
+  </ItemGroup>
+</Project>

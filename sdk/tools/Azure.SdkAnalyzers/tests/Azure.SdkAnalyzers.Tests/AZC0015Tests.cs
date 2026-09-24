@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis.Testing;
 using NUnit.Framework;
 using Verifier = Azure.SdkAnalyzers.Tests.AzureAnalyzerVerifier<Azure.SdkAnalyzers.ClientMethodReturnTypeAnalyzer>;
 
@@ -12,6 +13,7 @@ namespace Azure.SdkAnalyzers.Tests
         private static string Wrap(string member) => $@"
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure;
 
@@ -29,6 +31,10 @@ namespace RandomNamespace
         [TestCase("public Task<int> {|AZC0015:FooAsync|}() { return default; }")]
         [TestCase("public Task<Pageable<int>> {|AZC0015:FooAsync|}() { return default; }")]
         [TestCase("public Task<AsyncPageable<int>> {|AZC0015:FooAsync|}() { return default; }")]
+        [TestCase("public Task<CollectionResult> {|AZC0015:FooAsync|}() { return default; }")]
+        [TestCase("public Task<AsyncCollectionResult> {|AZC0015:FooAsync|}() { return default; }")]
+        [TestCase("public Task<CollectionResult<int>> {|AZC0015:FooAsync|}() { return default; }")]
+        [TestCase("public Task<AsyncCollectionResult<int>> {|AZC0015:FooAsync|}() { return default; }")]
         public async Task AZC0015ProducedForInvalidReturnTypes(string member)
         {
             await Verifier.VerifyAnalyzerAsync(Wrap(member));
@@ -53,6 +59,8 @@ namespace RandomNamespace
         [TestCase("public ClientResult<int> FooAsync() { return default; }")]
         [TestCase("public Task<ClientResult> FooAsync() { return default; }")]
         [TestCase("public Task<ClientResult<int>> FooAsync() { return default; }")]
+        [TestCase("public CollectionResult FooAsync() { return default; }")]
+        [TestCase("public AsyncCollectionResult FooAsync() { return default; }")]
         [TestCase("public CollectionResult<int> FooAsync() { return default; }")]
         [TestCase("public AsyncCollectionResult<int> FooAsync() { return default; }")]
         public async Task AZC0015NotProducedForSystemClientModelReturnTypes(string member)
@@ -60,15 +68,87 @@ namespace RandomNamespace
             await Verifier.VerifyAnalyzerAsync(Wrap(member));
         }
 
+        [TestCase("ClientResult", "Task<ClientResult>")]
+        [TestCase("ClientResult<int>", "Task<ClientResult<int>>")]
+        [TestCase("CollectionResult", "AsyncCollectionResult")]
+        [TestCase("CollectionResult<int>", "AsyncCollectionResult<int>")]
+        [TestCase("Response<int>", "Task<Response<int>>")]
+        [TestCase("Pageable<int>", "AsyncPageable<int>")]
+        public async Task AZC0015NotProducedForMatchingSyncAndAsyncMethods(string syncReturnType, string asyncReturnType)
+        {
+            await Verifier.VerifyAnalyzerAsync(Wrap($@"
+        public virtual {syncReturnType} GetItems(System.Threading.CancellationToken cancellationToken = default) => default;
+        public virtual {asyncReturnType} GetItemsAsync(System.Threading.CancellationToken cancellationToken = default) => default;"));
+        }
+
+        [TestCase("CollectionResult")]
+        [TestCase("AsyncCollectionResult")]
+        [TestCase("CollectionResult<int>")]
+        [TestCase("AsyncCollectionResult<int>")]
+        public async Task AZC0015NotProducedForDerivedCollectionResults(string returnType)
+        {
+            var test = Verifier.CreateAnalyzer(Wrap($@"
+        public abstract class IntermediateResult<T> : {returnType} {{ }}
+        public abstract class DerivedResult : IntermediateResult<int> {{ }}
+
+        public virtual IntermediateResult<int> GetBaseAsync() => default;
+        public virtual DerivedResult GetDerivedAsync() => default;"));
+
+            // Inheritance requires the netstandard reference assembly even when the test runner targets .NET Framework.
+            string? nugetConfigFilePath = test.ReferenceAssemblies.NuGetConfigFilePath;
+            test.ReferenceAssemblies = ReferenceAssemblies.NetStandard.NetStandard20
+                .WithPackages(test.ReferenceAssemblies.Packages);
+            if (nugetConfigFilePath != null)
+            {
+                test.ReferenceAssemblies = test.ReferenceAssemblies.WithNuGetConfigFilePath(nugetConfigFilePath);
+            }
+
+            await test.RunAsync();
+        }
+
+        [TestCase("OtherNamespace", "CollectionResult")]
+        [TestCase("OtherNamespace", "AsyncCollectionResult")]
+        [TestCase("System.ClientModel.Primitives.Other", "CollectionResult")]
+        [TestCase("System.ClientModel.Primitives.Other", "AsyncCollectionResult")]
+        public async Task AZC0015ProducedForCollectionResultsInOtherNamespaces(string namespaceName, string typeName)
+        {
+            string code = Wrap($@"
+        public virtual {namespaceName}.{typeName} {{|AZC0015:FooAsync|}}() => default;") + $@"
+namespace {namespaceName}
+{{
+    public class {typeName} {{ }}
+}}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [TestCase("CollectionResult")]
+        [TestCase("AsyncCollectionResult")]
+        public async Task AZC0015ProducedForGenericCollectionLookalikesInPrimitivesNamespace(string typeName)
+        {
+            string code = Wrap($@"
+        public virtual System.ClientModel.Primitives.{typeName}<int> {{|AZC0015:FooAsync|}}() => default;") + $@"
+namespace System.ClientModel.Primitives
+{{
+    public class {typeName}<T> {{ }}
+}}";
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [TestCase("public System.ClientModel.AsyncStreamingResult<int> FooAsync() { return default; }")]
+        [TestCase("public Task<System.ClientModel.AsyncStreamingResult<int>> FooAsync() { return default; }")]
         [TestCase("public System.ClientModel.AsyncStreamingClientResult<int> FooAsync() { return default; }")]
         [TestCase("public Task<System.ClientModel.AsyncStreamingClientResult<int>> FooAsync() { return default; }")]
-        public async Task AZC0015NotProducedForAsyncStreamingClientResult(string member)
+        public async Task AZC0015NotProducedForAsyncStreamingResult(string member)
         {
             string code = $@"
 using System.Threading.Tasks;
 
 namespace System.ClientModel
 {{
+    public sealed class AsyncStreamingResult<T>
+    {{
+    }}
+
     public sealed class AsyncStreamingClientResult<T>
     {{
     }}

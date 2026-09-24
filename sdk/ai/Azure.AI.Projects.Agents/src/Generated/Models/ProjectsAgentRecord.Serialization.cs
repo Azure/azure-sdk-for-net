@@ -95,6 +95,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.ToString());
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("configuration_state"u8);
+                writer.WriteStringValue(ConfigurationState.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(StateSource))
             {
                 writer.WritePropertyName("state_source"u8);
@@ -178,6 +183,7 @@ namespace Azure.AI.Projects.Agents
             string id = default;
             string name = default;
             AgentState state = default;
+            AgentState configurationState = default;
             AgentStateSource? stateSource = default;
             AgentObjectVersions versions = default;
             AgentEndpointConfiguration agentEndpoint = default;
@@ -207,6 +213,11 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("state"u8))
                 {
                     state = new AgentState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("configuration_state"u8))
+                {
+                    configurationState = new AgentState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state_source"u8))
@@ -287,6 +298,7 @@ namespace Azure.AI.Projects.Agents
                 id,
                 name,
                 state,
+                configurationState,
                 stateSource,
                 versions,
                 agentEndpoint,

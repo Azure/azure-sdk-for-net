@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            SlotConfigNames properties = default;
+            SlotConfigNamesProperties properties = default;
             string kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService
                     {
                         continue;
                     }
-                    properties = SlotConfigNames.DeserializeSlotConfigNames(prop.Value, options);
+                    properties = SlotConfigNamesProperties.DeserializeSlotConfigNamesProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))

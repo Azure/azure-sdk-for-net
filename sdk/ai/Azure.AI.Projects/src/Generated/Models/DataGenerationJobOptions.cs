@@ -20,23 +20,19 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobOptions"/>. </summary>
         /// <param name="type"> The data generation job type. </param>
-        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
-        private protected DataGenerationJobOptions(DataGenerationJobKind @type, int maxSamples)
+        private protected DataGenerationJobOptions(DataGenerationJobKind @type)
         {
             Type = @type;
-            MaxSamples = maxSamples;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobOptions"/>. </summary>
         /// <param name="type"> The data generation job type. </param>
-        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJobOptions(DataGenerationJobKind @type, int maxSamples, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJobOptions(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
-            MaxSamples = maxSamples;
             TrainSplit = trainSplit;
             ModelOptions = modelOptions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -44,9 +40,6 @@ namespace Azure.AI.Projects
 
         /// <summary> The data generation job type. </summary>
         internal DataGenerationJobKind Type { get; set; }
-
-        /// <summary> Maximum number of samples to generate. </summary>
-        public int MaxSamples { get; set; }
 
         /// <summary> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </summary>
         public float? TrainSplit { get; set; }

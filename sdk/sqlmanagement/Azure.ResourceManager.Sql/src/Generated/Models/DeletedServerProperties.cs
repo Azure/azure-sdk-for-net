@@ -27,14 +27,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="version"> The version of the deleted server. </param>
         /// <param name="deletedOn"> The deletion time of the deleted server. </param>
         /// <param name="originalId"> The original ID of the server before deletion. </param>
+        /// <param name="originalResourceGroup"> The resource group of the original server before deletion. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
+        /// <param name="scheduledPurgeOn"> The date and time when the deleted server will be permanently deleted (purged). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedServerProperties(string version, DateTimeOffset? deletedOn, ResourceIdentifier originalId, string fullyQualifiedDomainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedServerProperties(string version, DateTimeOffset? deletedOn, ResourceIdentifier originalId, string originalResourceGroup, string fullyQualifiedDomainName, DateTimeOffset? scheduledPurgeOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             DeletedOn = deletedOn;
             OriginalId = originalId;
+            OriginalResourceGroup = originalResourceGroup;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
+            ScheduledPurgeOn = scheduledPurgeOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,8 +54,16 @@ namespace Azure.ResourceManager.Sql.Models
         [WirePath("originalId")]
         public ResourceIdentifier OriginalId { get; }
 
+        /// <summary> The resource group of the original server before deletion. </summary>
+        [WirePath("originalResourceGroup")]
+        public string OriginalResourceGroup { get; }
+
         /// <summary> The fully qualified domain name of the server. </summary>
         [WirePath("fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName { get; }
+
+        /// <summary> The date and time when the deleted server will be permanently deleted (purged). </summary>
+        [WirePath("scheduledPurgeTime")]
+        public DateTimeOffset? ScheduledPurgeOn { get; }
     }
 }

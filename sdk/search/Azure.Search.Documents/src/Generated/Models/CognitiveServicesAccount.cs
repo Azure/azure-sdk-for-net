@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
     /// Base type for describing any Azure AI service resource attached to a skillset.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DefaultCognitiveServicesAccount"/>, <see cref="CognitiveServicesAccountKey"/>, <see cref="AIServicesAccountKey"/>, and <see cref="AIServicesAccountIdentity"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AIServicesAccountIdentity"/>, <see cref="AIServicesAccountKey"/>, <see cref="CognitiveServicesAccountKey"/>, and <see cref="DefaultCognitiveServicesAccount"/>.
     /// </summary>
     public partial class CognitiveServicesAccount
     {

@@ -30,6 +30,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The unique identifier of the agent. </param>
         /// <param name="name"> The name of the agent. </param>
         /// <param name="state"> The operational state of the agent. Controls whether the agent endpoint accepts or rejects requests. </param>
+        /// <param name="configurationState"> The administrative configuration state of the agent. This reflects whether the agent was explicitly enabled or disabled, independently of identity-derived operational state. </param>
         /// <param name="stateSource"> The source of the agent's operational state. When the agent is disabled, indicates where the disabled state originates from. Empty when not derived from a specific source. </param>
         /// <param name="versions"> The latest version of the agent. </param>
         /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
@@ -39,12 +40,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="blueprintReference"> The blueprint for the agent. </param>
         /// <param name="agentCard"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentRecord(string @object, string id, string name, AgentState state, AgentStateSource? stateSource, AgentObjectVersions versions, AgentEndpointConfiguration agentEndpoint, DigitalWorkerType? digitalWorkerType, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentRecord(string @object, string id, string name, AgentState state, AgentState configurationState, AgentStateSource? stateSource, AgentObjectVersions versions, AgentEndpointConfiguration agentEndpoint, DigitalWorkerType? digitalWorkerType, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Id = id;
             Name = name;
             State = state;
+            ConfigurationState = configurationState;
             StateSource = stateSource;
             Versions = versions;
             AgentEndpoint = agentEndpoint;
@@ -64,6 +66,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The operational state of the agent. Controls whether the agent endpoint accepts or rejects requests. </summary>
         public AgentState State { get; }
+
+        /// <summary> The administrative configuration state of the agent. This reflects whether the agent was explicitly enabled or disabled, independently of identity-derived operational state. </summary>
+        public AgentState ConfigurationState { get; }
 
         /// <summary> The source of the agent's operational state. When the agent is disabled, indicates where the disabled state originates from. Empty when not derived from a specific source. </summary>
         public AgentStateSource? StateSource { get; }
