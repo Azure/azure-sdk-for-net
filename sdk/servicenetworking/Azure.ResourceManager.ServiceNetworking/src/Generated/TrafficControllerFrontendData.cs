@@ -52,6 +52,23 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
+        /// <summary> Whether public network access is allowed for the frontend. Enabled indicates a public frontend; Disabled indicates a private frontend. </summary>
+        public TrafficControllerPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
+
         /// <summary> Frontend Security Policy Configuration. </summary>
         public SecurityPolicyConfigurations SecurityPolicyConfigurations
         {
@@ -75,6 +92,23 @@ namespace Azure.ResourceManager.ServiceNetworking
             get
             {
                 return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID of the Association. </summary>
+        public ResourceIdentifier AssociationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssociationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendProperties();
+                }
+                Properties.AssociationId = value;
             }
         }
     }

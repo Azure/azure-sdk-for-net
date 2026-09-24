@@ -11,15 +11,15 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The summarized provisioning result of an occurrence. </summary>
+    /// <summary> Summary of results for a scheduled action occurrence. </summary>
     public partial class OccurrenceResultSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceResultSummary"/>. </summary>
-        /// <param name="total"> The total number of resources that the occurrence was supposed to act on. </param>
-        /// <param name="statuses"> The summarized status of the resources. </param>
+        /// <param name="total"> The number of resources targeted by the occurrence. </param>
+        /// <param name="statuses"> Resource counts grouped by result code. </param>
         internal OccurrenceResultSummary(int total, IEnumerable<ResourceResultSummary> statuses)
         {
             Total = total;
@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceResultSummary"/>. </summary>
-        /// <param name="total"> The total number of resources that the occurrence was supposed to act on. </param>
-        /// <param name="statuses"> The summarized status of the resources. </param>
+        /// <param name="total"> The number of resources targeted by the occurrence. </param>
+        /// <param name="statuses"> Resource counts grouped by result code. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OccurrenceResultSummary(int total, IList<ResourceResultSummary> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The total number of resources that the occurrence was supposed to act on. </summary>
+        /// <summary> The number of resources targeted by the occurrence. </summary>
         public int Total { get; }
 
-        /// <summary> The summarized status of the resources. </summary>
+        /// <summary> Resource counts grouped by result code. </summary>
         public IList<ResourceResultSummary> Statuses { get; }
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -161,7 +162,14 @@ namespace Azure.AI.Projects.Agents
                     Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                        }
                     }
                     toolConfigs = dictionary;
                     continue;
@@ -201,7 +209,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new A2AToolboxTool(

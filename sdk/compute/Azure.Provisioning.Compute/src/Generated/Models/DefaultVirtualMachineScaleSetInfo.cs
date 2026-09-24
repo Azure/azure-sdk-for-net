@@ -47,7 +47,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return DefaultVirtualMachineScaleSet.Id;
+                return DefaultVirtualMachineScaleSet is null ? default : DefaultVirtualMachineScaleSet.Id;
             }
         }
 

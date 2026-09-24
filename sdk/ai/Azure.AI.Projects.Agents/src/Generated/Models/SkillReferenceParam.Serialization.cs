@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The SkillReferenceParam. </summary>
-    internal partial class SkillReferenceParam : ContainerSkill, IJsonModel<SkillReferenceParam>
+    public partial class SkillReferenceParam : ContainerSkill, IJsonModel<SkillReferenceParam>
     {
         /// <summary> Initializes a new instance of <see cref="SkillReferenceParam"/> for deserialization. </summary>
         internal SkillReferenceParam()
@@ -134,7 +134,7 @@ namespace OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new SkillReferenceParam(@type, additionalBinaryDataProperties, skillId, version);

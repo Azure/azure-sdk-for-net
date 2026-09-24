@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="productCode"> Product UPN for the credit type. </param>
         /// <param name="reason"> The reason for the credit. Not required if not applicable. </param>
         /// <param name="credit"> The entire investment amount for the credit contract, including currency and amount. </param>
-        /// <param name="startOn"> Start DateTime. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="startsOn"> Start DateTime. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="policies"> Credit breakdown item representing a milestone, line-item, or no-charge service. </param>
         /// <param name="billingAccountResourceId"> Fully-qualified identifier of the billing account where the benefit is applied. Present only for Enterprise Agreement customers. </param>
         /// <param name="billingProfileResourceId"> Fully-qualified identifier of the billing profile where the benefit is applied. Present only for Field-led or Customer-led customers. </param>
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="customerId"> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. Format is /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the resource. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/{benefitType}/{benefitName}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreditProperties(CreditStatus? status, string productCode, CreditReason reason, BillingBenefitsCommitment credit, DateTimeOffset? startOn, DateTimeOffset? endOn, CreditPolicies policies, ResourceIdentifier billingAccountResourceId, ResourceIdentifier billingProfileResourceId, IList<CreditBreakdownItem> breakdown, BillingBenefitsProvisioningState? provisioningState, string systemId, string customerId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreditProperties(CreditStatus? status, string productCode, CreditReason reason, BillingBenefitsCommitment credit, DateTimeOffset? startsOn, DateTimeOffset? endsOn, CreditPolicies policies, ResourceIdentifier billingAccountResourceId, ResourceIdentifier billingProfileResourceId, IList<CreditBreakdownItem> breakdown, BillingBenefitsProvisioningState? provisioningState, string systemId, string customerId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ProductCode = productCode;
             Reason = reason;
             Credit = credit;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Policies = policies;
             BillingAccountResourceId = billingAccountResourceId;
             BillingProfileResourceId = billingProfileResourceId;
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsCommitment Credit { get; set; }
 
         /// <summary> Start DateTime. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End DateTime in UTC. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Credit breakdown item representing a milestone, line-item, or no-charge service. </summary>
         public CreditPolicies Policies { get; set; }

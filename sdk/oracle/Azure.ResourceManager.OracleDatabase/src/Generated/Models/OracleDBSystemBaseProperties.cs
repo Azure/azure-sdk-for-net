@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DisplayName = displayName;
             InitialDataStorageSizeInGb = initialDataStorageSizeInGb;
             DataStorageSizeInGbs = dataStorageSizeInGbs;
-            DbSystemOptions = dbSystemOptions;
+            DBSystemOptions = dbSystemOptions;
             DiskRedundancy = diskRedundancy;
             DomainV2 = domainV2;
             GridImageOcid = gridImageOcid;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public int? DataStorageSizeInGbs { get; }
 
         /// <summary> The DB system options. </summary>
-        internal OracleDBSystemOptions DbSystemOptions { get; set; }
+        internal OracleDBSystemOptions DBSystemOptions { get; set; }
 
         /// <summary> The type of redundancy configured for the DB system. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. </summary>
         public DBSystemDiskRedundancyType? DiskRedundancy { get; set; }

@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new ServerPortMatchCondition. </summary>
         public ServerPortMatchCondition()
         {
+            TypeName.Assign(DeliveryRuleConditionParametersType.DeliveryRuleServerPortConditionParameters);
         }
 
         /// <summary> Gets or sets the ServerPortOperator. </summary>
@@ -86,7 +87,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleServerPortConditionParameters");
             _serverPortOperator = DefineProperty<ServerPortOperator>(nameof(ServerPortOperator), new string[] { "operator" }, isRequired: true);
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });
             _matchValues = DefineListProperty<string>(nameof(MatchValues), new string[] { "matchValues" });

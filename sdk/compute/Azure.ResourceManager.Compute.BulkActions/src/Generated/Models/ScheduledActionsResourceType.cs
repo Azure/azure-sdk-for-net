@@ -11,13 +11,13 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The type of resource being targeted. </summary>
+    /// <summary> The type of compute resource targeted by the scheduled action. </summary>
     public readonly partial struct ScheduledActionsResourceType : IEquatable<ScheduledActionsResourceType>
     {
         private readonly string _value;
-        /// <summary> Resources defined are Virtual Machines. </summary>
+        /// <summary> Azure virtual machines. </summary>
         private const string VirtualMachineValue = "VirtualMachine";
-        /// <summary> Resources defined are Virtual Machines Scale Sets. </summary>
+        /// <summary> Azure Virtual Machine Scale Sets. </summary>
         private const string VirtualMachineScaleSetValue = "VirtualMachineScaleSet";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsResourceType"/>. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Resources defined are Virtual Machines. </summary>
+        /// <summary> Azure virtual machines. </summary>
         public static ScheduledActionsResourceType VirtualMachine { get; } = new ScheduledActionsResourceType(VirtualMachineValue);
 
-        /// <summary> Resources defined are Virtual Machines Scale Sets. </summary>
+        /// <summary> Azure Virtual Machine Scale Sets. </summary>
         public static ScheduledActionsResourceType VirtualMachineScaleSet { get; } = new ScheduledActionsResourceType(VirtualMachineScaleSetValue);
 
         /// <summary> Determines if two <see cref="ScheduledActionsResourceType"/> values are the same. </summary>

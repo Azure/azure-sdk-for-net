@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -94,6 +95,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(MaintenanceWindowId))
+            {
+                writer.WritePropertyName("maintenanceWindowId"u8);
+                writer.WriteStringValue(MaintenanceWindowId);
+            }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
@@ -143,6 +149,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             IList<ContainerServiceTimeInWeek> timesInWeek = default;
             IList<ContainerServiceTimeSpan> notAllowedTimes = default;
+            ResourceIdentifier maintenanceWindowId = default;
             ContainerServiceMaintenanceWindow maintenanceWindow = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -175,6 +182,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     notAllowedTimes = array;
                     continue;
                 }
+                if (prop.NameEquals("maintenanceWindowId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maintenanceWindowId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("maintenanceWindow"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -189,7 +205,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceConfigurationProperties(timesInWeek ?? new ChangeTrackingList<ContainerServiceTimeInWeek>(), notAllowedTimes ?? new ChangeTrackingList<ContainerServiceTimeSpan>(), maintenanceWindow, additionalBinaryDataProperties);
+            return new MaintenanceConfigurationProperties(timesInWeek ?? new ChangeTrackingList<ContainerServiceTimeInWeek>(), notAllowedTimes ?? new ChangeTrackingList<ContainerServiceTimeSpan>(), maintenanceWindowId, maintenanceWindow, additionalBinaryDataProperties);
         }
     }
 }

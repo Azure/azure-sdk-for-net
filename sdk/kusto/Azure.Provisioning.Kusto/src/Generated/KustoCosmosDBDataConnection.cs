@@ -21,6 +21,7 @@ namespace Azure.Provisioning.Kusto
         /// <param name="resourceVersion"> The resource API version. </param>
         public KustoCosmosDBDataConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, resourceVersion)
         {
+            Kind.Assign(DataConnectionKind.CosmosDb);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -187,7 +188,6 @@ namespace Azure.Provisioning.Kusto
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "CosmosDb");
             _properties = DefineModelProperty<CosmosDBDataConnectionProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

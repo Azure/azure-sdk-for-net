@@ -21,6 +21,7 @@ using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using Azure.Data.ConfidentialLedger.Tests.Helper;
 using Azure.Security.ConfidentialLedger.Certificate;
+using Azure.Security.ConfidentialLedger.Models;
 using NUnit.Framework;
 using static Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions;
 using static Azure.Security.ConfidentialLedger.Tests.ConfidentialLedgerClientLiveTests;
@@ -189,6 +190,76 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
+        }
+
+        [RecordedTest]
+        [LiveOnly]
+        public async Task PostAndGetReceipt_WithV2026_02_23_ReturnsApplicationClaim()
+        {
+            if (!TestEnvironment.IsApplicationClaimsLedgerConfigured)
+            {
+                Assert.Ignore(
+                    "Set CONFIDENTIALLEDGER_APPLICATION_CLAIMS_URL and " +
+                    "CONFIDENTIALLEDGER_APPLICATION_CLAIMS_IDENTITY_URL to run the application-claims live test.");
+            }
+
+            var identityClient = new ConfidentialLedgerCertificateClient(
+                TestEnvironment.ConfidentialLedgerApplicationClaimsIdentityUrl,
+                InstrumentClientOptions(new ConfidentialLedgerCertificateClientOptions()));
+            (X509Certificate2 Cert, string PEM) applicationClaimsServiceCert =
+                ConfidentialLedgerClient.GetIdentityServerTlsCert(
+                    TestEnvironment.ConfidentialLedgerApplicationClaimsUrl,
+                    new ConfidentialLedgerCertificateClientOptions(),
+                    identityClient);
+
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await SetProxyOptionsAsync(
+                    new ProxyOptions
+                    {
+                        Transport = new ProxyOptionsTransport
+                        {
+                            TLSValidationCert = applicationClaimsServiceCert.PEM,
+                            AllowAutoRedirect = true
+                        }
+                    });
+            }
+
+            var v2026Client = InstrumentClient(
+                new ConfidentialLedgerClient(
+                    TestEnvironment.ConfidentialLedgerApplicationClaimsUrl,
+                    credential: Credential,
+                    clientCertificate: null,
+                    ledgerOptions: InstrumentClientOptions(
+                        new ConfidentialLedgerClientOptions(ServiceVersion.V2026_02_23)
+                        {
+                            CertificateEndpoint = TestEnvironment.ConfidentialLedgerApplicationClaimsIdentityUrl,
+                        }),
+                    identityServiceCert: applicationClaimsServiceCert.Cert));
+
+            var operation = await v2026Client.PostLedgerEntryAsync(
+                waitUntil: WaitUntil.Completed,
+                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
+            string transactionId = operation.Id;
+            Assert.NotNull(transactionId);
+
+            Response<TransactionReceipt> receiptResponse = null;
+            for (int attempt = 0; attempt < 10; attempt++)
+            {
+                receiptResponse = await v2026Client.GetReceiptAsync(transactionId).ConfigureAwait(false);
+                if (receiptResponse.Value.TransactionId == transactionId &&
+                    receiptResponse.Value.ApplicationClaims.Count > 0)
+                {
+                    break;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(1)).ConfigureAwait(false);
+            }
+
+            Assert.AreEqual((int)HttpStatusCode.OK, receiptResponse.GetRawResponse().Status);
+            Assert.AreEqual(transactionId, receiptResponse.Value.TransactionId);
+            Assert.IsNotEmpty(receiptResponse.Value.ApplicationClaims);
+            Assert.That(receiptResponse.Value.ApplicationClaims, Has.Some.Matches<ApplicationClaim>(
+                claim => claim.Kind == ApplicationClaimKind.LedgerEntry && claim.LedgerEntry != null));
         }
         #endregion
 

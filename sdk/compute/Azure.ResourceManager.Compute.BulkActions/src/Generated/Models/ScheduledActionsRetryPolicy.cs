@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Retry policy the scheduled action can pass. </summary>
+    /// <summary> Retry settings for a scheduled action operation. </summary>
     public partial class ScheduledActionsRetryPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsRetryPolicy"/>. </summary>
-        /// <param name="retryCount"> Retry count for the request. </param>
-        /// <param name="retryWindowInMinutes"> Retry window in minutes for the request. </param>
-        /// <param name="onFailureAction"> Action to take on failure. </param>
+        /// <param name="retryCount"> The maximum number of retry attempts. </param>
+        /// <param name="retryWindowInMinutes"> The time window, in minutes, during which retries can occur. </param>
+        /// <param name="onFailureAction"> The resource operation to retry after a failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ScheduledActionsRetryPolicy(int? retryCount, int? retryWindowInMinutes, ScheduledActionsResourceOperationType? onFailureAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Retry count for the request. </summary>
+        /// <summary> The maximum number of retry attempts. </summary>
         public int? RetryCount { get; set; }
 
-        /// <summary> Retry window in minutes for the request. </summary>
+        /// <summary> The time window, in minutes, during which retries can occur. </summary>
         public int? RetryWindowInMinutes { get; set; }
 
-        /// <summary> Action to take on failure. </summary>
+        /// <summary> The resource operation to retry after a failure. </summary>
         public ScheduledActionsResourceOperationType? OnFailureAction { get; set; }
     }
 }

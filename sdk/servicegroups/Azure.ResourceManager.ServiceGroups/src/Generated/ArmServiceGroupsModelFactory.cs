@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.ServiceGroups.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmServiceGroupsModelFactory
     {
+        /// <summary> The serviceGroup details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -41,11 +42,12 @@ namespace Azure.ResourceManager.ServiceGroups.Models
 
         /// <param name="provisioningState"> The provisioning state of the serviceGroup. For example, Running. </param>
         /// <param name="displayName"> The display name of the serviceGroup. For example, ServiceGroupTest1. </param>
+        /// <param name="attributesCriticality"> The criticality designation of the service group. Valid values range from 0 through 4. </param>
         /// <param name="parentResourceId"> The fully qualified ID of the parent serviceGroup.  For example, '/providers/Microsoft.Management/serviceGroups/TestServiceGroup'. </param>
         /// <returns> A new <see cref="Models.ServiceGroupProperties"/> instance for mocking. </returns>
-        public static ServiceGroupProperties ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState = default, string displayName = default, ResourceIdentifier parentResourceId = default)
+        public static ServiceGroupProperties ServiceGroupProperties(ServiceGroupProvisioningState? provisioningState = default, string displayName = default, int? attributesCriticality = default, ResourceIdentifier parentResourceId = default)
         {
-            return new ServiceGroupProperties(provisioningState, displayName, parentResourceId is null ? default : new ParentServiceGroupProperties(parentResourceId, default), default);
+            return new ServiceGroupProperties(provisioningState, displayName, attributesCriticality is null ? default : new ServiceGroupAttributes(attributesCriticality, default), parentResourceId is null ? default : new ParentServiceGroupProperties(parentResourceId, default), default);
         }
     }
 }

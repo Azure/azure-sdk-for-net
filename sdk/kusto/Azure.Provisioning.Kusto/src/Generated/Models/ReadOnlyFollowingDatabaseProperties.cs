@@ -151,7 +151,7 @@ namespace Azure.Provisioning.Kusto
         {
             get
             {
-                return Statistics.Size;
+                return Statistics is null ? default : Statistics.Size;
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.Provisioning.Kusto
         {
             get
             {
-                return SuspensionDetails.SuspensionStartsOn;
+                return SuspensionDetails is null ? default : SuspensionDetails.SuspensionStartsOn;
             }
         }
 

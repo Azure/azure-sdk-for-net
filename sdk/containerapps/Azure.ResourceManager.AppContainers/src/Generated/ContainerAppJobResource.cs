@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppJobApiVersion);
             _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobApiVersion ?? "2025-10-02-preview");
+            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Resumes a suspended job
+        /// Resumes execution for a suspended Container Apps job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Resumes a suspended job
+        /// Resumes execution for a suspended Container Apps job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Suspends a job
+        /// Suspends execution for a running Container Apps job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Suspends a job
+        /// Suspends execution for a running Container Apps job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -1237,7 +1237,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(client => new ContainerAppJobDetectorPropertyCollection(client, Id));
         }
 
-        /// <summary> Get the properties of a Container App Job. </summary>
+        /// <summary> Get the properties for a given Container App Job. </summary>
         /// <param name="apiName"> Proxy API Name for Container App Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>
@@ -1250,7 +1250,7 @@ namespace Azure.ResourceManager.AppContainers
             return await GetContainerAppJobDetectorProperties().GetAsync(apiName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get the properties of a Container App Job. </summary>
+        /// <summary> Get the properties for a given Container App Job. </summary>
         /// <param name="apiName"> Proxy API Name for Container App Job. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiName"/> is null. </exception>

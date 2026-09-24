@@ -77,7 +77,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.RefreshedOn;
+                return Properties is null ? default : Properties.RefreshedOn;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.StatusBanners;
+                return Properties is null ? default : Properties.StatusBanners;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.StatusActiveEvents;
+                return Properties is null ? default : Properties.StatusActiveEvents;
             }
         }
 

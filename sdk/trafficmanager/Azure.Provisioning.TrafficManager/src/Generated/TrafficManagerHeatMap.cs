@@ -82,7 +82,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties.StartsOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties.EndsOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties.Endpoints;
+                return Properties is null ? default : Properties.Endpoints;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties.TrafficFlows;
+                return Properties is null ? default : Properties.TrafficFlows;
             }
         }
 

@@ -81,7 +81,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         {
             get
             {
-                return Properties.IsMultipleInstancesAllowed;
+                return Properties is null ? default : Properties.IsMultipleInstancesAllowed;
             }
         }
 
@@ -90,7 +90,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
         {
             get
             {
-                return Properties.DefaultReleaseNamespace;
+                return Properties is null ? default : Properties.DefaultReleaseNamespace;
             }
         }
 

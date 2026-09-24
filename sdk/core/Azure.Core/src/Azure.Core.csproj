@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.63.0-beta.1</Version>
+    <Version>1.63.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.62.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
@@ -50,6 +50,8 @@
 
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
+    <Compile Include="..\..\System.ClientModel\src\Internal\SseReconnectingStream.cs"
+             Link="Internal\SseReconnectingStream.cs" />
     <Compile Include="Shared\AppContextSwitchHelper.cs" />
     <Compile Include="Shared\ArrayBufferWriter.cs" />
     <Compile Include="Shared\AsyncLockWithValue.cs" />

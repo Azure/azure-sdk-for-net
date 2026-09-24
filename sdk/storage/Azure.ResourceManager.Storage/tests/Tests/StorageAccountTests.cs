@@ -436,6 +436,69 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        public async Task CreateAndUpdateStorageAccountDelegationSasPolicy()
+        {
+            string accountName = await CreateValidAccountNameAsync(namePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters();
+            parameters.AllowCrossTenantDelegationSas = true;
+            parameters.SasPolicy = new StorageAccountSasPolicy("1.00:00:00", ExpirationAction.Log)
+            {
+                IsUserBoundUserDelegationSasRequired = true,
+                RequireUserBoundUserDelegationSasAction = PolicyViolationAction.Log
+            };
+
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                accountName,
+                parameters)).Value;
+
+            account = await account.GetAsync();
+            Assert.IsTrue(account.Data.AllowCrossTenantDelegationSas);
+            Assert.AreEqual("1.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
+            Assert.AreEqual(ExpirationAction.Log, account.Data.SasPolicy.ExpirationAction);
+            Assert.IsTrue(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
+            Assert.AreEqual(PolicyViolationAction.Log, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
+
+            var patch = new StorageAccountPatch
+            {
+                AllowCrossTenantDelegationSas = false,
+                SasPolicy = new StorageAccountSasPolicy("2.00:00:00", ExpirationAction.Block)
+                {
+                    IsUserBoundUserDelegationSasRequired = true,
+                    RequireUserBoundUserDelegationSasAction = PolicyViolationAction.Block
+                }
+            };
+            account = await account.UpdateAsync(patch);
+
+            account = await account.GetAsync();
+            Assert.IsFalse(account.Data.AllowCrossTenantDelegationSas);
+            Assert.AreEqual("2.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
+            Assert.AreEqual(ExpirationAction.Block, account.Data.SasPolicy.ExpirationAction);
+            Assert.IsTrue(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
+            Assert.AreEqual(PolicyViolationAction.Block, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
+
+            patch = new StorageAccountPatch
+            {
+                SasPolicy = new StorageAccountSasPolicy("2.00:00:00", ExpirationAction.Log)
+                {
+                    IsUserBoundUserDelegationSasRequired = false,
+                    RequireUserBoundUserDelegationSasAction = PolicyViolationAction.None
+                }
+            };
+            account = await account.UpdateAsync(patch);
+
+            account = await account.GetAsync();
+            Assert.IsFalse(account.Data.AllowCrossTenantDelegationSas);
+            Assert.AreEqual("2.00:00:00", account.Data.SasPolicy.SasExpirationPeriod);
+            Assert.AreEqual(ExpirationAction.Log, account.Data.SasPolicy.ExpirationAction);
+            Assert.IsFalse(account.Data.SasPolicy.IsUserBoundUserDelegationSasRequired);
+            Assert.AreEqual(PolicyViolationAction.None, account.Data.SasPolicy.RequireUserBoundUserDelegationSasAction);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task UpdateStorageAccountMultipleProperties()
         {
             //create storage account

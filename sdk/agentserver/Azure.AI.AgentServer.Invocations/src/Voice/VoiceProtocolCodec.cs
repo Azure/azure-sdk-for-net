@@ -8,6 +8,8 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 
+#pragma warning disable AAAS001 // Internal implementation of the experimental Voice relay.
+
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
 internal sealed class VoiceProtocolException : Exception
@@ -951,3 +953,5 @@ internal static partial class VoiceProtocolCodec
 
     private sealed class FrameLimitExceededException : Exception;
 }
+
+#pragma warning restore AAAS001

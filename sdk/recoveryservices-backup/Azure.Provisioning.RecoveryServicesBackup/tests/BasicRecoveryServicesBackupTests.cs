@@ -67,24 +67,24 @@ public class BasicRecoveryServicesBackupTests
               location: location
               properties: {
                 backupManagementType: 'AzureIaasVM'
+                retentionPolicy: {
+                  dailySchedule: {
+                    retentionDuration: {
+                      count: 7
+                      durationType: 'Days'
+                    }
+                    retentionTimes: [
+                      '2026-01-01T02:00:00.0000000Z'
+                    ]
+                  }
+                  retentionPolicyType: 'LongTermRetentionPolicy'
+                }
                 schedulePolicy: {
                   schedulePolicyType: 'SimpleSchedulePolicy'
                   scheduleRunFrequency: 'Daily'
                   scheduleRunTimes: [
                     '2026-01-01T02:00:00.0000000Z'
                   ]
-                }
-                retentionPolicy: {
-                  retentionPolicyType: 'LongTermRetentionPolicy'
-                  dailySchedule: {
-                    retentionTimes: [
-                      '2026-01-01T02:00:00.0000000Z'
-                    ]
-                    retentionDuration: {
-                      count: 7
-                      durationType: 'Days'
-                    }
-                  }
                 }
                 timeZone: 'UTC'
               }
