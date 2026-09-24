@@ -193,14 +193,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGroupsMaintenanceConfigurationsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ResourceGroupsMaintenanceConfigurationsResource> GetResourceGroupsMaintenanceConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsMaintenanceConfigurationsListAsyncCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations"), data => new MaintenanceConfigurationResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceConfigurationData, ResourceGroupsMaintenanceConfigurationsResource>(new MaintenanceConfigurationsMaintenanceConfigurationsListAsyncCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetResourceGroupsMaintenanceConfigurations"), data => new ResourceGroupsMaintenanceConfigurationsResource(Client, data));
         }
 
         /// <summary>
@@ -221,70 +221,14 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ResourceGroupsMaintenanceConfigurationsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ResourceGroupsMaintenanceConfigurationsResource> GetResourceGroupsMaintenanceConfigurations(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceConfigurationData, MaintenanceConfigurationResource>(new MaintenanceConfigurationsMaintenanceConfigurationsListCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceConfigurations"), data => new MaintenanceConfigurationResource(Client, data));
-        }
-
-        /// <summary>
-        /// Get Configuration records within a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApplyUpdateOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceGroupApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceGroupApplyUpdateResource> GetMaintenanceGroupApplyUpdatesAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MaintenanceApplyUpdateData, MaintenanceGroupApplyUpdateResource>(new MaintenanceApplyUpdateGetAllAsyncCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceGroupApplyUpdates"), data => new MaintenanceGroupApplyUpdateResource(Client, data));
-        }
-
-        /// <summary>
-        /// Get Configuration records within a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApplyUpdateOperationGroup_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceGroupApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceGroupApplyUpdateResource> GetMaintenanceGroupApplyUpdates(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MaintenanceApplyUpdateData, MaintenanceGroupApplyUpdateResource>(new MaintenanceApplyUpdateGetAllCollectionResultOfT(MaintenanceApplyUpdateRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetMaintenanceGroupApplyUpdates"), data => new MaintenanceGroupApplyUpdateResource(Client, data));
+            return new PageableWrapper<MaintenanceConfigurationData, ResourceGroupsMaintenanceConfigurationsResource>(new MaintenanceConfigurationsMaintenanceConfigurationsListCollectionResultOfT(MaintenanceConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableMaintenanceSubscriptionResource.GetResourceGroupsMaintenanceConfigurations"), data => new ResourceGroupsMaintenanceConfigurationsResource(Client, data));
         }
     }
 }
