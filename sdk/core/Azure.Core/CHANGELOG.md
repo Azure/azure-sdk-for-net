@@ -4,9 +4,12 @@
 
 ### Features Added
 
-- The mTLS proof-of-possession APIs on `BearerTokenAuthenticationPolicy` and `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` are no longer experimental and no longer require `AZID0004` suppression.
-- Added mTLS proof-of-possession support to `ClientCertificateCredential`, including subject name and issuer certificate authentication configured with `SendCertificateChain`.
-- Added mTLS proof-of-possession support to the managed identity federated identity flow used by configured credentials, covering both managed identity assertion acquisition and client assertion token redemption. Set `DisableMtlsProofOfPossession` to `true` in the credential's JSON configuration to force bearer authentication for both exchanges.
+- Added opt-in mTLS proof-of-possession support to `ClientCertificateCredential`, including subject name and issuer certificate authentication configured with `SendCertificateChain`. First-party applications must also enable `Azure.Identity.EnableClientCertificateMtlsProofOfPossession` or `AZURE_IDENTITY_ENABLE_CLIENT_CERTIFICATE_MTLS_POP`.
+- Added opt-in mTLS proof-of-possession support to the managed identity federated identity flow used by configured credentials, covering both managed identity assertion acquisition and client assertion token redemption. Set `EnableMtlsProofOfPossession` to `true` in the credential's JSON configuration to enable it for both exchanges.
+
+### Breaking Changes
+
+- Renamed the experimental `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession` property and corresponding configuration setting to `EnableMtlsProofOfPossession`. mTLS proof-of-possession is now disabled by default and must be explicitly enabled.
 
 ### Bugs Fixed
 

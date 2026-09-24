@@ -302,7 +302,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         }
 
         [Test]
-        public void Constructor_WithChainedFederatedIdentitySource_CreatesPopCredential()
+        public void Constructor_WithChainedFederatedIdentitySource_EnableMtlsPop_CreatesPopCredential()
         {
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
@@ -314,6 +314,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
                     ["Credential:Sources:0:ManagedIdentityIdKind"] = "ClientId",
                     ["Credential:Sources:0:ManagedIdentityId"] = "test-mi-client-id",
                     ["Credential:Sources:0:AzureCloud"] = "public",
+                    ["Credential:Sources:0:EnableMtlsProofOfPossession"] = "true",
                 })
                 .Build();
 
@@ -333,7 +334,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
         }
 
         [Test]
-        public void Constructor_WithChainedFederatedIdentitySource_DisableMtlsPop_DoesNotCreatePopClient()
+        public void Constructor_WithChainedFederatedIdentitySource_Default_DoesNotCreatePopClient()
         {
             var config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
@@ -345,7 +346,6 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
                     ["Credential:Sources:0:ManagedIdentityIdKind"] = "ClientId",
                     ["Credential:Sources:0:ManagedIdentityId"] = "test-mi-client-id",
                     ["Credential:Sources:0:AzureCloud"] = "public",
-                    ["Credential:Sources:0:DisableMtlsProofOfPossession"] = "true",
                 })
                 .Build();
 
@@ -360,7 +360,7 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
             Assert.AreEqual(1, sources.Length);
             var assertionCredential = sources[0] as ClientAssertionCredential;
             Assert.IsNotNull(assertionCredential);
-            Assert.IsNull(assertionCredential.PopClient, "PopClient must not be created when DisableMtlsProofOfPossession is true.");
+            Assert.IsNull(assertionCredential.PopClient, "PopClient must not be created unless EnableMtlsProofOfPossession is true.");
             Assert.IsNotNull(assertionCredential.Client);
         }
 
