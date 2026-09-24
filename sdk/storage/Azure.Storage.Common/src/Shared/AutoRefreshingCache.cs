@@ -127,36 +127,6 @@ namespace Azure.Storage
         }
 
         /// <summary>
-        /// Initiates a background refresh of the cached value immediately, without waiting for
-        /// the next call to <see cref="GetAsync"/>. No-op if the cache is empty, the current
-        /// value cannot be served (failed or expired), or a background refresh is already in
-        /// flight. Concurrent <see cref="GetAsync"/> callers continue to receive the current
-        /// value; the new value is promoted on the next <see cref="GetAsync"/> after the
-        /// background acquire completes.
-        /// </summary>
-        public void ScheduleBackgroundRefresh()
-        {
-            TaskCompletionSource<TValue> backgroundTcs;
-            TValue current;
-
-            lock (_syncObj)
-            {
-                if (_state == null
-                    || _state.IsCurrentValueFailedOrExpired(DateTimeOffset.UtcNow)
-                    || _state.BackgroundValueTcs != null)
-                {
-                    return;
-                }
-
-                current = _state.CurrentValueTcs.Task.Result;
-                _state = _state.WithNewBackgroundValueTcs();
-                backgroundTcs = _state.BackgroundValueTcs;
-            }
-
-            _ = Task.Run(() => AcquireInBackgroundAsync(backgroundTcs, current, async: true));
-        }
-
-        /// <summary>
         /// Clears the cached value only if the currently cached value equals
         /// <paramref name="expectedValue"/>.
         /// The next call to <see cref="GetAsync"/> after a successful invalidation
