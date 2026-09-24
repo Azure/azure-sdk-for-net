@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary>
     /// The properties of the benefit recommendations.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SingleScopeBenefitRecommendationProperties"/> and <see cref="SharedScopeBenefitRecommendationProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SharedScopeBenefitRecommendationProperties"/> and <see cref="SingleScopeBenefitRecommendationProperties"/>.
     /// </summary>
     public abstract partial class BenefitRecommendationProperties
     {

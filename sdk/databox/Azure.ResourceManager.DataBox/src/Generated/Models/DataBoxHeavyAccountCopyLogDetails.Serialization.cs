@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataBoxHeavyAccountCopyLogDetails(copyLogDetailsType, additionalBinaryDataProperties, accountName, copyLogLink ?? new ChangeTrackingList<string>(), copyVerboseLogLink ?? new ChangeTrackingList<string>());
