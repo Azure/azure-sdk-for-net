@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Relationships
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ServiceGroupMemberRelationshipPropertiesV2 properties = default;
+            ServiceGroupMemberRelationshipProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Relationships
                     {
                         continue;
                     }
-                    properties = ServiceGroupMemberRelationshipPropertiesV2.DeserializeServiceGroupMemberRelationshipPropertiesV2(prop.Value, options);
+                    properties = ServiceGroupMemberRelationshipProperties.DeserializeServiceGroupMemberRelationshipProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

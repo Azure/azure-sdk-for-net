@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.Relationships.Mocking
         /// <param name="filter"> Filters the results by target resource type. Example: properties.metadata.targetType eq 'Microsoft.Compute/virtualMachines'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainsRelationship> GetByResourceGroupAsync(string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ContainsRelationship> GetByResourceGroupContainsRelationshipsAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainsRelationshipsGetByResourceGroupAsyncCollectionResultOfT(
+            return new ContainsRelationshipsGetByResourceGroupContainsRelationshipsAsyncCollectionResultOfT(
                 ContainsRelationshipsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 filter,
                 context,
-                "MockableRelationshipsResourceGroupResource.GetByResourceGroup");
+                "MockableRelationshipsResourceGroupResource.GetByResourceGroupContainsRelationships");
         }
 
         /// <summary>
@@ -94,19 +94,19 @@ namespace Azure.ResourceManager.Relationships.Mocking
         /// <param name="filter"> Filters the results by target resource type. Example: properties.metadata.targetType eq 'Microsoft.Compute/virtualMachines'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainsRelationship> GetByResourceGroup(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ContainsRelationship> GetByResourceGroupContainsRelationships(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ContainsRelationshipsGetByResourceGroupCollectionResultOfT(
+            return new ContainsRelationshipsGetByResourceGroupContainsRelationshipsCollectionResultOfT(
                 ContainsRelationshipsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 filter,
                 context,
-                "MockableRelationshipsResourceGroupResource.GetByResourceGroup");
+                "MockableRelationshipsResourceGroupResource.GetByResourceGroupContainsRelationships");
         }
     }
 }

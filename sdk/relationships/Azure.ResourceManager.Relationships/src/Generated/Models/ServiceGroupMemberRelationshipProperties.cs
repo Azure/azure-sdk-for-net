@@ -13,22 +13,22 @@ using Azure.ResourceManager.Relationships;
 namespace Azure.ResourceManager.Relationships.Models
 {
     /// <summary> ServiceGroupMember relationship properties. </summary>
-    public partial class ServiceGroupMemberRelationshipPropertiesV2
+    public partial class ServiceGroupMemberRelationshipProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipPropertiesV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipProperties"/>. </summary>
         /// <param name="sourceId"> The relationship source resource id. Must be a service group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceId"/> is null. </exception>
-        public ServiceGroupMemberRelationshipPropertiesV2(ResourceIdentifier sourceId)
+        public ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId)
         {
             Argument.AssertNotNull(sourceId, nameof(sourceId));
 
             SourceId = sourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipPropertiesV2"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipProperties"/>. </summary>
         /// <param name="sourceId"> The relationship source resource id. Must be a service group. </param>
         /// <param name="targetId"> The relationship target resource id. Server-derived from the scoped resource. </param>
         /// <param name="sourceTenant"> The relationship source tenant id. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="metadata"> Metadata about the relationship. </param>
         /// <param name="provisioningState"> The provisioning state of the relationship. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGroupMemberRelationshipPropertiesV2(ResourceIdentifier sourceId, ResourceIdentifier targetId, string sourceTenant, RelationshipOriginInformation originInformation, RelationshipMetadata metadata, RelationshipProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId, ResourceIdentifier targetId, string sourceTenant, RelationshipOriginInformation originInformation, RelationshipMetadata metadata, RelationshipProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceId = sourceId;
             TargetId = targetId;

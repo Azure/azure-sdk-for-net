@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Relationships
 {
     /// <summary></summary>
-    internal partial class DependencyOfRelationshipsByServiceGroupResourceOperationSource : IOperationSource<DependencyOfRelationshipsByServiceGroupResource>
+    internal partial class ServiceGroupDependencyOfRelationshipResourceOperationSource : IOperationSource<ServiceGroupDependencyOfRelationshipResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal DependencyOfRelationshipsByServiceGroupResourceOperationSource(ArmClient client)
+        internal ServiceGroupDependencyOfRelationshipResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DependencyOfRelationshipsByServiceGroupResource IOperationSource<DependencyOfRelationshipsByServiceGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceGroupDependencyOfRelationshipResource IOperationSource<ServiceGroupDependencyOfRelationshipResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
             DependencyOfRelationshipData data = DependencyOfRelationshipData.DeserializeDependencyOfRelationshipData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DependencyOfRelationshipsByServiceGroupResource(_client, data);
+            return new ServiceGroupDependencyOfRelationshipResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DependencyOfRelationshipsByServiceGroupResource> IOperationSource<DependencyOfRelationshipsByServiceGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceGroupDependencyOfRelationshipResource> IOperationSource<ServiceGroupDependencyOfRelationshipResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             DependencyOfRelationshipData data = DependencyOfRelationshipData.DeserializeDependencyOfRelationshipData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new DependencyOfRelationshipsByServiceGroupResource(_client, data);
+            return new ServiceGroupDependencyOfRelationshipResource(_client, data);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Relationships
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetBySubscriptionRequest(Guid subscriptionId, string filter, RequestContext context)
+        internal HttpMessage CreateGetBySubscriptionContainsRelationshipsRequest(Guid subscriptionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Relationships
             return message;
         }
 
-        internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetBySubscriptionContainsRelationshipsRequest(Uri nextPage, Guid subscriptionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Relationships
             return message;
         }
 
-        internal HttpMessage CreateGetByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string filter, RequestContext context)
+        internal HttpMessage CreateGetByResourceGroupContainsRelationshipsRequest(Guid subscriptionId, string resourceGroupName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Relationships
             return message;
         }
 
-        internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetByResourceGroupContainsRelationshipsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

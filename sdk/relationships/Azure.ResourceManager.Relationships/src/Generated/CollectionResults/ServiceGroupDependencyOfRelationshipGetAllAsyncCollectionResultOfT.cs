@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,19 +15,19 @@ using Azure.ResourceManager.Relationships.Models;
 
 namespace Azure.ResourceManager.Relationships
 {
-    internal partial class DependencyOfRelationshipsByServiceGroupGetAllCollectionResultOfT : Pageable<DependencyOfRelationshipData>
+    internal partial class ServiceGroupDependencyOfRelationshipGetAllAsyncCollectionResultOfT : AsyncPageable<DependencyOfRelationshipData>
     {
-        private readonly DependencyOfRelationshipsByServiceGroup _client;
+        private readonly ServiceGroupDependencyOfRelationship _client;
         private readonly string _serviceGroupName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DependencyOfRelationshipsByServiceGroupGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DependencyOfRelationshipsByServiceGroup client used to send requests. </param>
+        /// <summary> Initializes a new instance of ServiceGroupDependencyOfRelationshipGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ServiceGroupDependencyOfRelationship client used to send requests. </param>
         /// <param name="serviceGroupName"> The name of the service group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DependencyOfRelationshipsByServiceGroupGetAllCollectionResultOfT(DependencyOfRelationshipsByServiceGroup client, string serviceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ServiceGroupDependencyOfRelationshipGetAllAsyncCollectionResultOfT(ServiceGroupDependencyOfRelationship client, string serviceGroupName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _serviceGroupName = serviceGroupName;
@@ -34,16 +35,16 @@ namespace Azure.ResourceManager.Relationships
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DependencyOfRelationshipsByServiceGroupGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ServiceGroupDependencyOfRelationshipGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DependencyOfRelationshipsByServiceGroupGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DependencyOfRelationshipData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ServiceGroupDependencyOfRelationshipGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<DependencyOfRelationshipData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -61,14 +62,14 @@ namespace Azure.ResourceManager.Relationships
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _serviceGroupName, _context) : _client.CreateGetAllRequest(_serviceGroupName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -115,46 +115,46 @@ namespace Azure.ResourceManager.Relationships
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DependencyOfRelationshipsByServiceGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ServiceGroupDependencyOfRelationshipResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationshipsByServiceGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupDependencyOfRelationshipResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DependencyOfRelationshipsByServiceGroupResource"/> object. </returns>
-        public static DependencyOfRelationshipsByServiceGroupResource GetDependencyOfRelationshipsByServiceGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceGroupDependencyOfRelationshipResource"/> object. </returns>
+        public static ServiceGroupDependencyOfRelationshipResource GetServiceGroupDependencyOfRelationshipResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRelationshipsArmClient(client).GetDependencyOfRelationshipsByServiceGroupResource(id);
+            return GetMockableRelationshipsArmClient(client).GetServiceGroupDependencyOfRelationshipResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="DependencyOfRelationshipsByServiceGroupCollection"/> objects within the specified scope.
+        /// Gets a collection of <see cref="ServiceGroupDependencyOfRelationshipCollection"/> objects within the specified scope.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationshipsByServiceGroups(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupDependencyOfRelationships(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="DependencyOfRelationshipsByServiceGroupResource"/> objects. </returns>
-        public static DependencyOfRelationshipsByServiceGroupCollection GetDependencyOfRelationshipsByServiceGroups(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="ServiceGroupDependencyOfRelationshipResource"/> objects. </returns>
+        public static ServiceGroupDependencyOfRelationshipCollection GetServiceGroupDependencyOfRelationships(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRelationshipsArmClient(client).GetDependencyOfRelationshipsByServiceGroups(scope);
+            return GetMockableRelationshipsArmClient(client).GetServiceGroupDependencyOfRelationships(scope);
         }
 
         /// <summary>
         /// Get a DependencyOfRelationship
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationshipsByServiceGroup(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupDependencyOfRelationship(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -163,18 +163,18 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DependencyOfRelationshipsByServiceGroupResource> GetDependencyOfRelationshipsByServiceGroup(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        public static Response<ServiceGroupDependencyOfRelationshipResource> GetServiceGroupDependencyOfRelationship(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRelationshipsArmClient(client).GetDependencyOfRelationshipsByServiceGroup(scope, name, cancellationToken);
+            return GetMockableRelationshipsArmClient(client).GetServiceGroupDependencyOfRelationship(scope, name, cancellationToken);
         }
 
         /// <summary>
         /// Get a DependencyOfRelationship
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetDependencyOfRelationshipsByServiceGroupAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsArmClient.GetServiceGroupDependencyOfRelationshipAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DependencyOfRelationshipsByServiceGroupResource>> GetDependencyOfRelationshipsByServiceGroupAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceGroupDependencyOfRelationshipResource>> GetServiceGroupDependencyOfRelationshipAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableRelationshipsArmClient(client).GetDependencyOfRelationshipsByServiceGroupAsync(scope, name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRelationshipsArmClient(client).GetServiceGroupDependencyOfRelationshipAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Relationships
         /// List ContainsRelationship resources by resource group
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsResourceGroupResource.GetByResourceGroupAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsResourceGroupResource.GetByResourceGroupContainsRelationshipsAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -278,18 +278,18 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainsRelationship> GetByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string filter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ContainsRelationship> GetByResourceGroupContainsRelationshipsAsync(this ResourceGroupResource resourceGroupResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRelationshipsResourceGroupResource(resourceGroupResource).GetByResourceGroupAsync(filter, cancellationToken);
+            return GetMockableRelationshipsResourceGroupResource(resourceGroupResource).GetByResourceGroupContainsRelationshipsAsync(filter, cancellationToken);
         }
 
         /// <summary>
         /// List ContainsRelationship resources by resource group
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsResourceGroupResource.GetByResourceGroup(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsResourceGroupResource.GetByResourceGroupContainsRelationships(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -297,18 +297,18 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainsRelationship> GetByResourceGroup(this ResourceGroupResource resourceGroupResource, string filter = default, CancellationToken cancellationToken = default)
+        public static Pageable<ContainsRelationship> GetByResourceGroupContainsRelationships(this ResourceGroupResource resourceGroupResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRelationshipsResourceGroupResource(resourceGroupResource).GetByResourceGroup(filter, cancellationToken);
+            return GetMockableRelationshipsResourceGroupResource(resourceGroupResource).GetByResourceGroupContainsRelationships(filter, cancellationToken);
         }
 
         /// <summary>
         /// List ContainsRelationship resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsSubscriptionResource.GetBySubscriptionAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsSubscriptionResource.GetBySubscriptionContainsRelationshipsAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -316,18 +316,18 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ContainsRelationship> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ContainsRelationship> GetBySubscriptionContainsRelationshipsAsync(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableRelationshipsSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(filter, cancellationToken);
+            return GetMockableRelationshipsSubscriptionResource(subscriptionResource).GetBySubscriptionContainsRelationshipsAsync(filter, cancellationToken);
         }
 
         /// <summary>
         /// List ContainsRelationship resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRelationshipsSubscriptionResource.GetBySubscription(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRelationshipsSubscriptionResource.GetBySubscriptionContainsRelationships(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -335,11 +335,11 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ContainsRelationship"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ContainsRelationship> GetBySubscription(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
+        public static Pageable<ContainsRelationship> GetBySubscriptionContainsRelationships(this SubscriptionResource subscriptionResource, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableRelationshipsSubscriptionResource(subscriptionResource).GetBySubscription(filter, cancellationToken);
+            return GetMockableRelationshipsSubscriptionResource(subscriptionResource).GetBySubscriptionContainsRelationships(filter, cancellationToken);
         }
     }
 }

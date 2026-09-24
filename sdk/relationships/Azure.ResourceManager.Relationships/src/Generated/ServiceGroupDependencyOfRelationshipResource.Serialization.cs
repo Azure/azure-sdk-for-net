@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Relationships
 {
     /// <summary></summary>
-    public partial class DependencyOfRelationshipsByServiceGroupResource : IJsonModel<DependencyOfRelationshipData>
+    public partial class ServiceGroupDependencyOfRelationshipResource : IJsonModel<DependencyOfRelationshipData>
     {
         private static IJsonModel<DependencyOfRelationshipData> s_dataDeserializationInstance;
 

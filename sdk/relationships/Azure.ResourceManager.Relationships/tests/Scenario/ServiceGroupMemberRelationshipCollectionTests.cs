@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
     /// <summary>
     /// Tests for ServiceGroupMember relationships.
     /// A ServiceGroupMember relationship makes an ARM resource (resource group, subscription, etc.)
-    /// a member of a Service Group. The relationship is created ON the member resource,
-    /// with targetId pointing to the Service Group.
+    /// a member of a Service Group. The relationship is created on the member resource,
+    /// with sourceId pointing to the Service Group and targetId pointing to the member.
     /// </summary>
     public class ServiceGroupMemberRelationshipCollectionTests : RelationshipsManagementTestBase
     {
@@ -62,15 +62,15 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         {
             return new ServiceGroupMemberRelationshipData
             {
-                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipPropertiesV2(serviceGroupId, memberResourceId)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(serviceGroupId, memberResourceId)
             };
         }
 
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            // ServiceGroupMember: source resource group becomes a member of target service group.
-            // The relationship is PUT on the source resource's scope, targeting the Service Group.
+            // ServiceGroupMember: the resource group becomes a member of the Service Group.
+            // The relationship is PUT on the member's scope, with the Service Group as sourceId.
             _target = await CreateServiceGroup("sg-");
             _source = await CreateResourceGroup(DefaultSubscription, "rg-member-", AzureLocation.WestUS);
 
@@ -190,7 +190,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         /// Corresponds to service-side test: Put_TargetIsNotAServiceGroup_BadRequestAsync.
         /// </summary>
         [RecordedTest]
-        public async Task CreateOrUpdate_WithNonServiceGroupTarget_ThrowsRequestFailedException()
+        [TestCase(TestName = "CreateOrUpdate_WithNonServiceGroupTarget_ThrowsRequestFailedException")]
+        public async Task CreateOrUpdate_WithNonServiceGroupSource_ThrowsRequestFailedException()
         {
             _source = await CreateResourceGroup(DefaultSubscription, "rg-member-", AzureLocation.WestUS);
 
@@ -200,7 +201,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             // Pass a resource group ID as sourceId - only Service Group IDs are valid sources.
             var data = new ServiceGroupMemberRelationshipData
             {
-                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipPropertiesV2(_source.Id, _source.Id)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(_source.Id, _source.Id)
             };
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -226,7 +227,7 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
 
             var data = new ServiceGroupMemberRelationshipData
             {
-                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipPropertiesV2(nonExistentSgId, _source.Id)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(nonExistentSgId, _source.Id)
             };
 
             var ex = Assert.ThrowsAsync<RequestFailedException>(async () =>

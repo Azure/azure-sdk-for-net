@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Relationships.ServiceGroupMemberRelationshipData"/> instance for mocking. </returns>
-        public static ServiceGroupMemberRelationshipData ServiceGroupMemberRelationshipData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceGroupMemberRelationshipPropertiesV2 properties = default)
+        public static ServiceGroupMemberRelationshipData ServiceGroupMemberRelationshipData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceGroupMemberRelationshipProperties properties = default)
         {
             return new ServiceGroupMemberRelationshipData(
                 id,
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Relationships.Models
         /// <param name="originInformation"> Information about the origin of the relationship. </param>
         /// <param name="metadata"> Metadata about the relationship. </param>
         /// <param name="provisioningState"> The provisioning state of the relationship. </param>
-        /// <returns> A new <see cref="Models.ServiceGroupMemberRelationshipPropertiesV2"/> instance for mocking. </returns>
-        public static ServiceGroupMemberRelationshipPropertiesV2 ServiceGroupMemberRelationshipPropertiesV2(ResourceIdentifier sourceId = default, ResourceIdentifier targetId = default, string sourceTenant = default, RelationshipOriginInformation originInformation = default, RelationshipMetadata metadata = default, RelationshipProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.ServiceGroupMemberRelationshipProperties"/> instance for mocking. </returns>
+        public static ServiceGroupMemberRelationshipProperties ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId = default, ResourceIdentifier targetId = default, string sourceTenant = default, RelationshipOriginInformation originInformation = default, RelationshipMetadata metadata = default, RelationshipProvisioningState? provisioningState = default)
         {
-            return new ServiceGroupMemberRelationshipPropertiesV2(
+            return new ServiceGroupMemberRelationshipProperties(
                 sourceId,
                 targetId,
                 sourceTenant,

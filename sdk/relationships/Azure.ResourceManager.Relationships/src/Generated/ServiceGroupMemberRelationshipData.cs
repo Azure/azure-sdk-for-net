@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Relationships
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGroupMemberRelationshipData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceGroupMemberRelationshipPropertiesV2 properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ServiceGroupMemberRelationshipData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceGroupMemberRelationshipProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public ServiceGroupMemberRelationshipPropertiesV2 Properties { get; set; }
+        public ServiceGroupMemberRelationshipProperties Properties { get; set; }
     }
 }
