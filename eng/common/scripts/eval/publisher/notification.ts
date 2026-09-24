@@ -8,6 +8,17 @@ export const DASHBOARD_NOTIFICATION_TARGET = Object.freeze({
     audience: "api://258998df-81ec-460c-bdd7-56a9bdde1e48",
 });
 
+export function readNotificationConfig(env) {
+    if (env.EVAL_NOTIFY_DASHBOARD?.toLowerCase() !== "true") return null;
+    const config = {
+        url: env.EVAL_DASHBOARD_URL ?? DASHBOARD_NOTIFICATION_TARGET.origin,
+        audience: env.EVAL_DASHBOARD_AUDIENCE ?? DASHBOARD_NOTIFICATION_TARGET.audience,
+    };
+    // Existing explicit settings remain validated; only absent settings use the reviewed defaults.
+    refreshUrl(config.url, config.audience);
+    return config;
+}
+
 export function refreshUrl(value, audience) {
     const url = new URL(value);
     if (url.protocol !== "https:" || url.username || url.password || url.port || url.search || url.hash || url.pathname !== "/") {
