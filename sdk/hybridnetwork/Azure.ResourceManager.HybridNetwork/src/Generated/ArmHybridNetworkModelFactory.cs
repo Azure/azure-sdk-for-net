@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary>
         /// The azure resource reference which is used for deployment.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SecretDeploymentResourceReference"/> and <see cref="Models.OpenDeploymentResourceReference"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.OpenDeploymentResourceReference"/> and <see cref="Models.SecretDeploymentResourceReference"/>.
         /// </summary>
         /// <param name="idType"> The resource reference arm id type. </param>
         /// <returns> A new <see cref="Models.DeploymentResourceIdReference"/> instance for mocking. </returns>
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary>
         /// Azure virtual network function application definition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureCoreNetworkFunctionVhdApplication"/> and <see cref="Models.AzureCoreNetworkFunctionArmTemplateApplication"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureCoreNetworkFunctionArmTemplateApplication"/> and <see cref="Models.AzureCoreNetworkFunctionVhdApplication"/>.
         /// </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
@@ -986,7 +986,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary>
         /// Azure Operator Distributed Services network function application definition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureOperatorNexusNetworkFunctionImageApplication"/> and <see cref="Models.AzureOperatorNexusNetworkFunctionArmTemplateApplication"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureOperatorNexusNetworkFunctionArmTemplateApplication"/> and <see cref="Models.AzureOperatorNexusNetworkFunctionImageApplication"/>.
         /// </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
@@ -1495,7 +1495,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary>
         /// The NFVI object.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureCoreNfviDetails"/>, <see cref="Models.AzureArcK8SClusterNfviDetails"/>, and <see cref="Models.AzureOperatorNexusClusterNfviDetails"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureArcK8SClusterNfviDetails"/>, <see cref="Models.AzureCoreNfviDetails"/>, and <see cref="Models.AzureOperatorNexusClusterNfviDetails"/>.
         /// </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
