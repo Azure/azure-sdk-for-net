@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -17,8 +18,25 @@ public class BasicFabricTests
                 #region Snippet:FabricBasic
                 Infrastructure infra = new();
 
-                FabricCapacity capacity = FabricCapacity.FromExisting(nameof(capacity), FabricCapacity.ResourceVersions.V2026_09_01_PREVIEW);
-                capacity.Name = "existingCapacity";
+                FabricCapacity capacity = new(nameof(capacity), FabricCapacity.ResourceVersions.V2026_09_01_PREVIEW)
+                {
+                    Name = "existingCapacity",
+                    Location = new AzureLocation("westus"),
+                    Sku = new()
+                    {
+                        Name = "F2",
+                        Tier = FabricSkuTier.Fabric
+                    },
+                    Properties = new()
+                    {
+                        AdministrationMembers = new() { "admin@contoso.com" },
+                        Overage = new()
+                        {
+                            State = CapacityOverageState.Enabled,
+                            ThresholdCapacityUnitHours = 100
+                        }
+                    }
+                };
                 infra.Add(capacity);
                 #endregion
 
@@ -33,8 +51,24 @@ public class BasicFabricTests
 
         test.Compare(
             """
-            resource capacity 'Microsoft.Fabric/capacities@2026-09-01-preview' existing = {
+            resource capacity 'Microsoft.Fabric/capacities@2026-09-01-preview' = {
               name: 'existingCapacity'
+              location: 'westus'
+              properties: {
+                administration: {
+                  members: [
+                    'admin@contoso.com'
+                  ]
+                }
+                overage: {
+                  state: 'Enabled'
+                  thresholdCapacityUnitHours: 100
+                }
+              }
+              sku: {
+                name: 'F2'
+                tier: 'Fabric'
+              }
             }
             """);
     }

@@ -24,13 +24,30 @@ This library allows you to define Microsoft Fabric infrastructure declaratively 
 
 ## Examples
 
-### Reference an existing Fabric capacity
+### Create a Fabric capacity
 
 ```C# Snippet:FabricBasic
 Infrastructure infra = new();
 
-FabricCapacity capacity = FabricCapacity.FromExisting(nameof(capacity), FabricCapacity.ResourceVersions.V2026_09_01_PREVIEW);
-capacity.Name = "existingCapacity";
+FabricCapacity capacity = new(nameof(capacity), FabricCapacity.ResourceVersions.V2026_09_01_PREVIEW)
+{
+    Name = "existingCapacity",
+    Location = new AzureLocation("westus"),
+    Sku = new()
+    {
+        Name = "F2",
+        Tier = FabricSkuTier.Fabric
+    },
+    Properties = new()
+    {
+        AdministrationMembers = new() { "admin@contoso.com" },
+        Overage = new()
+        {
+            State = CapacityOverageState.Enabled,
+            ThresholdCapacityUnitHours = 100
+        }
+    }
+};
 infra.Add(capacity);
 ```
 
